@@ -150,8 +150,7 @@ window.onload = function () {
   $('btnTangent').onclick = btn_tangent;
   $('btnOff').onclick = btn_off;
 
-  // This is not working for IE :(
-  if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
     $('menuTwig').style = 'display:none';
   }
 
@@ -2950,7 +2949,7 @@ function muteAudio(mute) {
 }
 function playAudio(obj) {
 
-  if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+  if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
     obj.play();
   }
 }
