@@ -28,6 +28,7 @@ window.onload = function () {
   $('don').onclick = monStatus;
 
   // RPNapes Menu
+  document.getElementsByTagName('li').onclick = hapticResponseMobileKeySupress();
   $('menuLoad').onclick = btn_load;
   $('openFile').addEventListener('change', function () {
     try{
@@ -361,6 +362,7 @@ function tricorderOn() {
 
 function hapticResponseMobileKeySupress() {
   navigator.vibrate([21]);
+  console.log('y');
   $('txtInput').readOnly = true;
 }
 function mobileKeyboardAllow() {
