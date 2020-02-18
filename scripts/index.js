@@ -309,6 +309,7 @@ NumberObject.prototype.prettyPrint = function () {
 
 function btn_xoff() {
 
+  navigator.vibrate([21]);
   if ($('rpnapes').className === 'hidden') {
     // Notes is visible - turn on RPNapes
     rpnapesOn();
@@ -346,7 +347,7 @@ function notesOn() {
   $('lstNotes').focus();
 }
 function tricorderOn() {
-
+  
   $('date').className = 'hidden';
   $('rpnapes').className = 'hidden';
   monOff();
@@ -366,7 +367,6 @@ function mobileKeyboardAllow() {
   $('txtInput').readOnly = false;
 }
 
-// Copy to clipboard from stack or txtInput
 function btn_copy() {
 
   hapticResponseMobileKeySupress();
@@ -2901,8 +2901,9 @@ function loadTricorder() {
 
 function power() {
 
-  var onOff;
+  navigator.vibrate([21]);
 
+  var onOff;
   onOff = $('tricorderskin').src.toString().indexOf('tricorderon');
 
   if (onOff === -1) {
@@ -2933,6 +2934,8 @@ function playAudio(obj) {
 // Power On/Off.
 function button1() {
 
+  navigator.vibrate([21]);
+
   if (power()) {
     muteAudio(true);
     $('widget').src = '';
@@ -2955,6 +2958,8 @@ function button1() {
 }
 function button2() {
 
+  navigator.vibrate([21]);
+
   if (power()) {
     if (viewPortSrc.indexOf($('viewport').src) !== -1) {
       var i = viewPortSrc.indexOf($('viewport').src);
@@ -2973,6 +2978,8 @@ function button2() {
 }
 function button3() {
 
+  navigator.vibrate([21]);
+
   if (power()) {
     if (viewPort2Src.indexOf($('viewport').src) !== -1) {
       var i = viewPort2Src.indexOf($('viewport').src);
@@ -2990,6 +2997,8 @@ function button3() {
   }
 }
 function button4() {
+
+  navigator.vibrate([21]);
 
   if (power()) {
     if ($('widget').className === 'hidden') {
@@ -3016,6 +3025,8 @@ function button4() {
   }
 }
 function button5() {
+
+  navigator.vibrate([21]);
 
   if (power()) {
     if ($('widget').className === 'hidden') {
@@ -3044,6 +3055,8 @@ function button5() {
 }
 function button6() {
 
+  navigator.vibrate([21]);
+
   if (power()) {
 
     if ($('widget').className === 'hidden') {
@@ -3068,6 +3081,8 @@ function button6() {
 // Tricorder sensors
 function sensor1() {
 
+  navigator.vibrate([21]);
+
   if (power()) {
     $('viewport').src = '';
     $('viewport').src = 'sounds/beatles.m3u';
@@ -3075,6 +3090,8 @@ function sensor1() {
   }
 }
 function sensor2() {
+
+  navigator.vibrate([21]);
   $('viewport').src = '';
   $('viewport').src = 'sounds/the20s.m3u';
   if (power()) {
@@ -3099,8 +3116,9 @@ var noteSize = 26;
 
 function btn_copy_notes() {
 
-  var tmpTxt = '';
+  navigator.vibrate([21]);
 
+  var tmpTxt = '';
   tmpTxt = $('txtInput').value.trim();
   $('lstNotes').focus();
   getSelectedText('lstNotes');
@@ -3108,6 +3126,7 @@ function btn_copy_notes() {
 }
 function btn_paste_notes() {
 
+  navigator.vibrate([21]);
   backupUndoNotes();
 
   if (/*@cc_on!@*/false || !!document.documentMode) {
@@ -3123,6 +3142,8 @@ function btn_paste_notes() {
 }
 function btn_undo_notes() {
 
+  navigator.vibrate([21]);
+
   if (backUpsNotes.length > 2) {
     restoresNotes.push(nestArray(notes));
     notes = splitArrayByBrowser(backUpsNotes.pop());
@@ -3133,6 +3154,8 @@ function btn_undo_notes() {
 }
 function btn_redo_notes() {
 
+  navigator.vibrate([21]);
+
   if (restoresNotes.length > 0) {
     backUpsNotes.push(nestArray(notes));
     notes = splitArrayByBrowser(restoresNotes.pop());
@@ -3142,6 +3165,8 @@ function btn_redo_notes() {
   $('lstNotes').focus();
 }
 function backupUndoNotes() {
+
+  navigator.vibrate([21]);
 
   backUpsNotes.push(nestArray(notes));
   notes = $('lstNotes').value.split('\n');
