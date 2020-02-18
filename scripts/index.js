@@ -1424,7 +1424,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  rpnAlert('Commands NOT case sensitive [about, c, city, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opnenotes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you]');
+  rpnAlert('Commands NOT case sensitive [about, c, city, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you]');
   btn_enter();
   btn_delete();
 }
@@ -1562,6 +1562,12 @@ function parseInput() {
   case 'open':
     btn_delete();
     btn_delete();
+    openAFile();
+    break;
+  case 'opennotes':
+    btn_delete();
+    btn_delete();
+    $('txtInput').value = 'notes';
     openAFile();
     break;
   case 'phi':
