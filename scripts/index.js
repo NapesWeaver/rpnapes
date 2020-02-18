@@ -1,18 +1,32 @@
-﻿var $ = function (id) {
+﻿const $ = function (id) {
   return document.getElementById(id);
 };
 
 navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
-var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-//var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+//const isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 
-var stack = [];
-var backUps = [33];
-var restores = [33];
-var stackSize = 14;
-var stackFocus = false;
-var fixDecimal = -1;
+const stack = [];
+const backUps = [33];
+const restores = [33];
+const stackSize = 14;
+let stackFocus = false;
+let fixDecimal = -1;
+
+document.addEventListener('keypress', function (event) {
+
+  if ($('rpnapes').className !== 'hidden') {
+    switch (event.keyCode) {
+    case 13:
+      // RPNapes ENTER
+      btn_enter();
+      break;
+    default:
+      break;
+    }
+  }
+});
 
 document.addEventListener('keydown', function (event) {
 
@@ -2358,11 +2372,11 @@ function cutOutNegExponent(tmpArray, expression) {
 
 //////////////////// idName, xPos, yPos, objSize, health, speed, ammo ////////////////
 
-var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
-var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
-var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
+const twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
+const tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
+const don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
 
-var theObjects = [3];
+const theObjects = [3];
 
 //////// Mathmon Class ///////////////////////////////////////////////////////////////
 
@@ -2676,12 +2690,12 @@ function gravity() {
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
 
-var viewPortSrc = [];
-var viewPort2Src = [];
-var widgetSrc = [];
+let viewPortSrc = [];
+let viewPort2Src = [];
+let widgetSrc = [];
 
-var lat;
-var lng;
+let lat;
+let lng;
 
 function loadTricorder() {
   var index = 0;
@@ -2899,9 +2913,9 @@ function saveTricorder() {
 
 //////// Notes ///////////////////////////////////////////////////////////////////////
 
-var notes = [];
-var backUpsNotes = [33];
-var restoresNotes = [33];
+let notes = [];
+const backUpsNotes = [33];
+const restoresNotes = [33];
 
 function btn_copy_notes() {
 
@@ -3254,17 +3268,3 @@ window.onload = function () {
   selectText('lstStack', 'lstStack');
   selectText('txtInput', 'txtInput');
 };
-
-document.addEventListener('keypress', function (event) {
-
-  if ($('rpnapes').className !== 'hidden') {
-    switch (event.keyCode) {
-    case 13:
-      // RPNapes ENTER
-      btn_enter();
-      break;
-    default:
-      break;
-    }
-  }
-});
