@@ -357,7 +357,7 @@ function tricorderOn() {
 
 function hapticResponseMobileKeyboardSupress() {
   navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-  navigator.vibrate([30]);
+  navigator.vibrate([21]);
   $('txtInput').readOnly = true;
 }
 function mobileKeyboardAllow() {
