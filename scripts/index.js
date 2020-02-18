@@ -81,6 +81,7 @@ window.onload = function () {
   $('menuTangent').onclick = btn_tangent;
 
   $('menuAngle').onclick = btn_angle;
+  $('menuKeyboard').onclick = toggleKeyboard;
   $('menuNotes').onclick = btn_xoff;
   $('menuShift').onclick = btn_shift;
 
@@ -150,6 +151,8 @@ window.onload = function () {
   // This is not working for IE :(
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     $('menuTwig').style = 'display:none';
+  } else {
+    $('menuKeyboard').style = 'display:none';
   }
 
   // Event Listener for Mouse
@@ -357,7 +360,7 @@ function tricorderOn() {
 
 function vibrateIt() {
   navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-  navigator.vibrate([10]);
+  navigator.vibrate([100]);
   $('txtInput').readOnly = true;
 }
 function mobileKeyboard() {
@@ -1895,6 +1898,50 @@ function rpnAlert(input) {
   backupUndo();
   $('txtInput').value = input;
   $('txtInput').select();
+}
+
+function toggleKeyboard() {
+
+  if ($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
+    $('txtInput').readOnly = true;
+    $('menuKeyboard').innerHTML = 'Key&nbsp;On';
+  }
+  else {
+    $('txtInput').readOnly = false;
+    $('menuKeyboard').innerHTML = 'Key&nbsp;Off';
+  }
+  $('txtInput').focus();
+}
+// Minimize mobile keyboard
+function hideKeyboard() {
+  //this set timeout needed for case when hideKeyborad
+  //is called inside of 'onfocus' event handler
+  setTimeout(function () {
+
+    //creating temp field
+    var field = document.createElement('input');
+    field.setAttribute('type', 'text');
+    //hiding temp field from peoples eyes
+    //-webkit-user-modify is nessesary for Android 4.x
+    field.setAttribute('style', 'position:absolute; top: 0px; opacity: 0; -webkit-user-modify: read-write-plaintext-only; left:0px;');
+    document.body.appendChild(field);
+
+    //adding onfocus event handler for out temp field
+    field.onfocus = function () {
+      //this timeout of 200ms is nessasary for Android 2.3.x
+      setTimeout(function () {
+
+        field.setAttribute('style', 'display:none;');
+        setTimeout(function () {
+          document.body.removeChild(field);
+          document.body.focus();
+        }, 14);
+
+      }, 200);
+    };
+    //focusing it
+    field.focus();
+  }, 50);
 }
 
 function storeCookie(aName, tmpArray) {
