@@ -2958,9 +2958,9 @@ function button1() {
 }
 function button2() {
 
-  navigator.vibrate([21]);
-
   if (power()) {
+    navigator.vibrate([21]);
+
     if (viewPortSrc.indexOf($('viewport').src) !== -1) {
       var i = viewPortSrc.indexOf($('viewport').src);
 
@@ -2978,9 +2978,9 @@ function button2() {
 }
 function button3() {
 
-  navigator.vibrate([21]);
-
   if (power()) {
+    navigator.vibrate([21]);
+
     if (viewPort2Src.indexOf($('viewport').src) !== -1) {
       var i = viewPort2Src.indexOf($('viewport').src);
 
@@ -2998,9 +2998,9 @@ function button3() {
 }
 function button4() {
 
-  navigator.vibrate([21]);
-
   if (power()) {
+    navigator.vibrate([21]);
+
     if ($('widget').className === 'hidden') {
       if (widgetSrc.indexOf($('widget').src) !== -1) {
         var i = widgetSrc.indexOf($('widget').src);
@@ -3026,9 +3026,9 @@ function button4() {
 }
 function button5() {
 
-  navigator.vibrate([21]);
-
   if (power()) {
+    navigator.vibrate([21]);
+
     if ($('widget').className === 'hidden') {
       var srcString = '';
       var myString = 'forecast';
@@ -3055,9 +3055,8 @@ function button5() {
 }
 function button6() {
 
-  navigator.vibrate([21]);
-
   if (power()) {
+    navigator.vibrate([21]);
 
     if ($('widget').className === 'hidden') {
       var srcString = '';
@@ -3081,9 +3080,8 @@ function button6() {
 // Tricorder sensors
 function sensor1() {
 
-  navigator.vibrate([21]);
-
   if (power()) {
+    navigator.vibrate([21]);
     $('viewport').src = '';
     $('viewport').src = 'sounds/beatles.m3u';
     playAudio($('communications_static'));
@@ -3091,10 +3089,10 @@ function sensor1() {
 }
 function sensor2() {
 
-  navigator.vibrate([21]);
   $('viewport').src = '';
   $('viewport').src = 'sounds/the20s.m3u';
   if (power()) {
+    navigator.vibrate([21]);
     playAudio($('spocksviewer'));
   }
 }
