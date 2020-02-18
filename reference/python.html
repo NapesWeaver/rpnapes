@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Napes Weaver -->
+<head>
+    <title>Python</title>
+    <meta charset="utf-8" />
+    <!-- For iPhone, Andriod smartphone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!--[if lt IE 9]>
+        <script>
+            document.createElement("article");
+            document.createElement("aside");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("main");
+            document.createElement("nav");
+            document.createElement("section");
+        </script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="notes.css" />
+</head>
+<body>
+    <h1 id="top">Python</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Home Page">Home</a></li>
+            <!--<li><a href="../index.html" title="RPNapes">RPNapes</a></li>-->
+            <li>|</li>
+            <li><a href="csharp.html" title="C#">C#</a></li>
+            <li>|</li>
+            <li><a href="css.html" title="CSS">CSS</a></li>
+            <li>|</li>
+            <li><a href="hardware.html" title="Hardware">Hardware</a></li>
+            <li>|</li>
+            <li><a href="html.html" title="HTML">HTML</a></li>
+            <li>|</li>
+            <li><a href="java.html" title="Java">Java</a></li>
+            <li>|</li>
+            <li><a href="javascript.html" title="JavaScript">JavaScript</a></li>
+            <li>|</li>
+            <li><a href="jquery.html" title="jQuery">jQuery</a></li>
+            <li>|</li>
+            <li><a href="linux.html" title="Linux">Linux</a></li>
+            <li>|</li>
+            <li><a href="mysql.html" title="MySQL">MySQL</a></li>
+            <li>|</li>
+            <li><a href="networking.html" title="Networking">Networking</a></li>
+            <li>|</li>
+            <li><a href="python.html" title="Python">Python</a></li>
+            <li>|</li>
+            <li><a href="windows.html" title="Windows">Windows</a></li>
+        </ul>
+    </nav>
+
+    <h3># Declarations / Importations</h3>
+    <ul>
+        <li>import random</li>
+        <li>import sys</li>
+        <li>import os</li>
+        <li><br /></li>
+        <li>myString = ""</li>
+        <li>myNumber = 1.8</li>
+        <li>grocery_list = ["Juice", "Tomatoes", "Flour", "Rice", "Catsup"]</li>
+        <li>other_events = ["Clean House", "Fix Bike", "Goto Movie"]</li>
+        <li><br /></li>
+        <li>to_do = [grocery_list, other_events]</li>
+        <li>to_do2 = other_events + grocery_list</li>
+        <li><br /></li>
+        <li>pi_tuple = (3,1,4,1,5,9)</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Input</h3>
+    <ul>
+        <li>print("Enter nom")</li>
+        <li>name = sys.stdin.readline()</li>
+        <li>print("Challo", name)</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Output</h3>
+    <ul>
+        <li>print ("Hallo Python")</li>
+        <li>print("\n" * 5)</li>
+        <li><br /></li>
+        <li>my_quote = "\"quoteth\""</li>
+        <li>my_string = "I say "</li>
+        <li>print(my_string + my_quote)</li>
+        <li><br /></li>
+        <li>print("I don't want a ", end="")</li>
+        <li>print("newline.")</li>
+        <li><br /></li>
+        <li>print(5*1)</li>
+        <li>print(5/2)</li>
+        <li>print(5**2)</li>
+        <li>print(5//2)</li>
+        <li></li>
+        <li>print("%c is my %s letter and my number %d number is %.5f" % ('M', "favorish", 1, 1.8))</li>
+        <li>long_string = "i'll meet you in Poland - baby!"</li>
+        <li>print(long_string[17:25])</li>
+        <li>print(long_string[:-5])</li>
+        <li>print(long_string[-5:])</li>
+        <li>print(long_string[:4] + " be there.")</li>
+        <li><br /></li>
+        <li>print(long_string.capitalize())</li>
+        <li>print(long_string.find("Poland"))</li>
+        <li>print(long_string.isalpha())</li>
+        <li>print(long_string.isalnum())</li>
+        <li>print(len(long_string))</li>
+        <li>print(long_string.replace("baby", "doodie"))</li>
+        <li>print(long_string.strip()) # remove whitespace</li>
+        <li>quote_string = long_string.split(" ")</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Arrays</h3>
+    <ul>
+        <li>print (grocery_list [1:4])</li>
+        <li>print ("First Item: ", grocery_list[0])</li>
+        <li>grocery_list[0] = "Orange Juice"</li>
+        <li>print ("New first item: ", grocery_list[0])</li>
+        <li>print(to_do)</li>
+        <li>print(to_do[1][1])</li>
+        <li>grocery_list.append("Onions")</li>
+        <li>grocery_list.insert(1, "Pickles")</li>
+        <li>grocery_list.remove("Orange Juice")</li>
+        <li>grocery_list.sort()</li>
+        <li>print(grocery_list)</li>
+        <li>grocery_list.reverse()</li>
+        <li>print(grocery_list)</li>
+        <li>del grocery_list[4]</li>
+        <li>print(grocery_list)</li>
+        <li><br /></li>
+        <li>print (to_do2)</li>
+        <li>print (len(to_do2))</li>
+        <li>print (max(to_do2))</li>
+        <li>print (min(to_do2))</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Maps / Dictionaries</h3>
+    <pre><code>
+    super_villians = {"Big Foot": "Veto von Vaughn", "Lex Luth": "Mack Moroue",
+        "Darth Dot": "Jack Cracker", "Mr. Monster": "Dick", "Anthrax Jack": "Colen",
+        "Count Chocula": "King Vampire", "Georgey Porgy": "Bush"}
+    print(super_villians)
+    print(super_villians["Darth Dot"])
+    del (super_villians["Lex Luth"])
+    super_villians["Big Foot"] = "Chewey"
+    print(len(super_villians))
+    print(super_villians.get("Big Foot"))
+    print(super_villians.keys())
+    print(super_villians.values())
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Tuples</h3>
+    <ul>
+        <li>pi_tuple = (3,1,4,1,5,9)</li>
+        <li>my_tuple = list(pi_tuple)</li>
+        <li>new_list = tuple(my_tuple)</li>
+        <li>print(len(my_tuple),min(my_tuple),max(my_tuple))</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Conditionals - if, else, elif, and, or, not</h3>
+    <pre><code>
+    age = 20
+    if age >= 15 :
+        print("You can drive")
+        if age >= 21 :
+            print("You can drive a tractor-trailer")
+        elif age == 15 :
+            print("You may use a lerner's permit")
+        else : print("You can drive a car")
+    else :
+        print("You cannot drive")
+    if ((age >= 9) and (age &#60;= 18)):
+        print("You must sign up for the Hunger Games")
+    elif ((age == 44) or (age >= 65)):
+          print("Go to the hog farm")
+    #elif not(age == 21):
+    elif age !=21 :
+        print("You are not 21")
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Loops</h3>
+    <pre><code>
+    for x in range(0,10):
+        print(x, ' ', end="")
+    print("")
+    for y in grocery_list:
+        print(y)
+    for x in [2,4,8,16,32,64]:
+        print(x, end="")
+    num_list = [[1,2,3],[10,20,30,],[100,200,300]]
+    for x in range(0,3):
+        for y in range(0,3):
+            print(num_list[x][y], end="")
+        
+    i = 1;
+    while(i &#60;= 20):
+        if(i%2 == 0):
+            print(i)
+        elif(i == 9):
+            break
+        else:
+            i += 1
+            continue
+        i += 1
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Random numbers</h3>
+    <pre><code>
+    random_num = random.randrange(0,100)
+    while(random_num != 15):
+        print(random_num, end="")
+        random_num = random.randrange(0,100)
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Functions</h3>
+    <pre><code>
+    def add_numbers(numA, numB):
+        sumNum = numA + numB
+        return sumNum
+    print(add_numbers(2, 4))
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># File I/O</h3>
+    <ul>
+        <li>test_file = open("test.txt", "wb")</li>
+        <li>#test_file = open("test.txt", "ab+")</li>
+        <li>print(test_file.name)</li>
+        <li>print(test_file.mode)</li>
+        <li>test_file.write(bytes("Write to test.txt", 'UTF-8'))</li>
+        <li>test_file.close()</li>
+        <li>test_file = open("test.txt", "r+")</li>
+        <li>text_in_file = test_file.read()</li>
+        <li>print(text_in_file)</li>
+        <li>test_file.close()</li>
+        <li>os.remove("test.txt") # delete test.txt</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3># Classes</h3>
+    <pre><code>    
+    class Animal:
+        __name = ""
+        __height = 0
+        __weight = 0
+        __sound = ""
+        def __init__(self, name, height, weight, sound):
+            self.name = name
+            self.height = height
+            self.weight = weight
+            self.sound = sound
+        def set_name(self, name):
+            self.__name = name          
+        def get_name(self):
+            return self.__name
+    
+        def set_height(self, height):
+            self.__height = height
+        def get_height(self):
+            return self.__height
+        def set_weight(self, weight):
+            self.__weight = weight
+        def get_weight(self):
+            return self.__weight
+    
+        def set_sound(self, sound):
+            self.__sound = sound
+        def get_sound(self):
+            return self.__sound
+        def get_type(self):
+            print("Animal")
+        def toString(self):
+            return "{} is {} cm tall and {} kilos and says {}".format(self.__name, self.__height, self.__weight, self.__sound)
+    cat = Animal("Diamond", 33, 10, "meow")
+    print(cat.toString())
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <footer>Return to <a href="index.html" title="Return to the home page">home page</a></footer>
+</body>
+</html>

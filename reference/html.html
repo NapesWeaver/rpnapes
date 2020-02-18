@@ -1,0 +1,2303 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Napes Weaver -->
+<head>
+    <title>HTML</title>
+    <meta charset="utf-8" />
+    <!-- For iPhone, Andriod smartphone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!--[if lt IE 9]>
+        <script>
+            document.createElement("article");
+            document.createElement("aside");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("main");
+            document.createElement("nav");
+            document.createElement("section");
+        </script>
+    <![endif]--> 
+    <link type="text/css" rel="stylesheet" href="notes.css" />
+</head>
+<body>
+    <h1 id="top">HTML - Hyper Text Markup Language</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Home Page">Home</a></li>
+            <!--<li><a href="../index.html" title="RPNapes">RPNapes</a></li>-->
+            <li>|</li>
+            <li><a href="csharp.html" title="C#">C#</a></li>
+            <li>|</li>
+            <li><a href="css.html" title="CSS">CSS</a></li>
+            <li>|</li>
+            <li><a href="hardware.html" title="Hardware">Hardware</a></li>
+            <li>|</li>
+            <li><a href="html.html" title="HTML">HTML</a></li>
+            <li>|</li>
+            <li><a href="java.html" title="Java">Java</a></li>
+            <li>|</li>
+            <li><a href="javascript.html" title="JavaScript">JavaScript</a></li>
+            <li>|</li>
+            <li><a href="jquery.html" title="jQuery">jQuery</a></li>
+            <li>|</li>
+            <li><a href="linux.html" title="Linux">Linux</a></li>
+            <li>|</li>
+            <li><a href="mysql.html" title="MySQL">MySQL</a></li>
+            <li>|</li>
+            <li><a href="networking.html" title="Networking">Networking</a></li>
+            <li>|</li>
+            <li><a href="python.html" title="Python">Python</a></li>
+            <li>|</li>
+            <li><a href="windows.html" title="Windows">Windows</a></li>
+        </ul>
+    </nav>
+    
+    <h2>HTML5</h2>
+    <p>&#60;!-- <a href="https://validator.w3.org/" title="validator.w3.org" target="_blank">W3C Markup Validation</a> --&#62;</p>
+
+    <h3>Web Page Template</h3>
+    <pre><code>
+    &#60;!DOCTYPE html&#62;
+    &#60;html lang="en"&#62;
+    &#60;!-- comments can begin now --&#62;
+      &#60;head&#62;
+        &#60;meta charset="UTF-8"/&#62;
+        &#60;meta name="viewport" content="width=device-width, initial-scale=1"/&#62;
+        &#60;meta http-equiv="X-UA-Compatible" content="ie=edge"/&#62;
+        &#60;!-- &#60;meta http-equiv="refresh" content="6; url=redirect.html"/&#62; --&#62;
+        &#60;meta name="description" content=""/&#62;
+        &#60;meta name="keywords" content=""/&#62;
+        &#60;meta name="robots" content="index,follow"/&#62;
+        &#60;title&#62;Page Title&#60;/title&#62;
+        &#60;link rel="icon" href="favicon.ico" type="image/x-icon"/&#62;
+        &#60;link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/&#62;
+        &#60;link rel="stylesheet" href="myStyles.css"/&#62;
+        &#60;noscript&#62;This page requires JavaScript!&#60;/noscript&#62;
+        &#60;!--[if lt IE 9]&#62;
+        &#60;script&#62;
+          document.createElement("article");
+          document.createElement("aside");
+          document.createElement("footer");
+          document.createElement("header");
+          document.createElement("main");
+          document.createElement("nav");
+          document.createElement("section");
+        &#60;/script&#62;
+        &#60;![endif]--&#62;
+           OR
+        &#60;!--[if lt IE 9]&#62;
+            &#60;script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"&#62;&#60;/script&#62;
+        &#60;![endif]--&#62;    
+      &#60;/head&#62;
+  
+      &#60;body&#62;
+        &#60;header role="banner"&#62;
+          &#60;h1 id="top"&#62;Heading&#60;/h1&#62;
+          &#60;p&#62;Some text typed here.&#60;/p&#62;
+        &#60;/header&#62;
+	
+        &#60;nav role="navigation"&#62;
+          &#60;ul&#62;
+            &#60;li&#62;&#60;a href="index.html" title="Return to the home page"&#62;Home Page&#60;/a&#62;&#60;/li&#62;
+            &#60;li&#62;|&#60;/li&#62;
+            &#60;li&#62;&#60;a href="page2.html" title="Go to another page"&#62;Another Page&#60;/a&#62;&#60;/li&#62;
+            &#60;li&#62;|&#60;/li&#62;
+            &#60;li&#62;&#60;a href="form.html" title="Fill out a form for more info"&#62;More
+            Info&#60;/a&#62;&#60;/li&#62;
+          &#60;/ul&#62;
+        &#60;/nav&#62;
+	
+        &#60;main role="main"&#62;
+          &#60;section&#62;
+            &#60;h2&#62;Section Title&#60;/h2&#62;
+            &#60;article&#62;
+              &#60;header&#62;
+                &#60;h3&#62;Article Title&#60;/h3&#62;
+                &#60;p&#62;(author, date)&#60;/p&#62;
+              &#60;/header&#62;
+              &#60;p&#62;&#60;span class="dropCaps"&#62;S&#60;/span&#62;ome text here.&#60;/p&#62;
+              &#60;p&#62;More and more text.&#60;/p&#62;
+            &#60;/article&#62;		
+            &#60;article&#62;
+              &#60;header&#62;
+                &#60;h3&#62;Article Title&#60;/h3&#62;
+                &#60;p&#62;(author, date)&#60;/p&#62;
+              &#60;/header&#62;
+              &#60;p&#62;More and more text.&#60;/p&#62;
+              &#60;p&#62;Even more text text text&#60;/p&#62;
+            &#60;/article&#62;	    
+          &#60;/section&#62;
+	  
+          &#60;section&#62;
+            &#60;h2&#62;Section Title&#60;/h2&#62;
+            &#60;article&#62;
+              &#60;header&#62;
+                &#60;h3&#62;Article Title&#60;/h3&#62;
+                &#60;p&#62;(author, date)&#60;/p&#62;
+              &#60;/header&#62;
+              &#60;p&#62;&#60;span class="dropCaps"&#62;S&#60;/span&#62;ome text here.&#60;/p&#62;
+              &#60;p&#62;&#60;span id="mySpecialM"&#62;M&#60;/span&#62;ore and more text.&#60;/p&#62;
+            &#60;/article&#62;
+          &#60;/section&#62;
+        &#60;/main&#62;
+	
+        &#60;aside&#62;
+          &#60;h2&#62;Aside Title&#60;/h2&#62;
+          &#60;p&#62;More text...(or nav)&#60;p&#62;
+        &#60;/aside&#62;
+	
+        &#60;footer role="contentinfo"&#62;
+          &#60;p id="footer"&#62;Updated Dec 14, 2015. Contact &#60;a href="mailto:someemail@yahoo.com"
+              title="someemail@yahoo.com"&#62;Somebody&#60;/a&#62; for questions and suggestions.&#60;/p&#62; 
+        &#60;/footer&#62;
+        &#60;script src="index.js"&#62;&#60;script/&#62;
+      &#60;/body&#62;
+    &#60;/html&#62;       
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    
+    <h3>HTML5 Alphabetically</h3>
+    <pre><code>
+        &#60;!&#45;&#45;...&#45;&#45;&#62; 	Defines a comment
+        &#60;!DOCTYPE&#62;  	Defines the document type
+        &#60;a&#62; 	Defines a hyperlink
+        &#60;abbr&#62; 	Defines an abbreviation
+        &#60;acronym&#62; 	Not supported in HTML5. Use &#60;abbr&#62; instead.
+        Defines an acronym
+        &#60;address&#62; 	Defines contact information for the author/owner of a document
+        &#60;applet&#62; 	Not supported in HTML5. Use &#60;object&#62; instead.
+        Defines an embedded applet
+        &#60;area&#62; 	Defines an area inside an image-map
+        &#60;article&#62; 	Defines an article
+        &#60;aside&#62; 	Defines content aside from the page content
+        &#60;audio&#62; 	Defines sound content
+        &#60;b&#62; 	Defines bold text
+        &#60;base&#62; 	Specifies the base URL/target for all relative URLs in a document
+        &#60;basefont&#62; 	Not supported in HTML5. Use CSS instead.
+        Specifies a default color, size, and font for all text in a document
+        &#60;bdi&#62; 	Isolates a part of text that might be formatted in a different direction from other text outside it
+        &#60;bdo&#62; 	Overrides the current text direction
+        &#60;big&#62; 	Not supported in HTML5. Use CSS instead.
+        Defines big text
+        &#60;blockquote&#62; 	Defines a section that is quoted from another source
+        &#60;body&#62; 	Defines the document's body
+        &#60;br&#62; 	Defines a single line break
+        &#60;button&#62; 	Defines a clickable button
+        &#60;canvas&#62; 	Used to draw graphics, on the fly, via scripting (usually JavaScript)
+        &#60;caption&#62; 	Defines a table caption
+        &#60;center&#62; 	Not supported in HTML5. Use CSS instead.
+        Defines centered text
+        &#60;cite&#62; 	Defines the title of a work
+        &#60;code&#62; 	Defines a piece of computer code
+        &#60;col&#62; 	Specifies column properties for each column within a &#60;colgroup&#62; element
+        &#60;colgroup&#62; 	Specifies a group of one or more columns in a table for formatting
+        &#60;datalist&#62; 	Specifies a list of pre-defined options for input controls
+        &#60;dd&#62; 	Defines a description/value of a term in a description list
+        &#60;del&#62; 	Defines text that has been deleted from a document
+        &#60;details&#62; 	Defines additional details that the user can view or hide
+        &#60;dfn&#62; 	Defines a definition term
+        &#60;dialog&#62; 	Defines a dialog box or window
+        &#60;dir&#62; 	Not supported in HTML5. Use &#60;ul&#62; instead.
+        Defines a directory list
+        &#60;div&#62; 	Defines a section in a document
+        &#60;dl&#62; 	Defines a description list
+        &#60;dt&#62; 	Defines a term/name in a description list
+        &#60;em&#62; 	Defines emphasized text
+        &#60;embed&#62; 	Defines a container for an external (non-HTML) application
+        &#60;fieldset&#62; 	Groups related elements in a form
+        &#60;figcaption&#62; 	Defines a caption for a &#60;figure&#62; element
+        &#60;figure&#62; 	Specifies self-contained content
+        &#60;font&#62; 	Not supported in HTML5. Use CSS instead.
+        Defines font, color, and size for text
+        &#60;footer&#62; 	Defines a footer for a document or section
+        &#60;form&#62; 	Defines an HTML form for user input
+        &#60;frame&#62; 	Not supported in HTML5.
+        Defines a window (a frame) in a frameset
+        &#60;frameset&#62; 	Not supported in HTML5.
+        Defines a set of frames
+        &#60;h1&#62; to &#60;h6&#62; 	Defines HTML headings
+        &#60;head&#62; 	Defines information about the document
+        &#60;header&#62; 	Defines a header for a document or section
+        &#60;hr&#62; 	Defines a thematic change in the content
+        &#60;html&#62; 	Defines the root of an HTML document
+        &#60;i&#62; 	Defines a part of text in an alternate voice or mood
+        &#60;iframe&#62; 	Defines an inline frame
+        &#60;img&#62; 	Defines an image
+        &#60;input&#62; 	Defines an input control
+        &#60;ins&#62; 	Defines a text that has been inserted into a document
+        &#60;kbd&#62; 	Defines keyboard input
+        &#60;keygen&#62; 	Defines a key-pair generator field (for forms)
+        &#60;label&#62; 	Defines a label for an &#60;input&#62; element
+        &#60;legend&#62; 	Defines a caption for a &#60;fieldset&#62; element
+        &#60;li&#62; 	Defines a list item
+        &#60;link&#62; 	Defines the relationship between a document and an external resource (most used to link to style sheets)
+        &#60;main&#62; 	Specifies the main content of a document
+        &#60;map&#62; 	Defines a client-side image-map
+        &#60;mark&#62; 	Defines marked/highlighted text
+        &#60;menu&#62; 	Defines a list/menu of commands
+        &#60;menuitem&#62; 	Defines a command/menu item that the user can invoke from a popup menu
+        &#60;meta&#62; 	Defines metadata about an HTML document
+        &#60;meter&#62; 	Defines a scalar measurement within a known range (a gauge)
+        &#60;nav&#62; 	Defines navigation links
+        &#60;noframes&#62; 	Not supported in HTML5.
+        Defines an alternate content for users that do not support frames
+        &#60;noscript&#62; 	Defines an alternate content for users that do not support client-side scripts
+        &#60;object&#62; 	Defines an embedded object
+        &#60;ol&#62; 	Defines an ordered list
+        &#60;optgroup&#62; 	Defines a group of related options in a drop-down list
+        &#60;option&#62; 	Defines an option in a drop-down list
+        &#60;output&#62; 	Defines the result of a calculation
+        &#60;p&#62; 	Defines a paragraph
+        &#60;param&#62; 	Defines a parameter for an object
+        &#60;pre&#62; 	Defines preformatted text
+        &#60;progress&#62; 	Represents the progress of a task
+        &#60;q&#62; 	Defines a short quotation
+        &#60;rp&#62; 	Defines what to show in browsers that do not support ruby annotations
+        &#60;rt&#62; 	Defines an explanation/pronunciation of characters (for East Asian typography)
+        &#60;ruby&#62; 	Defines a ruby annotation (for East Asian typography)
+        &#60;s&#62; 	Defines text that is no longer correct
+        &#60;samp&#62; 	Defines sample output from a computer program
+        &#60;script&#62; 	Defines a client-side script
+        &#60;section&#62; 	Defines a section in a document
+        &#60;select&#62; 	Defines a drop-down list
+        &#60;small&#62; 	Defines smaller text
+        &#60;source&#62; 	Defines multiple media resources for media elements (&#60;video&#62; and &#60;audio&#62;)
+        &#60;span&#62; 	Defines a section in a document
+        &#60;strike&#62; 	Not supported in HTML5. Use &#60;del&#62; instead.
+        Defines strikethrough text
+        &#60;strong&#62; 	Defines important text
+        &#60;style&#62; 	Defines style information for a document
+        &#60;sub&#62; 	Defines subscripted text
+        &#60;summary&#62; 	Defines a visible heading for a &#60;details&#62; element
+        &#60;sup&#62; 	Defines superscripted text
+        &#60;table&#62; 	Defines a table
+        &#60;tbody&#62; 	Groups the body content in a table
+        &#60;td&#62; 	Defines a cell in a table
+        &#60;textarea&#62; 	Defines a multiline input control (text area)
+        &#60;tfoot&#62; 	Groups the footer content in a table
+        &#60;th&#62; 	Defines a header cell in a table
+        &#60;thead&#62; 	Groups the header content in a table
+        &#60;time&#62; 	Defines a date/time
+        &#60;title&#62; 	Defines a title for the document
+        &#60;tr&#62; 	Defines a row in a table
+        &#60;track&#62; 	Defines text tracks for media elements (&#60;video&#62; and &#60;audio&#62;)
+        &#60;tt&#62; 	Not supported in HTML5. Use CSS instead.
+        Defines teletype text
+        &#60;u&#62; 	Defines text that should be stylistically different from normal text
+        &#60;ul&#62; 	Defines an unordered list
+        &#60;var&#62; 	Defines a variable
+        &#60;video&#62; 	Defines a video or movie
+        &#60;wbr&#62; 	Defines a possible line-break</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Escape Characters</h3>
+    <table>
+        <tr>
+            <td style="vertical-align:top;">
+                <table>
+                    <tr class="headings">
+                        <th>Symbol</th>
+                        <th>Code</th>
+                        <th>Entity Name</th>
+                    </tr>
+                    <tr>
+                        <td>™</td>
+                        <td>&amp;#8482;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>€</td>
+                        <td>&nbsp;</td>
+                        <td>&amp;euro;</td>
+                    </tr>
+                    <tr>
+                        <td>Space</td>
+                        <td>&amp;#32;</td>
+                        <td>&amp;nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>!</td>
+                        <td>&amp;#33;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>"</td>
+                        <td>&amp;#34;</td>
+                        <td>&amp;quot;</td>
+                    </tr>
+                    <tr>
+                        <td>#</td>
+                        <td>&amp;#35;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>$</td>
+                        <td>&amp;#36;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>%</td>
+                        <td>&amp;#37;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&amp;</td>
+                        <td>&amp;#38;</td>
+                        <td>&amp;amp;</td>
+                    </tr>
+                    <tr>
+                        <td>'</td>
+                        <td>&amp;#39;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>(</td>
+                        <td>&amp;#40;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>)</td>
+                        <td>&amp;#41;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>*</td>
+                        <td>&amp;#42;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>+</td>
+                        <td>&amp;#43;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>,</td>
+                        <td>&amp;#44;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>-</td>
+                        <td>&amp;#45;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>.</td>
+                        <td>&amp;#46;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>/</td>
+                        <td>&amp;#47;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>0</td>
+                        <td>&amp;#48;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>&amp;#49;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>&amp;#50;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>&amp;#51;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>&amp;#52;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>&amp;#53;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>&amp;#54;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>&amp;#55;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>&amp;#56;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>&amp;#57;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>:</td>
+                        <td>&amp;#58;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>;</td>
+                        <td>&amp;#59;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&lt;</td>
+                        <td>&amp;#60;</td>
+                        <td>&amp;lt;</td>
+                    </tr>
+                    <tr>
+                        <td>=</td>
+                        <td>&amp;#61;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>&gt;</td>
+                        <td>&amp;#62;</td>
+                        <td>&amp;gt;</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>&amp;#63;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>@</td>
+                        <td>&amp;#64;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>&amp;#65;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>&amp;#66;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>&amp;#67;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td>&amp;#68;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>E</td>
+                        <td>&amp;#69;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>F</td>
+                        <td>&amp;#70;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>G</td>
+                        <td>&amp;#71;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>H</td>
+                        <td>&amp;#72;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>I</td>
+                        <td>&amp;#73;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>J</td>
+                        <td>&amp;#74;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>K</td>
+                        <td>&amp;#75;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>L</td>
+                        <td>&amp;#76;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>M</td>
+                        <td>&amp;#77;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>N</td>
+                        <td>&amp;#78;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>O</td>
+                        <td>&amp;#79;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>P</td>
+                        <td>&amp;#80;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Q</td>
+                        <td>&amp;#81;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>R</td>
+                        <td>&amp;#82;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>S</td>
+                        <td>&amp;#83;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>T</td>
+                        <td>&amp;#84;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>U</td>
+                        <td>&amp;#85;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>V</td>
+                        <td>&amp;#86;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>W</td>
+                        <td>&amp;#87;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>X</td>
+                        <td>&amp;#88;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Y</td>
+                        <td>&amp;#89;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Z</td>
+                        <td>&amp;#90;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>[</td>
+                        <td>&amp;#91;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>\</td>
+                        <td>&amp;#92;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>]</td>
+                        <td>&amp;#93;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>^</td>
+                        <td>&amp;#94;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>_</td>
+                        <td>&amp;#95;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>`</td>
+                        <td>&amp;#96;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>a</td>
+                        <td>&amp;#97;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>b</td>
+                        <td>&amp;#98;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>c</td>
+                        <td>&amp;#99;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>d</td>
+                        <td>&amp;#100;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>e</td>
+                        <td>&amp;#101;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>f</td>
+                        <td>&amp;#102;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>g</td>
+                        <td>&amp;#103;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>h</td>
+                        <td>&amp;#104;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>i</td>
+                        <td>&amp;#105;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>j</td>
+                        <td>&amp;#106;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>k</td>
+                        <td>&amp;#107;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>l</td>
+                        <td>&amp;#108;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>m</td>
+                        <td>&amp;#109;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>n</td>
+                        <td>&amp;#110;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>o</td>
+                        <td>&amp;#111;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>p</td>
+                        <td>&amp;#112;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>q</td>
+                        <td>&amp;#113;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>r</td>
+                        <td>&amp;#114;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>s</td>
+                        <td>&amp;#115;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>t</td>
+                        <td>&amp;#116;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>u</td>
+                        <td>&amp;#117;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>v</td>
+                        <td>&amp;#118;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>w</td>
+                        <td>&amp;#119;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>x</td>
+                        <td>&amp;#120;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>y</td>
+                        <td>&amp;#121;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>z</td>
+                        <td>&amp;#122;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>{</td>
+                        <td>&amp;#123;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>|</td>
+                        <td>&amp;#124;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>}</td>
+                        <td>&amp;#125;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>~</td>
+                        <td>&amp;#126;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Non-breaking space</td>
+                        <td>&amp;#160;</td>
+                        <td>&amp;nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>¡</td>
+                        <td>&amp;#161;</td>
+                        <td>&amp;iexcl;</td>
+                    </tr>
+                    <tr>
+                        <td>¢</td>
+                        <td>&amp;#162;</td>
+                        <td>&amp;cent;</td>
+                    </tr>
+                    <tr>
+                        <td>£</td>
+                        <td>&amp;#163;</td>
+                        <td>&amp;pound;</td>
+                    </tr>
+                    <tr>
+                        <td>¤</td>
+                        <td>&amp;#164;</td>
+                        <td>&amp;curren;</td>
+                    </tr>
+                    <tr>
+                        <td>¥</td>
+                        <td>&amp;#165;</td>
+                        <td>&amp;yen;</td>
+                    </tr>
+                    <tr>
+                        <td>¦</td>
+                        <td>&amp;#166;</td>
+                        <td>&amp;brvbar;</td>
+                    </tr>
+                    <tr>
+                        <td>§</td>
+                        <td>&amp;#167;</td>
+                        <td>&amp;sect;</td>
+                    </tr>
+                    <tr>
+                        <td>¨</td>
+                        <td>&amp;#168;</td>
+                        <td>&amp;uml;</td>
+                    </tr>
+                    <tr>
+                        <td>©</td>
+                        <td>&amp;#169;</td>
+                        <td>&amp;copy;</td>
+                    </tr>
+                    <tr>
+                        <td>ª</td>
+                        <td>&amp;#170;</td>
+                        <td>&amp;ordf;</td>
+                    </tr>
+
+                    <tr>
+                        <td>«</td>
+                        <td>&amp;#171;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>¬</td>
+                        <td>&amp;#172;</td>
+                        <td>&amp;not;</td>
+                    </tr>
+
+                    <tr>
+                        <td>­</td>
+                        <td>&amp;#173;</td>
+                        <td>&amp;shy;</td>
+                    </tr>
+                    <tr>
+                        <td>®</td>
+                        <td>&amp;#174;</td>
+                        <td>&amp;reg;</td>
+                    </tr>
+                    <tr>
+                        <td>¯</td>
+                        <td>&amp;#175;</td>
+                        <td>&amp;macr;</td>
+                    </tr>
+                    <tr>
+                        <td>°</td>
+                        <td>&amp;#176;</td>
+                        <td>&amp;deg;</td>
+                    </tr>
+                    <tr>
+                        <td>±</td>
+                        <td>&amp;#177;</td>
+                        <td>&amp;plusmn;</td>
+                    </tr>
+                    <tr>
+                        <td>²</td>
+                        <td>&amp;#178;</td>
+                        <td>&amp;sup2;</td>
+                    </tr>
+                    <tr>
+                        <td>³</td>
+                        <td>&amp;#179;</td>
+                        <td>&amp;sup3;</td>
+                    </tr>
+                    <tr>
+                        <td>´</td>
+                        <td>&amp;#180;</td>
+                        <td>&amp;acute;</td>
+                    </tr>
+                    <tr>
+                        <td>µ</td>
+                        <td>&amp;#181;</td>
+                        <td>&amp;micro;</td>
+                    </tr>
+                    <tr>
+                        <td>¶</td>
+                        <td>&amp;#182;</td>
+                        <td>&amp;para;</td>
+                    </tr>
+                    <tr>
+                        <td>·</td>
+                        <td>&amp;#183;</td>
+                        <td>&amp;middot;</td>
+                    </tr>
+                    <tr>
+                        <td>¸</td>
+                        <td>&amp;#184;</td>
+                        <td>&amp;cedil;</td>
+                    </tr>
+                    <tr>
+                        <td>¹</td>
+                        <td>&amp;#185;</td>
+                        <td>&amp;sup1;</td>
+                    </tr>
+                    <tr>
+                        <td>º</td>
+                        <td>&amp;#186;</td>
+                        <td>&amp;ordm;</td>
+                    </tr>
+                    <tr>
+                        <td>»</td>
+                        <td>&amp;#187;</td>
+                        <td>&amp;raquo;</td>
+                    </tr>
+                    <tr>
+                        <td>¼</td>
+                        <td>&amp;#188;</td>
+                        <td>&amp;frac14;</td>
+                    </tr>
+                    <tr>
+                        <td>½</td>
+                        <td>&amp;#189;</td>
+                        <td>&amp;frac12;</td>
+                    </tr>
+                    <tr>
+                        <td>¾</td>
+                        <td>&amp;#190;</td>
+                        <td>&amp;frac34;</td>
+                    </tr>
+                    <tr>
+                        <td>¿</td>
+                        <td>&amp;#191;</td>
+                        <td>&amp;iquest;</td>
+                    </tr>
+                    <tr>
+                        <td>À</td>
+                        <td>&amp;#192;</td>
+                        <td>&amp;Agrave;</td>
+                    </tr>
+                    <tr>
+                        <td>Á</td>
+                        <td>&amp;#193;</td>
+                        <td>&amp;Aacute;</td>
+                    </tr>
+                    <tr>
+                        <td>Â</td>
+                        <td>&amp;#194;</td>
+                        <td>&amp;Acirc;</td>
+                    </tr>
+                    <tr>
+                        <td>Ã</td>
+                        <td>&amp;#195;</td>
+                        <td>&amp;Atilde;</td>
+                    </tr>
+                    <tr>
+                        <td>Ä</td>
+                        <td>&amp;#196;</td>
+                        <td>&amp;Auml;</td>
+                    </tr>
+                    <tr>
+                        <td>Å</td>
+                        <td>&amp;#197</td>
+                        <td>&amp;Aring;</td>
+                    </tr>
+                    <tr>
+                        <td>Æ</td>
+                        <td>&amp;#198;</td>
+                        <td>&amp;AElig;</td>
+                    </tr>
+                    <tr>
+                        <td>Ç</td>
+                        <td>&amp;#199;</td>
+                        <td>&amp;Ccedil;</td>
+                    </tr>
+                    <tr>
+                        <td>È</td>
+                        <td>&amp;#200;</td>
+                        <td>&amp;Egrave;</td>
+                    </tr>
+                    <tr>
+                        <td>É</td>
+                        <td>&amp;#201;</td>
+                        <td>&amp;Eacute;</td>
+                    </tr>
+                    <tr>
+                        <td>Ê</td>
+                        <td>&amp;#202;</td>
+                        <td>&amp;Ecirc;</td>
+                    </tr>
+                    <tr>
+                        <td>Ë</td>
+                        <td>&amp;#203;</td>
+                        <td>&amp;Euml;</td>
+                    </tr>
+                    <tr>
+                        <td>Ì</td>
+                        <td>&amp;#204;</td>
+                        <td>&amp;Igrave;</td>
+                    </tr>
+                    <tr>
+                        <td>Í</td>
+                        <td>&amp;#205;</td>
+                        <td>&amp;Iacute;</td>
+                    </tr>
+                    <tr>
+                        <td>Î</td>
+                        <td>&amp;#206;</td>
+                        <td>&amp;Icirc;</td>
+                    </tr>
+                    <tr>
+                        <td>Ï</td>
+                        <td>&amp;#207;</td>
+                        <td>&amp;Iuml;</td>
+                    </tr>
+                    <tr>
+                        <td>Ð</td>
+                        <td>&amp;#208;</td>
+                        <td>&amp;ETH;</td>
+                    </tr>
+                    <tr>
+                        <td>Ñ</td>
+                        <td>&amp;#209;</td>
+                        <td>&amp;Ntilde;</td>
+                    </tr>
+                    <tr>
+                        <td>Ò</td>
+                        <td>&amp;#210;</td>
+                        <td>&amp;Ograve;</td>
+                    </tr>
+                    <tr>
+                        <td>Ó</td>
+                        <td>&amp;#211;</td>
+                        <td>&amp;Oacute;</td>
+                    </tr>
+                    <tr>
+                        <td>Ô</td>
+                        <td>&amp;#212;</td>
+                        <td>&amp;Ocirc;</td>
+                    </tr>
+                    <tr>
+                        <td>Õ</td>
+                        <td>&amp;#213;</td>
+                        <td>&amp;Otilde;</td>
+                    </tr>
+                    <tr>
+                        <td>Ö</td>
+                        <td>&amp;#214;</td>
+                        <td>&amp;Ouml;</td>
+                    </tr>
+                    <tr>
+                        <td>×</td>
+                        <td>&amp;#215;</td>
+                        <td>&amp;times;</td>
+                    </tr>
+                    <tr>
+                        <td>Ø</td>
+                        <td>&amp;#216;</td>
+                        <td>&amp;Oslash;</td>
+                    </tr>
+                    <tr>
+                        <td>Ù</td>
+                        <td>&amp;#217;</td>
+                        <td>&amp;Ugrave;</td>
+                    </tr>
+                    <tr>
+                        <td>Ú</td>
+                        <td>&amp;#218;</td>
+                        <td>&amp;Uacute;</td>
+                    </tr>
+                    <tr>
+                        <td>Û</td>
+                        <td>&amp;#219;</td>
+                        <td>&amp;Ucirc;</td>
+                    </tr>
+                    <tr>
+                        <td>Ü</td>
+                        <td>&amp;#220;</td>
+                        <td>&amp;Uuml;</td>
+                    </tr>
+                    <tr>
+                        <td>Ý</td>
+                        <td>&amp;#221;</td>
+                        <td>&amp;Yacute;</td>
+                    </tr>
+                    <tr>
+                        <td>Þ</td>
+                        <td>&amp;#222;</td>
+                        <td>&amp;THORN;</td>
+                    </tr>
+                    <tr>
+                        <td>ß</td>
+                        <td>&amp;#223;</td>
+                        <td>&amp;szlig;</td>
+                    </tr>
+                    <tr>
+                        <td>à</td>
+                        <td>&amp;#224;</td>
+                        <td>&amp;agrave;</td>
+                    </tr>
+                    <tr>
+                        <td>á</td>
+                        <td>&amp;#225;</td>
+                        <td>&amp;aacute;</td>
+                    </tr>
+                    <tr>
+                        <td>â</td>
+                        <td>&amp;#226;</td>
+                        <td>&amp;acirc;</td>
+                    </tr>
+                    <tr>
+                        <td>ã</td>
+                        <td>&amp;#227;</td>
+                        <td>&amp;atilde;</td>
+                    </tr>
+                    <tr>
+                        <td>ä</td>
+                        <td>&amp;#228;</td>
+                        <td>&amp;auml;</td>
+                    </tr>
+                    <tr>
+                        <td>å</td>
+                        <td>&amp;#229;</td>
+                        <td>&amp;aring;</td>
+                    </tr>
+                    <tr>
+                        <td>æ</td>
+                        <td>&amp;#230;</td>
+                        <td>&amp;aelig;</td>
+                    </tr>
+                    <tr>
+                        <td>ç</td>
+                        <td>&amp;#231;</td>
+                        <td>&amp;ccedil;</td>
+                    </tr>
+                    <tr>
+                        <td>è</td>
+                        <td>&amp;#232;</td>
+                        <td>&amp;egrave;</td>
+                    </tr>
+                    <tr>
+                        <td>é</td>
+                        <td>&amp;#233;</td>
+                        <td>&amp;eacute;</td>
+                    </tr>
+                    <tr>
+                        <td>ê</td>
+                        <td>&amp;#234;</td>
+                        <td>&amp;ecirc;</td>
+                    </tr>
+                    <tr>
+                        <td>ë</td>
+                        <td>&amp;#235;</td>
+                        <td>&amp;euml;</td>
+                    </tr>
+                    <tr>
+                        <td>ì</td>
+                        <td>&amp;#236;</td>
+                        <td>&amp;igrave;</td>
+                    </tr>
+                    <tr>
+                        <td>í</td>
+                        <td>&amp;#237</td>
+                        <td>&amp;iacute;</td>
+                    </tr>
+                    <tr>
+                        <td>î</td>
+                        <td>&amp;#238;</td>
+                        <td>&amp;icirc;</td>
+                    </tr>
+                    <tr>
+                        <td>ï</td>
+                        <td>&amp;#239;</td>
+                        <td>&amp;iuml;</td>
+                    </tr>
+                    <tr>
+                        <td>ð</td>
+                        <td>&amp;#240;</td>
+                        <td>&amp;eth;</td>
+                    </tr>
+                    <tr>
+                        <td>ñ</td>
+                        <td>&amp;#241;</td>
+                        <td>&amp;ntilde;</td>
+                    </tr>
+                    <tr>
+                        <td>ò</td>
+                        <td>&amp;#242;</td>
+                        <td>&amp;ograve;</td>
+                    </tr>
+                    <tr>
+                        <td>ó</td>
+                        <td>&amp;#243;</td>
+                        <td>&amp;oacute;</td>
+                    </tr>
+                    <tr>
+                        <td>ô</td>
+                        <td>&amp;#244;</td>
+                        <td>&amp;ocirc;</td>
+                    </tr>
+                    <tr>
+                        <td>õ</td>
+                        <td>&amp;#245;</td>
+                        <td>&amp;otilde;</td>
+                    </tr>
+                </table>
+            </td>
+            <td style="vertical-align:top;">
+                <table>
+                    <tr class="headings">
+                        <th>Symbol</th>
+                        <th>Code</th>
+                        <th>Entity Name</th>
+                    </tr>
+
+                    <tr>
+                        <td>ö</td>
+                        <td>&amp;#246;</td>
+                        <td>&amp;ouml;</td>
+                    </tr>
+                    <tr>
+                        <td>÷</td>
+                        <td>&amp;#247;</td>
+                        <td>&amp;divide;</td>
+                    </tr>
+                    <tr>
+                        <td>ø</td>
+                        <td>&amp;#248;</td>
+                        <td>&amp;oslash;</td>
+                    </tr>
+                    <tr>
+                        <td>ù</td>
+                        <td>&amp;#249;</td>
+                        <td>&amp;ugrave;</td>
+                    </tr>
+                    <tr>
+                        <td>ú</td>
+                        <td>&amp;#250;</td>
+                        <td>&amp;uacute;</td>
+                    </tr>
+                    <tr>
+                        <td>û</td>
+                        <td>&amp;#251;</td>
+                        <td>&amp;ucirc;</td>
+                    </tr>
+                    <tr>
+                        <td>ü</td>
+                        <td>&amp;#252;</td>
+                        <td>&amp;uuml;</td>
+                    </tr>
+                    <tr>
+                        <td>ý</td>
+                        <td>&amp;#253;</td>
+                        <td>&amp;yacute;</td>
+                    </tr>
+                    <tr>
+                        <td>þ</td>
+                        <td>&amp;#254;</td>
+                        <td>&amp;thorn;</td>
+                    </tr>
+                    <tr>
+                        <td>ÿ</td>
+                        <td>&amp;#255;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ā</td>
+                        <td>&amp;#256;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ā</td>
+                        <td>&amp;#257;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ă</td>
+                        <td>&amp;#258;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ă</td>
+                        <td>&amp;#259;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ą</td>
+                        <td>&amp;#260;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ą</td>
+                        <td>&amp;#261;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ć</td>
+                        <td>&amp;#262;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ć</td>
+                        <td>&amp;#263;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ĉ</td>
+                        <td>&amp;#264;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ĉ</td>
+                        <td>&amp;#265;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ċ</td>
+                        <td>&amp;#266;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ċ</td>
+                        <td>&amp;#267;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Č</td>
+                        <td>&amp;#268;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>č</td>
+                        <td>&amp;#269;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ď</td>
+                        <td>&amp;#270;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ď</td>
+                        <td>&amp;#271;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Đ</td>
+                        <td>&amp;#272;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>đ</td>
+                        <td>&amp;#273;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ē</td>
+                        <td>&amp;#274;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ē</td>
+                        <td>&amp;#275;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ĕ</td>
+                        <td>&amp;#276;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ĕ</td>
+                        <td>&amp;#277</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ė</td>
+                        <td>&amp;#278;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ė</td>
+                        <td>&amp;#279;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ę</td>
+                        <td>&amp;#280;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ę</td>
+                        <td>&amp;#281;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ě</td>
+                        <td>&amp;#282;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>ě</td>
+                        <td>&amp;#283;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ĝ</td>
+                        <td>&amp;#284;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>ĝ</td>
+                        <td>&amp;#285;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ğ</td>
+                        <td>&amp;#286;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ğ</td>
+                        <td>&amp;#287;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ġ</td>
+                        <td>&amp;#288;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ġ</td>
+                        <td>&amp;#289;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ģ</td>
+                        <td>&amp;#290;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ģ</td>
+                        <td>&amp;#291;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ĥ</td>
+                        <td>&amp;#292;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>ĥ</td>
+                        <td>&amp;#293;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ħ</td>
+                        <td>&amp;#294;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>ħ</td>
+                        <td>&amp;#295;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ĩ</td>
+                        <td>&amp;#296;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ĩ</td>
+                        <td>&amp;#297;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ī</td>
+                        <td>&amp;#298;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ī</td>
+                        <td>&amp;#299;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ĭ</td>
+                        <td>&amp;#300;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ĭ</td>
+                        <td>&amp;#301;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Į</td>
+                        <td>&amp;#302;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>į</td>
+                        <td>&amp;#303;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>İ</td>
+                        <td>&amp;#304;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>ı</td>
+                        <td>&amp;#305;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ĳ</td>
+                        <td>&amp;#306;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>ĳ</td>
+                        <td>&amp;#307;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ĵ</td>
+                        <td>&amp;#308;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>ĵ</td>
+                        <td>&amp;#309;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ķ</td>
+                        <td>&amp;#310;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>ķ</td>
+                        <td>&amp;#311;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>ĸ</td>
+                        <td>&amp;#312;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>Ĺ</td>
+                        <td>&amp;#313;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ĺ</td>
+                        <td>&amp;#314;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ļ</td>
+                        <td>&amp;#315;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ļ</td>
+                        <td>&amp;#316;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ľ</td>
+                        <td>&amp;#317</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ľ</td>
+                        <td>&amp;#318;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŀ</td>
+                        <td>&amp;#319;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŀ</td>
+                        <td>&amp;#320;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ł</td>
+                        <td>&amp;#321;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ł</td>
+                        <td>&amp;#322;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ń</td>
+                        <td>&amp;#323;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ń</td>
+                        <td>&amp;#324;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ņ</td>
+                        <td>&amp;#325;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ņ</td>
+                        <td>&amp;#326;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ň</td>
+                        <td>&amp;#327;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ň</td>
+                        <td>&amp;#328;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŉ</td>
+                        <td>&amp;#329;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŋ</td>
+                        <td>&amp;#330;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŋ</td>
+                        <td>&amp;#331;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ō</td>
+                        <td>&amp;#332;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>ō</td>
+                        <td>&amp;#333;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŏ</td>
+                        <td>&amp;#334;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŏ</td>
+                        <td>&amp;#335;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ő</td>
+                        <td>&amp;#336;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ő</td>
+                        <td>&amp;#337;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Œ</td>
+                        <td>&amp;#338;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>œ</td>
+                        <td>&amp;#339;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŕ</td>
+                        <td>&amp;#340;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŕ</td>
+                        <td>&amp;#341;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŗ</td>
+                        <td>&amp;#342;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŗ</td>
+                        <td>&amp;#343;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ř</td>
+                        <td>&amp;#344;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ř</td>
+                        <td>&amp;#345;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ś</td>
+                        <td>&amp;#346;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ś</td>
+                        <td>&amp;#347;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŝ</td>
+                        <td>&amp;#348;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŝ</td>
+                        <td>&amp;#349;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ş</td>
+                        <td>&amp;#350;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ş</td>
+                        <td>&amp;#351;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Š</td>
+                        <td>&amp;#352;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>š</td>
+                        <td>&amp;#353;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ţ</td>
+                        <td>&amp;#354;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ţ</td>
+                        <td>&amp;#355;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ť</td>
+                        <td>&amp;#356;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ť</td>
+                        <td>&amp;#357</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŧ</td>
+                        <td>&amp;#358;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŧ</td>
+                        <td>&amp;#359;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ũ</td>
+                        <td>&amp;#360;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ũ</td>
+                        <td>&amp;#361;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ū</td>
+                        <td>&amp;#362;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ū</td>
+                        <td>&amp;#363;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŭ</td>
+                        <td>&amp;#364;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŭ</td>
+                        <td>&amp;#365;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ů</td>
+                        <td>&amp;#366;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ů</td>
+                        <td>&amp;#367;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ű</td>
+                        <td>&amp;#368;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ű</td>
+                        <td>&amp;#369;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ų</td>
+                        <td>&amp;#370;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ų</td>
+                        <td>&amp;#371;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŵ</td>
+                        <td>&amp;#372;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŵ</td>
+                        <td>&amp;#373;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŷ</td>
+                        <td>&amp;#374;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŷ</td>
+                        <td>&amp;#375;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ÿ</td>
+                        <td>&amp;#376;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ź</td>
+                        <td>&amp;#377;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ź</td>
+                        <td>&amp;#378;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ż</td>
+                        <td>&amp;#379;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ż</td>
+                        <td>&amp;#380;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ž</td>
+                        <td>&amp;#381;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ž</td>
+                        <td>&amp;#382;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ſ</td>
+                        <td>&amp;#383;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŕ</td>
+                        <td>&amp;#340;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŕ</td>
+                        <td>&amp;#341;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŗ</td>
+                        <td>&amp;#342;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŗ</td>
+                        <td>&amp;#343;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ř</td>
+                        <td>&amp;#344;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ř</td>
+                        <td>&amp;#345;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ś</td>
+                        <td>&amp;#346;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ś</td>
+                        <td>&amp;#347;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŝ</td>
+                        <td>&amp;#348;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŝ</td>
+                        <td>&amp;#349;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ş</td>
+                        <td>&amp;#350;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ş</td>
+                        <td>&amp;#351;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Š</td>
+                        <td>&amp;#352;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>š</td>
+                        <td>&amp;#353;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ţ</td>
+                        <td>&amp;#354;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ţ</td>
+                        <td>&amp;#355;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ť</td>
+                        <td>&amp;#356;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ť</td>
+                        <td>&amp;#577;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŧ</td>
+                        <td>&amp;#358;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŧ</td>
+                        <td>&amp;#359;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ũ</td>
+                        <td>&amp;#360;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ũ</td>
+                        <td>&amp;#361;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ū</td>
+                        <td>&amp;#362;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ū</td>
+                        <td>&amp;#363;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŭ</td>
+                        <td>&amp;#364;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŭ</td>
+                        <td>&amp;#365;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ů</td>
+                        <td>&amp;#366;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ů</td>
+                        <td>&amp;#367;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ű</td>
+                        <td>&amp;#368;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ű</td>
+                        <td>&amp;#369;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ų</td>
+                        <td>&amp;#370;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ų</td>
+                        <td>&amp;#371;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŵ</td>
+                        <td>&amp;#372;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŵ</td>
+                        <td>&amp;#373;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ŷ</td>
+                        <td>&amp;#374;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ŷ</td>
+                        <td>&amp;#375;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ÿ</td>
+                        <td>&amp;#376;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ź</td>
+                        <td>&amp;#377</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ź</td>
+                        <td>&amp;#378;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ż</td>
+                        <td>&amp;#379;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ż</td>
+                        <td>&amp;#380;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>Ž</td>
+                        <td>&amp;#381;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ž</td>
+                        <td>&amp;#382;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                        <td>ſ</td>
+                        <td>&amp;#383;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Root element</h3>
+    <p>&#60;html&#62;  Represents the root of an HTML or XHTML document. All other elements must be descendants of this element.</p>
+    <h3>Document metadata</h3>
+    <p>&#60;head&#62;  Represents a collection of metadata about the document, including links to, or definitions of, scripts and style sheets.</p>
+    <p>&#60;title&#62;  Defines the title of the document, shown in a browser's title bar or on the page's tab. It can only contain text and any contained tags are not interpreted.</p>
+    <p>&#60;base&#62;  Defines the base URL for relative URLs in the page.</p>
+    <p>&#60;link&#62;  Used to link JavaScript and external CSS with the current HTML document.</p>
+    <p>&#60;meta&#62; 	Defines metadata that can't be defined using another HTML element.</p>
+    <p>&#60;style&#62; 	Used to write inline CSS.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Scripting</h3>
+    <p>&#60;script&#62;  Defines either an internal script or a link to an external script. The script language is JavaScript.</p>
+    <p>&#60;noscript&#62; 	Defines alternative content to display when the browser doesn't support scripting.</p>
+    <p>&#60;template&#62;	This element has been added in HTML5 	Container for client-side content instantiated during runtime using JavaScript.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Semantic Elements</h3>
+    <p>&#60;body&#62; Represents the content of an HTML document. There is only one &#60;body&#62; element in a document.</p>
+    <p>&#60;section&#62; This element has been added in HTML5 	Defines a section in a document.</p>
+    <p>&#60;nav&#62; This element has been added in HTML5 	Defines a section that contains only navigation links.</p>
+    <p>&#60;article&#62; This element has been added in HTML5 	Defines self-contained content that could exist independently of the rest of the content.</p>
+    <p>&#60;aside&#62; This element has been added in HTML5 	Defines some content loosely related to the page content. If it is removed, the remaining content still makes sense.</p>
+    <p>&#60;h1&#62;,&#60;h2&#62;,&#60;h3&#62;,&#60;h4&#62;,&#60;h5&#62;,&#60;h6&#62; 	Heading elements.</p>
+    <p>&#60;header&#62; This element has been added in HTML5 	Defines the header of a page or section. It often contains a logo, the title of the Web site, and a navigational table of content.</p>
+    <p>&#60;footer&#62; This element has been added in HTML5 	Defines the footer for a page or section. It often contains a copyright notice, some links to legal information, or addresses to give feedback.</p>
+    <p>&#60;address&#62; Defines a section containing contact information.</p>
+    <p>&#60;main&#62;This element has been added in HTML5 	Defines the main or important content in the document. There is only one &#60;main&#62; element in the document.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Grouping content</h3>
+    <p>&#60;p&#62; Defines a portion that should be displayed as a paragraph.</p>
+    <p>&#60;hr&#62; Represents a thematic break between paragraphs of a section or article or any longer content.</p>
+    <p>&#60;pre&#62; Indicates that its content is preformatted and that this format must be preserved.</p>
+    <p>&#60;blockquote&#62; Represents a content that is quoted from another source.</p>
+    <p>&#60;ol&#62; Defines an ordered list of items.</p>
+    <p>&#60;ul&#62; Defines an unordered list of items.</p>
+    <p>&#60;li&#62; Defines a item of an enumeration list.</p>
+    <p>&#60;dl&#62; Defines a definition list, that is, a list of terms and their associated definitions.</p>
+    <p>&#60;dt&#62; Represents a term defined by the next &#60;dd&#62;.</p>
+    <p>&#60;dd&#62; Represents the definition of the terms immediately listed before it.</p>
+    <p>&#60;figure&#62; This element has been added in HTML5 	Represents a figure illustrated as part of the document.</p>
+    <p>&#60;figcaption&#62; This element has been added in HTML5 	Represents the legend of a figure.</p>
+    <p>&#60;div&#62; Represents a generic container with no special meaning.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Text-level semantics</h3>
+    <p>&#60;a&#62; Represents a hyperlink , linking to another resource.</p>
+    <p>&#60;em&#62; Represents emphasized text, like a stress accent.</p>
+    <p>&#60;strong&#62; Represents especially important text.</p>
+    <p>&#60;small&#62; Represents a side comment , that is, text like a disclaimer or a copyright, which is not essential to the comprehension of the document.</p>
+    <p>&#60;s&#62; Represents content that is no longer accurate or relevant.</p>
+    <p>&#60;cite&#62; Represents the title of a work.</p>
+    <p>&#60;q&#62; Represents an inline quotation.</p>
+    <p>&#60;dfn&#62; Represents a term whose definition is contained in its nearest ancestor content.</p>
+    <p>&#60;abbr&#62; Represents an abbreviation or an acronym ; the expansion of the abbreviation can be represented in the title attribute.</p>
+    <p>&#60;data&#62; This element has been added in HTML5. Associates to its content a machine-readable equivalent . (This element is only in the WHATWG version of the HTML standard, and not in the W3C version of HTML5).</p>
+    <p>&#60;time&#62; This element has been added in HTML5. Represents a date and time value; the machine-readable equivalent can be represented in the datetime attribute.</p>
+    <p>&#60;code&#62; Represents computer code.</p>
+    <p>&#60;var&#62; Represents a variable, that is, an actual mathematical expression or programming context, an identifier representing a constant, a symbol identifying a physical quantity, a function parameter, or a mere placeholder in prose.</p>
+    <p>&#60;samp&#62; Represents the output of a program or a computer.</p>
+    <p>&#60;kbd&#62; Represents user input , often from the keyboard, but not necessarily; it may represent other input, like transcribed voice commands.</p>
+    <p>&#60;sub&#62;,&#60;sup&#62; Represent a subscript , or a superscript.</p>
+    <p>&#60;i&#62; Represents some text in an alternate voice or mood, or at least of different quality, such as a taxonomic designation, a technical term, an idiomatic phrase, a thought, or a ship name.</p>
+    <p>&#60;b&#62; Represents a text which to which attention is drawn for utilitarian purposes. It doesn't convey extra importance and doesn't imply an alternate voice.</p>
+    <p>&#60;u&#62; Represents a non-textual annoatation for which the conventional presentation is underlining, such labeling the text as being misspelt or labeling a proper name in Chinese text.</p>
+    <p>&#60;mark&#62; This element has been added in HTML5. Represents text highlighted for reference purposes, that is for its relevance in another context.</p>
+    <p>&#60;ruby&#62; This element has been added in HTML5. Represents content to be marked with ruby annotations , short runs of text presented alongside the text. This is often used in conjunction with East Asian language where the annotations act as a guide for pronunciation, like the Japanese furigana.</p>
+    <p>&#60;rt&#62; This element has been added in HTML5. Represents the text of a ruby annotation.</p>
+    <p>&#60;rp&#62; This element has been added in HTML5. Represents parenthesis around a ruby annotation, used to display the annotation in an alternate way by browsers not supporting the standard display for annotations.</p>
+    <p>&#60;bdi&#62; This element has been added in HTML5.	Represents text that must be isolated from its surrounding for bidirectional text formatting. It allows embedding a span of text with a different, or unknown, directionality.</p>
+    <p>&#60;bdo&#62; Represents the directionality of its children, in order to explicitly override the Unicode bidirectional algorithm.</p>
+    <p>&#60;span&#62; Represents text with no specific meaning. This has to be used when no other text-semantic element conveys an adequate meaning, which, in this case, is often brought by global attributes like class, lang, or dir.</p>
+    <p>&#60;br&#62; Represents a line break.</p>
+    <p>&#60;wbr&#62; This element has been added in HTML5 	Represents a line break opportunity , that is a suggested point for wrapping text in order to improve readability of text split on several lines.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Edits</h3>
+    <p>&#60;ins&#62; Defines an addition to the document.</p>
+    <p>&#60;del&#62; Defines a removal from the document.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Embedded content</h3>
+    <p>&#60;img&#62; Represents an image.</p>
+    <p>&#60;iframe&#62; Represents a nested browsing context, that is an embedded HTML document.</p>
+    <p>&#60;embed&#62; This element has been added in HTML5. Represents a integration point for an external, often non-HTML, application or interactive content.</p>
+    <p>&#60;object&#62; Represents an external resource, which is treated as an image, an HTML sub-document, or an external resource to be processed by a plug-in.</p>
+    <p>&#60;param&#62; Defines parameters for use by plug-ins invoked by &#60;object&#62; elements.</p>
+    <p>&#60;video&#62; This element has been added in HTML5. Represents a video, and its associated audio files and captions, with the necessary interface to play it.</p>
+    <p>&#60;audio&#62; This element has been added in HTML5. Represents a sound, or an audio stream.</p>
+    <p>&#60;source&#62; This element has been added in HTML5. Allows authors to specify alternative media resources for media elements like &#60;video&#62; or &#60;audio&#62;.</p>
+    <p>&#60;track&#62; This element has been added in HTML5. Allows authors to specify timed text track for media elements like &#60;video&#62; or &#60;audio&#62;.</p>
+    <p>&#60;canvas&#62; This element has been added in HTML5. Represents a bitmap area that scripts can be used to render graphics, like graphs, game graphics, or any visual images on the fly.</p>
+    <p>&#60;map&#62; In conjunction with &#60;area&#62;, defines an image map.</p>
+    <p>&#60;area&#62; In conjunction with &#60;map&#62;, defines an image map.</p>
+    <p>&#60;svg&#62; This element has been added in HTML5. Defines an embedded vectorial image.</p>
+    <p>&#60;math&#62; This element has been added in HTML5. Defines a mathematical formula.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Tabular data</h3>
+    <p>&#60;table&#62; Represents data with more than one dimension.</p>
+    <p>&#60;caption&#62; Represents the title of a table.</p>
+    <p>&#60;colgroup&#62; Represents a set of one or more columns of a table.</p>
+    <p>&#60;col&#62; Represents a column of a table.</p>
+    <p>&#60;tbody&#62; Represents the block of rows that describes the concrete data of a table.</p>
+    <p>&#60;thead&#62; Represents the block of rows that describes the column labels of a table.</p>
+    <p>&#60;tfoot&#62; Represents the block of rows that describes the column summaries of a table.</p>
+    <p>&#60;tr&#62; Represents a row of cells in a table.</p>
+    <p>&#60;td&#62; Represents a data cell in a table.</p>
+    <p>&#60;th&#62; Represents a header cell in a table.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Forms</h3>
+    <p>&#60;form&#62; Represents a form, consisting of controls, that can be submitted to a server for processing.</p>
+    <p>&#60;fieldset&#62; Represents a set of controls.</p>
+    <p>&#60;legend&#62; Represents the caption for a &#60;fieldset&#62;.</p>
+    <p>&#60;label&#62; Represents the caption of a form control.</p>
+    <p>&#60;input&#62; Represents a typed data field allowing the user to edit the data.</p>
+    <p>&#60;button&#62; Represents a button.</p>
+    <p>&#60;select&#62; Represents a control allowing selection among a set of options.</p>
+    <p>&#60;datalist&#62; This element has been added in HTML5. Represents a set of predefined options for other controls.</p>
+    <p>&#60;optgroup&#62; Represents a set of options, logically grouped.</p>
+    <p>&#60;option&#62; Represents an option in a &#60;select&#62; element, or a suggestion of a &#60;datalist&#62; element.</p>
+    <p>&#60;textarea&#62; Represents a multiline text edit control.</p>
+    <p>&#60;keygen&#62; This element has been added in HTML5. Represents a key-pair generator control.</p>
+    <p>&#60;output&#62; This element has been added in HTML5. Represents the result of a calculation.</p>
+    <p>&#60;progress&#62; This element has been added in HTML5. Represents the completion progress of a task.</p>
+    <p>&#60;meter&#62; This element has been added in HTML5. Represents a scalar measurement (or a fractional value), within a known range.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Interactive elements</h3>
+    <p>&#60;details&#62; This element has been added in HTML5. Represents a widget from which the user can obtain additional information or controls.</p>
+    <p>&#60;summary&#62; This element has been added in HTML5. Represents a summary, caption, or legend for a given &#60;details&#62;.</p>
+    <p>&#60;menuitem&#62; This element has been added in HTML5. Represents a command that the user can invoke.</p>
+    <p>&#60;menu&#62; This element has been added in HTML5. Represents a list of commands.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>    
+
+    <footer>Return to <a href="index.html" title="Return to the home page">home page</a></footer>
+</body>
+</html>

@@ -1,0 +1,493 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Napes Weaver -->
+<head>
+    <title>Java</title>
+    <meta charset="utf-8" />
+    <!-- For iPhone, Andriod smartphone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!--[if lt IE 9]>
+        <script>
+            document.createElement("article");
+            document.createElement("aside");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("main");
+            document.createElement("nav");
+            document.createElement("section");
+        </script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="notes.css" />
+</head>
+<body>
+    <h1 id="top">Java</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Home Page">Home</a></li>
+            <!--<li><a href="../index.html" title="RPNapes">RPNapes</a></li>-->
+            <li>|</li>
+            <li><a href="csharp.html" title="C#">C#</a></li>
+            <li>|</li>
+            <li><a href="css.html" title="CSS">CSS</a></li>
+            <li>|</li>
+            <li><a href="hardware.html" title="Hardware">Hardware</a></li>
+            <li>|</li>
+            <li><a href="html.html" title="HTML">HTML</a></li>
+            <li>|</li>
+            <li><a href="java.html" title="Java">Java</a></li>
+            <li>|</li>
+            <li><a href="javascript.html" title="JavaScript">JavaScript</a></li>
+            <li>|</li>
+            <li><a href="jquery.html" title="jQuery">jQuery</a></li>
+            <li>|</li>
+            <li><a href="linux.html" title="Linux">Linux</a></li>
+            <li>|</li>
+            <li><a href="mysql.html" title="MySQL">MySQL</a></li>
+            <li>|</li>
+            <li><a href="networking.html" title="Networking">Networking</a></li>
+            <li>|</li>
+            <li><a href="python.html" title="Python">Python</a></li>
+            <li>|</li>
+            <li><a href="windows.html" title="Windows">Windows</a></li>
+        </ul>
+    </nav>
+
+    <h3>// Declarations</h3>
+    <ul>
+        <li>int myInt;</li>
+        <li>String myString;</li>
+        <li>int count; // control variable</li>
+        <li>int sentinel;  // sentinel value</li>
+        <li>int INT_ELEMENTS = 4; // we are using unnamed</li>
+        <li>int STR_ELEMENTS = 3; // constants for class</li>
+        <li>int[ ] myArrayOfInt = new int[INT_ELEMENTS];</li>
+        <li>int[ ] myArrayOfInt = {3, 6, 150, 7};</li>
+        <li>String[ ] myArrayOfStr = new String[STR_ELEMENTS];</li>
+        <li>String[ ] myArrayOfStr = {"one", "two", "three"};</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Input</h3>
+    <ul>
+        <li>String myString;</li>
+        <li>int myInt;</li>
+        <li>myString = input.readLine( );</li>
+        <li>myNumber = Integer.parseInt(myString);</li>
+        <li>arrayOfStrings[index] = input.readLine( );</li>
+        <li>arrayOfIntergers[index] = Integer.parseInt(input.readLine( ));</li>
+        <li>static Scanner scannerInput = new Scanner(System.in);</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Output</h3>
+    <ul>
+        <li>System.out.println(myString.substring(0,5));</li>
+        <li>System.out.println(myString.length( ));</li>
+        <li>'\n' - new line</li>
+        <li>'\t' - tab</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Decision</h3>
+    <pre><code>
+    if (myNumber &#60; 10 && &#60; 9)
+    {
+    }
+    else
+    {
+    }
+		
+    if(myString.contains("x"))
+    {
+        System.out.println("ta-da");
+    }	
+    if(myString.equals("Hallo"))
+    {
+        System.out.println("Exactly.");
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Loops</h3>
+    <pre><code>
+    for (myNumber = 0; myNumber &#60; 10; myNumber ++)
+    {
+    }
+		
+    for (elementType element : collection)
+    {
+    }
+    while (myNumber &#60; 10 || > 7)
+    {
+    }
+    do
+    {
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// ArrayList &#60;E&#62; &#38; Iterator &#60;E&#62;</h3>
+    <pre><code>
+    import java.util.ArrayList;
+    import java.util.Iterator;
+    String myFile = "anItem";
+    String myOtherFile = "anotherItem";
+    String myOutput;
+    int collectionSize;
+		
+    //ArrayList&#60;string&#62; myCollection;
+    //myCollection = new ArrayList&#60;string&#62;();
+    ArrayList&#60;string&#62; myCollection = new ArrayList&#60;string&#62;();
+		
+    myCollection.add(myFile);
+    myCollection.add(myOtherFile);
+		
+    Iterator&#60;string&#62; it = myCollection.iterator();
+    while(it.hasNext())
+    {
+        myOutput = it.next();
+        System.out.println(myOutput);
+    }
+		
+    collectionSize = myCollection.size();
+    //ArrayList&#60;collectionsize&#62; filesLeft = new ArrayList&#60;collectionsize&#62;();
+		
+    Collections.shuffle(myCollection);
+		
+    //ArrayList&#60;track&#62; leftToPlay = new ArrayList&#60;track&#62;(tracks);
+    //Collections.shuffle(leftToPlay);
+		
+    System.out.println("Array size before removal: " + collectionSize);		
+		
+    //myCollection.remove(myOtherFile);
+    //myCollection.remove(1);
+    it.remove();
+    collectionSize = myCollection.size();
+    System.out.println("Array size after removal: " + collectionSize);
+		
+    myOutput = myCollection.get(0);
+    System.out.println(myOutput);
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// HashMap &#60;K,V&#62;</h3>
+    <pre><code>
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// HashSet &#60;E&#62;</h3>
+    <pre><code>
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Random</h3>
+    <ul>
+        <li>import java.util.Random;</li>
+        <li><br /></li>
+        <li>Random generator = new Random( );</li>
+        <li>Random rand = new Random( );</li>
+        <li>int index;</li>
+        <li>double milesDriven;</li>
+        <li>index = rand.nextInt(100);</li>
+        <li>//milesDriven = (generator.nextDouble( )*50) + 50;</li>
+        <li>milesDriven = generator.nextDouble( );</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// toString</h3>
+    <pre><code>
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// String Builder</h3>
+    <pre><code>
+    public String toString() {
+        Double myDouble = 1.25;
+        String sep = System.getProperty("line.separator");
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();		
+        StringBuilder builder = new StringBuilder();
+		
+        builder.append(sep);
+        builder.append("A String. ");
+        builder.append("A second String.");
+        builder.append(sep);
+		
+        String strPrice = formatter.format(myDouble);
+        builder.append(strPrice);
+        builder.append(sep);
+		
+        System.out.println(builder);
+        //System.out.println(builder);
+        return builder.toString();
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Exception handling</h3>
+    <pre><code>
+    try {
+		
+    }
+    catch(Exception e) {
+	    System.out.println(e.toString());
+	    System.out.println(e.getMessage());
+	    e.printStackTrace();
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>More</h3>
+    <p>JRE - Java Runtime Environment</p>
+    <p>JKD - Java Development Kit</p>
+    <p>JAR - Java ARchive</p>
+    <p>API - Application Programming Interface</p>
+    <p>JDBC - Java Database Connectivity</p>
+    <p>C:\ java -version</p>
+    <p>C:\ java -jar fileName.jar</p>
+    <ul>
+        <li>int whichIsBigger = (50 > myInt) ? 50 : myInt;</li>
+        <li>this.inscrutableVariable</li>
+        <li>&&  and</li>
+        <li>||  or </li>
+        <li>!   not</li>
+        <li>^</li>
+        <li>++</li>
+        <li>--</li>
+        <li>+=</li>
+        <li>-=</li>
+        <li>%   modulo</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// JFrame</h3>
+    <pre><code>
+    private JFrame frame;
+    private JPanel myLayoutPanel, myButtonPanel;
+    private JButton exitButton;
+    private JScrollPane scrollPane;
+    private JTextArea inputOutput;
+    private JLabel header;
+	
+    frame = new JFrame("myJFrame");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    Container pane = frame.getContentPane();	
+	
+    myButtonPanel = new JPanel();
+    exitButton = new JButton("Clear");
+    exitButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent ev)
+        {
+            //inputOutput.setText(null);
+            inputOutput.setText(""); 
+            //System.exit(0);
+        }
+    }
+    );
+    myButtonPanel.add(exitButton);
+	
+    myLayoutPanel = new JPanel();
+    inputOutput = new JTextArea(10,30);
+    inputOutput.setLineWrap(true);
+    inputOutput.setWrapStyleWord(true);
+    scrollPane = new JScrollPane(inputOutput, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    header = new JLabel("My Header Bar");
+    myLayoutPanel.add(BorderLayout.NORTH, header);
+    myLayoutPanel.add(BorderLayout.SOUTH, scrollPane);	
+    pane.add(BorderLayout.SOUTH, myButtonPanel);
+    pane.add(BorderLayout.NORTH, myLayoutPanel);
+	
+    frame.setTitle("My Special Frame");
+    frame.setSize(600, 600);
+    //frame.pack();
+    //frame.setLocation(200,200);
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Lessons</h3>
+    <pre><code>
+    package maptester;
+    /**
+     * Practice 2
+     * Description: Simple program to test the HashMap class
+     * @author Craig Pounds
+     * @version 10/18/2014
+     */
+    import java.util.HashMap;
+    public class MapTester {
+	
+        // create a HashMap object named phoneBook
+        private HashMap&#60;string, string&#62; phoneBook = new HashMap&#60;string, string&#62;);
+    
+        /*
+         * method to add entries to the phoneBook HashMap object
+         * @param String name     
+         * @param String telephone number
+         */ 
+        public void enterNumber(String name, String number)
+        {
+            phoneBook.put(name, number);
+        }
+    
+        /*
+         * method to look up telephone numbers in the phoneBook by name
+         * @param String name mapped to the value we are looking up
+         * @return number mapped to key
+         */    
+        public String lookupNumber(String name)
+        {
+    	    String number;
+            number = phoneBook.get(name);
+            return number;
+        }
+    
+        public boolean doesContain(String name)
+        {        
+            return phoneBook.containsKey(name);
+        }
+    
+        public static void main(String[] args) {
+    	
+            MapTester myMapTester = new MapTester();
+        
+            myMapTester.enterNumber("Bob McDealy", "555-0000");
+            myMapTester.enterNumber("Pat Jones", "555-1111");
+            myMapTester.enterNumber("Bill Smith", "555-2222");
+            myMapTester.enterNumber("Jack Cracker", "555-3333");
+            myMapTester.enterNumber("Veto von Vaughn", "555-4444");
+        
+            //Exercise 5.27
+            System.out.println(myMapTester.lookupNumber("Bill Smith"));
+            myMapTester.enterNumber("Bill Smith", "555-5555");
+            System.out.println(myMapTester.lookupNumber("Bill Smith"));
+        
+            //Exercise 5.28
+            myMapTester.enterNumber("Will Smith", "555-5555");
+            System.out.println(myMapTester.lookupNumber("Bill Smith"));
+            System.out.println(myMapTester.lookupNumber("Will Smith"));
+        
+            //Exercise 5.29
+            System.out.println(myMapTester.phoneBook.containsKey("Pat Jones"));
+            System.out.println(myMapTester.doesContain("Pat Jones"));        
+        
+            //Exercise 5.30
+            System.out.println(myMapTester.lookupNumber("Spock Mustard"));
+        
+            //Exercise 5.31
+            System.out.println(myMapTester.phoneBook.size());
+        
+            //Exercise 5.32
+            System.out.println(myMapTester.phoneBook.keySet());        
+        }    
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Lessons</h3>
+    <pre><code>
+    Lesson - File Access
+    Character Streams
+    Character stream classes typically inherit from Reader or Writer:
+        FileWriter, FileReader
+        BufferedWriter, BufferedReader
+        We can create an efficient stream by layering streams.
+        To write to a file, instantiate a FileWriter object.
+        To improve performance, pass the FileWriter as an
+        argument to a BufferedWriter object . This ‘buffers’ the data
+        rather than reading each byte one at a time from the disk. When
+        the buffer is full, the data is then flushed (written to
+        the file). This saves on slow i/o operations.
+        To provide formatting, you can in addition pass the BufferedWriter to a
+        PrintWriter.
+    Streams
+    Binary Streams
+        To write to a binary file, use a
+        FileOutputStream object
+        To buffer the output, use a
+        BufferedOutputStream.
+        A DataOutputStream writes primitive
+        data types to a file.
+    Binary stream classes inherit from InputStream or OutputStream
+        DataOutputStream, DataInputStream
+        
+    Lesson - Database Access
+    XAMPP Install and Use
+    XAMPP Tutorial
+    What is XAMPP?
+    XAMPP is a package of related software (free!) that can be downloaded and installed together. For our purposes, it includes the Apache webserver, a mySQL database server and phpMyAdmin for web-based administration of mySQL. The applications are installed locally so that your machine becomes both a webserver and a database server. This allows you to create and manage your own mySQL databases using phpMyAdmin.
+    Install XAMPP
+    This is easy and straightforward. Download the Installler for XAMPP or XAMPP-Lite for your machine. Versions are available for Windows, Linux and the MAC-OS. Run the installer. Install both Apache and mySQL as services. These will run when you boot up your machine. If you do not want to do that, you can manually start and stop both using the XAMPP Control Panel.
+    Accessing phpMyAdmin
+    phpMyAdmin is a well-known web interface for managing mySQL databases. It isn't pretty, but easy to use. With the XAMPP installation, the easiest to run phpMyAdmin is to use the XAMPP control panel. For Windows, you will find the executable control panel in the installation folder. Run this program, then select Admin next to the Apache service. This will start a web page. Once you have selected a default language, the XAMPP home page will appear. A link to phpMyAdmin can be found in the sidebar menu.
+    You have full control over mySql. The default username is 'root' and the password is "" (empty string).
+    Database Access Basics
+    Database Access using JDBC
+    JDBC is a set of interfaces and classes known as the Java Database Connectivity API. This API provides the code that enables you to access relational databases as well as flat file data sources via a Java application.
+    The three main functions of JDBC are as follows:
+        Establishing a connection with a database
+        Sending SQL commands to the database
+        Processing the results
+    The JDBC Driver
+    As we said above, the JDBC API defines the Java interfaces and classes that programmers use to connect to databases and send queries.
+    A JDBC driver implements these interfaces and classes for a particular database. For instance we will use the mySql driver, known as the Connector/J driver. Netbeans provides this as part of the installation.
+    The driver is the intermediary between the application and the database. It translates Java 'commands' into something the database can understand and vice versa translates the results to the Java application.
+    Before it can connect to a database, a Java application must load the specific driver into memory. Otherwise, there is no translator for that database.
+    Database Access - Retrieving Data
+    Database Access - Getting Results
+    Retrieving Data
+    Once you have loaded the driver, the process of retrieving data JDBC involves the following:
+        Establish a Connection.
+        Create a Statement.
+        Execute the SQL query
+        Process the ResultSet object.
+        Close the Connection.
+    Establish a Connection
+    Load the driver - catch or throw ClassNotFoundException
+        Class.forName(“driver name”)
+    This loads the driver code and registers it with a class called DriverManager. You do not need to create an instance of a driver. Calling Class.forName will do that for you automatically.
+    Return a Connection - catch or throw SQLException
+        Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/som_database
+    Create a Statement Object
+    Use the Connection object to instantiate a Statement:
+        Statement stmt = connect.createStatement();
+    Execute the SQL query
+        ResultSet rs = stmt.executeQuery("Select * from some_table");
+    Process the ResultSet
+    The ResultSet contains the information from the database. You can picture it as a table in memory and must process it one row at a time. The next() method determines if there are any more rows. If true, it moves the cursor (row pointer) to that next row. If there is no more data, the method returns false.
+        while(rs.next){ ...
+    process each row in the loop. Each piece of information can be retrieved using the column name or a numeric value (1-based, not 0-based).
+    In a typical OOP application, we create an object based on the row data and add to a List or some other data structure. See the Customer sample for the specifics.
+    Close the Connection
+    close the Statement, ResultSet and the Connection. Connections are "expensive" and should be closed when no longer needed.
+        connect.close()
+    All Java statements involving Connections, Statements and ResultSets throw SQLException. You must either catch or throw SQLException from any method that includes method calls on these objects.
+    Database Access - Adding a Netbeans Library File
+    Database Access
+    Netbeans - Adding a Library File
+    Netbeans provides the Connector/J driver which must be added to any program through the Library section of a project. Right-click the Libraries choice in the Project window, select Add Library, then select the MySql JDBC Driver. A reference to the driver .jar file will be added to your project. This will enable you to load the driver in your code.
+    add a library
+    add driver
+    Database Access - setting up the Customers Sample
+    Database Access - the Customers Sample
+    Set Up the Customer Database
+    To set up the Customer database for the sample code from Unit 6:
+    1. In phpMyAdmin create a database called "1414_customers".
+    2. Select the newly created database.
+    3. Choose the Import selection, then use then browse to the .sql file in the sample project folder. Select Go. This should create a table in the database for you.
+    Run the Customer Sample Program
+    Once the database is set up as above you should be able to run the sample program.
+        
+    You should see information from the database in the console output.
+    Review the readRecords method of the CustomerDA class. This is the class we use to create methods for access to the database. This class and the database are known as the database layer of our program.
+    JDBC
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <footer>Return to <a href="index.html" title="Return to the home page">home page</a></footer>
+</body>
+</html>

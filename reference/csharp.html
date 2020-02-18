@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Napes Weaver -->
+<head>
+    <title>C#</title>
+    <meta charset="utf-8" />
+    <!-- For iPhone, Andriod smartphone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!--[if lt IE 9]>
+        <script>
+            document.createElement("article");
+            document.createElement("aside");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("main");
+            document.createElement("nav");
+            document.createElement("section");
+        </script>
+    <![endif]--> 
+    <link type="text/css" rel="stylesheet" href="notes.css" />
+</head>
+<body>
+    <h1 id="top">C#</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Home Page">Home</a></li>
+            <!--<li><a href="../index.html" title="RPNapes">RPNapes</a></li>-->
+            <li>|</li>
+            <li><a href="csharp.html" title="C#">C#</a></li>
+            <li>|</li>
+            <li><a href="css.html" title="CSS">CSS</a></li>
+            <li>|</li>
+            <li><a href="hardware.html" title="Hardware">Hardware</a></li>
+            <li>|</li>
+            <li><a href="html.html" title="HTML">HTML</a></li>
+            <li>|</li>
+            <li><a href="java.html" title="Java">Java</a></li>
+            <li>|</li>
+            <li><a href="javascript.html" title="JavaScript">JavaScript</a></li>
+            <li>|</li>
+            <li><a href="jquery.html" title="jQuery">jQuery</a></li>
+            <li>|</li>
+            <li><a href="linux.html" title="Linux">Linux</a></li>
+            <li>|</li>
+            <li><a href="mysql.html" title="MySQL">MySQL</a></li>
+            <li>|</li>
+            <li><a href="networking.html" title="Networking">Networking</a></li>
+            <li>|</li>
+            <li><a href="python.html" title="Python">Python</a></li>
+            <li>|</li>
+            <li><a href="windows.html" title="Windows">Windows</a></li>
+        </ul>
+    </nav>
+
+    <h3>// Declarations</h3>
+    <ul>
+        <li>string myString;</li>
+        <li><br /></li>
+        <li>string[ ] players = {"Larry Tate", "Louise Tate", "Darrin Stephens", "Sam Stephens", "Arthur Smith", "Dr. Bombay"};</li>
+        <li><br /></li>
+        <li>decimal[ ] price = {2.31m, 1.10m, 2.50m, 45.33m , 299.99m, 199.99m, 12.99m, 7.88m ,3.50m , 4.50m};</li>
+        <li><br /></li>
+        <li>decimal[ ] temps = new decimal[7];</li>
+        <li><br /></li>
+        <li>int[,] phoneDir = new int[3,2];</li>
+        <li>phoneDir[0, 0] = "555-1234";</li>
+        <li>phoneDir[0, 1] = "Larry Tate";</li>
+        <li>phoneDir[1, 0] = "555-1235";</li>
+        <li>phoneDir[1, 1] = "Arthur Smith";</li>
+        <li>phoneDir[2, 0] = "555-1236";</li>
+        <li>phoneDir[2, 1] = "Dr. Bombay";</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Casting</h3>
+    <p>Impicit Casting: byte->short->int->long->decimal</p>
+    <ul>
+        <li>double grade = 97; // convert int to double</li>
+        <li>int letter = 'B'; // convert char to int (letter = 66)</li>
+    </ul>
+    <p>Explicit Casting: </p>
+    <ul>
+        <li>int grade = (int)97.45 // convert double to int (grade = 97)</li>
+        <li>char letter = (char)66; // convert int to char (letter = 'B')</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Input</h3>
+    <ul>
+        <li>myNumber = Convert.ToInt16(txtMyNumber.Text);</li>
+        <li>anotherNumber = Convert.ToInt32(txtAnotherNumber.Text);</li>
+        <li>myString = txtInput.Text;</li>
+        <li>myString = myString.Trim();</li>
+        <li>txtInput.Focus();</li>
+        <li>txtInput.SelectAll();</li>
+        <li><br /></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Output</h3>
+    <ul>
+        <li>MessageBox.Show("Input Error");</li>
+        <li>txtMyOutput.Text = Convert.ToString(myNumber);</li>
+        <li>txtFutureValue.Text = futureValue.ToString("c");</li>
+        <li>txtPartPrice.Text = string.Format("{0:c}", price[foundIndex]);</li>
+        <li>myString += String.Format("{0:###0}  ", timesTable[row, col]);</li>
+        <li>txtAverage.Text = string.Format("{0:f2} dollars", myTotal);</li>
+        <li>txtInput.AppendText(String.Format("{0:G10}", Math.Round(this.x.Quanta, decPlace, MidpointRounding.AwayFromZero)));</li>
+        <li>lstOutput.Enabled = false;</li>
+        <li>lstOutput.Items.Clear( );</li>
+        <li>lstOutput.Items.Add(testScores[x]);</li>
+        <li>lstOutput.Items.Add("The upperBound is " + arraySize);</li>
+        <li>lblGame.Text = "GAME " + gameNumber;</li>
+        <li>Console.WriteLine("Hello");</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// DateTime</h3>
+    <ul>
+        <li>DateTime futureDate = DateTime.Parse(txtFutureDate.Text);</li>
+        <li>DateTime currentDate = DateTime.Now;</li>
+        <li>TimeSpan dayDue = futureDate - currentDate;</li>
+        <li>currentDate = DateTime.Parse("3/1/2013 13:28");</li>
+        <li>currentDate = DateTime.Parse(txtEnter.Text);</li>
+        <li>currentDateTime = currentDateTime.AddMonths(2);</li>
+        <li>currentDateTime = currentDateTime.AddDays(60);</li>
+        <li>currentDateTime = currentDateTime.AddMinutes(30);</li>
+        <li>currentDateTime = currentDateTime.AddHours(12);</li>
+        <li>txtOutput.Text = currentDateTime.Month.ToString( );</li>
+        <li>txtOutput.Text = currentDateTime.Hour.ToString( );</li>
+        <li>txtOutput.Text = currentDateTime.DayOfYear.ToString( );</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Case Switch</h3>
+    <pre><code>   
+    int caseSwitch = 1;
+    switch (caseSwitch)
+    {
+        case 1:
+            Console.WriteLine("Case 1");
+            break;
+        case 2:
+            Console.WriteLine("Case 2");
+            break;
+        default:
+            Console.WriteLine("Default case");
+            break;
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// More</h3>
+    <ul>
+        <li>string myString = "0superfragica14fragilistic";</li>
+        <li>myInt = myString.IndexOf("fragil");</li>
+        <li>MessageBox.Show(myInt.ToString( ));</li>
+        <li>btnEnter.Enabled = false;</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// MyMethods</h3>
+    <pre><code>
+    GetInput(out number1, out number2, out operation);
+	
+    /**
+     * Example of out-ref
+     */
+    public void GetInput(out int number1, out int number2, out string tmpOperator)
+    {
+        number1 = Convert.ToInt16(txtNumber1.Text);
+        number2 = Convert.ToInt16(txtNumber2.Text);
+        tmpOperator = txtOperation.Text;
+    }
+    /**
+     * Validate the input
+     */
+    private bool IsValid()
+    {
+        bool valid = false;
+		
+        //if (CheckForString(txtScore) && IsNumeric(txtScore))
+        if (txtScore.Text != "" && IsNumeric(txtScore))
+        {
+            valid = true;
+        }
+        return valid;
+    }
+		
+    /**
+     * Check that TextBox is not empty
+     */
+    private bool CheckForString(TextBox tBox)
+    {
+        bool badString = false;
+        if (tBox.Text.Length > 0)
+        {
+            badString = true;
+        }
+        return badString;
+    }
+    /**
+     * Check that TextBox contains a number and is in range
+     */
+    private bool IsNumeric(TextBox tBox)
+    {
+        bool valid = false;
+        try
+        {
+            if (Convert.ToInt16(tBox.Text) >= 0 && Convert.ToInt16(tBox.Text) &#60;= 100)
+            {
+                valid = true;
+            }
+            else
+            {
+                // OverflowException the number was out of range
+                MessageBox.Show("Valid test scores range\nfrom 0 to 100.");
+            }
+        }
+        catch(FormatException)
+        {
+            // it was not a number
+            valid = false;
+            MessageBox.Show("Enter a number\nfrom 0 to 100.");
+        };
+        return valid;
+    }
+		
+    /**
+     * Exit button - close the form
+     */
+    private void btnExit_Click(object sender, EventArgs e)
+    {
+        this.Close();
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Lessons</h3>
+    <pre><code>
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    /*
+     * Pogram3 - Score Calculator
+     * Description:
+     * Author Craig Pounds
+     * Version Nov 13, 2014
+     */
+    namespace ScoreCalculator
+    {
+        public partial class frmScoreCalculator : Form
+        {
+            public frmScoreCalculator()
+            {
+                InitializeComponent();
+            }
+            //  decalare variables
+            int[] scores = new int[5];
+            int scoreTotal = 0;
+            int scoreCount = 0;
+            int average;
+            /**
+             * Add button - for valid data, calls clearScores if 
+             * scoreCount > the size of the Array scores, calls
+             * CalculateScores() and FormOutput.
+             * Returns the focus to txtScore and selects its text.
+             */
+            private void btnAdd_Click(object sender, EventArgs e)
+            {
+                if (IsValid())
+                { 
+                    if (scoreCount > scores.GetUpperBound(0))
+                    {
+                        ClearScores();
+                    }
+                    CalculateScores();
+                    FormOutput();
+                    txtScore.Focus();
+                    txtScore.SelectAll();
+                }
+            }
+            /**
+             * Display scores button - builds a string from
+             * the current values in the scores array and
+             * then prints it in a MessageBox "Scores"
+             */
+            private void btnDisplay_Click(object sender, EventArgs e)
+            {
+                string scoreMessage = "";
+                for (int i = 0; i &#60; scoreCount; i++)
+                {
+                    scoreMessage += scores[i] + "\n";
+                }
+                MessageBox.Show(scoreMessage, "Scores");
+            }
+            /**
+             * Clear scores button - call clearScores(),
+             * clear and return focus to input textbox.
+             */
+            private void btnClear_Click(object sender, EventArgs e)
+            {
+                ClearScores();
+                txtScore.Text = "";
+                txtScore.Focus();
+            }
+            /**
+             * Clear the textboxes and global variables
+             * for scoreTotal scoreCount and scoreAverage.
+             */
+            private void ClearScores()
+            {
+                txtTotal.Text = "";
+                txtCount.Text = "";
+                txtAverage.Text = "";
+                scoreTotal = 0;
+                scoreCount = 0;
+                average = 0;
+            }
+            /**
+             * Exit button - close the form
+             */
+            private void btnExit_Click(object sender, EventArgs e)
+            {
+                this.Close();
+            }
+            /**
+             * Calculate the average score, scoreTotal and
+             * update the scoreCount
+             */
+            private void CalculateScores()
+            {
+                int total = 0;
+                scores[scoreCount] = Convert.ToInt16(txtScore.Text);
+                for (int i = 0; i &#60;= scoreCount; i++)
+                {
+                    total += scores[i];
+                }
+                average = total / (scoreCount + 1);
+                scoreTotal = total;
+                scoreCount++;
+            }
+            /**
+             * Output scoreTotal, scoreCount and
+             * average to the form
+             */
+            private void FormOutput()
+            {
+                txtTotal.Text = Convert.ToString(scoreTotal);
+                txtCount.Text = Convert.ToString(scoreCount);
+                txtAverage.Text = Convert.ToString(average);
+            }
+            /**
+             * Validate the input
+             */
+            private bool IsValid()
+            {
+                bool valid = false;
+                if (CheckForString(txtScore) && IsNumeric(txtScore))
+                {
+                    valid = true;
+                }
+                return valid;
+            }
+            /**
+             * Check that TextBox is not empty
+             */
+            private bool CheckForString(TextBox tBox)
+            {
+                bool badString = false;
+                if (tBox.Text.Length > 0)
+                {
+                    badString = true;
+                }
+                return badString;
+            }
+            /**
+             * Check that TextBox contains a number and is in range
+             */
+            private bool IsNumeric(TextBox tBox)
+            {
+                bool valid = false;
+                try
+                {
+                    if (Convert.ToInt16(tBox.Text) >= 0 && Convert.ToInt16(tBox.Text) &#60;= 100)
+                    {
+                        valid = true;
+                    }
+                    else
+                    {
+                        // OverflowException the number was out of range
+                        MessageBox.Show("Valid test scores range\nfrom 0 to 100.");
+                    }
+                }
+                catch (FormatException)
+                {
+                    // it was not a number
+                    valid = false;
+                    MessageBox.Show("Enter a number\nfrom 0 to 100.");
+                };
+                return valid;
+            }
+        }
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    <footer>Return to <a href="index.html" title="Return to the home page">home page</a></footer>
+</body>
+</html>

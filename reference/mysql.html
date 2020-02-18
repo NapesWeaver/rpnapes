@@ -1,0 +1,634 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Napes Weaver -->
+<head>
+    <title>MySQL</title>
+    <meta charset="utf-8" />
+    <!-- For iPhone, Andriod smartphone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!--[if lt IE 9]>
+        <script>
+            document.createElement("article");
+            document.createElement("aside");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("main");
+            document.createElement("nav");
+            document.createElement("section");
+        </script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="notes.css" />
+</head>
+<body>
+    <h1 id="top">MySQL</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Home Page">Home</a></li>
+            <!--<li><a href="../index.html" title="RPNapes">RPNapes</a></li>-->
+            <li>|</li>
+            <li><a href="csharp.html" title="C#">C#</a></li>
+            <li>|</li>
+            <li><a href="css.html" title="CSS">CSS</a></li>
+            <li>|</li>
+            <li><a href="hardware.html" title="Hardware">Hardware</a></li>
+            <li>|</li>
+            <li><a href="html.html" title="HTML">HTML</a></li>
+            <li>|</li>
+            <li><a href="java.html" title="Java">Java</a></li>
+            <li>|</li>
+            <li><a href="javascript.html" title="JavaScript">JavaScript</a></li>
+            <li>|</li>
+            <li><a href="jquery.html" title="jQuery">jQuery</a></li>
+            <li>|</li>
+            <li><a href="linux.html" title="Linux">Linux</a></li>
+            <li>|</li>
+            <li><a href="mysql.html" title="MySQL">MySQL</a></li>
+            <li>|</li>
+            <li><a href="networking.html" title="Networking">Networking</a></li>
+            <li>|</li>
+            <li><a href="python.html" title="Python">Python</a></li>
+            <li>|</li>
+            <li><a href="windows.html" title="Windows">Windows</a></li>
+        </ul>
+    </nav>
+
+    <h3>-- MySQL ~ My Structured Query Language</h3>
+    <p>Data Manipulation Language and Data Definition Language</p>
+    <p><a href="http://www.mysql.com/" title="www.mysql.com" target="_blank">www.mysql.com</a></p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>-- Data Types</h3>
+    <p>TINYINT: 127 to -128</p>
+    <p>SMALLINT: 32,768 to -32,767</p>
+    <p>MEDIUM INT: 8,388,608 to -8,388,688</p>
+    <p>INT: 2^31 to -2^31-1</p>
+    <p>BIGINT: 2^63 to -2^63-1</p>
+    <p>FLOAT: 1.1E38 to -1.1E38</p>
+    <p>DOUBLE: 1.7E308 to -1.7E308</p>
+    <p>CHAR: fixed length</p>
+    <p>VARCHAR: vairable length</p>
+    <p>BLOB: 2^16 bytes</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>-- Login</h3>
+    <p>-- C:\&#62; net start mysql57</p>
+    <p>-- C:\&#62; -uuser -ppassword my_db &#60; sample_db.sql</p>
+    <p>-- C:\&#62; mysql -uroot -p</p>
+    <p>-- -h host</p>
+    <p>-- -P --port=3306</p>
+    <p>-- -D --database=</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>-- Switches</h3>
+    <pre><code>
+    -- \c ~ clear buffer 
+    -- \q ~ QUIT, EXIT 
+    -- \p ~ print command to screen 
+    -- \h ~ help 
+    -- \s ~ status 
+    -- \u ~ use database 
+    -- \g ~ go ~ ; 
+    -- \G ~ vertical format --vertical --html --xml  
+    -- \T C:\logSQL.txt 
+    -- \t ~ quit outfile  
+    -- \e ~ editor  
+    -- \! ~ run operating system command
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>-- SELECT</h3>
+    <pre><code>
+    /* IN, NOT IN */ 
+ 
+    SELECT first_name 
+    FROM Contacts 
+    WHERE first_name IN('Joe', 'Sue'); 
+    -- NOT IN()
+   
+    /* Logic and Maths */  
+ 
+    -- Precedence ~ AND &#62; OR &#62; NOT 
+ 
+    SELECT 15 + 28, 94 - 55; 
+ 
+    SELECT 20 DIV 3; 
+    -- 6, no remainder 
+    -- IS NULL, IS NOT NULL ~ comparing column = NULL does not work 
+    -- RAND(), ROUND(), CEILING(), FLOOR(), TRUNCATE(), POW(), SQRT(), LOG(), EXP(), SIN(), COS(), TAN(), ASIN(), ACOS(), ATAN(), PI(), DEGREES(), RADIANS() 
+  
+    /* IF */ 
+ 
+    SELECT code, weight, IF(weight &#60; 5, 1.99, 2,99) 
+    FROM Products; 
+ 
+    SELECT IF(((MIN(bed_number) &#62; 1) AND (MAX(bed_number)) &#60; 5500) AND (bed_number != NULL),'ok','Do a Bed Check')
+    FROM Patient; 
+  
+    /* CASE */ 
+ 
+    SELECT code, weight, 
+    CASE WHEN weight &#60; 2 THEN 1.99 
+                WHEN weight &#60; 5 THEN 2.99 
+                ELSE 4.99 
+                END AS Shipping 
+    FROM Products; 
+    -- a NULL can be returned when ELSE is not used 
+  
+    /* IF NULL, NULL IF */ 
+ 
+    SELECT IF NULL(0, 99), IF NULL(NULL, 99); 
+ 
+    SELECT code, price, NULL IF(price, 99) 
+    FROM Products; 
+  
+    /* Strings */  
+ 
+    SELECT BINARY 'abc' = 'ABC'; 
+    -- when ordering BINARY causes a &#62; A 
+ 
+    SELECT last_name FROM Contacts WHERE last_name BETWEEN 'CA' AND 'JZ'; 
+    -- NOT  BETWEEN 
+ 
+    SELECT last_name FROM Contacts WHERE last_name LIKE 'F_c%'; 
+    -- NOT LIKE 
+ 
+    SELECT CONCAT(UPPER(SUBSTRING(first_name, 1, 1)), LOWER(SUBSTRING(first_name, 2))) AS Name 
+    FROM Customers; 
+ 
+    SELECT CONCAT_WS(' ', FirstName, LastName) AS Name 
+    FROM students; 
+ 
+    -- LTRIM(), RTRIM(), TRIM(), RPAD(), LPAD(), LOCATE(), LENGTH(), REPLACE(), SUBSTRING(), UPPER(), LOWER() 
+ 
+    SELECT SUBSTRING_INDEX('www.samspublishing.com', '.', -1); 
+  
+    /* DATE */ 
+ 
+    SELECT '2005-12-30' INTERVAL 7 DAY; 
+    -- YEAR, QUARTER, MONTH, WEEK, HOUR, MINUTE, SECOND, MICROSECOND, HOUR_MINUTE 
+ 
+    SELECT CURDATE(); 
+    -- CURTIME(), NOW(), UTC_TIME(), UTC_TIMESTAMP() 
+ 
+    SELECT CONVERT_TZ('2004-01-01 12:00:00', 'US/Pacific', 'US/Eastern'); 
+ 
+    SELECT DATE FORMAT(NOW(), 'The time is %h %W %D %M %Y'); 
+    -- returns string 
+ 
+    SELECT DATE_FORMAT(order_date, '%M %Y') AS month_ordered, customer_code, COUNT(*) 
+    FROM Orders 
+    GROUP BY month_ordered, customer_code 
+    ORDER BY order_date; 
+    -- without Aggregate function GROUP BY = DISTINCT, without ORDER BY query will be ordered on GROUP BY columns 
+ 
+    SELECT EXTRACT(YEAR_MONTH FROM NOW()); 
+    -- returns numeric 
+ 
+    SELECT DATEDIFF('2005-12-31', '2006-01-01'); 
+    -- time components would be ignored 
+ 
+    SELECT student_id AS SID, 
+    ROUND(DATEDIFF(NOW(),DOB) / 365) AS Age 
+    FROM Students; 
+ 
+    SELECT TIMEDIFF('12:00', '10:30'); 
+    -- date components would be ignored 
+ 
+    SELECT FROM_UNIXTIME(UNIX_TIMESTAMP('2006-01-01 12:45:31')); 
+   
+    /* Aggregate Functions */ 
+ 
+    SELECT COUNT(*), COUNT(DISTINCT state) 
+    FROM Contacts; 
+ 
+    SELECT SUM(weight &#60; 5) 
+    FROM Products; 
+    -- true = 1 and false = 0 
+ 
+    SELECT SUM(weight) / COUNT(weight) 
+    FROM Products; 
+  
+    SELECT AVE(weight) 
+    FROM Products; 
+    -- NULL values are excluded  
+ 
+    SELECT MAX(order_date) 
+    FROM Orders; 
+    -- MIN() 
+  
+    /* GROUP BY */ 
+ 
+    SELECT Major AS Major, COUNT(*) AS TotalCount 
+    FROM students 
+    WHERE Major != 'CIT' 
+    GROUP BY Major;  
+  
+    /* HAVING */  
+ 
+    SELECT Major AS Major, COUNT(*) AS MaleCount 
+    FROM students 
+    WHERE Gender = 'M' 
+    GROUP BY Major 
+    HAVING MaleCount &#62;= 2; 
+ 
+    SELECT product_code, SUM(quantity) AS num_shipped 
+    FROM OrderLines 
+    GROUP BY product_code 
+    HAVING num_shipped &#62; 30; 
+    -- you cannot reference a column produced by aggregate function in a WHERE clause 
+ 
+    SELECT major AS Major, COUNT(*) AS MaleCount 
+    FROM Students 
+    WHERE gender = 'M' 
+    GROUP BY major 
+    HAVING MaleCount &#62;= 2; 
+  
+    /* *** SUBQUERIES **********************************/
+
+    SELECT * FROM Products
+    WHERE product_code IN(
+    SELECT product_code
+    FROM OrderLines
+    WHERE order_id = 1
+    );
+
+    SELECT bed_number, room_id 
+    FROM bed 
+    WHERE room_id IN( 
+    SELECT room_id 
+    FROM room 
+    WHERE room_description LIKE '%Double%' 
+    );
+
+    -- Correlated Subquery
+    SELECT order_id, product_code, quantity
+    FROM OrderLines ol1
+    WHERE quantity &#62; (
+    SELECT AVG(quantity)
+    FROM OrderLines ol2
+    WHERE ol2.product_code = ol1.product_code
+    );
+
+    -- Subquerying The Same Table
+    SELECT first_name, last_name
+    FROM CustomerContacts
+    WHERE customer_code = (
+    SELECT customer_code
+    FROM CustomerContacts
+    WHERE first_name = 'Benjamin'
+    AND last_name = 'Franklin'
+    );
+
+    SELECT p.name, (
+    SELECT SUM(ol.quantity) 
+    FROM OrderLines ol 
+    WHERE ol.product_code = p.product_code) AS subquery
+    FROM products p;
+
+    -- Subqueries As Tables 
+    SELECT * FROM (
+    SELECT first_name, last_name
+    FROM CustomerContacts
+    WHERE CustomerCode = 'SCI-CORP') AS
+    sci_corp_customers
+    WHERE first_name = 'Benjamin';
+
+    /* *** Joins ************************************* */
+
+    SELECT name,
+    CONCAT(last_name, ', ' ,first_name) AS contact_name
+    FROM Customers, CustomerContacts
+    WHERE Customers.customer_code = 
+    CustomerContacts.customer_code
+    ORDER BY name, contact_name;
+
+    -- Cartesian Products 
+    SELECT * FROM MyTable1, MyTable2; 
+
+    -- INNER JOIN
+    SELECT CONCAT(pat_first_name, ' ', pat_last_name), patient.bed_number, room_description
+    FROM patient INNER JOIN bed
+    ON patient.bed_number = bed.bed_number
+    INNER JOIN room
+    ON bed.room_id = room.room_id
+    WHERE patient.bed_number IS NOT NULL;
+
+    -- Joining Multiple Tables
+    -- Cross Joins 
+    SELECT * FROM MyTable1, MyTable2
+    WHERE MyTable1.id = MyTable2.id;
+
+    -- LEFT OUTER JOIN
+    SELECT CONCAT_WS(' ', pat_first_name, pat_last_name), room_description
+    FROM patient 
+    LEFT OUTER JOIN bed
+    ON patient.bed_number = bed.bed_number
+    LEFT OUTER JOIN room
+    ON bed.room_id = room.room_id;
+
+    SELECT room.room_id AS Room
+    FROM room
+    LEFT JOIN bed
+    ON room.room_id = bed.room_id
+    WHERE bed.room_id IS NULL;
+
+    /* UNION */
+
+    SELECT first_name, last_name
+    FROM customer_contacts
+    WHERE customer_code = 'SCI-CORP'
+    UNION
+    SELECT first_name, last_name
+    FROM customer_contacts
+    WHERE customer_code = 'PRES-INC'
+    SELECT first_name
+    FROM customer_contacts
+    UNION
+    SELECT last_name
+    FROM customer_contacts;
+
+    SELECT first_name
+    FROM customer_contacts
+    UNION ALL
+    SELECT last_name
+    FROM customer_contacts
+    ORDER BY first_name;
+
+    CREATE TEMPORARY TABLE myUnion AS
+    SELECT first_name FROM customer_contacts;
+
+    INSERT INTO myUnion
+    SELECT last_name FROM customer_contacts;
+
+    /* *** Combined Queries *********************** */
+
+    /* MINUS */
+
+    SELECT first_name
+    FROM customer_contacts
+    MINUS
+    SELECT last_name
+    FROM customer_contacts;
+
+    -- is equivalent to
+    SELECT first_name
+    FROM customer_contacts
+    WHERE first_name NOT IN (
+    SELECT last_name
+    FROM customer_contacts
+    );
+
+    -- as a LEFT JOIN
+    SELECT c1.first_name
+    FROM customer_contacts
+    LEFT JOIN customer_contacts c2
+    ON c1.first_name = c2.last_name
+    WHERE c2.last_name IS NULL;
+
+    CREATE TEMPORARY TABLE myMinus AS
+    SELECT first_name FROM customer_contacts;
+
+    DELETE FROM myMinus
+    WHERE first_name IN(
+    SELECT last_name
+    FROM customer_contacts
+    );
+
+    /* INTERSECT */
+
+    SELECT first_name
+    FROM customer_contacts
+    INTERSECT
+    SELECT last_name
+    FROM customer_contacts;
+
+    -- as a LEFT JOIN
+    SELECT c1.first_name
+    FROM customer_contacts c1
+    JOIN customer_contacts c2
+    ON c1.first_name = c2.last_name;
+
+    CREATE TEMPORARY TABLE myIntersect
+    SELECT first_ name FROM customer_contacts;
+    DELETE FROM myIntersect
+    WHERE first_name NOT IN(
+    SELECT last_name
+    FROM customer_contacts
+    );
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>-- DATABASE and TABLES</h3>
+    <pre><code>
+    /* CREATE DATABASE */    
+ 
+    CREATE DATABASE IF NOT EXISTS my_db; 
+ 
+    DROP DATABASE IF EXISITS my_db;
+
+    ALTER DATABASE my_db; 
+    CHARACTER SET ascii;
+
+    -- See available character sets 
+    SHOW CHARACTER SET;
+
+    CHARACTER SET greek COLLATE greek_general_ci; 
+    SHOW WARNINGS; 
+    -- collation will default as shown by SHOW CHARACTER SET
+
+    /* CREATE TABLE */ 
+ 
+    SET FOREIGN_KEY_CHECKS=0; 
+    SET FOREIGN_KEY_CHECKS=1; 
+ 
+    CREATE TABLE IF NOT EXISTS Products ( 
+    product_code VARCHAR(10) PRIMARY KEY, 
+    product_number INT NOT NULL, 
+    name VARCHAR(40) NOT NULL UNIQUE, 
+    weight DECIMAL(6,2) NOT NULL, 
+    price DECIMAL(6,2) NOT NULL, 
+    sex CHAR(1) DEFAULT 'F' 
+    ) ENGINE=InnoDB; 
+    -- column names can be 64 characters long, the characters .,\/ are disallowed 
+  
+    CREATE TABLE Students( 
+    student_id INT NOT NULL AUTO_INCREMENT, 
+    first_name VARCHAR(30) NOT NULL, 
+    last_name VARCHAR(30) NOT NULL, 
+    major VARCHAR(35) DEFAULT 'Undeclared', 
+    CONSTRAINT pk_student_id PRIMARY KEY(student_id) 
+    ); 
+ 
+    CREATE TABLE Courses( 
+    course_number CHAR(8) NOT NULL, 
+    course_name VARCHAR(40) NOT NULL, 
+    credits DECIMAL(2,1) NOT NULL, 
+    CONSTRAINT pk_course_number PRIMARY KEY(course_number) 
+    ); 
+ 
+    CREATE TABLE Employee( 
+    ssn CHAR(9) NOT NULL, 
+    lastname CHAR(25) NOT NULL, 
+    firstname VARCHAR(25) NOT NULL, 
+    mi CHAR(1) NULL, 
+    dob DATETIME NULL, 
+    salary DECIMAL(7,2) NOT NULL, 
+    parkspace INT NULL, 
+    dept SMALLINT NOT NULL, 
+    CONSTRAINT pk_employee PRIMARY KEY(ssn), 
+    CONSTRAINT fk_dept FOREIGN KEY(dept) REFERENCES department(dno) 
+    );
+ 
+    CREATE TABLE IF NOT EXISTS Department(
+    dno SMALLINT NOT NULL, 
+    dname VARCHAR(20),
+    CONSTRAINT pk_department PRIMARY KEY(dno) 
+    ); 
+ 
+    CREATE TABLE MajorList 
+    SELECT student_id AS SID, CONCAT_WS(' ', first_name, last_name) AS Name, major AS Major, ROUND(DATEDIFF(NOW(),DOB) / 365) AS Age 
+    FROM Students; 
+ 
+    CREATE TEMPORARY TABLE FallRegistration AS 
+    SELECT * FROM Registration; 
+ 
+    CREATE TEMPORARY TABLE Customers AS 
+    ENGINE=MEMORY 
+    SELECT * FROM CustomerContacts 
+    WHERE customer_code = 'SCI-CORP'; 
+    -- keyword AS is optional for clarity 
+  
+    /* ALTER TABLE */ 
+ 
+    ALTER TABLE Courses  
+    ADD CONSTRAINT pk_course_number PRIMARY KEY(course_number); 
+ 
+    ALTER TABLE Registration  
+    ADD CONSTRAINT fk_course FOREIGN KEY(course_id)  
+    REFERENCES Courses(course_number);  
+ 
+    ALTER TABLE Products  
+    DROP sex; 
+ 
+    ALTER TABLE Employee 
+    CHANGE eParkSpace eParkSpace SMALLINT, 
+    ADD eGender CHAR(1) NULL, 
+    ADD HireDate DATETIME NULL;  
+    -- MODIFY can only change the data type not the field name 
+  
+    /* RENAME TABLE */ 
+  
+    RENAME TABLE 
+    MyTable TO MyNewTable; 
+ 
+    /* DESCRIBE */ 
+ 
+    DESC MyNewTable; 
+    -- same as DESCRIBE MyNewTable or SHOW COLUMNS FROM my_table; 
+  
+    /* INSERT */ 
+ 
+    INSERT INTO Products(product_code, name, weight, price) 
+    VALUES 
+    ('P123', 'Pizz-o Pan', 1.02,19.99), 
+    ('X52', 'Widget', 3.57,29.99 ), 
+    ('CAT333', 'Kitty Stroller', 18.00, 59.99); 
+  
+    /* DELETE */ 
+ 
+    DELETE FROM RegFall 
+    WHERE course_id != 'INFO1511'; 
+  
+    /* UPDATE */ 
+ 
+    UPDATE Assignment 
+    SET work_hours = 25.00, 
+	    hours_planned = 35.00 
+    WHERE (emp_ssn = '222-14-2068' && proj_num = 4); 
+  
+    /* REPLACE */ 
+  
+    /* Loading Data From A File */ 
+ 
+    LOAD DATA INFILE 'C:/assignment.txt' 
+    INTO TABLE Assignment 
+    FIELDS TERMINATED BY ',' 
+    IGNORE 1 LINES 
+    (hoursPlanned,empSSN,projNum,workHours); 
+ 
+    -- From outside of MySQL: 
+    -- C:\&#62; Mysql -uroot -pcit_1511 &#60;c:\Lab4Script.sql -- From within MySQL
+    -- mysql&#62; \. c:\createriverbend.txt;  
+   
+    /* Transactions */ 
+
+    /* Indexes */
+
+    ALTER TABLE my_table
+    ADD UNIQUE INDEX(customer_code);
+    ALTER TABLE my_table
+    ADD INDEX(first_name(5));
+    CREATE INDEX cust_code_idx
+    ON my_table(customer_code);
+    SHOW INDEXES FROM my_table;
+    DROP INDEX cust_code_idx
+    ON my_table;
+    -- column name not needed for primary key
+    ALTER TABLE my_table DROP PRIMARY KEY;
+    -- Compound INDEX
+    ALTER TABLE my_table ADD INDEX(weight, price);
+    CREATE INDEX prod_weight_price ON my_table(price, weight);
+    -- FULLTEXT INDEX
+    ALTER TABLE my_table ADD FULLTEXT(last_name);
+    SELECT * FROM my_table
+    WHERE MATCH (last_name) AGAINST ('Weaver');
+    -- MyISAM only, not InnoDB. Foreign Key constraint available InnoDB only, not MyISAM
+
+    /* *** Managing User Access ******************* */
+
+    -- tables_priv
+    CREATE USER napes@localhost IDENTIFIED BY 'Napes_Password1';
+    SET PASSWORD FOR napes@localhost = 'NewPassword';
+    -- or, if logged in,
+    SET PASSWORD = 'NewPassword';
+    GRANT SELECT, INSERT
+    ON my_db.my_table
+    TO 'napes@%'
+    WITH GRANT OPTION;
+    REVOKE INSERT
+    ON my_db.my_table
+    FROM napes@localhost;
+    SHOW GRANTS FOR napes@localhost;
+    REVOKE ALL PRIVILEGES ON *.* FROM napes@localhost;
+    DROP USER napes@localhost;
+    FLUSH PRIVILEGES;
+ 
+    /* *** List Constraints *********************** */  
+
+    SELECT * FROM 
+    INFORMATION_SCHEMA.TABLE_CONSTRAINTS 
+    WHERE CONSTRAINT_SCHEMA = 'Temp_DB'; 
+    SELECT CONCAT(TABLE_NAME, '.', column_name) AS 'Foreign Key',  
+    CONCAT(REFERENCED_TABLE_NAME, '.', REFERENCED_COLUMN_NAME) AS 'References'  
+    FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE  
+    WHERE REFERENCED_TABLE_NAME IS NOT NULL AND TABLE_SCHEMA = 'Temp_DB' AND TABLE_NAME = 'Employee';  
+
+    /* ******************************************** */  
+
+    /*
+    Joining 3+ tables
+    There is a good example of a 3-table JOIN on page 113 in the book.  Basically, it breaks down like this:
+    FROM tableA JOIN tableB on A_PK=B_FKa
+                        JOIN tableC on C_PK=B_FKc
+    A -- 1:N -- B -- N:1 -- C (image the little boxes around A,B and C)
+    I think about JOINs this way:  the word "JOIN" indicates a drawing of the line between the tables, and the ON indicates where to begin and end the line.
+    */
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    <footer>Return to <a href="index.html" title="Return to the home page">home page</a></footer>
+</body>
+</html>

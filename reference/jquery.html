@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Napes Weaver -->
+<head>
+    <title>jQuery</title>
+    <meta charset="utf-8" />
+    <!-- For iPhone, Andriod smartphone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!--[if lt IE 9]>
+        <script>
+            document.createElement("article");
+            document.createElement("aside");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("main");
+            document.createElement("nav");
+            document.createElement("section");
+        </script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="notes.css" />
+</head>
+<body>
+    <h1 id="top">jQuery</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Home Page">Home</a></li>
+            <!--<li><a href="../index.html" title="RPNapes">RPNapes</a></li>-->
+            <li>|</li>
+            <li><a href="csharp.html" title="C#">C#</a></li>
+            <li>|</li>
+            <li><a href="css.html" title="CSS">CSS</a></li>
+            <li>|</li>
+            <li><a href="hardware.html" title="Hardware">Hardware</a></li>
+            <li>|</li>
+            <li><a href="html.html" title="HTML">HTML</a></li>
+            <li>|</li>
+            <li><a href="java.html" title="Java">Java</a></li>
+            <li>|</li>
+            <li><a href="javascript.html" title="JavaScript">JavaScript</a></li>
+            <li>|</li>
+            <li><a href="jquery.html" title="jQuery">jQuery</a></li>
+            <li>|</li>
+            <li><a href="linux.html" title="Linux">Linux</a></li>
+            <li>|</li>
+            <li><a href="mysql.html" title="MySQL">MySQL</a></li>
+            <li>|</li>
+            <li><a href="networking.html" title="Networking">Networking</a></li>
+            <li>|</li>
+            <li><a href="python.html" title="Python">Python</a></li>
+            <li>|</li>
+            <li><a href="windows.html" title="Windows">Windows</a></li>
+        </ul>
+    </nav>
+
+    <h2>jQuery</h2>
+    <p>// <a href="https://code.jquery.com/" target="_blank" title="code.jquery.com">jQuery CDN</a></p>
+
+    <h3>// Targeting</h3>
+    <p>// <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference" title="developer.mozilla.org/en-US/docs/Web/CSS/Reference" target="_blank">CSS Reference</a></p>
+    <ul>
+        <li>$("#wrapper").css("width", 500);</li>
+        <li>$("#p_two").css({ "background": "url('repeatBkgrnd.png') repeat-y" });</li>
+        <li>$("a").css({ "border-color": "black", "border-width": "1px", "border-style": "solid" });</li>
+        <li>$(#tableData a").css("color", "green"); // a tag inside #tableData</li>
+        <li>$("em + a").css("color", "orange"); // a after em</li>
+        <li>$(".myClass > em").css("color", "gray"); // em that are childeren of .myClass</li>
+        <li>$("#oListIndent li:nth-child(3)").css("color", "red"); // 3rd li in #oListIndent</li>
+        <li>$("li[name]").html("Yabba Dabba Dooo!"); // li tags with name attributes</li>
+        <li>$("input[type='text']#fName").val("Napes"); // Change value in text input element #fName</li>
+        <li>$("a[href*='google']").css("font-weight", "bolder"); // href contains 'google'</li>
+        <li>$("img[alt^='NTT']").width(150).height(150); // img alt begins with 'NTT'</li>
+        <li>$("a[href$='pdf']").css("color", "red"); // href ends with 'pdf'</li>
+        <li>$("#tableData tr:even").css("background-color", "#FFFDD0"); // even rows</li>
+        <li>$("#tableData tr:odd").css("background-color", "#F0F8FF"); // odd rows</li>
+        <li>$("#tableData tr:first").css("color", "white"); // First matching element</li>
+        <li>$("#tableData tr:last").css("color", "white"); // Last matching element</li>
+        <li>$("a:contains(gravida)").css("color", "blue"); // contains 'gravida'</li>
+        <li>$("oListTypes li:not(:contains(and))".css("color", "red"); // does not contain 'and'</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Attributes</h3>
+    <ul>
+        <li>$("p:has(i)").hide(); // every p that has i tag inside it</li>
+        <li>alert($("p:has(i)").html());</li>
+        <li>$("p:has(i)").html(&#60;i&#62;normal text&#60;/i&#62;).show();</li>
+        <li>$("p:has(i)").append("I go at the end");</li>
+        <li>$("p:has(i)").prepend("I go at the begining");</li>
+        <li>$("p:has(i)").before("&#60;p id='before_p'&#62;A new paragraph before&#60;/p&#62;");</li>
+        <li>$("p:has(i)").after("&#60;p id='after_p'&#62;A new paragraph after&#60;/p&#62;");</li>
+        <li>$("#after_p).click(function() { $(this).remove(); });</li>
+        <li>$("#before_p).click(function() { $(this).replaceWith("&#60;p&#62;Hallo&#60;/p&#62;"); });</li>
+        <li>$"("#oListIndent li").each(function(index) { let inputListStuff = $("#listStuff").val(); $("#listStuff").val(inputListStuff + ", " + $(this).text()); });</li>
+        <li>$("#oListIndent li").addClass("Star_Trek");</li>
+        <li>$("#oListIndent li").click(function() { $(this).toggleClass("highlight"); let bgColor = $(this).css("background-color"); $("input[type=text]#fName").val(bgColor); });</li>
+        <li>$(#logo2").click(function() { let imgName = $(this).attr("src"); $("input[type=text]#fName").val(imgName); };</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Events</h3>
+    <ul>
+        <li>.mouseover(function() { $("#logo2").attr("src", "ntt-logo-horz.png"); });</li>
+        <li>.mouseout()</li>
+        <li>.hover(function() { $("h2").css("color": "gree"); }, function() { $("h2").css("color": "black"); });</li>
+        <li>.dblclick()</li>
+        <li>$(document).click(function(e) { $("#mouseXPos").val(e.pageX); $("#mouseYPos").val(e.pageY); })</li>
+        <li>$(document).mousemove(function(e) { $("#mouseMovX").val(e.screenX); $("#mouseMovY").val(e.screenY); })</li>
+        <li>$(document).keepress(function(e) { let pressed = String.fromCharCode(e.which); $("#pressed").val(keyPressed); })</li>
+        <li>.blurr()</li>
+        <li>.change()</li>
+        <li>.focus()</li>
+        <li>.select()</li>
+        <li>.on(events [,selector] [,data], handler)</li>
+        <li>.ready()</li>
+        <li>.resize()</li>
+        <li>.scroll()</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Animation</h3>
+    <p>// <a href="https://api.jquery.com/category/effects/" title="api.jquery.com/category/effects" target="_blank">Effects</a></p>
+    <ul>
+        <li>$("#p_one").click(function() { $(this).hide() });</li>
+        <li>$("#p_two").click(function() { $(this).fadeOut(2000) });</li>
+        <li>.fadeToggle(2000)</li>
+        <li>.fadeTo('slow', .5)</li>
+        <li>.slideUp()</li>
+        <li>.slideDown()</li>
+        <li>.animate({ left: 300, opacity: .5, "font-size": "22px" }, 2000, "easeInQuad", function() { alert('Done!') }); // Position set to relative in CSS</li>
+
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// jQuery AJAX</h3>
+    <pre><code>
+    $("document").ready(function() {
+        $("#oneButton").on("click", getInfoFromServer);
+        $("#twoButton").on("click", getDblFromServer);
+        $("#threeButton").on("click", getXmlFromServer);
+    });
+    function getInfoFromServer() {
+        $.ajax({
+            type: "GET",
+            url: "textFromServer.txt",
+            success: postToPage
+        });
+    }
+    function postToPage(data, status) {
+        $("#first").text(data);
+    }
+    function getDblFromServer() {
+        $("span").load("getDouble.php",
+            $("#theForm").serializeArray());
+    }
+    function getXmlFromServer() {
+        $.ajax({
+            type: "GET",
+            url: "customer.xml",
+            datatype: "xml",
+            success: postToPageTwo
+        });
+    }
+    function postToPageTwo(data) {
+        $(data).find("customer").each(function() {
+            let id = $(this).attr("id");
+            let fName = $(this).find("fName").text();
+            let lName = $(this).find("lName").text();
+            let street = $(this).find("street").text();
+            let city = $(this).find("city").text();
+            let zip = $(this).find("zip").text();
+
+            $('&#60;div class="fName"&#62;&#60;/div&#62;').html(fName).appendTo('#customers');
+            $('&#60;div class="lName"&#62;&#60;/div&#62;').html(lName).appendTo('#customers');
+            $('&#60;div class="street"&#62;&#60;/div&#62;').html(street).appendTo('#customers');
+            $('&#60;div class="city"&#62;&#60;/div&#62;').html(city).appendTo('#customers');
+            $('&#60;div class="zip"&#62;&#60;/div&#62;').html(zip).appendTo('#customers');
+        });
+    }</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// jQuery UI</h3>
+    <p>// <a href="https://jqueryui.com/themeroller/" title="jqueryui.com/themeroller" target="blank">UI Themes</a></p>
+    <h4>// Menu</h4>
+    <pre><code>
+    $(document).ready(function() {
+        $("#shMenu").menu({
+            position: {
+                my: "center top",
+                at: "center bottom"
+            }
+        });
+    });</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Accordion</h4>
+    <pre><code>
+    $(#accordion").accordion({
+        animate: 1500,
+        active: 1,
+        collapsible: true,
+        event: "click",
+        heightStyle: "content"
+    });</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Tabs</h4>
+    <pre><code>
+    $("#shTabs").tabs({
+        event: "click",
+        show: "fadeIn",
+        hide: "fadeOut",
+        active: 3,
+        collapsible: true,
+        heightStyle: "auto"
+    });</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Dialog</h4>
+    <pre><code>
+    $("#customDialog").dialog({
+        draggable: true,
+        resizeable: false,
+        height: 300,
+        width: 300,
+        postion: {
+            my: 'center top',
+            at: 'center bottom',
+            of: "#openDialog"
+        },
+        show: 1000,
+        hide: 1000,
+        autoOpen: false,
+        buttons: {
+            "OK": function() {
+                $("#openDialog").html("You clicked OK");
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#openDialog").click(function() {
+        $("#customDialog").dialog("open");
+    });</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Tool Tip</h4>
+    <pre><code>
+    $("[title]").tooltip();</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Select Menu</h4>
+    <pre><code>
+    $("#present").selectmenu({ width: 200 });</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Buttons</h4>
+    <pre><code>
+    $("#randButton").button();</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Radio Buttons</h4>
+    <pre><code>
+    $("#radioPresnets").buttonset();</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Date Picker</h4>
+    <pre><code>
+    $("#birthday").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "MM dd, yy",
+        numberOfMonths: 1,
+        maxDate: 365,
+        minDate: -3650
+    });</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4>// Draggable / Droppable</h4>
+    <pre><code>
+    $("#toy1").draggable();
+    $("#cartDiv").droppable({
+        activeClass: "highlight",
+        hoverClass: "hverDroppable",
+        drop: function(event, ui) {
+            ui.helper.hide("fade");
+            let itemAlt = $(ui.draggable).attr("alt");
+            alert("Item added: " + itemAlt);
+        },
+        accetp: ".toy",
+        disabled: false,
+        activate: function(event, ui) {
+            $("#cartMsg").remove();
+            $(this).append("&#60;span id='cartMsg'&#62;Drop Toy Here&#60;/span&#62;")
+        },
+        deactivate: function(event, ui) {
+            $("#cartMsg").remove();
+            $(this).append("&#60;span id='cartMsg'&#62;You want it!&#60;/span&#62;")
+        },
+        over: function(event, ui) {
+            $("#cartMsg").remove();
+            $(this).append("&#60;span id='cartMsg'&#62;Drop It&#60;/span&#62;")
+        },
+        out: function(event, ui) {
+            $("#cartMsg").remove();
+            $(this).append("&#60;span id='cartMsg'&#62;NOOOOOOOOOOOOOO!&#60;/span&#62;")
+        }
+    });</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    
+    <footer>Return to <a href="index.html" title="Return to the home page">home page</a></footer>
+</body>
+</html>

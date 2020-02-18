@@ -1,0 +1,1087 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Napes Weaver -->
+<head>
+    <title>Linux</title>
+    <meta charset="utf-8" />
+    <!-- For iPhone, Andriod smartphone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!--[if lt IE 9]>
+        <script>
+            document.createElement("article");
+            document.createElement("aside");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("main");
+            document.createElement("nav");
+            document.createElement("section");
+        </script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="notes.css" />
+</head>
+<body>
+    <h1 id="top">Linux</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Home Page">Home</a></li>
+            <!--<li><a href="../index.html" title="RPNapes">RPNapes</a></li>-->
+            <li>|</li>
+            <li><a href="csharp.html" title="C#">C#</a></li>
+            <li>|</li>
+            <li><a href="css.html" title="CSS">CSS</a></li>
+            <li>|</li>
+            <li><a href="hardware.html" title="Hardware">Hardware</a></li>
+            <li>|</li>
+            <li><a href="html.html" title="HTML">HTML</a></li>
+            <li>|</li>
+            <li><a href="java.html" title="Java">Java</a></li>
+            <li>|</li>
+            <li><a href="javascript.html" title="JavaScript">JavaScript</a></li>
+            <li>|</li>
+            <li><a href="jquery.html" title="jQuery">jQuery</a></li>
+            <li>|</li>
+            <li><a href="linux.html" title="Linux">Linux</a></li>
+            <li>|</li>
+            <li><a href="mysql.html" title="MySQL">MySQL</a></li>
+            <li>|</li>
+            <li><a href="networking.html" title="Networking">Networking</a></li>
+            <li>|</li>
+            <li><a href="python.html" title="Python">Python</a></li>
+            <li>|</li>
+            <li><a href="windows.html" title="Windows">Windows</a></li>
+        </ul>
+    </nav>
+
+    <h2>Bash (Bourne Again SHell) / Terminal Commands</h2>
+    <nav id="nav2">
+        <ul>
+            <li><a href="#A" title="A"><strong>A</strong></a></li>
+            <li><a href="#B" title="B"><strong>B</strong></a></li>
+            <li><a href="#C" title="C"><strong>C</strong></a></li>
+            <li><a href="#D" title="D"><strong>D</strong></a></li>
+            <li><a href="#E" title="E"><strong>E</strong></a></li>
+            <li><a href="#F" title="F"><strong>F</strong></a></li>
+            <li><a href="#G" title="G"><strong>G</strong></a></li>
+            <li><a href="#H" title="H"><strong>H</strong></a></li>
+            <li><a href="#I" title="I"><strong>I</strong></a></li>
+            <li><a href="#J" title="J"><strong>J</strong></a></li>
+            <li><a href="#K" title="K"><strong>K</strong></a></li>
+            <li><a href="#L" title="L"><strong>L</strong></a></li>
+            <li><a href="#M" title="M"><strong>M</strong></a></li>
+            <li><a href="#N" title="N"><strong>N</strong></a></li>
+            <li><a href="#O" title="O"><strong>O</strong></a></li>
+            <li><a href="#P" title="P"><strong>P</strong></a></li>
+            <li><a href="#Q" title="Q"><strong>Q</strong></a></li>
+            <li><a href="#R" title="R"><strong>R</strong></a></li>
+            <li><a href="#S" title="S"><strong>S</strong></a></li>
+            <li><a href="#T" title="T"><strong>T</strong></a></li>
+            <li><a href="#U" title="U"><strong>U</strong></a></li>
+            <li><a href="#V" title="V"><strong>V</strong></a></li>
+            <li><a href="#W" title="W"><strong>W</strong></a></li>
+            <li><a href="#X" title="W"><strong>X</strong></a></li>
+        </ul>
+    </nav>
+
+    <h4 id="A">A</h4>
+    <p><a href="http://ss64.com/bash/alias.html" target="_blank">alias</a> Create an alias: alias [-p] [name[=value] ...]</p>
+    <ul>
+        <li>alias quit='exit'</li>
+        <li>alias -p</li>
+        <li>*Do NOT try to alias cls - wont work</li>
+        <li>*Do NOT alias cl - there is a linux prog by that name</li>
+    </ul>
+    <p>apropos, man -k Search manual for appropriate command</p>
+    <p><a href="http://ss64.com/bash/aspell.html" target="_blank">aspell</a> Spell Checker: aspell check myfile.txt</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="B">B</h4>
+    <p><a href="http://ss64.com/bash/bg.html" target="_blank">bg</a> Send process to background using jobspec: bg %jobspec</p>
+    <ul>
+        <li>To start process in background type: processName &</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="C">C</h4>
+    <p><a href="http://ss64.com/bash/cal.html" target="_blank">cal</a> Calendar</p>
+    <p><a href="http://ss64.com/bash/cat.html" target="_blank">cat</a> Concatenate and display the content of files: cat [-Ans...] [File]...</p>
+    <ul>
+        <li>cat movie.mpeg* > movie.mpeg</li>
+        <li><br /></li>
+        <li>cat > myFile.txt</li>
+        <li>Ctrl+d to quit</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/cd.html" target="_blank">cd</a> Change directory: cd [options] [directory]</p>
+    <ul>
+        <li>cd Change to home directory</li>
+        <li>cd - Change to the previous working directory</li>
+        <li>cd ~username Change to home directory of username</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/chgrp.html" target="_blank">chgrp</a> Change group ownership: chown [options]... :group file...</p>
+    <p><a href="http://ss64.com/bash/chmod.html" target="_blank">chmod</a> Change access permissions</p>
+    <ul>
+        <li>
+            <dl>
+                <dt>Octal: chmod 644 myFile.txt</dt>
+                <dd>sticky bit 1000</dd>
+                <dd>setgid bit 2000</dd>
+                <dd>setuid bit 4000</dd>
+                <dt>Symbolic: chmod u+rw,go-x myFile.txt</dt>
+                <dd>u User, g Group, o Others, a All</dd>
+                <dd>+, -, =</dd>
+                <dd>r, w, x, s setuid or setgid, t sticky bit</dd>
+            </dl>
+        </li>
+    </ul>
+
+    <p><a href="http://ss64.com/bash/chown.html" target="_blank">chown</a>  Change file owner and group: chown [owner] [:group] file...</p>
+    <p>clear Clear terminal screen</p>
+    <p><a href="http://ss64.com/bash/comm.html" target="_blank">comm</a> Compare two sorted files</p>
+    <ul>
+        <li>comm -12 file1.txt file2.txt</li>
+        <li>comm --nocheck-order months.txt months2.txt</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/cp.html" target="_blank">cp</a> Copy: cp [-airuv]... [source] [destination]</p>
+    <p><a href="http://ss64.com/bash/cut.html" target="_blank">cut</a> Divide a file into several parts: cut [-c -d: -f]... [FILE]...</p>
+    <ul>
+        <li>cut -d: -f5 /etc/passwd | cut -c 2-5 > foo.txt</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="D">D</h4>
+    <p><a href="http://ss64.com/bash/date.html" target="_blank">date</a> Display/change date/time: date [option]... [format]</p>
+    <p><a href="http://ss64.com/bash/df.html" target="_blank">df</a> Display free disk space: df [option]... [file]...</p>
+    <p><a href="http://ss64.com/bash/diff.html" target="_blank">diff</a> Display the differences between two files: diff [-c -i -u] FILES</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="E">E</h4>
+    <p><a href="http://ss64.com/bash/echo.html" target="_blank">echo</a> Display message on screen: echo [-e]... [string]...</p>
+    <ul>
+        <li>echo front-{A,B,C}-back</li>
+        <li>echo Number_{1..7}</li>
+        <li>echo {Z..A}</li>
+        <li>echo $((2+4))</li>
+        <li>echo $USER</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/expand.html" target="_blank">expand</a> Convert tabs to spaces</p>
+    <p><a href="http://ss64.com/bash/exit.html" target="_blank">exit</a> Exit from program, shell or log out of network: exit</p>
+    <p><a href="http://ss64.com/bash/export.html" target="_blank">export</a> Set environmental variable</p>
+    <ul>
+        <li>export PS1</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="F">F</h4>
+    <p><a href="http://ss64.com/bash/fg.html" target="_blank">fg</a> Send process to foreground specifying jobspec</p>
+    <p><a href="http://ss64.com/bash/file.html" target="_blank">file</a> Determine file type: file</p>
+    <p><a href="http://ss64.com/bash/find.html" target="_blank">find</a> Search for files that meet a desired criteria</p>
+    <ul>
+        <li>find ~ -type f -name "*.jpg" -size +1M -print | xargs ls -l</li>
+        <li>find ~ -type f -name "*.jpg" -size +1M -delete</li>
+        <li>find ~ -type f -name "*.jpg" -size +1M -exec rm '{}' ';'</li>
+        <li>find ~ \(-type f -not -perm0600\) -or \(-type d -not -perm 0700\)</li>
+        <li>find . -regex '.*[^-_./0-9a-zA-Z].*'</li>
+    </ul>
+
+    <p>free Display memory usage: free [-b|-k|-m|-g|-h]</p>
+    <p><a href="http://ss64.com/bash/ftp.html" target="_blank">ftp</a> File Transfer Protocol: ftp myFileServer</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="G">G</h4>
+    <p><a href="http://ss64.com/bash/grep.html" target="_blank">grep</a> Search files for specific text: grep [-cEhivlLn...] regex [file...]</p>
+    <ul>
+        <li>ls /bin | sort | uniq | grep ntfs</li>
+        <li>grep myText myFile.txt</li>
+        <li>grep -h '[^bg]zip dirlist*.txt</li>
+        <li>grep '^Anchor[^nothese]' ships.txt</li>
+        <li>grep -h '^[A-Z]' capitol.txt</li>
+        <li>grep -i '^..j.r$' usr/share/dict/words</li>
+        <li>echo "(555)123-4567" | grep -E '^\(?[0-9]{3}\)? [0-9]{3}-[0-9]{4}$'</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="H">H</h4>
+    <p><a href="http://ss64.com/bash/hash.html" target="_blank">hash</a> Remember the full pathname of a name argument: hash [-r] [-p filename] [name]</p>
+    <p><a href="http://ss64.com/bash/head.html" target="_blank">head</a> Output the first part of files: head [options]... [file]...</p>
+    <ul>
+        <li>head -5 myFile.txt</li>
+    </ul>
+    <p>help Help for shell builtins</p>
+    <p><a href="http://ss64.com/bash/history.html" target="_blank">history</a> Command History: history -c</p>
+    <p><a href="http://ss64.com/bash/hostname.html">hostname</a> Print or set system name</p>
+    <ul>
+        <li>sudo hostname my-new-computer-name Change computer name temporarily</li>
+        <li>Modifiy &#47;etc&#47;hostname with a text editor to change name permanently</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="I">I</h4>
+    <p><a href="http://ss64.com/bash/id.html" target="_blank">id</a> Print user and group id's: id [options]... [username]</p>
+    <p>info Manual in info format: info [command]</p>
+    <ul>
+        <li>? = command help</li>
+        <li>n = next node</li>
+        <li>p = prev node</li>
+        <li>u = parent node</li>
+        <li>ENTER = follow hyperlink</li>
+        <li>q = quit</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="J">J</h4>
+    <p><a href="http://ss64.com/bash/jobs.html" target="_blank">jobs</a> List active jobs</p>
+    <p><a href="http://ss64.com/bash/join.html" target="_blank">join</a> Join lines on a common (sorted) field as in a relational DB</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="K">K</h4>
+    <p><a href="http://ss64.com/bash/kill.html" target="_blank">kill</a> Kill a process by specifying PID or %jobspec</p>
+    <p><a href="http://ss64.com/bash/killall.html" target="_blank">killall</a> Kill multiple processes by name</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="L">L</h4>
+    <p><a href="http://ss64.com/bash/less.html" target="_blank">less</a> Display output one screen at a time: less [options]</p>
+    <ul>
+        <li>G = move to end</li>
+        <li>1G or g = move to begining</li>
+        <li>/char = search for char</li>
+        <li>n = next occurence of prev search</li>
+        <li>h = help</li>
+        <li>q = quit</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/let.html" target="_blank">let</a> Perform arithmetic on shell variables</p>
+    <p><a href="http://ss64.com/bash/ln.html" target="_blank">ln</a> Create a link to a file: ln [-s]...</p>
+    <p>*a hard link cannot reference a directory or a file outside its own filesystem</p>
+    <p><a href="http://ss64.com/bash/locate.html" target="_blank">locate</a> Find files (updatedb = update locate database)</p>
+    <p><a href="http://ss64.com/bash/ls.html" target="_blank">ls</a> List files: ls [-aFhilrS | -t]... [.. | ~ | /etc]...</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="M">M</h4>
+    <p><a href="http://ss64.com/bash/man.html" target="_blank">man</a> Manual: man [option]... [section] [command]</p>
+    <ol>
+        <li>user commands</li>
+        <li>interfaces for kernel</li>
+        <li>interfaces to C library</li>
+        <li>device nodes and drivers</li>
+        <li>file formats</li>
+        <li>games</li>
+        <li>misc.</li>
+        <li>admin</li>
+    </ol>
+    <p><a href="http://ss64.com/bash/mkdir.html" target="_blank">mkdir</a> Create new directory: mkdir [-p]... [directory]...</p>
+    <ul>
+        <li>mkdir -p playground/myDir-{00{1..9},0{10..99},100}</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/more.html" target="_blank">more</a> Display output one screen at a time, forward only</p>
+    <p><a href="http://ss64.com/bash/mv.html" target="_blank">mv</a> Move or rename files or directories: mv [iuv]... [source] [destination]</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="N">N</h4>
+    <p>netstat Networking information: netstat -r; netstat -ie &#126; ifconfig</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="O">O</h4>
+
+    <h4 id="P">P</h4>
+    <p><a href="http://ss64.com/bash/passwd.html" target="_blank">passwd</a> Modify a user password</p>
+    <p><a href="http://ss64.com/bash/paste.html" target="_blank">paste</a> Merge lines of files: paste [-d:]... [file]...</p>
+    <p><a href="http://ss64.com/bash/ping.html" target="_blank">ping</a> Test a network connection: ping -c5</p>
+    <p>printenv Print environment variables</p>
+    <p><a href="http://ss64.com/bash/printf.html" target="_blank">printf</a> Format and print data</p>
+    <ul>
+        <li>printf %'x\n' "$((2#10001100))"</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/ps.html" target="_blank">ps</a> Process status (gives PID)</p>
+    <p><a href="http://ss64.com/bash/pwd.html" target="_blank">pwd</a> Print Working Directory: pwd [option]...</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="Q">Q</h4>
+
+    <h4 id="R">R</h4>
+    <p><a href="http://ss64.com/bash/read.html" target="_blank">read</a> Read a line from standard input: read -p "Press enter to continue"</p>
+    <p><a href="http://ss64.com/bash/rm.html" target="_blank">rm</a> Remove files: rm [-irfv]... [file]</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="S">S</h4>
+    <p><a href="http://ss64.com/bash/scp.html" target="_blank">scp</a> Secure copy (remote file copy)</p>
+    <p><a href="http://ss64.com/bash/set.html" target="_blank">set</a> View all variables, set shell variables and functions</p>
+    <ul>
+        <li>set PATH="/bin:/usr/bin:/usr/sbin:usr/local/bin"</li>
+    </ul>
+    <p>sftp Secure File Transfer Program</p>
+    <p><a href="http://ss64.com/bash/shutdown.html" target="_blank">shutdown</a> Shutdown or restart linux</p>
+    <ul>
+        <li>shutdown -P now "Bye"</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/sleep.html" target="_blank">sleep</a> Delay for a specified time</p>
+    <p><a href="http://ss64.com/bash/sort.html" target="_blank">sort</a> Sort text files: sort [options] [file...]</p>
+    <ul>
+        <li>sort -t: -k7 /etc/passwd | head</li>
+        <li>sort -k1,1 -k3.7bnr -k3.1bnr -k3.4bnr distros.txt | tee sortAZandDate.txt</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/source.html" target="_blank">source</a> Run commands from file: source filename [arguments]</p>
+    <ul>
+        <li>source .bashrc (same as . .bashrc)</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/ssh.html" target="_blank">ssh</a> Secure Shell client (remote login program)</p>
+    <p><a href="http://ss64.com/bash/stat.html" target="_blank">stat</a> Display file or file system status</p>
+    <p><a href="http://ss64.com/bash/su.html" target="_blank">su</a> Substitute user identity: su[-l|-p] [user] or su -c 'command'</p>
+    <p><a href="http://ss64.com/bash/sudo.html" target="_blank">sudo</a> Execute command as superuser or another user: sudo [command]...</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="T">T</h4>
+    <p><a href="http://ss64.com/bash/tail.html" target="_blank">tail</a> Output the last part of files: tail [options]... [file]...</p>
+    <ul>
+        <li>tail -n 5 myFile.txt</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/tee.html" target="_blank">tee</a> Redirect output to multiple files: tee [options]... [file]...</p>
+    <ul>
+        <li>ls /usr/bin | tee myFile.txt | grep zip</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/top.html" target="_blank">top</a> List processes running on the system</p>
+    <p><a href="http://ss64.com/bash/touch.html" target="_blank">touch</a> Change file timestamps / create file: touch [options]... File...</p>
+    <ul>
+        <li>playground/myDir-{00{1..9},0{10..99},100}/myFile-{A..Z}</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/tr.html" target="_blank">tr</a> Translilterate, squeeze, delete characters</p>
+    <ul>
+        <li>cat lowercasefile | tr a-z A-Z > uppercase.txt</li>
+        <li>tr -d "\r" &#60;dos.txt&#62; unix.txt</li>
+        <li>tr -s "o" &#60;doubleoofile.txt&#62; singleo.txt</li>
+        <li>ROT13: echo "secret text" | tr a-zA-Z n-za-mN-ZA-M</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/traceroute.html" target="_blank">traceroute</a> tracepath, Trace Route to Host</p>
+    <p>tree list directories in tree format: tree -aCdL 1</p>
+    <p><a href="http://ss64.com/bash/type.html" target="_blank">type</a> Identify command type: type [-atp] [name ...]</p>
+    <ul>
+        <li>Executable</li>
+        <li>Shell builtin</li>
+        <li>Shell function</li>
+        <li>Alais</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="U">U</h4>
+    <p><a href="http://ss64.com/bash/alias.html" target="_blank">unalias</a> Remove an alias: unalias [-a] [name ... ]</p>
+    <p><a href="http://ss64.com/bash/umask.html" target="_blank">umask</a> Users file creation mask</p>
+    <p><a href="http://ss64.com/bash/uniq.html" target="_blank">uniq</a> Report or filter out repeated lines in a file: uniq [-c -d -i -fn -sn -u]... [InputFile [OutputFile]]</p>
+    <ul>
+        <li>sort foo.txt foo2.txt | uniq > finalfoo.txt</li>
+    </ul>
+    <p><a href="http://ss64.com/bash/unset.html" target="_blank">unset</a> Remove variable or function names: unset [-fv] [name]</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="V">V</h4>
+
+    <h4 id="W">W</h4>
+    <p><a href="http://ss64.com/bash/wc.html" target="_blank">wc</a> Print byte, word, and line counts: wc [-c|-i|-l|-w]... [file]...</p>
+    <p>wget Retrieve web pages or files via HTTP, HTTPS or FTP</p>
+    <p><a href="http://ss64.com/bash/which.html" target="_blank">which</a> Display users path to a command: which [options] [--] program_name [...]</p>
+    <p>whatis Display brief description of command: whatis [command]...</p>
+    <p><a href="http://ss64.com/bash/who.html" target="_blank">who</a> List all usernames currently logged in: who [options] [file] [am i]</p>
+    <p><a href="http://ss64.com/bash/whoami.html" target="_blank">whoami</a> Display the current user id and name: whoami [options]</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h4 id="X">X</h4>
+    <p><a href="http://ss64.com/bash/xargs.html" target="_blank">xargs</a> Execute command, passing constructed argument list(s): xargs [options] [command]</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Linux File System</h2>
+    <pre><code>     /bin - binaries essential to boot system and run
+     /boot
+        /grub/grub.conf or menu.lst        
+        /RAM disk, boot loader
+        /vmlinuz (kernel)
+     /dev - device files for system
+           (block and charactor type)
+     /etc - configuration files for system        
+        /passwd, group, rc, group, crontab
+        /rc.d/rc.sysinit
+        /bash/bash.rc                        
+        /profile
+        /fstab - devices mounted at boot
+     /home
+        /.bash_profile
+        /.bash_login
+        /.bashrc
+        /.profile
+     /lib - libraries, support for symbolic linking
+     /lost+found - for filesystem recovery
+     /media - temporary mount points (newer systems)
+     /mnt - temporary mount points (older systems)
+     /root - home directory for root (super user)
+     /tmp</code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>File Type</h3>
+    <ul>
+        <li>- Regular file</li>
+        <li>d Directory</li>
+        <li>l Symbolic link</li>
+        <li>c Character special file</li>
+        <li>b Block special file</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>File Mode</h3>
+    <table>
+        <tr class="headings">
+            <th>Mode</th>
+            <th>File</th>
+            <th>Directory</th>
+        </tr>
+        <tr>
+            <td>r</td>
+            <td>open/read</td>
+            <td>list contents (x must be set also)</td>
+        </tr>
+        <tr>
+            <td>w</td>
+            <td>write</td>
+            <td>create/delete/rename contents (x must be set also)</td>
+        </tr>
+        <tr>
+            <td>x</td>
+            <td>execute</td>
+            <td>enter</td>
+        </tr>
+    </table>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>The Terminal</h2>
+    <h3>[username@machinename ~] $</h3>
+    <ul>
+        <li>~ denotes user's home directory</li>
+        <li>$ denotes normal user</li>
+        <li># denotes superuser</li>
+        <li>[\u@\h \W]\$</li>
+        <li><br /></li>
+        <li>Ctrl+Alt+t = open terminal within the GUI</li>
+        <li>Ctrl+Alt+F1 through Ctrl+Alt+F6 = Access the virtual terminals from desktop</li>
+        <li>Atl+F1 through Alt+F7 = switch between virtual terminals Alt+F8 = return to GUI</li>
+        <li>Ctrl+c = Kill process in terminal (INT), Ctrl+z = Suspend process in terminal (TSTP)</li>
+        <li>Tab = Completion</li>
+        <li>Ctrl+l = Clear screen</li>
+        <li>Ctrl+u = Clear prompt</li>
+        <li>Start process in background: processName &</li>
+        <li>Disregard $PATH, search current directory: ./processName</li>
+        <li><br /></li>
+        <li>cAsE sEnSiTiVe...</li>
+    </ul>
+    <p>Do not use spaces in folder and file names -- Linux does not like that at the command line!</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Wildcards * ?</h3>
+    <ul>
+        <li>* any characters</li>
+        <li>? any character</li>
+        <li>[characters] Any character that is a member of the set [characters]</li>
+        <li>[!characters] Any character that is not a member of set [characters]</li>
+        <li>[[:class:]] Any chracter tht is a member of the class</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Redirecting stdin(0), stdout(1) and stderr(2)</h3>
+    <ul>
+        <li>&#60;, &#62; and &#62;&#62; (redirectors)</li>
+        <li>&#62; Redirect stdout from a command to a file</li>
+        <li>&#62;&#62; Redirect and append stdout to file</li>
+        <li>2&#62; Redirect stderr from a command to a file</li>
+        <li>2&#62; /dev/null Send stderr to bit bucket</li>
+        <li>&#60; Redirect stdin: cat -n &#60; myFile.txt</li>
+        <li>Redirect stdout and stderr to one file: ls -l &#62; list.txt 2&#38;&#62;1 or ls -l &#38;&#62; list.txt</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Pipe, tee</h3>
+    <ul>
+        <li>Pipe (filter) one command into another: ls /bin /usr/bin | sort | uniq -d | less</li>
+        <li>tee: Send output to a file as well as the terminal eg: ls /usr/bin | tee myFile.txt</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Escape Characters</h3>
+    <ul>
+        <li>\a Bell</li>
+        <li>\b Backspace</li>
+        <li>\n Newline</li>
+        <li>\r Return carriage</li>
+        <li>\t Tab</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Arithmetic and Base Expansion</h3>
+    <ul>
+        <li>echo $((2+2))4</li>
+        <li>echo $(($((5**2)) * 3))</li>
+        <li>echo five divided by 2 equals 2 $((5/2))</li>
+        <li>echo FromA-{A,B,C}-ToC</li>
+        <li>echo Number{1..5}</li>
+        <li>echo {Z..A}</li>
+        <li>mkdir {2005..2015}-0{1..9} {2009..2015}-{10..12}</li>
+        <li>echo $(ls -l | wc -l)</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Regular Expression Metacharacters ^ $ . ? * + - | [ ] { } ( ) \</h3>
+    <ul>
+        <li>^ $ Anchors </li>
+        <li>. any element</li>
+        <li>? match element zero or one time</li>
+        <li>* match element zero or more times</li>
+        <li>+ match element one or more times</li>
+        <li>-</li>
+        <li>| OR</li>
+        <li>^ NOT when inside [ ]</li>
+        <li>[ ]</li>
+        <li>{ }</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>POSIX Character Classes</h3>
+    <ul>
+        <li>[:alnum:] Alphanumeric character</li>
+        <li>[:alpha:] Alphabetic character</li>
+        <li>[:digit] Numeral</li>
+        <li>[:lower:] Lowercase letter</li>
+        <li>[:upper:] Uppercase letter</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Text Editors</h2>
+    <h3>vi editor</h3>
+    <ul>
+        <li>vi myFile = open/create myFile</li>
+        <li><br /></li>
+        <li>h, j, k, l = move</li>
+        <li>w = forward one word</li>
+        <li>b = back one word</li>
+        <li>nG = goto line n</li>
+        <li>Ctrl+f = forward a screen</li>
+        <li>Ctrl+b = back a screen</li>
+        <li>Ctrl+u = up half screen</li>
+        <li>Ctrl+d =down half screen</li>
+        <li><br /></li>
+        <li>i = Insert mode</li>
+        <li>(Esc = return to Command mode)</li>
+        <li><br /></li>
+        <li>a = append after cursor A = append at line end</li>
+        <li>o = start new line below O = start above</li>
+        <li>r = replace character R = replace till Esc</li>
+        <li>nyy = copy n lines (including current)</li>
+        <li>ndd = cut n lines</li>
+        <li>p = paste</li>
+        <li><br /></li>
+        <li>x = delete</li>
+        <li>dw = delete to end of word</li>
+        <li>D = delete to end of line</li>
+        <li>u = undo</li>
+        <li>Ctrl+r = redo</li>
+        <li>~n = change case of n characters</li>
+        <li><br /></li>
+        <li>:q = quit :q! = quit w/o saving</li>
+        <li>:w [filename] = save [as]</li>
+        <li>:wq = save and quit</li>
+        <li>:x = save and quit</li>
+        <li>:e filename = save, quit and open filename</li>
+        <li>:r = redo</li>
+        <li><br /></li>
+        <li>:s/old/new/g = replace all on line</li>
+        <li>:%s/old/new/g = start at beginning of file</li>
+        <li><br /></li>
+        <li>:! command = run linux command</li>
+        <li><br /></li>
+        <li>:set showmode</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>vim</h3>
+    <p>vi iMproved - a programmers text editor.</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Nano</h3>
+    <p>Nano's ANOther editor, an enhanced free Pico clone.</p>
+    <ul>
+        <li>nano myFile= open/create myFile</li>
+        <li>ctrl+o Enter = save</li>
+        <li>ctrl+x = exit</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Emacs</h3>
+    <p>Text editor that is really an IDE</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Pico</h3>
+    <p>Pico (Pine composer) is a text editor for Unix and Unix-based computer systems</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Scripts</h2>
+    <p>Script must start with the shebang:</p>
+    <ul>
+        <li>#!/bin/bash</li>
+        <li># begins a comment if it isn't the shebang</li>
+    </ul>
+    <p>Script must be executable:</p>
+    <ul>
+        <li>chmod 700, chmod 770 or chmod 777</li>
+    </ul>
+    <p>Script must be on the path:</p>
+    <ul>
+        <li>~/bin or /usr/local/bin or /usr/local/sbin</li>
+        <li>PATH=$PATH:. = adds current location to path</li>
+        <li>. .bashrc = sources the bashrc file</li>
+        <li>Do NOT name script "test" - linux don't like it (test.sc will work tho)</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>If...Then...Else</h3>
+    <pre><code>
+    echo –n “Who is your favorite instructor? “
+    read INST
+    if [ “$INST” = “Killham” ]
+    then
+        echo “Good choice, you get an A!”
+    else
+        echo “ Would you like to rethink your answer?”
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>For Loop</h3>
+    <pre><code>
+    for name in Karen Jo Barb Linda Laurie Kim
+    do
+        echo “Welcome $name”
+    done
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>While Loop</h3>
+    <pre><code>
+    echo –n “Try to guess my favorite instructor “
+    read guess
+    while [ “$guess” != “Schuster” ]; do
+    echo “No, not that one. Try again. “;
+    read guess
+    done
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Example Script</h3>
+    <pre><code>
+    #!/bin/bash
+    clear
+    #echo -n "Enter name of file to create: "    
+    #read myString
+    read -p "Enter name of file to create: " myString
+    touch $myString
+    free > $myString
+    echo >> $myString
+    df >> $myString
+    echo >> $myString
+    echo "Results from ping -c 3 www.unl.edu"  >> $myString
+    ping -c 3 www.unl.edu >> $dateFile
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Installations and Updates</h2>
+    <ul>
+        <li>sudo apt-get install</li>
+        <li>sudo yum install</li>
+        <li>sudo apt-get update</li>
+		<li>sudo apt-get upgrade</li>
+        <li>sudo apt-get remove</li>
+        <li>sudo apt-get purge</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Tarball</h3>
+    <p>sudo tar -cvpzf [Create Verbose PreservePermissions z=compress Filename] backup.tar.gz &#45;&#45;exclude=/mnt /directoryToBeBackedUp</p>
+    <p>sudo tar -xvpzf [eXtract Verbose PreservePermissions z=uncompress File] backup.tar.gz -C /recoveryDirector [ChangeDirectory]</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Cron Job</h3>
+    <pre><code>
+    sudo crontab -e & choose text editor
+    m h dom m dow comm
+    Min 0-59
+    Hour 0-23
+    DayOfMonth 1-31
+    Month 1-12
+    DayOfWeek 0-6 (Sun to Sat)
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Administration</h2>
+    <pre><code>
+    su = change ID or become Super User
+    sudo = Super User Do
+    gksudo = for apps using a GUI
+    visudo = edits sudoers file
+    sudo adduser napes
+    sudo userdel napes
+    sudo passwd = change password
+    sudo vi /etc/passwd = etc/passwd contains user names, home directories...
+    sudo groupadd napesGroup
+    sudo groupdel napesGroup
+    sudo adduser napes napesGroup
+    sudo deluser napes napesGroup
+    sudo vi /etc/group
+    chmod 777 example.txt = gives Read, Write & eXecute permissions to user, group and others to file example.txt eg. 111 111 111
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>System</h2>
+    <pre><code>
+    sudo apt-get install
+    ubuntu-restricted-extras
+    echo $SHELL = Shell you are using
+    BASH (Bourne-Again SHell) freeware, most common, Brian Fox and Chet Ramey.
+    CSH (C SHell) The C shell's syntax and usage are very similar to the C programming language.
+    KSH (Korn SHell) David Korn	AT & T Bell Labs.
+    TCSH enhanced, compatible version of the Berkeley UNIX C shell (CSH).
+    ps = report a snapshot of the current process
+    es
+    pa aux = List all processes in detail running on the system
+    uname = get name and information about current kernel
+    version = kernel info
+    df -h = report file system disk space usage
+    df -i
+    du -cksh = size of current folder
+    du -cksh file.examp = size of file.examp
+    sudo du -s -h -x /* = estimate file space usage
+    sudo top  (+ h) = "task manager"
+    ipcs -m = provide info on ipc facilities
+    inxi -xG =
+    sleep
+    kill PID
+    killall
+    processName
+    xkill = starts GUI for killing windows
+    cd /boot/grub/
+    vi menu.lst
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Formatting Floppy Disk</h3>
+    <pre><code>
+    &#36; dd bs=512 count=2880 if=&#47;dev&#47;zero of=floppy.img
+    &#36; mkfs.msdos floppy.img
+    &#36; sudo mount -o loop image.img &#47;media&#47;floppy&#47;
+    &#60;&#60;&#60;copy your files on to the "drive" now&#62;&#62;&#62;
+    &#36; sudo umount &#47;media&#47;floppy&#47;
+        </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Networking</h2>
+    <pre><code>
+    whois
+    netstat -print network connections, routing tables, interface...
+    sudo ifconfig
+    sudo dhclient = release/renew ip address
+    sudo vi /etc/resolv.conf
+    sudo vi/etc/network/interfaces
+    sudo /bin/hostname (or just hostname)
+    sudo /bin/hostname name = renames computer to "name"
+    sudo /etc/init.d/exampleService stop
+    sudo /etc/init.d/exampleService start
+    sudo /etc/init.d/exampleService restart
+    sudo service networking restart
+    sudo vim /etc/vsftpd.conf
+    sudo service vsftpd restart
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>WireShark</h3>
+    <pre><code>
+    sudo apt-get install wireshark libcap2-bin
+    sudo groupadd wireshark
+    sudo adduser napes wireshark
+    sudo chgrp wireshark /usr/bin/dumpcap
+    sudo chmod 755 /usr/bin/dumpcap
+    sudo setcap cap_net_raw,cap_net_admin=eip /usr/bin/dumpcap
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Firewall</h3>
+    <pre><code>
+    sudo apt-get install gufw
+    turn on
+    add rules (show extended options) + :
+    select number 0, deny, service, SSH
+        or
+    sudo ufw
+    status verbose
+    sudo ufw allow/deny x.x.x.x
+    sudo ufw allow/deny [port#]
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Linux Mint</h2>
+    <h3>Unable to Mount Floppy Error [solved]:</h3>
+    <p>sudo mateconf-editor apps\caja\preferences\media_automount (uncheck),</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+	<h3>Decryption Prompt Not Appearing [solved]:</h3>
+	<p>sudo vi /etc/default/grub</p>
+	<p>Add this line</p>
+	<p>GRUB_GFXPAYLOAD_LINUX=text</p>
+	<p>sudo update-grub</p>
+	<p>sudo reboot</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+        
+    <h3>Kernel Won't Update - Drive Full [solved]:</h3>
+    <p>Separate partition for /boot seems to for LVM and/or "full" disk encryption on the rest of the drive.</p>
+    <p>The likely cause of this issue is too many previous kernels installed. The /boot directory contains all of the kernel images. The separate partition for /boot is only around 227MB in size. This partition is full. Ubuntu issues kernel updates which bump the version number in the package name fairly frequently even for long term stable versions, so over time if you keep the system up to date, the /boot directory will grow.</p>
+    <p>Find the currently running kernel with:</p>
+    <p>uname -r</p>
+    <p>List all installed kernels with:</p>
+    <p>aptitude search ~ilinux-image</p>
+    <p>This may also return some packages that aren't kernels. There is usually no need for more than two kernels to be installed - the kernel in use and, as a fallback, its predecessor.</p>    
+    <p>Remove older kernels, one by one, like this:</p>
+    <p>sudo apt-get autoremove linux-image-3.2.0-23-generic</p>
+    <p>Substitute "3.2.0-23-generic" with the actual kernel version you want to remove! Don't remove packages such as linux-image-generic! Do not to remove the currently running kernel!</p>    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>NVIDIA</h3>
+    <p>sudo apt-get install nvidia-current-updates</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Commandes Dispo (TI-89 Titanium)</h2>
+    <p>Voici la liste des commandes disponibles pour le kernel (dans le terminal):</p>
+    <pre><code>
+    cd
+    chroot - change root directory?
+    copy
+    cp
+    echo
+    getfold
+    hostname
+    hwclock - query or set the hardware clock (RTC)
+    logname
+    ls
+    mcd
+    mdel
+    mkdir
+    mmd
+    mrd
+    netstat
+    rm
+    rmdir
+    rusers
+    sleep
+    uname
+    version
+    who
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+		
+        <!--<h3>Shell/Terminal/CLI (command line interface) Commands for bash (Bourne Again SHell)</h3>
+        <pre>
+    A
+        <a href="http://ss64.com/bash/apt-get.html">apt-get</a>  Search for and install software packages (Debian/Ubuntu)
+        <a href="http://ss64.com/bash/aptitude.html">aptitude</a> Search for and install software packages (Debian/Ubuntu)
+        <a href="http://ss64.com/bash/awk.html">awk</a>      Find and Replace text, database sort/validate/index
+    B
+        <a href="http://ss64.com/bash/basename.html">basename</a> Strip directory and suffix from filenames
+        bash     GNU Bourne-Again SHell
+        <a href="http://ss64.com/bash/bc.html">bc</a>       Arbitrary precision calculator language
+        <a href="http://ss64.com/bash/break.html">break</a>    Exit from a loop •
+        <a href="http://ss64.com/bash/builtin.html">builtin</a>  Run a shell builtin
+        <a href="http://ss64.com/bash/bzip2.html">bzip2</a>    Compress or decompress named file(s)
+    C
+        <a href="http://ss64.com/bash/case.html">case</a>     Conditionally perform a command
+        <a href="http://ss64.com/bash/cfdisk.html">cfdisk</a>   Partition table manipulator for Linux
+        <a href="http://ss64.com/bash/chroot.html">chroot</a>   Run a command with a different root directory
+        <a href="http://ss64.com/bash/chkconfig.html">chkconfig</a> System services (runlevel)
+        <a href="http://ss64.com/bash/cksum.html">cksum</a>    Print CRC checksum and byte counts
+        <a href="http://ss64.com/bash/cmp.html">cmp</a>      Compare two files
+        <a href="http://ss64.com/bash/command.html">command</a>  Run a command - ignoring shell functions •
+        <a href="http://ss64.com/bash/continue.html">continue</a> Resume the next iteration of a loop •
+        <a href="http://ss64.com/bash/cron.html">cron</a>     Daemon to execute scheduled commands
+        <a href="http://ss64.com/bash/crontab.html">crontab</a>  Schedule a command to run at a later time
+        <a href="http://ss64.com/bash/csplit.html">csplit</a>   Split a file into context-determined pieces
+    D
+        <a href="http://ss64.com/bash/dc.html">dc</a>       Desk Calculator
+        <a href="http://ss64.com/bash/dd.html">dd</a>       Convert and copy a file, write disk headers, boot records
+        <a href="http://ss64.com/bash/ddrescue.html">ddrescue</a> Data recovery tool
+        <a href="http://ss64.com/bash/declare.html">declare</a>  Declare variables and give them attributes •
+        <a href="http://ss64.com/bash/diff3.html">diff3</a>    Show differences among three files
+        <a href="http://ss64.com/bash/dig.html">dig</a>      DNS lookup
+        <a href="http://ss64.com/bash/dir.html">dir</a>      Briefly list directory contents
+        <a href="http://ss64.com/bash/dircolors.html">dircolors</a> Colour setup for `ls'
+        <a href="http://ss64.com/bash/dirname.html">dirname</a>  Convert a full pathname to just a path
+        <a href="http://ss64.com/bash/dirs.html">dirs</a>     Display list of remembered directories
+        <a href="http://ss64.com/bash/dmesg.html">dmesg</a>    Print kernel &amp; driver messages
+        <a href="http://ss64.com/bash/du.html">du</a>       Estimate file space usage
+    E
+        <a href="http://ss64.com/bash/egrep.html">egrep</a>    Search file(s) for lines that match an extended expression
+        <a href="http://ss64.com/bash/eject.html">eject</a>    Eject removable media
+        <a href="http://ss64.com/bash/enable.html">enable</a>   Enable and disable builtin shell commands •
+        <a href="http://ss64.com/bash/env.html">env</a>      Environment variables
+        ethtool  Ethernet card settings
+        <a href="http://ss64.com/bash/eval.html">eval</a>     Evaluate several commands/arguments
+        <a href="http://ss64.com/bash/exec.html">exec</a>     Execute a command
+        <a href="http://en.wikipedia.org/wiki/Expect">expect</a>   Automate arbitrary applications accessed over a terminal
+        <a href="http://ss64.com/bash/expr.html">expr</a>     Evaluate expressions
+    F
+        <a href="http://ss64.com/bash/false.html">false</a>    Do nothing, unsuccessfully
+        <a href="http://ss64.com/bash/fdformat.html">fdformat</a> Low-level format a floppy disk
+        <a href="http://ss64.com/bash/fdisk.html">fdisk</a>    Partition table manipulator for Linux
+        <a href="http://ss64.com/bash/fgrep.html">fgrep</a>    Search file(s) for lines that match a fixed string
+        <a href="http://ss64.com/bash/fmt.html">fmt</a>      Reformat paragraph text
+        <a href="http://ss64.com/bash/fold.html">fold</a>     Wrap text to fit a specified width.
+        <a href="http://ss64.com/bash/for.html">for</a>      Expand <var>words</var>, and execute <var>commands</var>
+        format   Format disks or tapes
+        <a href="http://ss64.com/bash/fsck.html">fsck</a>     File system consistency check and repair
+        <a href="http://ss64.com/bash/function.html">function</a> Define Function Macros
+        <a href="http://ss64.com/bash/fuser.html">fuser</a>    Identify/kill the process that is accessing a file
+    G
+        <a href="http://ss64.com/bash/awk.html">gawk</a>     Find and Replace text within file(s)
+        <a href="http://ss64.com/bash/getopts.html">getopts</a>  Parse positional parameters
+        <a href="http://ss64.com/bash/groupadd.html">groupadd</a> Add a user security group
+        <a href="http://ss64.com/bash/groupdel.html">groupdel</a> Delete a group
+        <a href="http://ss64.com/bash/groupmod.html">groupmod</a> Modify a group
+        <a href="http://ss64.com/bash/groups.html">groups</a>   Print group names a user is in
+        <a href="http://ss64.com/bash/gzip.html">gzip</a>     Compress or decompress named file(s)
+    H        
+        <a href="http://ss64.com/bash/htop.html">htop</a>     Interactive process viewer
+    I
+        <a href="http://ss64.com/bash/iconv.html">iconv</a>    Convert the character set of a file
+        <a href="http://ss64.com/bash/if.html">if</a>       Conditionally perform a command
+        <a href="http://ss64.com/bash/ifconfig.html">ifconfig</a> Configure a network interface
+        <a href="http://ss64.com/bash/ifup.html">ifdown</a>   Stop a network interface
+        <a href="http://ss64.com/bash/ifup.html">ifup</a>     Start a network interface up
+        <a href="http://ss64.com/bash/import.html">import</a>   Capture an X server screen and save the image to file
+        <a href="http://ss64.com/bash/install.html">install</a>  Copy files and set attributes
+        <a href="http://ss64.com/bash/ip.html">ip</a>       Routing, devices and tunnels
+
+    L
+        <a href="http://ss64.com/bash/link.html">link</a>     Create a link to a file
+        <a href="http://ss64.com/bash/local.html">local</a>    Create variables •
+        <a href="http://ss64.com/bash/logname.html">logname</a>  Print current login name
+        <a href="http://ss64.com/bash/logout.html">logout</a>   Exit a login shell •
+        <a href="http://ss64.com/bash/look.html">look</a>     Display lines beginning with a given string
+        <a href="http://ss64.com/bash/lpc.html">lpc</a>      Line printer control program
+        <a href="http://ss64.com/bash/lpr.html">lpr</a>      Off line print
+        lprint   Print a file
+        lprintd  Abort a print job
+        lprintq  List the print queue
+        <a href="http://ss64.com/bash/lprm.html">lprm</a>     Remove jobs from the print queue
+        <a href="http://ss64.com/bash/lsof.html">lsof</a>     List open files
+    M
+        make     Recompile a group of programs
+        <a href="http://ss64.com/bash/mkfifo.html">mkfifo</a>   Make FIFOs (named pipes)
+        mkisofs  Create an hybrid ISO9660/JOLIET/HFS filesystem
+        <a href="http://ss64.com/bash/mknod.html">mknod</a>    Make block or character special files
+        <a href="http://ss64.com/bash/most.html">most</a>     Browse or page through a text file
+        <a href="http://ss64.com/bash/mount.html">mount</a>    Mount a file system
+        <a href="http://ss64.com/bash/mtools.html">mtools</a>   Manipulate MS-DOS files
+        <a href="http://ss64.com/bash/mtr.html">mtr</a>      Network diagnostics (traceroute/ping)
+        <a href="http://ss64.com/bash/mmv.html">mmv</a>      Mass Move and rename (files)
+    N
+        <a href="http://ss64.com/bash/nice.html">nice</a>     Set the priority of a command or job
+        <a href="http://ss64.com/bash/nl.html">nl</a>       Number lines and write files
+        <a href="http://ss64.com/bash/nohup.html">nohup</a>    Run a command immune to hangups
+        <a href="http://ss64.com/bash/notify-send.html">notify-send</a>  Send desktop notifications
+        <a href="http://ss64.com/bash/nslookup.html">nslookup</a> Query Internet name servers interactively
+    O
+        <a href="http://ss64.com/bash/open.html">open</a>     Open a file in its default application
+        <a href="http://ss64.com/bash/op.html">op</a>       Operator access
+    P
+        pathchk  Check file name portability
+        <a href="http://ss64.com/bash/pkill.html">pkill</a>    Kill processes by a full or partial name.
+        <a href="http://ss64.com/bash/popd.html">popd</a>     Restore the previous value of the current directory
+        <a href="http://ss64.com/bash/pr.html">pr</a>       Prepare files for printing
+        printcap Printer capability database
+        <a href="http://ss64.com/bash/pushd.html">pushd</a>    Save and then change the current directory
+        <a href="http://ss64.com/bash/pv.html">pv</a>       Monitor the progress of data through a pipe
+    Q
+        <a href="http://ss64.com/bash/quota.html">quota</a>    Display disk usage and limits
+        <a href="http://ss64.com/bash/quotacheck.html">quotacheck</a> Scan a file system for disk usage
+        <a href="http://ss64.com/bash/quotactl.html">quotactl</a> Set disk quotas
+    R
+        <a href="http://ss64.com/bash/ram.html">ram</a>      ram disk device
+        <a href="http://ss64.com/bash/rar.html">rar</a>      Archive files with compression
+        <a href="http://ss64.com/bash/rcp.html">rcp</a>      Copy files between two machines
+        readarray Read from stdin into an array variable •
+        <a href="http://ss64.com/bash/readonly.html">readonly</a> Mark variables/functions as readonly
+        reboot   Reboot the system
+        <a href="http://ss64.com/bash/rename.html">rename</a>   Rename files
+        renice   Alter priority of running processes
+        remsync  Synchronize remote files via email
+        <a href="http://ss64.com/bash/return.html">return</a>   Exit a shell function
+        <a href="http://ss64.com/bash/rev.html">rev</a>      Reverse lines of a file
+        <a href="http://ss64.com/bash/rmdir.html">rmdir</a>    Remove folder(s)
+        <a href="http://ss64.com/bash/rsync.html">rsync</a>    Remote file copy (Synchronize file trees)
+    S
+        <a href="http://ss64.com/bash/screen.html">screen</a>   Multiplex terminal, run remote shells via ssh
+        <a href="http://ss64.com/bash/sdiff.html">sdiff</a>    Merge two files interactively
+        <a href="http://ss64.com/bash/sed.html">sed</a>      Stream Editor
+        <a href="http://ss64.com/bash/select.html">select</a>   Accept keyboard input
+        <a href="http://ss64.com/bash/seq.html">seq</a>      Print numeric sequences
+        <a href="http://ss64.com/bash/shift.html">shift</a>    Shift positional parameters
+        <a href="http://ss64.com/bash/shopt.html">shopt</a>    Shell Options
+        <a href="http://ss64.com/bash/slocate.html">slocate</a>  Find files
+        <a href="http://ss64.com/bash/split.html">split</a>    Split a file into fixed-size pieces
+        <a href="http://ss64.com/bash/strace.html">strace</a>   Trace system calls and signals
+        <a href="http://ss64.com/bash/sum.html">sum</a>      Print a checksum for a file
+        <a href="http://ss64.com/bash/suspend.html">suspend</a>  Suspend execution of this shell •
+        <a href="http://ss64.com/bash/sync.html">sync</a>     Synchronize data on disk with memory
+    T
+        <a href="http://ss64.com/bash/tar.html">tar</a>      Store, list or extract files in an archive
+        <a href="http://ss64.com/bash/test.html">test</a>     Evaluate a conditional expression
+        <a href="http://ss64.com/bash/time.html">time</a>     Measure Program running time
+        <a href="http://ss64.com/bash/timeout.html">timeout</a>  Run a command with a time limit
+        <a href="http://ss64.com/bash/times.html">times</a>    User and system times
+        <a href="http://ss64.com/bash/tput.html">tput</a>     Set terminal-dependent capabilities, color, position
+        trap     Run a command when a signal is set(bourne)
+        <a href="http://ss64.com/bash/true.html">true</a>     Do nothing, successfully
+        <a href="http://ss64.com/bash/tsort.html">tsort</a>    Topological sort
+        <a href="http://ss64.com/bash/tty.html">tty</a>      Print filename of terminal on stdin
+    U
+        <a href="http://ss64.com/bash/ulimit.html">ulimit</a>   Limit user resources •
+        umount   Unmount a device
+        <a href="http://ss64.com/bash/uname.html">uname</a>    Print system information
+        <a href="http://ss64.com/bash/unexpand.html">unexpand</a> Convert spaces to tabs
+        <a href="http://ss64.com/bash/units.html">units</a>    Convert units from one scale to another
+        <a href="http://ss64.com/bash/unrar.html">unrar</a>    Extract files from a rar archive
+        <a href="http://ss64.com/bash/unshar.html">unshar</a>   Unpack shell archive scripts
+        <a href="http://ss64.com/bash/until.html">until</a>    Execute commands (until error)
+        uptime   Show uptime
+        <a href="http://ss64.com/bash/useradd.html">useradd</a>  Create new user account
+        <a href="http://ss64.com/bash/userdel.html">userdel</a>  Delete a user account
+        <a href="http://ss64.com/bash/usermod.html">usermod</a>  Modify user account
+        <a href="http://ss64.com/bash/users.html">users</a>    List users currently logged in
+        <a href="http://ss64.com/bash/uuencode.html">uuencode</a> Encode a binary file
+        <a href="http://ss64.com/bash/uuencode.html">uudecode</a> Decode a file created by uuencode
+    V
+        v        Verbosely list directory contents (`ls -l -b')
+        vdir     Verbosely list directory contents (`ls -l -b')
+        <a href="http://ss64.com/vi.html">vi</a>       Text Editor
+        <a href="http://ss64.com/bash/vmstat.html">vmstat</a>   Report virtual memory statistics
+    W
+        <a href="http://ss64.com/bash/wait.html">wait</a>     Wait for a process to complete •
+        <a href="http://ss64.com/bash/watch.html">watch</a>    Execute/display a program periodically
+        <a href="http://ss64.com/bash/whereis.html">whereis</a>  Search the user's $path, man pages and source files for a program
+        <a href="http://ss64.com/bash/while.html">while</a>    Execute commands
+        <a href="http://ss64.com/bash/write.html">write</a>    Send a message to another user
+    X
+        <a href="http://ss64.com/bash/xdg-open.html">xdg-open</a> Open a file or URL in the user's preferred application.
+        <a href="http://ss64.com/bash/yes.html">yes</a>      Print a string until interrupted
+        <a href="http://ss64.com/bash/zip.html">zip</a>      Package and compress (archive) files.
+        <a href="http://ss64.com/bash/source.html">.</a>        Run a command script in the current shell
+        <a href="http://ss64.com/bash/bang.html">!!</a>       Run the last command again
+        <a href="http://ss64.com/bash/rem.html">&#35;&#35;&#35;</a>      Comment / Remark
+    </pre>
+        <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+        <h3>Notes</h3>
+        <p>Need to execute a GUI program from the terminal?  Simply type the program name (case sensitive!) and it will launch.  This will render the current terminal unusable.  Closing the terminal while the program is open will kill the program.  A better way is to background the program, using program_name & and then typing the word exit at the terminal to close it and keep the process running.</p>
+        <p>Need to run a GUI program with root rights from the terminal?  Prefix it with gksudo or gksu and not sudo.  Using sudo to launch GUI applications is a bad habit and should be avoided.</p>
+        <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>-->
+
+    <footer>Return to <a href="index.html" title="Return to the home page">home page</a></footer>
+</body>
+</html>

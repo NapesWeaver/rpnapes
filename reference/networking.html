@@ -1,0 +1,302 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<!-- Napes Weaver -->
+<head>
+    <title>Networking</title>
+    <meta charset="utf-8" />
+    <!-- For iPhone, Andriod smartphone -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<!--[if lt IE 9]>
+        <script>
+            document.createElement("article");
+            document.createElement("aside");
+            document.createElement("footer");
+            document.createElement("header");
+            document.createElement("main");
+            document.createElement("nav");
+            document.createElement("section");
+        </script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="notes.css" />
+	<script src="slideshow.js"></script>
+</head>
+<body>
+    <h1 id="top">Networking</h1>
+    <nav>
+        <ul>
+            <li><a href="index.html" title="Home Page">Home</a></li>
+            <!--<li><a href="../index.html" title="RPNapes">RPNapes</a></li>-->
+            <li>|</li>
+            <li><a href="csharp.html" title="C#">C#</a></li>
+            <li>|</li>
+            <li><a href="css.html" title="CSS">CSS</a></li>
+            <li>|</li>
+            <li><a href="hardware.html" title="Hardware">Hardware</a></li>
+            <li>|</li>
+            <li><a href="html.html" title="HTML">HTML</a></li>
+            <li>|</li>
+            <li><a href="java.html" title="Java">Java</a></li>
+            <li>|</li>
+            <li><a href="javascript.html" title="JavaScript">JavaScript</a></li>
+            <li>|</li>
+            <li><a href="jquery.html" title="jQuery">jQuery</a></li>
+            <li>|</li>
+            <li><a href="linux.html" title="Linux">Linux</a></li>
+            <li>|</li>
+            <li><a href="mysql.html" title="MySQL">MySQL</a></li>
+            <li>|</li>
+            <li><a href="networking.html" title="Networking">Networking</a></li>
+            <li>|</li>
+            <li><a href="python.html" title="Python">Python</a></li>
+            <li>|</li>
+            <li><a href="windows.html" title="Windows">Windows</a></li>
+        </ul>
+    </nav>
+
+    <noscript><h3>*This page requires java script</h3></noscript>
+    
+    <h2>OSI vs TCP</h2>
+    
+    <img src="images/OSI-vs-TCP.jpg" class="slideShow" alt="Networking Slideshow A" />    
+    <ul>
+		<li><a href="images/OSI-vs-TCP.jpg" title="OSI vs TCP"></a></li>
+		<li><a href="images/OSI-TCP-Protocols.jpg" title="OSI / TCP Protocols"></a></li>
+    </ul>
+        
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>IP addressing</h2>
+    <textarea rows="12" cols="36" readonly>
+
+        .  1 - .127   Class A
+        .128 - .191   Class B
+        .192 - .223   Class C
+        .  1   0  0  0  0  0  0  0  1
+        .127   0  1  1  1  1  1  1  1
+        .128   1  0  0  0  0  0  0  0
+        .191   1  0  1  1  1  1  1  1
+        .192   1  1  0  0  0  0  0  0
+        .223   1  1  0  1  1  1  1  1
+        .224   1  1  1  0  0  0  0  0
+        .239   1  1  1  0  1  1  1  1
+    </textarea>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Subnetting</h3>
+    <textarea rows="31" cols="70" readonly>
+
+        128 64 32 16 8  4  2  1
+        .  0   0  0  0  0  0  0  0  0   /24   256 - 2 = 254
+        .128   1  0  0  0  0  0  0  0   /25   128 - 2 = 126
+        .192   1  1  0  0  0  0  0  0   /26    64 - 2 = 62
+        .224   1  1  1  0  0  0  0  0   /27    32 - 2 = 30
+        .240   1  1  1  1  0  0  0  0   /28    16 - 2 = 14
+        .248   1  1  1  1  1  0  0  0   /29     8 - 2 = 6
+        .252   1  1  1  1  1  1  0  0   /30     4 - 2 = 2
+        .254   1  1  1  1  1  1  1  0   /31     2 - 2 = 0  No Host Bits
+        .255   1  1  1  1  1  1  1  1   /32     1 - 2 = 0  No Host Bits
+        *256 - Subnetmask = Subnet Steps
+        & Subnet Step - 1 = Broadcast Address Each Subnet
+        128 64 32 16 8  4  2  1
+        .128   1  0  0  0  0  0  0  0    /1 /9  /17 /25
+        .192   1  1  0  0  0  0  0  0    /2 /10 /18 /26
+        .224   1  1  1  0  0  0  0  0    /3 /11 /19 /27
+        .240   1  1  1  1  0  0  0  0    /4 /12 /20 /28
+        .248   1  1  1  1  1  0  0  0    /5 /13 /21 /29
+        .252   1  1  1  1  1  1  0  0    /6 /14 /22 /30
+        .254   1  1  1  1  1  1  1  0    /7 /15 /23 /31
+        .255   1  1  1  1  1  1  1  1    /8 /16 /24 /32
+        .255   1  1  1  1  1  1  1  1      1 - 2 = 0  No Host Bits
+        .254   1  1  1  1  1  1  1  0      2 - 2 = 0  No Host Bits
+        .252   1  1  1  1  1  1  0  0      4 - 2 = 2
+        .248   1  1  1  1  1  0  0  0      8 - 2 = 6
+        .240   1  1  1  1  0  0  0  0     16 - 2 = 14
+        .224   1  1  1  0  0  0  0  0     32 - 2 = 30
+        .192   1  1  0  0  0  0  0  0     64 - 2 = 62
+        .128   1  0  0  0  0  0  0  0    128 - 2 = 126
+        .  0   0  0  0  0  0  0  0  0    256 - 2 = 254
+    </textarea>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Network Mapping</h2>
+    <ul>
+        <li>DNS</li>
+        <li>host file = C:\Windows\system32\drivers\etc\host</li>
+        <li>opendns</li>
+        <li>Reverse DNS</li>
+        <li>254.254.168.192.in-addr.arpa</li>
+        <li>ICMP - Internet Control Messaging Protocol</li>
+        <li>msconfig</li>
+        <li>system.ini</li>
+        <li>netstat -ano</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Port Scanning</h3>
+    <ul>
+        <li>ipconfig /release</li>
+        <li>ipconfig /renew</li>
+        <li>ipconfig /all</li>
+        <li>C:\> ping 8.8.8.8</li>
+        <li>C:\> tracert 8.8.8.8</li>
+        <li>C:\> nslookup 8.8.8.8</li>
+        <li>C:\> net</li>
+        <li>Turn of SNMP ???</li>
+        <li>Spiceworks</li>
+        <li>PortScan</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h2>Wireshark</h2>
+    <ul>
+        <li>Packet List Pane</li>
+        <li>Packet Details Pane</li>
+        <li>Packet Bytes Pane</li>
+    </ul>
+    <h3>Wireshark Filters</h3>
+    <ul>
+        <li>ip.addr==192.168.0.1 Show all traffic from and to 192.168.0.1</li>
+        <li>tcp.port==80 Show all the traffic with 80 as a source or destination port</li>
+        <li>ip.src==192.168.0.1 and ip.dst==10.100.1.1 Show all the traffic that starts from 192.168.0.1 and has as target 10.100.1.1</li>
+        <li>ftp Show only the traffic for the ftp protocol</li>
+        <li>http Show only the traffic for the http protocol</li>
+        <li>dns Show only the traffic for the dns protocol</li>
+        <li>http.request.uri contains string Show all http traffic where the url contains the word "string."</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>    
+
+    <h2>Cableing</h2>
+    <ul>
+        <li>&#60; 100m ~ 330ft</li>
+        <li>cat 3  10Mbps</li>
+        <li>cat 5/cat 5e 1Gbps</li>
+        <li>cat 6  10Gps</li>
+        <li>Plenum is for duct-work</li>
+        <li>RJ45 jack for networking</li>
+        <li>RJ11 jack for telephone</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Tools</h3>
+    <ul>
+        <li>electrician scissors $20</li>
+        <li>(Jameson Cable Scissors Part #100652))</li>
+        <li>crimpers > 40$</li>
+        <li>punchdown tool 1/10 Blade (60/6 Blade is for telephone) 40-50$</li>
+        <li>cable tester 40-100$</li>
+        <li>toneing device 60-80$</li>
+        <li>fish tape (for running cable)</li>
+        <li>fish sticks (for running cable)</li>
+        <li>drywall saw 10$</li>
+        <li>zipties</li>
+        <li>cable comb</li>
+        <li>lables</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Cable Types</h3>
+    <h4>Straight-Through Wired Cables:</h4>
+    <p>
+        Straight-Through refers to cables that have the pin assignments on each end of the cable. In other words Pin 1 connector A goes to Pin 1 on connector B, Pin 2 to Pin 2 ect. Straight-Through wired cables are most commonly used to connect a host to client. When we talk about cat5e patch cables, the Straight-Through wired cat5e patch cable is used to connect computers, printers and other network client devices to the router switch or hub (the host device in this instance).
+    </p>
+    <textarea rows="22" cols="16" readonly>
+
+    Connector A
+
+    Pin 1
+    Pin 2
+    Pin 3
+    Pin 4
+    Pin 5
+    Pin 6
+    Pin 7
+    Pin 8
+
+    Connector B
+
+    Pin 1
+    Pin 2
+    Pin 3
+    Pin 4
+    Pin 5
+    Pin 6
+    Pin 7
+    Pin 8
+    </textarea>
+    <h4>Crossover Wired Cables:</h4>
+    <p>
+        Crossover wired cables (commonly called crossover cables) are very much like Straight-Through cables with the exception that TX and RX lines are crossed (they are at oposite positions on either end of the cable. Using the 568-B standard as an example below you will see that Pin 1 on connector A goes to Pin 3 on connector B. Pin 2 on connector A goes to Pin 6 on connector B ect. Crossover cables are most commonly used to connect two hosts directly. Examples would be connecting a computer directly to another computer, connecting a switch directly to another switch, or connecting a router to a router.Note: While in the past when connecting two host devices directly a crossover cable was required. Now days most devices have auto sensing technology that detects the cable and device and crosses pairs when needed.
+    </p>
+    <textarea rows="22" cols="16" readonly>
+
+    Connector A
+
+    Pin 1
+    Pin 2
+    Pin 3
+    Pin 4
+    Pin 5
+    Pin 6
+    Pin 7
+    Pin 8
+
+    Connector B
+
+    Pin 3
+    Pin 6
+    Pin 1
+    Pin 7
+    Pin 8
+    Pin 2
+    Pin 4
+    Pin 5
+    </textarea>
+    <h4>Rollover Wired Cables:</h4>
+    <p>
+        Rollover wired cables most commonly called rollover cables, have opposite Pin assignments on each end of the cable or in other words it is "rolled over". Pin 1 of connector A would be connected to Pin 8 of connector B. Pin 2 of connector A would be connected to Pin 7 of connector B and so on. Rollover cables, sometimes referred to as Yost cables are most commonly used to connect to a devices console port to make programming changes to the device. Unlike crossover and straight-wired cables, rollover cables are not intended to carry data but instead create an interface with the device.
+    </p>
+    <textarea rows="22" cols="16" readonly>
+
+    Connector A
+
+    Pin 1
+    Pin 2
+    Pin 3
+    Pin 4
+    Pin 5
+    Pin 6
+    Pin 7
+    Pin 8
+
+    Connector B
+
+    Pin 8
+    Pin 7
+    Pin 6
+    Pin 5
+    Pin 4
+    Pin 3
+    Pin 2
+    Pin 1
+    </textarea>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <noscript><h3>*This page requires java script</h3></noscript>
+    <h2>RJ45</h2>
+    <img src="images/RJ45.jpg" class="slideShow" alt="Networking slide show" />    
+    <ul>
+		<li><a href="images/RJ45.jpg" title="RJ45"></a></li>
+		<li><a href="images/Crossover.jpg" title="Crossover Wiring"></a></li>
+		<li><a href="images/DSLAM.jpg" title="DSLAM"></a></li>
+		<li><a href="images/Intranet.jpg" title="Intranet"></a></li>
+		<li><a href="images/Internet.jpg" title="Internet"></a></li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <footer>Return to <a href="index.html" title="Return to the home page">home page</a></footer>
+</body>
+</html>

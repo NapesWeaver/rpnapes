@@ -1,0 +1,389 @@
+﻿article, aside, figure, figcaption, footer, header, hgroup, main, menu, nav, section {
+    display: block;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #C4C6B1;
+    overflow: hidden;
+}
+
+#wrap {
+    background-color: #D4D0C8;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 266px;
+    height: 460px;    
+    border-style: outset;
+    border-color: #808080;
+    border-width: 2px;
+}
+
+header {
+    height: 18px;
+    /* background-image: url(../images/titlebar.png); */
+    /* background-position: 3px; */
+    /* background-repeat: no-repeat; */
+    font-size: 0.81em;
+    /* color: #EEEEEE; */
+    color: #6D8EBF;
+    background-color: #6D8EBF;
+}
+
+footer {
+    text-align: left;
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: 0.7em;
+    margin-top: 3px;
+    margin-left: 12px;
+}
+
+    footer a {
+        color: black;
+        text-decoration: none;
+    }
+
+input {
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: 0.7em;
+    font-weight: bold;
+    /* next line needed for linux compatibility */
+    background-color: ButtonFace;
+    background-color: #D4D0C8;
+    margin-bottom: 3px;
+}
+
+    input:hover {
+	    background-color: #DEEEFC;
+    }
+
+#lstStack {
+
+    /* Scroll bar always */
+    /*overflow-y: scroll;*/
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: 0.7em;
+    font-weight: bold;
+    color: #FF0000;
+    /* Height reinforcement across browsers */
+    height: 15em;
+    width: 240px;
+    margin-bottom: 7px;
+}
+
+#txtInput {
+    background-color: #FFFFFF;
+    display: block;
+    width: 240px;
+    margin-left: 12px;
+    margin-bottom: 5px;
+    border-style: inset;
+}
+
+img {
+    position: relative;
+}
+
+kbd {
+  padding: 1px 2px 0;  
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+  margin: 0 .1em;
+  font-weight: 600;
+}
+
+/***** Buttons **************/
+
+.btn-big {
+    width: 57px;
+    height: 23px;
+}
+.btn-med {
+    width: 42px;
+    height: 23px;
+}
+.btn-small {
+    width: 33px;
+    height: 23px;
+}
+#btnXoff {
+    width: 15px;
+    height: 15px;
+    margin-left: 233px;
+}
+#btnDelete {
+    margin-left: 1px;
+    background-color: #808080;
+}
+#btnUndo {
+    background-color: #808080;
+}
+#btnGo {
+    color: green;
+    text-decoration: underline;
+}
+#btnAngle {
+    background-color: #B0C4DE;
+}
+#btnClear {
+    background-color: #808080;
+}
+#btnSave {
+    background-color: #808080;
+}
+#btnLoad {
+    background-color: #808080;
+}
+#btnOff {
+    background-color: #CD5C5C;
+    text-decoration: underline;
+}
+    #btnOff:hover {
+        background-color: #B85252;
+    }
+
+#open {
+    background-color: #ffffff;
+    padding: 0px 12px 3px 12px;
+}
+#open:hover {
+    color: #0040FF;
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+.visible {
+    display: inline;
+}
+
+/*.preventCopy {
+    onmousedown='return false;'
+}*/
+
+/***** Menu ***************/
+
+#menu-wrap {
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: 0.8em;
+    width: 100%;
+    /*box-shadow:0px 1px 3px rgba(0,0,0,0.2);*/
+    margin-left: 15px;
+}
+
+.menu {
+    /* width:255px; */
+    margin: 0px auto;
+}
+
+    .menu li {
+        margin: 0px;
+        list-style: none;
+    }
+
+    .menu a {
+        transition: all linear 0.15s;
+        color: #000000;
+    }
+
+    .menu li:hover > a, .menu .current-item > a {
+        text-decoration: none;
+    }
+
+    .menu .arrow {
+        font-size: 0.65em;
+        line-height: 0%;
+    }
+
+    /***** Top Level ************/
+
+    .menu > ul > li {
+        float: left;
+        display: inline-block;
+        position: relative;
+        font-size: 0.85em;
+    }
+
+    .menu > ul > li > a {
+        padding-top: 3px;
+        padding-left: 3px;
+        padding-right: 18px;
+        display: inline-block;
+        text-decoration: none;
+        /*text-shadow:0px 1px 0px rgba(0,0,0,0.4);*/            
+    }
+
+    /** Top Level Hover Styles **/
+    .menu > ul > li:hover > a, .menu > ul > .current-item > a {
+        /*color:#0040FF;*/
+        /*background:#ffffff;*/
+        text-decoration-line: underline;
+    }
+
+    /***** Bottom Level *********/
+
+    /** Side Strip Color **/
+    .menu li:hover .sub-menu {
+        z-index: 1;
+        opacity: 1;
+        /*background:#405D98;*/
+        background: #D4D0C8; /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#D4D0C8, #F2F2F2); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#D4D0C8, #F2F2F2); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#D4D0C8, #F2F2F2); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#D4D0C8, #F2F2F2); /* Standard syntax */        
+    }
+
+.sub-menu {
+    padding-bottom: 3px;
+    padding-left: 5px;
+    position: absolute;
+    /*top:100%;*/
+    /*left:0px;*/
+    z-index: -1;
+    opacity: 0;
+    transition: opacity linear 0.15s;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.2);
+}
+
+    .sub-menu li {
+        display: block;
+    }
+
+        .sub-menu li a {
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-left:3px;
+            padding-right:3px;
+            /*margin-left:5px;
+            margin-right:5px;*/
+            display: block;
+            text-decoration: none;
+            background-color: #FFFFFF;
+        }
+
+    /** Menu Items Hover Styles **/
+    .sub-menu li a:hover, .sub-menu .current-item a {
+        color:#0040FF;
+        /*background-color:#F0F0F0;*/
+        text-decoration-line: underline;
+    }
+
+.sub-sub-menu {
+
+    background-color: red;
+}
+
+/***** Tricorder ************/
+
+#tricorderskin {
+   position: absolute;
+   left: 50%;
+   top: 308px;
+   transform: translateY(-50%) translateX(-50%);
+}
+
+#viewport {
+    position: relative;
+    /* position: absolute; */
+    left: -54px;
+    top: 23px;
+    /* transform: translateY(-50%) translateX(-50%); */
+    border: none;    
+    border-radius: 13px;
+}
+
+#widget {
+    /* position: relative; */
+    position: absolute;
+    left: 50%;
+    top: 467px;
+    transform: translateY(-50%) translateX(-50%);
+    background-color: #F1F1F1;
+}
+
+/***** Notes ****************/
+
+#lstNotes {
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: 0.7em;
+    font-weight: bold;
+    /* Height reinforcement across browsers */
+    height: 380px;
+    width: 240px;
+}
+
+/***** Phone CSS ***********/
+
+@media only screen and (max-width: 640px) {
+    #wrap {        
+        width: 360px;
+        height: 600px;        
+    }
+    header {
+        height: 24px;
+        background-color: #6D8EBF;
+        /* background-image: url(../favicon.ico); */
+        background-image: none;
+        background-position: 0;
+        /* background-image: linear-gradient(to right, #0A246A , #A6CAF0); */
+    }
+    #menu-wrap {
+        font-size: 1.2em;
+        margin-left: 32px;
+    }
+    #open {
+        padding: 0px 18px 3px 18px;
+    }
+    footer {
+        margin-left: 22px;
+    }
+    input {
+        font-size: 1em;
+    }    
+    #lstStack {
+        font-size: 1em;
+        width: 334px;
+    }    
+    #txtInput {
+        font-size: 1em;
+        width: 334px;
+        margin-left: 12px;
+    }
+    #btnXoff {
+        width: 24px;
+        height: 24px;
+        margin-left: 318px;
+    }
+    .btn-big {
+        width: 77px;
+        height: 30px;
+    }
+    .btn-med {
+        width: 57px;
+        height: 30px;
+    }
+    .btn-small {
+        width: 45px;
+        height: 30px;
+    }
+    #tricorderskin {
+        top: 314px;    
+    }    
+    #widget {
+        top: 473px;
+    }
+    #lstNotes {
+        font-size: 1em;
+        height: 496px;
+        width: 325px;
+    }
+}
+
