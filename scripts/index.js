@@ -360,7 +360,7 @@ function tricorderOn() {
 
 function vibrateIt() {
   navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-  navigator.vibrate([100]);
+  navigator.vibrate([10]);
   $('txtInput').readOnly = true;
 }
 function mobileKeyboard() {
