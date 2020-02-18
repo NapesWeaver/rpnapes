@@ -293,7 +293,17 @@ NumberObject.prototype.prettyPrint = function () {
   return prettyString;
 };
 
-//////// Control Buttons /////////////////////////////////////////////////////////////
+//////// Buttons /////////////////////////////////////////////////////////////////////
+
+function hapticResponseMobileKeySupress() {
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    navigator.vibrate([18]);
+    $('txtInput').readOnly = true;
+  }
+}
+function mobileKeyboardAllow() {
+  $('txtInput').readOnly = false;
+}
 
 function btn_xoff() {
 
@@ -344,14 +354,6 @@ function tricorderOn() {
   }
   $('tricorder').className = 'visible';
   $('viewport').className = 'visible';
-}
-
-function hapticResponseMobileKeySupress() {
-  navigator.vibrate([18]);
-  $('txtInput').readOnly = true;
-}
-function mobileKeyboardAllow() {
-  $('txtInput').readOnly = false;
 }
 
 function btn_copy() {
@@ -467,7 +469,7 @@ function enterFunction() {
 
   stack.push(objX);
 
-  $('txtInput').value = $('txtInput').value.trim();
+  $('txtInput').value = $('txtInput').value.trim();  
 }
 
 function btn_delete() {
@@ -734,7 +736,7 @@ function saveToHostFile(fileName, pretty) {
   }
 
   if (stack.length > 0 || notes.length > 1) {
-    content += '===== RPNapes =====\n\n';
+    content += '===== Stack =====\n\n';
     for (var s in stack) {
       if (pretty) {
         content += rounding(decodeSpecialChar(stack[s].prettyPrint()));
@@ -1543,7 +1545,7 @@ function parseInput() {
   case 'mobile':
     stack.pop();
     updateDisplay();
-    rpnAlert(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+    rpnAlert(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
     break;
   case 'napes':
     location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
