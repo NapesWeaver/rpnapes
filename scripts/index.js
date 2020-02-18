@@ -187,8 +187,13 @@ window.onload = function () {
   $('btnLoadNotes').onclick = btn_load_notes;
   $('btnClearNotes').onclick = btn_clear_notes;
 
-  $('lstStack').style.color = '#000000';
+  // $('lstNotes').addEventListener('paste', function (e) {
+  //   backupUndoNotes();
+  // });
+  
+  // $('lstStack').style.color = '#000000';
   $('lstStack').value = '';
+
 
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
@@ -3178,14 +3183,14 @@ function backupUndoNotes() {
   colorNotesUndoButton();
 }
 function colorNotesUndoButton() {
-
+  console.log(backUpsNotes.length);
   if (backUpsNotes.length > 2) {
     $('btnUndoNotes').style.color = '#01c401';
   }
   else {
     $('btnUndoNotes').style.color = '#919191';
   }
-  if (restoresNotes.length > 0) {
+  if (restoresNotes.length >= 1) {
     $('btnRedoNotes').style.color = '#01c401';
   }
   else {
