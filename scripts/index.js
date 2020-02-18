@@ -98,7 +98,7 @@ window.onload = function () {
   $('menuHelp').onclick = help;
 
   // Text Input
-  $('txtInput').onclick = showKeyboard;
+  $('txtInput').onclick = mobileKeyboard;
 
   // Buttons
   $('btnXoff').onclick = btn_xoff;
@@ -358,15 +358,20 @@ function tricorderOn() {
   $('viewport').className = 'visible';
 }
 
-function showKeyboard() {
+function vibrateIt() {
+  navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+  navigator.vibrate([100]);
+  $('txtInput').readOnly = true;
+}
+function mobileKeyboard() {
   $('txtInput').readOnly = false;
 }
 
 // Copy to clipboard from stack or txtInput
 function btn_copy() {
-  navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-  navigator.vibrate(200);
-  $('txtInput').readOnly = true;
+
+  vibrateIt();
+
   if (stackFocus) {
     var tmpTxt;
 
