@@ -3236,6 +3236,7 @@ function btn_load_notes() {
 }
 function btn_clear_notes() {
 
+  navigator.vibrate([21]);
   backupUndoNotes();
   $('lstNotes').value = '';
   notes = $('lstNotes').value.split('\n');
