@@ -297,7 +297,7 @@ NumberObject.prototype.prettyPrint = function () {
 
 function btn_xoff() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
   if ($('rpnapes').className === 'hidden') {
     // Notes is visible - turn on RPNapes
     rpnapesOn();
@@ -347,7 +347,7 @@ function tricorderOn() {
 }
 
 function hapticResponseMobileKeySupress() {
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
   $('txtInput').readOnly = true;
 }
 function mobileKeyboardAllow() {
@@ -1424,9 +1424,13 @@ function internetSearch(domainString) {
 
 function help() {
 
-  rpnAlert('Commands NOT case sensitive [about, c, city, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you]');
+  rpnAlert('Commands NOT case sensitive [about, c, city, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opnenotes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you]');
   btn_enter();
   btn_delete();
+}
+
+function openAFile() {
+  $('openFile').click();
 }
 
 function parseInput() {
@@ -1554,6 +1558,11 @@ function parseInput() {
     stack.pop();
     updateDisplay();
     btn_off();
+    break;
+  case 'open':
+    btn_delete();
+    btn_delete();
+    openAFile();
     break;
   case 'phi':
     stack.pop();
@@ -2941,7 +2950,7 @@ function playAudio(obj) {
 // Power On/Off.
 function button1() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
 
   if (power()) {
     muteAudio(true);
@@ -2965,7 +2974,7 @@ function button1() {
 function button2() {
 
   if (power()) {
-    navigator.vibrate([21]);
+    navigator.vibrate([18]);
 
     if (viewPortSrc.indexOf($('viewport').src) !== -1) {
       var i = viewPortSrc.indexOf($('viewport').src);
@@ -2984,7 +2993,7 @@ function button2() {
 function button3() {
 
   if (power()) {
-    navigator.vibrate([21]);
+    navigator.vibrate([18]);
 
     if (viewPort2Src.indexOf($('viewport').src) !== -1) {
       var i = viewPort2Src.indexOf($('viewport').src);
@@ -3004,7 +3013,7 @@ function button3() {
 function button4() {
 
   if (power()) {
-    navigator.vibrate([21]);
+    navigator.vibrate([18]);
 
     if ($('widget').className === 'hidden') {
       if (widgetSrc.indexOf($('widget').src) !== -1) {
@@ -3031,7 +3040,7 @@ function button4() {
 function button5() {
 
   if (power()) {
-    navigator.vibrate([21]);
+    navigator.vibrate([18]);
 
     if ($('widget').className === 'hidden') {
       var srcString = '';
@@ -3060,7 +3069,7 @@ function button5() {
 function button6() {
 
   if (power()) {
-    navigator.vibrate([21]);
+    navigator.vibrate([18]);
 
     if ($('widget').className === 'hidden') {
       var srcString = '';
@@ -3084,7 +3093,7 @@ function button6() {
 function sensor1() {
 
   if (power()) {
-    navigator.vibrate([21]);
+    navigator.vibrate([18]);
     $('viewport').src = '';
     $('viewport').src = 'http://64.40.99.76:8000/http://64.40.99.76:8000';
     playAudio($('keypress7'));
@@ -3094,7 +3103,7 @@ function sensor1() {
 function sensor2() {
 
   if (power()) {
-    navigator.vibrate([21]);
+    navigator.vibrate([18]);
     $('viewport').src = '';
     $('viewport').src = 'http://64.5.130.47:80/http://64.5.130.47:80';
     playAudio($('keypress7'));
@@ -3118,7 +3127,7 @@ var restoresNotes = [33];
 
 function btn_copy_notes() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
 
   var tmpTxt = '';
   tmpTxt = $('txtInput').value.trim();
@@ -3127,7 +3136,7 @@ function btn_copy_notes() {
 }
 function btn_paste_notes() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
   backupUndoNotes();
 
   if (/*@cc_on!@*/false || !!document.documentMode) {
@@ -3142,7 +3151,7 @@ function btn_paste_notes() {
 }
 function btn_undo_notes() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
 
   if (backUpsNotes.length > 2) {
     restoresNotes.push(nestArray(notes));
@@ -3153,7 +3162,7 @@ function btn_undo_notes() {
 }
 function btn_redo_notes() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
 
   if (restoresNotes.length > 0) {
     backUpsNotes.push(nestArray(notes));
@@ -3207,7 +3216,7 @@ function colorNotesSaveButton() {
 }
 function btn_save_notes() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
 
   var tmpY;
   $('btnSaveNotes').style.color = '#919191';
@@ -3219,7 +3228,7 @@ function btn_save_notes() {
 }
 function btn_load_notes() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
   var index = 0;
 
   backupUndoNotes();
@@ -3236,7 +3245,7 @@ function btn_load_notes() {
 }
 function btn_clear_notes() {
 
-  navigator.vibrate([21]);
+  navigator.vibrate([18]);
   backupUndoNotes();
   $('lstNotes').value = '';
   notes = $('lstNotes').value.split('\n');
