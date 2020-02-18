@@ -81,7 +81,6 @@ window.onload = function () {
   $('menuTangent').onclick = btn_tangent;
 
   $('menuAngle').onclick = btn_angle;
-  $('menuKeyboard').onclick = toggleKeyboard;
   $('menuNotes').onclick = btn_xoff;
   $('menuShift').onclick = btn_shift;
 
@@ -1898,19 +1897,6 @@ function rpnAlert(input) {
   backupUndo();
   $('txtInput').value = input;
   $('txtInput').select();
-}
-
-function toggleKeyboard() {
-
-  if ($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
-    $('txtInput').readOnly = true;
-    $('menuKeyboard').innerHTML = 'Key&nbsp;On';
-  }
-  else {
-    $('txtInput').readOnly = false;
-    $('menuKeyboard').innerHTML = 'Key&nbsp;Off';
-  }
-  $('txtInput').focus();
 }
 
 function storeCookie(aName, tmpArray) {
