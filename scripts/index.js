@@ -55,7 +55,9 @@ window.onload = function () {
       };
       fr.readAsText(this.files[0]);
     }
-    catch (e) { }
+    catch (e) {
+      rpnAlert(e.toString());
+    }
   });
   $('menuSave').onclick = btn_save;
   $('menuOff').onclick = btn_off;
@@ -118,7 +120,6 @@ window.onload = function () {
   $('btnFactorial').onclick = btn_factorial;
   $('btnModulus').onclick = btn_modulus;
   $('btnSign').onclick = btn_sign;
-  //$("btnPi").onclick = btn_pi;
   $('btnGo').onclick = btn_go;
   $('btnShift').onclick = btn_shift;
 
@@ -153,8 +154,6 @@ window.onload = function () {
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
     $('menuTwig').style = 'display:none';
   }
-
-  $('btnSave').style.color = '#D4D0C8';
 
   // Tricorder
   viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
@@ -192,14 +191,14 @@ window.onload = function () {
   $('lstStack').value = '';
 
   // Check for cookies
-  if (document.cookie.indexOf('NOTES') != -1) {
+  if (document.cookie.indexOf('NOTES') !== -1) {
     $('lstNotes').value = '';
     btn_load_notes();
   }
   else {
     backupUndoNotes();
   }
-  if (document.cookie.indexOf('TRICORDER') != -1) {
+  if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   }
   else {
@@ -207,7 +206,7 @@ window.onload = function () {
     widgetSrc.push('https://www.youtube.com/embed/Fn44paKMX4E?autoplay=1');
     widgetSrc.push('https://www.youtube.com/embed/yXQz-VU5iVc?autoplay=1');
   }
-  if (document.cookie.indexOf('STACK') != -1) {
+  if (document.cookie.indexOf('STACK') !== -1) {
     $('lstStack').value = '';
     $('txtInput').value = '';
     btn_load();
@@ -215,6 +214,7 @@ window.onload = function () {
   else
   {
     backupUndo();
+    $('btnSave').style.color = '#D4D0C8';
   }
   // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function :(
   selectText('lstStack', 'lstStack');
@@ -479,7 +479,7 @@ function btn_delete() {
 
   backupUndo();
   if ($('btnGo').value === 'Go') {
-    if ($('txtInput').value == '' || stackFocus) {
+    if ($('txtInput').value === '' || stackFocus) {
       deleteFromStack();
     }
     else {
@@ -499,7 +499,7 @@ function deleteFromStack() {
 }
 function backspaceKey() {
 
-  if ($('txtInput').value == '' || stackFocus) {
+  if ($('txtInput').value === '' || stackFocus) {
     var i = stack.length - 1;
 
     stack.splice(i, 1);
@@ -735,7 +735,6 @@ function saveToHostFile(fileName, pretty) {
   if (fileName.trim() === '') {
     fileName = 'untitled';
   }
-
   if (stack.length > 0 || notes.length > 1) {
     content += '===== Stack =====\n\n';
     for (var s in stack) {
@@ -800,7 +799,6 @@ function loadStack(tmpStack) {
     tmpStack = tmpStack.substr(1);
   }
   tmpStack = splitArrayByBrowser(tmpStack);
-
     
   while (tmpStack.length > 0) {
 
@@ -818,7 +816,6 @@ function instantiateNumberObject(tmpArray) {
   var unitsY = tmpArray[2].trim();
   var imaginaryY = tmpArray[3].trim();
   var timeStampY = tmpArray[4].trim();
-
   var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY, timeStampY);
 
   stack.push(objY);
@@ -851,11 +848,11 @@ function rootFunction() {
 
   backupUndo();
   var newUnits = '';
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString().trim() == 'NaN') {
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString().trim() === 'NaN') {
     btn_enter();
     $(('txtInput')).value = '2';
   }
-  if (extractUnits($('txtInput').value) == 'null') {
+  if (extractUnits($('txtInput').value) === 'null') {
     newUnits = divideUnits(1 / extractReal($('txtInput').value));
   }
   $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), 1 / extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
@@ -872,7 +869,7 @@ function exponentialFunction() {
     btn_enter();
     $(('txtInput')).value = '2';
   }
-  if (extractUnits($('txtInput').value) == 'null') {
+  if (extractUnits($('txtInput').value) === 'null') {
     newUnits = multiplyUnits(extractReal($('txtInput').value));
   }
   $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
@@ -1086,7 +1083,7 @@ function btn_sine() {
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
   if (newUnits === 'null') { newUnits = ''; }
-  if ($('btnAngle').value == 'rad') {
+  if ($('btnAngle').value === 'rad') {
 
     $('txtInput').value = Math.sin(extractReal($('txtInput').value));
   }
@@ -1103,7 +1100,7 @@ function btn_cosine() {
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
   if (newUnits === 'null') { newUnits = ''; }
-  if ($('btnAngle').value == 'rad') {
+  if ($('btnAngle').value === 'rad') {
 
     $('txtInput').value = Math.cos(extractReal($('txtInput').value));
   }
@@ -1120,7 +1117,7 @@ function btn_tangent() {
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
   if (newUnits === 'null') { newUnits = ''; }
-  if ($('btnAngle').value == 'rad') {
+  if ($('btnAngle').value === 'rad') {
 
     $('txtInput').value = Math.tan(extractReal($('txtInput').value));
   }
@@ -1198,7 +1195,6 @@ function btn_nine() {
 
 function averageStack() {
 
-
 }
 function inArray(arrayToCheck, value) {
 
@@ -1211,7 +1207,6 @@ function inArray(arrayToCheck, value) {
 }
 function sortStack(maxMin) {
 
-
 }
 // Sum an unknown number of arguments eg. getSum(1,2,3,4,5,6) = 21
 function getSum() {
@@ -1222,7 +1217,6 @@ function getSum() {
   return sum;
 }
 function totalStack() {
-
 
 }
 
@@ -1416,7 +1410,7 @@ function internetSearch(domainString) {
     btn_delete();
     btn_delete();
   }
-  else if ($('txtInput').value.trim() != '') {
+  else if ($('txtInput').value.trim() !== '') {
     searchTerm = $('txtInput').value.trim();
     btn_enter();
   }
@@ -1427,7 +1421,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  rpnAlert('Commands NOT case sensitive [about, c, city, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you]');
+  rpnAlert('Commands NOT case sensitive [about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you]');
   btn_enter();
   btn_delete();
 }
@@ -1455,12 +1449,6 @@ function parseInput() {
     stack.pop();
     updateDisplay();
     rpnAlert('299792458m/s');
-    break;
-  case 'city':
-    stack.pop();
-    // Change city for map widget 
-    city = stack[stack.length - 1].getSoul();
-    btn_delete();
     break;
   case 'clear':
   case 'clr':
@@ -1648,7 +1636,7 @@ function parseInput() {
 
 document.addEventListener('keypress', function (event) {
 
-  if ($('rpnapes').className != 'hidden') {
+  if ($('rpnapes').className !== 'hidden') {
     switch (event.keyCode) {
     case 13:
       // RPNapes ENTER
@@ -1662,8 +1650,8 @@ document.addEventListener('keypress', function (event) {
 
 document.addEventListener('keydown', function (event) {
 
-  if ($('rpnapes').className != 'hidden') {
-    if ($('twig').className != 'hidden') {
+  if ($('rpnapes').className !== 'hidden') {
+    if ($('twig').className !== 'hidden') {
       switch (event.keyCode) {
       case 37:
         // LEFT ARROW
@@ -1789,15 +1777,15 @@ document.addEventListener('keydown', function (event) {
 });
 document.addEventListener('keyup', function (event) {
 
-  if ($('rpnapes').className != 'hidden') {
+  if ($('rpnapes').className !== 'hidden') {
 
     switch (event.keyCode) {
     case 37:
-      // LEFT ARROW
+      // LEFT ARROW (Falls through)
     case 38:
-      // UP ARROW
+      // UP ARROW (Falls through)
     case 39:
-      // RIGHT ARROW
+      // RIGHT ARROW (Falls through)
     case 40:
       // DOWN ARROW
       if (twig.health > 0) {
@@ -1811,15 +1799,15 @@ document.addEventListener('keyup', function (event) {
     $('btnSaveNotes').style.color = '#000000';
     switch (event.keyCode) {
     case 13:
-      // Notes ENTER
+      // Notes ENTER (Falls through)
     case 46:
-      // Notes DELETE
+      // Notes DELETE (Falls through)
     case 49:
-      // Notes 1 and !
+      // Notes 1 and ! (Falls through)
     case 188:
-      // Notes , and <
+      // Notes , and < (Falls through)
     case 190:
-      // Notes . and >
+      // Notes . and > (Falls through)
     case 191:
       // Notes ? and /
       backupUndoNotes();
@@ -1922,13 +1910,13 @@ function updateDisplay() {
   for (var s in stack) {
     $('lstStack').value += '\n';
 
-    if (isNaN(stack[s].getRealPart()) && stack[s].getImaginary() == 'NiN') {
+    if (isNaN(stack[s].getRealPart()) && stack[s].getImaginary() === 'NiN') {
       $('lstStack').value += decodeSpecialChar(stack[s].getSoul());
     }
     else {
       if(!isNaN(stack[s].getRealPart())) {
         $('lstStack').value += rounding(stack[s].getRealPart().toString());
-        if (stack[s].getImaginary() != 'NiN') {
+        if (stack[s].getImaginary() !== 'NiN') {
           if (parseFloat(stack[s].getImaginary()) > 0) {
             $('lstStack').value += ' + ' + rounding(stack[s].getImaginary().toString()) + 'j';
           }
@@ -1945,7 +1933,7 @@ function updateDisplay() {
           $('lstStack').value += '-' + rounding(stack[s].getImaginary().toString()).substring(1) + 'j';
         }
       }
-      if (stack[s].getUnits() != 'null') {
+      if (stack[s].getUnits() !== 'null') {
         $('lstStack').value += ' ' + decodeSpecialChar(stack[s].getUnits());
       }
     }
@@ -1958,7 +1946,7 @@ function colorSaveButton() {
 
   if (document.cookie.indexOf('STACK') !== -1) {
     var index = 0;
-
+    
     index = getCookie('STACK').indexOf('=') + 1;
     //console.log(getCookie("STACK").substr(0).trim() + "\n" + nestArray(stack).trim());
     if (getCookie('STACK').substr(index).trim() !== nestArray(stack).trim()) {
@@ -1967,7 +1955,9 @@ function colorSaveButton() {
     else {
       $('btnSave').style.color = '#D4D0C8';
     }
-  }    
+  }  else {
+    $('btnSave').style.color = '#000000';
+  }  
 }
 function rpnAlert(input) {
 
@@ -1997,10 +1987,10 @@ function getCookie(cname) {
   for (var i = 0; i < ca.length; i++) {
     var c = ca[i];
 
-    while (c.charAt(0) == ' ') {
+    while (c.charAt(0) === ' ') {
       c = c.substring(1);
     }
-    if (c.indexOf(name) == 0) {
+    if (c.indexOf(name) === 0) {
       return c.substring(name.length, c.length);
     }
   }
@@ -2151,7 +2141,7 @@ function extractSubString(tmpArray) {
       // Not bothering to check index 0, it is either a number or "-" or "+"
       for (var i = 1; i < tmpSubString.length ; i++) {
         // Check if character is not part of a normal decimal number
-        if (subIndex < 0 && isNaN(tmpSubString[i]) && tmpSubString[i] != '.') {
+        if (subIndex < 0 && isNaN(tmpSubString[i]) && tmpSubString[i] !== '.') {
           // Check if character is part of scientific notation
           if (noExponent && (tmpSubString[i].toLowerCase() === 'e' && (!isNaN(tmpSubString[i + 1]) || ((tmpSubString[i + 1] === '-' || tmpSubString[i + 1] === '+') && !isNaN(tmpSubString[i + 2]))))) {
             noExponent = false;
@@ -2189,7 +2179,7 @@ function parseY() {
 }
 function parenthesesExist(tmpArray) {
 
-  if(tmpArray.indexOf('(') == -1) {
+  if(tmpArray.indexOf('(') === -1) {
     return false;
   }
   return true;
@@ -2243,7 +2233,7 @@ function extractUnits(tmpArray) {
 
   var tmpUnits = '';
 
-  if (tmpArray.indexOf('Infinity') != -1) {
+  if (tmpArray.indexOf('Infinity') !== -1) {
     tmpArray = tmpArray.replace(/Infinity/g, '');
   }
   //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z0-9/]*/);
@@ -2256,7 +2246,7 @@ function extractUnits(tmpArray) {
 
 function setFixDecimal(value) {
 
-  if (value != '' && !isNaN(value) && parseInt(value) > -2 && parseInt(value) < 18) {
+  if (value !== '' && !isNaN(value) && parseInt(value) > -2 && parseInt(value) < 18) {
     fixDecimal = value;
   }
   else {
@@ -2265,8 +2255,8 @@ function setFixDecimal(value) {
 }
 function rounding(possibleNumber) {
 
-  if (!isNaN(possibleNumber) && (possibleNumber != '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
-    if (fixDecimal != -1) {
+  if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
+    if (fixDecimal !== -1) {
       //possibleNumber = possibleNumber.toExponential();
       possibleNumber = toFixed(possibleNumber, fixDecimal);
     }
@@ -2317,11 +2307,11 @@ function addUnits() {
   var newUnits = '';
 
   // If x and y have the same units or y has no units
-  if (extractUnits($('txtInput').value) === decodeSpecialChar(stack[stack.length - 1].getUnits()) || (extractUnits($('txtInput').value) != 'null' && stack[stack.length - 1].getUnits()) === '') {
+  if (extractUnits($('txtInput').value) === decodeSpecialChar(stack[stack.length - 1].getUnits()) || (extractUnits($('txtInput').value) !== 'null' && stack[stack.length - 1].getUnits()) === '') {
     newUnits = ' ' + extractUnits($('txtInput').value);
   }
   // If y has units but x does not
-  if (extractUnits($('txtInput').value) === 'null' && stack[stack.length - 1].getUnits() != '') {
+  if (extractUnits($('txtInput').value) === 'null' && stack[stack.length - 1].getUnits() !== '') {
     newUnits = ' ' + stack[stack.length - 1].getUnits();
   }
   return newUnits;
@@ -2332,7 +2322,7 @@ function multiplyUnits(multiplier) {
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
   var unitsX = extractUnits($('txtInput').value);
 
-  if (unitsY != '' || unitsX != 'null') {
+  if (unitsY !== '' || unitsX !== 'null') {
     unitsMultiplied = ' ' + processUnits(unitsY, unitsX, multiplier, true);
   }
   return unitsMultiplied;
@@ -2343,7 +2333,7 @@ function divideUnits(multiplier) {
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
   var unitsX = extractUnits($('txtInput').value);
 
-  if ((unitsY != '' || unitsX != 'null') && unitsY != unitsX) {
+  if ((unitsY !== '' || unitsX !== 'null') && unitsY !== unitsX) {
     unitsDivided = ' ' + processUnits(unitsY, unitsX, multiplier, false);
   }
   return unitsDivided;
@@ -2354,10 +2344,10 @@ function inverseUnits() {
   var invertedUnits = '';
   var unitsX = extractUnits($('txtInput').value);
 
-  if (unitsX != 'null') {
+  if (unitsX !== 'null') {
     unitsX = rewriteNegUnitExp(unitsX);
 
-    if (unitsX.indexOf('/') != -1) {
+    if (unitsX.indexOf('/') !== -1) {
       tmpArray = unitsX.split('/');
 
       if (tmpArray[0].indexOf('1') === -1) {
@@ -2380,7 +2370,7 @@ function splitUnits(tmpUnits) {
   var unitsB = '';
   var unitsCombined = '';
 
-  if (tmpUnits.indexOf('/') != -1) {
+  if (tmpUnits.indexOf('/') !== -1) {
     tmpUnits = tmpUnits.split('/');
     unitsA = tmpUnits[0];
     unitsB = tmpUnits[1];
@@ -2419,7 +2409,7 @@ function processUnits(unitsY, unitsX, multiplier, multiply) {
     // Division
     numeratorY = unitAddition(numeratorY, denominatorX, multiplier, true);
 
-    if (denominatorY != '') {
+    if (denominatorY !== '') {
       denominatorY = unitAddition(denominatorY, numeratorX, multiplier, true);
     }
     else {
@@ -2430,7 +2420,7 @@ function processUnits(unitsY, unitsX, multiplier, multiply) {
   }
   //unitsCombined = numeratorX + "/" + denominatorX;
   unitsCombined = unitAddition(numeratorX.split('*'), denominatorX.split('*'), 1, false);
-  if (unitsCombined.indexOf('-') != -1) {
+  if (unitsCombined.indexOf('-') !== -1) {
     unitsCombined = rewriteNegUnitExp(unitsCombined);
   }
   return unitsCombined;
@@ -2447,7 +2437,7 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
     unitsDoNotMatch = true;
 
     tmpUnitsA += unitsA[a].match(/[Ω♥a-zA-Z]+/);
-    if (unitsA[a].indexOf('^') != -1) {
+    if (unitsA[a].indexOf('^') !== -1) {
       expA = unitsA[a].match(/[-]?[.0-9]+/);
     }
     // Check for matches between tmpUnitsA and unitsB
@@ -2456,7 +2446,7 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
       var expB = 1;
 
       tmpUnitsB += unitsB[b].match(/!?[Ω♥a-zA-Z]+/);
-      if (unitsB[b].indexOf('^') != -1) {
+      if (unitsB[b].indexOf('^') !== -1) {
         expB = unitsB[b].match(/[-]?[.0-9]+/);
       }
       if (tmpUnitsA === tmpUnitsB) {
@@ -2485,7 +2475,7 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
 
     unitsDoNotMatch = true;
     tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
-    if (unitsB[b].indexOf('^') != -1) {
+    if (unitsB[b].indexOf('^') !== -1) {
       expB = unitsB[b].match(/[-]?[.0-9]+/);
     }
     for (var a in unitsA) {
@@ -2508,14 +2498,14 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
 }
 function appendUnits(unitString, tmpUnits, exponent) {
 
-  if (tmpUnits != 'null') {
-    if (exponent == 1) {
+  if (tmpUnits !== 'null') {
+    if (exponent === 1) {
       if (unitString.length > 0) {
         unitString += '*';
       }
       unitString += tmpUnits;
     }
-    else if (exponent != 0) {
+    else if (exponent !== 0) {
       if (unitString.length > 0) {
         unitString += '*';
       }
@@ -2534,7 +2524,7 @@ function rewriteNegUnitExp(tmpUnits) {
 
   var newUnits = '';
 
-  if (tmpUnits.indexOf('-') != -1) {
+  if (tmpUnits.indexOf('-') !== -1) {
     var unitsSplit = [];
     var numerator = [];
     var denominator = [];
@@ -2556,12 +2546,12 @@ function rewriteNegUnitExp(tmpUnits) {
     changedUnits = [];
     denominator = unitAddition(denominator, changedUnits, 1, true);
 
-    if (numerator === '' && denominator != '') {
+    if (numerator === '' && denominator !== '') {
       numerator += '1';
     }
     newUnits += numerator;
 
-    if (denominator != '') {
+    if (denominator !== '') {
       newUnits += '/' + denominator;
     }
   }
@@ -2575,7 +2565,7 @@ function cutOutNegExponent(tmpArray, expression) {
   var e = 0;
 
   while (e < expression.length) {
-    if (expression[e].indexOf('-') != -1) {
+    if (expression[e].indexOf('-') !== -1) {
       var tmpString = '';
       tmpString += expression.splice(e, 1).toString();
       tmpString = tmpString.replace(/-/g, '');
@@ -2766,7 +2756,7 @@ function moveObj(obj, speed, xMov, yMov) {
   }    
   // Check for collision with other objects
   for (var i = 0; i < theObjects.length; i++) {
-    if (obj.idName != theObjects[i].idName) {
+    if (obj.idName !== theObjects[i].idName) {
       // Compute space between two objects
       var spaceX = Math.abs(obj.xPos - (theObjects[i].xPos + ((i - index) * (65 + theObjects.length))));
       var spaceY = Math.abs(obj.yPos - theObjects[i].yPos);
@@ -2785,7 +2775,7 @@ function moveObj(obj, speed, xMov, yMov) {
         }
         if (theObjects[i].idName === 'tv') {
           // If not already animated
-          if ($('tv').src.indexOf('tv-off') != -1) {
+          if ($('tv').src.indexOf('tv-off') !== -1) {
             $('tv').src = 'images/twig/tv-pong.gif';
             staticTV();
           }
@@ -2850,10 +2840,10 @@ function brownianMovement(obj) {
   var x = Math.floor(Math.random() * 2);
   var y = Math.floor(Math.random() * 2);
 
-  if (Math.floor(Math.random() * 2) == 0) {
+  if (Math.floor(Math.random() * 2) === 0) {
     x = x * -1;
   }
-  if (Math.floor(Math.random() * 2) == 0) {
+  if (Math.floor(Math.random() * 2) === 0) {
     y = y * -1;
   }
   moveObj(obj, obj.speed, x, y);
