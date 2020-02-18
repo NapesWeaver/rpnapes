@@ -2885,7 +2885,6 @@ var widgetSrc = [];
 
 var lat;
 var lng;
-var city = 'Lincoln,Nebraska';
 
 function loadTricorder() {
   var index = 0;
@@ -2947,7 +2946,6 @@ function button1() {
   else {
     muteAudio(false);
     $('tricorderskin').src = 'images/tricorderon.png';
-    //$("viewport").src = "images/sinoidal.gif";
     $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1';
     
     $('viewport').className = 'visible';
@@ -2973,7 +2971,6 @@ function button2() {
       $('viewport').src = viewPortSrc[0];
     }
     playAudio($('keypress2'));
-    //playAudio($("keypress7"));
   }
 }
 function button3() {
@@ -3020,7 +3017,6 @@ function button4() {
     else {
       $('widget').className = 'hidden';
       playAudio($('keypress5'));
-      //playAudio($("destruct"));
     }
   }
 }
@@ -3072,7 +3068,6 @@ function button6() {
       $('widget').src = '';
       $('widget').className = 'hidden';
       playAudio($('keypress5'));
-      //playAudio($("verified"));
     }
   }
 }
@@ -3110,7 +3105,6 @@ function saveTricorder() {
 var notes = [];
 var backUpsNotes = [33];
 var restoresNotes = [33];
-var noteSize = 26;
 
 function btn_copy_notes() {
 
