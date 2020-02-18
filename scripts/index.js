@@ -346,7 +346,6 @@ function notesOn() {
     playAudio($('keypress3'));
   }
   $('notes').className = 'visible';
-  $('lstNotes').focus();
 }
 function tricorderOn() {
   
@@ -1821,7 +1820,6 @@ document.addEventListener('keyup', function (event) {
       // Notes ? and /
       backupUndoNotes();
       notes = $('lstNotes').value.split('\n');
-      $('lstNotes').focus();
       break;
     default:
     }
@@ -3187,7 +3185,6 @@ function btn_copy_notes() {
 
   var tmpTxt = '';
   tmpTxt = $('txtInput').value.trim();
-  $('lstNotes').focus();
   getSelectedText('lstNotes');
   $('txtInput').value = tmpTxt;
 }
@@ -3205,7 +3202,6 @@ function btn_paste_notes() {
     //insertAtCursor($("lstNotes"), "\nNot supported by this browser.\n");
     alert('Not supported by this browser.');
   }
-  $('lstNotes').focus();
 }
 function btn_undo_notes() {
 
@@ -3217,7 +3213,6 @@ function btn_undo_notes() {
     updateDisplayNotes();
   }
   colorNotesUndoButton();
-  $('lstNotes').focus();
 }
 function btn_redo_notes() {
 
@@ -3229,7 +3224,6 @@ function btn_redo_notes() {
     updateDisplayNotes();
   }
   colorNotesUndoButton();
-  $('lstNotes').focus();
 }
 function backupUndoNotes() {
 
@@ -3286,7 +3280,6 @@ function btn_save_notes() {
   notes = tmpY.split('\n');
 
   storeCookie('NOTES', nestArray(notes));
-  $('lstNotes').focus();
 }
 function btn_load_notes() {
 
@@ -3303,14 +3296,12 @@ function btn_load_notes() {
   updateDisplayNotes();
   $('btnSaveNotes').style.color = '#919191';
   $('lstNotes').scrollTop = $('lstNotes').scrollHeight;
-  $('lstNotes').focus();
 }
 function btn_clear_notes() {
 
   backupUndoNotes();
   $('lstNotes').value = '';
   notes = $('lstNotes').value.split('\n');
-  $('lstNotes').focus();
 }
 function updateDisplayNotes() {
 
