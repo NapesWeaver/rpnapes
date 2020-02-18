@@ -78,13 +78,13 @@
                     <li><a id="menuTangent" href="#">tangent</a></li>
                   </ul>
                 </li>
-                <li>
-                  <a class='hapticResponse' href="#" onmouseover="$('base').className='hidden'; $('fix').className='hidden'">View</a>
+                <li class="hapticResponse">
+                  <a href="#" onmouseover="$('base').className='hidden'; $('fix').className='hidden'">View</a>
                   <ul class="sub-menu">
-                    <li class="menu">
+                    <li class="menu hapticResponse">
                       <a href="#" onclick="$('base').className='visible'" onmouseover="$('fix').className='hidden'">Base</a>
                       <ul id="base">
-                        <li><a id="menuBinary" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;binary</a></li>
+                        <li class="hapticResponse"><a id="menuBinary" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;binary</a></li>
                         <li><a id="menuOctal" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;octal</a></li>
                         <li><a id="menuHex" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;hex</a></li>
                         <li><a id="menuBase10" href="#">&nbsp;&nbsp;base&nbsp;10</a></li>
@@ -92,10 +92,10 @@
                     </li>
                     <li><a id="menuAngle" href="#">deg/rad</a></li>
                     <li class="menu">
-                      <a class='hapticResponse' href="#" onclick="$('fix').className='visible'" onmouseover="$('base').className='hidden'">Fix</a>
+                      <a href="#" onclick="$('fix').className='visible'" onmouseover="$('base').className='hidden'">Fix</a>
                       <ul id="fix">
                         <li><a href="#" onclick="fixDecimal = -1; updateDisplay()">&nbsp;&nbsp;OFF</a></li>
-                        <li><a class='hapticResponse' href="#" onclick="fixDecimal = 0; updateDisplay()">&nbsp;&nbsp;0</a></li>
+                        <li><a href="#" onclick="fixDecimal = 0; updateDisplay()">&nbsp;&nbsp;0</a></li>
                         <li><a href="#" onclick="fixDecimal = 1; updateDisplay()">&nbsp;&nbsp;1</a></li>
                         <li><a href="#" onclick="fixDecimal = 2; updateDisplay()">&nbsp;&nbsp;2</a></li>
                         <li><a href="#" onclick="fixDecimal = 3; updateDisplay()">&nbsp;&nbsp;3</a></li>
@@ -273,7 +273,7 @@
         <p>
           <a id="date" href="JavaScript:void(0)" onmouseover="this.style.color = 'green'" onmouseout="this.style.color = 'black'"
             onmousedown="rpnAlert('The date today is...')" onclick="todaysDate()" ondblclick="rpnAlert('Holy Calcamatrons Batman!!!')">
-            Modified&nbsp;Feb-17-2020
+            Modified&nbsp;Feb-18-2020
           </a>
         </p>
       </footer>
