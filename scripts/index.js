@@ -2991,7 +2991,7 @@ function muteAudio(mute) {
     }
   }
   else {
-    for (var i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
+    for (i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
       $('tricorder').getElementsByTagName('audio')[i].muted = false;
     }
   }
@@ -3135,7 +3135,7 @@ function button6() {
       $('widget').src = srcString;
       $('widget').className = 'visible';
       playAudio($('keypress6'));
-      playAudio($('scanner'));
+      playAudio($('verified'));
     }
     else {
       $('widget').src = '';
@@ -3151,8 +3151,9 @@ function sensor1() {
   if (power()) {
     navigator.vibrate([21]);
     $('viewport').src = '';
-    $('viewport').src = 'sounds/beatles.m3u';
-    playAudio($('communications_static'));
+    $('viewport').src = 'http://64.40.99.76:8000/http://64.40.99.76:8000';
+    playAudio($('keypress7'));
+    playAudio($('scanner'));
   }
 }
 function sensor2() {
@@ -3160,8 +3161,9 @@ function sensor2() {
   if (power()) {
     navigator.vibrate([21]);
     $('viewport').src = '';
-    $('viewport').src = 'sounds/the20s.m3u';
-    playAudio($('spocksviewer'));
+    $('viewport').src = 'http://64.5.130.47:80/http://64.5.130.47:80';
+    playAudio($('keypress7'));
+    playAudio($('scanner'));
   }
 }
 
