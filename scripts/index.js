@@ -28,7 +28,7 @@ window.onload = function () {
   $('don').onclick = monStatus;
 
   // RPNapes Menu
-  document.getElementsByTagName('a').onclick = hapticResponseMobileKeySupress();
+  document.getElementsByClassName('hapticResponse').onclick = hapticResponseMobileKeySupress();
 
   $('menuLoad').onclick = btn_load;
   $('openFile').addEventListener('change', function () {
