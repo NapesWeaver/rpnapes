@@ -154,6 +154,8 @@ window.onload = function () {
     $('menuTwig').style = 'display:none';
   }
 
+  $('btnSave').style.color = '#D4D0C8';
+
   // Tricorder
   viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
   viewPortSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
@@ -1954,12 +1956,12 @@ function updateDisplay() {
 }
 function colorSaveButton() {
 
-  if (document.cookie.indexOf('STACK') != -1) {
+  if (document.cookie.indexOf('STACK') !== -1) {
     var index = 0;
 
     index = getCookie('STACK').indexOf('=') + 1;
-    //alert(getCookie("STACK").substr(0).trim() + "\n" + nestArray(stack).trim());
-    if (getCookie('STACK').substr(index).trim() != nestArray(stack).trim()) {
+    //console.log(getCookie("STACK").substr(0).trim() + "\n" + nestArray(stack).trim());
+    if (getCookie('STACK').substr(index).trim() !== nestArray(stack).trim()) {
       $('btnSave').style.color = '#000000';
     }
     else {
