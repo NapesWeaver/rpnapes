@@ -3155,10 +3155,10 @@ function sensor1() {
 }
 function sensor2() {
 
-  $('viewport').src = '';
-  $('viewport').src = 'sounds/the20s.m3u';
   if (power()) {
     navigator.vibrate([21]);
+    $('viewport').src = '';
+    $('viewport').src = 'sounds/the20s.m3u';
     playAudio($('spocksviewer'));
   }
 }
