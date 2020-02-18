@@ -2973,8 +2973,6 @@ function loadTricorder() {
 
 function power() {
 
-  navigator.vibrate([21]);
-
   var onOff;
   onOff = $('tricorderskin').src.toString().indexOf('tricorderon');
 
