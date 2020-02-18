@@ -14,217 +14,175 @@ var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
 
-window.onload = function () {
+document.addEventListener('keydown', function (event) {
 
-  // Internet Explorer needs this for "btnOff" ~ window.close()   
-  window.open('', '_self');
-
-  // MathMon
-  theObjects[0] = twig;
-  theObjects[1] = tv;
-  theObjects[2] = don;
-  $('twig').onclick = monStatus;
-  $('tv').onclick = monStatus;
-  $('don').onclick = monStatus;
-
-  // RPNapes Menu  
-  $('menuLoad').onclick = btn_load;
-  $('openFile').addEventListener('change', function () {
-    try{
-      var fr = new FileReader();
-
-      fr.onload = function () {
-
-        if ($('txtInput').value.toLowerCase().trim() === ('notes')) {
-          btn_delete();
-          backupUndoNotes();
-          $('lstNotes').value += this.result;
-          backupUndoNotes();
+  if ($('rpnapes').className !== 'hidden') {
+    if ($('twig').className !== 'hidden') {
+      switch (event.keyCode) {
+      case 37:
+        // LEFT ARROW
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        if (twig.health > 0) {
+          $('twig').src = 'images/twig/walk-left.gif';
+          moveObj(twig, twig.speed, -1, 0);
         }
-        else {
-          var tmpStack = [];
-          backupUndo();
-          tmpStack = this.result.split('\n');
-          for (var t in tmpStack) {
-            //tmpStack[t] = encodeSpecialChar(tmpStack[t]);
-            $('txtInput').value = tmpStack[t];
-            enterFunction();
+        break;
+      case 38:
+        // UP ARROW
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        if (twig.health > 0) {
+          $('twig').src = 'images/twig/walk-left.gif';
+          moveObj(twig, twig.speed, 0, -1);
+        }
+        break;
+      case 39:
+        // RIGHT ARROW
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        if (twig.health > 0) {
+          $('twig').src = 'images/twig/walk-right.gif';
+          moveObj(twig, twig.speed, 1, 0);
+        }
+        break;
+      case 40:
+        // DOWN ARROW
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        if (twig.health > 0) {
+          $('twig').src = 'images/twig/walk-right.gif';
+          moveObj(twig, twig.speed, 0, 1);
+        }
+        break;
+      default:
+        break;
+      }
+    }
+    else {
+      if (false) {
+        //if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
+        // IE || Chrome - No solution yet :(
+      } else {
+        // Firefox        
+        switch (event.keyCode) {
+        case 38:
+          // UP ARROW - If focus is on txtInput move focus to bottom of lstStack                        
+          if (!stackFocus) {
+            //event.preventDefault();
+            if (!event) { event = window.event; }
+            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+            var t = $('lstStack');
+            t.onfocus = function () {
+              t.scrollTop = t.scrollHeight;
+              setTimeout(function () {
+                t.select();
+                t.selectionStart = t.selectionEnd;
+              }, 10);
+            };
+            $('lstStack').focus();
+            stackFocus = true;
           }
-          updateDisplay();
+          break;
+        case 40:
+          // DOWN ARROW - If focus is at bottom of lstStack move focus to txtInput
+          if (getIndex('lstStack') == $('lstStack').value.split('\n').length) {
+            //event.preventDefault();
+            if (!event) { event = window.event; }
+            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+            $('txtInput').focus();
+          }
+          break;
+        default:
+          break;
         }
-      };
-      fr.readAsText(this.files[0]);
+      }
     }
-    catch (e) {
-      rpnAlert(e.toString());
+    switch (event.keyCode) {
+    case 8:
+      // BACKSPACE
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      backupUndo();
+      backspaceKey();
+      break;
+    case 27:
+      // ESC
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_xy();
+      break;
+    case 46:
+      // DELETE
+      btn_delete();
+      break;
+    case 106:
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_multiply();
+      break;
+    case 107:
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_add();
+      break;
+    case 109:
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_subtract();
+      break;
+    case 111:
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_divide();
+      break;
+    default:
+      break;
     }
-  });
-  $('menuSave').onclick = btn_save;
-  $('menuOff').onclick = btn_off;
-
-  $('menuCopy').onclick = btn_copy;
-  $('menuPaste').onclick = btn_paste;
-  $('menuDelete').onclick = btn_delete;
-  $('menuClear').onclick = btn_clear;
-  $('menuUndo').onclick = btn_undo;
-  $('menuRedo').onclick = btn_redo;
-  $('menuXy').onclick = xyFunction;
-  $('menuAb').onclick = btn_ab;
-
-  $('menuDivide').onclick = btn_divide;
-  $('menuMultiply').onclick = btn_multiply;
-  $('menuSubtract').onclick = btn_subtract;
-  $('menuAdd').onclick = btn_add;
-  $('menuRoot').onclick = rootFunction;
-  $('menuExponential').onclick = exponentialFunction;
-  $('menuInverse').onclick = btn_inverse;
-  $('menuFactorial').onclick = btn_factorial;
-  $('menuModulus').onclick = btn_modulus;
-  $('menuSign').onclick = btn_sign;
-  $('menuSine').onclick = btn_sine;
-  $('menuCosine').onclick = btn_cosine;
-  $('menuTangent').onclick = btn_tangent;
-
-  $('menuAngle').onclick = btn_angle;
-  $('menuNotes').onclick = btn_xoff;
-  $('menuShift').onclick = btn_shift;
-
-  $('menuPhi').onclick = goldenRatio;
-  $('menuEulers').onclick = eulersNum;
-  $('menuGravitationalConstant').onclick = gravitationalConstant;
-  $('menuLightSpeed').onclick = speedOfLight;
-  $('menuPi').onclick = btn_pi;
-  $('menuDate').onclick = todaysDate;
-  $('menuTricorder').onclick = tricorderOn;
-  $('menuTwig').onclick = monOn;
-  $('menuHeart').onclick = charHeart;
-  $('menuOhm').onclick = charOhm;
-  $('menuHelp').onclick = help;
-
-  // Text Input
-  $('txtInput').onclick = mobileKeyboardAllow;
-
-  // Buttons
-  $('btnXoff').onclick = btn_xoff;
-  $('btnCopy').onclick = btn_copy;
-  $('btnXy').onclick = btn_xy;
-  $('btnEnter').onclick = btn_enter;
-  $('btnDelete').onclick = btn_delete;
-
-  $('btnPaste').onclick = btn_paste;
-  $('btnRoot').onclick = btn_root;
-  $('btnInverse').onclick = btn_inverse;
-  $('btnUndo').onclick = btn_undo;
-
-  $('btnEE').onclick = btn_EE;
-  $('btnFactorial').onclick = btn_factorial;
-  $('btnModulus').onclick = btn_modulus;
-  $('btnSign').onclick = btn_sign;
-  $('btnGo').onclick = btn_go;
-  $('btnShift').onclick = btn_shift;
-
-  $('btnSeven').onclick = btn_seven;
-  $('btnEight').onclick = btn_eight;
-  $('btnNine').onclick = btn_nine;
-  $('btnDivide').onclick = btn_divide;
-  $('btnAngle').onclick = btn_angle;
-  $('btnClear').onclick = btn_clear;
-
-  $('btnFour').onclick = btn_four;
-  $('btnFive').onclick = btn_five;
-  $('btnSix').onclick = btn_six;
-  $('btnMultiply').onclick = btn_multiply;
-  $('btnSine').onclick = btn_sine;
-  $('btnSave').onclick = btn_save;
-
-  $('btnOne').onclick = btn_one;
-  $('btnTwo').onclick = btn_two;
-  $('btnThree').onclick = btn_three;
-  $('btnSubtract').onclick = btn_subtract;
-  $('btnCosine').onclick = btn_cosine;
-  $('btnLoad').onclick = btn_load;
-
-  $('btnSpace').onclick = btn_space;
-  $('btnZero').onclick = btn_zero;
-  $('btnDot').onclick = btn_dot;
-  $('btnAdd').onclick = btn_add;
-  $('btnTangent').onclick = btn_tangent;
-  $('btnOff').onclick = btn_off;
-
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
-    $('menuTwig').style = 'display:none';
   }
+});
+document.addEventListener('keyup', function (event) {
 
-  // Tricorder
-  viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/Zx-up8quvnI?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/sKtieXEBLcE?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/VVpRv6rC8RY?autoplay=1');
+  if ($('rpnapes').className !== 'hidden') {
 
-  viewPort2Src.push('https://www.youtube.com/embed/qb43-hn_-_c?autoplay=1');
-  viewPort2Src.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1');
-  viewPort2Src.push('https://www.youtube.com/embed/v_5fA85qGcU?autoplay=1');
-
-  $('sensor1').onclick = sensor1;
-  $('sensor2').onclick = sensor2;
-  $('button1').onclick = button1;
-  $('button2').onclick = button2;
-  $('button3').onclick = button3;
-  $('button4').onclick = button4;
-  $('button5').onclick = button5;
-  $('button6').onclick = button6;
-
-  muteAudio(true);
-
-  // Notes
-  $('btnCopyNotes').onclick = btn_copy_notes;
-  $('btnPasteNotes').onclick = btn_paste_notes;
-  $('btnUndoNotes').onclick = btn_undo_notes;
-  $('btnRedoNotes').onclick = btn_redo_notes;
-  $('btnSaveNotes').onclick = btn_save_notes;
-  $('btnLoadNotes').onclick = btn_load_notes;
-  $('btnClearNotes').onclick = btn_clear_notes;
-
-  // $('lstNotes').addEventListener('paste', function (e) {
-  //   backupUndoNotes();
-  // });
-  
-  // $('lstStack').style.color = '#000000';
-  $('lstStack').value = '';
-
-
-  // Check for cookies
-  if (document.cookie.indexOf('NOTES') !== -1) {
-    $('lstNotes').value = '';
-    btn_load_notes();
+    switch (event.keyCode) {
+    case 37:
+      // LEFT ARROW (Falls through)
+    case 38:
+      // UP ARROW (Falls through)
+    case 39:
+      // RIGHT ARROW (Falls through)
+    case 40:
+      // DOWN ARROW
+      if (twig.health > 0) {
+        $('twig').src = 'images/twig/hat-on.gif';
+      }
+      break;
+    default:
+    }
   }
   else {
-    backupUndoNotes();
+    $('btnSaveNotes').style.color = '#000000';
+    switch (event.keyCode) {
+    case 13:
+      // Notes ENTER (Falls through)
+    case 46:
+      // Notes DELETE (Falls through)
+    case 49:
+      // Notes 1 and ! (Falls through)
+    case 188:
+      // Notes , and < (Falls through)
+    case 190:
+      // Notes . and > (Falls through)
+    case 191:
+      // Notes ? and /
+      backupUndoNotes();
+      notes = $('lstNotes').value.split('\n');
+      break;
+    default:
+    }
   }
-  if (document.cookie.indexOf('TRICORDER') !== -1) {
-    loadTricorder();        
-  }
-  else {
-    widgetSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/Fn44paKMX4E?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/yXQz-VU5iVc?autoplay=1');
-  }
-  if (document.cookie.indexOf('STACK') !== -1) {
-    $('lstStack').value = '';
-    $('txtInput').value = '';
-    btn_load();
-  }
-  else
-  {
-    backupUndo();
-    $('btnSave').style.color = '#D4D0C8';
-  }
-  // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function :(
-  selectText('lstStack', 'lstStack');
-  selectText('txtInput', 'txtInput');
-};
+});
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -1639,190 +1597,6 @@ function parseInput() {
   }
 }
 
-document.addEventListener('keypress', function (event) {
-
-  if ($('rpnapes').className !== 'hidden') {
-    switch (event.keyCode) {
-    case 13:
-      // RPNapes ENTER
-      btn_enter();
-      break;
-    default:
-      break;
-    }
-  }
-});
-
-document.addEventListener('keydown', function (event) {
-
-  if ($('rpnapes').className !== 'hidden') {
-    if ($('twig').className !== 'hidden') {
-      switch (event.keyCode) {
-      case 37:
-        // LEFT ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-left.gif';
-          moveObj(twig, twig.speed, -1, 0);
-        }
-        break;
-      case 38:
-        // UP ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-left.gif';
-          moveObj(twig, twig.speed, 0, -1);
-        }
-        break;
-      case 39:
-        // RIGHT ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-right.gif';
-          moveObj(twig, twig.speed, 1, 0);
-        }
-        break;
-      case 40:
-        // DOWN ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-right.gif';
-          moveObj(twig, twig.speed, 0, 1);
-        }
-        break;
-      default:
-        break;
-      }
-    }
-    else {
-      if (false) {
-        //if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-        // IE || Chrome - No solution yet :(
-      } else {
-        // Firefox        
-        switch (event.keyCode) {
-        case 38:
-          // UP ARROW - If focus is on txtInput move focus to bottom of lstStack                        
-          if (!stackFocus) {
-            //event.preventDefault();
-            if (!event) { event = window.event; }
-            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            var t = $('lstStack');
-            t.onfocus = function () {
-              t.scrollTop = t.scrollHeight;
-              setTimeout(function () {
-                t.select();
-                t.selectionStart = t.selectionEnd;
-              }, 10);
-            };
-            $('lstStack').focus();
-            stackFocus = true;
-          }
-          break;
-        case 40:
-          // DOWN ARROW - If focus is at bottom of lstStack move focus to txtInput
-          if (getIndex('lstStack') == $('lstStack').value.split('\n').length) {
-            //event.preventDefault();
-            if (!event) { event = window.event; }
-            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            $('txtInput').focus();
-          }
-          break;
-        default:
-          break;
-        }
-      }
-    }
-    switch (event.keyCode) {
-    case 8:
-      // BACKSPACE
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      backupUndo();
-      backspaceKey();
-      break;
-    case 27:
-      // ESC
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_xy();
-      break;
-    case 46:
-      // DELETE
-      btn_delete();
-      break;
-    case 106:
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_multiply();
-      break;
-    case 107:
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_add();
-      break;
-    case 109:
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_subtract();
-      break;
-    case 111:
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_divide();
-      break;
-    default:
-      break;
-    }
-  }
-});
-document.addEventListener('keyup', function (event) {
-
-  if ($('rpnapes').className !== 'hidden') {
-
-    switch (event.keyCode) {
-    case 37:
-      // LEFT ARROW (Falls through)
-    case 38:
-      // UP ARROW (Falls through)
-    case 39:
-      // RIGHT ARROW (Falls through)
-    case 40:
-      // DOWN ARROW
-      if (twig.health > 0) {
-        $('twig').src = 'images/twig/hat-on.gif';
-      }
-      break;
-    default:
-    }
-  }
-  else {
-    $('btnSaveNotes').style.color = '#000000';
-    switch (event.keyCode) {
-    case 13:
-      // Notes ENTER (Falls through)
-    case 46:
-      // Notes DELETE (Falls through)
-    case 49:
-      // Notes 1 and ! (Falls through)
-    case 188:
-      // Notes , and < (Falls through)
-    case 190:
-      // Notes . and > (Falls through)
-    case 191:
-      // Notes ? and /
-      backupUndoNotes();
-      notes = $('lstNotes').value.split('\n');
-      break;
-    default:
-    }
-  }
-});
-
 function lstStackFocus() {
 
   stackFocus = true;
@@ -3183,7 +2957,7 @@ function backupUndoNotes() {
   colorNotesUndoButton();
 }
 function colorNotesUndoButton() {
-  console.log(backUpsNotes.length);
+  // console.log(backUpsNotes.length);
   if (backUpsNotes.length > 2) {
     $('btnUndoNotes').style.color = '#01c401';
   }
@@ -3267,3 +3041,230 @@ function updateDisplayNotes() {
     $('lstNotes').value = '';
   }
 }
+
+window.onload = function () {
+
+  // Internet Explorer needs this for "btnOff" ~ window.close()   
+  window.open('', '_self');
+
+  // MathMon
+  theObjects[0] = twig;
+  theObjects[1] = tv;
+  theObjects[2] = don;
+  $('twig').onclick = monStatus;
+  $('tv').onclick = monStatus;
+  $('don').onclick = monStatus;
+
+  // RPNapes Menu  
+  $('menuLoad').onclick = btn_load;
+  $('openFile').addEventListener('change', function () {
+    try{
+      var fr = new FileReader();
+
+      fr.onload = function () {
+
+        if ($('txtInput').value.toLowerCase().trim() === ('notes')) {
+          btn_delete();
+          backupUndoNotes();
+          $('lstNotes').value += this.result;
+          backupUndoNotes();
+        }
+        else {
+          var tmpStack = [];
+          backupUndo();
+          tmpStack = this.result.split('\n');
+          for (var t in tmpStack) {
+            //tmpStack[t] = encodeSpecialChar(tmpStack[t]);
+            $('txtInput').value = tmpStack[t];
+            enterFunction();
+          }
+          updateDisplay();
+        }
+      };
+      fr.readAsText(this.files[0]);
+    }
+    catch (e) {
+      rpnAlert(e.toString());
+    }
+  });
+  $('menuSave').onclick = btn_save;
+  $('menuOff').onclick = btn_off;
+
+  $('menuCopy').onclick = btn_copy;
+  $('menuPaste').onclick = btn_paste;
+  $('menuDelete').onclick = btn_delete;
+  $('menuClear').onclick = btn_clear;
+  $('menuUndo').onclick = btn_undo;
+  $('menuRedo').onclick = btn_redo;
+  $('menuXy').onclick = xyFunction;
+  $('menuAb').onclick = btn_ab;
+
+  $('menuDivide').onclick = btn_divide;
+  $('menuMultiply').onclick = btn_multiply;
+  $('menuSubtract').onclick = btn_subtract;
+  $('menuAdd').onclick = btn_add;
+  $('menuRoot').onclick = rootFunction;
+  $('menuExponential').onclick = exponentialFunction;
+  $('menuInverse').onclick = btn_inverse;
+  $('menuFactorial').onclick = btn_factorial;
+  $('menuModulus').onclick = btn_modulus;
+  $('menuSign').onclick = btn_sign;
+  $('menuSine').onclick = btn_sine;
+  $('menuCosine').onclick = btn_cosine;
+  $('menuTangent').onclick = btn_tangent;
+
+  $('menuAngle').onclick = btn_angle;
+  $('menuNotes').onclick = btn_xoff;
+  $('menuShift').onclick = btn_shift;
+
+  $('menuPhi').onclick = goldenRatio;
+  $('menuEulers').onclick = eulersNum;
+  $('menuGravitationalConstant').onclick = gravitationalConstant;
+  $('menuLightSpeed').onclick = speedOfLight;
+  $('menuPi').onclick = btn_pi;
+  $('menuDate').onclick = todaysDate;
+  $('menuTricorder').onclick = tricorderOn;
+  $('menuTwig').onclick = monOn;
+  $('menuHeart').onclick = charHeart;
+  $('menuOhm').onclick = charOhm;
+  $('menuHelp').onclick = help;
+
+  // Text Area
+  $('lstStack').style.color = '#000000';// noscript warning was red ;)
+  $('lstStack').value = '';
+
+  // Text Input
+  $('txtInput').onclick = mobileKeyboardAllow;
+
+  // Buttons
+  $('btnXoff').onclick = btn_xoff;
+  $('btnCopy').onclick = btn_copy;
+  $('btnXy').onclick = btn_xy;
+  $('btnEnter').onclick = btn_enter;
+  $('btnDelete').onclick = btn_delete;
+
+  $('btnPaste').onclick = btn_paste;
+  $('btnRoot').onclick = btn_root;
+  $('btnInverse').onclick = btn_inverse;
+  $('btnUndo').onclick = btn_undo;
+
+  $('btnEE').onclick = btn_EE;
+  $('btnFactorial').onclick = btn_factorial;
+  $('btnModulus').onclick = btn_modulus;
+  $('btnSign').onclick = btn_sign;
+  $('btnGo').onclick = btn_go;
+  $('btnShift').onclick = btn_shift;
+
+  $('btnSeven').onclick = btn_seven;
+  $('btnEight').onclick = btn_eight;
+  $('btnNine').onclick = btn_nine;
+  $('btnDivide').onclick = btn_divide;
+  $('btnAngle').onclick = btn_angle;
+  $('btnClear').onclick = btn_clear;
+
+  $('btnFour').onclick = btn_four;
+  $('btnFive').onclick = btn_five;
+  $('btnSix').onclick = btn_six;
+  $('btnMultiply').onclick = btn_multiply;
+  $('btnSine').onclick = btn_sine;
+  $('btnSave').onclick = btn_save;
+
+  $('btnOne').onclick = btn_one;
+  $('btnTwo').onclick = btn_two;
+  $('btnThree').onclick = btn_three;
+  $('btnSubtract').onclick = btn_subtract;
+  $('btnCosine').onclick = btn_cosine;
+  $('btnLoad').onclick = btn_load;
+
+  $('btnSpace').onclick = btn_space;
+  $('btnZero').onclick = btn_zero;
+  $('btnDot').onclick = btn_dot;
+  $('btnAdd').onclick = btn_add;
+  $('btnTangent').onclick = btn_tangent;
+  $('btnOff').onclick = btn_off;
+
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    $('menuTwig').style = 'display:none';
+  }
+
+  // Tricorder
+  viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
+  viewPortSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
+  viewPortSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
+  viewPortSrc.push('https://www.youtube.com/embed/Zx-up8quvnI?autoplay=1');
+  viewPortSrc.push('https://www.youtube.com/embed/sKtieXEBLcE?autoplay=1');
+  viewPortSrc.push('https://www.youtube.com/embed/VVpRv6rC8RY?autoplay=1');
+
+  viewPort2Src.push('https://www.youtube.com/embed/qb43-hn_-_c?autoplay=1');
+  viewPort2Src.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1');
+  viewPort2Src.push('https://www.youtube.com/embed/v_5fA85qGcU?autoplay=1');
+
+  $('sensor1').onclick = sensor1;
+  $('sensor2').onclick = sensor2;
+  $('button1').onclick = button1;
+  $('button2').onclick = button2;
+  $('button3').onclick = button3;
+  $('button4').onclick = button4;
+  $('button5').onclick = button5;
+  $('button6').onclick = button6;
+
+  muteAudio(true);
+
+  // Notes
+  $('btnCopyNotes').onclick = btn_copy_notes;
+  $('btnPasteNotes').onclick = btn_paste_notes;
+  $('btnUndoNotes').onclick = btn_undo_notes;
+  $('btnRedoNotes').onclick = btn_redo_notes;
+  $('btnSaveNotes').onclick = btn_save_notes;
+  $('btnLoadNotes').onclick = btn_load_notes;
+  $('btnClearNotes').onclick = btn_clear_notes;
+
+  // $('lstNotes').addEventListener('paste', function() {
+  //   console.log(notes.length);
+  //   if (notes.length > 1) backupUndoNotes();
+  // });
+  
+  // Check for cookies
+  if (document.cookie.indexOf('NOTES') !== -1) {
+    $('lstNotes').value = '';
+    btn_load_notes();
+  }
+  else {
+    backupUndoNotes();
+  }
+  if (document.cookie.indexOf('TRICORDER') !== -1) {
+    loadTricorder();        
+  }
+  else {
+    widgetSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');
+    widgetSrc.push('https://www.youtube.com/embed/Fn44paKMX4E?autoplay=1');
+    widgetSrc.push('https://www.youtube.com/embed/yXQz-VU5iVc?autoplay=1');
+  }
+  if (document.cookie.indexOf('STACK') !== -1) {
+    $('lstStack').value = '';
+    $('txtInput').value = '';
+    btn_load();
+  }
+  else
+  {
+    backupUndo();
+    $('btnSave').style.color = '#D4D0C8';
+  }
+  // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function :(
+  selectText('lstStack', 'lstStack');
+  selectText('txtInput', 'txtInput');
+};
+
+document.addEventListener('keypress', function (event) {
+
+  if ($('rpnapes').className !== 'hidden') {
+    switch (event.keyCode) {
+    case 13:
+      // RPNapes ENTER
+      btn_enter();
+      break;
+    default:
+      break;
+    }
+  }
+});
