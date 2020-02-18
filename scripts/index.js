@@ -150,8 +150,6 @@ window.onload = function () {
   // This is not working for IE :(
   if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
     $('menuTwig').style = 'display:none';
-  } else {
-    $('menuKeyboard').style = 'display:none';
   }
 
   // Event Listener for Mouse
@@ -359,7 +357,7 @@ function tricorderOn() {
 
 function vibrateIt() {
   navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-  navigator.vibrate([100]);
+  navigator.vibrate([30]);
   $('txtInput').readOnly = true;
 }
 function mobileKeyboard() {
