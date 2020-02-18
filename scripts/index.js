@@ -3164,8 +3164,6 @@ function btn_redo_notes() {
 }
 function backupUndoNotes() {
 
-  navigator.vibrate([21]);
-
   backUpsNotes.push(nestArray(notes));
   notes = $('lstNotes').value.split('\n');
   restoresNotes.length = 0;
@@ -3209,8 +3207,9 @@ function colorNotesSaveButton() {
 }
 function btn_save_notes() {
 
-  var tmpY;
+  navigator.vibrate([21]);
 
+  var tmpY;
   $('btnSaveNotes').style.color = '#919191';
 
   tmpY = encodeSpecialChar($('lstNotes').value);
@@ -3220,11 +3219,12 @@ function btn_save_notes() {
 }
 function btn_load_notes() {
 
+  navigator.vibrate([21]);
   var index = 0;
 
   backupUndoNotes();
   index = getCookie('NOTES').indexOf('=') + 1;
-  try{
+  try {
     notes = splitArrayByBrowser(getCookie('NOTES').substr(index));
   }
   catch (e) {
