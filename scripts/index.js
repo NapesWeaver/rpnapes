@@ -28,9 +28,9 @@ window.onload = function () {
   $('don').onclick = monStatus;
 
   // RPNapes Menu
-  var listItems = document.getElementsByTagName('li');
-  for (var i= 0; i < listItems.length; i++) {
-    listItems[i].onclick = hapticResponseMobileKeySupress();
+  var menuElements = document.getElementsByTagName('a');
+  for (var m = 0; m < menuElements.length; m++) {
+    menuElements[m].onclick = hapticResponseMobileKeySupress();
   }
 
   $('menuLoad').onclick = btn_load;
@@ -160,18 +160,6 @@ window.onload = function () {
     $('menuTwig').style = 'display:none';
   }
 
-  // Event Listener for Mouse
-  //document.body.onmousemove = function (e) {
-  //    e = e || window.event;
-  //    var pageX = e.pageX;
-  //    var pageY = e.pageY;
-  //    if (pageX === undefined) {
-  //        pageX = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-  //        pageY = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-  //    }
-  //      $("txtInput").value = pageX + ", " + pageY;
-  //};
-
   // Tricorder
   viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
   viewPortSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
@@ -195,7 +183,7 @@ window.onload = function () {
 
   muteAudio(true);
 
-  // Note
+  // Notes
   $('btnCopyNotes').onclick = btn_copy_notes;
   $('btnPasteNotes').onclick = btn_paste_notes;
   $('btnUndoNotes').onclick = btn_undo_notes;
@@ -1807,7 +1795,7 @@ document.addEventListener('keyup', function (event) {
     }
   }
   else {
-    //$("btnSaveNotes").style.color = "#000000";
+    $('btnSaveNotes').style.color = '#000000';
     switch (event.keyCode) {
     case 13:
       // Notes ENTER
