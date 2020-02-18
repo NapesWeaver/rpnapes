@@ -1,6 +1,9 @@
 ﻿var $ = function (id) {
   return document.getElementById(id);
 };
+
+navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 //var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 
@@ -355,8 +358,7 @@ function tricorderOn() {
   $('viewport').className = 'visible';
 }
 
-function hapticResponseMobileKeyboardSupress() {
-  navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+function hapticResponseMobileKeySupress() {
   navigator.vibrate([21]);
   $('txtInput').readOnly = true;
 }
@@ -367,7 +369,7 @@ function mobileKeyboardAllow() {
 // Copy to clipboard from stack or txtInput
 function btn_copy() {
 
-  hapticResponseMobileKeyboardSupress();
+  hapticResponseMobileKeySupress();
 
   if (stackFocus) {
     var tmpTxt;
