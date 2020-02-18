@@ -27,12 +27,7 @@ window.onload = function () {
   $('tv').onclick = monStatus;
   $('don').onclick = monStatus;
 
-  // RPNapes Menu
-  var menuElements = document.getElementsByTagName('a');
-  for (var m = 0; m < menuElements.length; m++) {
-    menuElements[m].onclick = hapticResponseMobileKeySupress();
-  }
-
+  // RPNapes Menu  
   $('menuLoad').onclick = btn_load;
   $('openFile').addEventListener('change', function () {
     try{
@@ -2573,55 +2568,6 @@ function cutOutNegExponent(tmpArray, expression) {
   }
   return tmpArray;
 }
-
-//////// ♥ ♥ ♥ ///////////////////////////////////////////////////////////////////////
-
-/**    
-                 RPNapes
-
-    Finish implementation of expressions evaluation wiring (root, exponential, parentheses buttons/function (equals button?))
-
-        Add function to replace pow, sqrt with Math.pow and Math.sqrt
-    
-    Reorder NumberObject parameters ??? (soul, realPart, imaginary, units, timeStamp).
-
-    Refactor prevent default, getSelectedText(id) re. selectedText.trim(), selectText(id, name) and 'units' methods.
-
-    More verbose help - in context - and more error handling in general - more titles help.
-
-    Rework +/-.
-
-    Implement imaginary numbers.
-
-    Display scientific/engineering? notation - rework rounding method...
-
-    Different view / save as options eg. see numbers only, see original input only, etc..
-
-    Option for save as fileName.    
-
-    totalStack(), averageStack(), sortStack(maxMin), searchStack()..?
-
-    Compute e..?    
-
-    Logarhythms. 
-
-    Add Riemann Zeta function.    
-
-    Spell-check?
-
-    Parse discriptor field for NumberObject ie. 15e3V -5i Is my Weird Voltage?
-
-                 Twig
-     
-    Mobile arrow-key functions..?
-
-                 Tricorder
-                 
-    Level, compass, accelerometer???
-
-                 Notes
-        
-**/
 
 //////////////////// idName, xPos, yPos, objSize, health, speed, ammo ////////////////
 
