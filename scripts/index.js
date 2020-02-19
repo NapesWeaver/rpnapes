@@ -1392,7 +1392,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  rpnAlert('Commands NOT case sensitive [about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you]');
+  rpnAlert('Commands NOT case sensitive [about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you]');
   btn_enter();
   btn_delete();
 }
