@@ -100,7 +100,7 @@ document.addEventListener('keydown', function (event) {
           break;
         case 40:
           // DOWN ARROW - If focus is at bottom of lstStack move focus to txtInput
-          if (getIndex('lstStack') == $('lstStack').value.split('\n').length) {
+          if (getIndex('lstStack') === $('lstStack').value.split('\n').length) {
             //event.preventDefault();
             if (!event) { event = window.event; }
             event.preventDefault ? event.preventDefault() : (event.returnValue = false);
