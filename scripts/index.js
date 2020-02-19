@@ -1,18 +1,18 @@
-﻿const $ = function (id) {
+﻿var $ = function (id) {
   return document.getElementById(id);
 };
 
 navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
-const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-//const isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+//var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 
-const stack = [];
-const backUps = [33];
-const restores = [33];
-const stackSize = 14;
-let stackFocus = false;
-let fixDecimal = -1;
+var stack = [];
+var backUps = [33];
+var restores = [33];
+var stackSize = 14;
+var stackFocus = false;
+var fixDecimal = -1;
 
 document.addEventListener('keypress', function (event) {
 
@@ -21,8 +21,6 @@ document.addEventListener('keypress', function (event) {
     case 13:
       // RPNapes ENTER
       btn_enter();
-      break;
-    default:
       break;
     }
   }
@@ -69,19 +67,19 @@ document.addEventListener('keydown', function (event) {
           moveObj(twig, twig.speed, 0, 1);
         }
         break;
-      default:
-        break;
       }
     }
     else {
+            
+      // IE || Chrome - No solution yet :(
       if (false) {
         //if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-        // IE || Chrome - No solution yet :(
       } else {
-        // Firefox        
+        // Firefox      
         switch (event.keyCode) {
         case 38:
-          // UP ARROW - If focus is on txtInput move focus to bottom of lstStack                        
+          // UP ARROW - If focus is on txtInput move focus to bottom of lstStack
+          $('lstStack').readOnly = false;
           if (!stackFocus) {
             //event.preventDefault();
             if (!event) { event = window.event; }
@@ -97,20 +95,21 @@ document.addEventListener('keydown', function (event) {
             $('lstStack').focus();
             stackFocus = true;
           }
+          $('lstStack').readOnly = true;
           break;
         case 40:
           // DOWN ARROW - If focus is at bottom of lstStack move focus to txtInput
+          $('lstStack').readOnly = false;
           if (getIndex('lstStack') === $('lstStack').value.split('\n').length) {
             //event.preventDefault();
             if (!event) { event = window.event; }
             event.preventDefault ? event.preventDefault() : (event.returnValue = false);
             $('txtInput').focus();
           }
-          break;
-        default:
+          $('lstStack').readOnly = true;
           break;
         }
-      }
+      }      
     }
     switch (event.keyCode) {
     case 8:
@@ -150,8 +149,6 @@ document.addEventListener('keydown', function (event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btn_divide();
       break;
-    default:
-      break;
     }
   }
 });
@@ -171,8 +168,6 @@ document.addEventListener('keyup', function (event) {
       if (twig.health > 0) {
         $('twig').src = 'images/twig/hat-on.gif';
       }
-      break;
-    default:
     }
   }
   else {
@@ -193,7 +188,6 @@ document.addEventListener('keyup', function (event) {
       backupUndoNotes();
       notes = $('lstNotes').value.split('\n');
       break;
-    default:
     }
   }
 });
@@ -2372,11 +2366,11 @@ function cutOutNegExponent(tmpArray, expression) {
 
 //////////////////// idName, xPos, yPos, objSize, health, speed, ammo ////////////////
 
-const twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
-const tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
-const don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
+var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
+var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
+var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
 
-const theObjects = [3];
+var theObjects = [3];
 
 //////// Mathmon Class ///////////////////////////////////////////////////////////////
 
@@ -2690,12 +2684,12 @@ function gravity() {
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
 
-let viewPortSrc = [];
-let viewPort2Src = [];
-let widgetSrc = [];
+var viewPortSrc = [];
+var viewPort2Src = [];
+var widgetSrc = [];
 
-let lat;
-let lng;
+var lat;
+var lng;
 
 function loadTricorder() {
   var index = 0;
@@ -2913,9 +2907,9 @@ function saveTricorder() {
 
 //////// Notes ///////////////////////////////////////////////////////////////////////
 
-let notes = [];
-const backUpsNotes = [33];
-const restoresNotes = [33];
+var notes = [];
+var backUpsNotes = [33];
+var restoresNotes = [33];
 
 function btn_copy_notes() {
 
