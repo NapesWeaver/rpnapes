@@ -241,6 +241,7 @@ NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.units + ', ' + this.imaginary + ', ' + this.timeStamp;
 };
 NumberObject.prototype.prettyPrint = function () {
+  
   var prettyString = '';
 
   if (isNaN(this.realPart)) return this.soul;
