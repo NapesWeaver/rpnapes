@@ -17,7 +17,8 @@ A separate interface for note taking is implemented.
 
 ![Notes](images/screenshots/notes.jpg)
 
-Stack and Notes can be saved independently, locally, to browser cookie. Saving and opening files, local to host device, is supported also.
+Stack and Notes can be saved independently, locally, to browser cookie. 
+Saving and opening text files is supported also - with special thanks to [FileSaver.js by Eligrey](https://github.com/eligrey/FileSaver.js/).
 
 ## Tricorder
 
