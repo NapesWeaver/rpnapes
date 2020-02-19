@@ -25,7 +25,6 @@ document.addEventListener('keypress', function (event) {
     }
   }
 });
-
 document.addEventListener('keydown', function (event) {
 
   if ($('rpnapes').className !== 'hidden') {
@@ -684,21 +683,21 @@ function nestArray(srcArray) {
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
     // IE || Chrome
-    for (var s in srcArray) {
+    for (var c in srcArray) {
       newArray += '_';
-      newArray += srcArray[s];
+      newArray += srcArray[c];
     }
   } else {
     //Firefox        
-    for (var s in srcArray) {
+    for (var f in srcArray) {
       newArray += '\t';
-      newArray += srcArray[s];
+      newArray += srcArray[f];
     }
   }
   return newArray;
 }
 
-function saveToHostFile(fileName, pretty) {
+function saveFile(fileName, pretty) {
 
   var myBlob;
   var content = '';
@@ -1554,7 +1553,7 @@ function parseInput() {
     break;
   case 'saveas':
     stack.pop();
-    saveToHostFile(stack[stack.length - 1].prettyPrint(), true);
+    saveFile(stack[stack.length - 1].prettyPrint(), true);
     btn_delete();
     break;
   case 'size':
@@ -1569,7 +1568,7 @@ function parseInput() {
     break;
   case 'tostring':
     stack.pop();
-    saveToHostFile(stack[stack.length - 1].prettyPrint(), false);
+    saveFile(stack[stack.length - 1].prettyPrint(), false);
     btn_delete();
     break;
   case 'twig':
