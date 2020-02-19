@@ -18,16 +18,12 @@ A separate interface for note taking is implemented.
 ![Notes](images/screenshots/notes.jpg)
 
 Stack and Notes can be saved independently, locally, to browser cookie. 
-Saving and opening text files is supported also - with special thanks to [FileSaver.js by Eligrey](https://github.com/eligrey/FileSaver.js/).
+Saving and opening text files is supported also - with special thanks to Eli Grey for the use of [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
 
 ## Tricorder
 
 ![Tricorder](images/screenshots/tricorder.jpg)
 
-The tricorder doesn't do much. It displays the weather, from [forecast.io](https://forecast.io/) and [maps.darksky.net](https://maps.darksky.net) and has a few YouTube videos and Internet radio stations embedded in iFrames.
+The original tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Special thanks to keiske84 :)
 
-The original tricorder image is found on IMGBIN.
-
-Special thanks to keiske84 :)
-
-[Medical Tricorder Star Trek X Prize Foundation Hypospray PNG](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png)
+The tricorder doesn't do too much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) And there are few YouTube videos and Internet radio stations embedded in iFrames.
