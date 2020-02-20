@@ -904,9 +904,11 @@ function btn_sign() {
 
   hapticResponseMobileKeySupress();
 
-  var tmpX = $('txtInput').value.trim();
+  // var tmpX = $('txtInput').value().trim();
+  var tmpX = $('txtInput').value;
   backupUndo();
 
+  // If input is blank
   if (tmpX === '') {
     tmpX = '-';
   }
@@ -916,21 +918,53 @@ function btn_sign() {
   else if (tmpX === '-') {
     tmpX = '+';
   }
-  else if (!isNaN(tmpX)) {
-    tmpX = parseFloat(tmpX) * -1;
-  }
-  else if (/^[-+]?[0-9]*\.?[0-9]+([eE][-])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '+';
-  }
-  else if (/^[-+]?[0-9]*\.?[0-9]+([eE][+])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-
+  // If exponential number
+  else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
     tmpX += '-';
   }
-  else if (/^[-+]?[0-9]*\.?[0-9]+[eE]$/.test(tmpX)) {
+  else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
     tmpX += '-';
   }
+  // If imaginary number
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length);
+    tmpX += '-';
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+    tmpX += '-';
+  }
+  // If exponential imaginary number
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length);
+    tmpX += '-';
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+    tmpX += '-';
+  }
+  // If unit exponent
+  else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
+    tmpX += '-'
+  }
+  else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+    tmpX += '-';
+  }
+  // Change sign
   else {
     if (tmpX.charAt(0) === '+') {
       tmpX = tmpX.substring(1);
@@ -1392,7 +1426,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  rpnAlert('Commands NOT case sensitive [about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you]');
+  rpnAlert('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you');
   btn_enter();
   btn_delete();
 }
