@@ -1245,6 +1245,18 @@ function goldenRatio() {
   insertAtCursor($('txtInput'), phi);
   $('txtInput').select();
 }
+function charMinus() {
+  backupUndo();
+  insertAtCursor($('txtInput'), '-');
+}
+function charCarat() {
+  backupUndo();
+  insertAtCursor($('txtInput'), '^');
+}
+function charSolidus() {
+  backupUndo();
+  insertAtCursor($('txtInput'), '/');
+}
 function charHeart() {
   backupUndo();
   insertAtCursor($('txtInput'), '♥');
@@ -3167,6 +3179,9 @@ window.onload = function () {
   $('menuDate').onclick = todaysDate;
   $('menuTricorder').onclick = tricorderOn;
   $('menuTwig').onclick = monOn;
+  $('menuMinus').onclick = charMinus;
+  $('menuCarat').onclick = charCarat;
+  $('menuSolidus').onclick = charSolidus;
   $('menuHeart').onclick = charHeart;
   $('menuOhm').onclick = charOhm;
   $('menuHelp').onclick = help;
