@@ -1611,7 +1611,7 @@ function parseInput() {
   case 'time':
     stack.pop();
     updateDisplay();
-    rpnAlert(gameOn);
+    rpnAlert(getTime());
     break;
   case 'tostring':
     stack.pop();
