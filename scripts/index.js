@@ -1257,6 +1257,10 @@ function charSolidus() {
   backupUndo();
   insertAtCursor($('txtInput'), '/');
 }
+function charAsterisk() {
+  backupUndo();
+  insertAtCursor($('txtInput'), '*');
+}
 function charHeart() {
   backupUndo();
   insertAtCursor($('txtInput'), '♥');
@@ -3182,6 +3186,7 @@ window.onload = function () {
   $('menuMinus').onclick = charMinus;
   $('menuCarat').onclick = charCarat;
   $('menuSolidus').onclick = charSolidus;
+  $('menuAsterisk').onclick = charAsterisk;
   $('menuHeart').onclick = charHeart;
   $('menuOhm').onclick = charOhm;
   $('menuHelp').onclick = help;
