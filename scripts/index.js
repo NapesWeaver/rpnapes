@@ -1248,26 +1248,32 @@ function goldenRatio() {
 function charMinus() {
   backupUndo();
   insertAtCursor($('txtInput'), '-');
+  $('txtInput').focus();
 }
 function charCarat() {
   backupUndo();
   insertAtCursor($('txtInput'), '^');
+  $('txtInput').focus();
 }
 function charSolidus() {
   backupUndo();
   insertAtCursor($('txtInput'), '/');
+  $('txtInput').focus();
 }
 function charAsterisk() {
   backupUndo();
   insertAtCursor($('txtInput'), '*');
+  $('txtInput').focus();
 }
 function charHeart() {
   backupUndo();
   insertAtCursor($('txtInput'), '♥');
+  $('txtInput').focus();
 }
 function charOhm() {
   backupUndo();
   insertAtCursor($('txtInput'), 'Ω');
+  $('txtInput').focus();
 }
 
 // Get current browser window screen size
