@@ -1245,34 +1245,9 @@ function goldenRatio() {
   insertAtCursor($('txtInput'), phi);
   $('txtInput').select();
 }
-function charMinus() {
+function insertSymbol(s) {
   backupUndo();
-  insertAtCursor($('txtInput'), '-');
-  $('txtInput').focus();
-}
-function charCarat() {
-  backupUndo();
-  insertAtCursor($('txtInput'), '^');
-  $('txtInput').focus();
-}
-function charSolidus() {
-  backupUndo();
-  insertAtCursor($('txtInput'), '/');
-  $('txtInput').focus();
-}
-function charAsterisk() {
-  backupUndo();
-  insertAtCursor($('txtInput'), '*');
-  $('txtInput').focus();
-}
-function charHeart() {
-  backupUndo();
-  insertAtCursor($('txtInput'), '♥');
-  $('txtInput').focus();
-}
-function charOhm() {
-  backupUndo();
-  insertAtCursor($('txtInput'), 'Ω');
+  insertAtCursor($('txtInput'), s);
   $('txtInput').focus();
 }
 
@@ -3189,18 +3164,42 @@ window.onload = function () {
   $('menuDate').onclick = todaysDate;
   $('menuTricorder').onclick = tricorderOn;
   $('menuTwig').onclick = monOn;
-  $('menuMinus').onclick = charMinus;
-  $('menuCarat').onclick = charCarat;
-  $('menuSolidus').onclick = charSolidus;
-  $('menuAsterisk').onclick = charAsterisk;
-  $('menuHeart').onclick = charHeart;
-  $('menuOhm').onclick = charOhm;
+  $('menuMinus').onclick = (function() {
+    return function() { 
+      insertSymbol('-');
+    }
+  })();
+  $('menuCarat').onclick = (function() {
+    return function() { 
+      insertSymbol('^');
+    }
+  })();
+  $('menuSolidus').onclick = (function() {
+    return function() { 
+      insertSymbol('/');
+    }
+  })();
+  $('menuAsterisk').onclick = (function() {
+    return function() { 
+      insertSymbol('*');
+    }
+  })();
+  $('menuHeart').onclick = (function() {
+    return function() { 
+      insertSymbol('♥');
+    }
+  })();
+  $('menuOhm').onclick = (function() {
+    return function() { 
+      insertSymbol('Ω');
+    }
+  })();
   $('menuHelp').onclick = help;
 
   // Text Area
   $('lstStack').style.color = '#000000';// noscript warning was red ;)
   $('lstStack').value = '';
-
+  
   // Text Input
   $('txtInput').onclick = mobileKeyboardAllow;
 
