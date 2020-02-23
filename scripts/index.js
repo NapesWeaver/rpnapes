@@ -469,7 +469,7 @@ function enterFunction() {
 function evaluate () {
 
   backupUndo();
-  
+
   $('txtInput').value = eval($('txtInput').value);
 }
 
@@ -648,6 +648,7 @@ function btn_shift() {
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
     $('btnEE').value = 'Eng';
+    $('btnModulus').value = '%';
     $('btnSign').value = '±';
     $('btnGo').value = 'Go';
     $('btnGo').style.color = 'green';
@@ -668,6 +669,7 @@ function btn_shift() {
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
+    $('btnModulus').value = '(  √¯ )';
     $('btnSign').value = '(  ^  )';
     $('btnGo').value = 'You';
     $('btnGo').style.color = 'blue';
@@ -925,9 +927,14 @@ function btn_modulus() {
   hapticResponseMobileKeySupress();
   backupUndo();
 
-  $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
-  updateDisplay();
-  $('txtInput').select();
+  if ($('btnGo').value === 'Go') {
+    $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
+    updateDisplay();
+    $('txtInput').select();
+  }
+  else {
+    insertText('√¯');
+  }  
 }
 
 function btn_sign() {
@@ -3228,13 +3235,17 @@ window.onload = function () {
   $('menuTricorder').onclick = tricorderOn;
   $('menuTwig').onclick = monOn;
 
+  // Menu Symbols
+  $('menuRadical').onclick = (function() {
+    return function() { 
+      insertText('√¯');
+    }
+  })();
   $('menuCarat').onclick = (function() {
     return function() { 
       insertText('^');
     }
   })();
-
-  // Menu Symbols
   $('menuSolidus').onclick = (function() {
     return function() { 
       insertText('/');
