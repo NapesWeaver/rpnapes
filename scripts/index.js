@@ -477,8 +477,8 @@ function evaluate () {
 function btn_delete() {
 
   hapticResponseMobileKeySupress();
-
   backupUndo();
+
   if ($('btnGo').value === 'Go') {
     if ($('txtInput').value === '' || stackFocus) {
       deleteFromStack();
@@ -558,8 +558,6 @@ function undoFunction() {
   colorUndoButton();
 }
 function btn_redo() {
-
-  hapticResponseMobileKeySupress();
 
   if (restores.length > 0) {
     // REDO
