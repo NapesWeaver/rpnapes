@@ -471,6 +471,7 @@ function evaluate () {
   backupUndo();
 
   $('txtInput').value = eval($('txtInput').value);
+  $('txtInput').focus();
 }
 
 function btn_delete() {
