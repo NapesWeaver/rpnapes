@@ -980,8 +980,8 @@ function btn_sign() {
 function btn_pi() {
 
   hapticResponseMobileKeySupress();
-  // insertSymbol(Math.PI);
-  insertSymbol('3.141592653589793');
+  // insertText(Math.PI);
+  insertText('3.141592653589793');
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
@@ -1228,7 +1228,7 @@ function getSize() {
     g = d.getElementsByTagName('body')[0],
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight || e.clientHeight || g.clientHeight;
-  insertSymbol(x + ' × ' + y);
+  insertText(x + ' × ' + y);
 }
 function getTime() {
 
@@ -1239,17 +1239,28 @@ function getTime() {
 function todaysDate() {
 
   var today = new Date();
-
   var month = today.getMonth() + 1;
   var date = today.getDate();
   var year = today.getFullYear();
-
-  insertSymbol(month + '/' + date + '/' + year);
+  insertText(month + '/' + date + '/' + year);
 }
-function insertSymbol(s) {
+
+function inputText(text) {
+  
   backupUndo();
-  insertAtCursor($('txtInput'), s);
+  $('txtInput').value = text;
+}
+function insertText(text) {
+
+  backupUndo();
+  insertAtCursor($('txtInput'), text);
   $('txtInput').focus();
+}
+function rpnAlert(text) {
+
+  backupUndo();
+  $('txtInput').value = text;
+  $('txtInput').select();
 }
 
 function embed(src) {
@@ -1316,7 +1327,7 @@ function getIP() {
   }
   else {
     getUserIP(function (ip) {
-      textInput(ip);
+      inputText(ip);
     });
   }
 }
@@ -1387,7 +1398,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  textInput('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you');
+  inputText('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you');
   btn_enter();
   btn_delete();
 }
@@ -1402,19 +1413,19 @@ function parseInput() {
 
   case 'about':
     stack.pop();
-    textInput('This is a Reverse Polish Notation Calculator, with a Stack. Designed by Napes Weaver.');
+    inputText('This is a Reverse Polish Notation Calculator, with a Stack. Designed by Napes Weaver.');
     btn_enter();
     btn_delete();
     break;
   case 'ai + drones =':
-    textInput('Really Super Smart Autonomous Drones');
+    inputText('Really Super Smart Autonomous Drones');
     btn_enter();
     btn_delete();
     break;
   case 'c':
     stack.pop();
     updateDisplay();
-    textInput('299792458m/s');
+    inputText('299792458m/s');
     break;
   case 'clear':
   case 'clr':
@@ -1429,7 +1440,7 @@ function parseInput() {
   case 'e':
     stack.pop();
     updateDisplay();
-    textInput(Math.exp(1));
+    inputText(Math.exp(1));
     break;
   case 'embed':
     stack.pop();
@@ -1450,7 +1461,7 @@ function parseInput() {
   case 'g':
     stack.pop();
     updateDisplay();
-    textInput('6.674E-11');
+    inputText('6.674E-11');
     break;
   case 'go':
     internetSearch('https://www.google.com/#q=');
@@ -1467,13 +1478,13 @@ function parseInput() {
   case 'how are ya':
   case 'how are you':
   case 'how ya doing':
-    textInput('Like a rhinestone cowboy!');
+    inputText('Like a rhinestone cowboy!');
     btn_enter();
     btn_delete();
     break;
   case 'hello':
   case 'hi':
-    textInput('Hallo there!');
+    inputText('Hallo there!');
     btn_enter();
     btn_delete();
     break;
@@ -1495,12 +1506,12 @@ function parseInput() {
   case 'locus':
     stack.pop();
     updateDisplay();
-    textInput('lat:' + lat + ', lon:' + lng);
+    inputText('lat:' + lat + ', lon:' + lng);
     break;
   case 'mobile':
     stack.pop();
     updateDisplay();
-    textInput(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
+    inputText(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
     break;
   case 'napes':
     location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
@@ -1530,7 +1541,7 @@ function parseInput() {
   case 'phi':
     stack.pop();
     updateDisplay();
-    textInput((1 + Math.sqrt(5)) / 2);
+    inputText((1 + Math.sqrt(5)) / 2);
     break;
   case 'pi':
     stack.pop();
@@ -1560,7 +1571,7 @@ function parseInput() {
   case 'time':
     stack.pop();
     updateDisplay();
-    textInput(getTime());
+    inputText(getTime());
     break;
   case 'tostring':
     stack.pop();
@@ -1740,17 +1751,6 @@ function colorSaveButton() {
   }  else {
     $('btnSave').style.color = '#000000';
   }  
-}
-function textInput(input) {
-  
-  backupUndo();
-  $('txtInput').value = input;
-}
-function rpnAlert(input) {
-
-  backupUndo();
-  $('txtInput').value = input;
-  $('txtInput').select();
 }
 
 function storeCookie(aName, tmpArray) {
@@ -2449,7 +2449,7 @@ function displayGIF(obj) {
 function monStatus() {
 
   for (var i = 0; i < theObjects.length; i++) {
-    textInput(theObjects[i].toString());
+    inputText(theObjects[i].toString());
     btn_enter();
   }
 }
@@ -2553,7 +2553,7 @@ function moveObj(obj, speed, xMov, yMov) {
         moveObj(theObjects[i], speed + 1, xMov, yMov);                
         if (theObjects[i].idName === 'twig') {
           twig.movHealth(-1);
-          textInput(twig.health);
+          inputText(twig.health);
           if (twig.health <= 0) {
             $('twig').src = 'images/twig/pop.gif';
             rpnAlert('Game Over');
@@ -2581,7 +2581,7 @@ function moveObj(obj, speed, xMov, yMov) {
   //if ($("btnGo").value === "Go") {
   //    screenEdgeCollision(obj, index);
   //}
-  //textInput("twig:" + theObjects[0].xPos.toString() + " " + theObjects[0].yPos.toString() + " tv:" + theObjects[1].xPos.toString() + " " + theObjects[1].yPos.toString() + " don:" + theObjects[2].xPos.toString() + " " + theObjects[2].yPos.toString());
+  //inputText("twig:" + theObjects[0].xPos.toString() + " " + theObjects[0].yPos.toString() + " tv:" + theObjects[1].xPos.toString() + " " + theObjects[1].yPos.toString() + " don:" + theObjects[2].xPos.toString() + " " + theObjects[2].yPos.toString());
   displayGIF(obj);
 }
 //function screenEdgeCollision(obj, index) {
@@ -3127,68 +3127,68 @@ window.onload = function () {
 
   $('menuPhi').onclick = (function() {
     return function() { 
-      // insertSymbol((1 + Math.sqrt(5)) / 2);
-      insertSymbol('1.618033988749895');
+      // insertText((1 + Math.sqrt(5)) / 2);
+      insertText('1.618033988749895');
     }
   })();
   $('menuEulers').onclick = (function() {
     return function() { 
-      // insertSymbol(Math.exp(1));
-      insertSymbol('2.718281828459045');
+      // insertText(Math.exp(1));
+      insertText('2.718281828459045');
     }
   })();
   $('menuGravitationalConstant').onclick = (function() {
     return function() { 
-      insertSymbol('6.674E-11');
+      insertText('6.674E-11');
     }
   })();
   $('menuLightSpeed').onclick = (function() {
     return function() { 
-      insertSymbol('299792458 m/s');
+      insertText('299792458 m/s');
     }
   })();
   $('menuPi').onclick = (function() {
     return function() {
-      // insertSymbol(Math.PI);
-      insertSymbol('3.141592653589793');
+      // insertText(Math.PI);
+      insertText('3.141592653589793');
     }
   })();
   $('menuDate').onclick = todaysDate;
   $('menuOhmsLaw').onclick = (function() {
     return function() {
-      insertSymbol('E = IR');
+      insertText('E = IR');
     }
   })();
   $('menuTricorder').onclick = tricorderOn;
   $('menuTwig').onclick = monOn;
   $('menuMinus').onclick = (function() {
     return function() { 
-      insertSymbol('-');
+      insertText('-');
     }
   })();
   $('menuCarat').onclick = (function() {
     return function() { 
-      insertSymbol('^');
+      insertText('^');
     }
   })();
   $('menuSolidus').onclick = (function() {
     return function() { 
-      insertSymbol('/');
+      insertText('/');
     }
   })();
   $('menuAsterisk').onclick = (function() {
     return function() { 
-      insertSymbol('*');
+      insertText('*');
     }
   })();
   $('menuHeart').onclick = (function() {
     return function() { 
-      insertSymbol('♥');
+      insertText('♥');
     }
   })();
   $('menuOhm').onclick = (function() {
     return function() { 
-      insertSymbol('Ω');
+      insertText('Ω');
     }
   })();
   $('menuHelp').onclick = help;
