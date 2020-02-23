@@ -467,6 +467,9 @@ function enterFunction() {
   $('txtInput').value = $('txtInput').value.trim();  
 }
 function evaluate () {
+
+  backupUndo();
+  
   $('txtInput').value = eval($('txtInput').value);
 }
 
