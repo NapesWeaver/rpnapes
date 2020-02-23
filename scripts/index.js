@@ -426,16 +426,21 @@ function btn_enter() {
 
   hapticResponseMobileKeySupress();
 
-  if (stackFocus) {
-    selectText('lstStack', 'lstStack');
-    getSelectedText('lstStack');
+  if ($('btnGo').value === 'Go') {
+    if (stackFocus) {
+      selectText('lstStack', 'lstStack');
+      getSelectedText('lstStack');
+    }
+    else {
+      backupUndo();
+      enterFunction();
+    }
+    updateDisplay();
+    parseInput();
   }
   else {
-    backupUndo();
-    enterFunction();
-  }
-  updateDisplay();
-  parseInput();
+    evaluate();
+  }  
 }
 function enterFunction() {
 
@@ -460,6 +465,9 @@ function enterFunction() {
   stack.push(objX);
 
   $('txtInput').value = $('txtInput').value.trim();  
+}
+function evaluate () {
+  $('txtInput').value = eval($('txtInput').value);
 }
 
 function btn_delete() {
@@ -630,6 +638,7 @@ function btn_shift() {
   if ($('btnGo').value === 'You') {
     $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x <-> y';
+    $('btnEnter').value = 'ENTER';
     $('btnDelete').value = 'DEL';
     $('btnInverse').value = '1 / x';
     $('btnLog').value = 'Log';
@@ -649,21 +658,22 @@ function btn_shift() {
   else {
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a <-> b';
+    $('btnEnter').value = '=';
     $('btnDelete').value = '<-----';
     $('btnInverse').value = '! x';
     $('btnLog').value = 'ln';
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
-    $('btnSign').value = '[  ^  ]';
+    $('btnSign').value = '(  ^  )';
     $('btnGo').value = 'You';
     $('btnGo').style.color = 'blue';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
-    $('btnDivide').value = '[  /  ]';
-    $('btnMultiply').value = '[  *  ]';
-    $('btnSubtract').value = '[  -  ]';
-    $('btnAdd').value = '[  +  ]';
+    $('btnDivide').value = '(  /  )';
+    $('btnMultiply').value = '(  *  )';
+    $('btnSubtract').value = '(  -  )';
+    $('btnAdd').value = '(  +  )';
   }
   colorUndoButton();
   $('txtInput').focus();
