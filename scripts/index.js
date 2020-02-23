@@ -982,8 +982,8 @@ function btn_sign() {
 function btn_pi() {
 
   hapticResponseMobileKeySupress();
-
-  insertSymbol(Math.PI);
+  // insertSymbol(Math.PI);
+  insertSymbol('3.141592653589793');
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
