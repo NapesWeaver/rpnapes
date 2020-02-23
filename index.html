@@ -136,7 +136,7 @@
                     <li class="menu">
                       <a href="#" onclick="$('equations').className='visible'" onmouseover="$('constants').className='hidden'; $('programs').className='hidden'; $('symbols').className='hidden'">Equations</a>
                       <ul id="equations">
-                        <li><a href="#" onclick="rpnAlert('E = IR')">&nbsp;&nbsp;Ohm's&nbsp;Law</a></li>
+                        <li><a id="menuOhmsLaw" href="#">&nbsp;&nbsp;Ohm's&nbsp;Law</a></li>
                       </ul>
                     </li>
                     <li class="menu">
@@ -276,7 +276,7 @@
       <footer>
         <p>
           <a id="date" href="JavaScript:void(0)" onmouseover="this.style.color = 'green'" onmouseout="this.style.color = 'black'"
-            onmousedown="rpnAlert('The date today is...')" onclick="todaysDate()" ondblclick="rpnAlert('Holy Calcamatrons Batman!!!')">
+            onmousedown="rpnAlert('The date today is...')" onclick="$('txtInput').value='';todaysDate()" ondblclick="rpnAlert('Holy Calcamatrons Batman!!!')">
             Modified&nbsp;Feb-22-2020
           </a>
         </p>

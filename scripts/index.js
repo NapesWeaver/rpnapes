@@ -983,9 +983,7 @@ function btn_pi() {
 
   hapticResponseMobileKeySupress();
 
-  backupUndo();
-  insertAtCursor($('txtInput'), Math.PI);
-  $('txtInput').select();
+  insertSymbol(Math.PI);
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
@@ -1224,34 +1222,6 @@ function getSum() {
 function totalStack() {
 
 }
-
-function eulersNum() {
-
-  backupUndo();
-  insertAtCursor($('txtInput'), Math.exp(1));
-  $('txtInput').select();
-}
-function gravitationalConstant() {
-  rpnAlert('6.674E-11');
-}
-function speedOfLight() {
-  rpnAlert('299792458 m/s');
-}
-function goldenRatio() {
-
-  var phi;
-  backupUndo();
-  phi = (1 + Math.sqrt(5)) / 2;
-  insertAtCursor($('txtInput'), phi);
-  $('txtInput').select();
-}
-function insertSymbol(s) {
-  backupUndo();
-  insertAtCursor($('txtInput'), s);
-  $('txtInput').focus();
-}
-
-// Get current browser window screen size
 function getSize() {
 
   var w = window,
@@ -1260,23 +1230,13 @@ function getSize() {
     g = d.getElementsByTagName('body')[0],
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight || e.clientHeight || g.clientHeight;
-  rpnAlert(x + ' × ' + y);
+  insertSymbol(x + ' × ' + y);
 }
 function getTime() {
 
   var currentdate = new Date();
   var datetime = currentdate.getHours() + ':' + currentdate.getMinutes() + ':' + currentdate.getSeconds();
   return datetime;
-}
-function dateModified() {
-
-  var modified = new Date(document.lastModified);
-
-  var month = modified.getMonth() + 1;
-  var date = modified.getDate();
-  var year = modified.getFullYear();
-
-  document.writeln('Modified ' + month + '/' + date + '/' + year);
 }
 function todaysDate() {
 
@@ -1286,8 +1246,14 @@ function todaysDate() {
   var date = today.getDate();
   var year = today.getFullYear();
 
-  rpnAlert(month + '/' + date + '/' + year);
+  insertSymbol(month + '/' + date + '/' + year);
 }
+function insertSymbol(s) {
+  backupUndo();
+  insertAtCursor($('txtInput'), s);
+  $('txtInput').focus();
+}
+
 function embed(src) {
   if (src.indexOf('http') !== -1 && src.indexOf('embed') !== -1) {
     widgetSrc.unshift(src);//https://www.youtube.com/embed/25QpDHCLOUc
@@ -1465,7 +1431,7 @@ function parseInput() {
   case 'e':
     stack.pop();
     updateDisplay();
-    eulersNum();
+    rpnAlert(Math.exp(1));
     break;
   case 'embed':
     stack.pop();
@@ -1566,7 +1532,7 @@ function parseInput() {
   case 'phi':
     stack.pop();
     updateDisplay();
-    goldenRatio();
+    rpnAlert((1 + Math.sqrt(5)) / 2);
     break;
   case 'pi':
     stack.pop();
@@ -1781,7 +1747,7 @@ function rpnAlert(input) {
 
   backupUndo();
   $('txtInput').value = input;
-  $('txtInput').select();
+  // $('txtInput').select();
 }
 
 function storeCookie(aName, tmpArray) {
@@ -3156,12 +3122,40 @@ window.onload = function () {
   $('menuNotes').onclick = btn_xoff;
   $('menuShift').onclick = btn_shift;
 
-  $('menuPhi').onclick = goldenRatio;
-  $('menuEulers').onclick = eulersNum;
-  $('menuGravitationalConstant').onclick = gravitationalConstant;
-  $('menuLightSpeed').onclick = speedOfLight;
-  $('menuPi').onclick = btn_pi;
+  $('menuPhi').onclick = (function() {
+    return function() { 
+      // insertSymbol((1 + Math.sqrt(5)) / 2);
+      insertSymbol('1.618033988749895');
+    }
+  })();
+  $('menuEulers').onclick = (function() {
+    return function() { 
+      // insertSymbol(Math.exp(1));
+      insertSymbol('2.718281828459045');
+    }
+  })();
+  $('menuGravitationalConstant').onclick = (function() {
+    return function() { 
+      insertSymbol('6.674E-11');
+    }
+  })();
+  $('menuLightSpeed').onclick = (function() {
+    return function() { 
+      insertSymbol('299792458 m/s');
+    }
+  })();
+  $('menuPi').onclick = (function() {
+    return function() {
+      // insertSymbol(Math.PI);
+      insertSymbol('3.141592653589793');
+    }
+  })();
   $('menuDate').onclick = todaysDate;
+  $('menuOhmsLaw').onclick = (function() {
+    return function() {
+      insertSymbol('E = IR');
+    }
+  })();
   $('menuTricorder').onclick = tricorderOn;
   $('menuTwig').onclick = monOn;
   $('menuMinus').onclick = (function() {
