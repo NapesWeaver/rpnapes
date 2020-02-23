@@ -1318,7 +1318,7 @@ function getIP() {
   }
   else {
     getUserIP(function (ip) {
-      rpnAlert(ip);
+      textInput(ip);
     });
   }
 }
@@ -1389,7 +1389,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  rpnAlert('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you');
+  textInput('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you');
   btn_enter();
   btn_delete();
 }
@@ -1404,19 +1404,19 @@ function parseInput() {
 
   case 'about':
     stack.pop();
-    rpnAlert('This is a Reverse Polish Notation Calculator, with a Stack. Designed by Napes Weaver.');
+    textInput('This is a Reverse Polish Notation Calculator, with a Stack. Designed by Napes Weaver.');
     btn_enter();
     btn_delete();
     break;
   case 'ai + drones =':
-    rpnAlert('Really Super Smart Autonomous Drones');
+    textInput('Really Super Smart Autonomous Drones');
     btn_enter();
     btn_delete();
     break;
   case 'c':
     stack.pop();
     updateDisplay();
-    rpnAlert('299792458m/s');
+    textInput('299792458m/s');
     break;
   case 'clear':
   case 'clr':
@@ -1431,7 +1431,7 @@ function parseInput() {
   case 'e':
     stack.pop();
     updateDisplay();
-    rpnAlert(Math.exp(1));
+    textInput(Math.exp(1));
     break;
   case 'embed':
     stack.pop();
@@ -1452,7 +1452,7 @@ function parseInput() {
   case 'g':
     stack.pop();
     updateDisplay();
-    rpnAlert('6.674E-11');
+    textInput('6.674E-11');
     break;
   case 'go':
     internetSearch('https://www.google.com/#q=');
@@ -1469,13 +1469,13 @@ function parseInput() {
   case 'how are ya':
   case 'how are you':
   case 'how ya doing':
-    rpnAlert('Like a rhinestone cowboy!');
+    textInput('Like a rhinestone cowboy!');
     btn_enter();
     btn_delete();
     break;
   case 'hello':
   case 'hi':
-    rpnAlert('Hallo there!');
+    textInput('Hallo there!');
     btn_enter();
     btn_delete();
     break;
@@ -1497,12 +1497,12 @@ function parseInput() {
   case 'locus':
     stack.pop();
     updateDisplay();
-    rpnAlert('lat:' + lat + ', lon:' + lng);
+    textInput('lat:' + lat + ', lon:' + lng);
     break;
   case 'mobile':
     stack.pop();
     updateDisplay();
-    rpnAlert(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
+    textInput(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
     break;
   case 'napes':
     location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
@@ -1532,7 +1532,7 @@ function parseInput() {
   case 'phi':
     stack.pop();
     updateDisplay();
-    rpnAlert((1 + Math.sqrt(5)) / 2);
+    textInput((1 + Math.sqrt(5)) / 2);
     break;
   case 'pi':
     stack.pop();
@@ -1562,7 +1562,7 @@ function parseInput() {
   case 'time':
     stack.pop();
     updateDisplay();
-    rpnAlert(getTime());
+    textInput(getTime());
     break;
   case 'tostring':
     stack.pop();
@@ -1743,11 +1743,16 @@ function colorSaveButton() {
     $('btnSave').style.color = '#000000';
   }  
 }
+function textInput(input) {
+  
+  backupUndo();
+  $('txtInput').value = input;
+}
 function rpnAlert(input) {
 
   backupUndo();
   $('txtInput').value = input;
-  // $('txtInput').select();
+  $('txtInput').select();
 }
 
 function storeCookie(aName, tmpArray) {
@@ -2446,7 +2451,7 @@ function displayGIF(obj) {
 function monStatus() {
 
   for (var i = 0; i < theObjects.length; i++) {
-    rpnAlert(theObjects[i].toString());
+    textInput(theObjects[i].toString());
     btn_enter();
   }
 }
@@ -2550,7 +2555,7 @@ function moveObj(obj, speed, xMov, yMov) {
         moveObj(theObjects[i], speed + 1, xMov, yMov);                
         if (theObjects[i].idName === 'twig') {
           twig.movHealth(-1);
-          rpnAlert(twig.health);
+          textInput(twig.health);
           if (twig.health <= 0) {
             $('twig').src = 'images/twig/pop.gif';
             rpnAlert('Game Over');
@@ -2578,7 +2583,7 @@ function moveObj(obj, speed, xMov, yMov) {
   //if ($("btnGo").value === "Go") {
   //    screenEdgeCollision(obj, index);
   //}
-  //rpnAlert("twig:" + theObjects[0].xPos.toString() + " " + theObjects[0].yPos.toString() + " tv:" + theObjects[1].xPos.toString() + " " + theObjects[1].yPos.toString() + " don:" + theObjects[2].xPos.toString() + " " + theObjects[2].yPos.toString());
+  //textInput("twig:" + theObjects[0].xPos.toString() + " " + theObjects[0].yPos.toString() + " tv:" + theObjects[1].xPos.toString() + " " + theObjects[1].yPos.toString() + " don:" + theObjects[2].xPos.toString() + " " + theObjects[2].yPos.toString());
   displayGIF(obj);
 }
 //function screenEdgeCollision(obj, index) {
