@@ -546,7 +546,6 @@ function undoFunction() {
     updateDisplay();
   }
   colorUndoButton();
-  $('txtInput').focus();
 }
 function btn_redo() {
 
@@ -571,7 +570,6 @@ function btn_redo() {
     updateDisplay();
   }
   colorUndoButton();
-  $('txtInput').focus();
 }
 function backupUndo() {
 
