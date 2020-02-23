@@ -332,17 +332,39 @@ function btn_copy() {
 
   hapticResponseMobileKeySupress();
 
-  if (stackFocus) {
-    var tmpTxt;
-
-    tmpTxt = $('txtInput').value;
-    $('txtInput').value = '';
-    getSelectedText('lstStack');
-    $('txtInput').value = tmpTxt;
+  if ($('btnGo').value === 'Go') {
+    if (stackFocus) {
+      var tmpTxt;
+  
+      tmpTxt = $('txtInput').value;
+      $('txtInput').value = '';
+      getSelectedText('lstStack');
+      $('txtInput').value = tmpTxt;
+    }
+    else {
+      document.querySelector('#txtInput').select();
+      document.execCommand('copy');
+    }
   }
   else {
-    document.querySelector('#txtInput').select();
-    document.execCommand('copy');
+    btn_paste();
+  }  
+}
+function btn_paste() {
+
+  if (stackFocus) {
+    getSelectedText('lstStack');
+  }
+  else {
+    if (/*@cc_on!@*/false || !!document.documentMode) {
+      // IE
+      backupUndo();
+      insertAtCursor($('txtInput'), window.clipboardData.getData('Text'));
+    }
+    else {
+      rpnAlert('Function not available for this browser.');
+      $('txtInput').focus();
+    }
   }
 }
 
@@ -359,8 +381,6 @@ function btn_xy() {
 }
 function btn_ab() {
 
-  hapticResponseMobileKeySupress();
-
   if (stack.length > 1) {
     backupUndo();
     var tmp = stack.pop();
@@ -372,8 +392,6 @@ function btn_ab() {
   $('txtInput').focus();
 }
 function xyFunction() {
-
-  hapticResponseMobileKeySupress();
 
   if (stack.length > 0) {
     backupUndo();
@@ -494,26 +512,6 @@ function backspace(txtField) {
   $('txtInput').focus();
 }
 
-function btn_paste() {
-
-  hapticResponseMobileKeySupress();
-
-  if (stackFocus) {
-    getSelectedText('lstStack');
-  }
-  else {
-    if (/*@cc_on!@*/false || !!document.documentMode) {
-      // IE
-      backupUndo();
-      insertAtCursor($('txtInput'), window.clipboardData.getData('Text'));
-    }
-    else {
-      rpnAlert('Function not available for this browser.');
-      $('txtInput').focus();
-    }
-  }
-}
-
 function btn_undo() {
 
   hapticResponseMobileKeySupress();
@@ -630,8 +628,10 @@ function btn_shift() {
   hapticResponseMobileKeySupress();
 
   if ($('btnGo').value === 'You') {
+    $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x <-> y';
     $('btnDelete').value = 'DEL';
+    $('btnLog').value = 'Log';
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
     $('btnEE').value = 'EE';
@@ -641,8 +641,10 @@ function btn_shift() {
     $('btnShift').style.borderStyle = 'outset';
   }
   else {
+    $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a <-> b';
     $('btnDelete').value = '<-----';
+    $('btnLog').value = 'ln';
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
@@ -800,6 +802,10 @@ function btn_off() {
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
 
+function btn_log() {
+  hapticResponseMobileKeySupress();
+  rpnAlert('Not implemented yet');
+}
 function btn_root() {
 
   hapticResponseMobileKeySupress();
@@ -3207,7 +3213,7 @@ window.onload = function () {
   $('btnEnter').onclick = btn_enter;
   $('btnDelete').onclick = btn_delete;
 
-  $('btnPaste').onclick = btn_paste;
+  $('btnLog').onclick = btn_log;
   $('btnRoot').onclick = btn_root;
   $('btnInverse').onclick = btn_inverse;
   $('btnUndo').onclick = btn_undo;
