@@ -631,10 +631,14 @@ function btn_shift() {
     $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x <-> y';
     $('btnDelete').value = 'DEL';
+    $('btnInverse').value = '1 / x';
     $('btnLog').value = 'Log';
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
     $('btnEE').value = 'EE';
+    $('btnModulus').value = '%';
+    $('btnSolidus').value = '/';
+    $('btnSign').value = '±';
     $('btnGo').value = 'Go';
     $('btnGo').style.color = 'green';
     $('btnShift').style.backgroundColor = '#D4D0C8';
@@ -644,10 +648,14 @@ function btn_shift() {
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a <-> b';
     $('btnDelete').value = '<-----';
+    $('btnInverse').value = '! x';
     $('btnLog').value = 'ln';
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
+    $('btnModulus').value = '^';
+    $('btnSolidus').value = '*';
+    $('btnSign').value = '-';
     $('btnGo').value = 'You';
     $('btnGo').style.color = 'blue';
     $('btnShift').style.backgroundColor = 'grey';
@@ -802,80 +810,32 @@ function btn_off() {
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
 
-function btn_log() {
-  hapticResponseMobileKeySupress();
-  rpnAlert('Not implemented yet');
-}
-function btn_root() {
-
-  hapticResponseMobileKeySupress();
-
-  if ($('btnGo').value === 'Go') {
-    rootFunction();
-  }
-  else {
-    exponentialFunction();
-  }
-}
-function rootFunction() {
-
-  hapticResponseMobileKeySupress();
-
-  backupUndo();
-  var newUnits = '';
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString().trim() === 'NaN') {
-    btn_enter();
-    $(('txtInput')).value = '2';
-  }
-  if (extractUnits($('txtInput').value) === 'null') {
-    newUnits = divideUnits(1 / extractReal($('txtInput').value));
-  }
-  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), 1 / extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
-  updateDisplay();
-  $('txtInput').select();
-}
-function exponentialFunction() {
-
-  hapticResponseMobileKeySupress();
-
-  backupUndo();
-  var newUnits = '';
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString() === 'NaN') {
-    btn_enter();
-    $(('txtInput')).value = '2';
-  }
-  if (extractUnits($('txtInput').value) === 'null') {
-    newUnits = multiplyUnits(extractReal($('txtInput').value));
-  }
-  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
-  updateDisplay();
-  $('txtInput').select();
-}
 function btn_inverse() {
 
   hapticResponseMobileKeySupress();
-
-  var newUnits = inverseUnits();
   backupUndo();
-  if (!isNaN(extractReal($('txtInput').value)) && isNaN(extractImaginary($('txtInput').value))) {
-    $('txtInput').value = 1 / extractReal($('txtInput').value);
-  }
-  if (isNaN(extractReal($('txtInput').value)) && !isNaN(extractImaginary($('txtInput').value))) {
-    $('txtInput').value = -1 * (1 / extractImaginary($('txtInput').value));
-    $('txtInput').value += 'j';
-  }
-  if (!isNaN(extractReal($('txtInput').value)) && !isNaN(extractImaginary($('txtInput').value))) {
-    // Invert complex number
-  }
-  $('txtInput').value += newUnits;
-  $('txtInput').select();
-}
 
+  if ($('btnGo').value === 'Go') {
+    var newUnits = inverseUnits();
+    if (!isNaN(extractReal($('txtInput').value)) && isNaN(extractImaginary($('txtInput').value))) {
+      $('txtInput').value = 1 / extractReal($('txtInput').value);
+    }
+    if (isNaN(extractReal($('txtInput').value)) && !isNaN(extractImaginary($('txtInput').value))) {
+      $('txtInput').value = -1 * (1 / extractImaginary($('txtInput').value));
+      $('txtInput').value += 'j';
+    }
+    if (!isNaN(extractReal($('txtInput').value)) && !isNaN(extractImaginary($('txtInput').value))) {
+    // Invert complex number
+    }
+    $('txtInput').value += newUnits;
+    $('txtInput').select();
+  }
+  else {
+    btn_factorial();
+  } 
+}
 function btn_factorial() {
 
-  hapticResponseMobileKeySupress();
-
-  backupUndo();
   $('txtInput').value = factorial(extractReal($('txtInput').value));
   $('txtInput').select();
 }
@@ -895,94 +855,164 @@ function factorial(num) {
     return theResult;
   }
 }
-function btn_modulus() {
+
+function btn_root() {
 
   hapticResponseMobileKeySupress();
-
   backupUndo();
-  $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
+
+  if ($('btnGo').value === 'Go') {
+    rootFunction();
+  }
+  else {
+    exponentialFunction();
+  }
+}
+function rootFunction() {
+
+  var newUnits = '';
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString().trim() === 'NaN') {
+    btn_enter();
+    $(('txtInput')).value = '2';
+  }
+  if (extractUnits($('txtInput').value) === 'null') {
+    newUnits = divideUnits(1 / extractReal($('txtInput').value));
+  }
+  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), 1 / extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
   updateDisplay();
   $('txtInput').select();
 }
+function exponentialFunction() {
+
+  var newUnits = '';
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString() === 'NaN') {
+    btn_enter();
+    $(('txtInput')).value = '2';
+  }
+  if (extractUnits($('txtInput').value) === 'null') {
+    newUnits = multiplyUnits(extractReal($('txtInput').value));
+    if (newUnits === ' ') newUnits = '';
+  }
+  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
+  updateDisplay();
+  $('txtInput').select();
+}
+
+function btn_log() {
+  hapticResponseMobileKeySupress();
+  rpnAlert('Not implemented yet');
+}
+
+function btn_modulus() {
+
+  hapticResponseMobileKeySupress(); 
+
+  if ($('btnGo').value === 'Go') {
+    backupUndo();
+    $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
+    updateDisplay();
+    $('txtInput').select();
+  }
+  else {
+    insertText('^');
+  }
+}
+
+function btn_Solidus() {
+  hapticResponseMobileKeySupress();
+  
+  if ($('btnGo').value === 'Go') {
+    insertText('/');
+  }
+  else {
+    insertText('*');
+  }
+}
+
 function btn_sign() {
 
   hapticResponseMobileKeySupress();
 
-  // var tmpX = $('txtInput').value().trim();
-  var tmpX = $('txtInput').value;
-  backupUndo();
-
-  // If input is blank
-  if (tmpX === '') {
-    tmpX = '-';
-  }
-  else if (tmpX === '+') {
-    tmpX = '-';
-  }
-  else if (tmpX === '-') {
-    tmpX = '+';
-  }
-  // If exponential number
-  else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
-    tmpX += '-';
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
-  }
-  // If imaginary number
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length);
-    tmpX += '-';
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
-  }
-  // If exponential imaginary number
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length);
-    tmpX += '-';
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
-  }
-  // If unit exponent
-  else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
-    tmpX += '-'
-  }
-  else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
-  }
-  // Change sign
-  else {
-    if (tmpX.charAt(0) === '+') {
-      tmpX = tmpX.substring(1);
+  if ($('btnGo').value === 'Go') {
+    var tmpX = $('txtInput').value;
+    backupUndo();
+  
+    // If input is blank
+    if (tmpX === '') {
+      tmpX = '-';
     }
-    if (tmpX.charAt(0) === '-') {
-      tmpX = tmpX.substring(1);
+    else if (tmpX === '+') {
+      tmpX = '-';
     }
+    else if (tmpX === '-') {
+      tmpX = '+';
+    }
+    // If exponential number
+    else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+      tmpX += '-';
+    }
+    else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+    }
+    else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+      tmpX += '-';
+    }
+    // If imaginary number
+    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length);
+      tmpX += '-';
+    }
+    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+    }
+    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+      tmpX += '-';
+    }
+    // If exponential imaginary number
+    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length);
+      tmpX += '-';
+    }
+    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+    }
+    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+      tmpX += '-';
+    }
+    // If unit exponent
+    else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
+      tmpX += '-'
+    }
+    else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+    }
+    else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+      tmpX += '-';
+    }
+    // Change sign
     else {
-      tmpX = '-' + tmpX;
+      if (tmpX.charAt(0) === '+') {
+        tmpX = tmpX.substring(1);
+      }
+      if (tmpX.charAt(0) === '-') {
+        tmpX = tmpX.substring(1);
+      }
+      else {
+        tmpX = '-' + tmpX;
+      }
     }
+    $('txtInput').value = tmpX;
+    $('txtInput').focus();
   }
-  $('txtInput').value = tmpX;
-  $('txtInput').focus();
+  else {
+    insertText('-');
+  } 
 }
+
 function btn_pi() {
 
   hapticResponseMobileKeySupress();
@@ -3213,13 +3243,13 @@ window.onload = function () {
   $('btnEnter').onclick = btn_enter;
   $('btnDelete').onclick = btn_delete;
 
-  $('btnLog').onclick = btn_log;
-  $('btnRoot').onclick = btn_root;
   $('btnInverse').onclick = btn_inverse;
+  $('btnRoot').onclick = btn_root;
+  $('btnLog').onclick = btn_log;
   $('btnUndo').onclick = btn_undo;
 
   $('btnEE').onclick = btn_EE;
-  $('btnFactorial').onclick = btn_factorial;
+  $('btnSolidus').onclick = btn_Solidus;
   $('btnModulus').onclick = btn_modulus;
   $('btnSign').onclick = btn_sign;
   $('btnGo').onclick = btn_go;
