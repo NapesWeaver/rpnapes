@@ -643,6 +643,8 @@ function btn_shift() {
     $('btnShift').style.borderStyle = 'outset';
     $('btnDivide').value = '÷';
     $('btnMultiply').value = 'x';
+    $('btnSubtract').value = '-';
+    $('btnAdd').value = '+';
   }
   else {
     $('btnCopy').value = 'PASTE';
@@ -653,13 +655,15 @@ function btn_shift() {
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
-    $('btnSign').value = '^';
+    $('btnSign').value = '[  ^  ]';
     $('btnGo').value = 'You';
     $('btnGo').style.color = 'blue';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
-    $('btnDivide').value = '/';
-    $('btnMultiply').value = '*';
+    $('btnDivide').value = '[  /  ]';
+    $('btnMultiply').value = '[  *  ]';
+    $('btnSubtract').value = '[  -  ]';
+    $('btnAdd').value = '[  +  ]';
   }
   colorUndoButton();
   $('txtInput').focus();
