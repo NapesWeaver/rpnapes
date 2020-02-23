@@ -635,14 +635,14 @@ function btn_shift() {
     $('btnLog').value = 'Log';
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
-    $('btnEE').value = 'EE';
-    $('btnModulus').value = '%';
-    $('btnSolidus').value = '/';
+    $('btnEE').value = 'Eng';
     $('btnSign').value = '±';
     $('btnGo').value = 'Go';
     $('btnGo').style.color = 'green';
     $('btnShift').style.backgroundColor = '#D4D0C8';
     $('btnShift').style.borderStyle = 'outset';
+    $('btnDivide').value = '÷';
+    $('btnMultiply').value = 'x';
   }
   else {
     $('btnCopy').value = 'PASTE';
@@ -653,13 +653,13 @@ function btn_shift() {
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
-    $('btnModulus').value = '^';
-    $('btnSolidus').value = '*';
-    $('btnSign').value = '-';
+    $('btnSign').value = '^';
     $('btnGo').value = 'You';
     $('btnGo').style.color = 'blue';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
+    $('btnDivide').value = '/';
+    $('btnMultiply').value = '*';
   }
   colorUndoButton();
   $('txtInput').focus();
@@ -905,28 +905,12 @@ function btn_log() {
 
 function btn_modulus() {
 
-  hapticResponseMobileKeySupress(); 
-
-  if ($('btnGo').value === 'Go') {
-    backupUndo();
-    $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
-    updateDisplay();
-    $('txtInput').select();
-  }
-  else {
-    insertText('^');
-  }
-}
-
-function btn_Solidus() {
   hapticResponseMobileKeySupress();
-  
-  if ($('btnGo').value === 'Go') {
-    insertText('/');
-  }
-  else {
-    insertText('*');
-  }
+  backupUndo();
+
+  $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
+  updateDisplay();
+  $('txtInput').select();
 }
 
 function btn_sign() {
@@ -1009,7 +993,7 @@ function btn_sign() {
     $('txtInput').focus();
   }
   else {
-    insertText('-');
+    insertText('^');
   } 
 }
 
@@ -1025,78 +1009,97 @@ function btn_pi() {
 function btn_divide() {
 
   hapticResponseMobileKeySupress();
-
   backupUndo();
-  if (parenthesesExist($('txtInput').value)) {
-    if (parenthesesEven($('txtInput').value)) {
-      $('txtInput').value = eval($('txtInput').value);
-    } else {
-      $('txtInput').value += '/';
+
+  if ($('btnGo').value === 'Go') {
+
+    if (parenthesesExist($('txtInput').value)) {
+      if (parenthesesEven($('txtInput').value)) {
+        $('txtInput').value = eval($('txtInput').value);
+      } else {
+        $('txtInput').value += '/';
+      }
     }
+    if (!parenthesesExist($('txtInput').value)) {
+      var newUnits = divideNotNullUnits(1);
+      $('txtInput').value = parseFloat(parseY()) / parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+      updateDisplay();
+    }    
+    $('txtInput').focus();
   }
-  if (!parenthesesExist($('txtInput').value)) {
-    var newUnits = divideNotNullUnits(1);
-    $('txtInput').value = parseFloat(parseY()) / parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    updateDisplay();
-  }    
-  $('txtInput').focus();
+  else {
+    insertText('/');
+  }  
 }
 function btn_multiply() {
 
   hapticResponseMobileKeySupress();
-
   backupUndo();
-  if (parenthesesExist($('txtInput').value)) {
-    if (parenthesesEven($('txtInput').value)) {
-      $('txtInput').value = eval($('txtInput').value);
-    } else {
-      $('txtInput').value += '*';
+
+  if ($('btnGo').value === 'Go') {
+    if (parenthesesExist($('txtInput').value)) {
+      if (parenthesesEven($('txtInput').value)) {
+        $('txtInput').value = eval($('txtInput').value);
+      } else {
+        $('txtInput').value += '*';
+      }
     }
-  }
-  if (!parenthesesExist($('txtInput').value)) {
-    var newUnits = multiplyNotNullUnits(1);
-    $('txtInput').value = parseFloat(parseY()) * parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    updateDisplay();        
-  }
-  $('txtInput').focus();    
+    if (!parenthesesExist($('txtInput').value)) {
+      var newUnits = multiplyNotNullUnits(1);
+      $('txtInput').value = parseFloat(parseY()) * parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+      updateDisplay();        
+    }
+    $('txtInput').focus();
+  } else {
+    insertText('*');
+  }      
 }
 function btn_subtract() {
 
   hapticResponseMobileKeySupress();
-
   backupUndo();
-  if (parenthesesExist($('txtInput').value)) {
-    if (parenthesesEven($('txtInput').value)) {
-      $('txtInput').value = eval($('txtInput').value);
-    } else {
-      $('txtInput').value += '-';
+
+  if ($('btnGo').value === 'Go') {
+    if (parenthesesExist($('txtInput').value)) {
+      if (parenthesesEven($('txtInput').value)) {
+        $('txtInput').value = eval($('txtInput').value);
+      } else {
+        $('txtInput').value += '-';
+      }
     }
+    if (!parenthesesExist($('txtInput').value)) {
+      var newUnits = addNotNullUnits();        
+      $('txtInput').value = parseFloat(parseY()) - parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+      updateDisplay();
+    }    
+    $('txtInput').focus();
   }
-  if (!parenthesesExist($('txtInput').value)) {
-    var newUnits = addNotNullUnits();        
-    $('txtInput').value = parseFloat(parseY()) - parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    updateDisplay();
-  }    
-  $('txtInput').focus();
+  else {
+    insertText('-');
+  }  
 }
 function btn_add() {
 
   hapticResponseMobileKeySupress();
-
   backupUndo();
-  if (parenthesesExist($('txtInput').value)) {
-    if (parenthesesEven($('txtInput').value)) {
-      $('txtInput').value = eval($('txtInput').value);
-    } else {
-      $('txtInput').value += '+';
+
+  if ($('btnGo').value === 'Go') {
+    if (parenthesesExist($('txtInput').value)) {
+      if (parenthesesEven($('txtInput').value)) {
+        $('txtInput').value = eval($('txtInput').value);
+      } else {
+        $('txtInput').value += '+';
+      }
     }
-  }
-  if (!parenthesesExist($('txtInput').value)) {
-    var newUnits = addNotNullUnits();
-    $('txtInput').value = parseFloat(parseY()) + parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    updateDisplay();
-  }    
-  $('txtInput').focus();
+    if (!parenthesesExist($('txtInput').value)) {
+      var newUnits = addNotNullUnits();
+      $('txtInput').value = parseFloat(parseY()) + parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+      updateDisplay();
+    }    
+    $('txtInput').focus();
+  } else {
+    insertText('+');
+  }  
 }
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
@@ -3099,7 +3102,7 @@ window.onload = function () {
   $('tv').onclick = monStatus;
   $('don').onclick = monStatus;
 
-  // RPNapes Menu  
+  // Menu File 
   $('menuLoad').onclick = btn_load;
   $('openFile').addEventListener('change', function () {
     try{
@@ -3134,6 +3137,7 @@ window.onload = function () {
   $('menuSave').onclick = btn_save;
   $('menuOff').onclick = btn_off;
 
+  // Menu Edit
   $('menuCopy').onclick = btn_copy;
   $('menuPaste').onclick = btn_paste;
   $('menuDelete').onclick = btn_delete;
@@ -3143,6 +3147,7 @@ window.onload = function () {
   $('menuXy').onclick = xyFunction;
   $('menuAb').onclick = btn_ab;
 
+  // Menu Maths
   $('menuDivide').onclick = btn_divide;
   $('menuMultiply').onclick = btn_multiply;
   $('menuSubtract').onclick = btn_subtract;
@@ -3157,10 +3162,12 @@ window.onload = function () {
   $('menuCosine').onclick = btn_cosine;
   $('menuTangent').onclick = btn_tangent;
 
+  // Menu View
   $('menuAngle').onclick = btn_angle;
   $('menuNotes').onclick = btn_xoff;
   $('menuShift').onclick = btn_shift;
 
+  // Menu Constants
   $('menuPhi').onclick = (function() {
     return function() { 
       // insertText((1 + Math.sqrt(5)) / 2);
@@ -3189,24 +3196,28 @@ window.onload = function () {
       insertText('3.141592653589793');
     }
   })();
+
+  // Menu Date
   $('menuDate').onclick = todaysDate;
+
+  // Menu Equations
   $('menuOhmsLaw').onclick = (function() {
     return function() {
       insertText('E = IR');
     }
   })();
+
+  // Menu Programs
   $('menuTricorder').onclick = tricorderOn;
   $('menuTwig').onclick = monOn;
-  $('menuMinus').onclick = (function() {
-    return function() { 
-      insertText('-');
-    }
-  })();
+
   $('menuCarat').onclick = (function() {
     return function() { 
       insertText('^');
     }
   })();
+
+  // Menu Symbols
   $('menuSolidus').onclick = (function() {
     return function() { 
       insertText('/');
@@ -3215,6 +3226,16 @@ window.onload = function () {
   $('menuAsterisk').onclick = (function() {
     return function() { 
       insertText('*');
+    }
+  })();
+  $('menuMinus').onclick = (function() {
+    return function() { 
+      insertText('-');
+    }
+  })();
+  $('menuPlus').onclick = (function() {
+    return function() { 
+      insertText('+');
     }
   })();
   $('menuHeart').onclick = (function() {
@@ -3227,6 +3248,8 @@ window.onload = function () {
       insertText('Ω');
     }
   })();
+
+  // Menu Help
   $('menuHelp').onclick = help;
 
   // Text Area
@@ -3249,7 +3272,7 @@ window.onload = function () {
   $('btnUndo').onclick = btn_undo;
 
   $('btnEE').onclick = btn_EE;
-  $('btnSolidus').onclick = btn_Solidus;
+  $('btnPI').onclick = btn_pi;
   $('btnModulus').onclick = btn_modulus;
   $('btnSign').onclick = btn_sign;
   $('btnGo').onclick = btn_go;
