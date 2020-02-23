@@ -630,26 +630,26 @@ function btn_shift() {
   hapticResponseMobileKeySupress();
 
   if ($('btnGo').value === 'You') {
-    $('btnGo').value = 'Go';
-    $('btnGo').style.color = 'green';
-    $('btnShift').style.backgroundColor = '#D4D0C8';
-    $('btnShift').style.borderStyle = 'outset';
     $('btnXy').value = 'x <-> y';
     $('btnDelete').value = 'DEL';
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
     $('btnEE').value = 'EE';
+    $('btnGo').value = 'Go';
+    $('btnGo').style.color = 'green';
+    $('btnShift').style.backgroundColor = '#D4D0C8';
+    $('btnShift').style.borderStyle = 'outset';
   }
   else {
-    $('btnGo').value = 'You';
-    $('btnGo').style.color = 'blue';
-    $('btnShift').style.backgroundColor = 'grey';
-    $('btnShift').style.borderStyle = 'inset';
     $('btnXy').value = 'a <-> b';
     $('btnDelete').value = '<-----';
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
+    $('btnGo').value = 'You';
+    $('btnGo').style.color = 'blue';
+    $('btnShift').style.backgroundColor = 'grey';
+    $('btnShift').style.borderStyle = 'inset';
   }
   colorUndoButton();
   $('txtInput').focus();
