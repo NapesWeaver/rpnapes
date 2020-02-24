@@ -125,8 +125,8 @@ kbd {
     background-color: #808080;
 }
 #btnGo {
-    color: green;
-    text-decoration: underline;
+    background-color: #4285F4;
+    color: #FFFFFF;
 }
 #btnAngle {
     background-color: #B0C4DE;

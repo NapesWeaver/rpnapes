@@ -463,27 +463,43 @@ function btn_shift() {
   if ($('btnGo').value === 'You') {
     $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x <-> y';
+    // $('btnEnter').style.backgroundColor = '#D4D0C8';
+    $('btnEnter').style.color = '#000000';
     $('btnEnter').value = 'ENTER';
     $('btnDelete').value = 'DEL';
     $('btnInverse').value = '1 / x';
     $('btnLog').value = 'Log';
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
-    $('btnEE').value = 'Eng';
+    $('btnEE').value = 'eng';
+    // $('btnModulus').style.backgroundColor = '#D4D0C8';
+    $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
+    // $('btnSign').style.backgroundColor = '#D4D0C8';
+    $('btnSign').style.color = '#000000';
     $('btnSign').value = '±';
+    $('btnGo').style.backgroundColor = '#4285F4';
     $('btnGo').value = 'Go';
-    $('btnGo').style.color = 'green';
     $('btnShift').style.backgroundColor = '#D4D0C8';
     $('btnShift').style.borderStyle = 'outset';
+    // $('btnDivide').style.backgroundColor = '#D4D0C8';
+    $('btnDivide').style.color = '#000000';
     $('btnDivide').value = '÷';
+    // $('btnMultiply').style.backgroundColor = '#D4D0C8';
+    $('btnMultiply').style.color = '#000000';
     $('btnMultiply').value = 'x';
+    // $('btnSubtract').style.backgroundColor = '#D4D0C8';
+    $('btnSubtract').style.color = '#000000';
     $('btnSubtract').value = '-';
+    // $('btnAdd').style.backgroundColor = '#D4D0C8';
+    $('btnAdd').style.color = '#000000';
     $('btnAdd').value = '+';
   }
   else {
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a <-> b';
+    // $('btnEnter').style.backgroundColor = '#E6E7E9';
+    $('btnEnter').style.color = 'blue';
     $('btnEnter').value = '=';
     $('btnDelete').value = '<-----';
     $('btnInverse').value = '! x';
@@ -491,16 +507,28 @@ function btn_shift() {
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
-    $('btnModulus').value = '(  √¯ )';
-    $('btnSign').value = '(  ^  )';
+    // $('btnModulus').style.backgroundColor = '#E6E7E9';
+    $('btnModulus').style.color = 'blue';
+    $('btnModulus').value = '√¯';
+    // $('btnSign').style.backgroundColor = '#E6E7E9';
+    $('btnSign').style.color = 'blue';
+    $('btnSign').value = '^';
+    $('btnGo').style.backgroundColor = '#B85252';
     $('btnGo').value = 'You';
-    $('btnGo').style.color = 'blue';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
-    $('btnDivide').value = '(  /  )';
-    $('btnMultiply').value = '(  *  )';
-    $('btnSubtract').value = '(  -  )';
-    $('btnAdd').value = '(  +  )';
+    // $('btnDivide').style.backgroundColor = '#E6E7E9';
+    $('btnDivide').style.color = 'blue';
+    $('btnDivide').value = '/';
+    // $('btnMultiply').style.backgroundColor = '#E6E7E9';
+    $('btnMultiply').style.color = 'blue';
+    $('btnMultiply').value = '*';
+    // $('btnSubtract').style.backgroundColor = '#E6E7E9';
+    $('btnSubtract').style.color = 'blue';
+    $('btnSubtract').value = '-';
+    // $('btnAdd').style.backgroundColor = '#E6E7E9';
+    $('btnAdd').style.color = 'blue';
+    $('btnAdd').value = '+';
   }
   colorUndoButton();
   $('txtInput').focus();
@@ -755,7 +783,7 @@ function btn_modulus() {
     $('txtInput').select();
   }
   else {
-    insertText('√¯');
+    insertText('√');
   }  
 }
 
@@ -3238,7 +3266,7 @@ window.onload = function () {
   // Menu Symbols
   $('menuRadical').onclick = (function() {
     return function() { 
-      insertText('√¯');
+      insertText('√');
     }
   })();
   $('menuCarat').onclick = (function() {
