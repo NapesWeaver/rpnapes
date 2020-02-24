@@ -94,9 +94,10 @@ function hapticResponse() {
     $('txtInput').readOnly = true;
   }
 }
+
 function mobileKeyboardAllow() {
   $('txtInput').readOnly = false;
-  insertAtCursor($('txtInput'), '');
+  $('txtInput').removeAllRanges();
 }
 
 //////// Buttons /////////////////////////////////////////////////////////////////////
