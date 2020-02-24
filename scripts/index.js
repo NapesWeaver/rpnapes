@@ -469,7 +469,7 @@ function btn_shift() {
     $('btnEnter').value = 'ENTER';
     $('btnDelete').value = 'DEL';
     $('btnInverse').value = '1 / x';
-    $('btnLog').value = 'Log';
+    $('btnLog').value = 'log';
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
     $('btnEE').value = 'eng';
