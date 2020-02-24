@@ -3213,7 +3213,7 @@ window.onload = function () {
       insertText('299792458 m/s');
     }
   })();
-  $('menuPi').onclick = (function() {
+  $('menuPI').onclick = (function() {
     return function() {
       // insertText(Math.PI);
       insertText('3.141592653589793');
@@ -3335,8 +3335,8 @@ window.onload = function () {
 
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
     $('menuTwig').style = 'display:none';
-    $('menuPi').value = '&Pi';
-    $('btnPi').value = '&Pi';
+    $('menuPI').value = '&Pi';
+    $('btnPI').value = '&Pi';
   }
 
   // Tricorder
