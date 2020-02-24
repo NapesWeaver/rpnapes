@@ -185,7 +185,7 @@ function btn_paste() {
       insertAtCursor($('txtInput'), window.clipboardData.getData('Text'));
     }
     else {
-      rpnAlert('Function not available for this browser.');
+      rpnAlert('Function prohibited by browser.');
       $('txtInput').focus();
     }
   }
@@ -646,7 +646,7 @@ function btn_off() {
   hapticResponse();
 
   window.close();
-  rpnAlert('Not supported by this browser.');
+  rpnAlert('Function prohibited by browser.');
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
