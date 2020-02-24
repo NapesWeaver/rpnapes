@@ -3335,7 +3335,7 @@ window.onload = function () {
 
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
     $('menuTwig').style = 'display:none';
-    $('menuPI').value = '&Pi';
+    $('menuPI').innerHTML = 'bla';
     $('btnPI').value = '&Pi';
   }
 
