@@ -3335,8 +3335,8 @@ window.onload = function () {
 
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
     $('menuTwig').style = 'display:none';
-    $('menuPI').innerHTML = 'bla';
-    $('btnPI').value = '&Pi';
+    $('menuPI').innerHTML = 'Π';
+    $('btnPI').value = 'Π';
   }
 
   // Tricorder
