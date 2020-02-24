@@ -3280,6 +3280,13 @@ window.onload = function () {
   // Menu Help
   $('menuHelp').onclick = help;
 
+  // Attach hapticResponse
+  var elements = document.getElementsByClassName('haptic-response');
+
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', hapticResponse, false);
+  }
+
   // Text Area
   $('lstStack').style.color = '#000000';// noscript warning was red ;)
   $('lstStack').value = '';
