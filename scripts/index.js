@@ -90,6 +90,7 @@ NumberObject.prototype.prettyPrint = function () {
 
 function hapticResponse() {
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  // if (true) {
     navigator.vibrate([18]);
     $('txtInput').readOnly = true;
   }
@@ -98,11 +99,24 @@ function hapticResponse() {
 function mobileKeyboardAllow() {
   if ($('txtInput').readOnly === true) {
     moveCursorToEnd($('txtInput'));
-    moveCursorToEnd($('txtInput'));
     $('txtInput').readOnly = false;
   }
 }
 
+// function moveCursorToEnd(el) {
+//   try {
+//     if (typeof el.selectionStart === 'number') {
+//       el.selectionStart = el.selectionEnd = el.value.length;
+//     } else if (typeof el.createTextRange !== 'undefined') {
+//       el.focus();
+//       var range = el.createTextRange();
+//       range.collapse(false);
+//       range.select();
+//     }
+//   } catch (e) {
+//     console.error(e);
+//   }  
+// }
 function moveCursorToEnd(el) {
   try {
     if (typeof el.selectionStart === 'number') {
@@ -2816,9 +2830,9 @@ function sensor1() {
   if (power()) {
     navigator.vibrate([18]);
     $('viewport').src = '';
-    $('viewport').src = 'http://64.40.99.76:8000/http://64.40.99.76:8000';
     playAudio($('keypress7'));
     playAudio($('scanner'));
+    $('viewport').src = 'http://64.40.99.76:8000/http://64.40.99.76:8000';
   }
 }
 function sensor2() {
@@ -2826,9 +2840,9 @@ function sensor2() {
   if (power()) {
     navigator.vibrate([18]);
     $('viewport').src = '';
-    $('viewport').src = 'http://64.5.130.47:80/http://64.5.130.47:80';
     playAudio($('keypress7'));
     playAudio($('scanner'));
+    $('viewport').src = 'http://64.5.130.47:80/http://64.5.130.47:80';
   }
 }
 
