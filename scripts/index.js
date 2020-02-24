@@ -93,12 +93,24 @@ function hapticResponse() {
     navigator.vibrate([18]);
     $('txtInput').readOnly = true;
   }
+  $('txtInput').readOnly = true;
+}
+function mobileKeyboardAllow() {
+  if ($('txtInput').readOnly === true) {
+    moveCursorToEnd($('txtInput'));
+    $('txtInput').readOnly = false;
+  }
 }
 
-function mobileKeyboardAllow() {
-  $('txtInput').removeAllRanges();
-  insertAtCursor($('txtInput'), '');
-  $('txtInput').readOnly = false;
+function moveCursorToEnd(el) {
+  if (typeof el.selectionStart === 'number') {
+    el.selectionStart = el.selectionEnd = el.value.length;
+  } else if (typeof el.createTextRange !== 'undefined') {
+    el.focus();
+    var range = el.createTextRange();
+    range.collapse(false);
+    range.select();
+  }
 }
 
 //////// Buttons /////////////////////////////////////////////////////////////////////
