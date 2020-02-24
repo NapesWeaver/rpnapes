@@ -95,7 +95,8 @@ function hapticResponse() {
   }
 }
 function mobileKeyboardAllow() {
-  $('txtInput').readOnly = false;
+  setTimeout(function(){
+    $('txtInput').readOnly = false; }, 300);  
 }
 
 //////// Buttons /////////////////////////////////////////////////////////////////////
@@ -1971,9 +1972,9 @@ function rounding(possibleNumber) {
   }
   return possibleNumber;
 }
-function toFixed(value, precision) {
+function toFixed(value, p) {
 
-  var precision = precision || 0,
+  var precision = p || 0,
     power = Math.pow(10, precision),
     absValue = Math.abs(Math.round(value * power)),
     result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
@@ -2972,6 +2973,7 @@ function updateDisplayNotes() {
 }
 
 // Event listeners & window.onload
+
 document.addEventListener('keypress', function (event) {
 
   if ($('rpnapes').className !== 'hidden') {

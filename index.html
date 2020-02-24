@@ -93,7 +93,7 @@
                     <li><a id="menuAngle" href="#">deg/rad</a></li>
                     <li class="menu">
                       <a href="#" onclick="$('fix').className='visible'" onmouseover="$('base').className='hidden'">Fix</a>
-                      <ul id="fix">
+                      <ul id="fix" onclick="$('fix').className='hidden'">
                         <li><a href="#" onclick="fixDecimal = -1; updateDisplay()">&nbsp;&nbsp;OFF</a></li>
                         <li><a href="#" onclick="fixDecimal = 0; updateDisplay()">&nbsp;&nbsp;0</a></li>
                         <li><a href="#" onclick="fixDecimal = 1; updateDisplay()">&nbsp;&nbsp;1</a></li>
