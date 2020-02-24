@@ -98,6 +98,7 @@ function hapticResponse() {
 function mobileKeyboardAllow() {
   if ($('txtInput').readOnly === true) {
     moveCursorToEnd($('txtInput'));
+    moveCursorToEnd($('txtInput'));
     $('txtInput').readOnly = false;
   }
 }
@@ -290,12 +291,6 @@ function btn_enter() {
   }
 }
 function enterFunction() {
-
-  // if (parenthesesExist($("txtInput").value)) {
-  //     if (parenthesesEven($("txtInput").value)) {
-  //         $("txtInput").value = eval($("txtInput").value);
-  //     }
-  // }
 
   var soulX = $('txtInput').value.trim();
   var realPartX = extractReal(soulX);
