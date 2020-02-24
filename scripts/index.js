@@ -249,7 +249,8 @@ function btn_enter() {
 
   hapticResponse();
 
-  if ($('btnGo').value === 'Go') {
+  // if ($('btnGo').value === 'Go') {
+  if (true) {
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
       getSelectedText('lstStack');
@@ -1143,13 +1144,16 @@ function getSize() {
     y = w.innerHeight || e.clientHeight || g.clientHeight;
   insertText(x + ' × ' + y);
 }
+function insertTime() {
+  insertText(getTime());
+}
 function getTime() {
 
   var currentdate = new Date();
   var datetime = currentdate.getHours() + ':' + currentdate.getMinutes() + ':' + currentdate.getSeconds();
   return datetime;
 }
-function todaysDate() {
+function insertDate() {
 
   var today = new Date();
   var month = today.getMonth() + 1;
@@ -1348,7 +1352,7 @@ function parseInput() {
   case 'date':
     stack.pop();
     updateDisplay();
-    todaysDate();
+    insertDate();
     break;
   case 'e':
     stack.pop();
@@ -3250,7 +3254,10 @@ window.onload = function () {
   })();
 
   // Menu Date
-  $('menuDate').onclick = todaysDate;
+  $('menuDate').onclick = insertDate;
+
+  // Menu Time
+  $('menuTime').onclick = insertTime;
 
   // Menu Equations
   $('menuOhmsLaw').onclick = (function() {
