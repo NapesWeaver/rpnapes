@@ -249,8 +249,8 @@ function btn_enter() {
 
   hapticResponse();
 
-  // if ($('btnGo').value === 'Go') {
-  if (true) {
+  if ($('btnGo').value === 'Go') {
+
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
       getSelectedText('lstStack');
@@ -263,8 +263,12 @@ function btn_enter() {
     parseInput();
   }
   else {
-    evaluate();
-  }  
+    try {
+      evaluate();
+    } catch (e) {
+      rpnAlert(e.toString());
+    }
+  }
 }
 function enterFunction() {
 
