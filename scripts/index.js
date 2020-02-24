@@ -265,9 +265,7 @@ NumberObject.prototype.prettyPrint = function () {
   return prettyString;
 };
 
-//////// Buttons /////////////////////////////////////////////////////////////////////
-
-function hapticResponseMobileKeySupress() {
+function hapticResponse() {
   if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
     navigator.vibrate([18]);
     $('txtInput').readOnly = true;
@@ -276,6 +274,8 @@ function hapticResponseMobileKeySupress() {
 function mobileKeyboardAllow() {
   $('txtInput').readOnly = false;
 }
+
+//////// Buttons /////////////////////////////////////////////////////////////////////
 
 function btn_xoff() {
 
@@ -330,7 +330,7 @@ function tricorderOn() {
 
 function btn_copy() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     if (stackFocus) {
@@ -370,7 +370,7 @@ function btn_paste() {
 
 function btn_xy() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     xyFunction();
@@ -424,7 +424,7 @@ function xyFunction() {
 
 function btn_enter() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     if (stackFocus) {
@@ -476,7 +476,7 @@ function evaluate () {
 
 function btn_delete() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -526,7 +526,7 @@ function backspace(txtField) {
 
 function btn_undo() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     undoFunction();
@@ -599,7 +599,7 @@ function colorUndoButton() {
 
 function btn_EE() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     //if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($("txtInput").value) && !/.*[eE].*[eE].*/g.test($("txtInput").value)) {
@@ -618,7 +618,7 @@ function btn_EE() {
 
 function btn_go() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   backupUndo();
   if ($('txtInput').value !== '') {
@@ -635,7 +635,7 @@ function btn_go() {
 
 function btn_shift() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   if ($('btnGo').value === 'You') {
     $('btnCopy').value = 'COPY';
@@ -685,7 +685,7 @@ function btn_shift() {
 
 function btn_clear() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   backupUndo();
   monOff();
@@ -698,7 +698,7 @@ function btn_clear() {
 
 function btn_save() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   $('btnSave').style.color = '#D4D0C8';
   storeCookie('STACK', nestArray(stack));
@@ -758,7 +758,7 @@ function saveFile(fileName, pretty) {
 
 function btn_load() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   var index = 0;
   backupUndo();
@@ -820,7 +820,7 @@ function instantiateNumberObject(tmpArray) {
 
 function btn_off() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   window.close();
   rpnAlert('Not supported by this browser.');
@@ -830,7 +830,7 @@ function btn_off() {
 
 function btn_inverse() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -876,7 +876,7 @@ function factorial(num) {
 
 function btn_root() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -917,13 +917,13 @@ function exponentialFunction() {
 }
 
 function btn_log() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   rpnAlert('Not implemented yet');
 }
 
 function btn_modulus() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -938,7 +938,7 @@ function btn_modulus() {
 
 function btn_sign() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     var tmpX = $('txtInput').value;
@@ -1022,7 +1022,7 @@ function btn_sign() {
 
 function btn_pi() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   // insertText(Math.PI);
   insertText('3.141592653589793');
 }
@@ -1031,7 +1031,7 @@ function btn_pi() {
 
 function btn_divide() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -1056,7 +1056,7 @@ function btn_divide() {
 }
 function btn_multiply() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -1079,7 +1079,7 @@ function btn_multiply() {
 }
 function btn_subtract() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -1103,7 +1103,7 @@ function btn_subtract() {
 }
 function btn_add() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -1129,7 +1129,7 @@ function btn_add() {
 
 function btn_angle() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   if ($('btnAngle').value === 'deg') {
     $('btnAngle').value = 'rad';
@@ -1141,7 +1141,7 @@ function btn_angle() {
 }
 function btn_sine() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
@@ -1158,7 +1158,7 @@ function btn_sine() {
 }
 function btn_cosine() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
@@ -1175,7 +1175,7 @@ function btn_cosine() {
 }
 function btn_tangent() {
 
-  hapticResponseMobileKeySupress();
+  hapticResponse();
 
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
@@ -1194,62 +1194,62 @@ function btn_tangent() {
 //////// Input Buttons ///////////////////////////////////////////////////////////////
 
 function btn_dot() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '.');
   $('txtInput').focus();
 }
 function btn_zero() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '0');
   $('txtInput').focus();
 }
 function btn_one() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '1');
   $('txtInput').focus();
 }
 function btn_two() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '2');
   $('txtInput').focus();
 }
 function btn_three() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '3');
   $('txtInput').focus();
 }
 function btn_space() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), ' ');
   $('txtInput').focus();
 }
 function btn_four() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '4');
   $('txtInput').focus();
 }
 function btn_five() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '5');
   $('txtInput').focus();
 }
 function btn_six() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '6');
   $('txtInput').focus();
 }
 function btn_seven() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '7');
   $('txtInput').focus();
 }
 function btn_eight() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '8');
   $('txtInput').focus();
 }
 function btn_nine() {
-  hapticResponseMobileKeySupress();
+  hapticResponse();
   insertAtCursor($('txtInput'), '9');
   $('txtInput').focus();
 }
