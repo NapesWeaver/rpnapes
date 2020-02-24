@@ -96,8 +96,8 @@ function hapticResponse() {
 }
 
 function mobileKeyboardAllow() {
-  $('txtInput').readOnly = false;
   $('txtInput').removeAllRanges();
+  $('txtInput').readOnly = false;
 }
 
 //////// Buttons /////////////////////////////////////////////////////////////////////
