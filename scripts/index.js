@@ -3379,10 +3379,11 @@ window.onload = function () {
   $('btnLoadNotes').onclick = btn_load_notes;
   $('btnClearNotes').onclick = btn_clear_notes;
 
-  // $('lstNotes').addEventListener('paste', function() {
-  //   console.log(notes.length);
-  //   if (notes.length > 1) backupUndoNotes();
-  // });
+  $('lstNotes').addEventListener('paste', function() {
+    setTimeout(function(){
+      if (notes.length > 0) backupUndoNotes(); 
+    }, 100);
+  });
   
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
