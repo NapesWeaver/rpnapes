@@ -14,183 +14,6 @@ var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
 
-document.addEventListener('keypress', function (event) {
-
-  if ($('rpnapes').className !== 'hidden') {
-    switch (event.keyCode) {
-    case 13:
-      // RPNapes ENTER
-      btn_enter();
-      break;
-    }
-  }
-});
-document.addEventListener('keydown', function (event) {
-
-  if ($('rpnapes').className !== 'hidden') {
-    if ($('twig').className !== 'hidden') {
-      switch (event.keyCode) {
-      case 37:
-        // LEFT ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-left.gif';
-          moveObj(twig, twig.speed, -1, 0);
-        }
-        break;
-      case 38:
-        // UP ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-left.gif';
-          moveObj(twig, twig.speed, 0, -1);
-        }
-        break;
-      case 39:
-        // RIGHT ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-right.gif';
-          moveObj(twig, twig.speed, 1, 0);
-        }
-        break;
-      case 40:
-        // DOWN ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-right.gif';
-          moveObj(twig, twig.speed, 0, 1);
-        }
-        break;
-      }
-    }
-    else {
-            
-      // IE || Chrome - No solution yet :(
-      if (false) {
-        //if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-      } else {
-        // Firefox      
-        switch (event.keyCode) {
-        case 38:
-          // UP ARROW - If focus is on txtInput move focus to bottom of lstStack
-          $('lstStack').readOnly = false;
-          if (!stackFocus) {
-            //event.preventDefault();
-            if (!event) { event = window.event; }
-            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            var t = $('lstStack');
-            t.onfocus = function () {
-              t.scrollTop = t.scrollHeight;
-              setTimeout(function () {
-                t.select();
-                t.selectionStart = t.selectionEnd;
-              }, 10);
-            };
-            $('lstStack').focus();
-            stackFocus = true;
-          }
-          $('lstStack').readOnly = true;
-          break;
-        case 40:
-          // DOWN ARROW - If focus is at bottom of lstStack move focus to txtInput
-          $('lstStack').readOnly = false;
-          if (getIndex('lstStack') === $('lstStack').value.split('\n').length) {
-            //event.preventDefault();
-            if (!event) { event = window.event; }
-            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            $('txtInput').focus();
-          }
-          $('lstStack').readOnly = true;
-          break;
-        }
-      }      
-    }
-    switch (event.keyCode) {
-    case 8:
-      // BACKSPACE
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      backupUndo();
-      backspaceKey();
-      break;
-    case 27:
-      // ESC
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_xy();
-      break;
-    case 46:
-      // DELETE
-      btn_delete();
-      break;
-    case 106:
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_multiply();
-      break;
-    case 107:
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_add();
-      break;
-    case 109:
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_subtract();
-      break;
-    case 111:
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_divide();
-      break;
-    }
-  }
-});
-document.addEventListener('keyup', function (event) {
-
-  if ($('rpnapes').className !== 'hidden') {
-
-    switch (event.keyCode) {
-    case 37:
-      // LEFT ARROW (Falls through)
-    case 38:
-      // UP ARROW (Falls through)
-    case 39:
-      // RIGHT ARROW (Falls through)
-    case 40:
-      // DOWN ARROW
-      if (twig.health > 0) {
-        $('twig').src = 'images/twig/hat-on.gif';
-      }
-    }
-  }
-  else {
-    $('btnSaveNotes').style.color = '#000000';
-    switch (event.keyCode) {
-    case 13:
-      // Notes ENTER (Falls through)
-    case 46:
-      // Notes DELETE (Falls through)
-    case 49:
-      // Notes 1 and ! (Falls through)
-    case 188:
-      // Notes , and < (Falls through)
-    case 190:
-      // Notes . and > (Falls through)
-    case 191:
-      // Notes ? and /
-      backupUndoNotes();
-      notes = $('lstNotes').value.split('\n');
-      break;
-    }
-  }
-});
-
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
   this.soul = soul;
@@ -330,8 +153,6 @@ function tricorderOn() {
 
 function btn_copy() {
 
-  hapticResponse();
-
   if ($('btnGo').value === 'Go') {
     if (stackFocus) {
       var tmpTxt;
@@ -369,8 +190,6 @@ function btn_paste() {
 }
 
 function btn_xy() {
-
-  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     xyFunction();
@@ -424,8 +243,6 @@ function xyFunction() {
 
 function btn_enter() {
 
-  hapticResponse();
-
   if ($('btnGo').value === 'Go') {
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
@@ -476,7 +293,6 @@ function evaluate () {
 
 function btn_delete() {
 
-  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -525,8 +341,6 @@ function backspace(txtField) {
 }
 
 function btn_undo() {
-
-  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     undoFunction();
@@ -599,8 +413,6 @@ function colorUndoButton() {
 
 function btn_EE() {
 
-  hapticResponse();
-
   if ($('btnGo').value === 'Go') {
     //if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($("txtInput").value) && !/.*[eE].*[eE].*/g.test($("txtInput").value)) {
     if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txtInput').value) && !/.*[eE].*[eE].*/g.test($('txtInput').value)) {
@@ -618,8 +430,6 @@ function btn_EE() {
 
 function btn_go() {
 
-  hapticResponse();
-
   backupUndo();
   if ($('txtInput').value !== '') {
     if ($('btnGo').value === 'You') {
@@ -634,8 +444,6 @@ function btn_go() {
 }
 
 function btn_shift() {
-
-  hapticResponse();
 
   if ($('btnGo').value === 'You') {
     $('btnCopy').value = 'COPY';
@@ -685,8 +493,6 @@ function btn_shift() {
 
 function btn_clear() {
 
-  hapticResponse();
-
   backupUndo();
   monOff();
   $('txtInput').value = '';
@@ -697,8 +503,6 @@ function btn_clear() {
 }
 
 function btn_save() {
-
-  hapticResponse();
 
   $('btnSave').style.color = '#D4D0C8';
   storeCookie('STACK', nestArray(stack));
@@ -757,8 +561,6 @@ function saveFile(fileName, pretty) {
 }
 
 function btn_load() {
-
-  hapticResponse();
 
   var index = 0;
   backupUndo();
@@ -820,8 +622,6 @@ function instantiateNumberObject(tmpArray) {
 
 function btn_off() {
 
-  hapticResponse();
-
   window.close();
   rpnAlert('Not supported by this browser.');
 }
@@ -830,7 +630,6 @@ function btn_off() {
 
 function btn_inverse() {
 
-  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -876,7 +675,6 @@ function factorial(num) {
 
 function btn_root() {
 
-  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -917,13 +715,12 @@ function exponentialFunction() {
 }
 
 function btn_log() {
-  hapticResponse();
+
   rpnAlert('Not implemented yet');
 }
 
 function btn_modulus() {
 
-  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -937,8 +734,6 @@ function btn_modulus() {
 }
 
 function btn_sign() {
-
-  hapticResponse();
 
   if ($('btnGo').value === 'Go') {
     var tmpX = $('txtInput').value;
@@ -1022,7 +817,6 @@ function btn_sign() {
 
 function btn_pi() {
 
-  hapticResponse();
   // insertText(Math.PI);
   insertText('3.141592653589793');
 }
@@ -1030,8 +824,7 @@ function btn_pi() {
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
 function btn_divide() {
-
-  hapticResponse();
+  
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -1056,7 +849,6 @@ function btn_divide() {
 }
 function btn_multiply() {
 
-  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -1079,7 +871,6 @@ function btn_multiply() {
 }
 function btn_subtract() {
 
-  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -1103,7 +894,6 @@ function btn_subtract() {
 }
 function btn_add() {
 
-  hapticResponse();
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
@@ -1129,8 +919,6 @@ function btn_add() {
 
 function btn_angle() {
 
-  hapticResponse();
-
   if ($('btnAngle').value === 'deg') {
     $('btnAngle').value = 'rad';
   }
@@ -1140,8 +928,6 @@ function btn_angle() {
   $('txtInput').focus();
 }
 function btn_sine() {
-
-  hapticResponse();
 
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
@@ -1158,8 +944,6 @@ function btn_sine() {
 }
 function btn_cosine() {
 
-  hapticResponse();
-
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
   if (newUnits === 'null') { newUnits = ''; }
@@ -1174,8 +958,6 @@ function btn_cosine() {
   $('txtInput').select();
 }
 function btn_tangent() {
-
-  hapticResponse();
 
   var newUnits = extractUnits($('txtInput').value);
   backupUndo();
@@ -1194,62 +976,50 @@ function btn_tangent() {
 //////// Input Buttons ///////////////////////////////////////////////////////////////
 
 function btn_dot() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '.');
   $('txtInput').focus();
 }
 function btn_zero() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '0');
   $('txtInput').focus();
 }
 function btn_one() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '1');
   $('txtInput').focus();
 }
 function btn_two() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '2');
   $('txtInput').focus();
 }
 function btn_three() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '3');
   $('txtInput').focus();
 }
 function btn_space() {
-  hapticResponse();
   insertAtCursor($('txtInput'), ' ');
   $('txtInput').focus();
 }
 function btn_four() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '4');
   $('txtInput').focus();
 }
 function btn_five() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '5');
   $('txtInput').focus();
 }
 function btn_six() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '6');
   $('txtInput').focus();
 }
 function btn_seven() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '7');
   $('txtInput').focus();
 }
 function btn_eight() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '8');
   $('txtInput').focus();
 }
 function btn_nine() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '9');
   $('txtInput').focus();
 }
@@ -3112,6 +2882,183 @@ function updateDisplayNotes() {
   }
 }
 
+// Event listeners & window.onload
+document.addEventListener('keypress', function (event) {
+
+  if ($('rpnapes').className !== 'hidden') {
+    switch (event.keyCode) {
+    case 13:
+      // RPNapes ENTER
+      btn_enter();
+      break;
+    }
+  }
+});
+document.addEventListener('keydown', function (event) {
+
+  if ($('rpnapes').className !== 'hidden') {
+    if ($('twig').className !== 'hidden') {
+      switch (event.keyCode) {
+      case 37:
+        // LEFT ARROW
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        if (twig.health > 0) {
+          $('twig').src = 'images/twig/walk-left.gif';
+          moveObj(twig, twig.speed, -1, 0);
+        }
+        break;
+      case 38:
+        // UP ARROW
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        if (twig.health > 0) {
+          $('twig').src = 'images/twig/walk-left.gif';
+          moveObj(twig, twig.speed, 0, -1);
+        }
+        break;
+      case 39:
+        // RIGHT ARROW
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        if (twig.health > 0) {
+          $('twig').src = 'images/twig/walk-right.gif';
+          moveObj(twig, twig.speed, 1, 0);
+        }
+        break;
+      case 40:
+        // DOWN ARROW
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        if (twig.health > 0) {
+          $('twig').src = 'images/twig/walk-right.gif';
+          moveObj(twig, twig.speed, 0, 1);
+        }
+        break;
+      }
+    }
+    else {            
+      // IE || Chrome - No solution yet :(
+      if (false) {
+        //if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
+      } else {
+        // Firefox      
+        switch (event.keyCode) {
+        case 38:
+          // UP ARROW - If focus is on txtInput move focus to bottom of lstStack
+          $('lstStack').readOnly = false;
+          if (!stackFocus) {
+            //event.preventDefault();
+            if (!event) { event = window.event; }
+            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+            var t = $('lstStack');
+            t.onfocus = function () {
+              t.scrollTop = t.scrollHeight;
+              setTimeout(function () {
+                t.select();
+                t.selectionStart = t.selectionEnd;
+              }, 10);
+            };
+            $('lstStack').focus();
+            stackFocus = true;
+          }
+          $('lstStack').readOnly = true;
+          break;
+        case 40:
+          // DOWN ARROW - If focus is at bottom of lstStack move focus to txtInput
+          $('lstStack').readOnly = false;
+          if (getIndex('lstStack') === $('lstStack').value.split('\n').length) {
+            //event.preventDefault();
+            if (!event) { event = window.event; }
+            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+            $('txtInput').focus();
+          }
+          $('lstStack').readOnly = true;
+          break;
+        }
+      }      
+    }
+    switch (event.keyCode) {
+    case 8:
+      // BACKSPACE
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      backupUndo();
+      backspaceKey();
+      break;
+    case 27:
+      // ESC
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_xy();
+      break;
+    case 46:
+      // DELETE
+      btn_delete();
+      break;
+    case 106:
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_multiply();
+      break;
+    case 107:
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_add();
+      break;
+    case 109:
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_subtract();
+      break;
+    case 111:
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btn_divide();
+      break;
+    }
+  }
+});
+document.addEventListener('keyup', function (event) {
+
+  if ($('rpnapes').className !== 'hidden') {
+
+    switch (event.keyCode) {
+    case 37:
+      // LEFT ARROW (Falls through)
+    case 38:
+      // UP ARROW (Falls through)
+    case 39:
+      // RIGHT ARROW (Falls through)
+    case 40:
+      // DOWN ARROW
+      if (twig.health > 0) {
+        $('twig').src = 'images/twig/hat-on.gif';
+      }
+    }
+  }
+  else {
+    $('btnSaveNotes').style.color = '#000000';
+    switch (event.keyCode) {
+    case 13:
+      // Notes ENTER (Falls through)
+    case 46:
+      // Notes DELETE (Falls through)
+    case 49:
+      // Notes 1 and ! (Falls through)
+    case 188:
+      // Notes , and < (Falls through)
+    case 190:
+      // Notes . and > (Falls through)
+    case 191:
+      // Notes ? and /
+      backupUndoNotes();
+      notes = $('lstNotes').value.split('\n');
+      break;
+    }
+  }
+});
+
 window.onload = function () {
 
   // Internet Explorer needs this for "btnOff" ~ window.close()   
@@ -3376,6 +3323,13 @@ window.onload = function () {
   //   if (notes.length > 1) backupUndoNotes();
   // });
   
+  // Attach hapticResponse()
+  var elements = document.getElementsByClassName('haptic-response');
+
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', hapticResponse, false);
+  }
+
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lstNotes').value = '';
