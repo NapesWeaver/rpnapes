@@ -233,7 +233,6 @@ kbd {
     .menu li:hover .sub-menu {
         z-index: 1;
         opacity: 1;
-        /*background:#405D98;*/
         background: #D4D0C8; /* For browsers that do not support gradients */
         background: -webkit-linear-gradient(#D4D0C8, #F2F2F2); /* For Safari 5.1 to 6.0 */
         background: -o-linear-gradient(#D4D0C8, #F2F2F2); /* For Opera 11.1 to 12.0 */

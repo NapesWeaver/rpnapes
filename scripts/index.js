@@ -102,20 +102,6 @@ function mobileKeyboardAllow() {
   }
 }
 
-// function moveCursorToEnd(el) {
-//   try {
-//     if (typeof el.selectionStart === 'number') {
-//       el.selectionStart = el.selectionEnd = el.value.length;
-//     } else if (typeof el.createTextRange !== 'undefined') {
-//       el.focus();
-//       var range = el.createTextRange();
-//       range.collapse(false);
-//       range.select();
-//     }
-//   } catch (e) {
-//     console.error(e);
-//   }  
-// }
 function moveCursorToEnd(el) {
   try {
     if (typeof el.selectionStart === 'number') {
@@ -129,6 +115,16 @@ function moveCursorToEnd(el) {
   } catch (e) {
     console.error(e);
   }  
+}
+
+function hideMenu() {
+  console.log('y');
+  var menuItem = document.getElementsByClassName('menu');
+  
+  for (var m = 0; m < menuItem.length; m++) {
+    menuItem[m].className = 'hidden';
+  }
+  console.log('yy');
 }
 
 //////// Buttons /////////////////////////////////////////////////////////////////////

@@ -79,11 +79,11 @@
                   </ul>
                 </li>
                 <li class="haptic-response">
-                  <a href="#" onmouseover="$('base').className='hidden'; $('fix').className='hidden'">View</a>
+                  <a href="#" onmouseover="$('base').className='hidden';$('fix').className='hidden'">View</a>
                   <ul class="sub-menu">
                     <li class="menu">
                       <a href="#" onclick="$('base').className='visible'" onmouseover="$('fix').className='hidden'">Base</a>
-                      <ul id="base">
+                      <ul id="base" onclick="$('base').className='hidden'">
                         <li><a id="menuBinary" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;binary</a></li>
                         <li><a id="menuOctal" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;octal</a></li>
                         <li><a id="menuHex" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;hex</a></li>
@@ -120,11 +120,11 @@
                   </ul>
                 </li>
                 <li class="haptic-response">
-                  <a href="#" onmouseover="$('constants').className='hidden'; $('equations').className='hidden'; $('programs').className='hidden'; $('symbols').className='hidden'">Tools</a>
+                  <a href="#" onmouseover="$('constants').className='hidden';$('equations').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Tools</a>
                   <ul class="sub-menu">
                     <li class="menu">
-                      <a href="#" onclick="$('constants').className='visible'" onmouseover="$('equations').className='hidden'; $('programs').className='hidden'; $('symbols').className='hidden'">Constants</a>
-                      <ul id="constants">
+                      <a href="#" onclick="$('constants').className='visible'" onmouseover="$('equations').className='hidden'">Constants</a>
+                      <ul id="constants" onclick="$('constants').className='hidden'">
                         <li><a id="menuPhi" href="#" title="Phi ~ Golden Ratio">&nbsp;&nbsp;&#934;</a></li>
                         <li><a id="menuEulers" href="#" title="Euler's Number">&nbsp;&nbsp;e</a></li>
                         <li><a id="menuGravitationalConstant" href="#" title="Gravitational Constant">&nbsp;&nbsp;G</a></li>
@@ -135,14 +135,14 @@
                     <li><a id="menuDate" href="#">Date</a></li>
                     <li><a id="menuTime" href="#">Time</a></li>
                     <li class="menu">
-                      <a href="#" onclick="$('equations').className='visible'" onmouseover="$('constants').className='hidden'; $('programs').className='hidden'; $('symbols').className='hidden'">Equations</a>
-                      <ul id="equations">
+                      <a href="#" onclick="$('equations').className='visible'" onmouseover="$('constants').className='hidden';$('programs').className='hidden';">Equations</a>
+                      <ul id="equations" onclick="$('equations').className='hidden'">
                         <li><a id="menuOhmsLaw" href="#">&nbsp;&nbsp;Ohm's&nbsp;Law</a></li>
                       </ul>
                     </li>
                     <li class="menu">
-                      <a href="#" onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden'; $('equations').className = 'hidden'; $('symbols').className='hidden'">Programs</a>
-                      <ul id="programs">
+                      <a href="#" onclick="$('programs').className='visible'" onmouseover="$('equations').className='hidden';$('symbols').className='hidden'">Programs</a>
+                      <ul id="programs" onclick="$('programs').className='hidden'">
                         <li><a id="menuIpMapper" href="https://napesweaver.github.io/ip-mapper/" target="_blank">&nbsp;&nbsp;IP Mapper</a></li>
                         <li><a href="reference/index.html">&nbsp;&nbsp;Reference</a></li>
                         <li><a id="menuTricorder" href="#">&nbsp;&nbsp;Tricorder</a></li>
@@ -150,8 +150,8 @@
                       </ul>
                     </li>
                     <li class="menu">
-                      <a href="#" onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden'; $('equations').className='hidden'">Symbols</a>
-                      <ul id="symbols">
+                      <a href="#" onclick="$('symbols').className='visible'" onmouseover="$('programs').className='hidden'">Symbols</a>
+                      <ul id="symbols" onclick="$('symbols').className='hidden'">
                         <li><a id="menuRadical" href="#" title="Radical">√¯</a></li>
                         <li><a id="menuCarat" href="#" title="Carat">&nbsp;&nbsp;&#94;</a></li>
                         <li><a id="menuSolidus" href="#" title="Solidus">&nbsp;&nbsp;&#47;</a></li>
