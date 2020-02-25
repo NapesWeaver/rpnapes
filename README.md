@@ -13,8 +13,16 @@ This calcamatron makes use of a visible stack . Units are supported (no conversi
 ![Calcamatron](images/screenshots/rpnapes.jpg)
 ![Shifted calcamatron](images/screenshots/rpnapes-2.jpg)
 
+Features include the ability to load and run simple code scripted thus:
+
+`maxCount = prompt('Enter a number number','25');`
+
+`getFizzBuzz = function(w){word=w;if(w%3===0)word='fizz';if(w%5===0)word='buzz';if(w%15===0)word='fizzbuzz';return word}`
+
+`for(w=1;w<=maxCount;w++){word=getFizzBuzz(w);$('txtInput').value='';$('txtInput').value=word;enterFunction();}`
+
 ## Notes
-A separate interface for note taking is implemented.
+A separate interface for note taking is also implemented.
 
 ![Notes](images/screenshots/notes.jpg)
 
