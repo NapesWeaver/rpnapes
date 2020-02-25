@@ -29,7 +29,7 @@ Thanks to Darryl Snow. Your [moveCursorToEnd](https://gist.github.com/darryl-sno
 
 The original tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Special thanks to keiske84 :)
 
-The tricorder doesn't do too much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) And there are few YouTube videos and Internet radio stations embedded in iFrames.
+The tricorder doesn't do too much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) And there are few YouTube videos and [TuneIn](https://tunein.com/radio/home/) Internet radio stations embedded in iFrames.
 
 ## Acknowledgements
 
