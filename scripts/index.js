@@ -13,7 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var testTmp = '123';
+var testTmp = '321';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -100,7 +100,7 @@ function mobileKeyboardAllow() {
 
   $('txtInput').readOnly = true;
   // if ($('txtInput').readOnly === true) {
-    // moveCursorToEnd($('txtInput'));
+    moveCursorToEnd($('txtInput'));
     $('txtInput').readOnly = false;
   // }
 }
