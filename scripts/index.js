@@ -13,7 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var testTmp = '321';
+var testTmp = '333';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
