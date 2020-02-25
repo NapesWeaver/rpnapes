@@ -13,6 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
+var tmp = 'hallo';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -96,10 +97,12 @@ function hapticResponse() {
   }
 }
 function mobileKeyboardAllow() {
-  if ($('txtInput').readOnly === true) {
-    moveCursorToEnd($('txtInput'));
+
+  $('txtInput').readOnly = true;
+  // if ($('txtInput').readOnly === true) {
+    // moveCursorToEnd($('txtInput'));
     $('txtInput').readOnly = false;
-  }
+  // }
 }
 
 function moveCursorToEnd(el) {
