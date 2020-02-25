@@ -94,7 +94,6 @@ function hapticResponse() {
     navigator.vibrate([18]);
     $('txtInput').readOnly = true;
   }
-  $('txtInput').readOnly = true;
 }
 function mobileKeyboardAllow() {
   if ($('txtInput').readOnly === true) {
