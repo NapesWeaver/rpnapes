@@ -2832,9 +2832,9 @@ function sensor1() {
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
-    // $('viewport').src = 'http://64.40.99.76:8000/http://64.40.99.76:8000';// 1970's http :(
-    $('viewport').src = 'https://tunein.com/embed/player/s249942/';// Classic Hits
     // $('viewport').src = 'https://tunein.com/embed/player/s35862/';// KZUM
+    $('viewport').src = 'https://tunein.com/embed/player/s249942/';// Classic Hits
+    // $('viewport').src = 'https://tunein.com/embed/player/s51173/';// 1920's
   }
 }
 function sensor2() {
@@ -2844,7 +2844,6 @@ function sensor2() {
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
-    // $('viewport').src = 'http://64.5.130.47:80/http://64.5.130.47:80';// 1920's http :(
     // $('viewport').src = 'https://tunein.com/embed/player/s35862/';// NET
     $('viewport').src = 'https://tunein.com/embed/player/s67176/';// BBC World Service
   }
