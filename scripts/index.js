@@ -13,7 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var testTmp = '369';
+var testVar = '1:47AM';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -103,7 +103,6 @@ function mobileKeyboardAllow() {
     $('txtInput').readOnly = false;
   }
 }
-
 function moveCursorToEnd(el) {
   try {
     if (typeof el.selectionStart === 'number') {
@@ -322,7 +321,6 @@ function enterFunction() {
 function evaluate () {
 
   backupUndo();
-
   $('txtInput').value = eval($('txtInput').value);
   $('txtInput').focus();
 }
@@ -2776,9 +2774,9 @@ function button5() {
 
     if ($('widget').className === 'hidden') {
       var srcString = '';
-      var myString = 'forecast';
+      var uniqueString = 'forecast';
 
-      if ($('widget').src.indexOf(myString) === -1) {
+      if ($('widget').src.indexOf(uniqueString) === -1) {
         // Forcast widget
         srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';
         $('widget').src = srcString;
@@ -3212,7 +3210,13 @@ window.onload = function () {
           for (var t in tmpStack) {
             //tmpStack[t] = encodeSpecialChar(tmpStack[t]);
             $('txtInput').value = tmpStack[t];
-            enterFunction();
+            if ($('btnGo').value === 'Go') {
+              enterFunction();              
+            }
+            else {
+              enterFunction();
+              evaluate();// <-- evaluate function can execute code !!!
+            }
           }
           updateDisplay();
         }
