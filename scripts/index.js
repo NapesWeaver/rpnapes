@@ -13,7 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var testVar = '10:59';
+var testVar = '1:13';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -293,11 +293,7 @@ function btn_enter() {
     parseInput();
   }
   else {
-    try {
-      evaluate();
-    } catch (e) {
-      rpnAlert(e.toString());
-    }
+    evaluate($('txtInput').value);
   }
 }
 function enterFunction() {
@@ -318,11 +314,25 @@ function enterFunction() {
 
   $('txtInput').value = $('txtInput').value.trim();  
 }
-function evaluate () {
+// function evaluate () {
+
+//   backupUndo();
+//   try{
+//     $('txtInput').value = eval($('txtInput').value);
+//     $('txtInput').focus();
+//   } catch (e) {
+//     rpnAlert(e.toString());
+//   }
+// }
+function evaluate (input) {
 
   backupUndo();
-  $('txtInput').value = eval($('txtInput').value);
-  $('txtInput').focus();
+  try{
+    $('txtInput').value = eval(input);
+    $('txtInput').focus();
+  } catch (e) {
+    rpnAlert(e.toString());
+  }
 }
 
 function btn_delete() {
@@ -656,16 +666,6 @@ function btn_load() {
   catch(e) { rpnAlert('load MathMon error'); }
   updateDisplay();
 }
-function splitArrayByBrowser(tmpArray) {
-  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-    // IE || Chrome
-    tmpArray = tmpArray.split('_');
-  }
-  else {
-    tmpArray = tmpArray.split('\t');
-  }
-  return tmpArray;
-}
 function loadStack(tmpStack) {
 
   stack.length = 0;
@@ -681,7 +681,18 @@ function loadStack(tmpStack) {
     var tmpArray = [];
     tmpArray = tmpStack.shift();
     instantiateNumberObject(tmpArray);
+    if ($('btnGo').value !== 'Go') evaluate(decodeSpecialChar(stack[stack.length - 1].soul));
   }    
+}
+function splitArrayByBrowser(tmpArray) {
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
+    // IE || Chrome
+    tmpArray = tmpArray.split('_');
+  }
+  else {
+    tmpArray = tmpArray.split('\t');
+  }
+  return tmpArray;
 }
 function instantiateNumberObject(tmpArray) {
 
@@ -2441,7 +2452,7 @@ function resetMathmon() {
   don.setXPos(-45);
   don.setYPos(-420);
 
-  for (var i = 0; i < theObjects.length; i++) {
+  for (i = 0; i < theObjects.length; i++) {
     $(theObjects[i].idName).style.left = theObjects[i].xPos + 'px';
     $(theObjects[i].idName).style.top = theObjects[i].yPos + 'px';
   }
@@ -3215,7 +3226,7 @@ window.onload = function () {
             }
             else {
               enterFunction();
-              evaluate();// <-- evaluate function can execute code !!!
+              evaluate($('txtInput').value);// <-- evaluate function can execute code !!!
             }
           }
           updateDisplay();
