@@ -13,7 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var testVar = '1:13';
+var lastMod = '18:39:55';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -1330,13 +1330,7 @@ function internetSearch(domainString) {
 
   var win;
   var searchTerm = '';
-
-  //window.location.href = "https://google.com";
-  //window.location.reload();
-  //history.forward();
-  //history.back();
-  //history.go(-2);
-
+  
   if ($('txtInput').value.trim().toLowerCase() === 'go' || $('txtInput').value.trim().toLowerCase() === 'you') {
     searchTerm = decodeSpecialChar(stack[stack.length - 2].getSoul());
     btn_delete();
@@ -1344,11 +1338,14 @@ function internetSearch(domainString) {
   }
   else if ($('txtInput').value.trim() !== '') {
     searchTerm = $('txtInput').value.trim();
-    btn_enter();
   }
   domainString += searchTerm;
   win = window.open(domainString, '_blank');
   win.location;
+  //window.location.href = "https://google.com";
+  //window.location.reload();
+  //history.forward();
+  //history.go(-2);
 }
 
 function help() {
