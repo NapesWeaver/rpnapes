@@ -728,19 +728,28 @@ function btn_inverse() {
   backupUndo();
 
   if ($('btnGo').value === 'Go') {
+
     var newUnits = inverseUnits();
-    if (!isNaN(extractReal($('txtInput').value)) && isNaN(extractImaginary($('txtInput').value))) {
-      $('txtInput').value = 1 / extractReal($('txtInput').value);
+    var isNumber = !isNaN(extractReal($('txtInput').value));
+    var isImaginary = !isNaN(extractImaginary($('txtInput').value));
+
+    if (isNumber || isImaginary) {
+      
+      if (isNumber && !isImaginary) {
+        $('txtInput').value = 1 / extractReal($('txtInput').value);
+      }
+      if (!isNumber && isImaginary) {
+        $('txtInput').value = -1 * (1 / extractImaginary($('txtInput').value));
+        $('txtInput').value += 'j';
+      }
+      if (isNumber && isImaginary) {
+        // write code here please ;)
+      }
+      $('txtInput').value += newUnits;
+      $('txtInput').select();
+    } else {
+      $('txtInput').value = newUnits.trim();
     }
-    if (isNaN(extractReal($('txtInput').value)) && !isNaN(extractImaginary($('txtInput').value))) {
-      $('txtInput').value = -1 * (1 / extractImaginary($('txtInput').value));
-      $('txtInput').value += 'j';
-    }
-    if (!isNaN(extractReal($('txtInput').value)) && !isNaN(extractImaginary($('txtInput').value))) {
-    // Invert complex number
-    }
-    $('txtInput').value += newUnits;
-    $('txtInput').select();
   }
   else {
     btn_factorial();
