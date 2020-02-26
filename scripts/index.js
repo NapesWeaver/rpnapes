@@ -509,7 +509,7 @@ function btn_shift() {
     $('btnLog').value = 'log';
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
-    $('btnEE').value = 'eng';
+    $('btnEE').value = 'ENG';
     // $('btnModulus').style.backgroundColor = '#D4D0C8';
     $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
