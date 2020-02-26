@@ -761,8 +761,7 @@ function btn_factorial() {
   $('txtInput').select();
 }
 function factorial(num) {
-
-  backupUndo();
+  
   if (num <= 1) {
     return 1;
   }
