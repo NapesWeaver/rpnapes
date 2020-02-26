@@ -13,7 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var lastMod = '15:15:42';
+var lastMod = '15:42:31';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -816,11 +816,12 @@ function btn_log() {
   hapticResponse();
   
   if ($('btnGo').value === 'Go') {
-    rpnAlert(getBaseLog(10, 1000));// logxY
+    // rpnAlert(getBaseLog(10, 1000));// logxY
   }
   else {
-    rpnAlert(Math.log(10));// ln
+    // rpnAlert(Math.log(10));// ln
   }
+  rpnAlert('Not yet implemented.');
 }
 function getBaseLog(x, y) {
   return Math.log(y) / Math.log(x);
