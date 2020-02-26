@@ -12,8 +12,9 @@ var backUps = [33];
 var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
+var shifted = false;
 var fixDecimal = -1;
-var lastMod = '15:42:31';
+var varTime = '17:29:36';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -185,7 +186,9 @@ function btn_copy() {
 
   hapticResponse();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
+    btn_paste();  }
+  else {
     if (stackFocus) {
 
       var tmpTxt;
@@ -199,9 +202,6 @@ function btn_copy() {
       document.querySelector('#txtInput').select();
       document.execCommand('copy');
     }
-  }
-  else {
-    btn_paste();
   }  
 }
 function btn_paste() {
@@ -226,11 +226,11 @@ function btn_xy() {
 
   hapticResponse();
 
-  if ($('btnGo').value === 'Go') {
-    xyFunction();
+  if (shifted) {
+    btn_ab();
   }
   else {
-    btn_ab();
+    xyFunction();
   }
 }
 function btn_ab() {
@@ -280,7 +280,10 @@ function btn_enter() {
 
   hapticResponse();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
+    evaluate($('txtInput').value);
+  }
+  else {
 
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
@@ -292,9 +295,6 @@ function btn_enter() {
     }
     updateDisplay();
     parseInput();
-  }
-  else {
-    evaluate($('txtInput').value);
   }
 }
 function enterFunction() {
@@ -341,18 +341,17 @@ function btn_delete() {
   hapticResponse();
   backupUndo();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
+    backspaceKey();
+  }
+  else {
     if ($('txtInput').value === '' || stackFocus) {
       deleteFromStack();
-    }
-    else {
+    } else {
       $('txtInput').value = '';
     }
     updateDisplay();
     $('txtInput').focus();
-  }
-  else {
-    backspaceKey();
   }
 }
 function deleteFromStack() {
@@ -390,11 +389,11 @@ function btn_undo() {
 
   hapticResponse();
 
-  if ($('btnGo').value === 'Go') {
-    undoFunction();
+  if (shifted) {
+    btn_redo();
   }
   else {
-    btn_redo();
+    undoFunction();
   }
 }
 function undoFunction() {
@@ -463,16 +462,16 @@ function btn_EE() {
 
   hapticResponse();
 
-  if ($('btnGo').value === 'Go') {
-    //if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($("txtInput").value) && !/.*[eE].*[eE].*/g.test($("txtInput").value)) {
-    if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txtInput').value) && !/.*[eE].*[eE].*/g.test($('txtInput').value)) {
-      insertAtCursor($('txtInput'), 'e');
-    }        
-  }
-  else {
+  if (shifted) {
     //if (/[-+]?\d+[.]?\d*[eE]?[-+]?\d*/g.test($("txtInput").value) && $("txtInput").value.indexOf("j") === -1) {
     if (/[-+]?\d+[.]?\d*[eE]?[-+]?\d*/g.test($('txtInput').value) && $('txtInput').value.indexOf('j') === -1) {
       insertAtCursor($('txtInput'), 'j');
+    }        
+  }
+  else {
+    //if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($("txtInput").value) && !/.*[eE].*[eE].*/g.test($("txtInput").value)) {
+    if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txtInput').value) && !/.*[eE].*[eE].*/g.test($('txtInput').value)) {
+      insertAtCursor($('txtInput'), 'e');
     }
   }
   $('txtInput').focus();
@@ -484,7 +483,7 @@ function btn_go() {
   backupUndo();
 
   if ($('txtInput').value !== '') {
-    if ($('btnGo').value === 'You') {
+    if (shifted) {
 
       internetSearch('https://www.youtube.com/results?search_query=');
     }
@@ -499,7 +498,8 @@ function btn_shift() {
 
   hapticResponse();
 
-  if ($('btnGo').value === 'You') {
+  if (shifted) {
+    shifted = false;
     $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x < > y';
     $('btnEnter').className = 'btn-big';
@@ -533,6 +533,7 @@ function btn_shift() {
     $('btnAdd').value = '+';
   }
   else {
+    shifted = true;
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a < > b';
     $('btnEnter').className = 'btn-big btn-large-font';
@@ -577,9 +578,7 @@ function btn_clear() {
   monOff();
   $('txtInput').value = '';
   $('lstStack').value = '';
-  stack = [];
-  //updateDisplay();
-  $('txtInput').focus();
+  stack.length = 0;
 }
 
 function btn_save() {
@@ -720,8 +719,11 @@ function btn_inverse() {
   hapticResponse();
   backupUndo();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
 
+    btn_factorial();    
+  }
+  else {
     var newUnits = inverseUnits();
     var isNumber = !isNaN(extractReal($('txtInput').value));
     var isImaginary = !isNaN(extractImaginary($('txtInput').value));
@@ -743,9 +745,6 @@ function btn_inverse() {
     } else {
       $('txtInput').value = newUnits.trim();
     }
-  }
-  else {
-    btn_factorial();
   } 
 }
 function btn_factorial() {
@@ -774,11 +773,11 @@ function btn_root() {
   hapticResponse();
   backupUndo();
 
-  if ($('btnGo').value === 'Go') {
-    rootFunction();
+  if (shifted) {
+    exponentialFunction();
   }
   else {
-    exponentialFunction();
+    rootFunction();
   }
 }
 function rootFunction() {
@@ -815,11 +814,11 @@ function btn_log() {
 
   hapticResponse();
   
-  if ($('btnGo').value === 'Go') {
-    // rpnAlert(getBaseLog(10, 1000));// logxY
+  if (shifted) {
+    // rpnAlert(Math.log(10));// ln
   }
   else {
-    // rpnAlert(Math.log(10));// ln
+    // rpnAlert(getBaseLog(10, 1000));// logxY
   }
   rpnAlert('Not yet implemented.');
 }
@@ -827,28 +826,59 @@ function getBaseLog(x, y) {
   return Math.log(y) / Math.log(x);
 }
 
+function btn_pi() {
+
+  hapticResponse();
+  backupUndo();
+
+  if (shifted) {
+    btn_parentheses();
+  }
+  else {
+    // insertText(Math.PI);
+    insertText('3.141592653589793');
+  }
+}
+function btn_parentheses() {
+  
+  insertAroundSelection($('txtInput'), '(' + returnSelectedText('txtInput') + ')');
+  $('txtInput').focus();
+}
+function insertAroundSelection(txtField, txtValue) {
+
+  var startPos = txtField.selectionStart;
+  var endPos = txtField.selectionEnd;
+
+  txtField.value = txtField.value.substring(0, startPos) + txtValue + txtField.value.substring(endPos, txtField.value.length);
+  txtField.selectionEnd = endPos + 1;  
+  txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
+}
+
 function btn_modulus() {
 
   hapticResponse();
   backupUndo();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
+    insertText('√');
+  }
+  else {
     $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
     updateDisplay();
     $('txtInput').select();
-  }
-  else {
-    insertText('√');
   }  
 }
 
 function btn_sign() {
 
   hapticResponse();
+  backupUndo();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
+    insertText('^');    
+  }
+  else {
     var tmpX = $('txtInput').value;
-    backupUndo();
   
     // If input is blank
     if (tmpX === '') {
@@ -920,38 +950,7 @@ function btn_sign() {
     }
     $('txtInput').value = tmpX;
     $('txtInput').focus();
-  }
-  else {
-    insertText('^');
   } 
-}
-
-function btn_pi() {
-
-  hapticResponse();
-  backupUndo();
-
-  if ($('btnGo').value === 'Go') {
-    // insertText(Math.PI);
-    insertText('3.141592653589793');
-  }
-  else {
-    btn_parentheses();
-  }
-}
-function btn_parentheses() {
-  
-  insertAroundSelection($('txtInput'), '(' + returnSelectedText('txtInput') + ')');
-  $('txtInput').focus();
-}
-function insertAroundSelection(txtField, txtValue) {
-
-  var startPos = txtField.selectionStart;
-  var endPos = txtField.selectionEnd;
-
-  txtField.value = txtField.value.substring(0, startPos) + txtValue + txtField.value.substring(endPos, txtField.value.length);
-  txtField.selectionEnd = endPos + 1;  
-  txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
@@ -961,8 +960,10 @@ function btn_divide() {
   hapticResponse();
   backupUndo();
 
-  if ($('btnGo').value === 'Go') {
-
+  if (shifted) {
+    insertText('/');    
+  }
+  else {
     if (parenthesesExist($('txtInput').value)) {
       if (parenthesesEven($('txtInput').value)) {
         $('txtInput').value = eval($('txtInput').value);
@@ -976,9 +977,6 @@ function btn_divide() {
       updateDisplay();
     }    
     $('txtInput').focus();
-  }
-  else {
-    insertText('/');
   }  
 }
 function btn_multiply() {
@@ -986,7 +984,9 @@ function btn_multiply() {
   hapticResponse();
   backupUndo();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
+    insertText('*');
+  } else {
     if (parenthesesExist($('txtInput').value)) {
       if (parenthesesEven($('txtInput').value)) {
         $('txtInput').value = eval($('txtInput').value);
@@ -1000,8 +1000,6 @@ function btn_multiply() {
       updateDisplay();        
     }
     $('txtInput').focus();
-  } else {
-    insertText('*');
   }      
 }
 function btn_subtract() {
@@ -1009,7 +1007,10 @@ function btn_subtract() {
   hapticResponse();
   backupUndo();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
+    insertText('-');    
+  }
+  else {
     if (parenthesesExist($('txtInput').value)) {
       if (parenthesesEven($('txtInput').value)) {
         $('txtInput').value = eval($('txtInput').value);
@@ -1023,9 +1024,6 @@ function btn_subtract() {
       updateDisplay();
     }    
     $('txtInput').focus();
-  }
-  else {
-    insertText('-');
   }  
 }
 function btn_add() {
@@ -1033,8 +1031,12 @@ function btn_add() {
   hapticResponse();
   backupUndo();
 
-  if ($('btnGo').value === 'Go') {
+  if (shifted) {
+    insertText('+');    
+  }
+  else {
     if (parenthesesExist($('txtInput').value)) {
+      
       if (parenthesesEven($('txtInput').value)) {
         $('txtInput').value = eval($('txtInput').value);
       } else {
@@ -1047,8 +1049,6 @@ function btn_add() {
       updateDisplay();
     }    
     $('txtInput').focus();
-  } else {
-    insertText('+');
   }  
 }
 
@@ -2600,7 +2600,7 @@ function moveObj(obj, speed, xMov, yMov) {
 function worldBoundary() {
 
   if (gameOn()) {
-    if ($('btnGo').value === 'Go') {
+    if (false) {
       for (var i = 0; i < theObjects.length; i++) {
         // i * 64 is the x coordinate offset of the .gif as rendered by the HTML
         // Pass through to other side
@@ -3263,14 +3263,13 @@ window.onload = function () {
           backupUndo();
           tmpStack = this.result.split('\n');
           for (var t in tmpStack) {
-            //tmpStack[t] = encodeSpecialChar(tmpStack[t]);
             $('txtInput').value = tmpStack[t];
-            if ($('btnGo').value === 'Go') {
-              enterFunction();              
+            if (shifted) {
+              evaluate($('txtInput').value);
+              enterFunction();
             }
             else {
-              enterFunction();
-              evaluate($('txtInput').value);// <-- evaluate function can execute code !!!
+              enterFunction();              
             }
           }
           updateDisplay();
