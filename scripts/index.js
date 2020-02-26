@@ -13,7 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var lastMod = '2/25/2020';
+var lastMod = '3:6:22';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -187,11 +187,12 @@ function btn_copy() {
 
   if ($('btnGo').value === 'Go') {
     if (stackFocus) {
+
       var tmpTxt;
   
       tmpTxt = $('txtInput').value;
       $('txtInput').value = '';
-      getSelectedText('lstStack');
+      copySelectedText('lstStack');
       $('txtInput').value = tmpTxt;
     }
     else {
@@ -206,7 +207,7 @@ function btn_copy() {
 function btn_paste() {
 
   if (stackFocus) {
-    getSelectedText('lstStack');
+    copySelectedText('lstStack');
   }
   else {
     if (/*@cc_on!@*/false || !!document.documentMode) {
@@ -283,7 +284,7 @@ function btn_enter() {
 
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
-      getSelectedText('lstStack');
+      copySelectedText('lstStack');
     }
     else {
       backupUndo();
@@ -480,8 +481,8 @@ function btn_EE() {
 function btn_go() {
 
   hapticResponse();
-
   backupUndo();
+
   if ($('txtInput').value !== '') {
     if ($('btnGo').value === 'You') {
 
@@ -925,17 +926,29 @@ function btn_sign() {
 function btn_pi() {
 
   hapticResponse();
+  backupUndo();
 
   if ($('btnGo').value === 'Go') {
     // insertText(Math.PI);
     insertText('3.141592653589793');
   }
   else {
-    insertParentheses();
+    btn_parentheses();
   }
 }
-function insertParentheses() {
-  insertText('()');  
+function btn_parentheses() {
+  
+  insertAroundSelection($('txtInput'), '(' + returnSelectedText('txtInput') + ')');
+  $('txtInput').focus();
+}
+function insertAroundSelection(txtField, txtValue) {
+
+  var startPos = txtField.selectionStart;
+  var endPos = txtField.selectionEnd;
+
+  txtField.value = txtField.value.substring(0, startPos) + txtValue + txtField.value.substring(endPos, txtField.value.length);
+  txtField.selectionEnd = endPos + 1;  
+  txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
@@ -1594,12 +1607,12 @@ function selectText(id, name) {
   var startPos = 0, endPos = $(id).value.length;
 
   for (var x = 0; x < lines.length; x++) {
-    if (x == getIndex(name) - 1) {
+    if (x === getIndex(name) - 1) {
       break;
     }
     startPos += (lines[x].length + 1);
   }
-  var endPos = lines[getIndex(name) - 1].length + startPos;
+  endPos = lines[getIndex(name) - 1].length + startPos;
 
   // Firefox
   if (typeof ($(id).selectionStart) !== 'undefined') {
@@ -1626,19 +1639,19 @@ function getIndex(name) {
   var t = document.getElementsByName(name)[0];
   return (t.value.substr(0, t.selectionStart).split('\n').length);
 }
-function getSelectedText(id) {
+function copySelectedText(id) {
 
   var textComponent = $(id);
   var selectedText;
+
   backupUndo();
   // IE version
-  if (document.selection != undefined) {
+  if (document.selection !== undefined) {
     textComponent.focus();
     var sel = document.selection.createRange();
     selectedText = sel.text;
-  }
-  // Mozilla version
-  else if (textComponent.selectionStart != undefined) {
+  }// Mozilla version
+  else if (textComponent.selectionStart !== undefined) {
     var startPos = textComponent.selectionStart;
     var endPos = textComponent.selectionEnd;
     selectedText = textComponent.value.substring(startPos, endPos);
@@ -1647,7 +1660,23 @@ function getSelectedText(id) {
   insertAtCursor($('txtInput'), selectedText);
   document.querySelector('#txtInput').select();
   document.execCommand('copy');
-  //$("txtInput").focus();
+}
+function returnSelectedText(id) {
+
+  var textComponent = $(id);
+  var selectedText;
+  // IE version
+  if (document.selection !== undefined) {
+    textComponent.focus();
+    var sel = document.selection.createRange();
+    selectedText = sel.text;
+  }// Mozilla version
+  else if (textComponent.selectionStart !== undefined) {
+    var startPos = textComponent.selectionStart;
+    var endPos = textComponent.selectionEnd;
+    selectedText = textComponent.value.substring(startPos, endPos);
+  }
+  return selectedText;
 }
 function insertAtCursor(txtField, txtValue) {
 
@@ -1659,7 +1688,6 @@ function insertAtCursor(txtField, txtValue) {
   // Deselect text for IE
   txtField.selectionStart = txtField.selectionEnd;
 }
-
 function updateDisplay() {
 
   $('lstStack').value = '';
@@ -2888,7 +2916,7 @@ function btn_copy_notes() {
 
   var tmpTxt = '';
   tmpTxt = $('txtInput').value.trim();
-  getSelectedText('lstNotes');
+  copySelectedText('lstNotes');
   $('txtInput').value = tmpTxt;
 }
 function btn_paste_notes() {

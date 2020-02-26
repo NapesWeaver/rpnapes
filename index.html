@@ -169,7 +169,7 @@
             </nav>
           </div>
 
-          <textarea name="lstStack" id="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands." onfocus="lstStackFocus()" onclick="selectText('lstStack', 'lstStack')" ondblclick="getSelectedText('lstStack')" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea name="lstStack" id="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands." onfocus="lstStackFocus()" onclick="selectText('lstStack', 'lstStack')" ondblclick="copySelectedText('lstStack')" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" name="txtInput" id="txtInput" size="32" tabindex="1" onfocus="txtInputFocus()"/>
 
           <input type="button" id="btnCopy" class="btn-big" value="COPY"/>
@@ -280,7 +280,7 @@
         <p>
           <a id="date" class="haptic-response" href="JavaScript:void(0)" onmouseover="this.style.color = 'green'" onmouseout="this.style.color = 'black'"
             onmousedown="inputText('The date today is...')" onclick="$('txtInput').value='';insertDate()" ondblclick="inputText('Holy Calcamatrons Batman!!!')">
-            Modified&nbsp;Feb-25-2020
+            Modified&nbsp;Feb-26-2020
           </a>
         </p>
       </footer>
