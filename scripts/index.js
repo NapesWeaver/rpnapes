@@ -13,7 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var lastMod = '3:6:22';
+var lastMod = '15:15:42';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -501,75 +501,67 @@ function btn_shift() {
 
   if ($('btnGo').value === 'You') {
     $('btnCopy').value = 'COPY';
-    $('btnXy').value = 'x <-> y';
-    // $('btnEnter').style.backgroundColor = '#D4D0C8';
+    $('btnXy').value = 'x < > y';
+    $('btnEnter').className = 'btn-big';
     $('btnEnter').style.color = '#000000';
     $('btnEnter').value = 'ENTER';
     $('btnDelete').value = 'DEL';
     $('btnInverse').value = '1 / x';
-    $('btnLog').value = 'log';
-    $('btnRoot').value = 'x √¯y';
+    $('btnLog').innerHTML = 'log<sub>x</sub>y';
+    $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';
     $('btnUndo').value = 'UND';
-    $('btnEE').value = 'ENG';
+    $('btnEE').className = 'btn-small btn-small-font';
+    $('btnEE').value = 'EE';
     $('btnPI').style.color = '#000000';    
     isMobile ? $('btnPI').value = 'Π' : $('btnPI').value = '¶';
-    // $('btnModulus').style.backgroundColor = '#D4D0C8';
     $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
-    // $('btnSign').style.backgroundColor = '#D4D0C8';
     $('btnSign').style.color = '#000000';
     $('btnSign').value = '±';
     $('btnGo').style.backgroundColor = '#4285F4';
     $('btnGo').value = 'Go';
     $('btnShift').style.backgroundColor = '#D4D0C8';
     $('btnShift').style.borderStyle = 'outset';
-    // $('btnDivide').style.backgroundColor = '#D4D0C8';
     $('btnDivide').style.color = '#000000';
     $('btnDivide').value = '÷';
-    // $('btnMultiply').style.backgroundColor = '#D4D0C8';
+    $('btnMultiply').className = 'btn-small';
     $('btnMultiply').style.color = '#000000';
-    $('btnMultiply').value = 'x';
-    // $('btnSubtract').style.backgroundColor = '#D4D0C8';
+    $('btnMultiply').innerHTML = 'x';    
     $('btnSubtract').style.color = '#000000';
     $('btnSubtract').value = '-';
-    // $('btnAdd').style.backgroundColor = '#D4D0C8';
     $('btnAdd').style.color = '#000000';
     $('btnAdd').value = '+';
   }
   else {
     $('btnCopy').value = 'PASTE';
-    $('btnXy').value = 'a <-> b';
-    // $('btnEnter').style.backgroundColor = '#E6E7E9';
+    $('btnXy').value = 'a < > b';
+    $('btnEnter').className = 'btn-big btn-large-font';
     $('btnEnter').style.color = 'blue';
     $('btnEnter').value = '=';
     $('btnDelete').value = '<-----';
     $('btnInverse').value = '! x';
-    $('btnLog').value = 'ln';
-    $('btnRoot').value = 'y ^ x';
+    $('btnLog').innerHTML = 'log<sub>e</sub>';
+    $('btnRoot').innerHTML = 'y&nbsp;<sup>x</sup>';
     $('btnUndo').value = 'REDO';
+    $('btnEE').className = 'btn-small';
     $('btnEE').value = 'j';
     $('btnPI').value = '(  )';
     $('btnPI').style.color = 'blue';
-    // $('btnModulus').style.backgroundColor = '#E6E7E9';
     $('btnModulus').style.color = 'blue';
     $('btnModulus').value = '√¯';
-    // $('btnSign').style.backgroundColor = '#E6E7E9';
     $('btnSign').style.color = 'blue';
     $('btnSign').value = '^';
     $('btnGo').style.backgroundColor = '#B85252';
     $('btnGo').value = 'You';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
-    // $('btnDivide').style.backgroundColor = '#E6E7E9';
     $('btnDivide').style.color = 'blue';
     $('btnDivide').value = '/';
-    // $('btnMultiply').style.backgroundColor = '#E6E7E9';
+    $('btnMultiply').className = 'btn-small su-script-large';
     $('btnMultiply').style.color = 'blue';
-    $('btnMultiply').value = '*';
-    // $('btnSubtract').style.backgroundColor = '#E6E7E9';
+    $('btnMultiply').innerHTML = '<sub>*</sub>';
     $('btnSubtract').style.color = 'blue';
     $('btnSubtract').value = '-';
-    // $('btnAdd').style.backgroundColor = '#E6E7E9';
     $('btnAdd').style.color = 'blue';
     $('btnAdd').value = '+';
   }
@@ -820,8 +812,18 @@ function exponentialFunction() {
 }
 
 function btn_log() {
+
   hapticResponse();
-  rpnAlert('Not implemented yet');
+  
+  if ($('btnGo').value === 'Go') {
+    rpnAlert(getBaseLog(10, 1000));// logxY
+  }
+  else {
+    rpnAlert(Math.log(10));// ln
+  }
+}
+function getBaseLog(x, y) {
+  return Math.log(y) / Math.log(x);
 }
 
 function btn_modulus() {

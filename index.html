@@ -67,9 +67,9 @@
                     <li style="font-size:.79em"><a id="menuMultiply" href="#">x</a></li>
                     <li style="font-size:1.1em"><a id="menuSubtract" href="#">-</a></li>
                     <li><a id="menuAdd" href="#">+</a></li>
+                    <li><a id="menuInverse" href="#">1&nbsp;/&nbsp;x</a></li>
                     <li><a id="menuRoot" href="#">x&nbsp;√¯y</a></li>
                     <li><a id="menuExponential" href="#">y&nbsp;^&nbsp;x</a></li>
-                    <li><a id="menuInverse" href="#">1&nbsp;/&nbsp;x</a></li>
                     <li><a id="menuFactorial" href="#">x&nbsp;!</a></li>
                     <li><a id="menuModulus" href="#">%</a></li>
                     <li><a id="menuSign" href="#">±</a></li>
@@ -152,10 +152,10 @@
                     <li class="menu">
                       <a href="#" onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden';$('equations').className='hidden';$('programs').className='hidden'">Symbols</a>
                       <ul id="symbols" onclick="$('symbols').className='hidden'">
-                        <li><a id="menuRadical" href="#" title="Radical">√¯</a></li>
+                        <li><a id="menuRadical" href="#" title="Radical">&#8730;¯</a></li>
                         <li><a id="menuCarat" href="#" title="Carat">&nbsp;&nbsp;&#94;</a></li>
                         <li><a id="menuSolidus" href="#" title="Solidus">&nbsp;&nbsp;&#47;</a></li>
-                        <li><a id="menuAsterisk" href="#" title="Asterisk">&nbsp;&nbsp;&#42;</a></li>
+                        <li><a id="menuAsterisk" class="su-script-large" href="#" title="Times">&nbsp;&nbsp;<sub>&#42;</sub></a></li>
                         <li><a id="menuMinus" href="#" title="Minus">&nbsp;&nbsp;&#45;</a></li>
                         <li><a id="menuPlus" href="#" title="Plus">&nbsp;&nbsp;&#43;</a></li>
                         <li><a id="menuHeart" href="#" title="Hearts">&nbsp;&nbsp;&#9829;</a></li>
@@ -173,16 +173,17 @@
           <input type="text" name="txtInput" id="txtInput" size="32" tabindex="1" onfocus="txtInputFocus()"/>
 
           <input type="button" id="btnCopy" class="btn-big" value="COPY"/>
-          <input type="button" id="btnXy" class="btn-big" value="x&nbsp;<->&nbsp;y"/>
+          <input type="button" id="btnXy" class="btn-big" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y"/>
           <input type="button" id="btnEnter" class="btn-big" value="ENTER"/>
           <input type="button" id="btnDelete" class="btn-med" value="DEL"/>
           <br/>
           <input type="button" id="btnInverse" class="btn-big" value="1&nbsp;/&nbsp;x"/>
-          <input type="button" id="btnRoot" class="btn-big" value="x&nbsp;√¯y"/>
-          <input type="button" id="btnLog" class="btn-big" value="log"/>
+          <!-- <button type="button" id="btnInverse" class="btn-big"><sup>1</sup>&nbsp;/&nbsp;x</button> -->
+          <button type="button" id="btnRoot" class="btn-big"><sup>x</sup>&nbsp;&#8730;¯y</button>
+          <button type="button" id ="btnLog" class="btn-big">log<sub>x</sub>y</button>
           <input type="button" id="btnUndo" class="btn-med" value="UND"/>
           <br/>
-          <input type="button" id="btnEE" class="btn-small" value="ENG"/>
+          <input type="button" id="btnEE" class="btn-small btn-small-font" value="EE"/>
           <input type="button" id="btnPI" class="btn-small" value="&#182;"/>
           <input type="button" id="btnModulus" class="btn-small" value="%"/>
           <input type="button" id="btnSign" class="btn-small" value="±"/>                    
@@ -200,7 +201,7 @@
           <input type="button" id="btnFour" class="btn-small" value="4"/>
           <input type="button" id="btnFive" class="btn-small" value="5"/>
           <input type="button" id="btnSix" class="btn-small" value="6"/>
-          <input type="button" id="btnMultiply" class="btn-small" value="x"/>
+          <button type="button" id="btnMultiply" class="btn-small">x</button>
           <input type="button" id="btnSine" class="btn-small" value="sin"/>
           <input type="button" id="btnSave" class="btn-med" value="SAV"/>
           <br/>
@@ -213,7 +214,8 @@
           <br/>
           <input type="button" id="btnSpace" class="btn-small" value="&nbsp;"/>
           <input type="button" id="btnZero" class="btn-small" value="0"/>
-          <input type="button" id="btnDot" class="btn-small" value="."/>
+          <!-- <input type="button" id="btnDot" class="btn-small" value="."/> -->
+          <button type="button" id="btnDot" class="btn-small"><sup class="su-script-large">.</sup></button>
           <input type="button" id="btnAdd" class="btn-small" value="+"/>
           <input type="button" id="btnTangent" class="btn-small" value="tan"/>
           <input type="button" id="btnOff" class="btn-med" value="OFF"/>
