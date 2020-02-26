@@ -6,14 +6,14 @@ navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mo
 
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 //var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
-
+var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 var stack = [];
 var backUps = [33];
 var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var fixDecimal = -1;
-var lastMod = '18:39:55';
+var lastMod = '2/25/2020';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -90,7 +90,7 @@ NumberObject.prototype.prettyPrint = function () {
 };
 
 function hapticResponse() {
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  if (isMobile) {
   // if (true) {
     navigator.vibrate([18]);
     $('txtInput').readOnly = true;
@@ -510,6 +510,8 @@ function btn_shift() {
     $('btnRoot').value = 'x √¯y';
     $('btnUndo').value = 'UND';
     $('btnEE').value = 'ENG';
+    $('btnPI').style.color = '#000000';    
+    isMobile ? $('btnPI').value = 'Π' : $('btnPI').value = '¶';
     // $('btnModulus').style.backgroundColor = '#D4D0C8';
     $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
@@ -545,6 +547,8 @@ function btn_shift() {
     $('btnRoot').value = 'y ^ x';
     $('btnUndo').value = 'REDO';
     $('btnEE').value = 'j';
+    $('btnPI').value = '(  )';
+    $('btnPI').style.color = 'blue';
     // $('btnModulus').style.backgroundColor = '#E6E7E9';
     $('btnModulus').style.color = 'blue';
     $('btnModulus').value = '√¯';
@@ -913,8 +917,17 @@ function btn_sign() {
 function btn_pi() {
 
   hapticResponse();
-  // insertText(Math.PI);
-  insertText('3.141592653589793');
+
+  if ($('btnGo').value === 'Go') {
+    // insertText(Math.PI);
+    insertText('3.141592653589793');
+  }
+  else {
+    insertParentheses();
+  }
+}
+function insertParentheses() {
+  insertText('()');  
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
@@ -1350,7 +1363,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  inputText('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, mobile, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you');
+  inputText('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you');
   btn_enter();
   btn_delete();
 }
@@ -1459,11 +1472,6 @@ function parseInput() {
     stack.pop();
     updateDisplay();
     inputText('lat:' + lat + ', lon:' + lng);
-    break;
-  case 'mobile':
-    stack.pop();
-    updateDisplay();
-    inputText(/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent));
     break;
   case 'napes':
     location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
@@ -2680,7 +2688,7 @@ function muteAudio(mute) {
 }
 function playAudio(obj) {
 
-  if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  if (!isMobile) {
     obj.play();
   }
 }
@@ -3421,7 +3429,7 @@ window.onload = function () {
   $('btnTangent').onclick = btn_tangent;
   $('btnOff').onclick = btn_off;
 
-  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  if (isMobile) {
     $('menuTwig').style = 'display:none';
     $('menuPI').innerHTML = 'Π';
     $('btnPI').value = 'Π';
