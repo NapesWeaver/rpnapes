@@ -258,7 +258,7 @@ function btn_enter() {
 
   if (shifted) {
     evaluate($('txtInput').value);
-    $('txtInput').select();
+    // $('txtInput').select();
   }
   else {
 
