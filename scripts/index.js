@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '20:20:14';
+var variable = '20:28:47';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -555,6 +555,7 @@ function btn_clear() {
   $('txtInput').value = '';
   $('lstStack').value = '';
   stack.length = 0;
+  $('txtInput').focus();
 }
 
 function btn_save() {
