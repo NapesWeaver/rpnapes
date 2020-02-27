@@ -131,6 +131,8 @@ input, button {
 }
     #btnOff:hover {
         background-color: #B85252;
+        /*** YouTube red ***/
+        /* background-color: #BF2727; */
     }
 #open {
     background-color: #ffffff;
@@ -174,10 +176,13 @@ input, button {
     color: #EA4335;
 }
 .google {
-    background-image: none;
+    /* background-image: url(../images/google.png); */
+    background-color: '#FBFBFB';
 }
 .you-tube {
-    background-image: url(../images/you-tube.png);
+    background-image: url(../images/youtube.png);
+}
+.google, .you-tube {
     background-size: 29px 19px;
 }
 
@@ -379,7 +384,7 @@ input, button {
         width: 45px;
         height: 30px;
     }
-    .you-tube {
+    .google, .you-tube {
         background-size: 41px 26px;
     }
     #tricorderskin {
