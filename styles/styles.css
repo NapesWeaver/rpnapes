@@ -177,10 +177,12 @@ input, button {
 }
 .google {
     /* background-image: url(../images/google.png); */
+    /* background-repeat: no-repeat; */
     background-color: '#FBFBFB';
 }
 .you-tube {
     background-image: url(../images/youtube.png);
+    background-repeat: no-repeat;
 }
 .google, .you-tube {
     background-size: 29px 19px;
