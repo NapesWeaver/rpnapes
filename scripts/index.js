@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '20:9:21';
+var variable = '20:20:14';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -103,30 +103,6 @@ function mobileKeyboardAllow() {
     moveCursorToEnd($('txtInput'));
     $('txtInput').readOnly = false;
   }
-}
-function moveCursorToEnd(el) {
-  try {
-    if (typeof el.selectionStart === 'number') {
-      el.selectionStart = el.selectionEnd = el.value.length;
-    } else if (typeof el.createTextRange !== 'undefined') {
-      el.focus();
-      var range = el.createTextRange();
-      range.collapse(false);
-      range.select();
-    }
-  } catch (e) {
-    console.error(e);
-  }  
-}
-
-function hideMenu() {
-  console.log('y');
-  var menuItem = document.getElementsByClassName('menu');
-  
-  for (var m = 0; m < menuItem.length; m++) {
-    menuItem[m].className = 'hidden';
-  }
-  console.log('yy');
 }
 
 //////// Buttons /////////////////////////////////////////////////////////////////////
@@ -1595,14 +1571,15 @@ function parseInput() {
   }
 }
 
-function lstStackFocus() {
 
+// onfocus events wired in the HTML
+function lstStackFocus() {
   stackFocus = true;
 }
 function txtInputFocus() {
-
   stackFocus = false;
 }
+
 function selectText(id, name) {
 
   var lines = $(id).value.split('\n');
@@ -1642,6 +1619,7 @@ function getIndex(name) {
   var t = document.getElementsByName(name)[0];
   return (t.value.substr(0, t.selectionStart).split('\n').length);
 }
+
 function copySelectedText(id) {
 
   var textComponent = $(id);
@@ -1664,6 +1642,7 @@ function copySelectedText(id) {
   document.querySelector('#txtInput').select();
   document.execCommand('copy');
 }
+
 function returnSelectedText(id) {
 
   var textComponent = $(id);
@@ -1681,6 +1660,7 @@ function returnSelectedText(id) {
   }
   return selectedText;
 }
+
 function insertAtCursor(txtField, txtValue) {
 
   var startPos = txtField.selectionStart;
@@ -1691,6 +1671,22 @@ function insertAtCursor(txtField, txtValue) {
   // Deselect text for IE
   txtField.selectionStart = txtField.selectionEnd;
 }
+
+function moveCursorToEnd(el) {
+  try {
+    if (typeof el.selectionStart === 'number') {
+      el.selectionStart = el.selectionEnd = el.value.length;
+    } else if (typeof el.createTextRange !== 'undefined') {
+      el.focus();
+      var range = el.createTextRange();
+      range.collapse(false);
+      range.select();
+    }
+  } catch (e) {
+    console.error(e);
+  }  
+}
+
 function updateDisplay() {
 
   $('lstStack').value = '';
