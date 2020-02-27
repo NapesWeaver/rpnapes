@@ -475,6 +475,7 @@ function btn_shift() {
   hapticResponse();
 
   if (shifted) {
+    // Shifting to false...
     shifted = false;
     $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x < > y';
@@ -512,11 +513,12 @@ function btn_shift() {
     $('btnAdd').value = '+';
   }
   else {
+    // Shifting to true...
     shifted = true;
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a < > b';
     $('btnEnter').className = 'btn-big btn-large-font';
-    $('btnEnter').style.color = 'blue';
+    $('btnEnter').style.color = '#0000A0';
     $('btnEnter').value = '=';
     $('btnDelete').value = '<-----';
     $('btnInverse').value = '! x';
@@ -526,11 +528,11 @@ function btn_shift() {
     $('btnEE').className = 'btn-small';
     $('btnEE').value = 'j';
     $('btnPI').value = '(  )';
-    $('btnPI').style.color = 'blue';
-    $('btnModulus').style.color = 'blue';
+    $('btnPI').style.color = '#0000A0';
+    $('btnModulus').style.color = '#0000A0';
     $('btnModulus').value = '√¯';
     $('btnSign').className = 'btn-small su-script-large';
-    $('btnSign').style.color = 'blue';
+    $('btnSign').style.color = '#0000A0';
     // $('btnSign').value = '^';
     $('btnSign').innerHTML = '<sub>^</sub>';
     // $('btnGo').style.backgroundColor = '#B85252';
@@ -539,14 +541,14 @@ function btn_shift() {
     $('btnGo').innerHTML = '';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
-    $('btnDivide').style.color = 'blue';
+    $('btnDivide').style.color = '#0000A0';
     $('btnDivide').value = '/';
     $('btnMultiply').className = 'btn-small su-script-large';
-    $('btnMultiply').style.color = 'blue';
+    $('btnMultiply').style.color = '#0000A0';
     $('btnMultiply').innerHTML = '<sub>*</sub>';
-    $('btnSubtract').style.color = 'blue';
+    $('btnSubtract').style.color = '#0000A0';
     $('btnSubtract').value = '-';
-    $('btnAdd').style.color = 'blue';
+    $('btnAdd').style.color = '#0000A0';
     $('btnAdd').value = '+';
   }
   colorUndoButton();
