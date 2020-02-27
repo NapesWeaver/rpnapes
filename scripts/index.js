@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var varTime = '17:29:36';
+var varTime = '18:8:17';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -519,7 +519,7 @@ function btn_shift() {
     $('btnSign').style.color = '#000000';
     $('btnSign').value = '±';
     $('btnGo').style.backgroundColor = '#4285F4';
-    $('btnGo').value = 'Go';
+    $('btnGo').innerHTML = 'Go';
     $('btnShift').style.backgroundColor = '#D4D0C8';
     $('btnShift').style.borderStyle = 'outset';
     $('btnDivide').style.color = '#000000';
@@ -553,7 +553,7 @@ function btn_shift() {
     $('btnSign').style.color = 'blue';
     $('btnSign').value = '^';
     $('btnGo').style.backgroundColor = '#B85252';
-    $('btnGo').value = 'You';
+    $('btnGo').innerHTML = 'You';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
     $('btnDivide').style.color = 'blue';
