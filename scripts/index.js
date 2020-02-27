@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var varTime = '18:8:17';
+var variable = '19:32:49';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -677,7 +677,7 @@ function loadStack(tmpStack) {
     var tmpArray = [];
     tmpArray = tmpStack.shift();
     instantiateNumberObject(tmpArray);
-    if ($('btnGo').value !== 'Go') evaluate(decodeSpecialChar(stack[stack.length - 1].soul));
+    if (shifted) evaluate(decodeSpecialChar(stack[stack.length - 1].soul));
   }    
 }
 function splitArrayByBrowser(tmpArray) {
