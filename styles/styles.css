@@ -122,7 +122,7 @@ input, button {
     background-color: #808080;
 }
 #btnGo {
-    background-color: #4285F4;
+    background-color: #FBFBFB;
     color: #FFFFFF;
 }
 #btnAngle {
@@ -166,6 +166,12 @@ input, button {
 }
 .visible {
     display: inline;
+}
+.color-blue {
+    color: #4285F4;
+}
+.color-red {
+    color: red;
 }
 
 /***** Menu ***************/

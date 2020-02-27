@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '20:28:47';
+var variable = '21:25:19';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -494,8 +494,8 @@ function btn_shift() {
     $('btnModulus').value = '%';
     $('btnSign').style.color = '#000000';
     $('btnSign').value = '±';
-    $('btnGo').style.backgroundColor = '#4285F4';
-    $('btnGo').innerHTML = 'Go';
+    $('btnGo').style.backgroundColor = '#FBFBFB';
+    $('btnGo').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
     $('btnShift').style.backgroundColor = '#D4D0C8';
     $('btnShift').style.borderStyle = 'outset';
     $('btnDivide').style.color = '#000000';
