@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '19:32:49';
+var variable = '20:9:21';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -657,7 +657,7 @@ function btn_load() {
   catch (e) { rpnAlert('load Stack error.'); }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
-    loadTheObjects(getCookie('MATHMON').substr(index));
+    loadMathMon(getCookie('MATHMON').substr(index));
   }
   catch(e) { rpnAlert('load MathMon error'); }
   updateDisplay();
@@ -2471,7 +2471,7 @@ function monOn() {
   $('twig').src = 'images/twig/piece-frog.gif';
   $('twig').className = 'visible';
   twig.setHealth(100);
-  worldBoundary();
+  worldEngine();
 }
 function monOff() {
 
@@ -2500,33 +2500,36 @@ function resetMathmon() {
     $(theObjects[i].idName).style.left = theObjects[i].xPos + 'px';
     $(theObjects[i].idName).style.top = theObjects[i].yPos + 'px';
   }
-  worldBoundary();
+  worldEngine();
 }
 
-function loadTheObjects(tmpStack) {
+function loadMathMon(tmpStack) {
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
     // IE || Chrome - remove underscore from begining of string
     tmpStack = tmpStack.substr(1);
   }
-  tmpStack = splitArrayByBrowser(tmpStack);
-  var o = 0;
+  tmpStack = splitArrayByBrowser(tmpStack);  
+  mathMonConstructor(tmpStack);
+}
+
+function mathMonConstructor(tmpStack) {
+  var i = 0;
   while (tmpStack.length > 0) {
 
     var tmpArray = [];
-
     tmpArray = tmpStack.shift();
     tmpArray = tmpArray.split(',');
 
-    theObjects[o].setXPos(parseInt(tmpArray[1]));
-    theObjects[o].setYPos(parseInt(tmpArray[2]));
-    theObjects[o].setObjSize(parseInt(tmpArray[3]));
-    theObjects[o].setHealth(parseInt(tmpArray[4]));
-    theObjects[o].setSpeed(parseInt(tmpArray[5]));
-    theObjects[o].setAmmo(parseInt(tmpArray[6]));
-    $(theObjects[o].idName).style.left = theObjects[o].xPos + 'px';
-    $(theObjects[o].idName).style.top = theObjects[o].yPos + 'px';
-    o++;
+    theObjects[i].setXPos(parseInt(tmpArray[1]));
+    theObjects[i].setYPos(parseInt(tmpArray[2]));
+    theObjects[i].setObjSize(parseInt(tmpArray[3]));
+    theObjects[i].setHealth(parseInt(tmpArray[4]));
+    theObjects[i].setSpeed(parseInt(tmpArray[5]));
+    theObjects[i].setAmmo(parseInt(tmpArray[6]));
+    $(theObjects[i].idName).style.left = theObjects[i].xPos + 'px';
+    $(theObjects[i].idName).style.top = theObjects[i].yPos + 'px';
+    i++;
   }
 }
 
@@ -2576,51 +2579,35 @@ function moveObj(obj, speed, xMov, yMov) {
       }
     }
   }
-  // Check for collision with display area boundry
-  //if ($("btnGo").value === "Go") {
-  //    screenEdgeCollision(obj, index);
-  //}
   //inputText("twig:" + theObjects[0].xPos.toString() + " " + theObjects[0].yPos.toString() + " tv:" + theObjects[1].xPos.toString() + " " + theObjects[1].yPos.toString() + " don:" + theObjects[2].xPos.toString() + " " + theObjects[2].yPos.toString());
   displayGIF(obj);
 }
-//function screenEdgeCollision(obj, index) {
-//    // index * 64 is the x coordinate offset of the .gif as rendered by the HTML
-//    // Pass through to other side
-//    if (obj.yPos < -440 + (obj.objSize / 2)) { obj.setYPos(-290 - obj.objSize); }// Top border
-//    if (obj.yPos > -290 - (obj.objSize / 2)) { obj.setYPos(-440 + obj.objSize); }// Bottom border
-//    if (obj.xPos < -49 - (index * 64) + (obj.objSize / 2)) { obj.setXPos(170 - (index * 64) - obj.objSize); }// Left border
-//    if (obj.xPos > 170 - (index * 64) - (obj.objSize / 2)) { obj.setXPos(-49 - (index * 64) + obj.objSize); }// Right border
 
-//    // Collide with border
-//    //if (obj.yPos < -440 + (obj.objSize / 2)) { obj.setYPos(-440 + obj.objSize); }// Top border
-//    //if (obj.yPos > -290 - (obj.objSize / 2)) { obj.setYPos(-290 - obj.objSize); }// Bottom border
-//    //if (obj.xPos < -49 - (index * 64) + (obj.objSize / 2)) { obj.setXPos(-49 - (index * 64) + obj.objSize); }// Left border
-//    //if (obj.xPos > 170 - (index * 64) - (obj.objSize / 2)) { obj.setXPos(170 - (index * 64) - obj.objSize); }// Right border   
-//}
-function worldBoundary() {
+function worldEngine() {
 
   if (gameOn()) {
-    if (false) {
-      for (var i = 0; i < theObjects.length; i++) {
-        // i * 64 is the x coordinate offset of the .gif as rendered by the HTML
-        // Pass through to other side
-        if (theObjects[i].yPos < -440 + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-290 - theObjects[i].objSize); }// Top border
-        if (theObjects[i].yPos > -290 - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-440 + theObjects[i].objSize); }// Bottom border
-        if (theObjects[i].xPos < -49 - (i * 64) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(170 - (i * 64) - theObjects[i].objSize); }// Left border
-        if (theObjects[i].xPos > 170 - (i * 64) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(-49 - (i * 64) + theObjects[i].objSize); }// Right border
-                
-        // Collide with border
-        //if (theObjects[i].yPos < -440 + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-440 + theObjects[i].objSize); }// Top border
-        //if (theObjects[i].yPos > -290 - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-290 - theObjects[i].objSize); }// Bottom border
-        //if (theObjects[i].xPos < -49 - (i * 64) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(-49 - (i * 64) + theObjects[i].objSize); }// Left border
-        //if (theObjects[i].xPos > 170 - (i * 64) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(170 - (i * 64) - theObjects[i].objSize); }// Right border   
+    for (var i = 0; i < theObjects.length; i++) {
+      shifted ? transXBorders(i) : collideWithBorders(i);
+      displayGIF(theObjects[i]);
+    }            
+  }
+  setTimeout(worldEngine, 90);
+}
+function collideWithBorders(i) {
+  // i * 64 is the x coordinate offset of the .gif as rendered by the HTML
+  if (theObjects[i].yPos < -440 + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-440 + theObjects[i].objSize); }// Top border
+  if (theObjects[i].yPos > -290 - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-290 - theObjects[i].objSize); }// Bottom border
+  if (theObjects[i].xPos < -49 - (i * 64) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(-49 - (i * 64) + theObjects[i].objSize); }// Left border
+  if (theObjects[i].xPos > 170 - (i * 64) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(170 - (i * 64) - theObjects[i].objSize); }// Right border 
+}
+function transXBorders(i) {
+  // Transport to other side of border
+  if (theObjects[i].yPos < -440 + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-290 - theObjects[i].objSize); }// Top border
+  if (theObjects[i].yPos > -290 - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-440 + theObjects[i].objSize); }// Bottom border
+  if (theObjects[i].xPos < -49 - (i * 64) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(170 - (i * 64) - theObjects[i].objSize); }// Left border
+  if (theObjects[i].xPos > 170 - (i * 64) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(-49 - (i * 64) + theObjects[i].objSize); }// Right border
+}
 
-        displayGIF(theObjects[i]);
-      }            
-    }
-    setTimeout(worldBoundary, 90);
-  }        
-} 
 function brownianMovement(obj) {
 
   var x = Math.floor(Math.random() * 2);
@@ -2634,6 +2621,17 @@ function brownianMovement(obj) {
   }
   moveObj(obj, obj.speed, x, y);
 }
+
+function gravity() {
+  if (gameOn()) {
+    for(var i = 0; i < theObjects.length; i++)
+    {
+      moveObj(theObjects[i], 1, 0, 1);
+    }
+    setTimeout(gravity, 1);
+  }
+}
+
 function pongTV() {
 
   if (gameOn()) {
@@ -2670,15 +2668,6 @@ function donMove() {
   else {
     $('don').src = 'images/twig/don-jon.gif';
   }  
-}
-function gravity() {
-  if (gameOn()) {
-    for(var i = 0; i < theObjects.length; i++)
-    {
-      moveObj(theObjects[i], 1, 0, 1);
-    }
-    setTimeout(gravity, 1);
-  }
 }
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
