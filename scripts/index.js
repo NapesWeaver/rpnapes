@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '21:25:19';
+var variable = '2:9:43';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -145,7 +145,7 @@ function notesOn() {
   }
   $('notes').className = 'visible';
 }
-function tricorderOn() {
+function showTricorder() {
   
   $('date').className = 'hidden';
   $('rpnapes').className = 'hidden';
@@ -493,8 +493,10 @@ function btn_shift() {
     $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
     $('btnSign').style.color = '#000000';
-    $('btnSign').value = '±';
-    $('btnGo').style.backgroundColor = '#FBFBFB';
+    // $('btnSign').value = '±';
+    $('btnSign').innerHTML = '±';
+    // $('btnGo').style.backgroundColor = '#FBFBFB';
+    $('btnGo').style.backgroundColor = '#F2F2F2';
     $('btnGo').className = 'btn-small google';
     $('btnGo').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
     $('btnShift').style.backgroundColor = '#D4D0C8';
@@ -527,8 +529,10 @@ function btn_shift() {
     $('btnPI').style.color = 'blue';
     $('btnModulus').style.color = 'blue';
     $('btnModulus').value = '√¯';
+    $('btnSign').className = 'btn-small su-script-large';
     $('btnSign').style.color = 'blue';
-    $('btnSign').value = '^';
+    // $('btnSign').value = '^';
+    $('btnSign').innerHTML = '<sub>^</sub>';
     // $('btnGo').style.backgroundColor = '#B85252';
     // $('btnGo').innerHTML = 'You';
     $('btnGo').className = 'btn-small you-tube';
@@ -687,9 +691,11 @@ function instantiateNumberObject(tmpArray) {
 function btn_off() {
 
   hapticResponse();
-
+  monOff();
+  tricorderOff();
   window.close();
   rpnAlert('This functionality prohibited by your browser.');
+  throw new Error();
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
@@ -1555,7 +1561,7 @@ function parseInput() {
   case 'tricorder':
     stack.pop();
     btn_delete();
-    tricorderOn();
+    showTricorder();
     break;
   case 'unembed':
     stack.pop();
@@ -2365,11 +2371,11 @@ function cutOutNegExponent(tmpArray, expression) {
 
 //////////////////// idName, xPos, yPos, objSize, health, speed, ammo ////////////////
 
+var theObjects = [3];
 var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
 var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
 var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
 
-var theObjects = [3];
 
 //////// Mathmon Class ///////////////////////////////////////////////////////////////
 
@@ -2452,7 +2458,7 @@ function monStatus() {
     btn_enter();
   }
 }
-function gameOn() {
+function worldIsRunning() {
 
   if ($('twig').src.indexOf('pop') === -1) {
     return true;
@@ -2585,7 +2591,7 @@ function moveObj(obj, speed, xMov, yMov) {
 
 function worldEngine() {
 
-  if (gameOn()) {
+  if (worldIsRunning()) {
     for (var i = 0; i < theObjects.length; i++) {
       shifted ? transXBorders(i) : collideWithBorders(i);
       displayGIF(theObjects[i]);
@@ -2623,7 +2629,7 @@ function brownianMovement(obj) {
 }
 
 function gravity() {
-  if (gameOn()) {
+  if (worldIsRunning()) {
     for(var i = 0; i < theObjects.length; i++)
     {
       moveObj(theObjects[i], 1, 0, 1);
@@ -2634,7 +2640,7 @@ function gravity() {
 
 function pongTV() {
 
-  if (gameOn()) {
+  if (worldIsRunning()) {
     $('tv').src = 'images/twig/tv-pong.gif';
     setTimeout(staticTV, 600);
     brownianMovement(tv);
@@ -2645,7 +2651,7 @@ function pongTV() {
 }
 function staticTV() {
 
-  if (gameOn()) {
+  if (worldIsRunning()) {
     $('tv').src = 'images/twig/tv-static.gif';
     setTimeout(pongTV, 900);
     brownianMovement(tv);
@@ -2656,7 +2662,7 @@ function staticTV() {
 }
 function donMove() {
 
-  if (gameOn()) {
+  if (worldIsRunning()) {
     if ($('don').src.indexOf('left') === -1) {
       $('don').src = 'images/twig/don-walk-left.gif';
     } else {
@@ -2727,23 +2733,29 @@ function button1() {
   navigator.vibrate([18]);
 
   if (power()) {
-    muteAudio(true);
-    $('widget').src = '';
-    $('widget').className = 'hidden';
-    $('viewport').src = '';
-    $('viewport').className = 'hidden';
-    $('tricorderskin').src = 'images/tricorder.png';
+    tricorderOff();
   }
   else {
-    muteAudio(false);
-    $('tricorderskin').src = 'images/tricorderon.png';
-    $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1';
-    
-    $('viewport').className = 'visible';
-    playAudio($('working'));
-    playAudio($('hailing_frequencies'));
-    getLocation();
+    tricorderOn();
   }
+}
+function tricorderOff() {
+  muteAudio(true);
+  $('widget').src = '';
+  $('widget').className = 'hidden';
+  $('viewport').src = '';
+  $('viewport').className = 'hidden';
+  $('tricorderskin').src = 'images/tricorder.png';
+}
+function tricorderOn() {
+  muteAudio(false);
+  $('tricorderskin').src = 'images/tricorderon.png';
+  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1';
+  
+  $('viewport').className = 'visible';
+  playAudio($('working'));
+  playAudio($('hailing_frequencies'));
+  getLocation();
 }
 function button2() {
 
@@ -3347,7 +3359,7 @@ window.onload = function () {
   })();
 
   // Menu Programs
-  $('menuTricorder').onclick = tricorderOn;
+  $('menuTricorder').onclick = showTricorder;
   $('menuTwig').onclick = monOn;
 
   // Menu Symbols

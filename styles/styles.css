@@ -88,7 +88,7 @@ kbd {
 input, button {
     margin-bottom: 3px;
     font-size: 0.7em;
-    font-weight: bold;    
+    font-weight: bold;        
     font-family: "Microsoft Sans Serif", "Sans Serif";
     background-color: ButtonFace;/* Needed for linux compatibility */
     background-color: #D4D0C8;
@@ -110,8 +110,9 @@ input, button {
     background-color: #808080;
 }
 #btnGo {
-    background-color: #FBFBFB;
-    color: #FFFFFF;
+    /* background-color: #FBFBFB; */
+    background-color: #F2F2F2;
+    /* color: #FFFFFF; */
 }
 #btnAngle {
     background-color: #B0C4DE;
@@ -126,13 +127,14 @@ input, button {
     background-color: #808080;
 }
 #btnOff {
-    background-color: #CD5C5C;
+    background-color: #B85252;
     text-decoration: underline;
 }
-    #btnOff:hover {
-        background-color: #B85252;
+#btnOff:hover {
+    /* background-color: #CD5C5C; */
         /*** YouTube red ***/
-        /* background-color: #BF2727; */
+        background-color: #B92020;
+        color: #FFFFFF;
     }
 #open {
     background-color: #ffffff;
@@ -153,6 +155,9 @@ input, button {
 .btn-small, .google, .you-tube {
     width: 33px;
     height: 23px;
+}
+.btn-big, .btn-med, .btn-small {
+    border-radius: 9%;
 }
 .btn-large-font {
     font-size: 1.2em;
