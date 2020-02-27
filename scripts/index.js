@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '2:9:43';
+var variable = '17:7:31';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -258,6 +258,7 @@ function btn_enter() {
 
   if (shifted) {
     evaluate($('txtInput').value);
+    $('txtInput').select();
   }
   else {
 
@@ -291,25 +292,14 @@ function enterFunction() {
 
   $('txtInput').value = $('txtInput').value.trim();  
 }
-// function evaluate () {
-
-//   backupUndo();
-//   try{
-//     $('txtInput').value = eval($('txtInput').value);
-//     $('txtInput').focus();
-//   } catch (e) {
-//     rpnAlert(e.toString());
-//   }
-// }
 function evaluate (input) {
 
   backupUndo();
   try{
     $('txtInput').value = eval(input);
-    $('txtInput').focus();
   } catch (e) {
     rpnAlert(e.toString());
-  }
+  }  
 }
 
 function btn_delete() {
@@ -663,7 +653,8 @@ function loadStack(tmpStack) {
     var tmpArray = [];
     tmpArray = tmpStack.shift();
     instantiateNumberObject(tmpArray);
-    if (shifted) evaluate(decodeSpecialChar(stack[stack.length - 1].soul));
+    // Evaluate code ???
+    if (shifted) {evaluate(decodeSpecialChar(stack[stack.length - 1].soul));}
   }    
 }
 function splitArrayByBrowser(tmpArray) {
