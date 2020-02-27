@@ -97,18 +97,6 @@ input, button {
     input:hover, button:hover {
 	    background-color: #DEEEFC;
     }
-.btn-big {
-    width: 57px;
-    height: 23px;
-}
-.btn-med {
-    width: 42px;
-    height: 23px;
-}
-.btn-small {
-    width: 33px;
-    height: 23px;
-}
 #btnXoff {
     width: 15px;
     height: 15px;
@@ -152,6 +140,18 @@ input, button {
     color: #0040FF;
     text-decoration: underline;
 }
+.btn-big {
+    width: 57px;
+    height: 23px;
+}
+.btn-med {
+    width: 42px;
+    height: 23px;
+}
+.btn-small, .google, .you-tube {
+    width: 33px;
+    height: 23px;
+}
 .btn-large-font {
     font-size: 1.2em;
 }
@@ -171,7 +171,14 @@ input, button {
     color: #4285F4;
 }
 .color-red {
-    color: red;
+    color: #EA4335;
+}
+.google {
+    background-image: none;
+}
+.you-tube {
+    background-image: url(../images/you-tube.png);
+    background-size: 29px 19px;
 }
 
 /***** Menu ***************/
@@ -368,9 +375,12 @@ input, button {
         width: 57px;
         height: 30px;
     }
-    .btn-small {
+    .btn-small, .google, .you-tube {
         width: 45px;
         height: 30px;
+    }
+    .you-tube {
+        background-size: 41px 26px;
     }
     #tricorderskin {
         top: 314px;    

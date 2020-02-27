@@ -494,7 +494,8 @@ function btn_shift() {
     $('btnModulus').value = '%';
     $('btnSign').style.color = '#000000';
     $('btnSign').value = '±';
-    $('btnGo').style.backgroundColor = '#FBFBFB';
+    // $('btnGo').style.backgroundColor = '#FBFBFB';
+    $('btnGo').className = 'google';
     $('btnGo').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
     $('btnShift').style.backgroundColor = '#D4D0C8';
     $('btnShift').style.borderStyle = 'outset';
@@ -528,8 +529,10 @@ function btn_shift() {
     $('btnModulus').value = '√¯';
     $('btnSign').style.color = 'blue';
     $('btnSign').value = '^';
-    $('btnGo').style.backgroundColor = '#B85252';
-    $('btnGo').innerHTML = 'You';
+    // $('btnGo').style.backgroundColor = '#B85252';
+    // $('btnGo').innerHTML = 'You';
+    $('btnGo').className = 'you-tube';
+    $('btnGo').innerHTML = '';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
     $('btnDivide').style.color = 'blue';
