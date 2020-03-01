@@ -35,14 +35,6 @@ header {
     background-color: #6D8EBF;
 }
 
-footer {
-    text-align: left;
-    font-family: "Microsoft Sans Serif", "Sans Serif";
-    font-size: 0.7em;
-    margin-top: 3px;
-    margin-left: 12px;
-}
-
 #lstStack {
 
     /* Scroll bar always */
@@ -348,9 +340,6 @@ input, button {
     }
     #open {
         padding: 0px 18px 3px 18px;
-    }
-    footer {
-        margin-left: 22px;
     }
     input, button {
         font-size: 1em;

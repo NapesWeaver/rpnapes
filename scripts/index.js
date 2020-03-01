@@ -14,6 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
+var modified = 'March 1, 2020'
 var variable = '11:18:16';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
@@ -1395,6 +1396,8 @@ function parseInput() {
   case 'about':
     stack.pop();
     inputText('This is a Reverse Polish Notation Calculator, with a Stack. Designed by Napes Weaver.');
+    btn_enter();
+    inputText('Modified ' + modified);
     btn_enter();
     btn_delete();
     break;
