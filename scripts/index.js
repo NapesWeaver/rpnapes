@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '11:51:12';
+var variable = '13:0:34';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -3239,6 +3239,10 @@ window.onload = function () {
 
   // Internet Explorer needs this for "btnOff" ~ window.close()   
   window.open('', '_self');
+
+  // Preload YouTube icon
+  var youTubeIcon = new Image();
+  youTubeIcon.src = '../images/youtube.png';
 
   // MathMon
   theObjects[0] = twig;
