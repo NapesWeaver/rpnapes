@@ -41,6 +41,6 @@ The tricorder doesn't do too much. It displays a weather forecast and weather ma
 
 ## Acknowledgements
 
-There are many snippets of code for which I never kept track of the original source. Some from GitHub and many from Stack Overflow and elsewhere. I apologize for not having been with it. As I rework and rediscover the code for myself I do intend to update my thanks whenever I can. To all the unsung hero's of coding, my hat is off to you ♥ ♥ ♥
+There are many snippets of code for which I never kept track of the original source. Some from GitHub and many from Stack Overflow and elsewhere. I apologize for not having been with it. As I rework and rediscover the code for myself I do intend to update my thanks whenever I can. To all the unsung hero's of coding, hat's off to you ♥ ♥ ♥
 
 ![Hat's off to you!](images/screenshots/tippy-hat.gif)
