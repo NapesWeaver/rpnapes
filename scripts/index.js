@@ -3368,6 +3368,11 @@ window.onload = function () {
   $('menuTwig').onclick = monOn;
 
   // Menu Symbols
+  $('menuParentheses').onclick = (function() {
+    return function() { 
+      btn_parentheses();
+    }
+  })();
   $('menuRadical').onclick = (function() {
     return function() { 
       insertText('√');
