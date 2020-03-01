@@ -33,34 +33,34 @@ function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 }
 NumberObject.prototype.setSoul = function (s) {
   this.soul = s;
-}
+};
 NumberObject.prototype.getSoul = function () {
   return this.soul;
-}
+};
 NumberObject.prototype.setRealPart = function (r) {
   this.realPart = r;
-}
+};
 NumberObject.prototype.getRealPart = function () {
   return this.realPart;
-}
+};
 NumberObject.prototype.setUnits = function (u) {
   this.units = u;
-}
+};
 NumberObject.prototype.getUnits = function () {
   return this.units;
-}
+};
 NumberObject.prototype.setImaginary = function (i) {
   this.imaginary = i;
-}
+};
 NumberObject.prototype.getImaginary = function () {
   return this.imaginary;
-}
+};
 NumberObject.prototype.setTimestamp = function (t) {
   this.timeStamp = t;
-}
+};
 NumberObject.prototype.getTimeStamp = function () {
   return this.timeStamp;
-}
+};
 NumberObject.prototype.toString = function () {
 
   return this.soul + ', ' + this.realPart + ', ' + this.units + ', ' + this.imaginary + ', ' + this.timeStamp;
