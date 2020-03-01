@@ -17,9 +17,9 @@ Features include the ability to load and run simple code scripted thus:
 
 `maxCount = prompt('Enter a number number','25');`
 
-`getFizzBuzz = function(w){word=w;if(w%3===0)word='fizz';if(w%5===0)word='buzz';if(w%15===0)word='fizzbuzz';return word}`
+`getFizzBuzz = function(w){ word = w;if (w % 3 === 0) word = 'fizz'; if(w % 5 === 0) word = 'buzz'; if (w % 15 === 0) word = 'fizzbuzz'; return word}`
 
-`for(w=1;w<=maxCount;w++){word=getFizzBuzz(w);$('txtInput').value='';$('txtInput').value=word;enterFunction();}`
+`for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $('txtInput').value=''; $('txtInput').value=word; enterFunction(); }`
 
 ## Notes
 A separate interface for note taking is also implemented.
