@@ -2,6 +2,8 @@
   return document.getElementById(id);
 };
 
+new Image().src = '../images/youtube.png';
+
 navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
@@ -3241,7 +3243,7 @@ window.onload = function () {
   window.open('', '_self');
 
   // Preload YouTube icon
-  new Image().src = '../images/youtube.png';
+  // new Image().src = '../images/youtube.png';
 
   // MathMon
   theObjects[0] = twig;
