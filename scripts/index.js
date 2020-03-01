@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '17:7:31';
+var variable = '11:18:16';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -792,17 +792,30 @@ function exponentialFunction() {
 function btn_log() {
 
   hapticResponse();
-  
+  backupUndo();
+
   if (shifted) {
-    // rpnAlert(Math.log(10));// ln
+    naturalLog();
   }
   else {
-    // rpnAlert(getBaseLog(10, 1000));// logxY
+    baseLog();
   }
-  rpnAlert('Not yet implemented.');
 }
-function getBaseLog(x, y) {
-  return Math.log(y) / Math.log(x);
+function baseLog() {
+
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString() === 'NaN') {
+    btn_enter();
+    $(('txtInput')).value = '10';
+  }
+  $('txtInput').value = Math.log(parseFloat(stack.pop().getRealPart())) / Math.log(extractReal($('txtInput').value));
+  updateDisplay();
+  $('txtInput').select();
+}
+function naturalLog() {
+
+  $('txtInput').value = Math.log(extractReal($('txtInput').value));
+  updateDisplay();
+  $('txtInput').select();
 }
 
 function btn_pi() {
@@ -3295,6 +3308,8 @@ window.onload = function () {
   $('menuAdd').onclick = btn_add;
   $('menuRoot').onclick = rootFunction;
   $('menuExponential').onclick = exponentialFunction;
+  $('menuLog').onclick = baseLog;
+  $('menuLn').onclick = naturalLog;
   $('menuInverse').onclick = btn_inverse;
   $('menuFactorial').onclick = btn_factorial;
   $('menuModulus').onclick = btn_modulus;
