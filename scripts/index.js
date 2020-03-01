@@ -3241,8 +3241,7 @@ window.onload = function () {
   window.open('', '_self');
 
   // Preload YouTube icon
-  var youTubeIcon = new Image();
-  youTubeIcon.src = '../images/youtube.png';
+  new Image().src = '../images/youtube.png';
 
   // MathMon
   theObjects[0] = twig;
