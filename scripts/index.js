@@ -129,12 +129,10 @@ function rpnapesOn() {
     playAudio($('keypress3'));
   }
   $('rpnapes').className = 'visible';
-  $('date').className = 'visible';
   $('txtInput').focus();
 }
 function notesOn() {
 
-  $('date').className = 'hidden';
   $('rpnapes').className = 'hidden';
   monOff();
   $('widget').className = 'hidden';
@@ -147,7 +145,6 @@ function notesOn() {
 }
 function showTricorder() {
   
-  $('date').className = 'hidden';
   $('rpnapes').className = 'hidden';
   monOff();
   $('notes').className = 'hidden';
