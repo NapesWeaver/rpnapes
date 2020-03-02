@@ -2,8 +2,6 @@
   return document.getElementById(id);
 };
 
-new Image().src = '../images/youtube.png';
-
 navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
@@ -16,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '13:0:34';
+var variable = '8:41:32';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -3243,7 +3241,7 @@ window.onload = function () {
   window.open('', '_self');
 
   // Preload YouTube icon
-  // new Image().src = '../images/youtube.png';
+  new Image().src = '../images/youtube.png';
 
   // MathMon
   theObjects[0] = twig;
