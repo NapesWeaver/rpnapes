@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '23:13:35';
+var variable = '23:41:42';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -1529,7 +1529,7 @@ function parseInput() {
     break;
   case 'saveas':
     stack.pop();
-    saveFile(stack[stack.length - 1].prettyPrint(), true);
+    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].prettyPrint(), true) : saveFile('', true)
     btn_delete();
     break;
   case 'size':

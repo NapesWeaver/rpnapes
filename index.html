@@ -40,7 +40,7 @@
                     <li><a id="menuLoad" href="#">Load</a></li>
                     <li><label id="open"><input type="file" id="openFile" class="hidden"/>Open</label></li>
                     <li><a id="menuSave" href="#">Save</a></li>
-                    <li><a href="#" title="Save as a .txt file" onclick="saveFile(stack[stack.length - 1].prettyPrint(), true)">Save&nbsp;As</a></li>
+                    <li><a href="#" title="Save as a .txt file" onclick="stack[stack.length - 1] ? saveFile(stack[stack.length - 1].prettyPrint(), true) : saveFile('', true)">Save&nbsp;As</a></li>
                     <li><a href="#" title="Go to Google" onclick="internetSearch('https://www.google.com/#q=')">Google</a></li>
                     <li><a href="#" title="Go to YouTube" onclick="internetSearch('https://www.youtube.com/results?search_query=')">YouTube</a></li>
                     <li><a id="menuOff" href="#" style="text-decoration:underline;">Off</a></li>
