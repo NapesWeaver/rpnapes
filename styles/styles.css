@@ -132,7 +132,9 @@ img {
 .btn-shifted {
     background-color: #D4D0C8;
     border-style: inset;
-    color: #0000A0;
+}
+.btn-char, .btn-shifted {
+    color: #0000A0
 }
 
 .google {

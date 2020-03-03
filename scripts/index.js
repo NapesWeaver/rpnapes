@@ -474,10 +474,10 @@ function btn_shift() {
     $('btnLog').innerHTML = 'log<sub>x</sub>y';
     $('btnRoot').innerHTML = 'y&nbsp;<sup>x</sup>';
     $('btnUndo').value = 'UND';
-    $('btnEE').className = 'btn-small btn-small-font';
+    $('btnEE').className = 'btn-small btn-small-font btn-char';
     $('btnEE').value = 'EE';
     $('btnPI').style.color = '#000000';    
-    isMobile ? $('btnPI').value = 'Π' : $('btnPI').value = '¶';
+    isMobile ? $('btnPI').value = '𝛑' : $('btnPI').value = '𝛑';
     $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
     $('btnSign').style.color = '#000000';
@@ -515,7 +515,7 @@ function btn_shift() {
     $('btnLog').innerHTML = 'log<sub>e</sub>';
     $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
     $('btnUndo').value = 'REDO';
-    $('btnEE').className = 'btn-small';
+    $('btnEE').className = 'btn-small btn-char';
     $('btnEE').value = 'j';
     $('btnPI').value = '(  )';
     $('btnPI').style.color = '#0000A0';
