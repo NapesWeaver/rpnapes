@@ -488,11 +488,14 @@ function btn_shift() {
     $('btnDivide').style.color = '#000000';
     $('btnDivide').value = '÷';
     $('btnMultiply').style.color = '#000000';
-    $('btnMultiply').innerHTML = 'x';    
+    $('btnMultiply').innerHTML = 'x';
+
     $('btnSubtract').style.color = '#000000';
     $('btnSubtract').value = '-';
+
     $('btnAdd').style.color = '#000000';
     $('btnAdd').value = '+';
+
   }
   else {
     // Shifting to true...
@@ -524,10 +527,13 @@ function btn_shift() {
     $('btnDivide').value = '/';
     $('btnMultiply').style.color = '#0000A0';
     $('btnMultiply').innerHTML = '<sub class="symbol-big">*</sub>';
+
     $('btnSubtract').style.color = '#0000A0';
     $('btnSubtract').value = '-';
+
     $('btnAdd').style.color = '#0000A0';
     $('btnAdd').value = '+';
+    
   }
   colorUndoButton();
   $('txtInput').focus();
@@ -1158,30 +1164,37 @@ function editStack() {
 
   // if (yesNo === 'yes') {
   if (true) {
+
     for (var s in stack) {
-      // Find btnUPPER
-      if(stack[s].soul.match(/btn[A-Z]/g)) {
-        // // console.log('Detected: ', stack[s].soul); 
-        // var paragraph = stack[s].soul;
-        // var searchTerm = /btn[A-Z]/;
-        // var index = paragraph.indexOf(searchTerm);
-        // console.log('index :' + index);        
-      }
-      // console.log(stack[s].soul);
-      var paragraph = stack[s].soul;
-      console.log(paragraph);
-  
+
+      var stackEntry = stack[s].soul;
       var searchTerm = /btn[A-Z]/;
-      var indexOfFirst = paragraph.search(searchTerm);
-  
-      console.log('The index of the first "' + searchTerm + '" from the beginning is ' + indexOfFirst);
-      // expected output: "The index of the first "dog" from the beginning is 40"
-  
-      console.log('The index of the 2nd "' + searchTerm + '" is ' + paragraph.indexOf(searchTerm, (indexOfFirst + 1)));
-      // expected output: "The index of the 2nd "dog" is 52"
+      var tmpIndex = 1;
+      // While 'btn[A-Z]' exists globally
+      while(stackEntry.match(/btn[A-Z]/g)) {
+        // console.log('Detected: ', stack[s].soul);
+        var index = stackEntry.search(searchTerm);
+        console.log('Index: ' + index);
+        // Insert '-'
+        stackEntry.insertAt(index, '-');
+
+        // console.log(stack[s].soul);
+        console.log(stackEntry);
+        // toLowerCase        
+
+        tmpIndex ++;
+        if (tmpIndex > 2) break;  
+      }      
     }
+    // While 'btn_' exists globally
+    // Remove '-'
+    // toCamelCase
   }
 }
+String.prototype.insertAt = function (index, input) {
+  return this.slice(0,index) + input + this.slice(index);
+}
+
 function getSize() {
 
   var w = window,

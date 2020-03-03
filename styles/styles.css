@@ -136,7 +136,7 @@ img {
 }
 
 .google {
-    background-color: #F2F2F2;
+    background-color: #F1F1F1;
 }
 .color-blue {
     color: #4285F4;
@@ -243,10 +243,10 @@ img {
         z-index: 1;
         opacity: 1;
         background: #D4D0C8; /* For browsers that do not support gradients */
-        background: -webkit-linear-gradient(#D4D0C8, #F2F2F2); /* For Safari 5.1 to 6.0 */
-        background: -o-linear-gradient(#D4D0C8, #F2F2F2); /* For Opera 11.1 to 12.0 */
-        background: -moz-linear-gradient(#D4D0C8, #F2F2F2); /* For Firefox 3.6 to 15 */
-        background: linear-gradient(#D4D0C8, #F2F2F2); /* Standard syntax */        
+        background: -webkit-linear-gradient(#D4D0C8, #F1F1F1); /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#D4D0C8, #F1F1F1); /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#D4D0C8, #F1F1F1); /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#D4D0C8, #F1F1F1); /* Standard syntax */        
     }
 
 /***** Sub menu ***********/
@@ -309,7 +309,7 @@ img {
     left: 50%;
     top: 467px;
     transform: translateY(-50%) translateX(-50%);
-    background-color: #F2F2F2;
+    background-color: #F1F1F1;
 }
 
 /***** Notes ****************/
