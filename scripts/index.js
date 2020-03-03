@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '8:41:32';
+var variable = '20:36:28';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -953,18 +953,9 @@ function btn_divide() {
     insertText('/');    
   }
   else {
-    if (parenthesesExist($('txtInput').value)) {
-      if (parenthesesEven($('txtInput').value)) {
-        $('txtInput').value = eval($('txtInput').value);
-      } else {
-        $('txtInput').value += '/';
-      }
-    }
-    if (!parenthesesExist($('txtInput').value)) {
-      var newUnits = divideNotNullUnits(1);
-      $('txtInput').value = parseFloat(parseY()) / parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-      updateDisplay();
-    }    
+    var newUnits = divideNotNullUnits(1);
+    $('txtInput').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+    updateDisplay();
     $('txtInput').focus();
   }  
 }
@@ -976,18 +967,9 @@ function btn_multiply() {
   if (shifted) {
     insertText('*');
   } else {
-    if (parenthesesExist($('txtInput').value)) {
-      if (parenthesesEven($('txtInput').value)) {
-        $('txtInput').value = eval($('txtInput').value);
-      } else {
-        $('txtInput').value += '*';
-      }
-    }
-    if (!parenthesesExist($('txtInput').value)) {
-      var newUnits = multiplyNotNullUnits(1);
-      $('txtInput').value = parseFloat(parseY()) * parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-      updateDisplay();        
-    }
+    var newUnits = multiplyNotNullUnits(1);
+    $('txtInput').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+    updateDisplay();
     $('txtInput').focus();
   }      
 }
@@ -1000,18 +982,9 @@ function btn_subtract() {
     insertText('-');    
   }
   else {
-    if (parenthesesExist($('txtInput').value)) {
-      if (parenthesesEven($('txtInput').value)) {
-        $('txtInput').value = eval($('txtInput').value);
-      } else {
-        $('txtInput').value += '-';
-      }
-    }
-    if (!parenthesesExist($('txtInput').value)) {
-      var newUnits = addNotNullUnits();        
-      $('txtInput').value = parseFloat(parseY()) - parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-      updateDisplay();
-    }    
+    var newUnits = addNotNullUnits();        
+    $('txtInput').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+    updateDisplay();
     $('txtInput').focus();
   }  
 }
@@ -1024,19 +997,9 @@ function btn_add() {
     insertText('+');    
   }
   else {
-    if (parenthesesExist($('txtInput').value)) {
-      
-      if (parenthesesEven($('txtInput').value)) {
-        $('txtInput').value = eval($('txtInput').value);
-      } else {
-        $('txtInput').value += '+';
-      }
-    }
-    if (!parenthesesExist($('txtInput').value)) {
-      var newUnits = addNotNullUnits();
-      $('txtInput').value = parseFloat(parseY()) + parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-      updateDisplay();
-    }    
+    var newUnits = addNotNullUnits();
+    $('txtInput').value = parseFloat(stack.pop().getRealPart()) + parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+    updateDisplay();
     $('txtInput').focus();
   }  
 }
@@ -1197,6 +1160,36 @@ function getSum() {
 }
 function totalStack() {
 
+}
+function editStack() {
+
+  // var yesNo = prompt('Are you sure?', 'no');
+
+  // if (yesNo === 'yes') {
+  if (true) {
+    for (var s in stack) {
+      // Find btnUPPER
+      if(stack[s].soul.match(/btn[A-Z]/g)) {
+        // // console.log('Detected: ', stack[s].soul); 
+        // var paragraph = stack[s].soul;
+        // var searchTerm = /btn[A-Z]/;
+        // var index = paragraph.indexOf(searchTerm);
+        // console.log('index :' + index);        
+      }
+      // console.log(stack[s].soul);
+      var paragraph = stack[s].soul;
+      console.log(paragraph);
+  
+      var searchTerm = /btn[A-Z]/;
+      var indexOfFirst = paragraph.search(searchTerm);
+  
+      console.log('The index of the first "' + searchTerm + '" from the beginning is ' + indexOfFirst);
+      // expected output: "The index of the first "dog" from the beginning is 40"
+  
+      console.log('The index of the 2nd "' + searchTerm + '" is ' + paragraph.indexOf(searchTerm, (indexOfFirst + 1)));
+      // expected output: "The index of the 2nd "dog" is 52"
+    }
+  }
 }
 function getSize() {
 
@@ -1419,6 +1412,9 @@ function parseInput() {
     stack.pop();
     updateDisplay();
     inputText(Math.exp(1));
+    break;
+  case 'editstack':
+    editStack();
     break;
   case 'embed':
     stack.pop();
@@ -1794,7 +1790,7 @@ function getCookie(cname) {
 
 function encodeSpecialChar(tmpString) {
 
-  tmpString = tmpString.replace(/×/g, '*');
+  //tmpString = tmpString.replace(/×/g, '*');// What the what ???
 
   tmpString = tmpString.replace(/%/g, '&#37');
   //tmpString = tmpString.replace(/\*/g, "&#42");
@@ -1959,32 +1955,6 @@ function extractSubString(tmpArray) {
     }
   }
   return subString;
-}
-function parseY() {
-
-  var tmpY = stack.pop();
-  if (parenthesesExist(tmpY.getSoul())) {
-    if (parenthesesEven(tmpY.getSoul())) {
-      tmpY = eval(tmpY.getSoul());
-    }    
-  } else {
-    tmpY = tmpY.getRealPart();
-  }
-  return tmpY;
-}
-function parenthesesExist(tmpArray) {
-
-  if(tmpArray.indexOf('(') === -1) {
-    return false;
-  }
-  return true;
-}
-function parenthesesEven(tmpArray) {
-
-  if ((tmpArray.match(/[(]/g) || []).length  >  (tmpArray.match(/[)]/g) || []).length) {
-    return false;
-  }
-  return true;
 }
 // Extract Real component from 'soul' of argument
 function extractReal(tmpArray) {
@@ -2163,7 +2133,6 @@ function splitUnits(tmpUnits) {
 
   var unitsA = '';
   var unitsB = '';
-  var unitsCombined = '';
 
   if (tmpUnits.indexOf('/') !== -1) {
     tmpUnits = tmpUnits.split('/');
@@ -2372,15 +2341,389 @@ function cutOutNegExponent(tmpArray, expression) {
   return tmpArray;
 }
 
-//////////////////// idName, xPos, yPos, objSize, health, speed, ammo ////////////////
+//////// Notes ///////////////////////////////////////////////////////////////////////
+
+var notes = [];
+var backUpsNotes = [33];
+var restoresNotes = [33];
+
+function btn_copy_notes() {
+
+  navigator.vibrate([18]);
+
+  var tmpTxt = '';
+  tmpTxt = $('txtInput').value.trim();
+  copySelectedText('lstNotes');
+  $('txtInput').value = tmpTxt;
+}
+function btn_paste_notes() {
+
+  navigator.vibrate([18]);
+  backupUndoNotes();
+
+  if (/*@cc_on!@*/false || !!document.documentMode) {
+    // IE
+    insertAtCursor($('lstNotes'), window.clipboardData.getData('Text'));
+  }
+  else {
+    // Firefox
+    //insertAtCursor($("lstNotes"), "\nNot supported by this browser.\n");
+    alert('Not supported by this browser.');
+  }
+}
+function btn_undo_notes() {
+
+  navigator.vibrate([18]);
+
+  if (backUpsNotes.length > 2) {
+    restoresNotes.push(nestArray(notes));
+    notes = splitArrayByBrowser(backUpsNotes.pop());
+    updateDisplayNotes();
+  }
+  colorNotesUndoButton();
+}
+function btn_redo_notes() {
+
+  navigator.vibrate([18]);
+
+  if (restoresNotes.length > 0) {
+    backUpsNotes.push(nestArray(notes));
+    notes = splitArrayByBrowser(restoresNotes.pop());
+    updateDisplayNotes();
+  }
+  colorNotesUndoButton();
+}
+function backupUndoNotes() {
+
+  backUpsNotes.push(nestArray(notes));
+  notes = $('lstNotes').value.split('\n');
+  restoresNotes.length = 0;
+  colorNotesUndoButton();
+}
+function colorNotesUndoButton() {
+  // console.log(backUpsNotes.length);
+  if (backUpsNotes.length > 2) {
+    $('btnUndoNotes').style.color = '#01c401';
+  }
+  else {
+    $('btnUndoNotes').style.color = '#919191';
+  }
+  if (restoresNotes.length >= 1) {
+    $('btnRedoNotes').style.color = '#01c401';
+  }
+  else {
+    $('btnRedoNotes').style.color = '#919191';
+  }
+  colorNotesSaveButton();
+}
+function colorNotesSaveButton() {
+
+  var index = 0;
+  var cookieValue = '';
+  var notesValue = '';
+
+  index = getCookie('NOTES').indexOf('=') + 1;
+  cookieValue = getCookie('NOTES').substr(index);
+  notesValue = nestArray(notes);
+  // This step is needed for Chrome and IE
+  cookieValue = cookieValue.replace(/_/g, ' ').trim();
+  notesValue = notesValue.replace(/_/g, ' ').trim();
+
+  if (cookieValue !== notesValue) {
+    $('btnSaveNotes').style.color = '#000000';
+  }
+  else {
+    $('btnSaveNotes').style.color = '#919191';
+  }
+}
+function btn_save_notes() {
+
+  navigator.vibrate([18]);
+
+  var tmpY;
+  $('btnSaveNotes').style.color = '#919191';
+
+  tmpY = encodeSpecialChar($('lstNotes').value);
+  notes = tmpY.split('\n');
+
+  storeCookie('NOTES', nestArray(notes));
+}
+function btn_load_notes() {
+
+  navigator.vibrate([18]);
+  var index = 0;
+
+  backupUndoNotes();
+  index = getCookie('NOTES').indexOf('=') + 1;
+  try {
+    notes = splitArrayByBrowser(getCookie('NOTES').substr(index));
+  }
+  catch (e) {
+    notes.push('Load error.');
+  }
+  updateDisplayNotes();
+  $('btnSaveNotes').style.color = '#919191';
+  $('lstNotes').scrollTop = $('lstNotes').scrollHeight;
+}
+function btn_clear_notes() {
+
+  navigator.vibrate([18]);
+  backupUndoNotes();
+  $('lstNotes').value = '';
+  notes = $('lstNotes').value.split('\n');
+}
+function updateDisplayNotes() {
+
+  $('lstNotes').value = '';
+  for (var n in notes) {
+    $('lstNotes').value += decodeSpecialChar(notes[n]);
+    $('lstNotes').value += '\n';
+  }
+  $('lstNotes').value = $('lstNotes').value.trim();
+  $('lstNotes').value += '\n';
+  if (notes.length === 1 && notes[0] === '') {
+    $('lstNotes').value = '';
+  }
+}
+
+//////// Tricorder ///////////////////////////////////////////////////////////////////
+
+var viewPortSrc = [];
+var viewPort2Src = [];
+var widgetSrc = [];
+
+var lat;
+var lng;
+
+function loadTricorder() {
+  var index = 0;
+  index = getCookie('TRICORDER').indexOf('=') + 1;
+  widgetSrc = splitArrayByBrowser(getCookie('TRICORDER').substr(index));
+  for (var s in widgetSrc) {
+    widgetSrc[s] = decodeSpecialChar(widgetSrc[s]);
+    if (widgetSrc[s] === '') {
+      widgetSrc.splice(s, 1);
+    }
+  }
+}
+
+function power() {
+
+  var onOff;
+  onOff = $('tricorderskin').src.toString().indexOf('tricorderon');
+
+  if (onOff === -1) {
+    return false;
+  }
+  return true;
+}
+function muteAudio(mute) {
+
+  if (mute) {
+    for (var i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
+      $('tricorder').getElementsByTagName('audio')[i].muted = true;
+    }
+  }
+  else {
+    for (i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
+      $('tricorder').getElementsByTagName('audio')[i].muted = false;
+    }
+  }
+}
+function playAudio(obj) {
+
+  if (!isMobile) {
+    obj.play();
+  }
+}
+
+// Power On/Off.
+function button1() {
+
+  navigator.vibrate([18]);
+
+  if (power()) {
+    tricorderOff();
+  }
+  else {
+    tricorderOn();
+  }
+}
+function tricorderOff() {
+  muteAudio(true);
+  $('widget').src = '';
+  $('widget').className = 'hidden';
+  $('viewport').src = '';
+  $('viewport').className = 'hidden';
+  $('tricorderskin').src = 'images/tricorder.png';
+}
+function tricorderOn() {
+  muteAudio(false);
+  $('tricorderskin').src = 'images/tricorderon.png';
+  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1';
+  
+  $('viewport').className = 'visible';
+  playAudio($('working'));
+  playAudio($('hailing_frequencies'));
+  getLocation();
+}
+function button2() {
+
+  if (power()) {
+    navigator.vibrate([18]);
+
+    if (viewPortSrc.indexOf($('viewport').src) !== -1) {
+      var i = viewPortSrc.indexOf($('viewport').src);
+
+      if (i === viewPortSrc.length - 1) {
+        i = -1;
+      }
+      $('viewport').src = viewPortSrc[i + 1];
+    }
+    else {
+      $('viewport').src = viewPortSrc[0];
+    }
+    playAudio($('keypress2'));
+  }
+}
+function button3() {
+
+  if (power()) {
+    navigator.vibrate([18]);
+
+    if (viewPort2Src.indexOf($('viewport').src) !== -1) {
+      var i = viewPort2Src.indexOf($('viewport').src);
+
+      if (i === viewPort2Src.length - 1) {
+        i = -1;
+      }
+      $('viewport').src = viewPort2Src[i + 1];
+    }
+    else {
+      $('viewport').src = viewPort2Src[0];
+    }
+    playAudio($('keypress1'));
+    playAudio($('datareceived'));
+  }
+}
+function button4() {
+
+  if (power()) {
+    navigator.vibrate([18]);
+
+    if ($('widget').className === 'hidden') {
+      if (widgetSrc.indexOf($('widget').src) !== -1) {
+        var i = widgetSrc.indexOf($('widget').src);
+
+        if (i === widgetSrc.length - 1) {
+          i = -1;
+        }
+        $('widget').src = widgetSrc[i + 1];
+      }
+      else {
+        $('widget').src = widgetSrc[0];
+      }
+      $('widget').className = 'visible';
+      playAudio($('scanner'));
+      playAudio($('keypress6'));
+    }
+    else {
+      $('widget').className = 'hidden';
+      playAudio($('keypress5'));
+    }
+  }
+}
+function button5() {
+
+  if (power()) {
+    navigator.vibrate([18]);
+
+    if ($('widget').className === 'hidden') {
+      var srcString = '';
+      var uniqueString = 'forecast';
+
+      if ($('widget').src.indexOf(uniqueString) === -1) {
+        // Forcast widget
+        srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';
+        $('widget').src = srcString;
+      }
+      else {
+        // Dark Sky Map
+        srcString += 'https://maps.darksky.net/@temperature,' + lat + ',' + lng + ',4?embed=true&timeControl=false&fieldControl=true&defaultField=temperature&defaultUnits=_f';
+        $('widget').src = srcString;
+      }
+      $('widget').className = 'visible';
+      playAudio($('keypress6'));
+      playAudio($('computerthinking'));
+    }
+    else {
+      $('widget').className = 'hidden';
+      playAudio($('keypress5'));
+    }
+  }
+}
+function button6() {
+
+  if (power()) {
+    navigator.vibrate([18]);
+
+    if ($('widget').className === 'hidden') {
+      var srcString = '';
+
+      // IP Mapper
+      srcString += 'https://napesweaver.github.io/ip-mapper/';
+      $('widget').src = srcString;
+      $('widget').className = 'visible';
+      playAudio($('keypress6'));
+      playAudio($('verified'));
+    }
+    else {
+      $('widget').src = '';
+      $('widget').className = 'hidden';
+      playAudio($('keypress5'));
+    }
+  }
+}
+
+// Tricorder sensors
+function sensor1() {
+
+  if (power()) {
+    navigator.vibrate([18]);
+    $('viewport').src = '';
+    playAudio($('keypress7'));
+    playAudio($('scanner'));
+    // $('viewport').src = 'https://tunein.com/embed/player/s35862/';// KZUM
+    $('viewport').src = 'https://tunein.com/embed/player/s249942/';// Classic Hits
+    // $('viewport').src = 'https://tunein.com/embed/player/s51173/';// 1920's
+  }
+}
+function sensor2() {
+
+  if (power()) {
+    navigator.vibrate([18]);
+    $('viewport').src = '';
+    playAudio($('keypress7'));
+    playAudio($('scanner'));
+    // $('viewport').src = 'https://tunein.com/embed/player/s35862/';// NET
+    $('viewport').src = 'https://tunein.com/embed/player/s67176/';// BBC World Service
+  }
+}
+
+function saveTricorder() {
+
+  for (var s in widgetSrc) {
+    widgetSrc[s] = encodeSpecialChar(widgetSrc[s]);
+  }  
+  storeCookie('TRICORDER', nestArray(widgetSrc));
+}
+
+/////////////Mathmon idName, xPos, yPos, objSize, health, speed, ammo ////////////////
 
 var theObjects = [3];
 var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
 var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
 var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
-
-
-//////// Mathmon Class ///////////////////////////////////////////////////////////////
 
 function Mathmon(idName, xPos, yPos, objSize, health, speed, ammo) {
 
@@ -2679,384 +3022,7 @@ function donMove() {
   }  
 }
 
-//////// Tricorder ///////////////////////////////////////////////////////////////////
-
-var viewPortSrc = [];
-var viewPort2Src = [];
-var widgetSrc = [];
-
-var lat;
-var lng;
-
-function loadTricorder() {
-  var index = 0;
-  index = getCookie('TRICORDER').indexOf('=') + 1;
-  widgetSrc = splitArrayByBrowser(getCookie('TRICORDER').substr(index));
-  for (var s in widgetSrc) {
-    widgetSrc[s] = decodeSpecialChar(widgetSrc[s]);
-    if (widgetSrc[s] === '') {
-      widgetSrc.splice(s, 1);
-    }
-  }
-}
-
-function power() {
-
-  var onOff;
-  onOff = $('tricorderskin').src.toString().indexOf('tricorderon');
-
-  if (onOff === -1) {
-    return false;
-  }
-  return true;
-}
-function muteAudio(mute) {
-
-  if (mute) {
-    for (var i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
-      $('tricorder').getElementsByTagName('audio')[i].muted = true;
-    }
-  }
-  else {
-    for (i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
-      $('tricorder').getElementsByTagName('audio')[i].muted = false;
-    }
-  }
-}
-function playAudio(obj) {
-
-  if (!isMobile) {
-    obj.play();
-  }
-}
-
-// Power On/Off.
-function button1() {
-
-  navigator.vibrate([18]);
-
-  if (power()) {
-    tricorderOff();
-  }
-  else {
-    tricorderOn();
-  }
-}
-function tricorderOff() {
-  muteAudio(true);
-  $('widget').src = '';
-  $('widget').className = 'hidden';
-  $('viewport').src = '';
-  $('viewport').className = 'hidden';
-  $('tricorderskin').src = 'images/tricorder.png';
-}
-function tricorderOn() {
-  muteAudio(false);
-  $('tricorderskin').src = 'images/tricorderon.png';
-  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1';
-  
-  $('viewport').className = 'visible';
-  playAudio($('working'));
-  playAudio($('hailing_frequencies'));
-  getLocation();
-}
-function button2() {
-
-  if (power()) {
-    navigator.vibrate([18]);
-
-    if (viewPortSrc.indexOf($('viewport').src) !== -1) {
-      var i = viewPortSrc.indexOf($('viewport').src);
-
-      if (i === viewPortSrc.length - 1) {
-        i = -1;
-      }
-      $('viewport').src = viewPortSrc[i + 1];
-    }
-    else {
-      $('viewport').src = viewPortSrc[0];
-    }
-    playAudio($('keypress2'));
-  }
-}
-function button3() {
-
-  if (power()) {
-    navigator.vibrate([18]);
-
-    if (viewPort2Src.indexOf($('viewport').src) !== -1) {
-      var i = viewPort2Src.indexOf($('viewport').src);
-
-      if (i === viewPort2Src.length - 1) {
-        i = -1;
-      }
-      $('viewport').src = viewPort2Src[i + 1];
-    }
-    else {
-      $('viewport').src = viewPort2Src[0];
-    }
-    playAudio($('keypress1'));
-    playAudio($('datareceived'));
-  }
-}
-function button4() {
-
-  if (power()) {
-    navigator.vibrate([18]);
-
-    if ($('widget').className === 'hidden') {
-      if (widgetSrc.indexOf($('widget').src) !== -1) {
-        var i = widgetSrc.indexOf($('widget').src);
-
-        if (i === widgetSrc.length - 1) {
-          i = -1;
-        }
-        $('widget').src = widgetSrc[i + 1];
-      }
-      else {
-        $('widget').src = widgetSrc[0];
-      }
-      $('widget').className = 'visible';
-      playAudio($('scanner'));
-      playAudio($('keypress6'));
-    }
-    else {
-      $('widget').className = 'hidden';
-      playAudio($('keypress5'));
-    }
-  }
-}
-function button5() {
-
-  if (power()) {
-    navigator.vibrate([18]);
-
-    if ($('widget').className === 'hidden') {
-      var srcString = '';
-      var uniqueString = 'forecast';
-
-      if ($('widget').src.indexOf(uniqueString) === -1) {
-        // Forcast widget
-        srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';
-        $('widget').src = srcString;
-      }
-      else {
-        // Dark Sky Map
-        srcString += 'https://maps.darksky.net/@temperature,' + lat + ',' + lng + ',4?embed=true&timeControl=false&fieldControl=true&defaultField=temperature&defaultUnits=_f';
-        $('widget').src = srcString;
-      }
-      $('widget').className = 'visible';
-      playAudio($('keypress6'));
-      playAudio($('computerthinking'));
-    }
-    else {
-      $('widget').className = 'hidden';
-      playAudio($('keypress5'));
-    }
-  }
-}
-function button6() {
-
-  if (power()) {
-    navigator.vibrate([18]);
-
-    if ($('widget').className === 'hidden') {
-      var srcString = '';
-
-      // IP Mapper
-      srcString += 'https://napesweaver.github.io/ip-mapper/';
-      $('widget').src = srcString;
-      $('widget').className = 'visible';
-      playAudio($('keypress6'));
-      playAudio($('verified'));
-    }
-    else {
-      $('widget').src = '';
-      $('widget').className = 'hidden';
-      playAudio($('keypress5'));
-    }
-  }
-}
-
-// Tricorder sensors
-function sensor1() {
-
-  if (power()) {
-    navigator.vibrate([18]);
-    $('viewport').src = '';
-    playAudio($('keypress7'));
-    playAudio($('scanner'));
-    // $('viewport').src = 'https://tunein.com/embed/player/s35862/';// KZUM
-    $('viewport').src = 'https://tunein.com/embed/player/s249942/';// Classic Hits
-    // $('viewport').src = 'https://tunein.com/embed/player/s51173/';// 1920's
-  }
-}
-function sensor2() {
-
-  if (power()) {
-    navigator.vibrate([18]);
-    $('viewport').src = '';
-    playAudio($('keypress7'));
-    playAudio($('scanner'));
-    // $('viewport').src = 'https://tunein.com/embed/player/s35862/';// NET
-    $('viewport').src = 'https://tunein.com/embed/player/s67176/';// BBC World Service
-  }
-}
-
-function saveTricorder() {
-
-  for (var s in widgetSrc) {
-    widgetSrc[s] = encodeSpecialChar(widgetSrc[s]);
-  }  
-  storeCookie('TRICORDER', nestArray(widgetSrc));
-}
-
-//////// Notes ///////////////////////////////////////////////////////////////////////
-
-var notes = [];
-var backUpsNotes = [33];
-var restoresNotes = [33];
-
-function btn_copy_notes() {
-
-  navigator.vibrate([18]);
-
-  var tmpTxt = '';
-  tmpTxt = $('txtInput').value.trim();
-  copySelectedText('lstNotes');
-  $('txtInput').value = tmpTxt;
-}
-function btn_paste_notes() {
-
-  navigator.vibrate([18]);
-  backupUndoNotes();
-
-  if (/*@cc_on!@*/false || !!document.documentMode) {
-    // IE
-    insertAtCursor($('lstNotes'), window.clipboardData.getData('Text'));
-  }
-  else {
-    // Firefox
-    //insertAtCursor($("lstNotes"), "\nNot supported by this browser.\n");
-    alert('Not supported by this browser.');
-  }
-}
-function btn_undo_notes() {
-
-  navigator.vibrate([18]);
-
-  if (backUpsNotes.length > 2) {
-    restoresNotes.push(nestArray(notes));
-    notes = splitArrayByBrowser(backUpsNotes.pop());
-    updateDisplayNotes();
-  }
-  colorNotesUndoButton();
-}
-function btn_redo_notes() {
-
-  navigator.vibrate([18]);
-
-  if (restoresNotes.length > 0) {
-    backUpsNotes.push(nestArray(notes));
-    notes = splitArrayByBrowser(restoresNotes.pop());
-    updateDisplayNotes();
-  }
-  colorNotesUndoButton();
-}
-function backupUndoNotes() {
-
-  backUpsNotes.push(nestArray(notes));
-  notes = $('lstNotes').value.split('\n');
-  restoresNotes.length = 0;
-  colorNotesUndoButton();
-}
-function colorNotesUndoButton() {
-  // console.log(backUpsNotes.length);
-  if (backUpsNotes.length > 2) {
-    $('btnUndoNotes').style.color = '#01c401';
-  }
-  else {
-    $('btnUndoNotes').style.color = '#919191';
-  }
-  if (restoresNotes.length >= 1) {
-    $('btnRedoNotes').style.color = '#01c401';
-  }
-  else {
-    $('btnRedoNotes').style.color = '#919191';
-  }
-  colorNotesSaveButton();
-}
-function colorNotesSaveButton() {
-
-  var index = 0;
-  var cookieValue = '';
-  var notesValue = '';
-
-  index = getCookie('NOTES').indexOf('=') + 1;
-  cookieValue = getCookie('NOTES').substr(index);
-  notesValue = nestArray(notes);
-  // This step is needed for Chrome and IE
-  cookieValue = cookieValue.replace(/_/g, ' ').trim();
-  notesValue = notesValue.replace(/_/g, ' ').trim();
-
-  if (cookieValue !== notesValue) {
-    $('btnSaveNotes').style.color = '#000000';
-  }
-  else {
-    $('btnSaveNotes').style.color = '#919191';
-  }
-}
-function btn_save_notes() {
-
-  navigator.vibrate([18]);
-
-  var tmpY;
-  $('btnSaveNotes').style.color = '#919191';
-
-  tmpY = encodeSpecialChar($('lstNotes').value);
-  notes = tmpY.split('\n');
-
-  storeCookie('NOTES', nestArray(notes));
-}
-function btn_load_notes() {
-
-  navigator.vibrate([18]);
-  var index = 0;
-
-  backupUndoNotes();
-  index = getCookie('NOTES').indexOf('=') + 1;
-  try {
-    notes = splitArrayByBrowser(getCookie('NOTES').substr(index));
-  }
-  catch (e) {
-    notes.push('Load error.');
-  }
-  updateDisplayNotes();
-  $('btnSaveNotes').style.color = '#919191';
-  $('lstNotes').scrollTop = $('lstNotes').scrollHeight;
-}
-function btn_clear_notes() {
-
-  navigator.vibrate([18]);
-  backupUndoNotes();
-  $('lstNotes').value = '';
-  notes = $('lstNotes').value.split('\n');
-}
-function updateDisplayNotes() {
-
-  $('lstNotes').value = '';
-  for (var n in notes) {
-    $('lstNotes').value += decodeSpecialChar(notes[n]);
-    $('lstNotes').value += '\n';
-  }
-  $('lstNotes').value = $('lstNotes').value.trim();
-  $('lstNotes').value += '\n';
-  if (notes.length === 1 && notes[0] === '') {
-    $('lstNotes').value = '';
-  }
-}
-
-// Event listeners & window.onload
+//////// Event listeners & window.onload /////////////////////////////////////////////
 
 document.addEventListener('keypress', function (event) {
 
