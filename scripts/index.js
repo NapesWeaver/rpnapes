@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '14:7:24';
+var variable = '16:32:41';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -489,13 +489,16 @@ function btn_shift() {
     $('btnDivide').value = '÷';
     $('btnMultiply').style.color = '#000000';
     $('btnMultiply').innerHTML = 'x';
-
+    $('btnSine').className = 'btn-small';
+    $('btnSine').innerHTML = 'sin';
     $('btnSubtract').style.color = '#000000';
     $('btnSubtract').value = '-';
-
+    $('btnCosine').className = 'btn-small';
+    $('btnCosine').innerHTML = 'cos';
     $('btnAdd').style.color = '#000000';
     $('btnAdd').value = '+';
-
+    $('btnTangent').className = 'btn-small';
+    $('btnTangent').innerHTML = 'tan';
   }
   else {
     // Shifting to true...
@@ -527,12 +530,16 @@ function btn_shift() {
     $('btnDivide').value = '/';
     $('btnMultiply').style.color = '#0000A0';
     $('btnMultiply').innerHTML = '<sub class="symbol-big">*</sub>';
-
+    $('btnSine').className = 'btn-small btn-small-font';
+    $('btnSine').innerHTML = 'sin<sup>-1</sup>'
     $('btnSubtract').style.color = '#0000A0';
     $('btnSubtract').value = '-';
-
+    $('btnCosine').className = 'btn-small btn-small-font';
+    $('btnCosine').innerHTML = 'cos<sup>-1</sup>';
     $('btnAdd').style.color = '#0000A0';
     $('btnAdd').value = '+';
+    $('btnTangent').className = 'btn-small btn-small-font';
+    $('btnTangent').innerHTML = 'tan<sup>-1</sup>';
     
   }
   colorUndoButton();
