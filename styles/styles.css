@@ -42,7 +42,7 @@ header {
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: 0.7em;
     font-weight: bold;
-    color: #FF0000;
+    color: #B92020;
     /* Height reinforcement across browsers */
     height: 15em;
     width: 240px;
@@ -62,14 +62,14 @@ img {
     position: relative;
 }
 
-kbd {
+/* kbd {
   padding: 1px 2px 0;  
   border: 1px solid #ccc;
   border-radius: 2px;
   box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
   margin: 0 .1em;
   font-weight: 600;
-}
+} */
 
 /***** Buttons **************/
 
@@ -90,12 +90,14 @@ input, button {
     height: 15px;
     margin-left: 233px;
 }
-#btnDelete {
-    margin-left: 1px;
+#btnDelete, #btnUndo, #btnGo, #btnClear, #btnSave, #btnLoad {
     background-color: #808080;
 }
-#btnUndo {
-    background-color: #808080;
+    #btnDelete:hover, #btnUndo:hover, #btnShift:hover, #btnAngle:hover, #btnClear:hover, #btnSave:hover, #btnLoad:hover {
+        background-color: #6D8EBF;
+    }
+#btnDelete {
+    margin-left: 1px;
 }
 #btnGo {
     /* background-color: #FBFBFB; */
@@ -105,33 +107,24 @@ input, button {
 #btnAngle {
     background-color: #B0C4DE;
 }
-#btnClear {
-    background-color: #808080;
-}
-#btnSave {
-    background-color: #808080;
-}
-#btnLoad {
-    background-color: #808080;
-}
 #btnOff {
     background-color: #B85252;
     text-decoration: underline;
 }
-#btnOff:hover {
-    /* background-color: #CD5C5C; */
-        /*** YouTube red ***/
-        background-color: #B92020;
-        color: #FFFFFF;
-    }
+    #btnOff:hover {
+        /* background-color: #CD5C5C; */
+            /*** YouTube red ***/
+            background-color: #B92020;
+            color: #FFFFFF;
+        }
 #open {
-    background-color: #ffffff;
+    background-color: #FFFFFF;
     padding: 0px 12px 3px 12px;
 }
-#open:hover {
-    color: #0040FF;
-    text-decoration: underline;
-}
+    #open:hover {
+        color: #0040FF;
+        text-decoration: underline;
+    }
 .btn-big {
     width: 57px;
     height: 23px;
@@ -149,9 +142,6 @@ input, button {
 }
 .btn-large-font {
     font-size: 1.2em;
-}
-.btn-med-font {
-    font-size: .7em;
 }
 .btn-small-font {
     font-size: .6em;
@@ -308,7 +298,7 @@ input, button {
     left: 50%;
     top: 467px;
     transform: translateY(-50%) translateX(-50%);
-    background-color: #F1F1F1;
+    background-color: #F2F2F2;
 }
 
 /***** Notes ****************/
@@ -349,9 +339,6 @@ input, button {
     }
     .btn-large-font {
         font-size: 1.5em;
-    }
-    .btn-med-font {
-        font-size: 1em;
     }
     .btn-small-font {
         font-size: .8em;

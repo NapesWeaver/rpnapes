@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '23:41:42';
+var variable = '9:4:29';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -469,7 +469,6 @@ function btn_shift() {
     $('btnEnter').className = 'btn-big';
     $('btnEnter').style.color = '#000000';
     $('btnEnter').value = 'ENTER';
-    $('btnDelete').className = 'btn-med btn-med-font';
     $('btnDelete').innerHTML = 'DEL';
     $('btnInverse').value = '1 / x';
     $('btnLog').innerHTML = 'log<sub>x</sub>y';
@@ -506,9 +505,9 @@ function btn_shift() {
     $('btnEnter').className = 'btn-big btn-large-font';
     $('btnEnter').style.color = '#0000A0';
     $('btnEnter').value = '=';
-    $('btnDelete').className = 'btn-med btn-large-font';
     // $('btnDelete').innerHTML = '<sup>↤</sup>';
-    $('btnDelete').innerHTML = '<sup>←</sup>';
+    // $('btnDelete').innerHTML = '<sup>←</sup>';
+    $('btnDelete').innerHTML = '<----';
     $('btnInverse').value = '! x';
     $('btnLog').innerHTML = 'log<sub>e</sub>';
     $('btnRoot').innerHTML = 'y&nbsp;<sup>x</sup>';
