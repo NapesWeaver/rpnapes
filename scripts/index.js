@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '9:4:29';
+var variable = '11:17:51';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -485,8 +485,9 @@ function btn_shift() {
     $('btnGo').style.backgroundColor = '#F2F2F2';
     $('btnGo').className = 'btn-small google';
     $('btnGo').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
-    $('btnShift').style.backgroundColor = '#D4D0C8';
-    $('btnShift').style.borderStyle = 'outset';
+    // $('btnShift').style.backgroundColor = '#D4D0C8';
+    // $('btnShift').style.borderStyle = 'outset';
+    $('btnShift').className = 'btn-med btn-shift';
     $('btnDivide').style.color = '#000000';
     $('btnDivide').value = '÷';
     $('btnMultiply').className = 'btn-small';
@@ -526,8 +527,9 @@ function btn_shift() {
     $('btnGo').className = 'btn-small su-script-large';
     $('btnGo').innerHTML = '&#9654';
     $('btnGo').className = 'btn-small you-tube';
-    $('btnShift').style.backgroundColor = 'grey';
-    $('btnShift').style.borderStyle = 'inset';
+    // $('btnShift').style.backgroundColor = 'grey';
+    // $('btnShift').style.borderStyle = 'inset';
+    $('btnShift').className = 'btn-med btn-shifted';
     $('btnDivide').style.color = '#0000A0';
     $('btnDivide').value = '/';
     $('btnMultiply').style.color = '#0000A0';
@@ -3383,14 +3385,7 @@ window.onload = function () {
   })();
 
   // Menu Help
-  $('menuHelp').onclick = help;
-
-  // Attach hapticResponse
-  var elements = document.getElementsByClassName('haptic-response');
-
-  for (var i = 0; i < elements.length; i++) {
-    elements[i].addEventListener('click', hapticResponse, false);
-  }
+  $('menuHelp').onclick = help; 
 
   // Text Area
   $('lstStack').style.color = '#000000';// noscript warning was red ;)
@@ -3489,7 +3484,14 @@ window.onload = function () {
       if (notes.length > 0) backupUndoNotes(); 
     }, 100);
   });
-  
+
+  // Attach hapticResponse
+  var elements = document.getElementsByClassName('haptic-response');
+
+  for (var i = 0; i < elements.length; i++) {
+    elements[i].addEventListener('click', hapticResponse, false);
+  }
+
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lstNotes').value = '';

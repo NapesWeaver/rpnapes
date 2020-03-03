@@ -26,19 +26,12 @@ body {
 
 header {
     height: 18px;
-    /*background-image: url(../images/titlebar.png);*/
-    /*background-position: 3px;*/
-    /*background-repeat: no-repeat;*/
     font-size: 0.81em;
-    /*color: #EEEEEE;*/
     color: #6D8EBF;
     background-color: #6D8EBF;
 }
 
 #lstStack {
-
-    /* Scroll bar always */
-    /*overflow-y: scroll;*/
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: 0.7em;
     font-weight: bold;
@@ -93,7 +86,7 @@ input, button {
 #btnDelete, #btnUndo, #btnGo, #btnClear, #btnSave, #btnLoad {
     background-color: #808080;
 }
-    #btnDelete:hover, #btnUndo:hover, #btnShift:hover, #btnAngle:hover, #btnClear:hover, #btnSave:hover, #btnLoad:hover {
+    #btnDelete:hover, #btnUndo:hover, #btnAngle:hover, #btnClear:hover, #btnSave:hover, #btnLoad:hover {
         background-color: #6D8EBF;
     }
 #btnDelete {
@@ -125,6 +118,18 @@ input, button {
         color: #0040FF;
         text-decoration: underline;
     }
+.btn-shift {
+    background-color: #808080;
+    border-style: outset;
+}
+    .btn-shift:hover {
+        background-color: #6D8EBF;
+    }
+.btn-shifted {
+    background-color: #D4D0C8;
+    border-style: inset;
+    color: #0000A0;
+}
 .btn-big {
     width: 57px;
     height: 23px;
