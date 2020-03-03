@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '22:1:38';
+var variable = '23:13:35';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -1790,7 +1790,7 @@ function getCookie(cname) {
 
 function encodeSpecialChar(tmpString) {
 
-  //tmpString = tmpString.replace(/×/g, '*');// What the what ???
+  // tmpString = tmpString.replace(/×/g, '*');// What the what ???
 
   tmpString = tmpString.replace(/%/g, '&#37');
   //tmpString = tmpString.replace(/\*/g, "&#42");
