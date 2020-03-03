@@ -31,7 +31,7 @@ header {
     background-color: #6D8EBF;
 }
 
-#lstStack {
+.lst-stack {
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: 0.7em;
     font-weight: bold;
@@ -42,12 +42,15 @@ header {
     margin-bottom: 7px;
 }
 
-#txtInput {
-    background-color: #FFFFFF;
+.txt-input {
     display: block;
-    width: 240px;
+    width: 240px; 
     margin-left: 12px;
     margin-bottom: 5px;
+    font-size: 0.7em;
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    background-color: #FFFFFF;
+    font-weight: bold;
     border-style: inset;
 }
 
@@ -66,7 +69,7 @@ img {
 
 /***** Buttons **************/
 
-input, button {
+.btn-big, .btn-med, .btn-small, .btn-other {
     margin-bottom: 3px;
     font-size: 0.7em;
     font-weight: bold;        
@@ -78,12 +81,14 @@ input, button {
     input:hover, button:hover {
 	    background-color: #DEEEFC;
     }
+
 #btnXoff {
     width: 15px;
     height: 15px;
     margin-left: 233px;
 }
-#btnDelete, #btnUndo, #btnGo, #btnClear, #btnSave, #btnLoad {
+
+#btnDelete, #btnUndo, #btnClear, #btnSave, #btnLoad {
     background-color: #808080;
 }
     #btnDelete:hover, #btnUndo:hover, #btnAngle:hover, #btnClear:hover, #btnSave:hover, #btnLoad:hover {
@@ -92,14 +97,11 @@ input, button {
 #btnDelete {
     margin-left: 1px;
 }
-#btnGo {
-    /* background-color: #FBFBFB; */
-    background-color: #F2F2F2;
-    /* color: #FFFFFF; */
-}
+
 #btnAngle {
     background-color: #B0C4DE;
 }
+
 #btnOff {
     background-color: #B85252;
     text-decoration: underline;
@@ -110,6 +112,7 @@ input, button {
             background-color: #B92020;
             color: #FFFFFF;
         }
+
 #open {
     background-color: #FFFFFF;
     padding: 0px 12px 3px 12px;
@@ -118,6 +121,7 @@ input, button {
         color: #0040FF;
         text-decoration: underline;
     }
+
 .btn-shift {
     background-color: #808080;
     border-style: outset;
@@ -130,6 +134,31 @@ input, button {
     border-style: inset;
     color: #0000A0;
 }
+
+.google {
+    background-color: #F2F2F2;
+    /* background-image: url(../images/google.png); */
+    /* background-repeat: no-repeat; */
+}
+.color-blue {
+    color: #4285F4;
+}
+.color-red {
+    color: #EA4335;
+}
+.you-tube {
+    background-color: #B92020;
+    color: #FFFFFF;
+    /* background-image: url(../images/youtube.png);
+    background-repeat: no-repeat; */
+}
+    .you-tube:hover {
+        background-color: #B85252;
+    }
+.google, .you-tube {
+    background-size: 29px 19px;
+}
+
 .btn-big {
     width: 57px;
     height: 23px;
@@ -138,45 +167,29 @@ input, button {
     width: 42px;
     height: 23px;
 }
-.btn-small, .google, .you-tube {
+.btn-small {
     width: 33px;
     height: 23px;
 }
 .btn-big, .btn-med, .btn-small {
     border-radius: 9%;
 }
-.btn-large-font {
+.btn-big-font {
     font-size: 1.2em;
 }
 .btn-small-font {
     font-size: .6em;
 }
+
 .su-script-large {
     font-size: 1em;
 }
+
 .hidden {
     display: none;
 }
 .visible {
     display: inline;
-}
-.color-blue {
-    color: #4285F4;
-}
-.color-red {
-    color: #EA4335;
-}
-.google {
-    /* background-image: url(../images/google.png); */
-    /* background-repeat: no-repeat; */
-    background-color: '#FBFBFB';
-}
-.you-tube {
-    background-image: url(../images/youtube.png);
-    background-repeat: no-repeat;
-}
-.google, .you-tube {
-    background-size: 29px 19px;
 }
 
 /***** Menu ***************/
@@ -308,7 +321,7 @@ input, button {
 
 /***** Notes ****************/
 
-#lstNotes {
+.lst-notes {
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: 0.7em;
     font-weight: bold;
@@ -324,6 +337,7 @@ input, button {
         width: 360px;
         height: 600px;        
     }
+
     header {
         height: 24px;
         background-color: #6D8EBF;
@@ -332,39 +346,48 @@ input, button {
         background-position: 0;
         /*background-image: linear-gradient(to right, #0A246A , #A6CAF0);*/
     }
+
     #menu-wrap {
         font-size: 1.2em;
         margin-left: 32px;
     }
+
     #open {
         padding: 0px 18px 3px 18px;
     }
-    input, button {
+
+    .txt-input, .btn-big, .btn-med, .btn-small, .btn-other {
         font-size: 1em;
     }
-    .btn-large-font {
+
+    .btn-big-font {
         font-size: 1.5em;
     }
     .btn-small-font {
         font-size: .8em;
     }
+
     .su-script-large {
         font-size: 1.3m;
     }
-    #lstStack {
+
+    .lst-stack {
         font-size: 1em;
         width: 334px;
-    }    
-    #txtInput {
+    }
+
+    .txt-input {
         font-size: 1em;
         width: 334px;
         margin-left: 12px;
     }
+
     #btnXoff {
         width: 24px;
         height: 24px;
         margin-left: 318px;
     }
+
     .btn-big {
         width: 77px;
         height: 30px;
@@ -373,20 +396,25 @@ input, button {
         width: 57px;
         height: 30px;
     }
+
     .btn-small, .google, .you-tube {
         width: 45px;
         height: 30px;
     }
+
     .google, .you-tube {
         background-size: 41px 26px;
     }
+
     #tricorderskin {
         top: 314px;    
-    }    
+    }
+
     #widget {
         top: 473px;
     }
-    #lstNotes {
+
+    .lst-notes {
         font-size: 1em;
         height: 496px;
         width: 325px;

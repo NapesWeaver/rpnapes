@@ -25,7 +25,7 @@
     <div id="wrap">
 
       <header>
-        <input type="button" name="btnXoff" id="btnXoff" value="&nbsp;"/>
+        <input id="btnXoff" class='btn-other' type="button" name="btnXoff" value="&nbsp;"/>
       </header>
       
       <main>
@@ -171,8 +171,8 @@
             </nav>
           </div>
 
-          <textarea name="lstStack" id="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Modified on March 3, 2020." onfocus="lstStackFocus()" onclick="selectText('lstStack', 'lstStack')" ondblclick="copySelectedText('lstStack')" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
-          <input type="text" name="txtInput" id="txtInput" size="32" tabindex="1" onfocus="txtInputFocus()"/>
+          <textarea id="lstStack" class="lst-stack" name="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Modified on March 3, 2020." onfocus="lstStackFocus()" onclick="selectText('lstStack', 'lstStack')" ondblclick="copySelectedText('lstStack')" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <input type="text" id="txtInput" class="txt-input" name="txtInput" size="32" tabindex="1" onfocus="txtInputFocus()"/>
 
           <input type="button" id="btnCopy" class="btn-big" value="COPY"/>
           <input type="button" id="btnXy" class="btn-big" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y"/>
@@ -189,7 +189,7 @@
           <input type="button" id="btnPI" class="btn-small" value="&#182;"/>
           <input type="button" id="btnModulus" class="btn-small" value="%"/>
           <button type="button" id="btnSign" class="btn-small">±</button>
-          <button type="button" id="btnGo" class="btn-small"><span class="color-blue">G</span><span class="color-red">o</span></button>
+          <button type="button" id="btnGo" class="google btn-small"><span class="color-blue">G</span><span class="color-red">o</span></button>
           <input type="button" id="btnShift" class="btn-med btn-shift" value="Shift"/>
           <br/>
           <br/>
@@ -224,15 +224,15 @@
 
         <!-- Notes -->
         <div id="notes" class="hidden">
-          <input type="button" id="btnCopyNotes" value="COPY"/>
-          <input type="button" id="btnPasteNotes" value="PASTE"/>
-          <input type="button" id="btnUndoNotes" value="UNDO"/>
-          <input type="button" id="btnRedoNotes" value="REDO"/>
+          <input type="button" id="btnCopyNotes" class="btn-other" value="COPY"/>
+          <input type="button" id="btnPasteNotes" class="btn-other" value="PASTE"/>
+          <input type="button" id="btnUndoNotes" class="btn-other" value="UNDO"/>
+          <input type="button" id="btnRedoNotes" class="btn-other" value="REDO"/>
           <br/>
-          <input type="button" id="btnSaveNotes" value="SAVE"/>
-          <input type="button" id="btnLoadNotes" value="LOAD"/>
-          <input type="button" id="btnClearNotes" value="CLEAR"/>
-          <textarea name="notes" id="lstNotes" placeholder="Notes:" cols="28" rows="27"></textarea>
+          <input type="button" id="btnSaveNotes" class="btn-other" value="SAVE"/>
+          <input type="button" id="btnLoadNotes" class="btn-other" value="LOAD"/>
+          <input type="button" id="btnClearNotes" class="btn-other" value="CLEAR"/>
+          <textarea id="lstNotes" class="lst-notes" name="notes" placeholder="Notes:" cols="28" rows="27"></textarea>
         </div>
 
         <!-- Tricorder -->

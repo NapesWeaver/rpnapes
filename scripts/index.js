@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '11:17:51';
+var variable = '13:11:24';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -482,11 +482,8 @@ function btn_shift() {
     $('btnModulus').value = '%';
     $('btnSign').style.color = '#000000';
     $('btnSign').innerHTML = '±';
-    $('btnGo').style.backgroundColor = '#F2F2F2';
     $('btnGo').className = 'btn-small google';
     $('btnGo').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
-    // $('btnShift').style.backgroundColor = '#D4D0C8';
-    // $('btnShift').style.borderStyle = 'outset';
     $('btnShift').className = 'btn-med btn-shift';
     $('btnDivide').style.color = '#000000';
     $('btnDivide').value = '÷';
@@ -503,7 +500,7 @@ function btn_shift() {
     shifted = true;
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a < > b';
-    $('btnEnter').className = 'btn-big btn-large-font';
+    $('btnEnter').className = 'btn-big btn-big-font';
     $('btnEnter').style.color = '#0000A0';
     $('btnEnter').value = '=';
     // $('btnDelete').innerHTML = '<sup>↤</sup>';
@@ -522,13 +519,8 @@ function btn_shift() {
     $('btnSign').className = 'btn-small su-script-large';
     $('btnSign').style.color = '#0000A0';
     $('btnSign').innerHTML = '<sub>^</sub>';
-    $('btnGo').style.backgroundColor = '#B92020';
-    $('btnGo').style.color = '#FFFFFF';
-    $('btnGo').className = 'btn-small su-script-large';
-    $('btnGo').innerHTML = '&#9654';
     $('btnGo').className = 'btn-small you-tube';
-    // $('btnShift').style.backgroundColor = 'grey';
-    // $('btnShift').style.borderStyle = 'inset';
+    $('btnGo').innerHTML = '&#9654';
     $('btnShift').className = 'btn-med btn-shifted';
     $('btnDivide').style.color = '#0000A0';
     $('btnDivide').value = '/';
