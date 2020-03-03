@@ -150,6 +150,9 @@ input, button {
 .btn-large-font {
     font-size: 1.2em;
 }
+.btn-med-font {
+    font-size: .7em;
+}
 .btn-small-font {
     font-size: .6em;
 }
@@ -347,8 +350,14 @@ input, button {
     .btn-large-font {
         font-size: 1.5em;
     }
+    .btn-med-font {
+        font-size: 1em;
+    }
     .btn-small-font {
         font-size: .8em;
+    }
+    .su-script-large {
+        font-size: 1.3m;
     }
     #lstStack {
         font-size: 1em;

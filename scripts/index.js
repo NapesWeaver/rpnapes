@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '20:36:28';
+var variable = '22:1:38';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -469,7 +469,8 @@ function btn_shift() {
     $('btnEnter').className = 'btn-big';
     $('btnEnter').style.color = '#000000';
     $('btnEnter').value = 'ENTER';
-    $('btnDelete').value = 'DEL';
+    $('btnDelete').className = 'btn-med btn-med-font';
+    $('btnDelete').innerHTML = 'DEL';
     $('btnInverse').value = '1 / x';
     $('btnLog').innerHTML = 'log<sub>x</sub>y';
     $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';
@@ -481,9 +482,7 @@ function btn_shift() {
     $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
     $('btnSign').style.color = '#000000';
-    // $('btnSign').value = '±';
     $('btnSign').innerHTML = '±';
-    // $('btnGo').style.backgroundColor = '#FBFBFB';
     $('btnGo').style.backgroundColor = '#F2F2F2';
     $('btnGo').className = 'btn-small google';
     $('btnGo').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
@@ -507,7 +506,9 @@ function btn_shift() {
     $('btnEnter').className = 'btn-big btn-large-font';
     $('btnEnter').style.color = '#0000A0';
     $('btnEnter').value = '=';
-    $('btnDelete').value = '<-----';
+    $('btnDelete').className = 'btn-med btn-large-font';
+    // $('btnDelete').innerHTML = '<sup>↤</sup>';
+    $('btnDelete').innerHTML = '<sup>←</sup>';
     $('btnInverse').value = '! x';
     $('btnLog').innerHTML = 'log<sub>e</sub>';
     $('btnRoot').innerHTML = 'y&nbsp;<sup>x</sup>';
@@ -520,17 +521,16 @@ function btn_shift() {
     $('btnModulus').value = '√¯';
     $('btnSign').className = 'btn-small su-script-large';
     $('btnSign').style.color = '#0000A0';
-    // $('btnSign').value = '^';
     $('btnSign').innerHTML = '<sub>^</sub>';
-    // $('btnGo').style.backgroundColor = '#B85252';
-    // $('btnGo').innerHTML = 'You';
+    $('btnGo').style.backgroundColor = '#B92020';
+    $('btnGo').style.color = '#FFFFFF';
+    $('btnGo').className = 'btn-small su-script-large';
+    $('btnGo').innerHTML = '&#9654';
     $('btnGo').className = 'btn-small you-tube';
-    $('btnGo').innerHTML = '';
     $('btnShift').style.backgroundColor = 'grey';
     $('btnShift').style.borderStyle = 'inset';
     $('btnDivide').style.color = '#0000A0';
     $('btnDivide').value = '/';
-    $('btnMultiply').className = 'btn-small su-script-large';
     $('btnMultiply').style.color = '#0000A0';
     $('btnMultiply').innerHTML = '<sub>*</sub>';
     $('btnSubtract').style.color = '#0000A0';
