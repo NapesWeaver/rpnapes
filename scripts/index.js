@@ -472,7 +472,7 @@ function btn_shift() {
     $('btnDelete').innerHTML = 'DEL';
     $('btnInverse').value = '1 / x';
     $('btnLog').innerHTML = 'log<sub>x</sub>y';
-    $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';
+    $('btnRoot').innerHTML = 'y&nbsp;<sup>x</sup>';
     $('btnUndo').value = 'UND';
     $('btnEE').className = 'btn-small btn-small-font';
     $('btnEE').value = 'EE';
@@ -513,7 +513,7 @@ function btn_shift() {
     $('btnDelete').innerHTML = '<----';
     $('btnInverse').value = '! x';
     $('btnLog').innerHTML = 'log<sub>e</sub>';
-    $('btnRoot').innerHTML = 'y&nbsp;<sup>x</sup>';
+    $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
     $('btnUndo').value = 'REDO';
     $('btnEE').className = 'btn-small';
     $('btnEE').value = 'j';
@@ -748,48 +748,6 @@ function factorial(num) {
   }
 }
 
-function btn_root() {
-
-  hapticResponse();
-  backupUndo();
-
-  if (shifted) {
-    exponentialFunction();
-  }
-  else {
-    rootFunction();
-  }
-}
-function rootFunction() {
-
-  var newUnits = '';
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString().trim() === 'NaN') {
-    btn_enter();
-    $(('txtInput')).value = '2';
-  }
-  if (extractUnits($('txtInput').value) === 'null') {
-    newUnits = divideUnits(1 / extractReal($('txtInput').value));
-  }
-  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), 1 / extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
-  updateDisplay();
-  $('txtInput').select();
-}
-function exponentialFunction() {
-
-  var newUnits = '';
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString() === 'NaN') {
-    btn_enter();
-    $(('txtInput')).value = '2';
-  }
-  if (extractUnits($('txtInput').value) === 'null') {
-    newUnits = multiplyUnits(extractReal($('txtInput').value));
-    if (newUnits === ' ') newUnits = '';
-  }
-  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
-  updateDisplay();
-  $('txtInput').select();
-}
-
 function btn_log() {
 
   hapticResponse();
@@ -815,6 +773,48 @@ function baseLog() {
 function naturalLog() {
 
   $('txtInput').value = Math.log(extractReal($('txtInput').value));
+  updateDisplay();
+  $('txtInput').select();
+}
+
+function btn_root() {
+
+  hapticResponse();
+  backupUndo();
+
+  if (shifted) {
+    rootFunction();
+  }
+  else {
+    exponentialFunction();
+  }
+}
+function exponentialFunction() {
+
+  var newUnits = '';
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString() === 'NaN') {
+    btn_enter();
+    $(('txtInput')).value = '2';
+  }
+  if (extractUnits($('txtInput').value) === 'null') {
+    newUnits = multiplyUnits(extractReal($('txtInput').value));
+    if (newUnits === ' ') newUnits = '';
+  }
+  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
+  updateDisplay();
+  $('txtInput').select();
+}
+function rootFunction() {
+
+  var newUnits = '';
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString().trim() === 'NaN') {
+    btn_enter();
+    $(('txtInput')).value = '2';
+  }
+  if (extractUnits($('txtInput').value) === 'null') {
+    newUnits = divideUnits(1 / extractReal($('txtInput').value));
+  }
+  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), 1 / extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
   updateDisplay();
   $('txtInput').select();
 }
@@ -3409,8 +3409,8 @@ window.onload = function () {
   $('btnDelete').onclick = btn_delete;
 
   $('btnInverse').onclick = btn_inverse;
-  $('btnRoot').onclick = btn_root;
   $('btnLog').onclick = btn_log;
+  $('btnRoot').onclick = btn_root;
   $('btnUndo').onclick = btn_undo;
 
   $('btnEE').onclick = btn_EE;
