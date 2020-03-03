@@ -62,10 +62,10 @@
                 <li class="haptic-response">
                   <a href="#">Maths</a>
                   <ul class="sub-menu">
-                    <li><a id="menuDivide" href="#">&#247;</a></li>
+                    <li><a id="menuDivide" class="symbol-big" href="#">&#247;</a></li>
                     <li><a id="menuMultiply" href="#">x</a></li>
-                    <li><a id="menuSubtract" href="#">-</a></li>
-                    <li><a id="menuAdd" href="#">+</a></li>
+                    <li><a id="menuSubtract" class="symbol-big" href="#">-</a></li>
+                    <li><a id="menuAdd" class="symbol-big" href="#">+</a></li>
                     <li><a id="menuInverse" href="#">1&nbsp;/&nbsp;x</a></li>
                     <li><a id="menuFactorial" href="#">x&nbsp;!</a></li>
                     <li><a id="menuExponential" href="#">y&nbsp;<sup>x</sup></a></li>
@@ -73,7 +73,7 @@
                     <li><a id="menuLog" href="#">log<sub>x</sub>y</a></li>
                     <li><a id="menuLn" href="#">log<sub>e</sub></a></li>
                     <li><a id="menuModulus" href="#">%</a></li>
-                    <li><a id="menuSign" href="#">±</a></li>
+                    <li><a id="menuSign" class="symbol-big" href="#">±</a></li>
                     <li><a id="menuSine" href="#">sine</a></li>
                     <li><a id="menuCosine" href="#">cosine</a></li>
                     <li><a id="menuTangent" href="#">tangent</a></li>
@@ -155,11 +155,11 @@
                       <ul id="symbols" onclick="$('symbols').className='hidden'">
                         <li><a id="menuParentheses" href="#" title="Parentheses">&#40;&nbsp;&#41;</a></li>
                         <li><a id="menuRadical" href="#" title="Radical">&#8730;¯</a></li>
-                        <li><a id="menuCarat" href="#" title="Carat"><sub class="su-script-large">&nbsp;&nbsp;&#94;</sub></a></li>
+                        <li><a id="menuCarat" class="symbol-big" href="#" title="Carat"><sub class="symbol-big">&nbsp;&nbsp;&#94;</sub></a></li>
                         <li><a id="menuSolidus" href="#" title="Solidus">&nbsp;&nbsp;&#47;</a></li>
-                        <li><a id="menuAsterisk" href="#" title="Times">&nbsp;&nbsp;<sub class="su-script-large">&#42;</sub></a></li>
-                        <li><a id="menuMinus" href="#" title="Minus">&nbsp;&nbsp;&#45;</a></li>
-                        <li><a id="menuPlus" href="#" title="Plus">&nbsp;&nbsp;&#43;</a></li>
+                        <li><a id="menuAsterisk" class="symbol-big" href="#" title="Times">&nbsp;&nbsp;<sub class="symbol-big">&#42;</sub></a></li>
+                        <li><a id="menuMinus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#45;</a></li>
+                        <li><a id="menuPlus" class="symbol-big" href="#" title="Plus">&nbsp;&nbsp;&#43;</a></li>
                         <li><a id="menuHeart" href="#" title="Hearts">&nbsp;&nbsp;&#9829;</a></li>
                         <li><a id="menuOhm" href="#" title="Ohms">&nbsp;&nbsp;&#937;</a></li>
                       </ul>
@@ -188,7 +188,7 @@
           <input type="button" id="btnEE" class="btn-small btn-small-font" value="EE"/>
           <input type="button" id="btnPI" class="btn-small" value="&#182;"/>
           <input type="button" id="btnModulus" class="btn-small" value="%"/>
-          <button type="button" id="btnSign" class="btn-small">±</button>
+          <button type="button" id="btnSign" class="btn-small symbol-med">±</button>
           <button type="button" id="btnGo" class="google btn-small"><span class="color-blue">G</span><span class="color-red">o</span></button>
           <input type="button" id="btnShift" class="btn-med btn-shift" value="Shift"/>
           <br/>
@@ -196,7 +196,7 @@
           <input type="button" id="btnSeven" class="btn-small" value="7"/>
           <input type="button" id="btnEight" class="btn-small" value="8"/>
           <input type="button" id="btnNine" class="btn-small" value="9"/>
-          <input type="button" id="btnDivide" class="btn-small" value="&#247;"/>
+          <input type="button" id="btnDivide" class="btn-small symbol-big" value="&#247;"/>
           <input type="button" id="btnAngle" class="btn-small" value="deg"/>
           <input type="button" id="btnClear" class="btn-med" value="CLR"/>
           <br/>
@@ -210,14 +210,14 @@
           <input type="button" id="btnOne" class="btn-small" value="1"/>
           <input type="button" id="btnTwo" class="btn-small" value="2"/>
           <input type="button" id="btnThree" class="btn-small" value="3"/>
-          <input type="button" id="btnSubtract" class="btn-small" value="-"/>
+          <input type="button" id="btnSubtract" class="btn-small symbol-big" value="-"/>
           <input type="button" id="btnCosine" class="btn-small" value="cos"/>
           <input type="button" id="btnLoad" class="btn-med" value="LOA"/>
           <br/>
           <input type="button" id="btnSpace" class="btn-small" value="&nbsp;"/>
           <input type="button" id="btnZero" class="btn-small" value="0"/>
-          <button type="button" id="btnDot" class="btn-small"><sup class="su-script-large">.</sup></button>
-          <input type="button" id="btnAdd" class="btn-small" value="+"/>
+          <button type="button" id="btnDot" class="btn-small"><sup class="symbol-big">.</sup></button>
+          <input type="button" id="btnAdd" class="btn-small symbol-big" value="+"/>
           <input type="button" id="btnTangent" class="btn-small" value="tan"/>
           <input type="button" id="btnOff" class="btn-med" value="OFF"/>
         </div>

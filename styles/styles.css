@@ -137,8 +137,6 @@ img {
 
 .google {
     background-color: #F2F2F2;
-    /* background-image: url(../images/google.png); */
-    /* background-repeat: no-repeat; */
 }
 .color-blue {
     color: #4285F4;
@@ -149,8 +147,6 @@ img {
 .you-tube {
     background-color: #B92020;
     color: #FFFFFF;
-    /* background-image: url(../images/youtube.png);
-    background-repeat: no-repeat; */
 }
     .you-tube:hover {
         background-color: #B85252;
@@ -181,7 +177,7 @@ img {
     font-size: .6em;
 }
 
-.su-script-large {
+.symbol-big, .symbol-med {
     font-size: 1em;
 }
 
@@ -302,16 +298,13 @@ img {
 
 #viewport {
     position: relative;
-    /*position: absolute;*/
     left: -54px;
     top: 23px;
-    /*transform: translateY(-50%) translateX(-50%);*/
     border: none;    
     border-radius: 13px;
 }
 
 #widget {
-    /*position: relative;*/
     position: absolute;
     left: 50%;
     top: 467px;
@@ -341,10 +334,8 @@ img {
     header {
         height: 24px;
         background-color: #6D8EBF;
-        /*background-image: url(../favicon.ico);*/
         background-image: none;
         background-position: 0;
-        /*background-image: linear-gradient(to right, #0A246A , #A6CAF0);*/
     }
 
     #menu-wrap {
@@ -367,8 +358,8 @@ img {
         font-size: .8em;
     }
 
-    .su-script-large {
-        font-size: 1.3m;
+    .symbol-big {
+        font-size: 1.1em;
     }
 
     .lst-stack {
@@ -420,4 +411,3 @@ img {
         width: 325px;
     }
 }
-

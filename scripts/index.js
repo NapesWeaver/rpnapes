@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '13:11:24';
+var variable = '14:7:24';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -487,7 +487,6 @@ function btn_shift() {
     $('btnShift').className = 'btn-med btn-shift';
     $('btnDivide').style.color = '#000000';
     $('btnDivide').value = '÷';
-    $('btnMultiply').className = 'btn-small';
     $('btnMultiply').style.color = '#000000';
     $('btnMultiply').innerHTML = 'x';    
     $('btnSubtract').style.color = '#000000';
@@ -516,16 +515,15 @@ function btn_shift() {
     $('btnPI').style.color = '#0000A0';
     $('btnModulus').style.color = '#0000A0';
     $('btnModulus').value = '√¯';
-    $('btnSign').className = 'btn-small su-script-large';
     $('btnSign').style.color = '#0000A0';
-    $('btnSign').innerHTML = '<sub>^</sub>';
+    $('btnSign').innerHTML = '<sub class="symbol-big">^</sub>';
     $('btnGo').className = 'btn-small you-tube';
     $('btnGo').innerHTML = '&#9654';
     $('btnShift').className = 'btn-med btn-shifted';
     $('btnDivide').style.color = '#0000A0';
     $('btnDivide').value = '/';
     $('btnMultiply').style.color = '#0000A0';
-    $('btnMultiply').innerHTML = '<sub>*</sub>';
+    $('btnMultiply').innerHTML = '<sub class="symbol-big">*</sub>';
     $('btnSubtract').style.color = '#0000A0';
     $('btnSubtract').value = '-';
     $('btnAdd').style.color = '#0000A0';
@@ -3198,9 +3196,6 @@ window.onload = function () {
 
   // Internet Explorer needs this for "btnOff" ~ window.close()   
   window.open('', '_self');
-
-  // Preload YouTube icon
-  new Image().src = '../images/youtube.png';
 
   // MathMon
   theObjects[0] = twig;
