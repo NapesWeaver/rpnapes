@@ -1024,6 +1024,14 @@ function btn_angle() {
   }
   $('txtInput').focus();
 }
+function appendAngle() {
+
+  if ($('btnAngle').value === 'rad') {
+    if ($('txtInput').value !== 'NaN') $('txtInput').value += ' radians';
+  } else {
+    if ($('txtInput').value !== 'NaN') $('txtInput').value += '°';
+  }
+}
 function btn_sine() {
 
   hapticResponse();
@@ -1036,6 +1044,7 @@ function btn_sine() {
     else {
       $('txtInput').value = (180 / Math.PI) * Math.asin(extractReal($('txtInput').value));
     }
+    appendAngle();
   } else {
     if ($('btnAngle').value === 'rad') {  
       $('txtInput').value = Math.sin(extractReal($('txtInput').value));
@@ -1059,6 +1068,7 @@ function btn_cosine() {
     else {
       $('txtInput').value = (180 / Math.PI) * Math.acos(extractReal($('txtInput').value));
     }
+    appendAngle();
   } else {
     if ($('btnAngle').value === 'rad') {
       $('txtInput').value = Math.cos(extractReal($('txtInput').value));
@@ -1082,6 +1092,7 @@ function btn_tangent() {
     else {
       $('txtInput').value = (180 / Math.PI) * Math.atan(extractReal($('txtInput').value));
     }
+    appendAngle();
   }
   else {
     if ($('btnAngle').value === 'rad') {
