@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '16:32:41';
+var variable = '21:39:7';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -1027,52 +1027,71 @@ function btn_angle() {
 function btn_sine() {
 
   hapticResponse();
-
-  var newUnits = extractUnits($('txtInput').value);
   backupUndo();
-  if (newUnits === 'null') { newUnits = ''; }
-  if ($('btnAngle').value === 'rad') {
 
-    $('txtInput').value = Math.sin(extractReal($('txtInput').value));
+  if (shifted) {
+    if ($('btnAngle').value === 'rad') {
+      $('txtInput').value = Math.asin(extractReal($('txtInput').value));
+    }
+    else {
+      $('txtInput').value = (180 / Math.PI) * Math.asin(extractReal($('txtInput').value));
+    }
+  } else {
+    if ($('btnAngle').value === 'rad') {  
+      $('txtInput').value = Math.sin(extractReal($('txtInput').value));
+    }
+    else {
+      $('txtInput').value = (180 / Math.PI) * Math.sin(extractReal($('txtInput').value));
+    }
   }
-  else {
-    $('txtInput').value = Math.sin((extractReal($('txtInput').value)) * Math.PI / 180);
-  }
-  $('txtInput').value += newUnits;
-  $('txtInput').select();
+  updateDisplay();
+  $('txtInput').select();  
 }
 function btn_cosine() {
 
   hapticResponse();
-
-  var newUnits = extractUnits($('txtInput').value);
   backupUndo();
-  if (newUnits === 'null') { newUnits = ''; }
-  if ($('btnAngle').value === 'rad') {
 
-    $('txtInput').value = Math.cos(extractReal($('txtInput').value));
+  if (shifted) {
+    if ($('btnAngle').value === 'rad') {
+      $('txtInput').value = Math.acos(extractReal($('txtInput').value));
+    }
+    else {
+      $('txtInput').value = (180 / Math.PI) * Math.acos(extractReal($('txtInput').value));
+    }
+  } else {
+    if ($('btnAngle').value === 'rad') {
+      $('txtInput').value = Math.cos(extractReal($('txtInput').value));
+    }
+    else {
+      $('txtInput').value = (180 / Math.PI) * Math.cos(extractReal($('txtInput').value));
+    }
   }
-  else {
-    $('txtInput').value = Math.cos((extractReal($('txtInput').value)) * Math.PI / 180);
-  }
-  $('txtInput').value += newUnits;
+  updateDisplay();
   $('txtInput').select();
 }
 function btn_tangent() {
 
   hapticResponse();
-
-  var newUnits = extractUnits($('txtInput').value);
   backupUndo();
-  if (newUnits === 'null') { newUnits = ''; }
-  if ($('btnAngle').value === 'rad') {
 
-    $('txtInput').value = Math.tan(extractReal($('txtInput').value));
+  if (shifted) {
+    if ($('btnAngle').value === 'rad') {
+      $('txtInput').value = Math.atan(extractReal($('txtInput').value));
+    }
+    else {
+      $('txtInput').value = (180 / Math.PI) * Math.atan(extractReal($('txtInput').value));
+    }
   }
   else {
-    $('txtInput').value = Math.tan((extractReal($('txtInput').value)) * Math.PI / 180);
+    if ($('btnAngle').value === 'rad') {
+      $('txtInput').value = Math.tan(extractReal($('txtInput').value));
+    }
+    else {
+      $('txtInput').value = (180 / Math.PI) * Math.tan(extractReal($('txtInput').value));
+    }
   }
-  $('txtInput').value += newUnits;
+  updateDisplay();
   $('txtInput').select();
 }
 
