@@ -180,7 +180,6 @@ img {
 }
 .btn-pi {
     font-size: .9em;
-    color: #000000;
 }
 .symbol-big, .symbol-med {
     font-size: 1em;
@@ -363,7 +362,7 @@ img {
         font-size: .8em;
     }
     .btn-pi {
-        font-size: 1.3em;
+        font-size: 1.2em;
     }
     .symbol-big {
         font-size: 1.1em;

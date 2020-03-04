@@ -478,6 +478,7 @@ function btn_shift() {
     $('btnEE').value = 'EE';
     $('btnPI').className = 'btn-small btn-pi';    
     $('btnPI').innerHTML = '&#120587;';
+    $('btnPI').style.color = '#000000';
     $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
     $('btnSign').style.color = '#000000';
