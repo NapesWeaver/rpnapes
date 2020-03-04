@@ -476,8 +476,8 @@ function btn_shift() {
     $('btnUndo').value = 'UND';
     $('btnEE').className = 'btn-small btn-small-font btn-char';
     $('btnEE').value = 'EE';
-    $('btnPI').style.color = '#000000';    
-    isMobile ? $('btnPI').value = '𝛑' : $('btnPI').value = '𝛑';
+    $('btnPI').className = 'btn-small btn-pi';    
+    $('btnPI').innerHTML = '&#120587;';
     $('btnModulus').style.color = '#000000';
     $('btnModulus').value = '%';
     $('btnSign').style.color = '#000000';
@@ -517,8 +517,9 @@ function btn_shift() {
     $('btnUndo').value = 'REDO';
     $('btnEE').className = 'btn-small btn-char';
     $('btnEE').value = 'j';
-    $('btnPI').value = '(  )';
+    $('btnPI').className = 'btn-small';
     $('btnPI').style.color = '#0000A0';
+    $('btnPI').innerHTML = '(  )';
     $('btnModulus').style.color = '#0000A0';
     $('btnModulus').value = '√¯';
     $('btnSign').style.color = '#0000A0';
@@ -3450,8 +3451,6 @@ window.onload = function () {
 
   if (isMobile) {
     $('menuTwig').style = 'display:none';
-    $('menuPI').innerHTML = 'Π';
-    $('btnPI').value = 'Π';
   }
 
   // Tricorder
