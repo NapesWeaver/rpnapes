@@ -1027,8 +1027,10 @@ function btn_angle() {
 function appendAngle() {
 
   if ($('btnAngle').value === 'rad') {
+
     if ($('txtInput').value !== 'NaN') $('txtInput').value += ' radians';
   } else {
+
     if ($('txtInput').value !== 'NaN') $('txtInput').value += '°';
   }
 }
@@ -1044,7 +1046,7 @@ function btn_sine() {
     else {
       $('txtInput').value = (180 / Math.PI) * Math.asin(extractReal($('txtInput').value));
     }
-    appendAngle();
+    // appendAngle();
   } else {
     if ($('btnAngle').value === 'rad') {  
       $('txtInput').value = Math.sin(extractReal($('txtInput').value));
@@ -1068,7 +1070,7 @@ function btn_cosine() {
     else {
       $('txtInput').value = (180 / Math.PI) * Math.acos(extractReal($('txtInput').value));
     }
-    appendAngle();
+    // appendAngle();
   } else {
     if ($('btnAngle').value === 'rad') {
       $('txtInput').value = Math.cos(extractReal($('txtInput').value));
@@ -1092,7 +1094,7 @@ function btn_tangent() {
     else {
       $('txtInput').value = (180 / Math.PI) * Math.atan(extractReal($('txtInput').value));
     }
-    appendAngle();
+    // appendAngle();
   }
   else {
     if ($('btnAngle').value === 'rad') {
@@ -1851,7 +1853,7 @@ function encodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/{/g, "&#123");
   //tmpString = tmpString.replace(/}/g, "&#125");
   //tmpString = tmpString.replace(/~/g, "&#126");    
-  //tmpString = tmpString.replace(/°/g, "&#176");// degree
+  tmpString = tmpString.replace(/°/g, '&deg');// degree
   //tmpString = tmpString.replace(/±/g, "&#177");
   //tmpString = tmpString.replace(/²/g, "&#178");
   //tmpString = tmpString.replace(/³/g, "&#179");
@@ -1913,7 +1915,7 @@ function decodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/&#123/g, "{");
   //tmpString = tmpString.replace(/&#125/g, "}");
   //tmpString = tmpString.replace(/&#126/g, "~");
-  //tmpString = tmpString.replace(/&#176/g, "°");
+  tmpString = tmpString.replace(/&deg/g, '°');
   //tmpString = tmpString.replace(/&#177/g, "±");
   //tmpString = tmpString.replace(/&#178/g, "²");
   //tmpString = tmpString.replace(/&#179/g, "³");
@@ -2048,6 +2050,9 @@ function extractUnits(tmpArray) {
   //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
   //tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
   tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
+
+  // degrees ???
+  // tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![°]\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
 
   return tmpUnits;
 }
