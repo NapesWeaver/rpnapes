@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '21:39:7';
+var variable = '13:53:58';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -1024,16 +1024,6 @@ function btn_angle() {
   }
   $('txtInput').focus();
 }
-function appendAngle() {
-
-  if ($('btnAngle').value === 'rad') {
-
-    if ($('txtInput').value !== 'NaN') $('txtInput').value += ' radians';
-  } else {
-
-    if ($('txtInput').value !== 'NaN') $('txtInput').value += '°';
-  }
-}
 function btn_sine() {
 
   hapticResponse();
@@ -1044,15 +1034,14 @@ function btn_sine() {
       $('txtInput').value = Math.asin(extractReal($('txtInput').value));
     }
     else {
-      $('txtInput').value = (180 / Math.PI) * Math.asin(extractReal($('txtInput').value));
+      $('txtInput').value = Math.asin(extractReal($('txtInput').value)) * 180 / Math.PI;
     }
-    // appendAngle();
   } else {
     if ($('btnAngle').value === 'rad') {  
       $('txtInput').value = Math.sin(extractReal($('txtInput').value));
     }
     else {
-      $('txtInput').value = (180 / Math.PI) * Math.sin(extractReal($('txtInput').value));
+      $('txtInput').value = Math.sin(extractReal($('txtInput').value) * Math.PI / 180);
     }
   }
   updateDisplay();
@@ -1068,15 +1057,14 @@ function btn_cosine() {
       $('txtInput').value = Math.acos(extractReal($('txtInput').value));
     }
     else {
-      $('txtInput').value = (180 / Math.PI) * Math.acos(extractReal($('txtInput').value));
+      $('txtInput').value = Math.acos(extractReal($('txtInput').value)) * 180 / Math.PI;
     }
-    // appendAngle();
   } else {
     if ($('btnAngle').value === 'rad') {
       $('txtInput').value = Math.cos(extractReal($('txtInput').value));
     }
     else {
-      $('txtInput').value = (180 / Math.PI) * Math.cos(extractReal($('txtInput').value));
+      $('txtInput').value = Math.cos(extractReal($('txtInput').value) * Math.PI / 180);
     }
   }
   updateDisplay();
@@ -1092,16 +1080,15 @@ function btn_tangent() {
       $('txtInput').value = Math.atan(extractReal($('txtInput').value));
     }
     else {
-      $('txtInput').value = (180 / Math.PI) * Math.atan(extractReal($('txtInput').value));
+      $('txtInput').value = Math.atan(extractReal($('txtInput').value)) * 180 / Math.PI;
     }
-    // appendAngle();
   }
   else {
     if ($('btnAngle').value === 'rad') {
       $('txtInput').value = Math.tan(extractReal($('txtInput').value));
     }
     else {
-      $('txtInput').value = (180 / Math.PI) * Math.tan(extractReal($('txtInput').value));
+      $('txtInput').value = Math.tan(extractReal($('txtInput').value) * Math.PI / 180);
     }
   }
   updateDisplay();
