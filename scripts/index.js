@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '13:53:58';
+var variable = '14:25:43';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -93,7 +93,7 @@ NumberObject.prototype.prettyPrint = function () {
 function hapticResponse() {
   if (isMobile) {
   // if (true) {
-    navigator.vibrate([18]);
+    navigator.vibrate([6]);
     $('txtInput').readOnly = true;
   }
 }
