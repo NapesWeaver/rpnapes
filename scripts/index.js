@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '21:5:11';
+var stamped = '0:11:6';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -2039,9 +2039,6 @@ function extractUnits(tmpArray) {
   //tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
   tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
 
-  // degrees ???
-  // tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![°]\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
-
   return tmpUnits;
 }
 
@@ -2760,6 +2757,12 @@ var theObjects = [3];
 var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
 var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
 var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
+var wBorders = {
+  bTop: -545,
+  bBottom: -330,
+  bLeft: -94,
+  bRight: 211
+}
 
 function Mathmon(idName, xPos, yPos, objSize, health, speed, ammo) {
 
@@ -2927,7 +2930,7 @@ function moveObj(obj, speed, xMov, yMov) {
   // Move obj
   obj.movXPos(speed * xMov);
   obj.movYPos(speed * yMov);
-  // Find obj's index in theObjects
+  // Find obj's index in theObjects array
   for (var i = 0; i < theObjects.length; i++) {
     if (obj.idName === theObjects[i].idName) { index = i; }
   }    
@@ -2974,26 +2977,29 @@ function moveObj(obj, speed, xMov, yMov) {
 function worldEngine() {
 
   if (worldIsRunning()) {
+
     for (var i = 0; i < theObjects.length; i++) {
+
       shifted ? transXBorders(i) : collideWithBorders(i);
+      
       displayGIF(theObjects[i]);
     }            
   }
   setTimeout(worldEngine, 90);
 }
 function collideWithBorders(i) {
-  // i * 64 is the x coordinate offset of the .gif as rendered by the HTML
-  if (theObjects[i].yPos < -440 + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-440 + theObjects[i].objSize); }// Top border
-  if (theObjects[i].yPos > -290 - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-290 - theObjects[i].objSize); }// Bottom border
-  if (theObjects[i].xPos < -49 - (i * 64) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(-49 - (i * 64) + theObjects[i].objSize); }// Left border
-  if (theObjects[i].xPos > 170 - (i * 64) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(170 - (i * 64) - theObjects[i].objSize); }// Right border 
+
+  if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bTop + theObjects[i].objSize); }// Top border
+  if (theObjects[i].yPos > wBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bBottom - theObjects[i].objSize); }// Bottom border
+  if (theObjects[i].xPos < wBorders.bLeft - (i * 64) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bLeft - (i * 64) + theObjects[i].objSize); }// Left border
+  if (theObjects[i].xPos > wBorders.bRight - (i * 64) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bRight - (i * 64) - theObjects[i].objSize); }// Right border
 }
 function transXBorders(i) {
   // Transport to other side of border
-  if (theObjects[i].yPos < -440 + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-290 - theObjects[i].objSize); }// Top border
-  if (theObjects[i].yPos > -290 - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(-440 + theObjects[i].objSize); }// Bottom border
-  if (theObjects[i].xPos < -49 - (i * 64) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(170 - (i * 64) - theObjects[i].objSize); }// Left border
-  if (theObjects[i].xPos > 170 - (i * 64) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(-49 - (i * 64) + theObjects[i].objSize); }// Right border
+  if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bBottom - theObjects[i].objSize); }// Top border
+  if (theObjects[i].yPos > wBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bTop + theObjects[i].objSize); }// Bottom border
+  if (theObjects[i].xPos < wBorders.bLeft - (i * 64) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bRight - (i * 64) - theObjects[i].objSize); }// Left border
+  if (theObjects[i].xPos > wBorders.bRight - (i * 64) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bLeft - (i * 64) + theObjects[i].objSize); }// Right border
 }
 
 function brownianMovement(obj) {
