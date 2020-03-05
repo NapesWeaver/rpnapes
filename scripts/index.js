@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '0:11:6';
+var stamped = '0:33:36';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -2757,6 +2757,13 @@ var theObjects = [3];
 var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
 var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
 var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
+
+// var wBorders = {
+//   bTop: -440,
+//   bBottom: -290,
+//   bLeft: -49,
+//   bRight: 170
+// }
 var wBorders = {
   bTop: -545,
   bBottom: -330,
@@ -2988,6 +2995,7 @@ function worldEngine() {
   setTimeout(worldEngine, 90);
 }
 function collideWithBorders(i) {
+
   var gifWidth = 64;
 
   if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bTop + theObjects[i].objSize); }// Top border
@@ -2996,7 +3004,7 @@ function collideWithBorders(i) {
   if (theObjects[i].xPos > wBorders.bRight - (i * gifWidth) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bRight - (i * gifWidth) - theObjects[i].objSize); }// Right border
 }
 function transXBorders(i) {
-  // Transport to other side of border
+
   var gifWidth = 64;
   
   if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bBottom - theObjects[i].objSize); }// Top border
@@ -3020,6 +3028,7 @@ function brownianMovement(obj) {
 }
 
 function gravity() {
+
   if (worldIsRunning()) {
     for(var i = 0; i < theObjects.length; i++)
     {
@@ -3072,6 +3081,7 @@ function donMove() {
 document.addEventListener('keypress', function (event) {
 
   if ($('rpnapes').className !== 'hidden') {
+
     switch (event.keyCode) {
     case 13:
       // RPNapes ENTER
@@ -3083,7 +3093,9 @@ document.addEventListener('keypress', function (event) {
 document.addEventListener('keydown', function (event) {
 
   if ($('rpnapes').className !== 'hidden') {
+
     if ($('twig').className !== 'hidden') {
+
       switch (event.keyCode) {
       case 37:
         // LEFT ARROW
@@ -3123,8 +3135,7 @@ document.addEventListener('keydown', function (event) {
         break;
       }
     }
-    else {
-            
+    else {            
       // IE || Chrome - No solution yet :(
       if (false) {
         //if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
@@ -3226,6 +3237,7 @@ document.addEventListener('keyup', function (event) {
   }
   else {
     $('btnSaveNotes').style.color = '#000000';
+
     switch (event.keyCode) {
     case 13:
       // Notes ENTER (Falls through)
@@ -3255,6 +3267,7 @@ window.onload = function () {
   theObjects[0] = twig;
   theObjects[1] = tv;
   theObjects[2] = don;
+
   $('twig').onclick = monStatus;
   $('tv').onclick = monStatus;
   $('don').onclick = monStatus;
@@ -3557,7 +3570,7 @@ window.onload = function () {
     backupUndo();
     $('btnSave').style.color = '#D4D0C8';
   }
-  // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function :(
+  // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function
   selectText('lstStack', 'lstStack');
   selectText('txtInput', 'txtInput');
 };
