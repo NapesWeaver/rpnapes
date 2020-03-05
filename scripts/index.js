@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var variable = '18:41:25';
+var variable = '20:50:12';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
