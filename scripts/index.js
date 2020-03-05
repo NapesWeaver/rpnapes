@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '0:33:36';
+var stamped = '1:34:46';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -1232,7 +1232,8 @@ function getSize() {
     g = d.getElementsByTagName('body')[0],
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight || e.clientHeight || g.clientHeight;
-  insertText(x + ' × ' + y);
+  // insertText(x + ' × ' + y);
+  return [x, y];
 }
 function insertTime() {
   insertText(getTime());
@@ -1402,7 +1403,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  inputText('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, time, tricorder, tostring, unembed, you');
+  inputText('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you');
   btn_enter();
   btn_delete();
 }
@@ -1568,7 +1569,7 @@ function parseInput() {
   case 'size':
     stack.pop();
     updateDisplay();
-    getSize();
+    rpnAlert(getSize());
     break;  
   case 'time':
     stack.pop();
@@ -1608,6 +1609,7 @@ function parseInput() {
   default:
     if (twig.health > 0) {
       $('twig').src = 'images/twig/hat-tip.gif';
+      // rpnAlert('pos: ' + twig.xPos + ', ' + twig.yPos);
     }
     break;
   }
@@ -2753,23 +2755,11 @@ function saveTricorder() {
 
 /////////////Mathmon idName, xPos, yPos, objSize, health, speed, ammo ////////////////
 
-var theObjects = [3];
 var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
 var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
 var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
-
-// var wBorders = {
-//   bTop: -440,
-//   bBottom: -290,
-//   bLeft: -49,
-//   bRight: 170
-// }
-var wBorders = {
-  bTop: -545,
-  bBottom: -330,
-  bLeft: -94,
-  bRight: 211
-}
+var theObjects = [3];
+var wBorders = { };
 
 function Mathmon(idName, xPos, yPos, objSize, health, speed, ammo) {
 
@@ -2869,6 +2859,7 @@ function monOn() {
   $('twig').src = 'images/twig/piece-frog.gif';
   $('twig').className = 'visible';
   twig.setHealth(100);
+  worldBordersSet();
   worldEngine();
 }
 function monOff() {
@@ -2898,6 +2889,7 @@ function resetMathmon() {
     $(theObjects[i].idName).style.left = theObjects[i].xPos + 'px';
     $(theObjects[i].idName).style.top = theObjects[i].yPos + 'px';
   }
+  worldBordersSet();
   worldEngine();
 }
 
@@ -2994,8 +2986,30 @@ function worldEngine() {
   }
   setTimeout(worldEngine, 90);
 }
-function collideWithBorders(i) {
 
+function worldBordersSet() {
+
+  var browserWindow = getSize();
+
+  if (browserWindow[0] > 330) {
+    wBorders = {
+      bTop: -545,
+      bBottom: -330,
+      bLeft: -91,
+      bRight: 209
+    }
+  } else {
+    wBorders = {
+      bTop: -420,
+      bBottom: -275,
+      bLeft: -46,
+      bRight: 164
+    }
+  }
+}
+
+function collideWithBorders(i) {
+  // The gifs are offset from each other in the html. Each is 64px * 64px.
   var gifWidth = 64;
 
   if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bTop + theObjects[i].objSize); }// Top border
@@ -3004,7 +3018,6 @@ function collideWithBorders(i) {
   if (theObjects[i].xPos > wBorders.bRight - (i * gifWidth) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bRight - (i * gifWidth) - theObjects[i].objSize); }// Right border
 }
 function transXBorders(i) {
-
   var gifWidth = 64;
   
   if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bBottom - theObjects[i].objSize); }// Top border

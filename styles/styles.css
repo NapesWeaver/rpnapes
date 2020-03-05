@@ -55,19 +55,6 @@ img {
         background-color: #6D8EBF;
     }
 
-
-
-
-
-.hidden {
-    display: none;
-}
-.visible {
-    display: inline;
-}
-
-
-
 .btn-big, .btn-med, .btn-small, .btn-other {
     margin-bottom: 3px;
     font-size: 1em;
@@ -125,7 +112,7 @@ img {
     margin-bottom: 7px;
 }
 
-.txt-input {
+#txtInput {
     display: block;
     width: 334px; 
     margin-left: 12px;
@@ -134,7 +121,7 @@ img {
     font-family: "Microsoft Sans Serif", "Sans Serif";
     background-color: #FFFFFF;
     font-weight: bold;
-    border-style: inset;
+    /* border-style: inset; */
 }
 
 .google {
@@ -189,6 +176,13 @@ img {
             background-color: #B92020;
             color: #FFFFFF;
         }
+
+.hidden {
+    display: none;
+}
+.visible {
+    display: inline;
+}
 
 /****** Menu ***********************************/
 #menu-wrap {
@@ -328,7 +322,7 @@ img {
     background-color: #F1F1F1;
 }
 
-/****** CSS Responsive for ity bity ************/
+/****** CSS Responsive 320px ************/
 
 @media only screen and (max-width: 320px) {
     #wrap {        
@@ -364,7 +358,7 @@ img {
         width: 240px;
     }
 
-    .txt-input {
+    #txtInput {
         font-size: .7em;
         width: 240px;
     }
