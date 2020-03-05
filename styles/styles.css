@@ -327,3 +327,88 @@ img {
     transform: translateY(-50%) translateX(-50%);
     background-color: #F1F1F1;
 }
+
+/****** CSS Responsive for ity bity ************/
+
+@media only screen and (max-width: 320px) {
+    #wrap {        
+        width: 266px;
+        height: 460px;
+    }
+
+    #menu-wrap {
+        font-size: .8em;
+        margin-left: 15px;
+    }
+    
+    #open {
+        padding: 0px 12px 3px 12px;
+    }
+
+    header {
+        height: 18px;
+    }
+
+    .btn-big, .btn-med, .btn-small, .btn-other {
+        font-size: .7em;
+    }
+
+    .btn-xoff {
+        width: 15px;
+        height: 15px;
+        margin-left: 233px;
+    }
+    
+    .lst-stack {
+        font-size: .7em;
+        width: 240px;
+    }
+
+    .txt-input {
+        font-size: .7em;
+        width: 240px;
+    }
+   
+    .btn-big {
+        width: 57px;
+        height: 23px
+    }
+    .btn-med {
+        width: 42px;
+        height: 23px;
+    }
+    .btn-small {
+        width: 33px;
+        height: 23px;
+    }  
+
+    .btn-big-font {
+        font-size: 1.2em;
+    }
+    .btn-small-font {
+        font-size: .6em;
+    }    
+    .btn-pi {
+        font-size: .9em;
+    }
+    .google, .you-tube {
+        background-size: 29px 19px;
+    }
+    .symbol-big {
+        font-size: 1em;
+    }
+    
+    #tricorderskin {
+        top: 308px;    
+    }
+
+    #widget {
+        top: 467px;
+    }
+
+    .lst-notes {
+        font-size: .7em;
+        height: 380px;
+        width: 240px;
+    }    
+}
