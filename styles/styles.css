@@ -106,14 +106,16 @@ img {
 }
 
 .lst-stack {
-    font-family: "Microsoft Sans Serif", "Sans Serif";
-    font-size: .7em;
-    font-weight: bold;
-    color: #B92020;
     /* Height reinforcement across browsers */
     height: 15em;
     width: 240px;
     margin-bottom: 7px;
+    overflow-y: scroll;
+    /* resize: none; */
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: .7em;
+    font-weight: bold;
+    color: #B92020;
 }
 
 #txtInput {
@@ -295,12 +297,14 @@ img {
 /****** Notes **********************************/
 
 .lst-notes {
-    font-family: "Microsoft Sans Serif", "Sans Serif";
-    font-size: .7em;
-    font-weight: bold;
     /* Height reinforcement across browsers */
     height: 380px;
     width: 240px;
+    overflow-y: scroll;
+    /* resize: none; */
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: .7em;
+    font-weight: bold;
 }
 
 /****** Tricorder ******************************/

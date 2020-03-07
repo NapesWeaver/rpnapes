@@ -1018,7 +1018,7 @@ function btn_angle() {
   }
   else {
     $('btnAngle').value = 'deg';
-    $('btnAngle').className = 'btn-small degree-style';
+    $('btnAngle').className = 'btn-small btn-angle degree-style';
     $('btnSine').className = 'btn-small degree-style';
     $('btnCosine').className = 'btn-small degree-style';
     $('btnTangent').className = 'btn-small degree-style';
