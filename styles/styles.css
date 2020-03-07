@@ -165,6 +165,14 @@ img {
 .btn-angle {
     background-color: #B0C4DE;
 }
+.degree-style {
+    /* border-color: #6D8EBF */
+    border: solid #6D8EBF;
+}
+.radian-style {
+    /* border-color: cadetblue; */
+    border: solid cadetblue;
+}
 
 .btn-off {
     background-color: #B85252;

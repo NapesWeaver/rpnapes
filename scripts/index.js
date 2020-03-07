@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '19:33:29';
+var stamped = '21:46:3';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -1018,9 +1018,17 @@ function btn_angle() {
 
   if ($('btnAngle').value === 'deg') {
     $('btnAngle').value = 'rad';
+    $('btnAngle').className = 'btn-small btn-angle radian-style';
+    $('btnSine').className = 'btn-small radian-style';
+    $('btnCosine').className = 'btn-small radian-style';
+    $('btnTangent').className = 'btn-small radian-style';
   }
   else {
     $('btnAngle').value = 'deg';
+    $('btnAngle').className = 'btn-small degree-style';
+    $('btnSine').className = 'btn-small degree-style';
+    $('btnCosine').className = 'btn-small degree-style';
+    $('btnTangent').className = 'btn-small degree-style';
   }
   $('txtInput').focus();
 }
