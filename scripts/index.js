@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '9:59:53';
+var stamped = '12:6:6';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -24,10 +24,7 @@ function NumberObject(soul, realPart, units, imaginary, timeStamp) {
   this.imaginary = imaginary;
   this.timeStamp = timeStamp;
   
-  if (isNaN(this.imaginary)) {
-    this.imaginary = 'NiN';
-  }
-  if (isNaN(this.realPart) && this.imaginary === 'NiN') {
+  if (isNaN(this.realPart) && isNaN(this.imaginary)) {
     this.units = 'null';
   }
 }
@@ -69,12 +66,13 @@ NumberObject.prototype.prettyPrint = function () {
   
   var prettyString = '';
 
-  if (isNaN(this.realPart)) return this.soul;
+  if (isNaN(this.realPart) && isNaN(this.imaginary)) return this.soul;
 
-  prettyString += this.realPart.toString();
-
-  if (this.imaginary !== 'NiN') {
-    prettyString += ' ';
+  if (!isNaN(this.realPart)) {
+    prettyString += this.realPart.toString();
+    if (!isNaN(this.imaginary)) prettyString += ' ';
+  }
+  if (!isNaN(this.imaginary)) {
 
     if (this.imaginary > 0) {
       prettyString += '+ ';
@@ -757,7 +755,7 @@ function btn_log() {
 }
 function baseLog() {
 
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString() === 'NaN') {
+  if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
     btn_enter();
     $(('txtInput')).value = '10';
   }
@@ -787,7 +785,7 @@ function btn_root() {
 function exponentialFunction() {
 
   var newUnits = '';
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString() === 'NaN') {
+  if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
     btn_enter();
     $(('txtInput')).value = '2';
   }
@@ -802,7 +800,7 @@ function exponentialFunction() {
 function rootFunction() {
 
   var newUnits = '';
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getRealPart().toString().trim() === 'NaN') {
+  if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString().trim())) {
     btn_enter();
     $(('txtInput')).value = '2';
   }
@@ -1742,7 +1740,7 @@ function updateDisplay() {
   for (var s in stack) {
     $('lstStack').value += '\n';
     // If not a number and not imaginary
-    if (isNaN(stack[s].getRealPart()) && stack[s].getImaginary() === 'NiN') {
+    if (isNaN(stack[s].getRealPart()) && isNaN(stack[s].getImaginary())) {
       $('lstStack').value += decodeSpecialChar(stack[s].getSoul());
     }
     else {
@@ -1751,7 +1749,7 @@ function updateDisplay() {
         // Append number
         $('lstStack').value += formatNumber(stack[s].getRealPart().toString());
         // If complex number
-        if (stack[s].getImaginary() !== 'NiN') {
+        if (!isNaN(stack[s].getImaginary())) {
           // If imaginary number is positive
           if (parseFloat(stack[s].getImaginary()) > 0) {
             // Append positive imaginary number
@@ -2015,7 +2013,7 @@ function extractReal(tmpArray) {
     tmpReal = parseFloat(tmpArray);
     //tmpReal += parseFloat(tmpArray.match(!/^[-+]?[ ]*\d+[.]?\d*[eE]?[-+]?\d*/g));
   } else {
-    tmpReal = 'NaN';
+    tmpReal = NaN;
   }
   return tmpReal;
 }
