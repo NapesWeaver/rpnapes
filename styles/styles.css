@@ -17,15 +17,15 @@ body {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    width: 360px;
-    height: 600px;  
+    width: 266px;
+    height: 460px;
     border-style: outset;
     border-color: #808080;
     border-width: 2px;
 }
 
 header {
-    height: 24px;
+    height: 18px;
     font-size: .81em;
     color: #6D8EBF;
     background-color: #6D8EBF;
@@ -37,7 +37,7 @@ img {
 
 #open {
     background-color: #FFFFFF;
-    padding: 0px 18px 3px 18px;
+    padding: 0px 12px 3px 12px;
 }
     #open:hover {
         color: #0040FF;
@@ -51,13 +51,13 @@ img {
 #btnDelete, #btnUndo, #btnClear, #btnSave, #btnLoad {
     background-color: #808080;
 }
-    #btnDelete:hover, #btnUndo:hover, #btnAngle:hover, #btnClear:hover, #btnSave:hover, #btnLoad:hover {
+    #btnDelete:hover, #btnUndo:hover, #btnClear:hover, #btnSave:hover, #btnLoad:hover {
         background-color: #6D8EBF;
     }
 
 .btn-big, .btn-med, .btn-small, .btn-other {
     margin-bottom: 3px;
-    font-size: 1em;
+    font-size: .7em;
     font-weight: bold;        
     font-family: "Microsoft Sans Serif", "Sans Serif";
     border-radius: 9%;
@@ -70,63 +70,64 @@ img {
     }
 
 .btn-big {
-    width: 77px;
-    height: 30px;
+    width: 57px;
+    height: 23px
+
 }
 .btn-med {
-    width: 57px;
-    height: 30px;
+    width: 42px;
+    height: 23px;
 }
 .btn-small {
-    width: 45px;
-    height: 30px;
+    width: 33px;
+    height: 23px;
 }
 
 .btn-big-font {
-    font-size: 1.5em;
+    font-size: 1.2em;
 }
 .btn-small-font {
-    font-size: .8em;
+    font-size: .6em;
 }
-.btn-pi, .symbol-big {
-    font-size: 1.1em;
+.btn-pi {
+    font-size: .9em;
+}
+.symbol-big {
+    font-size: 1em;
 }
 .symbol-med {
     font-size: 1em;
 }
 
 .btn-xoff {
-    width: 24px;
-    height: 24px;
-    margin-left: 318px;
+    width: 15px;
+    height: 15px;
+    margin-left: 233px;
 }
 
 .lst-stack {
     font-family: "Microsoft Sans Serif", "Sans Serif";
-    font-size: 1em;
+    font-size: .7em;
     font-weight: bold;
     color: #B92020;
     /* Height reinforcement across browsers */
     height: 15em;
-    width: 334px;
+    width: 240px;
     margin-bottom: 7px;
 }
 
 #txtInput {
     display: block;
-    width: 334px; 
+    width: 240px; 
     margin-left: 12px;
     margin-bottom: 5px;
-    font-size: 1em;
+    font-size: .7em;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     background-color: #FFFFFF;
     font-weight: bold;
-    /* border-style: inset; */
 }
 
 .google {
-    width: 45px;
-    height: 30px;
     background-color: #F1F1F1;
 }
 .color-blue {
@@ -136,8 +137,6 @@ img {
     color: #EA4335;
 }
 .you-tube {
-    width: 45px;
-    height: 30px;
     background-color: #B92020;
     color: #FFFFFF;
 }
@@ -145,7 +144,7 @@ img {
         background-color: #B85252;
     }
 .google, .you-tube {
-    background-size: 41px 26px;
+    background-size: 29px 19px;
 }
 
 .btn-shift {
@@ -163,7 +162,7 @@ img {
     color: #0000A0
 }
 
-.btnAngle {
+.btn-angle {
     background-color: #B0C4DE;
 }
 
@@ -187,12 +186,11 @@ img {
 /****** Menu ***********************************/
 #menu-wrap {
     font-family: "Microsoft Sans Serif", "Sans Serif";
-    /* font-size: .8em; */
-    font-size: 1.2em;
+    font-size: .8em;
     width: 100%;
     /*box-shadow:0px 1px 3px rgba(0,0,0,.2);*/
-    /* margin-left: 15px; */
-    margin-left: 32px;
+    /* margin-left: 32px; */
+    margin-left: 15px;
 }
 
 .menu {
@@ -290,11 +288,11 @@ img {
 
 .lst-notes {
     font-family: "Microsoft Sans Serif", "Sans Serif";
-    font-size: 1em;
+    font-size: .7em;
     font-weight: bold;
     /* Height reinforcement across browsers */
-    height: 496px;
-    width: 325px;
+    height: 380px;
+    width: 240px;
 }
 
 /****** Tricorder ******************************/
@@ -302,7 +300,7 @@ img {
 #tricorderskin {
    position: absolute;
    left: 50%;
-   top: 314px;
+   top: 308px;
    transform: translateY(-50%) translateX(-50%);
 }
 
@@ -317,92 +315,93 @@ img {
 #widget {
     position: absolute;
     left: 50%;
-    top: 473px;
+    top: 467px;
     transform: translateY(-50%) translateX(-50%);
     background-color: #F1F1F1;
 }
 
-/****** CSS Responsive 320px ************/
+/****** CSS Responsive ******************/
 
-@media only screen and (max-width: 320px) {
-    #wrap {        
-        width: 266px;
-        height: 460px;
-    }
-
-    #menu-wrap {
-        font-size: .8em;
-        margin-left: 15px;
-    }
-    
-    #open {
-        padding: 0px 12px 3px 12px;
+@media only screen and (min-width: 320px) {
+    #wrap {
+        width: 360px;
+        height: 600px;
     }
 
     header {
-        height: 18px;
+        height: 24px;
+    }   
+    
+    #open {
+        padding: 0px 18px 3px 18px;
     }
 
     .btn-big, .btn-med, .btn-small, .btn-other {
-        font-size: .7em;
+        font-size: 1em;
     }
 
+    .btn-big {
+        width: 77px;
+        height: 30px;
+    }
+    .btn-med {
+        width: 57px;
+        height: 30px;
+    }
+    .btn-small {
+        width: 45px;
+        height: 30px;
+    }
+
+    .btn-big-font {
+        font-size: 1.5em;
+    }
+    .btn-small-font {
+        font-size: .8em;
+    }    
+    .btn-pi {
+        font-size: 1.1em;
+    }
+    .symbol-big {
+        font-size: 1.1em;
+    }
+    
     .btn-xoff {
-        width: 15px;
-        height: 15px;
-        margin-left: 233px;
+        width: 24px;
+        height: 24px;
+        margin-left: 318px;
     }
     
     .lst-stack {
-        font-size: .7em;
-        width: 240px;
+        font-size: 1em;
+        width: 334px;
     }
 
     #txtInput {
-        font-size: .7em;
-        width: 240px;
+        font-size: 1em;
+        width: 334px;
     }
    
-    .btn-big {
-        width: 57px;
-        height: 23px
-    }
-    .btn-med {
-        width: 42px;
-        height: 23px;
-    }
-    .btn-small {
-        width: 33px;
-        height: 23px;
-    }  
-
-    .btn-big-font {
-        font-size: 1.2em;
-    }
-    .btn-small-font {
-        font-size: .6em;
-    }    
-    .btn-pi {
-        font-size: .9em;
-    }
     .google, .you-tube {
-        background-size: 29px 19px;
-    }
-    .symbol-big {
-        font-size: 1em;
-    }
-    
-    #tricorderskin {
-        top: 308px;    
+        background-size: 41px 26px;
     }
 
-    #widget {
-        top: 467px;
+    #menu-wrap {
+        font-size: 1.2em;
+        margin-left: 32px;
     }
 
     .lst-notes {
-        font-size: .7em;
-        height: 380px;
-        width: 240px;
-    }    
+        font-size: 1em;
+        height: 496px;
+        width: 325px;
+    }
+    
+    #tricorderskin {
+        top: 314px;  
+    }
+
+    #widget {
+        top: 473px;
+    }       
 }
