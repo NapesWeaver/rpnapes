@@ -508,8 +508,8 @@ function btn_shift() {
     $('btnEnter').value = '=';
     // $('btnDelete').innerHTML = '<span class="btn-big-font>←</span>';
     // $('btnDelete').innerHTML = '<span class="btn-big-font">↤</span>';
-    // $('btnDelete').innerHTML = '<span class="btn-big-font">⇐</span>';
-    $('btnDelete').innerHTML = '<span class="btn-big-font">⇤</span>';
+    $('btnDelete').innerHTML = '<span class="btn-big-font">⇐</span>';
+    // $('btnDelete').innerHTML = '<span class="btn-big-font">⇤</span>';
     $('btnInverse').value = '! x';
     $('btnLog').innerHTML = 'log<sub>e</sub>';
     $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
