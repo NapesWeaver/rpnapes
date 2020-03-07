@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '21:57:16';
+var stamped = '9:59:53';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -231,14 +231,14 @@ function xyFunction() {
       $('txtInput').value += decodeSpecialChar(tmpX.getSoul());
     }
     else {
-      $('txtInput').value += rounding(tmpX.getRealPart().toString());
+      $('txtInput').value += formatNumber(tmpX.getRealPart().toString());
 
       if (!isNaN(parseFloat(tmpX.getImaginary()))) {
         if (parseFloat(tmpX.getImaginary()) > 0) {
-          $('txtInput').value += ' + ' + rounding(tmpX.getImaginary().toString()) + 'j';
+          $('txtInput').value += ' + ' + formatNumber(tmpX.getImaginary().toString()) + 'j';
         }
         else {
-          $('txtInput').value += ' - ' + rounding(tmpX.getImaginary().toString().substring(1)) + 'j';
+          $('txtInput').value += ' - ' + formatNumber(tmpX.getImaginary().toString().substring(1)) + 'j';
         }
       }
       if (tmpX.getUnits() !== 'null') {
@@ -593,9 +593,9 @@ function saveFile(fileName, pretty) {
     content += '===== Stack =====\n\n';
     for (var s in stack) {
       if (pretty) {
-        content += rounding(decodeSpecialChar(stack[s].prettyPrint()));
+        content += formatNumber(decodeSpecialChar(stack[s].prettyPrint()));
       } else {
-        content += rounding(decodeSpecialChar(stack[s].toString()));
+        content += formatNumber(decodeSpecialChar(stack[s].toString()));
       }      
       content += '\n';
     }
@@ -1741,30 +1741,40 @@ function updateDisplay() {
   // Print to stack display
   for (var s in stack) {
     $('lstStack').value += '\n';
-
+    // If not a number and not imaginary
     if (isNaN(stack[s].getRealPart()) && stack[s].getImaginary() === 'NiN') {
       $('lstStack').value += decodeSpecialChar(stack[s].getSoul());
     }
     else {
+      // If a number
       if(!isNaN(stack[s].getRealPart())) {
-        $('lstStack').value += rounding(stack[s].getRealPart().toString());
+        // Append number
+        $('lstStack').value += formatNumber(stack[s].getRealPart().toString());
+        // If complex number
         if (stack[s].getImaginary() !== 'NiN') {
+          // If imaginary number is positive
           if (parseFloat(stack[s].getImaginary()) > 0) {
-            $('lstStack').value += ' + ' + rounding(stack[s].getImaginary().toString()) + 'j';
+            // Append positive imaginary number
+            $('lstStack').value += ' + ' + formatNumber(stack[s].getImaginary().toString()) + 'j';
           }
           else {
-            $('lstStack').value += ' - ' + rounding(stack[s].getImaginary().toString()).substring(1) + 'j';
+            // Append negative imaginary number
+            $('lstStack').value += ' - ' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
           }
         }
       }
       else {
+        // If imaginary number is positive
         if (parseFloat(stack[s].getImaginary()) > 0) {
-          $('lstStack').value += rounding(stack[s].getImaginary().toString()) + 'j';
+          // Append positive imaginary number
+          $('lstStack').value += formatNumber(stack[s].getImaginary().toString()) + 'j';
         }
         else {
-          $('lstStack').value += '-' + rounding(stack[s].getImaginary().toString()).substring(1) + 'j';
+          // Append negative imaginary number
+          $('lstStack').value += '-' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
         }
       }
+      // If there are units, append units
       if (stack[s].getUnits() !== 'null') {
         $('lstStack').value += ' ' + decodeSpecialChar(stack[s].getUnits());
       }
@@ -2053,7 +2063,7 @@ function setFixDecimal(value) {
     rpnAlert('Enter an integer from -1 to 17 first.');
   }
 }
-function rounding(possibleNumber) {
+function formatNumber(possibleNumber) {
 
   if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
     if (fixDecimal !== -1) {
