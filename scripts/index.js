@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '21:46:3';
+var stamped = '21:57:16';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -490,15 +490,12 @@ function btn_shift() {
     $('btnDivide').value = '÷';
     $('btnMultiply').style.color = '#000000';
     $('btnMultiply').innerHTML = 'x';
-    $('btnSine').className = 'btn-small';
     $('btnSine').innerHTML = 'sin';
     $('btnSubtract').style.color = '#000000';
     $('btnSubtract').value = '-';
-    $('btnCosine').className = 'btn-small';
     $('btnCosine').innerHTML = 'cos';
     $('btnAdd').style.color = '#000000';
     $('btnAdd').value = '+';
-    $('btnTangent').className = 'btn-small';
     $('btnTangent').innerHTML = 'tan';
   }
   else {
@@ -509,8 +506,8 @@ function btn_shift() {
     $('btnEnter').className = 'btn-big btn-big-font';
     $('btnEnter').style.color = '#0000A0';
     $('btnEnter').value = '=';
-    // $('btnDelete').innerHTML = '<span class="btn-big-font">↤</span>';
     // $('btnDelete').innerHTML = '<span class="btn-big-font>←</span>';
+    // $('btnDelete').innerHTML = '<span class="btn-big-font">↤</span>';
     // $('btnDelete').innerHTML = '<span class="btn-big-font">⇐</span>';
     $('btnDelete').innerHTML = '<span class="btn-big-font">⇤</span>';
     $('btnInverse').value = '! x';
@@ -532,17 +529,13 @@ function btn_shift() {
     $('btnDivide').value = '/';
     $('btnMultiply').style.color = '#0000A0';
     $('btnMultiply').innerHTML = '<sub class="symbol-big">*</sub>';
-    $('btnSine').className = 'btn-small btn-small-font';
-    $('btnSine').innerHTML = 'sin<sup>-1</sup>'
+    $('btnSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>'
     $('btnSubtract').style.color = '#0000A0';
     $('btnSubtract').value = '-';
-    $('btnCosine').className = 'btn-small btn-small-font';
-    $('btnCosine').innerHTML = 'cos<sup>-1</sup>';
+    $('btnCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('btnAdd').style.color = '#0000A0';
     $('btnAdd').value = '+';
-    $('btnTangent').className = 'btn-small btn-small-font';
-    $('btnTangent').innerHTML = 'tan<sup>-1</sup>';
-    
+    $('btnTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';    
   }
   colorUndoButton();
   $('txtInput').focus();
