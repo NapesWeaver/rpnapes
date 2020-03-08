@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '14:41:22';
+var stamped = '15:32:43';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -504,9 +504,8 @@ function btn_shift() {
     $('btnEnter').className = 'btn-big btn-big-font';
     $('btnEnter').style.color = '#0000A0';
     $('btnEnter').value = '=';
-    // $('btnDelete').innerHTML = '<span class="symbol-med">⌫</span>';
+    // $('btnDelete').innerHTML = '<span class="symbol-med">⇐</span>';
     $('btnDelete').innerHTML = '<span class="symbol-med">🡄</span>';
-    // $('btnDelete').innerHTML = '<span class="symbol-med">🢀</span>';
     $('btnInverse').value = '! x';
     $('btnLog').innerHTML = 'log<sub>e</sub>';
     $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
