@@ -14,7 +14,7 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '12:6:6';
+var stamped = '14:41:22';
 
 function NumberObject(soul, realPart, units, imaginary, timeStamp) {
 
@@ -60,7 +60,7 @@ NumberObject.prototype.getTimeStamp = function () {
 };
 NumberObject.prototype.toString = function () {
 
-  return this.soul + ', ' + this.realPart + ', ' + this.units + ', ' + this.imaginary + ', ' + this.timeStamp;
+  return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
 NumberObject.prototype.prettyPrint = function () {
   
