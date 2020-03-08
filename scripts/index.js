@@ -504,8 +504,8 @@ function btn_shift() {
     $('btnEnter').className = 'btn-big btn-big-font';
     $('btnEnter').style.color = '#0000A0';
     $('btnEnter').value = '=';
-    // $('btnDelete').innerHTML = '<span class="symbol-med">⇐</span>';
-    $('btnDelete').innerHTML = '<span class="symbol-med">🡄</span>';
+    $('btnDelete').innerHTML = '<span class="symbol-med">⇐</span>';
+    // $('btnDelete').innerHTML = '<span class="symbol-med">⬅</span>';
     $('btnInverse').value = '! x';
     $('btnLog').innerHTML = 'log<sub>e</sub>';
     $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
