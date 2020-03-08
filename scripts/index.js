@@ -490,10 +490,8 @@ function btn_shift() {
     $('btnMultiply').innerHTML = 'x';
     $('btnSine').innerHTML = 'sin';
     $('btnSubtract').style.color = '#000000';
-    $('btnSubtract').value = '-';
     $('btnCosine').innerHTML = 'cos';
     $('btnAdd').style.color = '#000000';
-    $('btnAdd').value = '+';
     $('btnTangent').innerHTML = 'tan';
   }
   else {
@@ -531,10 +529,8 @@ function btn_shift() {
     $('btnMultiply').innerHTML = '<sub class="symbol-big">*</sub>';
     $('btnSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>'
     $('btnSubtract').style.color = '#0000A0';
-    $('btnSubtract').value = '-';
     $('btnCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('btnAdd').style.color = '#0000A0';
-    $('btnAdd').value = '+';
     $('btnTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';    
   }
   colorUndoButton();
