@@ -37,63 +37,63 @@
                 <li class="haptic-response">
                   <a href="#">File</a>
                   <ul class="sub-menu">
-                    <li><a id="menuLoad" href="#">Load</a></li>
-                    <li><label id="open"><input type="file" id="openFile" class="hidden"/>Open</label></li>
-                    <li><a id="menuSave" href="#">Save</a></li>
+                    <li><a id="menuLoad" href="#" title="Load stack">Load</a></li>
+                    <li><label id="open" title="Open a file"><input type="file" id="openFile" class="hidden"/>Open</label></li>
+                    <li><a id="menuSave" href="#" title="Save to stack">Save</a></li>
                     <li><a href="#" title="Save as a .txt file" onclick="stack[stack.length - 1] ? saveFile(stack[stack.length - 1].prettyPrint(), true) : saveFile('', true)">Save&nbsp;As</a></li>
                     <li><a href="#" title="Go to Google" onclick="internetSearch('https://www.google.com/#q=')">Google</a></li>
                     <li><a href="#" title="Go to YouTube" onclick="internetSearch('https://www.youtube.com/results?search_query=')">YouTube</a></li>
-                    <li><a id="menuOff" href="#" style="text-decoration:underline;">Off</a></li>
+                    <li><a id="menuOff" title="Turn off programs and close browser"href="#" style="text-decoration:underline;">Off</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
                   <a href="#">Edit</a>
                   <ul class="sub-menu">
-                    <li><a id="menuCopy" href="#">Copy</a></li>
-                    <li><a id="menuPaste" href="#">Paste</a></li>
-                    <li><a id="menuDelete" href="#">Delete</a></li>
-                    <li><a id="menuClear" href="#">Clear</a></li>
+                    <li><a id="menuCopy" href="#" title="Copy text">Copy</a></li>
+                    <li><a id="menuPaste" href="#" title="Paste text from stack or clipboard">Paste</a></li>
+                    <li><a id="menuDelete" href="#" title="Delete entry">Delete</a></li>
+                    <li><a id="menuClear" href="#" title="Clear display and input">Clear</a></li>
                     <li><a id="menuUndo" href="#">Undo</a></li>
                     <li><a id="menuRedo" href="#">Redo</a></li>
-                    <li><a id="menuXy" href="#">x&nbsp;&#60;&nbsp;&#62;&nbsp;y</a></li>
-                    <li><a id="menuAb" href="#">a&nbsp;&#60;&nbsp;&#62;&nbsp;b</a></li>
+                    <li><a id="menuXy" href="#" title="Swap input and last stack entry">x&nbsp;&#60;&nbsp;&#62;&nbsp;y</a></li>
+                    <li><a id="menuAb" href="#" title="Swap last two stack entries">a&nbsp;&#60;&nbsp;&#62;&nbsp;b</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
                   <a href="#">Maths</a>
                   <ul class="sub-menu">
-                    <li><a id="menuDivide" class="symbol-big" href="#">&#247;</a></li>
-                    <li><a id="menuMultiply" href="#">x</a></li>
-                    <li><a id="menuSubtract" class="symbol-big" href="#">-</a></li>
-                    <li><a id="menuAdd" class="symbol-big" href="#">+</a></li>
-                    <li><a id="menuInverse" href="#">1&nbsp;/&nbsp;x</a></li>
-                    <li><a id="menuFactorial" href="#">x&nbsp;!</a></li>
-                    <li><a id="menuExponential" href="#">y&nbsp;<sup>x</sup></a></li>
-                    <li><a id="menuRoot" href="#"><sup>x</sup>&nbsp;&#8730;¯y</a></li>
-                    <li><a id="menuLog" href="#">log<sub>x</sub>y</a></li>
-                    <li><a id="menuLn" href="#">log<sub>e</sub></a></li>
-                    <li><a id="menuModulus" href="#">%</a></li>
-                    <li><a id="menuSign" class="symbol-big" href="#">±</a></li>
-                    <li><a id="menuSine" href="#">sine</a></li>
-                    <li><a id="menuCosine" href="#">cosine</a></li>
-                    <li><a id="menuTangent" href="#">tangent</a></li>
+                    <li><a id="menuDivide" class="symbol-big" href="#" title="Division">&#247;</a></li>
+                    <li><a id="menuMultiply" href="#" title="Multiplication">x</a></li>
+                    <li><a id="menuSubtract" class="symbol-big" href="#" title="Subtraction">-</a></li>
+                    <li><a id="menuAdd" class="symbol-big" href="#" title="Addition">+</a></li>
+                    <li><a id="menuInverse" href="#" title="Inverse">1&nbsp;/&nbsp;x</a></li>
+                    <li><a id="menuFactorial" href="#" title="Factorial">x&nbsp;!</a></li>
+                    <li><a id="menuExponential" href="#" title="Exponentail">y&nbsp;<sup>x</sup></a></li>
+                    <li><a id="menuRoot" href="#" title="Root"><sup>x</sup>&nbsp;&#8730;¯y</a></li>
+                    <li><a id="menuLog" href="#" title="Logarithm">log<sub>x</sub>y</a></li>
+                    <li><a id="menuLn" href="#" title="Natural logarithm">log<sub>e</sub></a></li>
+                    <li><a id="menuModulus" href="#" title="Modulus">%</a></li>
+                    <li><a id="menuSign" class="symbol-big" href="#" title="Sign">±</a></li>
+                    <li><a id="menuSine" href="#" title="Sine">sin</a></li>
+                    <li><a id="menuCosine" href="#" title="Cosine">cos</a></li>
+                    <li><a id="menuTangent" href="#" title="Tangent">tan</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
                   <a href="#" onmouseover="$('base').className='hidden';$('fix').className='hidden'">View</a>
                   <ul class="sub-menu">
                     <li class="menu">
-                      <a href="#" onclick="$('base').className='visible'" onmouseover="$('fix').className='hidden'">Base</a>
+                      <a href="#" title="Change base" onclick="$('base').className='visible'" onmouseover="$('fix').className='hidden'">Base</a>
                       <ul id="base" onclick="$('base').className='hidden'">
-                        <li><a id="menuBinary" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;binary</a></li>
-                        <li><a id="menuOctal" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;octal</a></li>
-                        <li><a id="menuHex" href="#" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;hex</a></li>
-                        <li><a id="menuBase10" href="#">&nbsp;&nbsp;base&nbsp;10</a></li>
+                        <li><a id="menuBinary" href="#" title="Toggle binary" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;binary</a></li>
+                        <li><a id="menuOctal" href="#" title="Toggle octal" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;octal</a></li>
+                        <li><a id="menuHex" href="#" title="Toggle hexidecimal" onclick="rpnAlert('Not implemented yet')">&nbsp;&nbsp;hex</a></li>
+                        <li><a id="menuBase10" title="Toggle base 10" href="#">&nbsp;&nbsp;base&nbsp;10</a></li>
                       </ul>
                     </li>
-                    <li><a id="menuAngle" href="#">deg/rad</a></li>
+                    <li><a id="menuAngle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>
                     <li class="menu">
-                      <a href="#" onclick="$('fix').className='visible'" onmouseover="$('base').className='hidden'">Fix</a>
+                      <a href="#" title="Fix decimal position" onclick="$('fix').className='visible'" onmouseover="$('base').className='hidden'">Fix</a>
                       <ul id="fix" onclick="$('fix').className='hidden'">
                         <li><a href="#" onclick="fixDecimal = -1; updateDisplay()">&nbsp;&nbsp;OFF</a></li>
                         <li><a href="#" onclick="fixDecimal = 0; updateDisplay()">&nbsp;&nbsp;0</a></li>
@@ -117,7 +117,7 @@
                       </ul>
                     </li>
                     <li><a id="menuNotes" href="#" title="Switch to Notes">Notes</a></li>
-                    <li><a id="menuShift" href="#">Shift</a></li>
+                    <li><a id="menuShift" href="#" title="Toggle shift">Shift</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
@@ -158,7 +158,8 @@
                         <li><a id="menuCarat" class="symbol-big" href="#" title="Carat"><sub class="symbol-big">&nbsp;&nbsp;&#94;</sub></a></li>
                         <li><a id="menuSolidus" href="#" title="Solidus">&nbsp;&nbsp;&#47;</a></li>
                         <li><a id="menuAsterisk" class="symbol-big" href="#" title="Times">&nbsp;&nbsp;<sub class="symbol-big">&#42;</sub></a></li>
-                        <li><a id="menuMinus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#45;</a></li>
+                        <!-- <li><a id="menuMinus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#45;</a></li> -->
+                        <li><a id="menuMinus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#8722;</a></li>
                         <li><a id="menuPlus" class="symbol-big" href="#" title="Plus">&nbsp;&nbsp;&#43;</a></li>
                         <li><a id="menuHeart" href="#" title="Hearts">&nbsp;&nbsp;&#9829;</a></li>
                         <li><a id="menuOhm" href="#" title="Ohms">&nbsp;&nbsp;&#937;</a></li>
@@ -209,7 +210,7 @@
           <input type="button" id="btnOne" class="btn-small" value="1"/>
           <input type="button" id="btnTwo" class="btn-small" value="2"/>
           <input type="button" id="btnThree" class="btn-small" value="3"/>
-          <input type="button" id="btnSubtract" class="btn-small symbol-big" value="-"/>
+          <input type="button" id="btnSubtract" class="btn-small symbol-big" value="−"/>
           <button type="button" id="btnCosine" class="btn-small degree-style">cos</button>
           <input type="button" id="btnLoad" class="btn-med" value="LOA"/>
           <br/>
