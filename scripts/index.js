@@ -463,6 +463,9 @@ function btn_shift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
+    $('menuSine').innerHTML = 'sin';
+    $('menuCosine').innerHTML = 'cos';
+    $('menuTangent').innerHTML = 'tan'
     $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x < > y';
     $('btnEnter').className = 'btn-big';
@@ -497,6 +500,9 @@ function btn_shift() {
   else {
     // Shifting to true...
     shifted = true;
+    $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
+    $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
+    $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a < > b';
     $('btnEnter').className = 'btn-big btn-big-font';
