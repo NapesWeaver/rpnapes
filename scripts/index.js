@@ -14,14 +14,14 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '15:32:43';
+var stamped = '13:46:17';
 
-function NumberObject(soul, realPart, units, imaginary, timeStamp) {
+function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
   this.soul = soul;
   this.realPart = realPart;
-  this.units = units;
   this.imaginary = imaginary;
+  this.units = units;
   this.timeStamp = timeStamp;
   
   if (isNaN(this.realPart) && isNaN(this.imaginary)) {
@@ -40,17 +40,17 @@ NumberObject.prototype.setRealPart = function (r) {
 NumberObject.prototype.getRealPart = function () {
   return this.realPart;
 };
-NumberObject.prototype.setUnits = function (u) {
-  this.units = u;
-};
-NumberObject.prototype.getUnits = function () {
-  return this.units;
-};
 NumberObject.prototype.setImaginary = function (i) {
   this.imaginary = i;
 };
 NumberObject.prototype.getImaginary = function () {
   return this.imaginary;
+};
+NumberObject.prototype.setUnits = function (u) {
+  this.units = u;
+};
+NumberObject.prototype.getUnits = function () {
+  return this.units;
 };
 NumberObject.prototype.setTimestamp = function (t) {
   this.timeStamp = t;
@@ -80,8 +80,7 @@ NumberObject.prototype.prettyPrint = function () {
       prettyString += '- ';
     }
     prettyString += Math.abs(this.imaginary).toString() + 'j';
-  }
-  
+  }  
   if (this.units !== 'null') {
     prettyString += ' ' + this.units;
   }
@@ -90,8 +89,6 @@ NumberObject.prototype.prettyPrint = function () {
 
 function hapticResponse() {
   if (isMobile) {
-    // navigator.vibrate([18]);
-    // navigator.vibrate([6]);
     navigator.vibrate([3]);
     $('txtInput').readOnly = true;
   }
@@ -274,15 +271,15 @@ function enterFunction() {
 
   var soulX = $('txtInput').value.trim();
   var realPartX = extractReal(soulX);
-  var unitsX = extractUnits(soulX);
   var imaginaryX = extractImaginary(soulX);
+  var unitsX = extractUnits(soulX);
   var timeStampX = Date.now();
 
   soulX = encodeSpecialChar(soulX);
   //unitsX = rewriteNegUnitExp(unitsX);
   unitsX = encodeSpecialChar(unitsX);
 
-  var objX = new NumberObject(soulX, realPartX, unitsX, imaginaryX, timeStampX);
+  var objX = new NumberObject(soulX, realPartX, imaginaryX, unitsX, timeStampX);
 
   stack.push(objX);
 
@@ -352,7 +349,7 @@ function btn_undo() {
   hapticResponse();
 
   if (shifted) {
-    btn_redo();
+    redoFunction();
   }
   else {
     undoFunction();
@@ -380,7 +377,7 @@ function undoFunction() {
   }
   colorUndoButton();
 }
-function btn_redo() {
+function redoFunction() {
 
   if (restores.length > 0) {
     // REDO
@@ -403,7 +400,6 @@ function btn_redo() {
   colorUndoButton();
 }
 function backupUndo() {
-
   backUps.push(nestArray(stack));
   backUps.push($('txtInput').value);
   restores.length = 0;
@@ -675,7 +671,7 @@ function instantiateNumberObject(tmpArray) {
   var imaginaryY = tmpArray[3].trim();
   var timeStampY = tmpArray[4].trim();
   var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY, timeStampY);
-
+  
   stack.push(objY);
 }
 
@@ -1203,14 +1199,11 @@ function editStack() {
       var tmpIndex = 1;
       // While 'btn[A-Z]' exists globally
       while(stackEntry.match(/btn[A-Z]/g)) {
-        // console.log('Detected: ', stack[s].soul);
+
         var index = stackEntry.search(searchTerm);
-        console.log('Index: ' + index);
         // Insert '-'
         stackEntry.insertAt(index, '-');
 
-        // console.log(stack[s].soul);
-        console.log(stackEntry);
         // toLowerCase        
 
         tmpIndex ++;
@@ -3343,7 +3336,7 @@ window.onload = function () {
   $('menuDelete').onclick = btn_delete;
   $('menuClear').onclick = btn_clear;
   $('menuUndo').onclick = btn_undo;
-  $('menuRedo').onclick = btn_redo;
+  $('menuRedo').onclick = redoFunction;
   $('menuXy').onclick = xyFunction;
   $('menuAb').onclick = btn_ab;
 
