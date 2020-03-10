@@ -15,7 +15,8 @@ var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
-var stamped = '15:17:29';
+var radix = 10;
+var stamped = '15:53:35';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -279,6 +280,13 @@ function enterFunction() {
   soulX = encodeSpecialChar(soulX);
   //unitsX = rewriteNegUnitExp(unitsX);
   unitsX = encodeSpecialChar(unitsX);
+
+  if (radix !== 10) {
+    // possibleNumber = parseInt('A',16);      // 10
+    // possibleNumber = parseInt('144',8);      // 100
+    // possibleNumber = parseInt('1100100',2);  // 100
+    if (!isNaN(realPartX)) realPartX = parseInt(realPartX, radix);
+  }
 
   var objX = new NumberObject(soulX, realPartX, imaginaryX, unitsX, timeStampX);
 
@@ -2061,14 +2069,18 @@ function setFixDecimal(value) {
 }
 function formatNumber(possibleNumber) {
 
-  // if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
-  if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
-    if (fixDecimal !== -1) {
-      possibleNumber = toFixed(possibleNumber, fixDecimal);
+  if (radix === 10) {
+    // if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
+    if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
+      if (fixDecimal !== -1) {
+        possibleNumber = toFixed(possibleNumber, fixDecimal);
+      }
+      if (sciDecimal !== -1) {
+        possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
+      }
     }
-    if (sciDecimal !== -1) {
-      possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
-    }
+  } else {    
+    possibleNumber = parseInt(possibleNumber).toString(radix);
   }
   return possibleNumber;
 }
