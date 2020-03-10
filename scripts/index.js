@@ -14,7 +14,8 @@ var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
 var fixDecimal = -1;
-var stamped = '13:46:17';
+var sciDecimal = -1;
+var stamped = '15:17:29';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -2060,10 +2061,13 @@ function setFixDecimal(value) {
 }
 function formatNumber(possibleNumber) {
 
-  if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
+  // if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
+  if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
     if (fixDecimal !== -1) {
-      //possibleNumber = possibleNumber.toExponential();
       possibleNumber = toFixed(possibleNumber, fixDecimal);
+    }
+    if (sciDecimal !== -1) {
+      possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
     }
   }
   return possibleNumber;
