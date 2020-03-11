@@ -599,7 +599,7 @@ function saveFile(fileName, pretty) {
       if (pretty) {
         content += formatNumber(decodeSpecialChar(stack[s].prettyPrint()));
       } else {
-        content += formatNumber(decodeSpecialChar(stack[s].toString()));
+        content += decodeSpecialChar(stack[s].toString());
       }      
       content += '\n';
     }
@@ -2015,7 +2015,19 @@ function extractReal(tmpArray) {
     //tmpReal += parseFloat(tmpArray.match(!/^[-+]?[ ]*\d+[.]?\d*[eE]?[-+]?\d*/g));
     tmpReal = parseFloat(tmpArray);    
     
-    if (radix !== 10) {
+    if (radix === 2) {
+      if (/[0-1]+/g.test(tmpArray)) {
+        // base10 = parseInt('f',16);// 15
+        tmpReal = parseInt(tmpArray, radix);
+      }
+    }
+    if (radix === 8) {
+      if (/[0-7]+/g.test(tmpArray)) {
+        // base10 = parseInt('f',16);// 15
+        tmpReal = parseInt(tmpArray, radix);
+      }
+    }
+    if (radix === 16) {
       if (/[0-9a-f]+/g.test(tmpArray)) {
         // base10 = parseInt('f',16);// 15
         tmpReal = parseInt(tmpArray, radix);
