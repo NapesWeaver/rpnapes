@@ -85,10 +85,10 @@
                     <li class="menu">
                       <a href="#" title="Change base" onclick="$('base').className='visible'" onmouseover="$('fix').className='hidden'">Base</a>
                       <ul id="base" onclick="$('base').className='hidden'">
-                        <li><a id="menuBinary" href="#" title="Toggle binary" onclick="radix=2; updateDisplay()">&nbsp;&nbsp;binary</a></li>
-                        <li><a id="menuOctal" href="#" title="Toggle octal" onclick="radix=8; updateDisplay()">&nbsp;&nbsp;octal</a></li>
-                        <li><a id="menuHex" href="#" title="Toggle hexidecimal" onclick="radix=16; updateDisplay()">&nbsp;&nbsp;hex</a></li>
-                        <li><a id="menuBase10" href="#" title="Toggle base 10" onclick="radix=10; updateDisplay()">&nbsp;&nbsp;base&nbsp;10</a></li>
+                        <li><a id="menuBinary" href="#" title="Toggle binary" onclick="convertBase(2); updateDisplay()">&nbsp;&nbsp;binary</a></li>
+                        <li><a id="menuOctal" href="#" title="Toggle octal" onclick="convertBase(8); updateDisplay()">&nbsp;&nbsp;octal</a></li>
+                        <li><a id="menuHex" href="#" title="Toggle hexidecimal" onclick="convertBase(16); updateDisplay()">&nbsp;&nbsp;hex</a></li>
+                        <li><a id="menuBase10" href="#" title="Toggle base 10" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;base&nbsp;10</a></li>
                       </ul>
                     </li>                    
                     <li><a id="menuAngle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>

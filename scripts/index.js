@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '15:53:35';
+var stamped = '21:9:42';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -253,7 +253,8 @@ function btn_enter() {
 
   if (shifted) {
     evaluate($('txtInput').value);
-    // $('txtInput').select();
+    $('txtInput').select();
+    moveCursorToEnd($('txtInput'));
   }
   else {
 
@@ -269,7 +270,7 @@ function btn_enter() {
     parseInput();
   }
 }
-function enterFunction() {
+function getX() {
 
   var soulX = $('txtInput').value.trim();
   var realPartX = extractReal(soulX);
@@ -280,18 +281,14 @@ function enterFunction() {
   soulX = encodeSpecialChar(soulX);
   //unitsX = rewriteNegUnitExp(unitsX);
   unitsX = encodeSpecialChar(unitsX);
+  
+  return new NumberObject(soulX, realPartX, imaginaryX, unitsX, timeStampX);
+}
+function enterFunction() {
 
-  if (radix !== 10) {
-    // possibleNumber = parseInt('A',16);      // 10
-    // possibleNumber = parseInt('144',8);      // 100
-    // possibleNumber = parseInt('1100100',2);  // 100
-    if (!isNaN(realPartX)) realPartX = parseInt(realPartX, radix);
-  }
-
-  var objX = new NumberObject(soulX, realPartX, imaginaryX, unitsX, timeStampX);
+  var objX = getX();  
 
   stack.push(objX);
-
   $('txtInput').value = $('txtInput').value.trim();  
 }
 function evaluate (input) {
@@ -379,7 +376,7 @@ function undoFunction() {
     var i = 1;
 
     while (i < tmpArray.length) {
-      instantiateNumberObject(tmpArray[i]);
+      pushObjectToStack(tmpArray[i]);
       i++;
     }
     updateDisplay();
@@ -401,7 +398,7 @@ function redoFunction() {
     var i = 1;
 
     while (i < tmpArray.length) {
-      instantiateNumberObject(tmpArray[i]);
+      pushObjectToStack(tmpArray[i]);
       i++;
     }
     updateDisplay();
@@ -655,7 +652,7 @@ function loadStack(tmpStack) {
 
     var tmpArray = [];
     tmpArray = tmpStack.shift();
-    instantiateNumberObject(tmpArray);
+    pushObjectToStack(tmpArray);
     // Evaluate code ???
     if (shifted) {evaluate(decodeSpecialChar(stack[stack.length - 1].soul));}
   }    
@@ -670,7 +667,7 @@ function splitArrayByBrowser(tmpArray) {
   }
   return tmpArray;
 }
-function instantiateNumberObject(tmpArray) {
+function pushObjectToStack(tmpArray) {
 
   tmpArray = tmpArray.split(',');
 
@@ -679,6 +676,7 @@ function instantiateNumberObject(tmpArray) {
   var unitsY = tmpArray[2].trim();
   var imaginaryY = tmpArray[3].trim();
   var timeStampY = tmpArray[4].trim();
+
   var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY, timeStampY);
   
   stack.push(objY);
@@ -1003,11 +1001,22 @@ function btn_add() {
     insertText('+');    
   }
   else {
-    var newUnits = addNotNullUnits();
-    $('txtInput').value = parseFloat(stack.pop().getRealPart()) + parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    updateDisplay();
-    $('txtInput').focus();
+    addition();
   }  
+}
+function addition() {
+
+  var newUnits = addNotNullUnits();
+  var objX = getX();
+  
+  if (radix === 10) {
+    $('txtInput').value = parseFloat(stack.pop().getRealPart()) + parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+    // $('txtInput').value = parseFloat(stack.pop().getRealPart()) + objX.getRealPart() + decodeSpecialChar(newUnits);
+  } else {
+    $('txtInput').value = (stack.pop().getRealPart() + objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
+  }  
+  updateDisplay();
+  $('txtInput').focus();
 }
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
@@ -1407,7 +1416,7 @@ function internetSearch(domainString) {
 
 function help() {
 
-  inputText('about, c, clear, date, e, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, phi, pi, print, save, saveas, size, time, tricorder, tostring, unembed, you');
+  inputText('about, clear, date, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, print, save, saveas, size, time, tricorder, tostring, unembed, you');
   btn_enter();
   btn_delete();
 }
@@ -1431,11 +1440,6 @@ function parseInput() {
     btn_enter();
     btn_delete();
     break;
-  case 'c':
-    stack.pop();
-    updateDisplay();
-    inputText('299792458m/s');
-    break;
   case 'clear':
   case 'clr':
   case 'cls':
@@ -1445,11 +1449,6 @@ function parseInput() {
     stack.pop();
     updateDisplay();
     insertDate();
-    break;
-  case 'e':
-    stack.pop();
-    updateDisplay();
-    inputText(Math.exp(1));
     break;
   case 'editstack':
     editStack();
@@ -1469,11 +1468,6 @@ function parseInput() {
     stack.pop();
     updateDisplay();
     window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
-    break;
-  case 'g':
-    stack.pop();
-    updateDisplay();
-    inputText('6.674E-11');
     break;
   case 'go':
     internetSearch('https://www.google.com/#q=');
@@ -1545,16 +1539,6 @@ function parseInput() {
     $('txtInput').value = 'notes';
     openAFile();
     break;
-  case 'phi':
-    stack.pop();
-    updateDisplay();
-    inputText((1 + Math.sqrt(5)) / 2);
-    break;
-  case 'pi':
-    stack.pop();
-    updateDisplay();
-    btn_pi();
-    break;
   case 'print':
     stack.pop();
     btn_delete();
@@ -1620,12 +1604,21 @@ function parseInput() {
 }
 
 
-// onfocus events wired in the HTML
+// onfocus events and functions wired into the HTML
 function lstStackFocus() {
   stackFocus = true;
 }
 function txtInputFocus() {
   stackFocus = false;
+}
+
+function convertBase(r) {
+
+  var txtInput = parseInt($('txtInput').value, radix);
+  
+  radix = r;
+
+  if (!isNaN(txtInput)) $('txtInput').value = parseInt(txtInput).toString(radix);
 }
 
 function selectText(id, name) {
@@ -2016,11 +2009,18 @@ function extractReal(tmpArray) {
   //if (!/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
   //if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
   if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
-    tmpReal = parseFloat(tmpArray);
     //tmpReal += parseFloat(tmpArray.match(!/^[-+]?[ ]*\d+[.]?\d*[eE]?[-+]?\d*/g));
+    tmpReal = parseFloat(tmpArray);    
+    
+    if (radix !== 10) {
+      if (/[0-9a-f]+/g.test(tmpArray)) {
+        // base10 = parseInt('f',16);// 15
+        tmpReal = parseInt(tmpArray, radix);
+      }
+    }
   } else {
     tmpReal = NaN;
-  }
+  }  
   return tmpReal;
 }
 // Extract Imaginary component from complex number
@@ -2047,13 +2047,16 @@ function extractUnits(tmpArray) {
 
   var tmpUnits = '';
 
-  if (tmpArray.indexOf('Infinity') !== -1) {
-    tmpArray = tmpArray.replace(/Infinity/g, '');
+  if (radix === 10) {
+
+    if (tmpArray.indexOf('Infinity') !== -1) {
+      tmpArray = tmpArray.replace(/Infinity/g, '');
+    }
+    //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z0-9/]*/);
+    //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
+    //tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
+    tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
   }
-  //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z0-9/]*/);
-  //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
-  //tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
-  tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
 
   return tmpUnits;
 }
