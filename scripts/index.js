@@ -1614,6 +1614,9 @@ function txtInputFocus() {
 
 function convertBase(r) {
 
+  fixDecimal = -1;
+  sciDecimal = -1;
+
   var txtInput = parseInt($('txtInput').value, radix);
   
   radix = r;
