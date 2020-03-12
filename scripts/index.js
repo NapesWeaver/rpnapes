@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '21:9:42';
+var stamped = '12:51:4';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -2041,20 +2041,31 @@ function extractReal(tmpArray) {
 // Extract Imaginary component from complex number
 function extractImaginary(tmpArray) {
 
-  var tmpImaginary = '';
+  var tmpImaginary = '';  
 
-  //tmpImaginary += tmpArray.match(/(?![!Ω♥!@#$%^&*()_=<>?/|~`'"])+[-+][ ]*[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]*j/);
-  //tmpImaginary += tmpArray.match(/(?![!Ω♥!@#$%^&*()_=<>?/|~`'"])+[-+][ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
-  //tmpImaginary += tmpArray.match(/[-+][ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
-  //tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
-  tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
-
-  if (tmpImaginary.charAt(1) === ' ') {
-    tmpImaginary = tmpImaginary.replace(/ /g, '');
+  if (radix === 10) {
+    //tmpImaginary += tmpArray.match(/(?![!Ω♥!@#$%^&*()_=<>?/|~`'"])+[-+][ ]*[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]*j/);
+    //tmpImaginary += tmpArray.match(/(?![!Ω♥!@#$%^&*()_=<>?/|~`'"])+[-+][ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
+    //tmpImaginary += tmpArray.match(/[-+][ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
+    //tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
+    tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
+    // Remove any space following a '+' or '-'
+    if (tmpImaginary.charAt(1) === ' ') {
+      tmpImaginary = tmpImaginary.replace(/ /g, '');
+    }
+    // Remove 'j'
+    tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
+    tmpImaginary = parseFloat(tmpImaginary);
+  } else {
+    if (radix === 2) tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-1]+j/);
+    if (radix === 8) tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-7]+j/);
+    if (radix === 16) tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-9a-f]+j/);
+    if (tmpImaginary.charAt(1) === ' ') {
+      tmpImaginary = tmpImaginary.replace(/ /g, '');
+    }
+    tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
+    tmpImaginary = parseInt(tmpImaginary, radix);
   }
-  tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
-  tmpImaginary = parseFloat(tmpImaginary);
-
   return tmpImaginary;
 }
 // Extract units from a number
@@ -2062,17 +2073,14 @@ function extractUnits(tmpArray) {
 
   var tmpUnits = '';
 
-  if (radix === 10) {
-
-    if (tmpArray.indexOf('Infinity') !== -1) {
-      tmpArray = tmpArray.replace(/Infinity/g, '');
-    }
-    //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z0-9/]*/);
-    //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
-    //tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
-    tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
+  if (tmpArray.indexOf('Infinity') !== -1) {
+    tmpArray = tmpArray.replace(/Infinity/g, '');
   }
-
+  //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z0-9/]*/);
+  //tmpUnits += tmpArray.match(/(?!^[0-9])(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
+  //tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
+  tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
+  
   return tmpUnits;
 }
 
