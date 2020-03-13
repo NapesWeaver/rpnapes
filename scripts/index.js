@@ -295,8 +295,8 @@ function btn_delete() {
 }
 function deleteFromStack() {
 
-  var i = getIndex('lstStack') - stackSize;
-  stack.splice(i, 1);
+  var stackIndex = getIndex('lstStack') - stackSize;
+  stack.splice(stackIndex, 1);
 }
 function backspaceKey() {
 
@@ -1195,34 +1195,29 @@ function totalStack() {
 }
 function editStack() {
 
-  // var yesNo = prompt('Are you sure?', 'no');
+  for (var s in stack) {
 
-  // if (yesNo === 'yes') {
-  if (true) {
+    var stackEntry = stack[s].soul;
+    var searchTerm = /btn[A-Z]/;
+    var tmpIndex = 1;
+    // While 'btn[A-Z]' exists globally
+    while(stackEntry.match(/btn[A-Z]/g)) {
 
-    for (var s in stack) {
+      var index = stackEntry.search(searchTerm);
+      // Insert '-'
+      stackEntry.insertAt(index, '-');
 
-      var stackEntry = stack[s].soul;
-      var searchTerm = /btn[A-Z]/;
-      var tmpIndex = 1;
-      // While 'btn[A-Z]' exists globally
-      while(stackEntry.match(/btn[A-Z]/g)) {
+      // toLowerCase        
 
-        var index = stackEntry.search(searchTerm);
-        // Insert '-'
-        stackEntry.insertAt(index, '-');
-
-        // toLowerCase        
-
-        tmpIndex ++;
-        if (tmpIndex > 2) break;  
-      }      
-    }
-    // While 'btn_' exists globally
-    // Remove '-'
-    // toCamelCase
+      tmpIndex ++;
+      if (tmpIndex > 2) break;  
+    }      
   }
+  // While 'btn_' exists globally
+  // Remove '-'
+  // toCamelCase
 }
+
 String.prototype.insertAt = function (index, input) {
   return this.slice(0,index) + input + this.slice(index);
 }
@@ -1726,7 +1721,7 @@ function moveCursorToEnd(el) {
       range.select();
     }
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }  
 }
 
@@ -2968,8 +2963,8 @@ function moveObj(obj, speed, xMov, yMov) {
   obj.movXPos(speed * xMov);
   obj.movYPos(speed * yMov);
   // Find obj's index in theObjects array
-  for (var i = 0; i < theObjects.length; i++) {
-    if (obj.idName === theObjects[i].idName) { index = i; }
+  for (var o = 0; o < theObjects.length; o++) {
+    if (obj.idName === theObjects[o].idName) { index = o; }
   }    
   // Check for collision with other objects
   for (var i = 0; i < theObjects.length; i++) {
