@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '17:43:48';
+var stamped = '18:29:59';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -2292,17 +2292,17 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
     }
   }
   // Check tmpUnitsB for units that didn't match unitsA
-  for (var b in unitsB) {
-    var tmpUnitsB = '';
-    var expB = 1;
+  for (b in unitsB) {
+    tmpUnitsB = '';
+    expB = 1;
 
     unitsDoNotMatch = true;
     tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
     if (unitsB[b].indexOf('^') !== -1) {
       expB = unitsB[b].match(/[-]?[.0-9]+/);
     }
-    for (var a in unitsA) {
-      var tmpUnitsA = '';
+    for (a in unitsA) {
+      tmpUnitsA = '';
 
       tmpUnitsA += unitsA[a].match(/[Ω♥a-zA-Z]+/);
 
