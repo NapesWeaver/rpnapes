@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '14:5:15';
+var stamped = '17:29:27';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -3394,29 +3394,29 @@ window.onload = function () {
   $('menuPhi').onclick = (function() {
     return function() { 
       // insertText((1 + Math.sqrt(5)) / 2);
-      insertText('1.618033988749895');
+      insertText(formatNumber('1.618033988749895'));
     }
   })();
   $('menuEulers').onclick = (function() {
     return function() { 
       // insertText(Math.exp(1));
-      insertText('2.718281828459045');
+      insertText(formatNumber('2.718281828459045'));
     }
   })();
   $('menuGravitationalConstant').onclick = (function() {
     return function() { 
-      insertText('6.674E-11');
+      insertText(formatNumber('6.674E-11'));
     }
   })();
   $('menuLightSpeed').onclick = (function() {
     return function() { 
-      insertText('299792458 m/s');
+      insertText(formatNumber('299792458'));
     }
   })();
   $('menuPI').onclick = (function() {
     return function() {
       // insertText(Math.PI);
-      insertText('3.141592653589793');
+      insertText(formatNumber('3.141592653589793'));
     }
   })();
 
