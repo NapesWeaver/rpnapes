@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '22:9:28';
+var stamped = '12:16:23';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -590,6 +590,38 @@ function nestArray(srcArray) {
   return newArray;
 }
 
+// function saveFile(fileName, pretty) {
+
+//   var myBlob;
+//   var content = '';
+
+//   if (fileName.trim() === '') {
+//     fileName = 'untitled';
+//   }
+//   if (stack.length > 0 || notes.length > 1) {
+//     content += '===== Stack =====\n\n';
+//     for (var s in stack) {
+//       if (pretty) {
+//         content += decodeSpecialChar(stack[s].prettyPrint());
+//         console.log(stack[s].realPart, stack[s].imaginary, stack[s].units);
+//       } else {
+//         content += decodeSpecialChar(stack[s].toString());
+//       }      
+//       content += '\n';
+//     }
+//     content += '\n===== Notes ======\n\n';
+//     for (var n in notes) {
+//       content += decodeSpecialChar(notes[n]);
+//       content += '\n';
+//     }
+//     myBlob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+//     fileName += '.txt';
+//     saveAs(myBlob, fileName);
+//   }
+//   else {
+//     rpnAlert('Error: There is no data to save.');
+//   }
+// }
 function saveFile(fileName, pretty) {
 
   var myBlob;
@@ -602,7 +634,40 @@ function saveFile(fileName, pretty) {
     content += '===== Stack =====\n\n';
     for (var s in stack) {
       if (pretty) {
-        content += formatNumber(decodeSpecialChar(stack[s].prettyPrint()));
+        // If not a number and not imaginary
+        if (isNaN(stack[s].getRealPart()) && isNaN(stack[s].getImaginary())) {
+          content += decodeSpecialChar(stack[s].getSoul());
+        } else {
+          // If a number
+          if(!isNaN(stack[s].getRealPart())) {
+            // Append number
+            content += formatNumber(stack[s].getRealPart().toString());
+            // If complex number
+            if (!isNaN(stack[s].getImaginary())) {
+              // If imaginary number is positive
+              if (parseFloat(stack[s].getImaginary()) > 0) {
+                // Append positive imaginary number
+                content += ' + ' + formatNumber(stack[s].getImaginary().toString()) + 'j';
+              } else {
+                // Append negative imaginary number
+                content.value += ' - ' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
+              }
+            }
+          } else {
+            // If imaginary number is positive
+            if (parseFloat(stack[s].getImaginary()) > 0) {
+              // Append positive imaginary number
+              content += formatNumber(stack[s].getImaginary().toString()) + 'j';
+            } else {
+              // Append negative imaginary number
+              content += '-' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
+            }
+          }
+          // If there are units, append units
+          if (stack[s].getUnits() !== 'null') {
+            content += ' ' + decodeSpecialChar(stack[s].getUnits());
+          }          
+        }
       } else {
         content += decodeSpecialChar(stack[s].toString());
       }      
@@ -1769,8 +1834,7 @@ function updateDisplay() {
     // If not a number and not imaginary
     if (isNaN(stack[s].getRealPart()) && isNaN(stack[s].getImaginary())) {
       $('lstStack').value += decodeSpecialChar(stack[s].getSoul());
-    }
-    else {
+    } else {
       // If a number
       if(!isNaN(stack[s].getRealPart())) {
         // Append number
@@ -1781,20 +1845,17 @@ function updateDisplay() {
           if (parseFloat(stack[s].getImaginary()) > 0) {
             // Append positive imaginary number
             $('lstStack').value += ' + ' + formatNumber(stack[s].getImaginary().toString()) + 'j';
-          }
-          else {
+          } else {
             // Append negative imaginary number
             $('lstStack').value += ' - ' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
           }
         }
-      }
-      else {
+      } else {
         // If imaginary number is positive
         if (parseFloat(stack[s].getImaginary()) > 0) {
           // Append positive imaginary number
           $('lstStack').value += formatNumber(stack[s].getImaginary().toString()) + 'j';
-        }
-        else {
+        } else {
           // Append negative imaginary number
           $('lstStack').value += '-' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
         }
@@ -2124,8 +2185,10 @@ function formatNumber(possibleNumber) {
         possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
       }
     }
-  } else {    
-    possibleNumber = parseInt(possibleNumber).toString(radix);
+  } else {  
+    if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
+      possibleNumber = parseInt(possibleNumber).toString(radix);
+    }
   }
   return possibleNumber;
 }
