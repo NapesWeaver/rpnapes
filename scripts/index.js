@@ -259,7 +259,8 @@ function btn_enter() {
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
       copySelectedText('lstStack');
-    } else {
+    }
+    else {
       backupUndo();
       enterFunction();
     }
@@ -3586,6 +3587,7 @@ window.onload = function () {
   
   // Text Input
   $('txtInput').onclick = mobileKeyboardAllow;
+  $('txtInput').readOnly = true;
 
   // Buttons
   $('btnXoff').onclick = btn_xoff;
@@ -3709,9 +3711,8 @@ window.onload = function () {
     backupUndo();
     $('btnSave').style.color = '#D4D0C8';
   }
-  // These lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function
+  // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function
   selectText('lstStack', 'lstStack');
-  $('txtInput').readOnly = true;
   selectText('txtInput', 'txtInput');
   $('txtInput').readOnly = false;
 };
