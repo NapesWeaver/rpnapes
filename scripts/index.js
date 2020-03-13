@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '12:59:50';
+var stamped = '14:5:15';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -576,40 +576,7 @@ function saveFile(fileName, pretty) {
     content += '===== Stack =====\n\n';
     for (var s in stack) {
       if (pretty) {
-        // If not a number and not imaginary
-        if (isNaN(stack[s].getRealPart()) && isNaN(stack[s].getImaginary())) {
-          content += decodeSpecialChar(stack[s].getSoul());
-        } else {
-          // If a number
-          if(!isNaN(stack[s].getRealPart())) {
-            // Append number
-            content += formatNumber(stack[s].getRealPart().toString());
-            // If complex number
-            if (!isNaN(stack[s].getImaginary())) {
-              // If imaginary number is positive
-              if (parseFloat(stack[s].getImaginary()) > 0) {
-                // Append positive imaginary number
-                content += ' + ' + formatNumber(stack[s].getImaginary().toString()) + 'j';
-              } else {
-                // Append negative imaginary number
-                content.value += ' - ' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
-              }
-            }
-          } else {
-            // If imaginary number is positive
-            if (parseFloat(stack[s].getImaginary()) > 0) {
-              // Append positive imaginary number
-              content += formatNumber(stack[s].getImaginary().toString()) + 'j';
-            } else {
-              // Append negative imaginary number
-              content += '-' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
-            }
-          }
-          // If there are units, append units
-          if (stack[s].getUnits() !== 'null') {
-            content += ' ' + decodeSpecialChar(stack[s].getUnits());
-          }          
-        }
+        content = prettyPrint(s, content);
       } else {
         content += decodeSpecialChar(stack[s].toString());
       }      
@@ -1574,7 +1541,7 @@ function parseInput() {
     break;
   case 'saveas':
     stack.pop();
-    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true)
+    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].prettyPrint(), true) : saveFile('', true)
     btn_delete();
     break;
   case 'size':
@@ -1589,7 +1556,7 @@ function parseInput() {
     break;
   case 'tostring':
     stack.pop();
-    saveFile(stack[stack.length - 1].soul, false);
+    saveFile(stack[stack.length - 1].prettyPrint(), false);
     btn_delete();
     break;
   case 'twig':
@@ -1773,44 +1740,48 @@ function updateDisplay() {
   // Print to stack display
   for (var s in stack) {
     $('lstStack').value += '\n';
-    // If not a number and not imaginary
-    if (isNaN(stack[s].getRealPart()) && isNaN(stack[s].getImaginary())) {
-      $('lstStack').value += decodeSpecialChar(stack[s].getSoul());
-    } else {
-      // If a number
-      if(!isNaN(stack[s].getRealPart())) {
-        // Append number
-        $('lstStack').value += formatNumber(stack[s].getRealPart().toString());
-        // If complex number
-        if (!isNaN(stack[s].getImaginary())) {
-          // If imaginary number is positive
-          if (parseFloat(stack[s].getImaginary()) > 0) {
-            // Append positive imaginary number
-            $('lstStack').value += ' + ' + formatNumber(stack[s].getImaginary().toString()) + 'j';
-          } else {
-            // Append negative imaginary number
-            $('lstStack').value += ' - ' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
-          }
-        }
-      } else {
-        // If imaginary number is positive
-        if (parseFloat(stack[s].getImaginary()) > 0) {
-          // Append positive imaginary number
-          $('lstStack').value += formatNumber(stack[s].getImaginary().toString()) + 'j';
-        } else {
-          // Append negative imaginary number
-          $('lstStack').value += '-' + formatNumber(stack[s].getImaginary().toString()).substring(1) + 'j';
-        }
-      }
-      // If there are units, append units
-      if (stack[s].getUnits() !== 'null') {
-        $('lstStack').value += ' ' + decodeSpecialChar(stack[s].getUnits());
-      }
-    }
+    $('lstStack').value = prettyPrint(s,$('lstStack').value);
   }
   colorSaveButton();
   $('lstStack').scrollTop = $('lstStack').scrollHeight;
   $('txtInput').select();
+}
+function prettyPrint(i, content) {
+  // If not a number and not imaginary
+  if (isNaN(stack[i].getRealPart()) && isNaN(stack[i].getImaginary())) {
+    content += decodeSpecialChar(stack[i].getSoul());
+  } else {
+    // If a number
+    if(!isNaN(stack[i].getRealPart())) {
+      // Append number
+      content += formatNumber(stack[i].getRealPart().toString());
+      // If complex number
+      if (!isNaN(stack[i].getImaginary())) {
+        // If imaginary number is positive
+        if (parseFloat(stack[i].getImaginary()) > 0) {
+          // Append positive imaginary number
+          content += ' + ' + formatNumber(stack[i].getImaginary().toString()) + 'j';
+        } else {
+          // Append negative imaginary number
+          content += ' - ' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
+        }
+      }
+    } else {
+      // If imaginary number is positive
+      if (parseFloat(stack[i].getImaginary()) > 0) {
+        // Append positive imaginary number
+        content += formatNumber(stack[i].getImaginary().toString()) + 'j';
+      } else {
+        // Append negative imaginary number
+        content += '-' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
+      }
+    }
+    // If there are units, append units
+    if (stack[i].getUnits() !== 'null') {
+      content += ' ' + decodeSpecialChar(stack[i].getUnits());
+    }          
+  }
+  return content;
 }
 function colorSaveButton() {
 
@@ -1837,11 +1808,7 @@ function storeCookie(aName, tmpArray) {
   var expires = '; expires=' + d.toUTCString();
   document.cookie = aName + '=' + tmpArray + expires + ';path=/';
 }
-//function getCookie(name) {
-//    var value = "; " + document.cookie;
-//    var parts = value.split("; " + name + "=");
-//    if (parts.length == 2) return parts.pop().split(";").shift();
-//}
+
 function getCookie(cname) {
 
   var name = cname + '=';
