@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '12:50:30';
+var stamped = '12:59:50';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -3584,7 +3584,6 @@ window.onload = function () {
   // Text Area
   $('lstStack').style.color = '#000000';// noscript warning was red ;)
   $('lstStack').value = '';
-  $('lstStack').readOnly = true;
   
   // Text Input
   $('txtInput').onclick = mobileKeyboardAllow;
@@ -3715,4 +3714,6 @@ window.onload = function () {
   // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function
   selectText('lstStack', 'lstStack');
   selectText('txtInput', 'txtInput');
+
+  $('txtInput').readOnly = false;
 };
