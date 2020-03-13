@@ -64,30 +64,6 @@ NumberObject.prototype.toString = function () {
 
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
-NumberObject.prototype.prettyPrint = function () {
-  
-  var prettyString = '';
-
-  if (isNaN(this.realPart) && isNaN(this.imaginary)) return this.soul;
-
-  if (!isNaN(this.realPart)) {
-    prettyString += this.realPart.toString();
-    if (!isNaN(this.imaginary)) prettyString += ' ';
-  }
-  if (!isNaN(this.imaginary)) {
-
-    if (this.imaginary > 0) {
-      prettyString += '+ ';
-    } else {
-      prettyString += '- ';
-    }
-    prettyString += Math.abs(this.imaginary).toString() + 'j';
-  }  
-  if (this.units !== 'null') {
-    prettyString += ' ' + this.units;
-  }
-  return prettyString;
-};
 
 function hapticResponse() {
   if (isMobile) {
@@ -588,38 +564,6 @@ function nestArray(srcArray) {
   return newArray;
 }
 
-// function saveFile(fileName, pretty) {
-
-//   var myBlob;
-//   var content = '';
-
-//   if (fileName.trim() === '') {
-//     fileName = 'untitled';
-//   }
-//   if (stack.length > 0 || notes.length > 1) {
-//     content += '===== Stack =====\n\n';
-//     for (var s in stack) {
-//       if (pretty) {
-//         content += decodeSpecialChar(stack[s].prettyPrint());
-//         console.log(stack[s].realPart, stack[s].imaginary, stack[s].units);
-//       } else {
-//         content += decodeSpecialChar(stack[s].toString());
-//       }      
-//       content += '\n';
-//     }
-//     content += '\n===== Notes ======\n\n';
-//     for (var n in notes) {
-//       content += decodeSpecialChar(notes[n]);
-//       content += '\n';
-//     }
-//     myBlob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-//     fileName += '.txt';
-//     saveAs(myBlob, fileName);
-//   }
-//   else {
-//     rpnAlert('Error: There is no data to save.');
-//   }
-// }
 function saveFile(fileName, pretty) {
 
   var myBlob;
@@ -1630,7 +1574,7 @@ function parseInput() {
     break;
   case 'saveas':
     stack.pop();
-    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].prettyPrint(), true) : saveFile('', true)
+    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true)
     btn_delete();
     break;
   case 'size':
@@ -1645,7 +1589,7 @@ function parseInput() {
     break;
   case 'tostring':
     stack.pop();
-    saveFile(stack[stack.length - 1].prettyPrint(), false);
+    saveFile(stack[stack.length - 1].soul, false);
     btn_delete();
     break;
   case 'twig':
