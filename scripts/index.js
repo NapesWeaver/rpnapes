@@ -1277,6 +1277,7 @@ function embed(src) {
     rpnAlert('Enter web address to embed.');
   }
 }
+
 function getLocation() {
 
   lat = '';
@@ -1292,16 +1293,6 @@ function getLocation() {
       lng += position.coords.longitude;
       lat = lat.substr(0, 8);
       lng = lng.substr(0, 8);
-      // Create a new map and place a marker at the device location.
-      var map = new GMaps({
-        el: '#map',
-        lat: lat,
-        lng: lng
-      });
-      map.addMarker({
-        lat: lat,
-        lng: lng
-      });
     }, geolocationError);
   }
   else {
