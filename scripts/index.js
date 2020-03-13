@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '17:1:24';
+var stamped = '22:9:28';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -427,13 +427,18 @@ function btn_EE() {
   hapticResponse();
 
   if (shifted) {
-    //if (/[-+]?\d+[.]?\d*[eE]?[-+]?\d*/g.test($("txtInput").value) && $("txtInput").value.indexOf("j") === -1) {
-    if (/[-+]?\d+[.]?\d*[eE]?[-+]?\d*/g.test($('txtInput').value) && $('txtInput').value.indexOf('j') === -1) {
-      insertAtCursor($('txtInput'), 'j');
-    }        
+
+    if (radix !== 16) {
+      if (/[-+]?\d+[.]?\d*[eE]?[-+]?\d*/g.test($('txtInput').value) && $('txtInput').value.indexOf('j') === -1) {
+        insertAtCursor($('txtInput'), 'j');
+      }
+    } else {
+      if (/[-+]?[a-e0-9]/g.test($('txtInput').value) && $('txtInput').value.indexOf('j') === -1) {
+        insertAtCursor($('txtInput'), 'j');
+      }
+    }
   }
   else {
-    //if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($("txtInput").value) && !/.*[eE].*[eE].*/g.test($("txtInput").value)) {
     if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txtInput').value) && !/.*[eE].*[eE].*/g.test($('txtInput').value)) {
       insertAtCursor($('txtInput'), 'e');
     }
@@ -895,14 +900,25 @@ function btn_sign() {
       tmpX += '-';
     }
     // If imaginary number
-    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
+    else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
       tmpX = tmpX.substring(0, tmpX.length);
       tmpX += '-';
     }
-    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
+    else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
       tmpX = tmpX.substring(0, tmpX.length - 1);
     }
-    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
+    else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+      tmpX += '-';
+    }
+    else if (radix === 16 && /^[-+]?[a-e0-9]+ +$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length);
+      tmpX += '-';
+    }
+    else if (radix === 16 && /^[-+]?[a-e0-9]+ +[-]$/.test(tmpX)) {
+      tmpX = tmpX.substring(0, tmpX.length - 1);
+    }
+    else if (radix === 16 && /^[-+]?[a-e0-9]+ +[+]$/.test(tmpX)) {
       tmpX = tmpX.substring(0, tmpX.length - 1);
       tmpX += '-';
     }
