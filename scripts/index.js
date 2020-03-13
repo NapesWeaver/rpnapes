@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '17:29:27';
+var stamped = '17:43:48';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -3392,31 +3392,51 @@ window.onload = function () {
 
   // Menu Constants
   $('menuPhi').onclick = (function() {
-    return function() { 
+    return function() {
       // insertText((1 + Math.sqrt(5)) / 2);
-      insertText(formatNumber('1.618033988749895'));
+      if (radix === 10) {
+        insertText('1.618033988749895');
+      } else {
+        insertText(parseInt('1.618033988749895').toString(radix));
+      }
     }
   })();
   $('menuEulers').onclick = (function() {
     return function() { 
-      // insertText(Math.exp(1));
-      insertText(formatNumber('2.718281828459045'));
+      if (radix === 10) {
+        // insertText(Math.exp(1));
+        insertText('2.718281828459045');
+      } else {
+        insertText(parseInt('2.718281828459045').toString(radix));
+      }
     }
   })();
   $('menuGravitationalConstant').onclick = (function() {
     return function() { 
-      insertText(formatNumber('6.674E-11'));
+      if (radix === 10) {
+        insertText('6.674E-11');
+      } else {
+        insertText(parseInt('6.674E-11').toString(radix));
+      }
     }
   })();
   $('menuLightSpeed').onclick = (function() {
     return function() { 
-      insertText(formatNumber('299792458'));
+      if (radix === 10) {
+        insertText('299792458 m/s');
+      } else {
+        insertText(parseInt('299792458').toString(radix));
+      }
     }
   })();
   $('menuPI').onclick = (function() {
     return function() {
-      // insertText(Math.PI);
-      insertText(formatNumber('3.141592653589793'));
+      if (radix === 10) {
+        // insertText(Math.PI);
+        insertText('3.141592653589793');
+      } else {
+        insertText(parseInt('3.141592653589793').toString(radix));
+      }
     }
   })();
 
