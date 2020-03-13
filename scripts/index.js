@@ -3173,9 +3173,8 @@ document.addEventListener('keydown', function (event) {
       }
     }
     else {            
-      // IE || Chrome - No solution yet :(
-      if (false) {
-        //if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
+      if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
+        // IE || Chrome - No solution yet :(
       } else {
         // Firefox      
         switch (event.keyCode) {
