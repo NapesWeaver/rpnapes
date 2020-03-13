@@ -255,14 +255,11 @@ function btn_enter() {
     evaluate($('txtInput').value);
     $('txtInput').select();
     moveCursorToEnd($('txtInput'));
-  }
-  else {
-
+  } else {
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
       copySelectedText('lstStack');
-    }
-    else {
+    } else {
       backupUndo();
       enterFunction();
     }
@@ -3712,7 +3709,9 @@ window.onload = function () {
     backupUndo();
     $('btnSave').style.color = '#D4D0C8';
   }
-  // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function
+  // These lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function
   selectText('lstStack', 'lstStack');
+  $('txtInput').readOnly = true;
   selectText('txtInput', 'txtInput');
+  $('txtInput').readOnly = false;
 };
