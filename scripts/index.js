@@ -947,7 +947,7 @@ function btn_divide() {
     insertText('/');    
   }
   else {
-    var newUnits = divideNotNullUnits(1);
+    var newUnits = getDivideUnits(1);
     $('txtInput').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
     updateDisplay();
     $('txtInput').focus();
@@ -961,7 +961,7 @@ function btn_multiply() {
   if (shifted) {
     insertText('*');
   } else {
-    var newUnits = multiplyNotNullUnits(1);
+    var newUnits = getMultiplyUnits(1);
     $('txtInput').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
     updateDisplay();
     $('txtInput').focus();
@@ -976,7 +976,7 @@ function btn_subtract() {
     insertText('-');    
   }
   else {
-    var newUnits = addNotNullUnits();        
+    var newUnits = getAddUnits();        
     $('txtInput').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
     updateDisplay();
     $('txtInput').focus();
@@ -996,7 +996,7 @@ function btn_add() {
 }
 function addition() {
 
-  var newUnits = addNotNullUnits();
+  var newUnits = getAddUnits();
   var objX = getX();
   
   if (radix === 10) {
@@ -1216,6 +1216,48 @@ function editStack() {
   // While 'btn_' exists globally
   // Remove '-'
   // toCamelCase
+}
+
+// Extract any substring that follows a number
+function extractSubString(tmpArray) {
+
+  var subString = '';
+  var subIndex = -1;
+  var noExponent = true;
+
+  tmpArray = decodeSpecialChar(tmpArray);
+
+  // If tmpArray contains a number
+  if (!isNaN(parseFloat(tmpArray))) {
+    // If the number is followed by more text find the index of the substring
+    if (isNaN(tmpArray)) {
+      var tmpSubString = tmpArray.split('');
+      // Not bothering to check index 0, it is either a number or "-" or "+"
+      for (var i = 1; i < tmpSubString.length ; i++) {
+        // Check if character is not part of a normal decimal number
+        if (subIndex < 0 && isNaN(tmpSubString[i]) && tmpSubString[i] !== '.') {
+          // Check if character is part of scientific notation
+          if (noExponent && (tmpSubString[i].toLowerCase() === 'e' && (!isNaN(tmpSubString[i + 1]) || ((tmpSubString[i + 1] === '-' || tmpSubString[i + 1] === '+') && !isNaN(tmpSubString[i + 2]))))) {
+            noExponent = false;
+            // If there is a leading minus or plus increment index
+            if ((tmpSubString[i + 1] === '-' || tmpSubString[i + 1] === '+') && !isNaN(tmpSubString[i + 2])) {
+              i++;
+            }
+          }
+          else {
+            // Found substring
+            subIndex = i;
+          }
+        }
+      }
+      // Capture substring
+      while (subIndex < tmpSubString.length) {
+        subString += tmpSubString[subIndex];
+        subIndex++;
+      }
+    }
+  }
+  return subString;
 }
 
 String.prototype.insertAt = function (index, input) {
@@ -1941,48 +1983,6 @@ function decodeSpecialChar(tmpString) {
   return tmpString;
 }
 
-// Extract any substring that follows a number
-function extractSubString(tmpArray) {
-
-  var subString = '';
-  var subIndex = -1;
-  var noExponent = true;
-
-  tmpArray = decodeSpecialChar(tmpArray);
-
-  // If tmpArray contains a number
-  if (!isNaN(parseFloat(tmpArray))) {
-    // If the number is followed by more text find the index of the substring
-    if (isNaN(tmpArray)) {
-      var tmpSubString = tmpArray.split('');
-      // Not bothering to check index 0, it is either a number or "-" or "+"
-      for (var i = 1; i < tmpSubString.length ; i++) {
-        // Check if character is not part of a normal decimal number
-        if (subIndex < 0 && isNaN(tmpSubString[i]) && tmpSubString[i] !== '.') {
-          // Check if character is part of scientific notation
-          if (noExponent && (tmpSubString[i].toLowerCase() === 'e' && (!isNaN(tmpSubString[i + 1]) || ((tmpSubString[i + 1] === '-' || tmpSubString[i + 1] === '+') && !isNaN(tmpSubString[i + 2]))))) {
-            noExponent = false;
-            // If there is a leading minus or plus increment index
-            if ((tmpSubString[i + 1] === '-' || tmpSubString[i + 1] === '+') && !isNaN(tmpSubString[i + 2])) {
-              i++;
-            }
-          }
-          else {
-            // Found substring
-            subIndex = i;
-          }
-        }
-      }
-      // Capture substring
-      while (subIndex < tmpSubString.length) {
-        subString += tmpSubString[subIndex];
-        subIndex++;
-      }
-    }
-  }
-  return subString;
-}
-
 // Extract Real component from 'soul' of argument
 function extractReal(tmpArray) {
 
@@ -2059,58 +2059,15 @@ function extractUnits(tmpArray) {
   return tmpUnits;
 }
 
-function setFixDecimal(value) {
+function getAddUnits() {
 
-  if (value !== '' && !isNaN(value) && parseInt(value) > -2 && parseInt(value) < 18) {
-    fixDecimal = value;
-  }
-  else {
-    rpnAlert('Enter an integer from -1 to 17 first.');
-  }
-}
-function formatNumber(possibleNumber) {
-
-  if (radix === 10) {
-    // if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
-    if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
-      if (fixDecimal !== -1) {
-        possibleNumber = toFixed(possibleNumber, fixDecimal);
-      }
-      if (sciDecimal !== -1) {
-        possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
-      }
-    }
-  } else {  
-    if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
-      possibleNumber = parseInt(possibleNumber).toString(radix);
-    }
-  }
-  return possibleNumber;
-}
-function toFixed(value, p) {
-
-  var precision = p || 0,
-    power = Math.pow(10, precision),
-    absValue = Math.abs(Math.round(value * power)),
-    result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
-
-  if (precision > 0) {
-    var fraction = String(absValue % power),
-      padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
-    result += '.' + padding + fraction;
-  }
-  return result;
-}
-
-function addNotNullUnits() {
-
-  var newUnits = addUnits();    
+  var newUnits = addUnits();
   if(newUnits === ' null') {
     newUnits = '';
   }
   return newUnits;
 }
-function multiplyNotNullUnits(exponent) {
+function getMultiplyUnits(exponent) {
 
   var newUnits = multiplyUnits(exponent);    
   if(newUnits === ' ') {
@@ -2118,7 +2075,7 @@ function multiplyNotNullUnits(exponent) {
   }
   return newUnits;
 }
-function divideNotNullUnits(exponent) {
+function getDivideUnits(exponent) {
 
   var newUnits = divideUnits(exponent);    
   if(newUnits === ' ') {
@@ -2357,13 +2314,13 @@ function rewriteNegUnitExp(tmpUnits) {
     numerator = unitsSplit[0];
     denominator = unitsSplit[1];
 
-    changedUnits = cutOutNegExponent(changedUnits, numerator);
+    changedUnits = removeNegativeExponentSign(numerator);
 
     denominator = unitAddition(denominator, changedUnits, 1, true);
     denominator = denominator.split('*');
 
     changedUnits = [];
-    changedUnits = cutOutNegExponent(changedUnits, denominator);
+    changedUnits = removeNegativeExponentSign(denominator);
 
     numerator = unitAddition(numerator, changedUnits, 1, true);
     changedUnits = [];
@@ -2383,14 +2340,15 @@ function rewriteNegUnitExp(tmpUnits) {
   }
   return newUnits;
 }
-function cutOutNegExponent(tmpArray, expression) {
+function removeNegativeExponentSign(factorsArray) {
 
+  var tmpArray = [];
   var e = 0;
 
-  while (e < expression.length) {
-    if (expression[e].indexOf('-') !== -1) {
+  while (e < factorsArray.length) {
+    if (factorsArray[e].indexOf('-') !== -1) {
       var tmpString = '';
-      tmpString += expression.splice(e, 1).toString();
+      tmpString += factorsArray.splice(e, 1).toString();
       tmpString = tmpString.replace(/-/g, '');
       tmpArray.push(tmpString);
       e--;
@@ -2398,6 +2356,49 @@ function cutOutNegExponent(tmpArray, expression) {
     e++;
   }
   return tmpArray;
+}
+
+function setFixDecimal(value) {
+
+  if (value !== '' && !isNaN(value) && parseInt(value) > -2 && parseInt(value) < 18) {
+    fixDecimal = value;
+  }
+  else {
+    rpnAlert('Enter an integer from -1 to 17 first.');
+  }
+}
+function formatNumber(possibleNumber) {
+
+  if (radix === 10) {
+    // if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
+    if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
+      if (fixDecimal !== -1) {
+        possibleNumber = toFixed(possibleNumber, fixDecimal);
+      }
+      if (sciDecimal !== -1) {
+        possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
+      }
+    }
+  } else {  
+    if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
+      possibleNumber = parseInt(possibleNumber).toString(radix);
+    }
+  }
+  return possibleNumber;
+}
+function toFixed(value, p) {
+
+  var precision = p || 0,
+    power = Math.pow(10, precision),
+    absValue = Math.abs(Math.round(value * power)),
+    result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
+
+  if (precision > 0) {
+    var fraction = String(absValue % power),
+      padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
+    result += '.' + padding + fraction;
+  }
+  return result;
 }
 
 //////// Notes ///////////////////////////////////////////////////////////////////////
@@ -2727,8 +2728,8 @@ function button6() {
     navigator.vibrate([18]);
 
     if ($('widget').className === 'hidden') {
+      
       var srcString = '';
-
       // IP Mapper
       srcString += 'https://napesweaver.github.io/ip-mapper/';
       $('widget').src = srcString;
