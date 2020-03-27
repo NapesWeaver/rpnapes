@@ -13,6 +13,7 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
+var 𝜋 = 3.141592653589793;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
@@ -3444,37 +3445,37 @@ window.onload = function () {
   // Menu Equations
   $('menuOhmsLaw').onclick = (function() {
     return function() {
-      insertText('E = IR');
+      insertText('E=I*R');
     }
   })();
   $('menuCircumference').onclick = (function() {
     return function() {
-      insertText('2𝜋r');
+      insertText('2*𝜋*r');
     }
   })();
   $('menuCircleArea').onclick = (function() {
     return function() {
-      insertText('𝜋r^2');
+      insertText('𝜋*r^2');
     }
   })();
   $('menuSphereArea').onclick = (function() {
     return function() {
-      insertText('4𝜋r^2');
+      insertText('4*𝜋*r^2');
     }
   })();
   $('menuSphereVolume').onclick = (function() {
     return function() {
-      insertText('(4/3)𝜋r^3');
+      insertText('4/3*𝜋*r^3');
     }
   })();
   $('menuConeArea').onclick = (function() {
     return function() {
-      insertText('𝜋r^2 + 𝜋rl');
+      insertText('𝜋*r^2 + 𝜋*r*l');
     }
   })();
   $('menuConeVolume').onclick = (function() {
     return function() {
-      insertText('(h/3)𝜋r^2');
+      insertText('h/3*𝜋*r^2');
     }
   })();
 
