@@ -3489,6 +3489,11 @@ window.onload = function () {
       btn_parentheses();
     }
   })();
+  $('menuEquals').onclick = (function() {
+    return function() { 
+      insertText('=');
+    }
+  })();
   $('menuRadical').onclick = (function() {
     return function() { 
       insertText('√');
