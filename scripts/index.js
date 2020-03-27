@@ -1917,6 +1917,8 @@ function encodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/♣/g, "&#9827");
   tmpString = tmpString.replace(/♥/g, '&#9829');
   //tmpString = tmpString.replace(/♦/g, "&#9830");
+  // tmpString = tmpString.replace(/𝛑/g, '&#120529');
+  // tmpString = tmpString.replace(/𝜋/g, '&#120587');
 
   return tmpString;
 }
@@ -1979,6 +1981,8 @@ function decodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/&#9827/g, "♣");
   tmpString = tmpString.replace(/&#9829/g, '♥');
   //tmpString = tmpString.replace(/&#9830/g, "♦");
+  // tmpString = tmpString.replace(/&#120529/g, '𝛑');
+  // tmpString = tmpString.replace(/&#120587/g, '𝜋');
 
   return tmpString;
 }
@@ -1990,7 +1994,7 @@ function extractReal(tmpArray) {
   
   if (radix === 10) {
     // Here we are checking that it is not addition/subtraction expression && not an IP address && not containing evaluation symbols && an not an imaginary number
-    if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`𝛑𝜋~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
     }
@@ -3441,6 +3445,31 @@ window.onload = function () {
   $('menuOhmsLaw').onclick = (function() {
     return function() {
       insertText('E = IR');
+    }
+  })();
+  $('menuCircumference').onclick = (function() {
+    return function() {
+      insertText('2𝜋r');
+    }
+  })();
+  $('menuCircleArea').onclick = (function() {
+    return function() {
+      insertText('𝜋r^2');
+    }
+  })();
+  $('menuSphereArea').onclick = (function() {
+    return function() {
+      insertText('4𝜋r^2');
+    }
+  })();
+  $('menuSphereVolume').onclick = (function() {
+    return function() {
+      insertText('(4/3)𝜋r^3');
+    }
+  })();
+  $('menuConeVolume').onclick = (function() {
+    return function() {
+      insertText('(h/3)𝜋r^2');
     }
   })();
 

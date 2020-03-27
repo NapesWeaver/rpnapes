@@ -163,6 +163,11 @@
                       <a href="#" onclick="$('equations').className='visible'" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Equations</a>
                       <ul id="equations" onclick="$('equations').className='hidden'">
                         <li><a id="menuOhmsLaw" href="#">&nbsp;&nbsp;Ohm's&nbsp;Law</a></li>
+                        <li><a id="menuCircumference" href="#">&nbsp;&nbsp;Circumference</a></li>
+                        <li><a id="menuCircleArea" href="#">&nbsp;&nbsp;Circle Area</a></li>
+                        <li><a id="menuSphereArea" href="#">&nbsp;&nbsp;Sphere Area</a></li>
+                        <li><a id="menuSphereVolume" href="#">&nbsp;&nbsp;Sphere Vol</a></li>
+                        <li><a id="menuConeVolume" href="#">&nbsp;&nbsp;Cone Vol</a></li>
                       </ul>
                     </li>
                     <li class="menu">
@@ -196,7 +201,7 @@
             </nav>
           </div>
 
-          <textarea id="lstStack" class="lst-stack" name="lstStack" cols="28" rows="12" scrollbar="yes" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified March 20, 2020." onfocus="lstStackFocus()" onclick="selectText('lstStack', 'lstStack')" ondblclick="copySelectedText('lstStack')" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lstStack" class="lst-stack" name="lstStack" cols="28" rows="12" scrollbar="yes" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified March 26, 2020." onfocus="lstStackFocus()" onclick="selectText('lstStack', 'lstStack')" ondblclick="copySelectedText('lstStack')" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txtInput" class="txt-input" name="txtInput" size="32" tabindex="1" onfocus="txtInputFocus()"/>
 
           <input type="button" id="btnCopy" class="btn-big" value="COPY"/>
