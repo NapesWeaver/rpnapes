@@ -3467,6 +3467,11 @@ window.onload = function () {
       insertText('(4/3)𝜋r^3');
     }
   })();
+  $('menuConeArea').onclick = (function() {
+    return function() {
+      insertText('𝜋r^2 + 𝜋rl');
+    }
+  })();
   $('menuConeVolume').onclick = (function() {
     return function() {
       insertText('(h/3)𝜋r^2');
