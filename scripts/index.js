@@ -3524,14 +3524,19 @@ window.onload = function () {
       insertText('+');
     }
   })();
-  $('menuHeart').onclick = (function() {
+  $('menuPiSymbol').onclick = (function() {
     return function() { 
-      insertText('♥');
+      insertText('𝜋');
     }
   })();
   $('menuOhm').onclick = (function() {
     return function() { 
       insertText('Ω');
+    }
+  })();
+  $('menuHeart').onclick = (function() {
+    return function() { 
+      insertText('♥');
     }
   })();
 
