@@ -16,7 +16,7 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '22:9:29';
+var stamped = '22:16:15';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -2275,7 +2275,7 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
       if (!add) {
         expB = expB * -1;
       }
-      unitsCombined = appendUnits(unitsCombined, tmpUnitsB, parseInt(expB));
+      unitsCombined = appendUnits(unitsCombined, tmpUnitsB, parseFloat(expB));
     }
   }
   return unitsCombined;
