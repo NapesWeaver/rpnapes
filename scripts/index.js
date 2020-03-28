@@ -455,7 +455,7 @@ function btn_shift() {
     $('btnEnter').value = 'ENTER';
     $('btnDelete').innerHTML = 'DEL';
     $('btnInverse').value = '1 / x';
-    $('btnLog').innerHTML = 'log<sub>x</sub>y';
+    $('btnLog').innerHTML = 'log<sub>e</sub>';
     $('btnRoot').innerHTML = 'y&nbsp;<sup>x</sup>';
     $('btnUndo').value = 'UND';
     $('btnEE').className = 'btn-small btn-small-font btn-char';
@@ -497,7 +497,7 @@ function btn_shift() {
     // $('btnDelete').innerHTML = '<span class="btn-big-font">⬅</span>';
     // $('btnDelete').innerHTML = '<span class="btn-big-font">⇐</span>';
     $('btnInverse').value = '! x';
-    $('btnLog').innerHTML = 'log<sub>e</sub>';
+    $('btnLog').innerHTML = 'log<sub>x</sub>y';
     $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
     $('btnUndo').value = 'REDO';
     $('btnEE').className = 'btn-small btn-char';
@@ -734,16 +734,17 @@ function btn_log() {
   backupUndo();
 
   if (shifted) {
-    naturalLog();
+    baseLog();
   }
   else {
-    baseLog();
+    naturalLog();
   }
 }
 function baseLog() {
 
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
-    btn_enter();
+    backupUndo();
+    enterFunction();
     $(('txtInput')).value = '10';
   }
   $('txtInput').value = Math.log(parseFloat(stack.pop().getRealPart())) / Math.log(extractReal($('txtInput').value));
@@ -773,7 +774,8 @@ function exponentialFunction() {
 
   var newUnits = '';
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
-    btn_enter();
+    backupUndo();
+    enterFunction();
     $(('txtInput')).value = '2';
   }
   if (extractUnits($('txtInput').value) === 'null') {
@@ -788,7 +790,8 @@ function rootFunction() {
 
   var newUnits = '';
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString().trim())) {
-    btn_enter();
+    backupUndo();
+    enterFunction();
     $(('txtInput')).value = '2';
   }
   if (extractUnits($('txtInput').value) === 'null') {
@@ -1992,6 +1995,8 @@ function decodeSpecialChar(tmpString) {
 function extractReal(tmpArray) {
 
   var tmpReal = '';
+
+  //tmpReal += parseFloat(tmpArray.match(!/^[-+]?[ ]*\d+[.]?\d*[eE]?[-+]?\d*/g));
   
   if (radix === 10) {
     // Here we are checking that it is not addition/subtraction expression && not an IP address && not containing evaluation symbols && an not an imaginary number
