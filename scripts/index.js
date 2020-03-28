@@ -488,7 +488,8 @@ function btn_shift() {
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a < > b';
     $('btnEnter').className = 'btn-big btn-big-font';
-    $('btnEnter').style.color = '#0000A0';
+    // $('btnEnter').style.color = '#0F4215';
+    $('btnEnter').style.color = '#008125';
     $('btnEnter').value = '=';
     // $('btnDelete').innerHTML = '<---';
     // $('btnDelete').innerHTML = '◀---';
@@ -1991,12 +1992,45 @@ function decodeSpecialChar(tmpString) {
   return tmpString;
 }
 
+// // Extract Real component from 'soul' of argument
+// function extractReal(tmpArray) {
+
+//   var tmpReal = '';
+  
+//   if (radix === 10) {
+//     // Here we are checking that it is not addition/subtraction expression && not an IP address && not containing evaluation symbols && an not an imaginary number
+//     if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`𝛑𝜋~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+//       // parseFloat does the rest of the regex work for us
+//       tmpReal = parseFloat(tmpArray);
+//     }
+//   }
+//   if (radix === 2) {
+//     // If binary && not imaginary
+//     if (/[0-1]+/g.test(tmpArray) && !/^[-+]?[0-1]+j/g.test(tmpArray)) {
+//       tmpReal = parseInt(tmpArray, radix);
+//     }
+//   }
+//   if (radix === 8) {
+//     // If ocatal && not imaginary
+//     if (/[0-7]+/g.test(tmpArray) && !/^[-+]?[0-7]+j/g.test(tmpArray)) {
+//       tmpReal = parseInt(tmpArray, radix);
+//     }
+//   }
+//   if (radix === 16) {
+//     // If hexadecimal && not imaginary
+//     if (/[0-9a-f]+/g.test(tmpArray) && !/^[-+]?[0-9a-f]+j/g.test(tmpArray)) {
+//       tmpReal = parseInt(tmpArray, radix);
+//     }
+//   }
+//   if (tmpReal === '') tmpReal = NaN;
+//   return tmpReal;
+// }
 // Extract Real component from 'soul' of argument
 function extractReal(tmpArray) {
 
   var tmpReal = '';
 
-  //tmpReal += parseFloat(tmpArray.match(!/^[-+]?[ ]*\d+[.]?\d*[eE]?[-+]?\d*/g));
+  //tmpReal += parseFloat(tmpArray.match(!/^[-+]?[ ]*\d+[.]?\d*[eE]?[-+]?\d*/g) || tmpArray.match(/𝜋/));
   
   if (radix === 10) {
     // Here we are checking that it is not addition/subtraction expression && not an IP address && not containing evaluation symbols && an not an imaginary number
@@ -2026,7 +2060,6 @@ function extractReal(tmpArray) {
   if (tmpReal === '') tmpReal = NaN;
   return tmpReal;
 }
-
 // Extract Imaginary component from complex number
 function extractImaginary(tmpArray) {
 
