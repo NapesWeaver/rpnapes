@@ -17,7 +17,7 @@ var 𝜋 = 3.141592653589793;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '22:16:15';
+var stamped = '6:36:26';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -569,27 +569,27 @@ function nestArray(srcArray) {
 function saveFile(fileName, pretty) {
 
   var myBlob;
-  var content = '';
+  var blobContent = '';
 
   if (fileName.trim() === '') {
     fileName = 'untitled';
   }
   if (stack.length > 0 || notes.length > 1) {
-    content += '===== Stack =====\n\n';
+    blobContent += '===== Stack =====\n\n';
     for (var s in stack) {
       if (pretty) {
-        content = prettyPrint(s, content);
+        blobContent = prettyPrint(s, blobContent);
       } else {
-        content += decodeSpecialChar(stack[s].toString());
+        blobContent += decodeSpecialChar(stack[s].toString());
       }      
-      content += '\n';
+      blobContent += '\n';
     }
-    content += '\n===== Notes ======\n\n';
+    blobContent += '\n===== Notes ======\n\n';
     for (var n in notes) {
-      content += decodeSpecialChar(notes[n]);
-      content += '\n';
+      blobContent += decodeSpecialChar(notes[n]);
+      blobContent += '\n';
     }
-    myBlob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    myBlob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
     fileName += '.txt';
     saveAs(myBlob, fileName);
   }
@@ -1574,7 +1574,7 @@ function parseInput() {
     break;
   case 'saveas':
     stack.pop();
-    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].prettyPrint(), true) : saveFile('', true)
+    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true);
     btn_delete();
     break;
   case 'size':
@@ -1589,7 +1589,7 @@ function parseInput() {
     break;
   case 'tostring':
     stack.pop();
-    saveFile(stack[stack.length - 1].prettyPrint(), false);
+    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, false) : saveFile('', false);
     btn_delete();
     break;
   case 'twig':
@@ -1779,6 +1779,7 @@ function updateDisplay() {
   $('lstStack').scrollTop = $('lstStack').scrollHeight;
   $('txtInput').select();
 }
+
 function prettyPrint(i, content) {
   // If not a number and not imaginary
   if (isNaN(stack[i].getRealPart()) && isNaN(stack[i].getImaginary())) {
@@ -1992,39 +1993,6 @@ function decodeSpecialChar(tmpString) {
   return tmpString;
 }
 
-// // Extract Real component from 'soul' of argument
-// function extractReal(tmpArray) {
-
-//   var tmpReal = '';
-  
-//   if (radix === 10) {
-//     // Here we are checking that it is not addition/subtraction expression && not an IP address && not containing evaluation symbols && an not an imaginary number
-//     if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`𝛑𝜋~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
-//       // parseFloat does the rest of the regex work for us
-//       tmpReal = parseFloat(tmpArray);
-//     }
-//   }
-//   if (radix === 2) {
-//     // If binary && not imaginary
-//     if (/[0-1]+/g.test(tmpArray) && !/^[-+]?[0-1]+j/g.test(tmpArray)) {
-//       tmpReal = parseInt(tmpArray, radix);
-//     }
-//   }
-//   if (radix === 8) {
-//     // If ocatal && not imaginary
-//     if (/[0-7]+/g.test(tmpArray) && !/^[-+]?[0-7]+j/g.test(tmpArray)) {
-//       tmpReal = parseInt(tmpArray, radix);
-//     }
-//   }
-//   if (radix === 16) {
-//     // If hexadecimal && not imaginary
-//     if (/[0-9a-f]+/g.test(tmpArray) && !/^[-+]?[0-9a-f]+j/g.test(tmpArray)) {
-//       tmpReal = parseInt(tmpArray, radix);
-//     }
-//   }
-//   if (tmpReal === '') tmpReal = NaN;
-//   return tmpReal;
-// }
 // Extract Real component from 'soul' of argument
 function extractReal(tmpArray) {
 
@@ -2034,25 +2002,25 @@ function extractReal(tmpArray) {
   
   if (radix === 10) {
     // Here we are checking that it is not addition/subtraction expression && not an IP address && not containing evaluation symbols && an not an imaginary number
-    if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`𝛑𝜋~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
     }
   }
   if (radix === 2) {
-    // If binary && not imaginary
+    // Looking for a binary number but not an imaginary number
     if (/[0-1]+/g.test(tmpArray) && !/^[-+]?[0-1]+j/g.test(tmpArray)) {
       tmpReal = parseInt(tmpArray, radix);
     }
   }
   if (radix === 8) {
-    // If ocatal && not imaginary
+    // Looking for an ocatal number but not an imaginary number
     if (/[0-7]+/g.test(tmpArray) && !/^[-+]?[0-7]+j/g.test(tmpArray)) {
       tmpReal = parseInt(tmpArray, radix);
     }
   }
   if (radix === 16) {
-    // If hexadecimal && not imaginary
+    // Looking for a hexadecimal number but not an imaginary number
     if (/[0-9a-f]+/g.test(tmpArray) && !/^[-+]?[0-9a-f]+j/g.test(tmpArray)) {
       tmpReal = parseInt(tmpArray, radix);
     }
@@ -2060,7 +2028,8 @@ function extractReal(tmpArray) {
   if (tmpReal === '') tmpReal = NaN;
   return tmpReal;
 }
-// Extract Imaginary component from complex number
+
+// Extract Imaginary component from 'soul' of argument
 function extractImaginary(tmpArray) {
 
   var tmpImaginary = '';  
@@ -2087,6 +2056,7 @@ function extractImaginary(tmpArray) {
   return tmpImaginary;
 }
 
+// Extract units from 'soul' of argument
 function extractUnits(tmpArray) {
 
   var tmpUnits = '';
