@@ -13,11 +13,16 @@ var restores = [33];
 var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
-var 𝜋 = 3.141592653589793;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-var stamped = '6:36:26';
+
+var Φ = 1.618033988749895;
+var 𝔢 = 2.718281828459045;
+var 𝜋 = 3.141592653589793;
+var 𝔾 = 6.674E-11;
+var 𝒸 = 299792458;
+var stamp = '0:41:58';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -1780,17 +1785,31 @@ function updateDisplay() {
   $('txtInput').select();
 }
 
+function isANumber(testString) {
+  
+  var isNumber = true;
+
+  if (isNaN(testString)) isNumber = false;
+  if (testString.toString().match(/Φ/)) isNumber = true;
+  if (testString.toString().match(/𝔢/)) isNumber = true;
+  if (testString.toString().match(/𝜋/)) isNumber = true;
+  if (testString.toString().match(/𝔾/)) isNumber = true;
+  if (testString.toString().match(/𝒸/)) isNumber = true;
+
+  return isNumber;
+}
+
 function prettyPrint(i, content) {
   // If not a number and not imaginary
-  if (isNaN(stack[i].getRealPart()) && isNaN(stack[i].getImaginary())) {
+  if (!isANumber(stack[i].getRealPart()) && !isANumber(stack[i].getImaginary())) {
     content += decodeSpecialChar(stack[i].getSoul());
   } else {
     // If a number
-    if(!isNaN(stack[i].getRealPart())) {
+    if(isANumber(stack[i].getRealPart())) {
       // Append number
       content += formatNumber(stack[i].getRealPart().toString());
       // If complex number
-      if (!isNaN(stack[i].getImaginary())) {
+      if (isANumber(stack[i].getImaginary())) {
         // If imaginary number is positive
         if (parseFloat(stack[i].getImaginary()) > 0) {
           // Append positive imaginary number
@@ -1997,34 +2016,49 @@ function decodeSpecialChar(tmpString) {
 function extractReal(tmpArray) {
 
   var tmpReal = '';
-
-  //tmpReal += parseFloat(tmpArray.match(!/^[-+]?[ ]*\d+[.]?\d*[eE]?[-+]?\d*/g) || tmpArray.match(/𝜋/));
   
   if (radix === 10) {
     // Here we are checking that it is not addition/subtraction expression && not an IP address && not containing evaluation symbols && an not an imaginary number
     if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
+
+      // Φ | 𝔢 | 𝜋 | 𝒸 (?!...)	Negative lookahead
+      if (/^[-+]?(?!ΦΦ)Φ/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?Φ/);
+      }
+      if (/^[-+]?(?!𝔢𝔢)𝔢/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?𝔢/);
+      }
+      if (/^[-+]?(?!𝜋𝜋)𝜋/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?𝜋/);
+      }
+      if (/^[-+]?(?!𝔾𝔾)𝔾/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?𝔾/);
+      }
+      if (/^[-+]?(?!𝒸𝒸)𝒸/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?𝒸/);
+      }
     }
   }
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
-    if (/[0-1]+/g.test(tmpArray) && !/^[-+]?[0-1]+j/g.test(tmpArray)) {
+    if (/^[-+]?[0-1]+/g.test(tmpArray) && !/^[-+]?[0-1]+j/g.test(tmpArray)) {
       tmpReal = parseInt(tmpArray, radix);
     }
   }
   if (radix === 8) {
     // Looking for an ocatal number but not an imaginary number
-    if (/[0-7]+/g.test(tmpArray) && !/^[-+]?[0-7]+j/g.test(tmpArray)) {
+    if (/^[-+]?[0-7]+/g.test(tmpArray) && !/^[-+]?[0-7]+j/g.test(tmpArray)) {
       tmpReal = parseInt(tmpArray, radix);
     }
   }
   if (radix === 16) {
     // Looking for a hexadecimal number but not an imaginary number
-    if (/[0-9a-f]+/g.test(tmpArray) && !/^[-+]?[0-9a-f]+j/g.test(tmpArray)) {
+    if (/^[-+]?[0-9a-f]+/g.test(tmpArray) && !/^[-+]?[0-9a-f]+j/g.test(tmpArray)) {
       tmpReal = parseInt(tmpArray, radix);
     }
-  }
+  }  
   if (tmpReal === '') tmpReal = NaN;
   return tmpReal;
 }
@@ -2382,19 +2416,22 @@ function setFixDecimal(value) {
 }
 function formatNumber(possibleNumber) {
 
-  if (radix === 10) {
-    // if (!isNaN(possibleNumber) && (possibleNumber !== '') && (possibleNumber.indexOf('e') === -1 && possibleNumber.indexOf('E') === -1)) {
-    if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
-      if (fixDecimal !== -1) {
-        possibleNumber = toFixed(possibleNumber, fixDecimal);
+  if (!/[Φ𝔢𝜋𝔾𝒸]/.test(possibleNumber)) {
+
+    if (radix === 10) {
+      
+      if (!isNaN(possibleNumber)) {
+        if (fixDecimal !== -1) {
+          possibleNumber = toFixed(possibleNumber, fixDecimal);
+        }
+        if (sciDecimal !== -1) {
+          possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
+        }
       }
-      if (sciDecimal !== -1) {
-        possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
+    } else {  
+      if (!isNaN(possibleNumber)) {
+        possibleNumber = parseInt(possibleNumber).toString(radix);
       }
-    }
-  } else {  
-    if (!isNaN(possibleNumber) && (possibleNumber !== '')) {
-      possibleNumber = parseInt(possibleNumber).toString(radix);
     }
   }
   return possibleNumber;
@@ -3396,53 +3433,31 @@ window.onload = function () {
 
   // Menu Constants
   $('menuPhi').onclick = (function() {
-    return function() {
-      // insertText((1 + Math.sqrt(5)) / 2);
-      if (radix === 10) {
-        insertText('1.618033988749895');
-      } else {
-        insertText(parseInt('1.618033988749895').toString(radix));
-      }
+    return function() { 
+      insertText('Φ');
     }
   })();
   $('menuEulers').onclick = (function() {
     return function() { 
-      if (radix === 10) {
-        // insertText(Math.exp(1));
-        insertText('2.718281828459045');
-      } else {
-        insertText(parseInt('2.718281828459045').toString(radix));
-      }
+      // insertText(Math.exp(1));
+      insertText('𝔢');      
+    }
+  })();
+  $('menuPI').onclick = (function() {
+    return function() { 
+      insertText('𝜋');
     }
   })();
   $('menuGravitationalConstant').onclick = (function() {
     return function() { 
-      if (radix === 10) {
-        insertText('6.674E-11');
-      } else {
-        insertText(parseInt('6.674E-11').toString(radix));
-      }
+      insertText('𝔾');
     }
   })();
   $('menuLightSpeed').onclick = (function() {
     return function() { 
-      if (radix === 10) {
-        insertText('299792458 m/s');
-      } else {
-        insertText(parseInt('299792458').toString(radix));
-      }
+      insertText('𝒸');
     }
-  })();
-  $('menuPI').onclick = (function() {
-    return function() {
-      if (radix === 10) {
-        // insertText(Math.PI);
-        insertText('3.141592653589793');
-      } else {
-        insertText(parseInt('3.141592653589793').toString(radix));
-      }
-    }
-  })();
+  })(); 
 
   // Menu Date
   $('menuDate').onclick = insertDate;
@@ -3530,11 +3545,6 @@ window.onload = function () {
   $('menuPlus').onclick = (function() {
     return function() { 
       insertText('+');
-    }
-  })();
-  $('menuPiSymbol').onclick = (function() {
-    return function() { 
-      insertText('𝜋');
     }
   })();
   $('menuOhm').onclick = (function() {
