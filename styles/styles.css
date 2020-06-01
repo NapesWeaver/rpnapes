@@ -63,6 +63,8 @@ img {
     border-radius: 9%;
     background-color: ButtonFace;/* Needed for linux compatibility */
     background-color: #D4D0C8;
+    border-color: #E3E3E3;
+    outline: none;
     vertical-align: middle;/* Needed for horizontal alignment with input type=button */
 }
     input:hover, button:hover {
@@ -123,6 +125,8 @@ img {
     font-size: .7em;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     background-color: #FFFFFF;
+    border-color: #E3E3E3;
+    outline: none;
     font-weight: bold;
 }
 

@@ -22,7 +22,7 @@ var 𝔢 = 2.718281828459045;
 var 𝜋 = 3.141592653589793;
 var 𝔾 = 6.674E-11;
 var 𝒸 = 299792458;
-var stamp = '0:41:58';
+var stamp = '18:29:15';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -409,11 +409,11 @@ function btn_EE() {
   if (shifted) {
 
     if (radix !== 16) {
-      if (/[-+]?\d+[.]?\d*[eE]?[-+]?\d*/g.test($('txtInput').value) && $('txtInput').value.indexOf('j') === -1) {
+      if (isANumber($('txtInput').value) && $('txtInput').value.indexOf('j') === -1) {
         insertAtCursor($('txtInput'), 'j');
       }
     } else {
-      if (/[-+]?[a-e0-9]/g.test($('txtInput').value) && $('txtInput').value.indexOf('j') === -1) {
+      if ((/[-+]?[a-e0-9]/g.test($('txtInput').value) || /[-+]?[Φ𝔢𝜋𝔾𝒸]/g.test($('txtInput').value)) && $('txtInput').value.indexOf('j') === -1) {
         insertAtCursor($('txtInput'), 'j');
       }
     }
@@ -818,7 +818,7 @@ function btn_pi() {
   }
   else {
     // insertText(Math.PI);
-    insertText('3.141592653589793');
+    insertText('𝜋');
   }
 }
 function btn_parentheses() {
@@ -2023,9 +2023,10 @@ function extractReal(tmpArray) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
 
-      // Φ | 𝔢 | 𝜋 | 𝒸 (?!...)	Negative lookahead
-      if (/^[-+]?(?!ΦΦ)Φ/.test(tmpArray)) {
+      // Φ | 𝔢 | 𝜋 | 𝔾 | 𝒸 (?!...)	Negative lookahead
+      if (/^[-+]?(?!Φj)Φ/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?Φ/);
+        console.log('y');
       }
       if (/^[-+]?(?!𝔢𝔢)𝔢/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?𝔢/);
@@ -2070,6 +2071,7 @@ function extractImaginary(tmpArray) {
 
   if (radix === 10) {
     tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
+    
     // Remove any space following a '+' or '-'
     if (tmpImaginary.charAt(1) === ' ') {
       tmpImaginary = tmpImaginary.replace(/ /g, '');
@@ -2086,6 +2088,13 @@ function extractImaginary(tmpArray) {
     }
     tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
     tmpImaginary = parseInt(tmpImaginary, radix);
+  }
+  if (/[-+]?[ ]*Φj/g.test(tmpArray)) {
+    tmpImaginary = '';
+    tmpImaginary += tmpArray.match(/[-+]?[ ]*[Φ]j/);
+    // Remove 'j'
+    tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
+    console.log('yj',tmpImaginary);
   }
   return tmpImaginary;
 }
