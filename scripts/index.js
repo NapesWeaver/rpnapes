@@ -22,7 +22,7 @@ var 𝔢 = 2.718281828459045;
 var 𝜋 = 3.141592653589793;
 var 𝔾 = 6.674E-11;
 var 𝒸 = 299792458;
-var stamp = '18:29:15';
+var stamp = '16:57:33';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -236,7 +236,7 @@ function btn_enter() {
   if (shifted) {
     evaluate($('txtInput').value);
     $('txtInput').select();
-    moveCursorToEnd($('txtInput'));
+    //moveCursorToEnd($('txtInput'));
   } else {
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
@@ -247,7 +247,7 @@ function btn_enter() {
       enterFunction();
     }
     updateDisplay();
-    parseInput();
+    parseCommand();
   }
 }
 function getX() {
@@ -274,11 +274,12 @@ function enterFunction() {
 function evaluate (input) {
 
   backupUndo();
+  parseEvaluation(input);
   try{
     $('txtInput').value = eval(input);
   } catch (e) {
     rpnAlert(e.toString());
-  }  
+  }
 }
 
 function btn_delete() {
@@ -1453,18 +1454,13 @@ function openAFile() {
   $('openFile').click();
 }
 
-function parseInput() {
+function parseCommand() {
 
   switch ($('txtInput').value.toLowerCase().trim()) {
 
   case 'about':
     stack.pop();
     inputText($('lstStack').getAttribute('placeholder'));
-    btn_enter();
-    btn_delete();
-    break;
-  case 'ai + drones =':
-    inputText('Really Super Smart Autonomous Drones');
     btn_enter();
     btn_delete();
     break;
@@ -1631,17 +1627,39 @@ function parseInput() {
   }
 }
 
+function parseEvaluation(input) {
+  // console.log(input);
+
+  // while (input.indexOf('^') !== -1) {
+
+  //  replace with Math.pow( , )
+
+  // var index = input.indexOf('^');
+  // input = [input.slice(0, index), ',', input.slice(index + 1)].join('');
+  // console.log(input);
+
+  // }
+
+  // return modified;
+  
+  return input;
+}
+// String.prototype.splice = function(start, delCount, newSubStr) {
+//   return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
+// };
 
 // onfocus events and functions wired into the HTML
 function lstStackFocus() {
+  // Called from HTML
   stackFocus = true;
 }
 function txtInputFocus() {
+  // Called from HTML
   stackFocus = false;
 }
 
 function convertBase(r) {
-
+  // Called from HTML
   fixDecimal = -1;
   sciDecimal = -1;
 
@@ -2018,15 +2036,14 @@ function extractReal(tmpArray) {
   var tmpReal = '';
   
   if (radix === 10) {
-    // Here we are checking that it is not addition/subtraction expression && not an IP address && not containing evaluation symbols && an not an imaginary number
-    if (!/^\d+[-+]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    // Here we are checking that it is not addition, subtraction, multiplication, division or power-of expression && not an IP address && not containing evaluation symbols && an not an imaginary number
+    if (!/^[\dΦ𝔢𝜋𝔾𝒸]+[-+*/^]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
 
       // Φ | 𝔢 | 𝜋 | 𝔾 | 𝒸 (?!...)	Negative lookahead
       if (/^[-+]?(?!Φj)Φ/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?Φ/);
-        console.log('y');
       }
       if (/^[-+]?(?!𝔢𝔢)𝔢/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?𝔢/);
