@@ -22,7 +22,7 @@ var 𝔢 = 2.718281828459045;
 var 𝜋 = 3.141592653589793;
 var 𝔾 = 6.674E-11;
 var 𝒸 = 299792458;
-var stamp = '16:57:33';
+var stamp = '13:1:47';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
@@ -274,10 +274,9 @@ function enterFunction() {
 function evaluate (input) {
 
   backupUndo();
-  parseEvaluation(input);
 
   try{
-    $('txtInput').value = eval($('txtInput').value);
+    $('txtInput').value = eval(parseEvaluation(input));
   } catch (e) {
     rpnAlert(e.toString());
   }
@@ -1630,7 +1629,18 @@ function parseCommand() {
 
 function parseEvaluation(input) {
     
-  // while (/[\^√]/.test(input)) {
+  // sin(), asin() ,cos(), acos(), tan(), atan() -> 
+
+  // √ -> Math.sqrt(x)
+  // nth root -> Math.pow(y, x/root)
+
+  // ln(x) -> Math.log(x)
+  // log(x) -> Math.log(10) / Math.log(x)
+  // log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
+
+  // ! -> 
+
+  // Still need to check input for baddies...
   while (/[\^]/.test(input)) {
 
     var inputArr = input.split('');
@@ -1648,8 +1658,8 @@ function parseEvaluation(input) {
     inputArr.splice(iStop, 0, ')');
 
     input = inputArr.join('');
-  }  
-  $('txtInput').value = input;
+  }
+  return input;
 }
 
 // onfocus events and functions wired into the HTML
