@@ -7,6 +7,14 @@ navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mo
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 //var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+
+const Φ = 1.618033988749895;
+const 𝔢 = 2.718281828459045;
+const 𝜋 = 3.141592653589793;
+const 𝔾 = 6.674E-11;
+const 𝒸 = 299792458;
+const stamp = '13:1:47';
+
 var stack = [];
 var backUps = [33];
 var restores = [33];
@@ -16,13 +24,6 @@ var shifted = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
-
-var Φ = 1.618033988749895;
-var 𝔢 = 2.718281828459045;
-var 𝜋 = 3.141592653589793;
-var 𝔾 = 6.674E-11;
-var 𝒸 = 299792458;
-var stamp = '13:1:47';
 
 function NumberObject(soul, realPart, imaginary, units, timeStamp) {
 
