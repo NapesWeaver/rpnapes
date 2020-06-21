@@ -275,8 +275,9 @@ function evaluate (input) {
 
   backupUndo();
   parseEvaluation(input);
+
   try{
-    $('txtInput').value = eval(input);
+    $('txtInput').value = eval($('txtInput').value);
   } catch (e) {
     rpnAlert(e.toString());
   }
@@ -1628,25 +1629,28 @@ function parseCommand() {
 }
 
 function parseEvaluation(input) {
-  // console.log(input);
+    
+  // while (/[\^√]/.test(input)) {
+  while (/[\^]/.test(input)) {
 
-  // while (input.indexOf('^') !== -1) {
+    var inputArr = input.split('');
+    var iStart = 0;
+    // Change symbol to comma
+    do { iStart++; } while (!/[\^]/.test(inputArr[iStart]));
+    inputArr[iStart] = ',';
 
-  //  replace with Math.pow( , )
+    var iStop = iStart;
+    // Insert 'Math.pow('
+    do { iStart--; } while (iStart < 0 && !/[-+*/^√(]/.test(inputArr[iStart]));
+    inputArr.splice(iStart, 0, 'Math.pow(');
+    // Insert ')'
+    do { iStop++; } while (iStop < inputArr.length && !/[-+*/^√(]/.test(inputArr[iStop]));
+    inputArr.splice(iStop, 0, ')');
 
-  // var index = input.indexOf('^');
-  // input = [input.slice(0, index), ',', input.slice(index + 1)].join('');
-  // console.log(input);
-
-  // }
-
-  // return modified;
-  
-  return input;
+    input = inputArr.join('');
+  }  
+  $('txtInput').value = input;
 }
-// String.prototype.splice = function(start, delCount, newSubStr) {
-//   return this.slice(0, start) + newSubStr + this.slice(start + Math.abs(delCount));
-// };
 
 // onfocus events and functions wired into the HTML
 function lstStackFocus() {
@@ -2036,12 +2040,12 @@ function extractReal(tmpArray) {
   var tmpReal = '';
   
   if (radix === 10) {
-    // Here we are checking that it is not addition, subtraction, multiplication, division or power-of expression && not an IP address && not containing evaluation symbols && an not an imaginary number
-    if (!/^[\dΦ𝔢𝜋𝔾𝒸]+[-+*/^]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number
+    if (!/^[\dΦ𝔢𝜋𝔾𝒸]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
 
-      // Φ | 𝔢 | 𝜋 | 𝔾 | 𝒸 (?!...)	Negative lookahead
+      // Φ | 𝔢 | 𝜋 | 𝔾 | 𝒸  (?!...negative lookahead)
       if (/^[-+]?(?!Φj)Φ/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?Φ/);
       }
