@@ -13,7 +13,7 @@ const 𝔢 = 2.718281828459045;
 const 𝜋 = 3.141592653589793;
 const 𝔾 = 6.674E-11;
 const 𝒸 = 299792458;
-const stamp = '13:1:47';
+const stamp = '14:44:27';
 
 var stack = [];
 var backUps = [33];
@@ -235,9 +235,9 @@ function btn_enter() {
   hapticResponse();
 
   if (shifted) {
+    
     evaluate($('txtInput').value);
     $('txtInput').select();
-    //moveCursorToEnd($('txtInput'));
   } else {
     if (stackFocus) {
       selectText('lstStack', 'lstStack');
@@ -643,7 +643,7 @@ function loadStack(tmpStack) {
     var tmpArray = [];
     tmpArray = tmpStack.shift();
     pushObjectToStack(tmpArray);
-    // Evaluate code ???
+    
     if (shifted) {evaluate(decodeSpecialChar(stack[stack.length - 1].soul));}
   }    
 }
@@ -1638,10 +1638,15 @@ function parseCommand() {
 
 function parseEvaluation(input) {
     
-  // sin(), asin() ,cos(), acos(), tan(), atan() -> 
+  // Still need to check input for baddies... 
+  while (/\^/.test(input)) input = parsePower(input);
+  if (/sin[(]/.test(input)) input = parseSine(input);
+  // Still to come...
+
+  // asin() ,cos(), acos(), tan(), atan() -> Math...
 
   // √ -> Math.sqrt(x)
-  // nth root -> Math.pow(y, x/root)
+  // nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5
 
   // ln(x) -> Math.log(x)
   // log(x) -> Math.log(10) / Math.log(x)
@@ -1649,40 +1654,57 @@ function parseEvaluation(input) {
 
   // ! -> 
 
-  // Still need to check input for baddies...
-  while (/[\^]/.test(input)) {
+  return input;  
 
-    var inputArr = input.split('');
-    var iStart = 0;
-    // Change symbol to comma
-    do { iStart++; } while (!/[\^]/.test(inputArr[iStart]));
-    inputArr[iStart] = ',';
+}
+function parsePower(input) {
 
-    var iStop = iStart;
-    // Insert 'Math.pow('
-    do { iStart--; } while (iStart < 0 && !/[-+*/^√(]/.test(inputArr[iStart]));
-    inputArr.splice(iStart, 0, 'Math.pow(');
-    // Insert ')'
-    do { iStop++; } while (iStop < inputArr.length && !/[-+*/^√(]/.test(inputArr[iStop]));
-    inputArr.splice(iStop, 0, ')');
+  var inputArr = input.split('');
+  var iStart = 0;
+  // Change symbol to comma
+  do { iStart++; } while (!/\^/.test(inputArr[iStart]));
+  inputArr[iStart] = ',';
 
-    input = inputArr.join('');
+  var iStop = iStart;
+  // Insert 'Math.pow('
+  do { iStart--; } while (iStart < 0 && !/[-+*/^√(]/.test(inputArr[iStart]));
+  inputArr.splice(iStart, 0, 'Math.pow(');
+  // Insert ')'
+  do { iStop++; } while (iStop < inputArr.length && !/[-+*/^√(]/.test(inputArr[iStop]));
+  inputArr.splice(iStop, 0, ')');
+
+  input = inputArr.join('');
+  
+  return input;
+}
+function parseSine(input) {
+
+  var inputArr = input.split('');
+
+  for (var i = 0; i < inputArr.length - 3; i++) {
+    
+    if (inputArr[i] === 's' && inputArr[i + 1] === 'i' && inputArr[i + 2] === 'n' && inputArr[i + 3] === '(') {
+
+      inputArr.splice(i, 0, 'Math.');
+      i = i + 8;
+    }
   }
+  input = inputArr.join('');
+  
   return input;
 }
 
-// onfocus events and functions wired into the HTML
+// Called from HTML
 function lstStackFocus() {
-  // Called from HTML
   stackFocus = true;
 }
+// Called from HTML
 function txtInputFocus() {
-  // Called from HTML
   stackFocus = false;
 }
 
+// Called from HTML
 function convertBase(r) {
-  // Called from HTML
   fixDecimal = -1;
   sciDecimal = -1;
 
