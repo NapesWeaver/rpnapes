@@ -13,7 +13,7 @@ const 𝔢 = 2.718281828459045;
 const 𝜋 = 3.141592653589793;
 const 𝔾 = 6.674E-11;
 const 𝒸 = 299792458;
-const stamp = '14:44:27';
+const stamp = '15:25:0';
 
 var stack = [];
 var backUps = [33];
@@ -1640,11 +1640,11 @@ function parseEvaluation(input) {
     
   // Still need to check input for baddies... 
   while (/\^/.test(input)) input = parsePower(input);
+  // eval radians or degrees ???
   if (/sin[(]/.test(input)) input = parseSine(input);
-  // Still to come...
-
-  // asin() ,cos(), acos(), tan(), atan() -> Math...
-
+  if (/cos[(]/.test(input)) input = parseCosine(input);
+  if (/tan[(]/.test(input)) input = parseTangent(input);
+  
   // √ -> Math.sqrt(x)
   // nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5
 
@@ -1654,8 +1654,7 @@ function parseEvaluation(input) {
 
   // ! -> 
 
-  return input;  
-
+  return input;
 }
 function parsePower(input) {
 
@@ -1682,8 +1681,55 @@ function parseSine(input) {
   var inputArr = input.split('');
 
   for (var i = 0; i < inputArr.length - 3; i++) {
-    
+
+    if (inputArr[i] === 'a' && inputArr[i + 1] === 's' && inputArr[i + 2] === 'i' && inputArr[i + 3] === 'n' && inputArr[i + 4] === '(') {
+
+      inputArr.splice(i, 0, 'Math.');
+      i = i + 9;
+    }    
     if (inputArr[i] === 's' && inputArr[i + 1] === 'i' && inputArr[i + 2] === 'n' && inputArr[i + 3] === '(') {
+
+      inputArr.splice(i, 0, 'Math.');
+      i = i + 8;
+    }
+  }
+  input = inputArr.join('');
+  
+  return input;
+}
+function parseCosine(input) {
+
+  var inputArr = input.split('');
+
+  for (var i = 0; i < inputArr.length - 3; i++) {
+
+    if (inputArr[i] === 'a' && inputArr[i + 1] === 'c' && inputArr[i + 2] === 'o' && inputArr[i + 3] === 's' && inputArr[i + 4] === '(') {
+
+      inputArr.splice(i, 0, 'Math.');
+      i = i + 9;
+    }    
+    if (inputArr[i] === 'c' && inputArr[i + 1] === 'o' && inputArr[i + 2] === 's' && inputArr[i + 3] === '(') {
+
+      inputArr.splice(i, 0, 'Math.');
+      i = i + 8;
+    }
+  }
+  input = inputArr.join('');
+  
+  return input;
+}
+function parseTangent(input) {
+
+  var inputArr = input.split('');
+
+  for (var i = 0; i < inputArr.length - 3; i++) {
+
+    if (inputArr[i] === 'a' && inputArr[i + 1] === 't' && inputArr[i + 2] === 'a' && inputArr[i + 3] === 'n' && inputArr[i + 4] === '(') {
+
+      inputArr.splice(i, 0, 'Math.');
+      i = i + 9;
+    }    
+    if (inputArr[i] === 't' && inputArr[i + 1] === 'a' && inputArr[i + 2] === 'n' && inputArr[i + 3] === '(') {
 
       inputArr.splice(i, 0, 'Math.');
       i = i + 8;
