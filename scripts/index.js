@@ -1050,70 +1050,87 @@ function btn_sine() {
   hapticResponse();
   backupUndo();
 
+  $('txtInput').value = computeSine($('txtInput').value);
+
+  updateDisplay();
+  $('txtInput').select();  
+}
+function computeSine(input) {
+
   if (shifted) {
     if ($('btnAngle').value === 'rad') {
-      $('txtInput').value = Math.asin(extractReal($('txtInput').value));
+      input = Math.asin(extractReal(input));
     }
     else {
-      $('txtInput').value = Math.asin(extractReal($('txtInput').value)) * 180 / Math.PI;
+      input = Math.asin(extractReal(input)) * 180 / Math.PI;
     }
   } else {
     if ($('btnAngle').value === 'rad') {  
-      $('txtInput').value = Math.sin(extractReal($('txtInput').value));
+      input = Math.sin(extractReal(input));
     }
     else {
-      $('txtInput').value = Math.sin(extractReal($('txtInput').value) * Math.PI / 180);
+      input = Math.sin(extractReal(input) * Math.PI / 180);
     }
   }
-  updateDisplay();
-  $('txtInput').select();  
+  return input;
 }
 function btn_cosine() {
 
   hapticResponse();
   backupUndo();
 
-  if (shifted) {
-    if ($('btnAngle').value === 'rad') {
-      $('txtInput').value = Math.acos(extractReal($('txtInput').value));
-    }
-    else {
-      $('txtInput').value = Math.acos(extractReal($('txtInput').value)) * 180 / Math.PI;
-    }
-  } else {
-    if ($('btnAngle').value === 'rad') {
-      $('txtInput').value = Math.cos(extractReal($('txtInput').value));
-    }
-    else {
-      $('txtInput').value = Math.cos(extractReal($('txtInput').value) * Math.PI / 180);
-    }
-  }
+  $('txtInput').value = computeCosine($('txtInput').value);
+
   updateDisplay();
   $('txtInput').select();
+}
+function computeCosine(input) {
+  
+  if (shifted) {
+    if ($('btnAngle').value === 'rad') {
+      input = Math.acos(extractReal(input));
+    }
+    else {
+      input = Math.acos(extractReal(input)) * 180 / Math.PI;
+    }
+  } else {
+    if ($('btnAngle').value === 'rad') {  
+      input = Math.cos(extractReal(input));
+    }
+    else {
+      input = Math.cos(extractReal(input) * Math.PI / 180);
+    }
+  }
+  return input;
 }
 function btn_tangent() {
 
   hapticResponse();
   backupUndo();
 
-  if (shifted) {
-    if ($('btnAngle').value === 'rad') {
-      $('txtInput').value = Math.atan(extractReal($('txtInput').value));
-    }
-    else {
-      $('txtInput').value = Math.atan(extractReal($('txtInput').value)) * 180 / Math.PI;
-    }
-  }
-  else {
-    if ($('btnAngle').value === 'rad') {
-      $('txtInput').value = Math.tan(extractReal($('txtInput').value));
-    }
-    else {
-      $('txtInput').value = Math.tan(extractReal($('txtInput').value) * Math.PI / 180);
-    }
-  }
+  $('txtInput').value = computeTangent($('txtInput').value);
+
   updateDisplay();
   $('txtInput').select();
+}
+function computeTangent(input) {
+
+  if (shifted) {
+    if ($('btnAngle').value === 'rad') {
+      input = Math.atan(extractReal(input));
+    }
+    else {
+      input = Math.atan(extractReal(input)) * 180 / Math.PI;
+    }
+  } else {
+    if ($('btnAngle').value === 'rad') {  
+      input = Math.tan(extractReal(input));
+    }
+    else {
+      input = Math.tan(extractReal(input) * Math.PI / 180);
+    }
+  }
+  return input;
 }
 
 //////// Input Buttons ///////////////////////////////////////////////////////////////
@@ -1641,9 +1658,9 @@ function parseEvaluation(input) {
   // Still need to check input for baddies... 
   while (/\^/.test(input)) input = parsePower(input);
   // eval radians or degrees ???
-  if (/sin[(]/.test(input)) input = parseSine(input);
-  if (/cos[(]/.test(input)) input = parseCosine(input);
-  if (/tan[(]/.test(input)) input = parseTangent(input);
+  if (/sin[(]/.test(input)) input = parseTrigs(input, 'sin');
+  if (/cos[(]/.test(input)) input = parseTrigs(input, 'cos');
+  if (/tan[(]/.test(input)) input = parseTrigs(input, 'tan');
   
   // √ -> Math.sqrt(x)
   // nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5
@@ -1676,61 +1693,37 @@ function parsePower(input) {
   
   return input;
 }
-function parseSine(input) {
+// function parseTrigs(input, prefix) {
 
-  var inputArr = input.split('');
+//   var inputArr = input.split('');
 
-  for (var i = 0; i < inputArr.length - 3; i++) {
+//   for (var i = 0; i < inputArr.length - 3; i++) {
 
-    if (inputArr[i] === 'a' && inputArr[i + 1] === 's' && inputArr[i + 2] === 'i' && inputArr[i + 3] === 'n' && inputArr[i + 4] === '(') {
-
-      inputArr.splice(i, 0, 'Math.');
-      i = i + 9;
-    }    
-    if (inputArr[i] === 's' && inputArr[i + 1] === 'i' && inputArr[i + 2] === 'n' && inputArr[i + 3] === '(') {
-
-      inputArr.splice(i, 0, 'Math.');
-      i = i + 8;
-    }
-  }
-  input = inputArr.join('');
+//     if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
+//       inputArr.splice(i, 0, 'Math.');
+//       i = i + 9;
+//     }    
+//     if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
+//       inputArr.splice(i, 0, 'Math.');
+//       i = i + 8;
+//     }
+//   }
+//   input = inputArr.join('');
   
-  return input;
-}
-function parseCosine(input) {
+//   return input;
+// }
+
+function parseTrigs(input, prefix) {
 
   var inputArr = input.split('');
 
   for (var i = 0; i < inputArr.length - 3; i++) {
 
-    if (inputArr[i] === 'a' && inputArr[i + 1] === 'c' && inputArr[i + 2] === 'o' && inputArr[i + 3] === 's' && inputArr[i + 4] === '(') {
-
+    if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
       inputArr.splice(i, 0, 'Math.');
       i = i + 9;
     }    
-    if (inputArr[i] === 'c' && inputArr[i + 1] === 'o' && inputArr[i + 2] === 's' && inputArr[i + 3] === '(') {
-
-      inputArr.splice(i, 0, 'Math.');
-      i = i + 8;
-    }
-  }
-  input = inputArr.join('');
-  
-  return input;
-}
-function parseTangent(input) {
-
-  var inputArr = input.split('');
-
-  for (var i = 0; i < inputArr.length - 3; i++) {
-
-    if (inputArr[i] === 'a' && inputArr[i + 1] === 't' && inputArr[i + 2] === 'a' && inputArr[i + 3] === 'n' && inputArr[i + 4] === '(') {
-
-      inputArr.splice(i, 0, 'Math.');
-      i = i + 9;
-    }    
-    if (inputArr[i] === 't' && inputArr[i + 1] === 'a' && inputArr[i + 2] === 'n' && inputArr[i + 3] === '(') {
-
+    if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
       inputArr.splice(i, 0, 'Math.');
       i = i + 8;
     }
