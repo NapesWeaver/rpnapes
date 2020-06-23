@@ -1618,8 +1618,9 @@ function parseCommand() {
 
 function parseEvaluation(input) {
   
-  while (/\^/.test(input)) input = parsePower(input);
+  while (/[Φ𝔢𝜋𝔾𝒸\d)]\^/.test(input)) input = parsePower(input);
   if (/sin[(]/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
+  // if (/(?![.]sin[()])sin[(]/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
   if (/cos[(]/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
   if (/tan[(]/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);  
   while (/√/.test(input)) input = parseRoot(input);// nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5 
@@ -1634,6 +1635,8 @@ function parseRoot(input) {
   return input;
 }
 function parsePower(input) {
+
+  // ��
 
   var inputArr = input.split('');
   var startPos = 0;
@@ -1654,7 +1657,8 @@ function parsePower(input) {
   }
   while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses > 0);
   
-  inputArr.splice(endPos, 0, ')');  
+  inputArr.splice(endPos, 0, ')');
+  console.log(inputArr);
   input = inputArr.join('');
   
   return input;
@@ -2352,7 +2356,7 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
       var tmpUnitsB = '';
       var expB = 1;
 
-      tmpUnitsB += unitsB[b].match(/!?[Ω♥a-zA-Z]+/);
+      tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
       if (unitsB[b].indexOf('^') !== -1) {
         expB = unitsB[b].match(/[-]?[.0-9]+/);
       }
