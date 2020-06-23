@@ -13,7 +13,7 @@ const 𝔢 = 2.718281828459045;
 const 𝜋 = 3.141592653589793;
 const 𝔾 = 6.674E-11;
 const 𝒸 = 299792458;
-const stamp = '15:25:0';
+const stamp = '11:44:12';
 
 var stack = [];
 var backUps = [33];
@@ -1617,13 +1617,12 @@ function parseCommand() {
 }
 
 function parseEvaluation(input) {
-    
-  // Still need to check input for baddies... 
+  
+  // *add multiplication symbols needed
   while (/\^/.test(input)) input = parsePower(input);
-  // eval radians or degrees ???
-  if (/sin[(]/.test(input)) input = parseTrigs(input, 'sin');
-  if (/cos[(]/.test(input)) input = parseTrigs(input, 'cos');
-  if (/tan[(]/.test(input)) input = parseTrigs(input, 'tan');
+  if (/sin[(]/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
+  if (/cos[(]/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
+  if (/tan[(]/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);
   
   // √ -> Math.sqrt(x)
   // nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5
@@ -1636,10 +1635,45 @@ function parseEvaluation(input) {
 
   return input;
 }
+function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
+
+  var inputArr = input.split('');
+  var startPos = 0;
+  var endPos = 0;
+  var result = 0;
+  
+  for (var i = 0; i < inputArr.length - 3; i++) {
+
+    if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
+      
+      startPos = i + 5;
+      do { i++; }
+      while (inputArr[i] !== ')' );
+      endPos = i;
+      result = computeTrig(eval(inputArr.slice(startPos, endPos).join('')), trigFuncA);
+      inputArr.splice(startPos - 5, endPos + 6 - startPos, result);
+      i = i - 6;
+    }
+    if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
+            
+      startPos = i + 4;
+      do { i++; }
+      while (inputArr[i] !== ')');
+      endPos = i;
+      result = computeTrig(eval(inputArr.slice(startPos, endPos).join('')), trigFuncB);
+      inputArr.splice(startPos - 4, endPos + 5 - startPos, result);
+      i = i - 5;
+    }
+  }
+  input = inputArr.join('');
+  
+  return input;
+}
 function parsePower(input) {
 
   var inputArr = input.split('');
   var startPos = 0;
+  var parentheses = 1;
   // Change symbol to comma
   do { startPos++; } while (!/\^/.test(inputArr[startPos]));
   inputArr[startPos] = ',';
@@ -1649,58 +1683,20 @@ function parsePower(input) {
   do { startPos--; } while (startPos < 0 && !/[-+*/^√(]/.test(inputArr[startPos]));
   inputArr.splice(startPos, 0, 'Math.pow(');
   // Insert ')'
-  do { endPos++; } while (endPos < inputArr.length && !/[-+*/^√(]/.test(inputArr[endPos]));
-  inputArr.splice(endPos, 0, ')');
-
-  input = inputArr.join('');
-  
-  return input;
-}
-function parseTrigs(input, prefix) {
-
-  var inputArr = input.split('');
-
-  for (var i = 0; i < inputArr.length - 3; i++) {
-
-    if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
-      inputArr.splice(i, 0, 'Math.');
-      i = i + 9;
-    }    
-    if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
-      inputArr.splice(i, 0, 'Math.');
-      i = i + 8;
-    }
+  do {
+    endPos++; 
+    if (inputArr[endPos] === '(') parentheses++;
+    if (inputArr[endPos] === ')') parentheses--;  
   }
+  while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses !== 1);
+  
+  inputArr.splice(endPos, 0, ')');
+  console.log(inputArr)
+  
   input = inputArr.join('');
   
   return input;
 }
-// function parseTrigs(input, prefix) {
-
-//   var inputArr = input.split('');
-//   var startPos = 0;
-//   var endPos = 0;
-  
-//   for (var i = 0; i < inputArr.length - 3; i++) {
-
-//     if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
-//       inputArr.splice(i, 0, 'Math.');
-//       i = i + 7;
-//     }    
-//     if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
-//       // inputArr.splice(i, 0, 'Math.');
-//       startPos = i + 4;
-//       do { i++ } while (inputArr[i] !== ')');
-//       endPos = i;
-//       // console.log(computeSine(inputArr.slice(startPos, endPos).join('')));
-//       console.log(computeSine(90));
-
-//     }
-//   }
-//   input = inputArr.join('');
-  
-//   return input;
-// }
 
 // Called from HTML
 function lstStackFocus() {
