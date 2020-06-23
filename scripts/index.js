@@ -1050,85 +1050,48 @@ function btn_sine() {
   hapticResponse();
   backupUndo();
 
-  $('txtInput').value = computeSine($('txtInput').value);
-
+  if (shifted) {
+    $('txtInput').value = computeTrig($('txtInput').value, Math.asin);
+  } else {
+    $('txtInput').value = computeTrig($('txtInput').value, Math.sin);
+  }
   updateDisplay();
   $('txtInput').select();  
-}
-function computeSine(input) {
-
-  if (shifted) {
-    if ($('btnAngle').value === 'rad') {
-      input = Math.asin(extractReal(input));
-    }
-    else {
-      input = Math.asin(extractReal(input)) * 180 / Math.PI;
-    }
-  } else {
-    if ($('btnAngle').value === 'rad') {  
-      input = Math.sin(extractReal(input));
-    }
-    else {
-      input = Math.sin(extractReal(input) * Math.PI / 180);
-    }
-  }
-  return input;
 }
 function btn_cosine() {
 
   hapticResponse();
   backupUndo();
 
-  $('txtInput').value = computeCosine($('txtInput').value);
-
+  if (shifted) {
+    $('txtInput').value = computeTrig($('txtInput').value, Math.acos);
+  } else {
+    $('txtInput').value = computeTrig($('txtInput').value, Math.cos);
+  }
   updateDisplay();
   $('txtInput').select();
-}
-function computeCosine(input) {
-  
-  if (shifted) {
-    if ($('btnAngle').value === 'rad') {
-      input = Math.acos(extractReal(input));
-    }
-    else {
-      input = Math.acos(extractReal(input)) * 180 / Math.PI;
-    }
-  } else {
-    if ($('btnAngle').value === 'rad') {  
-      input = Math.cos(extractReal(input));
-    }
-    else {
-      input = Math.cos(extractReal(input) * Math.PI / 180);
-    }
-  }
-  return input;
 }
 function btn_tangent() {
 
   hapticResponse();
   backupUndo();
 
-  $('txtInput').value = computeTangent($('txtInput').value);
-
+  if (shifted) {
+    $('txtInput').value = computeTrig($('txtInput').value, Math.atan);
+  }
+  else {
+    $('txtInput').value = computeTrig($('txtInput').value, Math.tan);
+  }
   updateDisplay();
   $('txtInput').select();
 }
-function computeTangent(input) {
-
-  if (shifted) {
-    if ($('btnAngle').value === 'rad') {
-      input = Math.atan(extractReal(input));
-    }
-    else {
-      input = Math.atan(extractReal(input)) * 180 / Math.PI;
-    }
-  } else {
-    if ($('btnAngle').value === 'rad') {  
-      input = Math.tan(extractReal(input));
-    }
-    else {
-      input = Math.tan(extractReal(input) * Math.PI / 180);
-    }
+function computeTrig(input, trigFunc) {
+  
+  if ($('btnAngle').value === 'rad') {  
+    input = trigFunc(extractReal(input));
+  }
+  else {
+    input = trigFunc(extractReal(input) * Math.PI / 180);
   }
   return input;
 }
@@ -1676,43 +1639,23 @@ function parseEvaluation(input) {
 function parsePower(input) {
 
   var inputArr = input.split('');
-  var iStart = 0;
+  var startPos = 0;
   // Change symbol to comma
-  do { iStart++; } while (!/\^/.test(inputArr[iStart]));
-  inputArr[iStart] = ',';
+  do { startPos++; } while (!/\^/.test(inputArr[startPos]));
+  inputArr[startPos] = ',';
 
-  var iStop = iStart;
+  var endPos = startPos;
   // Insert 'Math.pow('
-  do { iStart--; } while (iStart < 0 && !/[-+*/^√(]/.test(inputArr[iStart]));
-  inputArr.splice(iStart, 0, 'Math.pow(');
+  do { startPos--; } while (startPos < 0 && !/[-+*/^√(]/.test(inputArr[startPos]));
+  inputArr.splice(startPos, 0, 'Math.pow(');
   // Insert ')'
-  do { iStop++; } while (iStop < inputArr.length && !/[-+*/^√(]/.test(inputArr[iStop]));
-  inputArr.splice(iStop, 0, ')');
+  do { endPos++; } while (endPos < inputArr.length && !/[-+*/^√(]/.test(inputArr[endPos]));
+  inputArr.splice(endPos, 0, ')');
 
   input = inputArr.join('');
   
   return input;
 }
-// function parseTrigs(input, prefix) {
-
-//   var inputArr = input.split('');
-
-//   for (var i = 0; i < inputArr.length - 3; i++) {
-
-//     if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
-//       inputArr.splice(i, 0, 'Math.');
-//       i = i + 9;
-//     }    
-//     if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
-//       inputArr.splice(i, 0, 'Math.');
-//       i = i + 8;
-//     }
-//   }
-//   input = inputArr.join('');
-  
-//   return input;
-// }
-
 function parseTrigs(input, prefix) {
 
   var inputArr = input.split('');
@@ -1732,6 +1675,32 @@ function parseTrigs(input, prefix) {
   
   return input;
 }
+// function parseTrigs(input, prefix) {
+
+//   var inputArr = input.split('');
+//   var startPos = 0;
+//   var endPos = 0;
+  
+//   for (var i = 0; i < inputArr.length - 3; i++) {
+
+//     if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
+//       inputArr.splice(i, 0, 'Math.');
+//       i = i + 7;
+//     }    
+//     if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
+//       // inputArr.splice(i, 0, 'Math.');
+//       startPos = i + 4;
+//       do { i++ } while (inputArr[i] !== ')');
+//       endPos = i;
+//       // console.log(computeSine(inputArr.slice(startPos, endPos).join('')));
+//       console.log(computeSine(90));
+
+//     }
+//   }
+//   input = inputArr.join('');
+  
+//   return input;
+// }
 
 // Called from HTML
 function lstStackFocus() {
