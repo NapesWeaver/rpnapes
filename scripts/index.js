@@ -13,7 +13,7 @@ const 𝔢 = 2.718281828459045;
 const 𝜋 = 3.141592653589793;
 const 𝔾 = 6.674E-11;
 const 𝒸 = 299792458;
-const stamp = '11:44:12';
+const stamp = '17:25:8';
 
 var stack = [];
 var backUps = [33];
@@ -1618,62 +1618,26 @@ function parseCommand() {
 
 function parseEvaluation(input) {
   
-  // *add multiplication symbols needed
   while (/\^/.test(input)) input = parsePower(input);
   if (/sin[(]/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
   if (/cos[(]/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
-  if (/tan[(]/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);
-  
-  // √ -> Math.sqrt(x)
-  // nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5
-
-  // ln(x) -> Math.log(x)
-  // log(x) -> Math.log(10) / Math.log(x)
-  // log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
-
-  // ! -> 
-
+  if (/tan[(]/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);  
+  while (/√/.test(input)) input = parseRoot(input);// nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5 
+  // *add ln(x) -> Math.log(x)
+  // *add log(x) -> Math.log(10) / Math.log(x)
+  // *add log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
+  // *add ! ->
   return input;
 }
-function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
+function parseRoot(input) {
 
-  var inputArr = input.split('');
-  var startPos = 0;
-  var endPos = 0;
-  var result = 0;
-  
-  for (var i = 0; i < inputArr.length - 3; i++) {
-
-    if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
-      
-      startPos = i + 5;
-      do { i++; }
-      while (inputArr[i] !== ')' );
-      endPos = i;
-      result = computeTrig(eval(inputArr.slice(startPos, endPos).join('')), trigFuncA);
-      inputArr.splice(startPos - 5, endPos + 6 - startPos, result);
-      i = i - 6;
-    }
-    if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
-            
-      startPos = i + 4;
-      do { i++; }
-      while (inputArr[i] !== ')');
-      endPos = i;
-      result = computeTrig(eval(inputArr.slice(startPos, endPos).join('')), trigFuncB);
-      inputArr.splice(startPos - 4, endPos + 5 - startPos, result);
-      i = i - 5;
-    }
-  }
-  input = inputArr.join('');
-  
   return input;
 }
 function parsePower(input) {
 
   var inputArr = input.split('');
   var startPos = 0;
-  var parentheses = 1;
+  var parentheses = 0;
   // Change symbol to comma
   do { startPos++; } while (!/\^/.test(inputArr[startPos]));
   inputArr[startPos] = ',';
@@ -1688,11 +1652,52 @@ function parsePower(input) {
     if (inputArr[endPos] === '(') parentheses++;
     if (inputArr[endPos] === ')') parentheses--;  
   }
-  while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses !== 1);
+  while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses > 0);
   
-  inputArr.splice(endPos, 0, ')');
-  console.log(inputArr)
+  inputArr.splice(endPos, 0, ')');  
+  input = inputArr.join('');
   
+  return input;
+}
+function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
+
+  var inputArr = input.split('');
+  var startPos = 0;
+  var endPos = 0;
+  var result = 0;
+  var parentheses = 0;
+  
+  for (var i = 0; i < inputArr.length - 3; i++) {
+
+    if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
+      
+      startPos = i + 5;
+      do {
+        i++; 
+        if (inputArr[i] === '(') parentheses++;
+        if (inputArr[i] === ')') parentheses--; 
+      }
+      while (inputArr[i] !== ')' || parentheses > 0);
+      endPos = i;
+      result = computeTrig(eval(inputArr.slice(startPos, endPos).join('')), trigFuncA);
+      inputArr.splice(startPos - 5, endPos + 6 - startPos, result);
+      i = i - 6;
+    }
+    if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
+            
+      startPos = i + 4;
+      do {
+        i++; 
+        if (inputArr[i] === '(') parentheses++;
+        if (inputArr[i] === ')') parentheses--; 
+      }
+      while (inputArr[i] !== ')' || parentheses > 0);
+      endPos = i;
+      result = computeTrig(eval(inputArr.slice(startPos, endPos).join('')), trigFuncB);
+      inputArr.splice(startPos - 4, endPos + 5 - startPos, result);
+      i = i - 5;
+    }
+  }
   input = inputArr.join('');
   
   return input;
