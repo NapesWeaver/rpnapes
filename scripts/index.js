@@ -473,6 +473,7 @@ function btn_shift() {
     $('btnSine').innerHTML = 'sin';
     $('btnSubtract').style.color = '#000000';
     $('btnCosine').innerHTML = 'cos';
+    $('btnLoad').value = 'LOA';
     $('btnSpace').value = '';
     $('btnAdd').style.color = '#000000';
     $('btnTangent').innerHTML = 'tan';
@@ -518,6 +519,7 @@ function btn_shift() {
     $('btnSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>'
     $('btnSubtract').style.color = '#0000A0';
     $('btnCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
+    $('btnLoad').value = 'RUN';
     $('btnSpace').value = '=';
     $('btnAdd').style.color = '#0000A0';
     $('btnTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';    
