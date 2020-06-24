@@ -1618,15 +1618,19 @@ function parseCommand() {
 
 function parseEvaluation(input) {
   
-  while (/[Φ𝔢𝜋𝔾𝒸0-9)]\^/.test(input)) input = parsePower(input);
-  if (/(?<!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
-  if (/(?<!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
-  if (/(?<!Math\.a?)tan\(/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);  
-  while (/√[(Φ𝔢𝜋𝔾𝒸0-9]/.test(input)) input = parseRoot(input);// nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5 
-  // *add ln(x) -> Math.log(x)
-  // *add log(x) -> Math.log(10) / Math.log(x)
-  // *add log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
-  // *add ! ->
+  // If input does not contain quotes or regex
+  if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {
+    
+    while (/[Φ𝔢𝜋𝔾𝒸0-9\w)]\^[(Φ𝔢𝜋𝔾𝒸0-9\w]/.test(input)) input = parsePower(input);
+    if (/(?<!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
+    if (/(?<!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
+    if (/(?<!Math\.a?)tan\(/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);  
+    while (/√[(Φ𝔢𝜋𝔾𝒸0-9]/.test(input)) input = parseRoot(input);// nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5 
+    // *add ln(x) -> Math.log(x)
+    // *add log(x) -> Math.log(10) / Math.log(x)
+    // *add log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
+    // *add ! ->
+  }  
   return input;
 }
 function parseRoot(input) {
@@ -1653,8 +1657,7 @@ function parsePower(input) {
   }
   while (startPos < 0 && !/[-+*/^√)]/.test(inputArr[startPos]) || parentheses > 0);
   inputArr.splice(startPos, 0, 'Math.pow(');
-  parentheses = 0;
-  
+  parentheses = 0;  
   // Insert ')'
   do {
     endPos++; 
