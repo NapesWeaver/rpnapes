@@ -13,7 +13,7 @@ const 𝔢 = 2.718281828459045;
 const 𝜋 = 3.141592653589793;
 const 𝔾 = 6.674E-11;
 const 𝒸 = 299792458;
-const stamp = '10:58:52';
+const stamp = '15:51:8';
 
 var stack = [];
 var backUps = [33];
@@ -141,32 +141,21 @@ function btn_copy() {
   hapticResponse();
 
   if (shifted) {
-    btn_paste();  }
-  else {
-    if (stackFocus) {
-
-      var tmpTxt;
-  
-      tmpTxt = $('txtInput').value;
-      $('txtInput').value = '';
-      copySelectedText('lstStack');
-      $('txtInput').value = tmpTxt;
-    }
-    else {
-      document.querySelector('#txtInput').select();
-      document.execCommand('copy');
-    }
+    btn_paste();
+  } else {
+    document.execCommand('copy');
   }  
 }
 function btn_paste() {
 
+  backupUndo();
+
   if (stackFocus) {
-    copySelectedText('lstStack');
+    insertSelectedText('lstStack');
   }
   else {
     if (/*@cc_on!@*/false || !!document.documentMode) {
       // IE
-      backupUndo();
       insertAtCursor($('txtInput'), window.clipboardData.getData('Text'));
     }
     else {
@@ -233,18 +222,16 @@ function xyFunction() {
 function btn_enter() {
 
   hapticResponse();
+  backupUndo();
 
-  if (shifted) {
-    
+  if (shifted) {    
     evaluate($('txtInput').value);
     $('txtInput').select();
   } else {
     if (stackFocus) {
-      selectText('lstStack', 'lstStack');
-      copySelectedText('lstStack');
+      insertSelectedText('lstStack');
     }
     else {
-      backupUndo();
       enterFunction();
     }
     updateDisplay();
@@ -272,9 +259,7 @@ function enterFunction() {
   stack.push(objX);
   $('txtInput').value = $('txtInput').value.trim();  
 }
-function evaluate (input) {
-
-  backupUndo();
+function evaluate (input) {  
 
   try{
     $('txtInput').value = eval(parseEvaluation(input));
@@ -292,14 +277,18 @@ function btn_delete() {
     backspaceKey();
   }
   else {
-    if ($('txtInput').value === '' || stackFocus) {
-      deleteFromStack();
-    } else {
-      $('txtInput').value = '';
-    }
-    updateDisplay();
-    $('txtInput').focus();
+    deleteKey();
   }
+}
+function deleteKey() {
+
+  if ($('txtInput').value === '' || stackFocus) {
+    deleteFromStack();
+  } else {
+    $('txtInput').value = '';
+  }
+  updateDisplay();
+  $('txtInput').focus();
 }
 function deleteFromStack() {
 
@@ -1415,8 +1404,8 @@ function internetSearch(domainString) {
   
   if ($('txtInput').value.trim().toLowerCase() === 'go' || $('txtInput').value.trim().toLowerCase() === 'you') {
     searchTerm = decodeSpecialChar(stack[stack.length - 2].getSoul());
-    btn_delete();
-    btn_delete();
+    deleteKey();
+    deleteKey();
   }
   else if ($('txtInput').value.trim() !== '') {
     searchTerm = $('txtInput').value.trim();
@@ -1434,7 +1423,7 @@ function help() {
 
   inputText('about, clear, date, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, print, save, saveas, size, time, tricorder, tostring, unembed, you');
   btn_enter();
-  btn_delete();
+  deleteKey();
 }
 
 function openAFile() {
@@ -1449,7 +1438,7 @@ function parseCommand() {
     stack.pop();
     inputText($('lstStack').getAttribute('placeholder'));
     btn_enter();
-    btn_delete();
+    deleteKey();
     break;
   case 'clear':
   case 'clr':
@@ -1467,7 +1456,7 @@ function parseCommand() {
   case 'embed':
     stack.pop();
     embed(stack[stack.length - 1].getSoul());
-    btn_delete();
+    deleteKey();
     saveTricorder();
     break;  
   case 'fix':
@@ -1497,13 +1486,13 @@ function parseCommand() {
   case 'how ya doing':
     inputText('Like a rhinestone cowboy!');
     btn_enter();
-    btn_delete();
+    deleteKey();
     break;
   case 'hello':
   case 'hi':
     inputText('Hallo there!');
     btn_enter();
-    btn_delete();
+    deleteKey();
     break;
   case 'ip':
     stack.pop();
@@ -1517,7 +1506,7 @@ function parseCommand() {
   case 'loa':
   case 'load':
   case 'ls':
-    btn_delete();
+    deleteKey();
     btn_load();
     break;
   case 'locus':
@@ -1540,30 +1529,30 @@ function parseCommand() {
     btn_off();
     break;
   case 'open':
-    btn_delete();
-    btn_delete();
+    deleteKey();
+    deleteKey();
     openAFile();
     break;
   case 'opennotes':
-    btn_delete();
-    btn_delete();
+    deleteKey();
+    deleteKey();
     $('txtInput').value = 'notes';
     openAFile();
     break;
   case 'print':
     stack.pop();
-    btn_delete();
+    deleteKey();
     print();
     break;
   case 'save':
     stack.pop();
-    btn_delete();
+    deleteKey();
     btn_save();
     break;
   case 'saveas':
     stack.pop();
     stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true);
-    btn_delete();
+    deleteKey();
     break;
   case 'size':
     stack.pop();
@@ -1578,27 +1567,27 @@ function parseCommand() {
   case 'tostring':
     stack.pop();
     stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, false) : saveFile('', false);
-    btn_delete();
+    deleteKey();
     break;
   case 'twig':
     stack.pop();
-    btn_delete();           
+    deleteKey();           
     monOn();
     break;
   case 'twigstat':
     stack.pop();
     monStatus();
-    btn_delete();
+    deleteKey();
     break;
   case 'tricorder':
     stack.pop();
-    btn_delete();
+    deleteKey();
     showTricorder();
     break;
   case 'unembed':
     stack.pop();
     updateDisplay();
-    btn_delete();
+    deleteKey();
     widgetSrc.shift();
     saveTricorder();
     break;
@@ -1743,7 +1732,8 @@ function convertBase(r) {
   $('txtInput').value = outputTxt;
 }
 
-function selectText(id, name) {
+// Wired to HTML
+function selectTextByIdName(id, name) {
 
   var lines = $(id).value.split('\n');
   // Calculate start/end
@@ -1783,12 +1773,11 @@ function getIndex(name) {
   return (t.value.substr(0, t.selectionStart).split('\n').length);
 }
 
-function copySelectedText(id) {
+function insertSelectedText(id) {
 
   var textComponent = $(id);
   var selectedText;
 
-  backupUndo();
   // IE version
   if (document.selection !== undefined) {
     textComponent.focus();
@@ -1802,8 +1791,6 @@ function copySelectedText(id) {
   }
   selectedText = selectedText.trim();
   insertAtCursor($('txtInput'), selectedText);
-  document.querySelector('#txtInput').select();
-  document.execCommand('copy');
 }
 
 function returnSelectedText(id) {
@@ -2552,7 +2539,8 @@ function btn_copy_notes() {
 
   var tmpTxt = '';
   tmpTxt = $('txtInput').value.trim();
-  copySelectedText('lstNotes');
+  insertSelectedText('lstNotes');
+  document.execCommand('copy');
   $('txtInput').value = tmpTxt;
 }
 function btn_paste_notes() {
@@ -3418,15 +3406,7 @@ document.addEventListener('keyup', function (event) {
     case 13:
       // Notes ENTER (Falls through)
     case 46:
-      // Notes DELETE (Falls through)
-    case 49:
-      // Notes 1 and ! (Falls through)
-    case 188:
-      // Notes , and < (Falls through)
-    case 190:
-      // Notes . and > (Falls through)
-    case 191:
-      // Notes ? and /
+      // Notes DELETE
       backupUndoNotes();
       notes = $('lstNotes').value.split('\n');
       break;
@@ -3457,7 +3437,7 @@ window.onload = function () {
       fr.onload = function () {
 
         if ($('txtInput').value.toLowerCase().trim() === ('notes')) {
-          btn_delete();
+          deleteKey();
           backupUndoNotes();
           $('lstNotes').value += this.result;
           backupUndoNotes();
@@ -3595,6 +3575,10 @@ window.onload = function () {
   $('menuTricorder').onclick = showTricorder;
   $('menuTwig').onclick = monOn;
 
+  if (isMobile) {
+    $('menuTwig').style = 'display:none';
+  }
+  
   // Menu Symbols
   $('menuParentheses').onclick = (function() {
     return function() { 
@@ -3705,9 +3689,9 @@ window.onload = function () {
   $('btnTangent').onclick = btn_tangent;
   $('btnOff').onclick = btn_off;
 
-  if (isMobile) {
-    $('menuTwig').style = 'display:none';
-  }
+  $('txtInput').addEventListener('paste', function() {
+    backupUndo();
+  });
 
   // Tricorder
   viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
@@ -3745,7 +3729,7 @@ window.onload = function () {
     setTimeout(function(){
       if (notes.length > 0) backupUndoNotes(); 
     }, 100);
-  });
+  });  
 
   // Attach hapticResponse
   var elements = document.getElementsByClassName('haptic-response');
@@ -3781,8 +3765,8 @@ window.onload = function () {
     $('btnSave').style.color = '#D4D0C8';
   }
   // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function
-  selectText('lstStack', 'lstStack');
-  selectText('txtInput', 'txtInput');
+  selectTextByIdName('lstStack', 'lstStack');
+  selectTextByIdName('txtInput', 'txtInput');
 
   $('txtInput').readOnly = false;
 };

@@ -115,6 +115,7 @@ img {
     font-size: .7em;
     font-weight: bold;
     color: #B92020;
+    outline: none;
 }
 
 #txtInput {
@@ -304,6 +305,7 @@ img {
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .7em;
     font-weight: bold;
+    outline: none;
 }
 
 /****** Tricorder ******************************/
