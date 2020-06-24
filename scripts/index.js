@@ -309,9 +309,10 @@ function deleteFromStack() {
 function backspaceKey() {
 
   if ($('txtInput').value === '' || stackFocus) {
-    var i = stack.length - 1;
+    // var i = stack.length - 1;
 
-    stack.splice(i, 1);
+    // stack.splice(i, 1);
+    deleteFromStack();
     updateDisplay();
   }
   else {
