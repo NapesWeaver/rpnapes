@@ -13,7 +13,7 @@ const 𝔢 = 2.718281828459045;
 const 𝜋 = 3.141592653589793;
 const 𝔾 = 6.674E-11;
 const 𝒸 = 299792458;
-const stamp = '15:51:8';
+const stamp = '18:1:57';
 
 var stack = [];
 var backUps = [33];
@@ -441,6 +441,7 @@ function btn_shift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
+    $('open').setAttribute('title', 'Open a file');
     $('menuSine').innerHTML = 'sin';
     $('menuCosine').innerHTML = 'cos';
     $('menuTangent').innerHTML = 'tan'
@@ -479,6 +480,7 @@ function btn_shift() {
   else {
     // Shifting to true...
     shifted = true;
+    $('open').setAttribute('title', 'Run JS file');
     $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
