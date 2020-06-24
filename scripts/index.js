@@ -1635,8 +1635,6 @@ function parseRoot(input) {
 }
 function parsePower(input) {
 
-  // �� = problem with symbols :( Fix !!!
-
   var inputArr = input.split('');
   var startPos = 0;
   var parentheses = 0;
@@ -1646,7 +1644,13 @@ function parsePower(input) {
 
   var endPos = startPos;
   // Insert 'Math.pow('
-  do { startPos--; } while (startPos < 0 && !/[-+*/^√(]/.test(inputArr[startPos]));
+  do {
+    startPos--;
+    console.log(inputArr[startPos]);
+    // Testing for '�'
+    if (!/[-+*/^√()\d\w]/.test(inputArr[startPos])) startPos--;
+  }
+  while (startPos < 0 && !/[-+*/^√(]/.test(inputArr[startPos]));
   inputArr.splice(startPos, 0, 'Math.pow(');
   // Insert ')'
   do {
@@ -1657,7 +1661,7 @@ function parsePower(input) {
   while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses > 0);
   
   inputArr.splice(endPos, 0, ')');
-  console.log(inputArr);
+  // console.log(inputArr);
   input = inputArr.join('');
   
   return input;
