@@ -13,7 +13,7 @@ const 𝔢 = 2.718281828459045;
 const 𝜋 = 3.141592653589793;
 const 𝔾 = 6.674E-11;
 const 𝒸 = 299792458;
-const stamp = '17:25:8';
+const stamp = '10:58:52';
 
 var stack = [];
 var backUps = [33];
@@ -1646,12 +1646,15 @@ function parsePower(input) {
   // Insert 'Math.pow('
   do {
     startPos--;
-    console.log(inputArr[startPos]);
+    if (inputArr[startPos] === ')') parentheses++;
+    if (inputArr[startPos] === '(') parentheses--;
     // Testing for '�'
     if (!/[-+*/^√()\d\w]/.test(inputArr[startPos])) startPos--;
   }
-  while (startPos < 0 && !/[-+*/^√(]/.test(inputArr[startPos]));
+  while (startPos < 0 && !/[-+*/^√)]/.test(inputArr[startPos]) || parentheses > 0);
   inputArr.splice(startPos, 0, 'Math.pow(');
+  parentheses = 0;
+  
   // Insert ')'
   do {
     endPos++; 
@@ -1661,7 +1664,6 @@ function parsePower(input) {
   while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses > 0);
   
   inputArr.splice(endPos, 0, ')');
-  // console.log(inputArr);
   input = inputArr.join('');
   
   return input;
@@ -2172,7 +2174,6 @@ function extractImaginary(tmpArray) {
     tmpImaginary += tmpArray.match(/[-+]?[ ]*[Φ]j/);
     // Remove 'j'
     tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
-    console.log('yj',tmpImaginary);
   }
   return tmpImaginary;
 }
@@ -2598,7 +2599,7 @@ function backupUndoNotes() {
   colorNotesUndoButton();
 }
 function colorNotesUndoButton() {
-  // console.log(backUpsNotes.length);
+
   if (backUpsNotes.length > 2) {
     $('btnUndoNotes').style.color = '#01c401';
   }
