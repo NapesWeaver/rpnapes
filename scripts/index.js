@@ -1618,7 +1618,7 @@ function parseCommand() {
 
 function parseEvaluation(input) {
   
-  while (/[Φ𝔢𝜋𝔾𝒸\d)]\^/.test(input)) input = parsePower(input);
+  while (/[Φ𝔢𝜋𝔾𝒸0-9)]\^/.test(input)) input = parsePower(input);
   if (/sin[(]/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
   // if (/(?![.]sin[()])sin[(]/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
   if (/cos[(]/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
