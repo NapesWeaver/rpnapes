@@ -441,6 +441,9 @@ function btn_shift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
+    $('menuLoad').innerHTML = 'Load';
+    $('menuLoad').setAttribute('title', 'Load stack');
+    // $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>Open';
     $('open').setAttribute('title', 'Open a file');
     $('menuSine').innerHTML = 'sin';
     $('menuCosine').innerHTML = 'cos';
@@ -481,6 +484,9 @@ function btn_shift() {
   else {
     // Shifting to true...
     shifted = true;
+    $('menuLoad').innerHTML = 'Run';
+    $('menuLoad').setAttribute('title', 'Run stack');
+    // $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>RunFile';
     $('open').setAttribute('title', 'Run JS file');
     $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
