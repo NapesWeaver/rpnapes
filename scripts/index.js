@@ -1618,6 +1618,7 @@ function parseCommand() {
 function parseEvaluation(input) {
   
   // If input does not contain quotes or regex
+  // ;  |  ) {  |  [{}]  |  w.w  |  ()  <- more checks for code ???
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {
     
     while (/[Φ𝔢𝜋𝔾𝒸0-9\w)]\^[(Φ𝔢𝜋𝔾𝒸0-9\w]/.test(input)) input = parsePower(input);
@@ -1714,16 +1715,15 @@ function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
   return input;
 }
 
-// Called from HTML
+// Wired to HTML
 function lstStackFocus() {
   stackFocus = true;
 }
-// Called from HTML
+// Wired to HTML
 function txtInputFocus() {
   stackFocus = false;
 }
-
-// Called from HTML
+// Wired to HTML
 function convertBase(r) {
   fixDecimal = -1;
   sciDecimal = -1;
@@ -1743,8 +1743,14 @@ function convertBase(r) {
   }
   $('txtInput').value = outputTxt;
 }
-
 // Wired to HTML
+function getStackEntry() {
+
+  backupUndo();
+  selectTextByIdName('lstStack', 'lstStack');
+  insertSelectedText('lstStack');$('txtInput').select();
+}
+
 function selectTextByIdName(id, name) {
 
   var lines = $(id).value.split('\n');
