@@ -441,10 +441,10 @@ function btn_shift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
-    $('menuLoad').innerHTML = 'Load';
-    $('menuLoad').setAttribute('title', 'Load stack');
     // $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>Open';
     $('open').setAttribute('title', 'Open a file');
+    $('menuLoad').innerHTML = 'Load';
+    $('menuLoad').setAttribute('title', 'Load stack');
     $('menuSine').innerHTML = 'sin';
     $('menuCosine').innerHTML = 'cos';
     $('menuTangent').innerHTML = 'tan'
@@ -484,10 +484,10 @@ function btn_shift() {
   else {
     // Shifting to true...
     shifted = true;
-    $('menuLoad').innerHTML = 'Run';
-    $('menuLoad').setAttribute('title', 'Run stack');
     // $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>RunFile';
     $('open').setAttribute('title', 'Run JS file');
+    $('menuLoad').innerHTML = 'Run';
+    $('menuLoad').setAttribute('title', 'Run stack');
     $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
@@ -3685,18 +3685,18 @@ window.onload = function () {
   $('btnSix').onclick = btn_six;
   $('btnMultiply').onclick = btn_multiply;
   $('btnSine').onclick = btn_sine;
-  $('btnSave').onclick = btn_save;
+  $('btnLoad').onclick = btn_load;  
 
   $('btnOne').onclick = btn_one;
   $('btnTwo').onclick = btn_two;
   $('btnThree').onclick = btn_three;
   $('btnSubtract').onclick = btn_subtract;
   $('btnCosine').onclick = btn_cosine;
-  $('btnLoad').onclick = btn_load;
+  $('btnSave').onclick = btn_save;
 
-  $('btnSpace').onclick = btn_space;
   $('btnZero').onclick = btn_zero;
   $('btnDot').onclick = btn_dot;
+  $('btnSpace').onclick = btn_space;
   $('btnAdd').onclick = btn_add;
   $('btnTangent').onclick = btn_tangent;
   $('btnOff').onclick = btn_off;
