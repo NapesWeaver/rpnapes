@@ -151,7 +151,7 @@ function btn_paste() {
   backupUndo();
 
   if (stackFocus) {
-    insertSelectedText('lstStack');
+    insertAtCursor($('txtInput'), getSelectedText('lstStack'));
   }
   else {
     if (/*@cc_on!@*/false || !!document.documentMode) {
@@ -160,9 +160,9 @@ function btn_paste() {
     }
     else {
       rpnAlert('This functionality prohibited by your browser.');
-      $('txtInput').focus();
     }
   }
+  $('txtInput').select();
 }
 
 function btn_xy() {
@@ -229,7 +229,7 @@ function btn_enter() {
     $('txtInput').select();
   } else {
     if (stackFocus) {
-      insertSelectedText('lstStack');
+      insertAtCursor($('txtInput'), getSelectedText('lstStack'));
     }
     else {
       enterFunction();
@@ -1717,7 +1717,7 @@ function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
 
 // Wired to HTML
 function lstStackFocus() {
-  stackFocus = true;
+  stackFocus = true;  
 }
 // Wired to HTML
 function txtInputFocus() {
@@ -1743,53 +1743,21 @@ function convertBase(r) {
   }
   $('txtInput').value = outputTxt;
 }
-// Wired to HTML
+
 function getStackEntry() {
 
   backupUndo();
-  selectTextByIdName('lstStack', 'lstStack');
-  insertSelectedText('lstStack');$('txtInput').select();
+  insertAtCursor($('txtInput'), getSelectedText('lstStack'));
+  $('txtInput').select();
 }
 
-function selectTextByIdName(id, name) {
-
-  var lines = $(id).value.split('\n');
-  // Calculate start/end
-  var startPos = 0, endPos = $(id).value.length;
-
-  for (var x = 0; x < lines.length; x++) {
-    if (x === getIndex(name) - 1) {
-      break;
-    }
-    startPos += (lines[x].length + 1);
-  }
-  endPos = lines[getIndex(name) - 1].length + startPos;
-
-  // Firefox
-  if (typeof ($(id).selectionStart) !== 'undefined') {
-    $(id).selectionStart = startPos;
-    $(id).selectionEnd = endPos;
-    return true;
-  }
-  // Internet Explorer
-  if (document.selection && document.selection.createRange) {
-    $(id).select();
-    var range = document.selection.createRange();
-    range.collapse(true);
-    range.moveEnd('character', endPos);
-    range.moveStart('character', startPos);
-    range.select();
-    return true;
-  }
-  return false;
-}
 function getIndex(name) {
 
   var t = document.getElementsByName(name)[0];
   return (t.value.substr(0, t.selectionStart).split('\n').length);
 }
 
-function insertSelectedText(id) {
+function getSelectedText(id) {
 
   var textComponent = $(id);
   var selectedText;
@@ -1805,8 +1773,7 @@ function insertSelectedText(id) {
     var endPos = textComponent.selectionEnd;
     selectedText = textComponent.value.substring(startPos, endPos);
   }
-  selectedText = selectedText.trim();
-  insertAtCursor($('txtInput'), selectedText);
+  return selectedText.trim();  
 }
 
 function returnSelectedText(id) {
@@ -2553,11 +2520,7 @@ function btn_copy_notes() {
 
   navigator.vibrate([18]);
 
-  var tmpTxt = '';
-  tmpTxt = $('txtInput').value.trim();
-  insertSelectedText('lstNotes');
   document.execCommand('copy');
-  $('txtInput').value = tmpTxt;
 }
 function btn_paste_notes() {
 
@@ -3785,9 +3748,6 @@ window.onload = function () {
     backupUndo();
     $('btnSave').style.color = '#D4D0C8';
   }
-  // These two lines help Internet Explorer for getIndex('lstStack') ~ btn_delete function
-  selectTextByIdName('lstStack', 'lstStack');
-  selectTextByIdName('txtInput', 'txtInput');
 
   $('txtInput').readOnly = false;
 };
