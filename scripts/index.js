@@ -13,7 +13,7 @@ const 𝔢 = 2.718281828459045;
 const 𝜋 = 3.141592653589793;
 const 𝔾 = 6.674E-11;
 const 𝒸 = 299792458;
-const stamp = '18:1:57';
+const tStamp = '18:53:5';
 
 var stack = [];
 var backUps = [33];
@@ -1767,14 +1767,12 @@ function selectTextByIdName(id, name) {
 
   // Firefox
   if (typeof ($(id).selectionStart) !== 'undefined') {
-    $(id).focus();
     $(id).selectionStart = startPos;
     $(id).selectionEnd = endPos;
     return true;
   }
   // Internet Explorer
   if (document.selection && document.selection.createRange) {
-    $(id).focus();
     $(id).select();
     var range = document.selection.createRange();
     range.collapse(true);
@@ -3261,6 +3259,11 @@ function donMove() {
 
 //////// Event listeners & window.onload /////////////////////////////////////////////
 
+document.addEventListener('click', function (evt) {
+  if (evt.detail === 3) {
+      getStackEntry();
+  }
+});
 document.addEventListener('keypress', function (event) {
 
   if ($('rpnapes').className !== 'hidden') {
