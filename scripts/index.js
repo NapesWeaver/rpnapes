@@ -1723,6 +1723,7 @@ function lstStackFocus() {
 // Wired to HTML
 function txtInputFocus() {
   stackFocus = false;
+  if (isMobile) navigator.vibrate([3]);
 }
 // Wired to HTML
 function convertBase(r) {
