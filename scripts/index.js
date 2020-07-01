@@ -78,6 +78,11 @@ function hapticResponse() {
     $('txtInput').readOnly = true;
   }
 }
+function hapticResponseB() {
+  if (isMobile) {
+    navigator.vibrate([3]);
+  }
+}
 function mobileKeyboardAllow() {
 
   if ($('txtInput').readOnly === true) {
