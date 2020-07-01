@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '16:29:17';
+const tStamp = '18:13:28';
 
 var stack = [];
 var backUps = [33];
@@ -1722,8 +1722,7 @@ function lstStackFocus() {
 }
 // Wired to HTML
 function txtInputFocus() {
-  stackFocus = false;
-  if (isMobile) navigator.vibrate([3]);
+  stackFocus = false;  
 }
 // Wired to HTML
 function convertBase(r) {
