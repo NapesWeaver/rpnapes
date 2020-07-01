@@ -2,11 +2,11 @@
   return document.getElementById(id);
 };
 
-navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 //var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+
+if (isMobile) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
 const Φ = 1.618033988749895;
 const e = 2.718281828459045;
@@ -90,7 +90,8 @@ function mobileKeyboardAllow() {
 
 function btn_xoff() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
+
   if ($('rpnapes').className === 'hidden') {
     // Notes is visible - turn on RPNapes
     rpnapesOn();
@@ -1994,8 +1995,7 @@ function encodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/♣/g, "&#9827");
   tmpString = tmpString.replace(/♥/g, '&#9829');
   //tmpString = tmpString.replace(/♦/g, "&#9830");
-  // tmpString = tmpString.replace(/𝛑/g, '&#120529');
-  // tmpString = tmpString.replace(/π/g, '&#120587');
+  // tmpString = tmpString.replace(/π/g, '&#960');
 
   return tmpString;
 }
@@ -2058,8 +2058,7 @@ function decodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/&#9827/g, "♣");
   tmpString = tmpString.replace(/&#9829/g, '♥');
   //tmpString = tmpString.replace(/&#9830/g, "♦");
-  // tmpString = tmpString.replace(/&#120529/g, '𝛑');
-  // tmpString = tmpString.replace(/&#120587/g, 'π');
+  // tmpString = tmpString.replace(/&#960/g, 'π');
 
   return tmpString;
 }
@@ -2518,13 +2517,13 @@ var restoresNotes = [33];
 
 function btn_copy_notes() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
 
   document.execCommand('copy');
 }
 function btn_paste_notes() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
   backupUndoNotes();
 
   if (/*@cc_on!@*/false || !!document.documentMode) {
@@ -2539,7 +2538,7 @@ function btn_paste_notes() {
 }
 function btn_undo_notes() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
 
   if (backUpsNotes.length > 2) {
     restoresNotes.push(nestArray(notes));
@@ -2550,7 +2549,7 @@ function btn_undo_notes() {
 }
 function btn_redo_notes() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
 
   if (restoresNotes.length > 0) {
     backUpsNotes.push(nestArray(notes));
@@ -2604,7 +2603,7 @@ function colorNotesSaveButton() {
 }
 function btn_save_notes() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
 
   var tmpY;
   $('btnSaveNotes').style.color = '#919191';
@@ -2616,7 +2615,7 @@ function btn_save_notes() {
 }
 function btn_load_notes() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
   var index = 0;
 
   backupUndoNotes();
@@ -2633,7 +2632,7 @@ function btn_load_notes() {
 }
 function btn_clear_notes() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
   backupUndoNotes();
   $('lstNotes').value = '';
   notes = $('lstNotes').value.split('\n');
@@ -2706,7 +2705,7 @@ function playAudio(obj) {
 // Power On/Off.
 function button1() {
 
-  navigator.vibrate([18]);
+  if (isMobile) navigator.vibrate([3]);
 
   if (power()) {
     tricorderOff();
@@ -2736,7 +2735,7 @@ function tricorderOn() {
 function button2() {
 
   if (power()) {
-    navigator.vibrate([18]);
+    if (isMobile) navigator.vibrate([3]);
 
     if (viewPortSrc.indexOf($('viewport').src) !== -1) {
       var i = viewPortSrc.indexOf($('viewport').src);
@@ -2755,7 +2754,7 @@ function button2() {
 function button3() {
 
   if (power()) {
-    navigator.vibrate([18]);
+    if (isMobile) navigator.vibrate([3]);
 
     if (viewPort2Src.indexOf($('viewport').src) !== -1) {
       var i = viewPort2Src.indexOf($('viewport').src);
@@ -2775,7 +2774,7 @@ function button3() {
 function button4() {
 
   if (power()) {
-    navigator.vibrate([18]);
+    if (isMobile) navigator.vibrate([3]);
 
     if ($('widget').className === 'hidden') {
       if (widgetSrc.indexOf($('widget').src) !== -1) {
@@ -2802,7 +2801,7 @@ function button4() {
 function button5() {
 
   if (power()) {
-    navigator.vibrate([18]);
+    if (isMobile) navigator.vibrate([3]);
 
     if ($('widget').className === 'hidden') {
       var srcString = '';
@@ -2831,7 +2830,7 @@ function button5() {
 function button6() {
 
   if (power()) {
-    navigator.vibrate([18]);
+    if (isMobile) navigator.vibrate([3]);
 
     if ($('widget').className === 'hidden') {
       
@@ -2855,7 +2854,7 @@ function button6() {
 function sensor1() {
 
   if (power()) {
-    navigator.vibrate([18]);
+    if (isMobile) navigator.vibrate([3]);
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
@@ -2867,7 +2866,7 @@ function sensor1() {
 function sensor2() {
 
   if (power()) {
-    navigator.vibrate([18]);
+    if (isMobile) navigator.vibrate([3]);
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
@@ -3715,9 +3714,9 @@ window.onload = function () {
     }, 100);
   });  
 
-  // Attach hapticResponse
+  // Attach hapticResponse to Menu items
   var elements = document.getElementsByClassName('haptic-response');
-
+  
   for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener('click', hapticResponse, false);
   }
