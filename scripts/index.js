@@ -227,7 +227,7 @@ function xyFunction() {
 
 function btn_enter() {
 
-  hapticResponse();
+  // hapticResponse();
   backupUndo();
 
   if (shifted) {    
