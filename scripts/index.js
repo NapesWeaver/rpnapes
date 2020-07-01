@@ -9,10 +9,10 @@ var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
 const Φ = 1.618033988749895;
-const 𝔢 = 2.718281828459045;
-const 𝜋 = 3.141592653589793;
-const 𝔾 = 6.674E-11;
-const 𝒸 = 299792458;
+const e = 2.718281828459045;
+const π = 3.141592653589793;
+const G = 6.674E-11;
+const c = 299792458;
 const tStamp = '18:53:5';
 
 var stack = [];
@@ -404,7 +404,7 @@ function btn_EE() {
         insertAtCursor($('txtInput'), 'j');
       }
     } else {
-      if ((/[-+]?[a-e0-9]/g.test($('txtInput').value) || /[-+]?[Φ𝔢𝜋𝔾𝒸]/g.test($('txtInput').value)) && $('txtInput').value.indexOf('j') === -1) {
+      if ((/[-+]?[a-e0-9]/g.test($('txtInput').value) || /[-+]?[ΦeπGc]/g.test($('txtInput').value)) && $('txtInput').value.indexOf('j') === -1) {
         insertAtCursor($('txtInput'), 'j');
       }
     }
@@ -821,7 +821,7 @@ function btn_pi() {
   }
   else {
     // insertText(Math.PI);
-    insertText('𝜋');
+    insertText('π');
   }
 }
 function btn_parentheses() {
@@ -1621,11 +1621,11 @@ function parseEvaluation(input) {
   // ;  |  ) {  |  [{}]  |  w.w  |  ()  <- more checks for code ???
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {
     
-    while (/[Φ𝔢𝜋𝔾𝒸0-9\w)]\^[(Φ𝔢𝜋𝔾𝒸0-9\w]/.test(input)) input = parsePower(input);
-    if (/(?<!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
-    if (/(?<!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
-    if (/(?<!Math\.a?)tan\(/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);  
-    while (/√[(Φ𝔢𝜋𝔾𝒸0-9]/.test(input)) input = parseRoot(input);// nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5 
+    while (/[ΦeπGc0-9\w)]\^[(ΦeπGc0-9\w]/.test(input)) input = parsePower(input);
+    if (/(?!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
+    if (/(?!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
+    if (/(?!Math\.a?)tan\(/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);  
+    while (/√[(ΦeπGc0-9]/.test(input)) input = parseRoot(input);// nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5 
     // *add ln(x) -> Math.log(x)
     // *add log(x) -> Math.log(10) / Math.log(x)
     // *add log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
@@ -1843,10 +1843,10 @@ function isANumber(testString) {
 
   if (isNaN(testString)) isNumber = false;
   if (testString.toString().match(/Φ/)) isNumber = true;
-  if (testString.toString().match(/𝔢/)) isNumber = true;
-  if (testString.toString().match(/𝜋/)) isNumber = true;
-  if (testString.toString().match(/𝔾/)) isNumber = true;
-  if (testString.toString().match(/𝒸/)) isNumber = true;
+  if (testString.toString().match(/e/)) isNumber = true;
+  if (testString.toString().match(/π/)) isNumber = true;
+  if (testString.toString().match(/G/)) isNumber = true;
+  if (testString.toString().match(/c/)) isNumber = true;
 
   return isNumber;
 }
@@ -1995,7 +1995,7 @@ function encodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/♥/g, '&#9829');
   //tmpString = tmpString.replace(/♦/g, "&#9830");
   // tmpString = tmpString.replace(/𝛑/g, '&#120529');
-  // tmpString = tmpString.replace(/𝜋/g, '&#120587');
+  // tmpString = tmpString.replace(/π/g, '&#120587');
 
   return tmpString;
 }
@@ -2059,7 +2059,7 @@ function decodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/&#9829/g, '♥');
   //tmpString = tmpString.replace(/&#9830/g, "♦");
   // tmpString = tmpString.replace(/&#120529/g, '𝛑');
-  // tmpString = tmpString.replace(/&#120587/g, '𝜋');
+  // tmpString = tmpString.replace(/&#120587/g, 'π');
 
   return tmpString;
 }
@@ -2071,25 +2071,25 @@ function extractReal(tmpArray) {
   
   if (radix === 10) {
     // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number
-    if (!/^[\dΦ𝔢𝜋𝔾𝒸]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
 
-      // Φ | 𝔢 | 𝜋 | 𝔾 | 𝒸  (?!...negative lookahead)
+      // Φ | e | π | G | c  (?!...negative lookahead)
       if (/^[-+]?(?!Φj)Φ/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?Φ/);
       }
-      if (/^[-+]?(?!𝔢𝔢)𝔢/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?𝔢/);
+      if (/^[-+]?(?!ee)e/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?e/);
       }
-      if (/^[-+]?(?!𝜋𝜋)𝜋/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?𝜋/);
+      if (/^[-+]?(?!ππ)π/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?π/);
       }
-      if (/^[-+]?(?!𝔾𝔾)𝔾/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?𝔾/);
+      if (/^[-+]?(?!GG)G/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?G/);
       }
-      if (/^[-+]?(?!𝒸𝒸)𝒸/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?𝒸/);
+      if (/^[-+]?(?!cc)c/.test(tmpArray)) {
+        tmpReal = tmpArray.match(/[-+]?c/);
       }
     }
   }
@@ -2475,7 +2475,7 @@ function setFixDecimal(value) {
 }
 function formatNumber(possibleNumber) {
 
-  if (!/[Φ𝔢𝜋𝔾𝒸]/.test(possibleNumber)) {
+  if (!/[ΦeπGc]/.test(possibleNumber)) {
 
     if (radix === 10) {
       
@@ -3493,22 +3493,22 @@ window.onload = function () {
   $('menuEulers').onclick = (function() {
     return function() { 
       // insertText(Math.exp(1));
-      insertText('𝔢');      
+      insertText('e');      
     }
   })();
   $('menuPI').onclick = (function() {
     return function() { 
-      insertText('𝜋');
+      insertText('π');
     }
   })();
   $('menuGravitationalConstant').onclick = (function() {
     return function() { 
-      insertText('𝔾');
+      insertText('G');
     }
   })();
   $('menuLightSpeed').onclick = (function() {
     return function() { 
-      insertText('𝒸');
+      insertText('c');
     }
   })(); 
 
@@ -3526,32 +3526,32 @@ window.onload = function () {
   })();
   $('menuCircumference').onclick = (function() {
     return function() {
-      insertText('2*𝜋*r');
+      insertText('2*π*r');
     }
   })();
   $('menuCircleArea').onclick = (function() {
     return function() {
-      insertText('𝜋*r^2');
+      insertText('π*r^2');
     }
   })();
   $('menuSphereArea').onclick = (function() {
     return function() {
-      insertText('4*𝜋*r^2');
+      insertText('4*π*r^2');
     }
   })();
   $('menuSphereVolume').onclick = (function() {
     return function() {
-      insertText('4/3*𝜋*r^3');
+      insertText('4/3*π*r^3');
     }
   })();
   $('menuConeArea').onclick = (function() {
     return function() {
-      insertText('𝜋*r^2 + 𝜋*r*l');
+      insertText('π*r^2 + π*r*l');
     }
   })();
   $('menuConeVolume').onclick = (function() {
     return function() {
-      insertText('h/3*𝜋*r^2');
+      insertText('h/3*π*r^2');
     }
   })();
 
