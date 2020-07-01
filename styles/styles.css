@@ -65,6 +65,7 @@ img {
     background-color: #D4D0C8;
     border-color: #E3E3E3;
     outline: none;
+    border-style: outset;
     vertical-align: middle;/* Needed for horizontal alignment with input type=button */
 }
     input:hover, button:hover {
@@ -306,6 +307,7 @@ img {
     font-size: .7em;
     font-weight: bold;
     outline: none;
+    border-style: outset;
 }
 
 /****** Tricorder ******************************/
