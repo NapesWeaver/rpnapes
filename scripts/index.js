@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '18:41:54';
+const tStamp = '18:47:50';
 
 var stack = [];
 var backUps = [33];
@@ -78,6 +78,7 @@ function hapticResponse() {
     $('txtInput').readOnly = true;
   }
 }
+// Wired To HTML
 function hapticResponseB() {
   if (isMobile) {
     navigator.vibrate([3]);
@@ -144,8 +145,6 @@ function showTricorder() {
 
 function btn_copy() {
 
-  hapticResponse();
-
   if (shifted) {
     btn_paste();
   } else {
@@ -172,8 +171,6 @@ function btn_paste() {
 }
 
 function btn_xy() {
-
-  hapticResponse();
 
   if (shifted) {
     btn_ab();
@@ -227,7 +224,6 @@ function xyFunction() {
 
 function btn_enter() {
 
-  // hapticResponse();
   backupUndo();
 
   if (shifted) {    
@@ -276,7 +272,6 @@ function evaluate (input) {
 
 function btn_delete() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -328,8 +323,6 @@ function backspace(txtField) {
 }
 
 function btn_undo() {
-
-  hapticResponse();
 
   if (shifted) {
     redoFunction();
@@ -401,8 +394,6 @@ function colorUndoButton() {
 
 function btn_EE() {
 
-  hapticResponse();
-
   if (shifted) {
 
     if (radix !== 16) {
@@ -425,7 +416,6 @@ function btn_EE() {
 
 function btn_go() {
 
-  hapticResponse();
   backupUndo();
 
   if ($('txtInput').value !== '') {
@@ -441,8 +431,6 @@ function btn_go() {
 }
 
 function btn_shift() {
-
-  hapticResponse();
 
   if (shifted) {
     // Shifting to false...
@@ -542,8 +530,6 @@ function btn_shift() {
 
 function btn_clear() {
 
-  hapticResponse();
-
   backupUndo();
   monOff();
   $('txtInput').value = '';
@@ -553,8 +539,6 @@ function btn_clear() {
 }
 
 function btn_save() {
-
-  hapticResponse();
 
   $('btnSave').style.color = '#D4D0C8';
   storeCookie('STACK', nestArray(stack));
@@ -613,8 +597,6 @@ function saveFile(fileName, pretty) {
 }
 
 function btn_load() {
-
-  hapticResponse();
 
   var index = 0;
   backupUndo();
@@ -679,7 +661,6 @@ function pushObjectToStack(tmpArray) {
 
 function btn_off() {
 
-  hapticResponse();
   monOff();
   tricorderOff();
   window.close();
@@ -691,7 +672,6 @@ function btn_off() {
 
 function btn_inverse() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -745,7 +725,6 @@ function factorial(num) {
 
 function btn_log() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -775,7 +754,6 @@ function naturalLog() {
 
 function btn_root() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -819,7 +797,6 @@ function rootFunction() {
 
 function btn_pi() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -847,7 +824,6 @@ function insertAroundSelection(txtField, txtValue) {
 
 function btn_modulus() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -862,7 +838,6 @@ function btn_modulus() {
 
 function btn_sign() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -959,7 +934,6 @@ function btn_sign() {
 
 function btn_divide() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -974,7 +948,6 @@ function btn_divide() {
 }
 function btn_multiply() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -988,7 +961,6 @@ function btn_multiply() {
 }
 function btn_subtract() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -1003,7 +975,6 @@ function btn_subtract() {
 }
 function btn_add() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -1032,8 +1003,6 @@ function addition() {
 
 function btn_angle() {
 
-  hapticResponse();
-
   if ($('btnAngle').value === 'deg') {
     $('btnAngle').value = 'rad';
     $('btnAngle').className = 'btn-small btn-angle radian-style';
@@ -1052,7 +1021,6 @@ function btn_angle() {
 }
 function btn_sine() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -1065,7 +1033,6 @@ function btn_sine() {
 }
 function btn_cosine() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -1078,7 +1045,6 @@ function btn_cosine() {
 }
 function btn_tangent() {
 
-  hapticResponse();
   backupUndo();
 
   if (shifted) {
@@ -1104,32 +1070,26 @@ function computeTrig(input, trigFunc) {
 //////// Input Buttons ///////////////////////////////////////////////////////////////
 
 function btn_dot() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '.');
   $('txtInput').focus();
 }
 function btn_zero() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '0');
   $('txtInput').focus();
 }
 function btn_one() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '1');
   $('txtInput').focus();
 }
 function btn_two() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '2');
   $('txtInput').focus();
 }
 function btn_three() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '3');
   $('txtInput').focus();
 }
 function btn_space() {
-  hapticResponse();
     
   if (shifted) {
     insertAtCursor($('txtInput'), '=');
@@ -1140,32 +1100,26 @@ function btn_space() {
   $('txtInput').focus();
 }
 function btn_four() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '4');
   $('txtInput').focus();
 }
 function btn_five() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '5');
   $('txtInput').focus();
 }
 function btn_six() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '6');
   $('txtInput').focus();
 }
 function btn_seven() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '7');
   $('txtInput').focus();
 }
 function btn_eight() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '8');
   $('txtInput').focus();
 }
 function btn_nine() {
-  hapticResponse();
   insertAtCursor($('txtInput'), '9');
   $('txtInput').focus();
 }
