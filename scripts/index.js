@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '18:30:22';
+const tStamp = '18:37:13';
 
 var stack = [];
 var backUps = [33];
@@ -456,7 +456,7 @@ function btn_shift() {
     $('menuTangent').innerHTML = 'tan'
     $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x < > y';
-    $('btnEnter').className = 'btn-big';
+    $('btnEnter').className = 'btn-big haptic-response';
     $('btnEnter').style.color = '#000000';
     $('btnEnter').value = 'ENTER';
     $('btnDelete').innerHTML = 'DEL';
@@ -499,7 +499,7 @@ function btn_shift() {
     $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
     $('btnCopy').value = 'PASTE';
     $('btnXy').value = 'a < > b';
-    $('btnEnter').className = 'btn-big btn-big-font';
+    $('btnEnter').className = 'btn-big btn-big-font haptic-response';
     // $('btnEnter').style.color = '#0F4215';
     $('btnEnter').style.color = '#008125';
     $('btnEnter').value = '=';
