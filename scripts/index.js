@@ -220,24 +220,6 @@ function xyFunction() {
   $('txtInput').focus();
 }
 
-// function btn_enter() {
-
-//   backupUndo();
-
-//   if (shifted) {    
-//     evaluate($('txtInput').value);
-//     $('txtInput').select();
-//   } else {
-//     if (stackFocus) {
-//       insertAtCursor($('txtInput'), getSelectedText('lstStack'));
-//     }
-//     else {
-//       enterFunction();
-//     }
-//     updateDisplay();
-//     parseCommand();
-//   }
-// }
 function btn_enter() {
 
   backupUndo();
@@ -3690,7 +3672,7 @@ window.onload = function () {
     }, 100);
   });  
 
-  // Attach hapticResponse to Menu items
+  // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
   
   for (var i = 0; i < elements.length; i++) {
