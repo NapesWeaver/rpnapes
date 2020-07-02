@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '18:47:50';
+const tStamp = '18:59:50';
 
 var stack = [];
 var backUps = [33];
@@ -78,8 +78,7 @@ function hapticResponse() {
     $('txtInput').readOnly = true;
   }
 }
-// Wired To HTML
-function hapticResponseB() {
+function haptic() {
   if (isMobile) {
     navigator.vibrate([3]);
   }
@@ -96,7 +95,7 @@ function mobileKeyboardAllow() {
 
 function btn_xoff() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
 
   if ($('rpnapes').className === 'hidden') {
     // Notes is visible - turn on RPNapes
@@ -2476,13 +2475,13 @@ var restoresNotes = [33];
 
 function btn_copy_notes() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
 
   document.execCommand('copy');
 }
 function btn_paste_notes() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
   backupUndoNotes();
 
   if (/*@cc_on!@*/false || !!document.documentMode) {
@@ -2497,7 +2496,7 @@ function btn_paste_notes() {
 }
 function btn_undo_notes() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
 
   if (backUpsNotes.length > 2) {
     restoresNotes.push(nestArray(notes));
@@ -2508,7 +2507,7 @@ function btn_undo_notes() {
 }
 function btn_redo_notes() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
 
   if (restoresNotes.length > 0) {
     backUpsNotes.push(nestArray(notes));
@@ -2562,7 +2561,7 @@ function colorNotesSaveButton() {
 }
 function btn_save_notes() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
 
   var tmpY;
   $('btnSaveNotes').style.color = '#919191';
@@ -2574,7 +2573,8 @@ function btn_save_notes() {
 }
 function btn_load_notes() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
+
   var index = 0;
 
   backupUndoNotes();
@@ -2591,8 +2591,9 @@ function btn_load_notes() {
 }
 function btn_clear_notes() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
   backupUndoNotes();
+
   $('lstNotes').value = '';
   notes = $('lstNotes').value.split('\n');
 }
@@ -2664,7 +2665,7 @@ function playAudio(obj) {
 // Power On/Off.
 function button1() {
 
-  if (isMobile) navigator.vibrate([3]);
+  haptic();
 
   if (power()) {
     tricorderOff();
@@ -2694,7 +2695,8 @@ function tricorderOn() {
 function button2() {
 
   if (power()) {
-    if (isMobile) navigator.vibrate([3]);
+    
+    haptic();
 
     if (viewPortSrc.indexOf($('viewport').src) !== -1) {
       var i = viewPortSrc.indexOf($('viewport').src);
@@ -2713,7 +2715,8 @@ function button2() {
 function button3() {
 
   if (power()) {
-    if (isMobile) navigator.vibrate([3]);
+
+    haptic();
 
     if (viewPort2Src.indexOf($('viewport').src) !== -1) {
       var i = viewPort2Src.indexOf($('viewport').src);
@@ -2733,7 +2736,8 @@ function button3() {
 function button4() {
 
   if (power()) {
-    if (isMobile) navigator.vibrate([3]);
+    
+    haptic();
 
     if ($('widget').className === 'hidden') {
       if (widgetSrc.indexOf($('widget').src) !== -1) {
@@ -2760,7 +2764,8 @@ function button4() {
 function button5() {
 
   if (power()) {
-    if (isMobile) navigator.vibrate([3]);
+
+    haptic();
 
     if ($('widget').className === 'hidden') {
       var srcString = '';
@@ -2789,7 +2794,8 @@ function button5() {
 function button6() {
 
   if (power()) {
-    if (isMobile) navigator.vibrate([3]);
+
+    haptic();
 
     if ($('widget').className === 'hidden') {
       
@@ -2813,7 +2819,9 @@ function button6() {
 function sensor1() {
 
   if (power()) {
-    if (isMobile) navigator.vibrate([3]);
+    
+    haptic();
+
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
@@ -2825,7 +2833,9 @@ function sensor1() {
 function sensor2() {
 
   if (power()) {
-    if (isMobile) navigator.vibrate([3]);
+
+    haptic();
+
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
