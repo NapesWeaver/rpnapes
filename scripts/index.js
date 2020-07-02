@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '19:3:23';
+const tStamp = '19:18:10';
 
 var stack = [];
 var backUps = [33];
@@ -220,11 +220,30 @@ function xyFunction() {
   $('txtInput').focus();
 }
 
+// function btn_enter() {
+
+//   backupUndo();
+
+//   if (shifted) {    
+//     evaluate($('txtInput').value);
+//     $('txtInput').select();
+//   } else {
+//     if (stackFocus) {
+//       insertAtCursor($('txtInput'), getSelectedText('lstStack'));
+//     }
+//     else {
+//       enterFunction();
+//     }
+//     updateDisplay();
+//     parseCommand();
+//   }
+// }
 function btn_enter() {
 
   backupUndo();
 
-  if (shifted) {    
+  if (shifted) {
+    if (stackFocus) insertAtCursor($('txtInput'), getSelectedText('lstStack'));
     evaluate($('txtInput').value);
     $('txtInput').select();
   } else {
@@ -238,6 +257,7 @@ function btn_enter() {
     parseCommand();
   }
 }
+
 function getX() {
 
   var soulX = $('txtInput').value.trim();
@@ -3179,7 +3199,7 @@ function donMove() {
 
 document.addEventListener('click', function (evt) {
   if (evt.detail === 3) {
-      getStackEntry();
+    getStackEntry();
   }
 });
 document.addEventListener('keypress', function (event) {
