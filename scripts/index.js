@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '18:59:50';
+const tStamp = '19:3:23';
 
 var stack = [];
 var backUps = [33];
@@ -79,6 +79,7 @@ function hapticResponse() {
   }
 }
 function haptic() {
+
   if (isMobile) {
     navigator.vibrate([3]);
   }
@@ -94,8 +95,6 @@ function mobileKeyboardAllow() {
 //////// Buttons /////////////////////////////////////////////////////////////////////
 
 function btn_xoff() {
-
-  haptic();
 
   if ($('rpnapes').className === 'hidden') {
     // Notes is visible - turn on RPNapes
@@ -2475,13 +2474,10 @@ var restoresNotes = [33];
 
 function btn_copy_notes() {
 
-  haptic();
-
   document.execCommand('copy');
 }
 function btn_paste_notes() {
 
-  haptic();
   backupUndoNotes();
 
   if (/*@cc_on!@*/false || !!document.documentMode) {
@@ -2496,8 +2492,6 @@ function btn_paste_notes() {
 }
 function btn_undo_notes() {
 
-  haptic();
-
   if (backUpsNotes.length > 2) {
     restoresNotes.push(nestArray(notes));
     notes = splitArrayByBrowser(backUpsNotes.pop());
@@ -2506,8 +2500,6 @@ function btn_undo_notes() {
   colorNotesUndoButton();
 }
 function btn_redo_notes() {
-
-  haptic();
 
   if (restoresNotes.length > 0) {
     backUpsNotes.push(nestArray(notes));
@@ -2561,8 +2553,6 @@ function colorNotesSaveButton() {
 }
 function btn_save_notes() {
 
-  haptic();
-
   var tmpY;
   $('btnSaveNotes').style.color = '#919191';
 
@@ -2572,8 +2562,6 @@ function btn_save_notes() {
   storeCookie('NOTES', nestArray(notes));
 }
 function btn_load_notes() {
-
-  haptic();
 
   var index = 0;
 
@@ -2591,7 +2579,6 @@ function btn_load_notes() {
 }
 function btn_clear_notes() {
 
-  haptic();
   backupUndoNotes();
 
   $('lstNotes').value = '';
