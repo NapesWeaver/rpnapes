@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '15:33:31';
+const tStamp = '15:36:12';
 
 var stack = [];
 var backUps = [33];
@@ -1383,9 +1383,8 @@ function internetSearch(domainString) {
     searchTerm = $('txtInput').value.trim();
   }
   domainString += searchTerm;
-  window.open(domainString, '_blank');
-  console.log(domainString);
-  // window.location.href = domainString;
+  window.open(domainString, '_blank');  
+  //window.location.href = domainString;
   //window.location.reload();
   //history.forward();
   //history.go(-2);
@@ -1442,7 +1441,7 @@ function parseCommand() {
     window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
     break;
   case 'go':
-    internetSearch('https://www.google.com/#q=');
+    internetSearch('https://www.google.com/search?q=');
     break;
   case 'gravity':
     //resetMathmon();
