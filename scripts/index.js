@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '14:1:4';
+const tStamp = '14:24:48';
 
 var stack = [];
 var backUps = [33];
@@ -425,7 +425,7 @@ function btn_go() {
       internetSearch('https://www.youtube.com/results?search_query=');
     }
     else {
-      internetSearch('https://www.google.com/#q=');
+      internetSearch('http://www.google.com/#q=');
     }
   }
   $('txtInput').select();
