@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '14:51:6';
+const tStamp = '15:33:31';
 
 var stack = [];
 var backUps = [33];
@@ -425,7 +425,7 @@ function btn_go() {
       internetSearch('https://www.youtube.com/results?search_query=');
     }
     else {
-      internetSearch('http://www.google.com/#q=');
+      internetSearch('https://www.google.com/search?q=');
     }
   }
   $('txtInput').select();
@@ -1384,7 +1384,8 @@ function internetSearch(domainString) {
   }
   domainString += searchTerm;
   window.open(domainString, '_blank');
-  //window.location.href = "https://google.com";
+  console.log(domainString);
+  // window.location.href = domainString;
   //window.location.reload();
   //history.forward();
   //history.go(-2);
