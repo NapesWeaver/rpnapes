@@ -2029,10 +2029,10 @@ function extractReal(tmpArray) {
   if (radix === 10) {
     // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number
     if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
-    //if (!/^[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
 
+      /** Identify constants as numbers?
       // Φ | e | π | G | c  (?!...negative lookahead)
       if (/^[-+]?(?!Φ.)Φ/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?Φ/);
@@ -2049,6 +2049,7 @@ function extractReal(tmpArray) {
       if (/^[-+]?(?!c.)c/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?c/);
       }
+      */
     }
   }
   if (radix === 2) {
