@@ -8,12 +8,13 @@ var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userA
 
 if (isMobile) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
+// We can't enumerate over these - should I go more vanilla with this ???
 const Φ = 1.618033988749895;
 const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '19:18:10';
+const tStamp = '14:1:4';
 
 var stack = [];
 var backUps = [33];
@@ -265,8 +266,8 @@ function evaluate (input) {
 
   try{
     $('txtInput').value = eval(parseEvaluation(input));
-  } catch (e) {
-    rpnAlert(e.toString());
+  } catch (err) {
+    rpnAlert(err.toString());
   }
 }
 
@@ -550,15 +551,15 @@ function nestArray(srcArray) {
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
     // IE || Chrome
-    for (var c in srcArray) {
+    for (var chro in srcArray) {
       newArray += '_';
-      newArray += srcArray[c];
+      newArray += srcArray[chro];
     }
   } else {
     //Firefox        
-    for (var f in srcArray) {
+    for (var fire in srcArray) {
       newArray += '\t';
-      newArray += srcArray[f];
+      newArray += srcArray[fire];
     }
   }
   return newArray;
@@ -574,17 +575,17 @@ function saveFile(fileName, pretty) {
   }
   if (stack.length > 0 || notes.length > 1) {
     blobContent += '===== Stack =====\n\n';
-    for (var s in stack) {
+    for (var sta in stack) {
       if (pretty) {
-        blobContent = prettyPrint(s, blobContent);
+        blobContent = prettyPrint(sta, blobContent);
       } else {
-        blobContent += decodeSpecialChar(stack[s].toString());
+        blobContent += decodeSpecialChar(stack[sta].toString());
       }      
       blobContent += '\n';
     }
     blobContent += '\n===== Notes ======\n\n';
-    for (var n in notes) {
-      blobContent += decodeSpecialChar(notes[n]);
+    for (var note in notes) {
+      blobContent += decodeSpecialChar(notes[note]);
       blobContent += '\n';
     }
     myBlob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
@@ -607,12 +608,12 @@ function btn_load() {
       loadStack(getCookie('STACK').substr(index));
     }        
   }
-  catch (e) { rpnAlert('load Stack error.'); }
+  catch (err) { rpnAlert('load Stack error.'); }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
     loadMathMon(getCookie('MATHMON').substr(index));
   }
-  catch(e) { rpnAlert('load MathMon error'); }
+  catch(err) { rpnAlert('load MathMon error'); }
   updateDisplay();
 }
 function loadStack(tmpStack) {
@@ -682,7 +683,7 @@ function btn_inverse() {
     var newUnits = inverseUnits();
     var isNumber = !isNaN(extractReal($('txtInput').value));
     var isImaginary = !isNaN(extractImaginary($('txtInput').value));
-
+    console.log(newUnits, isNumber, isImaginary);
     if (isNumber || isImaginary) {
       
       if (isNumber && !isImaginary) {
@@ -716,7 +717,7 @@ function factorial(num) {
     try {
       var theResult = num * factorial(num - 1);
     }
-    catch (e) {
+    catch (err) {
       return 'Infinity';
     }
     return theResult;
@@ -1154,9 +1155,9 @@ function totalStack() {
 }
 function editStack() {
 
-  for (var s in stack) {
+  for (var sta in stack) {
 
-    var stackEntry = stack[s].soul;
+    var stackEntry = stack[sta].soul;
     var searchTerm = /btn[A-Z]/;
     var tmpIndex = 1;
     // While 'btn[A-Z]' exists globally
@@ -1384,7 +1385,7 @@ function internetSearch(domainString) {
   }
   domainString += searchTerm;
   win = window.open(domainString, '_blank');
-  win.location;
+  // win.location;
   //window.location.href = "https://google.com";
   //window.location.reload();
   //history.forward();
@@ -1698,7 +1699,7 @@ function convertBase(r) {
 
   if (!isNaN(inputTxt.realPart)) outputTxt += parseInt(inputTxt.realPart).toString(radix);
   if (!isNaN(inputTxt.imaginary)) {
-    if(!isNaN(inputTxt.realPart)) outputTxt += ' ';
+    if (!isNaN(inputTxt.realPart)) outputTxt += ' ';
     outputTxt += parseInt(inputTxt.imaginary).toString(radix) + 'j';
   }
   $('txtInput').value = outputTxt;
@@ -1775,8 +1776,8 @@ function moveCursorToEnd(el) {
       range.collapse(false);
       range.select();
     }
-  } catch (e) {
-    // console.error(e);
+  } catch (err) {
+    // console.error(err);
   }  
 }
 
@@ -1788,9 +1789,9 @@ function updateDisplay() {
     $('lstStack').value += ' \n';
   }
   // Print to stack display
-  for (var s in stack) {
+  for (var sta in stack) {
     $('lstStack').value += '\n';
-    $('lstStack').value = prettyPrint(s,$('lstStack').value);
+    $('lstStack').value = prettyPrint(sta,$('lstStack').value);
   }
   colorSaveButton();
   $('lstStack').scrollTop = $('lstStack').scrollHeight;
@@ -1817,7 +1818,7 @@ function prettyPrint(i, content) {
     content += decodeSpecialChar(stack[i].getSoul());
   } else {
     // If a number
-    if(isANumber(stack[i].getRealPart())) {
+    if (isANumber(stack[i].getRealPart())) {
       // Append number
       content += formatNumber(stack[i].getRealPart().toString());
       // If complex number
@@ -1881,13 +1882,13 @@ function getCookie(cname) {
   var ca = decodedCookie.split(';');
 
   for (var i = 0; i < ca.length; i++) {
-    var c = ca[i];
+    var cookieItem = ca[i];
 
-    while (c.charAt(0) === ' ') {
-      c = c.substring(1);
+    while (cookieItem.charAt(0) === ' ') {
+      cookieItem = cookieItem.substring(1);
     }
-    if (c.indexOf(name) === 0) {
-      return c.substring(name.length, c.length);
+    if (cookieItem.indexOf(name) === 0) {
+      return cookieItem.substring(name.length, cookieItem.length);
     }
   }
   return '';
@@ -2029,7 +2030,7 @@ function extractReal(tmpArray) {
   
   if (radix === 10) {
     // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number
-    if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}\[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
 
@@ -2126,7 +2127,7 @@ function extractUnits(tmpArray) {
 function getAddUnits() {
 
   var newUnits = addUnits();
-  if(newUnits === ' null') {
+  if (newUnits === ' null') {
     newUnits = '';
   }
   return newUnits;
@@ -2134,7 +2135,7 @@ function getAddUnits() {
 function getMultiplyUnits(exponent) {
 
   var newUnits = multiplyUnits(exponent);    
-  if(newUnits === ' ') {
+  if (newUnits === ' ') {
     newUnits = '';
   }
   return newUnits;
@@ -2142,7 +2143,7 @@ function getMultiplyUnits(exponent) {
 function getDivideUnits(exponent) {
 
   var newUnits = divideUnits(exponent);    
-  if(newUnits === ' ') {
+  if (newUnits === ' ') {
     newUnits = '';
   }
   return newUnits;
@@ -2407,17 +2408,17 @@ function rewriteNegUnitExp(tmpUnits) {
 function removeNegativeExponentSign(factorsArray) {
 
   var tmpArray = [];
-  var e = 0;
+  var i = 0;
 
-  while (e < factorsArray.length) {
-    if (factorsArray[e].indexOf('-') !== -1) {
+  while (i < factorsArray.length) {
+    if (factorsArray[i].indexOf('-') !== -1) {
       var tmpString = '';
-      tmpString += factorsArray.splice(e, 1).toString();
+      tmpString += factorsArray.splice(i, 1).toString();
       tmpString = tmpString.replace(/-/g, '');
       tmpArray.push(tmpString);
-      e--;
+      i--;
     }
-    e++;
+    i++;
   }
   return tmpArray;
 }
@@ -2572,7 +2573,7 @@ function btn_load_notes() {
   try {
     notes = splitArrayByBrowser(getCookie('NOTES').substr(index));
   }
-  catch (e) {
+  catch (err) {
     notes.push('Load error.');
   }
   updateDisplayNotes();
@@ -2589,8 +2590,8 @@ function btn_clear_notes() {
 function updateDisplayNotes() {
 
   $('lstNotes').value = '';
-  for (var n in notes) {
-    $('lstNotes').value += decodeSpecialChar(notes[n]);
+  for (var note in notes) {
+    $('lstNotes').value += decodeSpecialChar(notes[note]);
     $('lstNotes').value += '\n';
   }
   $('lstNotes').value = $('lstNotes').value.trim();
@@ -2613,10 +2614,10 @@ function loadTricorder() {
   var index = 0;
   index = getCookie('TRICORDER').indexOf('=') + 1;
   widgetSrc = splitArrayByBrowser(getCookie('TRICORDER').substr(index));
-  for (var s in widgetSrc) {
-    widgetSrc[s] = decodeSpecialChar(widgetSrc[s]);
-    if (widgetSrc[s] === '') {
-      widgetSrc.splice(s, 1);
+  for (var i in widgetSrc) {
+    widgetSrc[i] = decodeSpecialChar(widgetSrc[i]);
+    if (widgetSrc[i] === '') {
+      widgetSrc.splice(i, 1);
     }
   }
 }
@@ -2835,8 +2836,8 @@ function sensor2() {
 
 function saveTricorder() {
 
-  for (var s in widgetSrc) {
-    widgetSrc[s] = encodeSpecialChar(widgetSrc[s]);
+  for (var i in widgetSrc) {
+    widgetSrc[i] = encodeSpecialChar(widgetSrc[i]);
   }  
   storeCookie('TRICORDER', nestArray(widgetSrc));
 }
@@ -3131,7 +3132,7 @@ function brownianMovement(obj) {
 function gravity() {
 
   if (worldIsRunning()) {
-    for(var i = 0; i < theObjects.length; i++)
+    for (var i = 0; i < theObjects.length; i++)
     {
       moveObj(theObjects[i], 1, 0, 1);
     }
@@ -3387,8 +3388,8 @@ window.onload = function () {
           var tmpStack = [];
           backupUndo();
           tmpStack = this.result.split('\n');
-          for (var t in tmpStack) {
-            $('txtInput').value = tmpStack[t];
+          for (var i in tmpStack) {
+            $('txtInput').value = tmpStack[i];
             if (shifted) {
               evaluate($('txtInput').value);
               enterFunction();
@@ -3402,8 +3403,8 @@ window.onload = function () {
       };
       fr.readAsText(this.files[0]);
     }
-    catch (e) {
-      rpnAlert(e.toString());
+    catch (err) {
+      rpnAlert(err.toString());
     }
   });
   $('menuSave').onclick = btn_save;
@@ -3667,7 +3668,7 @@ window.onload = function () {
   $('btnClearNotes').onclick = btn_clear_notes;
 
   $('lstNotes').addEventListener('paste', function() {
-    setTimeout(function(){
+    setTimeout(function() {
       if (notes.length > 0) backupUndoNotes(); 
     }, 100);
   });  
