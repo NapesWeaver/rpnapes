@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '15:36:12';
+const tStamp = '16:39:54';
 
 var stack = [];
 var backUps = [33];
@@ -2029,23 +2029,24 @@ function extractReal(tmpArray) {
   if (radix === 10) {
     // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number
     if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    //if (!/^[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
 
       // Φ | e | π | G | c  (?!...negative lookahead)
-      if (/^[-+]?(?!Φj)Φ/.test(tmpArray)) {
+      if (/^[-+]?(?!Φ.)Φ/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?Φ/);
       }
-      if (/^[-+]?(?!ee)e/.test(tmpArray)) {
+      if (/^[-+]?(?!e.)e/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?e/);
       }
-      if (/^[-+]?(?!ππ)π/.test(tmpArray)) {
+      if (/^[-+]?(?!π.)π/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?π/);
       }
-      if (/^[-+]?(?!GG)G/.test(tmpArray)) {
+      if (/^[-+]?(?!G.)G/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?G/);
       }
-      if (/^[-+]?(?!cc)c/.test(tmpArray)) {
+      if (/^[-+]?(?!c.)c/.test(tmpArray)) {
         tmpReal = tmpArray.match(/[-+]?c/);
       }
     }
