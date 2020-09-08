@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '16:39:54';
+const tStamp = '21:37:52';
 
 var stack = [];
 var backUps = [33];
@@ -1581,12 +1581,17 @@ function parseEvaluation(input) {
   // ;  |  ) {  |  [{}]  |  w.w  |  ()  <- more checks for code ???
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {
     
-    while (/[ΦeπGc0-9\w)]\^[(ΦeπGc0-9\w]/.test(input)) input = parsePower(input);
+    // while (/[ΦeπGc0-9\w)]\^[(ΦeπGc0-9\w]/.test(input)) input = parsePower(input);
+    while (/[ΦeπGc0-9\w)]\^[(ΦeπGc0-9\w]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
+
+    // while (/[ΦeπGc0-9\w)]√[(ΦeπGc0-9\w]/.test(input)) input = parsePowerAndRoot(input, /√/, 'rootEval(');
+    while (/√[(ΦeπGc0-9\w]/.test(input) || /[ΦeπGc0-9\w)]√[(ΦeπGc0-9\w]/.test(input)) input = parsePowerAndRoot(input, /√/, 'rootEval(');
+    // while (/√[(ΦeπGc0-9\w]/.test(input) || /[ΦeπGc0-9\w)]√[(ΦeπGc0-9\w]/.test(input)) input = parseRoot(input, /√/, 'rootEval(');
+
     if (/(?!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
     if (/(?!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
-    if (/(?!Math\.a?)tan\(/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);  
-    // while (/√[(ΦeπGc0-9]/.test(input)) input = parseRoot(input);// nth root -> Math.pow(y, 1/x) eg. Math.pow(25, 1/2) == 5 
-    if (/√[(ΦeπGc0-9]/.test(input)) rpnAlert('Function not implemented :(');
+    if (/(?!Math\.a?)tan\(/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);
+
     // *add ln(x) -> Math.log(x)
     // *add log(x) -> Math.log(10) / Math.log(x)
     // *add log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
@@ -1594,31 +1599,50 @@ function parseEvaluation(input) {
   }
   return input;
 }
+
 function parseRoot(input) {
-
-  return input;
+  input = '2' + input;
+  console.log(input);
 }
-function parsePower(input) {
+function rootEval(y, x) {
 
+  // if (!y) {y = 2; console.log('yyy');}
+  return Math.pow(x, 1/y);
+}
+
+function parsePowerAndRoot(input, symbol, prefix) {
+  
   var inputArr = input.split('');
   var startPos = 0;
   var parentheses = 0;
-  // Change symbol to comma
-  do { startPos++; } while (!/\^/.test(inputArr[startPos]));
-  inputArr[startPos] = ',';
 
+  // Change symbol to comma
+  do { startPos++; } while (!symbol.test(inputArr[startPos]));
+  inputArr[startPos] = ',';
+  console.log('startPos comma: ', startPos);
   var endPos = startPos;
-  // Insert 'Math.pow('
+
+  // Insert prefix'
   do {
     startPos--;
+    console.log('startPos findStart: ', startPos);
+    console.log('endPos findStart: ', endPos);
+    
+    // Counting parentheses
     if (inputArr[startPos] === ')') parentheses++;
     if (inputArr[startPos] === '(') parentheses--;
     // Testing for '�'
-    if (!/[-+*/^√()\d\w]/.test(inputArr[startPos])) startPos--;
+    // if (!/[-+*/^√()\d\w]/.test(inputArr[startPos])) startPos--;    
+    if (!/[-+*/^√()\w]/.test(inputArr[startPos])) startPos--;    
   }
-  while (startPos < 0 && !/[-+*/^√)]/.test(inputArr[startPos]) || parentheses > 0);
-  inputArr.splice(startPos, 0, 'Math.pow(');
-  parentheses = 0;  
+  // while (startPos < 0 && !/[-+*/^√)]/.test(inputArr[startPos]) || parentheses > 0);
+  while (startPos > 0 && !/[-+*/^√)]/.test(inputArr[startPos]) || parentheses > 0);
+  inputArr.splice(startPos, 0, prefix);
+  console.log('startPos splice: ', startPos);
+  console.log('endPos splice: ', endPos);
+  console.log(inputArr);
+  parentheses = 0;
+
   // Insert ')'
   do {
     endPos++; 
@@ -1632,6 +1656,42 @@ function parsePower(input) {
   
   return input;
 }
+
+// function parsePower(input) {
+
+//   var inputArr = input.split('');
+//   var startPos = 0;
+//   var parentheses = 0;
+//   // Change symbol to comma
+//   do { startPos++; } while (!/\^/.test(inputArr[startPos]));
+//   inputArr[startPos] = ',';
+
+//   var endPos = startPos;
+//   // Insert 'Math.pow('
+//   do {
+//     startPos--;
+//     if (inputArr[startPos] === ')') parentheses++;
+//     if (inputArr[startPos] === '(') parentheses--;
+//     // Testing for '�'
+//     if (!/[-+*/^√()\d\w]/.test(inputArr[startPos])) startPos--;
+//   }
+//   while (startPos < 0 && !/[-+*/^√)]/.test(inputArr[startPos]) || parentheses > 0);
+//   inputArr.splice(startPos, 0, 'Math.pow(');
+//   parentheses = 0;  
+//   // Insert ')'
+//   do {
+//     endPos++; 
+//     if (inputArr[endPos] === '(') parentheses++;
+//     if (inputArr[endPos] === ')') parentheses--;  
+//   }
+//   while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses > 0);
+  
+//   inputArr.splice(endPos, 0, ')');
+//   input = inputArr.join('');
+  
+//   return input;
+// }
+
 function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
 
   var inputArr = input.split('');
