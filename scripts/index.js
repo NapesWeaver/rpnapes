@@ -1583,8 +1583,8 @@ function parseEvaluation(input) {
     
     while (/[ΦeπGc0-9\w)]\^[(ΦeπGc0-9\w]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
     
-    // while (/√[(ΦeπGc0-9\w]/.test(input) || /[ΦeπGc0-9\w)]√[(ΦeπGc0-9\w]/.test(input)) input = parsePowerAndRoot(input, /√/, 'rootEval(');
-    if (/√[(ΦeπGc0-9\w]/.test(input) || /[ΦeπGc0-9\w)]√[(ΦeπGc0-9\w]/.test(input)) rpnAlert('Not implemented as yet :(');
+    while (/√[(ΦeπGc0-9\w]/.test(input) || /[ΦeπGc0-9\w)]√[(ΦeπGc0-9\w]/.test(input)) input = parsePowerAndRoot(input, /√/, 'rootEval(');
+    // if (/√[(ΦeπGc0-9\w]/.test(input) || /[ΦeπGc0-9\w)]√[(ΦeπGc0-9\w]/.test(input)) rpnAlert('Not implemented as yet :(');
 
     if (/(?!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
     if (/(?!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
@@ -1606,33 +1606,33 @@ function rootEval(y, x) {
 function parsePowerAndRoot(input, symbol, prefix) {
   
   var inputArr = input.split('');
-  var startPos = 0;
+  var index = 0;
   var parentheses = 0;
 
   // Change symbol to comma
-  do { startPos++; } while (!symbol.test(inputArr[startPos]));
-  inputArr[startPos] = ',';
-  console.log('comma: ', startPos);
-  var endPos = startPos;
+  while (!symbol.test(inputArr[index])) {
+    index++;
+  }
+  inputArr[index] = ',';
+  if (inputArr[index - 1] === undefined || /[-+*/]/.test(inputArr[index - 1])) inputArr[index] = '2,';
+
+  var endPos = index;
 
   // Insert prefix
-  do {
+  while (index > 0 && !/[-+*/^√)]/.test(inputArr[index]) || parentheses > 0) {
     // Counting parentheses
-    startPos--;    
-    if (inputArr[startPos] === ')') parentheses++;
-    if (inputArr[startPos] === '(') parentheses--;
-    console.log('findStart: ', startPos);
+    index--;    
+    if (inputArr[index] === ')') parentheses++;
+    if (inputArr[index] === '(') parentheses--;  
   }
-  while (startPos > 0 && !/[-+*/^√)]/.test(inputArr[startPos]) || parentheses > 0);
-
-  inputArr.splice(startPos, 0, prefix);
-
-  console.log('splice: ', startPos);
-  console.log(inputArr);
-
-  parentheses = 0;
-
+  if (index === 0) {
+    inputArr.splice(index, 0, prefix);
+  } else {
+    inputArr.splice(index + 1, 0, prefix);
+  }
+  
   // Insert ')'
+  parentheses = 0;
   do {
     endPos++; 
     if (inputArr[endPos] === '(') parentheses++;
