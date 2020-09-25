@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '21:37:52';
+const tStamp = '1:43:21';
 
 var stack = [];
 var backUps = [33];
@@ -665,7 +665,7 @@ function btn_off() {
 
   monOff();
   tricorderOff();
-  window.close();
+  window.open('','_self').close();
   rpnAlert('This functionality prohibited by your browser.');
   throw new Error();
 }
