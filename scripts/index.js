@@ -1606,17 +1606,20 @@ function rootEval(y, x) {
 function parsePowerAndRoot(input, symbol, prefix) {
   
   var inputArr = input.split('');
+  console.log(inputArr);
   var index = 0;
   var parentheses = 0;
-
-  // Change symbol to comma
+  
+  // Change symbol to comma  
   while (!symbol.test(inputArr[index])) {
+    console.log('index: ' + inputArr[index] + ', ' + 'Test: ' + !symbol.test(inputArr[index]));
     index++;
   }
   inputArr[index] = ',';
-  if (inputArr[index - 1] === undefined || /[-+*/]/.test(inputArr[index - 1])) inputArr[index] = '2,';
-
+  if (inputArr[index - 1] === undefined || /[-+*/\s]/.test(inputArr[index - 1])) inputArr[index] = '2,';
+  
   var endPos = index;
+  console.log('endPos: ' + index);
 
   // Insert prefix
   while (index > 0 && !/[-+*/^√)]/.test(inputArr[index]) || parentheses > 0) {
