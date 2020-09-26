@@ -665,11 +665,8 @@ function btn_off() {
 
   monOff();
   tricorderOff();
-  // window.open('','_self').close();
-  window.open('', '_self');
-  setTimeout('window.close()', 500);
+  window.open('','_self').close();
   window.top.close();
-  // rpnAlert('Browser prevented closing window :(');
   rpnAlert('Window not opened with window.open()');
   throw new Error();
 }
