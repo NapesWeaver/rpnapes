@@ -686,7 +686,7 @@ function btn_inverse() {
     var newUnits = inverseUnits();
     var isNumber = !isNaN(extractReal($('txtInput').value));
     var isImaginary = !isNaN(extractImaginary($('txtInput').value));
-    console.log(newUnits, isNumber, isImaginary);
+    //console.log(newUnits, isNumber, isImaginary);
     if (isNumber || isImaginary) {
       
       if (isNumber && !isImaginary) {

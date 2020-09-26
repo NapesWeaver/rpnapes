@@ -1,5 +1,6 @@
 # RPNapes
 
+<!-- [Reverse Polish Notation Calcamatron](https://napesweaver.github.io/rpnapes/) -->
 <a href="https://napesweaver.github.io/rpnapes/" target="_blank">Reverse Polish Notation Calcamatron</a>
 
 This has been an ongoing project since my earliest coding in JS. It works well, is rather spaghettified and contains a number of stubs (I still need to implement maths for imaginary numbers, for instance).
