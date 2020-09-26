@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '2:18:31';
+const tStamp = '22:33:26';
 
 var stack = [];
 var backUps = [33];
@@ -665,7 +665,9 @@ function btn_off() {
 
   monOff();
   tricorderOff();
-  window.open('','_self').close();
+  // window.open('','_self').close();
+  window.open('', '_self');
+  setTimeout('window.close()', 500);
   window.top.close();
   // rpnAlert('Browser prevented closing window :(');
   rpnAlert('Window not opened with window.open()');
