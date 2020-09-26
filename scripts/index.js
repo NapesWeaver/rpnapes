@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '22:33:26';
+const tStamp = '22:56:18';
 
 var stack = [];
 var backUps = [33];
@@ -3427,7 +3427,15 @@ window.onload = function () {
     }
   });
   $('menuSave').onclick = btn_save;
-  $('menuOff').onclick = btn_off;
+  // $('menuOff').onclick = btn_off;
+  $('menuOff').onclick = function() {
+    monOff();
+    tricorderOff();
+    window.open('','_self').close();
+    window.top.close();
+    rpnAlert('Window not opened with window.open()');
+    throw new Error();
+  };
 
   // Menu Edit
   $('menuCopy').onclick = btn_copy;
