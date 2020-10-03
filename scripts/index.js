@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '22:56:18';
+const tStamp = '15:36:7';
 
 var stack = [];
 var backUps = [33];
@@ -3545,6 +3545,7 @@ window.onload = function () {
   $('menuTwig').onclick = monOn;
 
   if (isMobile) {
+    $('menuOff').style = 'display:none';
     $('menuTwig').style = 'display:none';
   }
   
