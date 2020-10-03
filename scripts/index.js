@@ -447,7 +447,7 @@ function btn_shift() {
     $('btnCopy').value = 'COPY';
     $('btnXy').value = 'x < > y';
     $('btnEnter').className = 'btn-big';
-    $('btnEnter').style.color = '#000000';
+    //$('btnEnter').style.color = '#000000';
     $('btnEnter').value = 'ENTER';
     $('btnDelete').innerHTML = 'DEL';
     $('btnInverse').value = '1 / x';
@@ -491,7 +491,7 @@ function btn_shift() {
     $('btnXy').value = 'a < > b';
     $('btnEnter').className = 'btn-big btn-big-font';
     // $('btnEnter').style.color = '#0F4215';
-    $('btnEnter').style.color = '#008125';
+    //$('btnEnter').style.color = '#008125';
     $('btnEnter').value = '=';
     // $('btnDelete').innerHTML = '<---';
     // $('btnDelete').innerHTML = '◀---';
