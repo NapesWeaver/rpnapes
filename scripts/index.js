@@ -441,6 +441,8 @@ function btn_shift() {
     $('open').setAttribute('title', 'Open a file');
     $('menuLoad').innerHTML = 'Load';
     $('menuLoad').setAttribute('title', 'Load stack');
+    $('menuEnter').innerHTML = 'Enter';
+    $('menuEnter').setAttribute('title', 'Enter input');
     $('menuSine').innerHTML = 'sin';
     $('menuCosine').innerHTML = 'cos';
     $('menuTangent').innerHTML = 'tan'
@@ -482,6 +484,8 @@ function btn_shift() {
     $('open').setAttribute('title', 'Run JS file');
     $('menuLoad').innerHTML = 'Run';
     $('menuLoad').setAttribute('title', 'Run stack');
+    $('menuEnter').innerHTML = '<span class="symbol-big">=</span>';
+    $('menuEnter').setAttribute('title', 'Evaluate input');
     $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
@@ -1389,6 +1393,7 @@ function internetSearch(domainString) {
 
 function help() {
 
+  if(shifted) btn_shift();
   inputText('about, clear, date, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, print, save, saveas, size, time, tricorder, tostring, unembed, you');
   btn_enter();
   deleteKey();
@@ -3432,6 +3437,7 @@ window.onload = function () {
   };
 
   // Menu Edit
+  $('menuEnter').onclick = btn_enter;
   $('menuCopy').onclick = btn_copy;
   $('menuPaste').onclick = btn_paste;
   $('menuDelete').onclick = btn_delete;
