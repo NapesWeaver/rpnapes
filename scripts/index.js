@@ -3202,7 +3202,7 @@ function donMove() {
 //////// Event listeners & window.onload /////////////////////////////////////////////
 
 document.addEventListener('click', function (evt) {
-  if (evt.detail === 3) {
+  if (evt.detail === 3 && evt.target === $('lstStack')) {console.log(evt)
     getStackEntry();
   }
 });
