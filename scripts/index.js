@@ -1625,10 +1625,10 @@ function parsePowerAndRoot(input, symbol, prefix) {
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
   }
-  //console.log(parentheses, inputArr.join(''));
+  console.log(parentheses, index, inputArr.join(''));
 
   if (index === 0) {
-  //if (index === 0 || (/[-+*/]/.test(inputArr[index - 1]))) {
+  //if (index <= 0 || (/[-+*/]/.test(inputArr[index - 1]))) {
     inputArr.splice(index, 0, prefix);
   } else {
     inputArr.splice(index + 1, 0, prefix);
@@ -1780,7 +1780,7 @@ function insertAtCursor(txtField, txtValue) {
   var endPos = txtField.selectionEnd;
 
   txtField.value = txtField.value.substring(0, startPos) + txtValue + txtField.value.substring(endPos, txtField.value.length);
-  txtField.selectionEnd = endPos + txtValue.length;
+  txtField.selectionEnd = startPos + txtValue.length;
   // Deselect text for IE
   txtField.selectionStart = txtField.selectionEnd;
 }
