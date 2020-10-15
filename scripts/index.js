@@ -682,6 +682,7 @@ function btn_inverse() {
   }
   else {
     var newUnits = inverseUnits();
+    console.log(extractReal($('txtInput'.value)));
     var isNumber = !isNaN(extractReal($('txtInput').value));
     var isImaginary = !isNaN(extractImaginary($('txtInput').value));
     //console.log(newUnits, isNumber, isImaginary);
@@ -700,7 +701,12 @@ function btn_inverse() {
       $('txtInput').value += newUnits;
       $('txtInput').select();
     } else {
-      $('txtInput').value = newUnits.trim();
+      
+      if(/^1\//.test($('txtInput').value)) {
+        $('txtInput').value = $('txtInput').value.slice(2);
+      } else {
+        $('txtInput').value = '1/' + $('txtInput').value;
+      }
     }
   } 
 }
@@ -3202,7 +3208,7 @@ function donMove() {
 //////// Event listeners & window.onload /////////////////////////////////////////////
 
 document.addEventListener('click', function (evt) {
-  if (evt.detail === 3 && evt.target === $('lstStack')) {console.log(evt)
+  if (evt.detail === 3 && evt.target === $('lstStack')) {
     getStackEntry();
   }
 });
