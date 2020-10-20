@@ -1612,34 +1612,32 @@ function parsePowerAndRoot(input, symbol, prefix) {
   
   var inputArr = input.split('');
   var index = 0;
+  var endPos = 0;
   var parentheses = 0;
   
   // Change symbol to comma  
   while (!symbol.test(inputArr[index])) {
     index++;
   }
-  inputArr[index] = ',';
-  
-  // Add 2 for implicit notation ie. √16 = 2√16
-  if (inputArr[index - 1] === undefined || /[-+*/(\s]/.test(inputArr[index - 1])) inputArr[index] = '2,';
-  var endPos = index;
+  inputArr[index] = ',';  
+  // Change comma to '2,' for implicit notation i.e. √16 = 2√16
+  if (inputArr[index - 1] === undefined || /[-+*/(\s]/.test(inputArr[index - 1]))inputArr[index] = '2,';  
+  endPos = index;
 
   // Insert prefix
   while (index > 0 && !/[-+*/^√()]/.test(inputArr[index]) || parentheses > 0) {
-  // Counting parentheses
     index--;    
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
   }
-  console.log(parentheses, index, inputArr.join(''));
-
-  if (index === 0) {
-  //if (index <= 0 || (/[-+*/]/.test(inputArr[index - 1]))) {
+  // console.log('index:', index);
+  // console.log(inputArr[index]);
+  // console.log('parentheses:', parentheses);
+  if (index === 0 || (inputArr[index] === '(' && parentheses === 0)) {
     inputArr.splice(index, 0, prefix);
   } else {
     inputArr.splice(index + 1, 0, prefix);
-  }
-  console.log(parentheses, index, inputArr.join(''));
+  }  
   
   // Insert ')'
   parentheses = 0;
@@ -1651,9 +1649,8 @@ function parsePowerAndRoot(input, symbol, prefix) {
   while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses > 0);
     
   inputArr.splice(endPos, 0, ')');
-
   input = inputArr.join('');
-  //console.log(parentheses, input);
+  // console.log(input);
   return input;
 }
 
