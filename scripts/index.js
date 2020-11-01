@@ -1642,10 +1642,13 @@ function parseParentheses(input, symbol, prefix) {
   if (/[ΦπG\w\s)]\^[(ΦπG\w\s]/.test(maths) || /[ΦπG\w\s)]√[(ΦπG\w\s]/.test(maths) || /[)√[(ΦπG\w\s]/.test(maths)) {
     maths = parsePowerAndRoot(maths, symbol, prefix);
   }
-  if (!/\^√/.test(maths)) maths = eval(maths);
 
   // Re-insert parsed maths
-  inputArr.splice(leftP, rightP - leftP + 1, maths);  
+  if (!/\^√/.test(maths)) {
+    inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
+  } else {
+    inputArr.splice(leftP, rightP - leftP + 1, maths);
+  }
 
   // Return input
   input = inputArr.join('');
@@ -1671,7 +1674,7 @@ function parsePowerAndRoot(input, symbol, prefix) {
   endPos = index;
 
   // Insert prefix
-  while (index > 0 && (!/[+*/^√\s]/.test(inputArr[index]) || /[\w.,]/.test(inputArr[index]) || parentheses > 0)) {
+  while (index > 0 && (!/[-+*/^√\s]/.test(inputArr[index]) || /[\w.,]/.test(inputArr[index]) || parentheses > 0)) {
     index--;    
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
@@ -1681,7 +1684,6 @@ function parsePowerAndRoot(input, symbol, prefix) {
     inputArr.splice(index, 0, prefix);
   } else {
     inputArr.splice(index + 1, 0, prefix);
-    // inputArr.splice(index, 0, prefix);
   }  
   
   // Insert ')'
@@ -1698,50 +1700,6 @@ function parsePowerAndRoot(input, symbol, prefix) {
   // console.log('inline:', input);
   return input;
 }
-
-// function parsePowerAndRoot(input, symbol, prefix) {  
-  
-//   var inputArr = input.split('');
-//   var index = 0;
-//   var endPos = 0;
-//   var parentheses = 0;
-  
-//   // Change symbol to comma  
-//   while (!symbol.test(inputArr[index])) {
-//     index++;
-//   }
-//   inputArr[index] = ',';  
-//   // Change comma to '2,' for implicit notation i.e. √16 = 2√16
-//   if (inputArr[index - 1] === undefined || /[-+*/(\s]/.test(inputArr[index - 1])) inputArr[index] = '2,';  
-//   endPos = index;
-
-//   // Insert prefix
-//   while (index > 0 && !/[-+*/^√()]/.test(inputArr[index]) || parentheses > 0) {
-//     index--;    
-//     if (inputArr[index] === ')') parentheses++;
-//     if (inputArr[index] === '(') parentheses--;  
-//   }
-  
-//   if (index === 0 || (inputArr[index] === '(' && parentheses === 0)) {
-//     inputArr.splice(index, 0, prefix);
-//   } else {
-//     inputArr.splice(index + 1, 0, prefix);
-//   }  
-  
-//   // Insert ')'
-//   parentheses = 0;
-//   do {
-//     endPos++; 
-//     if (inputArr[endPos] === '(') parentheses++;
-//     if (inputArr[endPos] === ')') parentheses--;  
-//   }
-//   while (endPos < inputArr.length && !/[-+*/^√]/.test(inputArr[endPos]) || parentheses > 0);
-    
-//   inputArr.splice(endPos, 0, ')');
-//   input = inputArr.join('');
-//   // console.log(input);
-//   return input;
-// }
 
 function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
 
