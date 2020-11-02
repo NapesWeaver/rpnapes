@@ -267,13 +267,14 @@ function evaluate(input) {
   try{  
     $('txtInput').value = eval(parseEvaluation(input));
 
-    try {
-      if (stack.length > 0 && stack.length % 2 === 0) {
-        console.log(decodeSpecialChar(stack[stack.length - 2].soul), stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString());
-      }
-    } catch(e) {
-      console.log(stack[stack.length - 2].soul, e.toString());
-    }
+    // Data Testing
+    // try {
+    //   if (stack.length > 0 && stack.length % 2 === 0) {
+    //     console.log(decodeSpecialChar(stack[stack.length - 2].soul), stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString());
+    //   }
+    // } catch(e) {
+    //   console.log(stack[stack.length - 2].soul, e.toString());
+    // }
   } catch (err) {
     rpnAlert(err.toString());
   }
