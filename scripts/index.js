@@ -323,7 +323,7 @@ function backspace(txtField) {
   var endPos = txtField.selectionEnd;
   
   if (txtField.selectionStart === txtField.selectionEnd) startPos--;
-  
+
   txtField.value = txtField.value.substring(0, startPos) + txtField.value.substring(endPos, txtField.value.length);
 
   txtField.selectionStart = startPos;
@@ -3787,6 +3787,5 @@ window.onload = function () {
     backupUndo();
     $('btnSave').style.color = '#D4D0C8';
   }
-
   $('txtInput').readOnly = false;
 };
