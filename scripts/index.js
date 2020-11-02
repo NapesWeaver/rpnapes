@@ -1775,9 +1775,22 @@ function convertBase(r) {
   $('txtInput').value = outputTxt;
 }
 
+function onClickSelection(textarea){
+
+  if (isMobile) {
+    // https://stackoverflow.com/questions/13650534/how-to-select-line-of-text-in-textarea
+    if(typeof textarea.selectionStart ==='undefined') return false;
+    var startPos = (textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') : 0;
+    var endPos = (textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') : textarea.value.length;
+    textarea.selectionStart = startPos + 1;
+    textarea.selectionEnd = endPos;
+    // return true;
+  }
+}
+
 function getStackEntry() {
 
-  backupUndo();
+  backupUndo();  
   insertAtCursor($('txtInput'), getSelectedText('lstStack'));
   $('txtInput').select();
 }
