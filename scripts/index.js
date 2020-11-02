@@ -14,7 +14,8 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '13:29:29';
+const tStamp = '22:47:21';
+var testing = false;
 
 var stack = [];
 var backUps = [33];
@@ -268,13 +269,15 @@ function evaluate(input) {
     $('txtInput').value = eval(parseEvaluation(input));
 
     // Data Testing
-    // try {
-    //   if (stack.length > 0 && stack.length % 2 === 0) {
-    //     console.log(decodeSpecialChar(stack[stack.length - 2].soul), stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString());
-    //   }
-    // } catch(e) {
-    //   console.log(stack[stack.length - 2].soul, e.toString());
-    // }
+    if (testing) {
+      try {
+        if (stack.length > 0 && stack.length % 2 === 0) {
+          console.log(decodeSpecialChar(stack[stack.length - 2].soul), stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString());
+        }
+      } catch(e) {
+        console.log(stack[stack.length - 2].soul, e.toString());
+      }
+    }
   } catch (err) {
     rpnAlert(err.toString());
   }
@@ -1593,13 +1596,12 @@ function parseCommand() {
 
 function parseEvaluation(input) {
   
-  // If input does not contain quotes or regex
-  // ;  |  ) {  |  [{}]  |  w.w  |  ()  <- more checks for code ???
+  // If input does not contain quotes or regex i.e. input is not part of another program
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {
     
     // Parse nested symbols
-    while (/\([-+*/^/ΦeπGc0-9\w\s]+\^[-+*/^ΦeπGc0-9\w\s]+\)/.test(input)) input = parseParentheses(input, /\^/, 'Math.pow(');
-    while (/\([-+*/√ΦeπGc0-9\w\s]+√[-+*/√ΦeπGc0-9\w\s]+\)/.test(input) || /\(√[-+*/√ΦeπGc0-9\w\s]+\)/.test(input)) input = parseParentheses(input, /√/, 'rootEval(');
+    while (/\([-+*/^/ΦeπGc0-9\w\s]+\^[-+*/^ΦeπGc0-9\w\s]+\)/.test(input) && !/[ΦeπGc0-9\w\s],[ΦeπGc0-9\w\s]/.test(input)) input = parseParentheses(input, /\^/, 'Math.pow(');
+    while (/\([-+*/√ΦeπGc0-9\w\s]+√[-+*/√ΦeπGc0-9\w\s]+\)/.test(input) || /\(√[-+*/√ΦeπGc0-9\w\s]+\)/.test(input) && !/[ΦeπGc0-9\w\s],[ΦeπGc0-9\w\s]/.test(input)) input = parseParentheses(input, /√/, 'rootEval(');
 
     // Parse in-line symbols
     while (/[ΦeπGc0-9\w)]\^[(ΦeπGc0-9\w\s]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
@@ -1634,51 +1636,46 @@ function parseParentheses(input, symbol, prefix) {
     index--;
     if (inputArr[index] === '(') leftP = index;
   }
-
   // Get nested maths
   maths = inputArr.slice(leftP + 1, rightP).join('');  
-  // console.log('maths:', maths);
+  //console.log('maths:', maths);
 
   // Parse nested maths
   if (/[ΦπG\w\s)]\^[(ΦπG\w\s]/.test(maths) || /[ΦπG\w\s)]√[(ΦπG\w\s]/.test(maths) || /[)√[(ΦπG\w\s]/.test(maths)) {
     maths = parsePowerAndRoot(maths, symbol, prefix);
   }
-
   // Re-insert parsed maths
-  // if (!/\^√/.test(maths)) {
+  //if (!/\^√/.test(maths)) {
   if (!/\(\)/.test(maths)) {
     // Overwrite parentheses
     inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
   } else {
     // Keep parentheses
     inputArr.splice(leftP, rightP - leftP + 1, maths);
-  }
-  
+  }  
   // Return input
   input = inputArr.join('');
-  // console.log('Nested:', input);
+  //console.log('Nested:', input);
   return input;
 }
 
 function parsePowerAndRoot(input, symbol, prefix) {  
-  // console.log('input', input);
+  
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
-  var parentheses = 0;
-  
+  var parentheses = 0;  
   // Overwrite symbol 
   while (!symbol.test(inputArr[index])) {
     index++;
   }  
-  // '2,' for implicit notation i.e. √16 => 2√16
+  // '2,' for implicit notation e.g. √16 => 2√16
   if (inputArr[index - 1] === undefined || /[-+*/(\s]/.test(inputArr[index - 1])) {
     inputArr[index] = '2,';
   } else {
     inputArr[index] = ',';    
   }
   endPos = index;
-
   // Insert prefix
   while (index > 0 && (!/[-+*/^√(\s]/.test(inputArr[index]) || /[\w.,]/.test(inputArr[index]) || parentheses > 0)) {
     index--;    
@@ -1690,7 +1687,6 @@ function parsePowerAndRoot(input, symbol, prefix) {
   } else {
     inputArr.splice(index + 1, 0, prefix);
   }  
-  
   // Insert ')'
   parentheses = 0;
   do {
@@ -1702,7 +1698,7 @@ function parsePowerAndRoot(input, symbol, prefix) {
     
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  // console.log('inline:', input);
+  //console.log('inline:', input);
   return input;
 }
 
@@ -1745,7 +1741,6 @@ function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
       i = i - 5;
     }
   }
-
   input = inputArr.join('');  
   return input;
 }
