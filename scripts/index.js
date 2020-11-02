@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '22:47:21';
+const tStamp = '1:49:45';
 var testing = false;
 
 var stack = [];
@@ -1774,17 +1774,18 @@ function convertBase(r) {
   }
   $('txtInput').value = outputTxt;
 }
-
+// Wired to HTML
 function onClickSelection(textarea){
 
-  if (isMobile) {
+  //if (isMobile) {
+  if (true) {
     // https://stackoverflow.com/questions/13650534/how-to-select-line-of-text-in-textarea
-    if(typeof textarea.selectionStart ==='undefined') return false;
+    if (typeof textarea.selectionStart ==='undefined') return false;
     var startPos = (textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') : 0;
     var endPos = (textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') : textarea.value.length;
     textarea.selectionStart = startPos + 1;
     textarea.selectionEnd = endPos;
-    // return true;
+    return true;
   }
 }
 
@@ -3266,7 +3267,7 @@ function donMove() {
 //////// Event listeners & window.onload /////////////////////////////////////////////
 
 document.addEventListener('click', function (evt) {
-  if (evt.detail === 3 && evt.target === $('lstStack')) {
+  if (evt.detail === 2 && evt.target === $('lstStack')) {
     getStackEntry();
   }
 });
