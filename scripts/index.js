@@ -1617,7 +1617,7 @@ function parseEvaluation(input) {
 }
 
 function parseParentheses(input, symbol, prefix) {
-  // console.log('parentheses');
+
   var inputArr = input.split('');
   var index = 0;
   var leftP = null;
@@ -1644,12 +1644,15 @@ function parseParentheses(input, symbol, prefix) {
   }
 
   // Re-insert parsed maths
-  if (!/\^√/.test(maths)) {
+  // if (!/\^√/.test(maths)) {
+  if (!/\(\)/.test(maths)) {
+    // Overwrite parentheses
     inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
   } else {
+    // Keep parentheses
     inputArr.splice(leftP, rightP - leftP + 1, maths);
   }
-
+  
   // Return input
   input = inputArr.join('');
   // console.log('Nested:', input);
@@ -1663,23 +1666,24 @@ function parsePowerAndRoot(input, symbol, prefix) {
   var endPos = 0;
   var parentheses = 0;
   
-  // Change symbol to comma  
+  // Overwrite symbol 
   while (!symbol.test(inputArr[index])) {
     index++;
+  }  
+  // '2,' for implicit notation i.e. √16 => 2√16
+  if (inputArr[index - 1] === undefined || /[-+*/(\s]/.test(inputArr[index - 1])) {
+    inputArr[index] = '2,';
+  } else {
+    inputArr[index] = ',';    
   }
-  inputArr[index] = ',';
-
-  // Change comma to '2,' for implicit notation i.e. √16 = 2√16
-  if (inputArr[index - 1] === undefined || /[-+*/(\s]/.test(inputArr[index - 1])) inputArr[index] = '2,';  
   endPos = index;
 
   // Insert prefix
-  while (index > 0 && (!/[-+*/^√\s]/.test(inputArr[index]) || /[\w.,]/.test(inputArr[index]) || parentheses > 0)) {
+  while (index > 0 && (!/[-+*/^√(\s]/.test(inputArr[index]) || /[\w.,]/.test(inputArr[index]) || parentheses > 0)) {
     index--;    
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
   }
-  
   if (index === 0 || (inputArr[index] === '(' && parentheses === 0)) {
     inputArr.splice(index, 0, prefix);
   } else {
@@ -1693,7 +1697,7 @@ function parsePowerAndRoot(input, symbol, prefix) {
     if (inputArr[endPos] === '(') parentheses++;
     if (inputArr[endPos] === ')') parentheses--;  
   }
-  while (endPos < inputArr.length && (!/[-+*/^√\s]/.test(inputArr[endPos]) || /[\w.,]/.test(inputArr[endPos]) || parentheses > 0));
+  while (endPos < inputArr.length && (!/[-+*/^√)\s]/.test(inputArr[endPos]) || /[\w.,]/.test(inputArr[endPos]) || parentheses > 0));
     
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
@@ -1740,14 +1744,13 @@ function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
       i = i - 5;
     }
   }
-  input = inputArr.join('');
-  
+
+  input = inputArr.join('');  
   return input;
 }
 
 // Passed to parsePowerAndRoot()
 function rootEval(y, x) {
-
   return Math.pow(x, 1/y);
 }
 
