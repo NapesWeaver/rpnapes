@@ -267,7 +267,6 @@ function evaluate(input) {
 
   try{  
     $('txtInput').value = eval(parseEvaluation(input));
-
     // Data Testing
     if (testing) {
       try {
@@ -323,11 +322,8 @@ function backspace(txtField) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
   
-  if (txtField.selectionStart === txtField.selectionEnd) {
-    startPos--;
-  }
-  // Testing for '�'
-  if (!/[-+*/^√()\d\w]/.test(txtField.value[startPos])) startPos--;
+  if (txtField.selectionStart === txtField.selectionEnd) startPos--;
+  
   txtField.value = txtField.value.substring(0, startPos) + txtField.value.substring(endPos, txtField.value.length);
 
   txtField.selectionStart = startPos;
