@@ -8,6 +8,7 @@
 }
 
 body {
+    touch-action: manipulation;
     background-color: #C4C6B1;
     overflow: hidden;
 }

@@ -1737,7 +1737,8 @@ function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
       i = i - 5;
     }
   }
-  input = inputArr.join('');  
+  input = inputArr.join('');
+  console.log(input);
   return input;
 }
 
@@ -1745,7 +1746,6 @@ function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
 function rootEval(y, x) {
   return Math.pow(x, 1/y);
 }
-
 // Wired to HTML
 function lstStackFocus() {
   stackFocus = true;  
