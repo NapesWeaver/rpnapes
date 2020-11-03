@@ -14,7 +14,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '1:49:45';
+const tStamp = '14:39:51';
 var testing = false;
 
 var stack = [];
@@ -76,7 +76,7 @@ NumberObject.prototype.toString = function () {
 
 function hapticResponse() {
   if (isMobile) {
-    navigator.vibrate([3]);
+    navigator.vibrate([1]);
     $('txtInput').readOnly = true;
   }
 }
