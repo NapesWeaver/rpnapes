@@ -112,7 +112,6 @@ img {
     width: 240px;
     margin-bottom: 7px;
     overflow-y: scroll;
-    /* resize: none; */
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .7em;
     font-weight: bold;
@@ -299,6 +298,7 @@ img {
 /****** Notes **********************************/
 
 .lst-notes {
+    resize: vertical;
     /* Height reinforcement across browsers */
     height: 380px;
     width: 240px;

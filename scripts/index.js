@@ -3,12 +3,11 @@
 };
 
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-//var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
 if (isMobile) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
-// We can't enumerate over these - should I go more vanilla with this ???
 const Φ = 1.618033988749895;
 const e = 2.718281828459045;
 const π = 3.141592653589793;
@@ -3325,46 +3324,7 @@ document.addEventListener('keydown', function (event) {
         break;
       }
     }
-    else {            
-      if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-        // IE || Chrome - No solution yet :(
-      } else {
-        // Firefox      
-        switch (event.keyCode) {
-        case 38:
-          // UP ARROW - If focus is on txtInput move focus to bottom of lstStack
-          $('lstStack').readOnly = false;
-          if (!stackFocus) {
-            //event.preventDefault();
-            if (!event) { event = window.event; }
-            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            var t = $('lstStack');
-            t.onfocus = function () {
-              t.scrollTop = t.scrollHeight;
-              setTimeout(function () {
-                t.select();
-                t.selectionStart = t.selectionEnd;
-              }, 10);
-            };
-            $('lstStack').focus();
-            stackFocus = true;
-          }
-          $('lstStack').readOnly = true;
-          break;
-        case 40:
-          // DOWN ARROW - If focus is at bottom of lstStack move focus to txtInput
-          $('lstStack').readOnly = false;
-          if (getIndex('lstStack') === $('lstStack').value.split('\n').length) {
-            //event.preventDefault();
-            if (!event) { event = window.event; }
-            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            $('txtInput').focus();
-          }
-          $('lstStack').readOnly = true;
-          break;
-        }
-      }      
-    }
+    
     switch (event.keyCode) {
     case 8:
       // BACKSPACE
