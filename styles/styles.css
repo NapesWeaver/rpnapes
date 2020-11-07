@@ -107,7 +107,6 @@ img {
 
 .lst-stack {
     resize: none;
-    pointer-events: none;
     /* Height reinforcement across browsers */
     height: 15em;
     width: 240px;

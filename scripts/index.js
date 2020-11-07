@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '14:39:51';
+const tStamp = '23:25:40';
 var testing = false;
 
 var stack = [];
@@ -3631,6 +3631,11 @@ window.onload = function () {
   // Text Area
   $('lstStack').style.color = '#000000';// noscript warning was red ;)
   $('lstStack').value = '';
+  $('lstStack').oncontextmenu = function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return false;
+  }
   
   // Text Input
   $('txtInput').onclick = mobileKeyboardAllow;
