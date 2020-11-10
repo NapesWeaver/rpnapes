@@ -1485,6 +1485,7 @@ function help(command) {
   }  
   btn_enter();
   btn_delete();
+  btn_enter();
 }
 
 function parseCommand() {
@@ -1495,6 +1496,10 @@ function parseCommand() {
   if (!/[,*√=Φπ\\^]+/.test(command)) {
     
     var commandArray = command.split(' ');
+    // Google
+    // if () {
+
+    // }
     // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
       stack.pop();
@@ -1549,6 +1554,10 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }
+    // YouTube
+    // if (command === 'you' || command.match(/^you .+)) {
+      
+    // }
   
     switch (command) {  
     case 'about':
@@ -1612,11 +1621,9 @@ function parseCommand() {
       updateDisplay();
       inputText('lat:' + lat + ', lon:' + lng);
       break;
-    // case 'login':
-      
+    // case 'login':      
     //   break;
-    // case 'logout':
-      
+    // case 'logout':      
     //   break;
     case 'napes':
       location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
