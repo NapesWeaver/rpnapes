@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '12:38:29';
+const tStamp = '14:14:6';
 var testing = false;
 
 var stack = [];
@@ -1469,8 +1469,8 @@ function help(command) {
     case 'tricorder':
       inputText('tricorder: Opens the Tricorder interface.');
       break;
-    case 'unEmbed':
-      inputText('unEmbed: Removes the last embedded video.');
+    case 'unembed':
+      inputText('unembed: Removes the last embedded video.');
       break;
     case 'you':
       inputText('you: Search YouTube for last stack entry.');
@@ -1481,7 +1481,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, date, embed, fix, flightLogger, go, ip, ipMapper, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unEmbed, you');
+    inputText('about, clear, date, embed, fix, flightLogger, go, ip, ipMapper, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unembed, you');
   }  
   btn_enter();
   btn_delete();
@@ -1536,8 +1536,8 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }
-    // NOT embed with word and no space, NOT embed with number, NOT embed with word and number, NOT embed with word and alphanumeric word
-    if (command.match(/(?!embed[0-9A-Za-z]+)(?!embed ?[0-9])(?!embed [A-Za-z ]+[0-9]+)(?!embed [A-Za-z]+ +[0-9A-Za-z]+)^embed ?[A-Za-z]*/)) {    
+    // If (command === embed and end of stack === URL) or command === embed with URL
+    if ((command.match(/^embed$/) && stack[stack.length - 2].getSoul().match(/^http[s]:\/\/[0-9A-Za-z]/)) || command.match(/^embed http[s]:\/\/[0-9A-Za-z]/)) {    
       
       if (commandArray[1] === undefined) {
         stack.pop();
@@ -1677,7 +1677,7 @@ function parseCommand() {
       deleteKey();
       showTricorder();
       break;
-    case 'unEmbed':
+    case 'unembed':
       stack.pop();
       updateDisplay();
       deleteKey();
