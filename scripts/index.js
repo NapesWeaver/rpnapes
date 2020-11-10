@@ -1407,9 +1407,7 @@ function internetSearch(domainString) {
 function help(command) {
 
   var queryString = command.split(' ');
-
-  if(shifted) btn_shift();
-
+  
   if (queryString[1] !== undefined) {
 
     switch (queryString[1]) {
@@ -1420,7 +1418,7 @@ function help(command) {
       inputText('Clears the displays.');
       break;
     case 'embed':
-      inputText('Embed last stack entry into Tricorder iFrame. Must be in the format of src="https://www.youtube.com/embed/G2re3s0kQgM"');
+      inputText('Embed last stack entry into Tricorder iFrame. Must be in the format of https://www.youtube.com/embed/G2re3s0kQgM');
       break;
     case 'flightlogger':
       inputText('Opens Flight Logger in a new tab.');
@@ -1440,8 +1438,14 @@ function help(command) {
     case 'load':
       inputText('Loads the Stack to the display.');
       break;
+    // case 'login':
+    //   inputText('');
+    //   break;
+    // case 'logout':
+    //   inputText('');
+    //   break;
     case 'locus':
-      inputText('Get geo-coordinates. Tricorder must have been opend first.');
+      inputText('Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'napes':
       inputText('Switch to Referances interface.');
@@ -1474,7 +1478,7 @@ function help(command) {
       inputText('Returns the current time.');
       break;
     case 'tostring':
-      inputText('Saves the Stack to a text file showing all fields for each entry.');
+      inputText('Saves the Stack to a text file showing all fields for each Stack entry.');
       break;
     case 'tricorder':
       inputText('Opens the Tricorder interface.');
@@ -1583,6 +1587,12 @@ function parseCommand() {
     updateDisplay();
     inputText('lat:' + lat + ', lon:' + lng);
     break;
+  // case 'login':
+    
+  //   break;
+  // case 'logout':
+    
+  //   break;
   case 'napes':
     location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
     break;
