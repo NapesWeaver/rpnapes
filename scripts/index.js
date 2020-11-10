@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '9:33:12';
+const tStamp = '10:22:20';
 var testing = false;
 
 var stack = [];
@@ -1475,9 +1475,9 @@ function help(command) {
     case 'you':
       inputText('Search YouTube for last stack entry.');
       break;
+    // case NOT a help argument:
     default:
-      rpnAlert('No help command for ' + commandArray[1] + '.');
-      break;
+      return;
     }
   } else {
     inputText('about, clear, date, embed, fix, flightLogger, go, ip, ipMapper, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unEmbed, you');
