@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '23:25:40';
+const tStamp = '0:27:11';
 var testing = false;
 
 var stack = [];
@@ -1238,17 +1238,6 @@ String.prototype.insertAt = function (index, input) {
   return this.slice(0,index) + input + this.slice(index);
 }
 
-function getSize() {
-
-  var w = window,
-    d = document,
-    e = d.documentElement,
-    g = d.getElementsByTagName('body')[0],
-    x = w.innerWidth || e.clientWidth || g.clientWidth,
-    y = w.innerHeight || e.clientHeight || g.clientHeight;
-  // insertText(x + ' × ' + y);
-  return [x, y];
-}
 function insertTime() {
   insertText(getTime());
 }
@@ -1267,22 +1256,16 @@ function insertDate() {
   insertText(month + '/' + date + '/' + year);
 }
 
-function rpnAlert(text) {
+function getSize() {
 
-  backupUndo();
-  $('txtInput').value = text;
-  $('txtInput').select();
-}
-function inputText(text) {
-  
-  backupUndo();
-  $('txtInput').value = text;
-}
-function insertText(text) {
-
-  backupUndo();
-  insertAtCursor($('txtInput'), text);
-  $('txtInput').focus();
+  var w = window,
+    d = document,
+    e = d.documentElement,
+    g = d.getElementsByTagName('body')[0],
+    x = w.innerWidth || e.clientWidth || g.clientWidth,
+    y = w.innerHeight || e.clientHeight || g.clientHeight;
+  // insertText(x + ' × ' + y);
+  return [x, y];
 }
 
 function embed(src) {
@@ -1351,8 +1334,8 @@ function getIP() {
  */
 function getUserIP(onNewIP) {
 
-  //  onNewIp - your listener function for new IPs
-  //compatibility for firefox and chrome
+  // onNewIp - your listener function for new IPs
+  // compatibility for firefox and chrome
   var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
   var pc = new myPeerConnection({
       iceServers: []
@@ -1411,6 +1394,9 @@ function help(command) {
   if (queryString[1] !== undefined) {
 
     switch (queryString[1]) {
+    case 'about':
+      inputText($('lstStack').getAttribute('placeholder'));
+      break;
     case 'date':
       inputText('Returns the current date.');
       break;
@@ -1439,10 +1425,10 @@ function help(command) {
       inputText('Loads the Stack to the display.');
       break;
     // case 'login':
-    //   inputText('');
+    //   inputText('Log into the database.');
     //   break;
     // case 'logout':
-    //   inputText('');
+    //   inputText('Logs out of the database.');
     //   break;
     case 'locus':
       inputText('Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
@@ -1528,9 +1514,9 @@ function parseCommand() {
     updateDisplay();
     insertDate();
     break;
-  case 'editstack':
-    editStack();
-    break;
+  // case 'editstack':
+  //   editStack();
+  //   break;
   case 'embed':
     stack.pop();
     embed(stack[stack.length - 1].getSoul());
@@ -1830,7 +1816,7 @@ function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
     }
   }
   input = inputArr.join('');
-  console.log(input);
+  //console.log(input);
   return input;
 }
 
@@ -1956,6 +1942,24 @@ function moveCursorToEnd(el) {
   } catch (err) {
     // console.error(err);
   }  
+}
+
+function rpnAlert(text) {
+
+  backupUndo();
+  $('txtInput').value = text;
+  $('txtInput').select();
+}
+function inputText(text) {
+  
+  backupUndo();
+  $('txtInput').value = text;
+}
+function insertText(text) {
+
+  backupUndo();
+  insertAtCursor($('txtInput'), text);
+  $('txtInput').focus();
 }
 
 function updateDisplay() {
