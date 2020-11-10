@@ -1267,6 +1267,12 @@ function insertDate() {
   insertText(month + '/' + date + '/' + year);
 }
 
+function rpnAlert(text) {
+
+  backupUndo();
+  $('txtInput').value = text;
+  $('txtInput').select();
+}
 function inputText(text) {
   
   backupUndo();
@@ -1277,12 +1283,6 @@ function insertText(text) {
   backupUndo();
   insertAtCursor($('txtInput'), text);
   $('txtInput').focus();
-}
-function rpnAlert(text) {
-
-  backupUndo();
-  $('txtInput').value = text;
-  $('txtInput').select();
 }
 
 function embed(src) {
@@ -1397,28 +1397,116 @@ function internetSearch(domainString) {
     searchTerm = $('txtInput').value.trim();
   }
   domainString += searchTerm;
-  window.open(domainString, '_blank');  
+  window.open(domainString, '_blank');
   //window.location.href = domainString;
   //window.location.reload();
   //history.forward();
   //history.go(-2);
 }
 
-function help() {
+function help(command) {
+
+  var queryString = command.split(' ');
 
   if(shifted) btn_shift();
-  inputText('about, clear, date, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, print, save, saveas, size, time, tricorder, tostring, unembed, you');
+
+  if (queryString[1] !== undefined) {
+
+    switch (queryString[1]) {
+    case 'date':
+      inputText('Returns the current date.');
+      break;
+    case 'clear':
+      inputText('Clears the displays.');
+      break;
+    case 'embed':
+      inputText('Embed last stack entry into Tricorder iFrame. Must be in the format of src="https://www.youtube.com/embed/G2re3s0kQgM"');
+      break;
+    case 'flightlogger':
+      inputText('Opens Flight Logger in a new tab.');
+      break;
+    case 'fix':
+      inputText('Fix number of decimals shown on stack. Last entry on stack is used as argument. Use -1 to turn Fixed Decimals off.');
+      break;
+    case 'go':
+      inputText('Google last stack entry.');
+      break;
+    case 'ip':
+      inputText('Returns local IP address.');
+      break;
+    case 'ipmapper':
+      inputText('Opens IP Mapper in a new tab.');
+      break;
+    case 'load':
+      inputText('Loads the Stack to the display.');
+      break;
+    case 'locus':
+      inputText('Get geo-coordinates. Tricorder must have been opend first.');
+      break;
+    case 'napes':
+      inputText('Switch to Referances interface.');
+      break;
+    case 'notes':
+      inputText('Switch to Notes interface.');
+      break;
+    case 'open':
+      inputText('Open a text file into the Stack.');
+      break;
+    case 'opennotes':
+      inputText('Open a text file into Notes.');
+      break;
+    case 'off':
+      inputText('Close browser window. Works sporadically. Window must be opened with window.open()');
+      break;
+    case 'print':
+      inputText('Opens print dialoge.');
+      break;
+    case 'save':
+      inputText('Saves the stack to a browser cookie.');
+      break;
+    case 'saveas':
+      inputText('Saves the stack to a text file. File is named using the last entry on the stack.');
+      break;
+    case 'size':
+      inputText('Returns the width and height of the browser window.');
+      break;
+    case 'time':
+      inputText('Returns the current time.');
+      break;
+    case 'tostring':
+      inputText('Saves the Stack to a text file showing all fields for each entry.');
+      break;
+    case 'tricorder':
+      inputText('Opens the Tricorder interface.');
+      break;
+    case 'unembed':
+      inputText('Removes the last embedded video.');
+      break;
+    case 'you':
+      inputText('Search YouTube for last stack entry.');
+      break;
+    default:
+      rpnAlert('No help command for ' + queryString[1] + '.');
+      break;
+    }
+
+  } else {
+    inputText('about, clear, date, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, print, save, saveas, size, time, tostring, tostring, unembed, you');
+  }  
   btn_enter();
   deleteKey();
 }
 
-function openAFile() {
-  $('openFile').click();
-}
-
 function parseCommand() {
 
-  switch ($('txtInput').value.toLowerCase().trim()) {
+  var command = $('txtInput').value.toLowerCase().trim();
+  // NOT help with word and no space, NOT help with number, NOT help with word and number
+  if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)^help ?[A-Za-z]*/)) {
+    stack.pop();
+    help(command);    
+  }
+
+  switch (command) {
 
   case 'about':
     stack.pop();
@@ -1461,11 +1549,6 @@ function parseCommand() {
   case 'gravity':
     //resetMathmon();
     gravity();
-    break;
-  case 'help':
-  case '?':
-    stack.pop();
-    help();
     break;
   case 'how are ya':
   case 'how are you':
@@ -1783,6 +1866,10 @@ function onClickSelection(textarea){
   textarea.selectionStart = startPos + 1;
   textarea.selectionEnd = endPos;
   return true;  
+}
+
+function openAFile() {
+  $('openFile').click();
 }
 
 function getStackEntry() {
