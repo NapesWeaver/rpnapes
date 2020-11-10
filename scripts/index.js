@@ -1490,14 +1490,16 @@ function parseCommand() {
 
   var command = $('txtInput').value.trim();
 
+  // Commands consist of words and numbers only
   if (!/[-,+*/√=ΦπG\\!@#$%^&)(\[\]\_]+/.test(command)) {
     
     var commandArray = command.split(' ');
-    // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word with another word
+    // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
       stack.pop();
       help(command);
     }
+    // NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
     if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix ?[0-9]*/)) {    
       
       if (commandArray[1] === undefined) {
@@ -1509,6 +1511,7 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }
+    // NOT saveAs with word and no space, NOT saveAs with number, NOT saveAs with word and alphanumeric word
     if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])(?!saveAs [A-Za-z]+ +[0-9A-Za-z]+)^saveAs ?[A-Za-z]*/)) {    
       
       if (commandArray[1] === undefined) {
@@ -1519,7 +1522,8 @@ function parseCommand() {
       }
       deleteKey();
       deleteKey();
-    }    
+    }
+    // NOT toString with word and no space, NOT toString with number, NOT toString with word and alphanumeric word
     if (command.match(/(?!toString[A-Za-z]+)(?!toString ?[0-9])(?!toString [A-Za-z]+ +[0-9A-Za-z]+)^toString ?[A-Za-z]*/)) {    
 
       if (commandArray[1] === undefined) {
