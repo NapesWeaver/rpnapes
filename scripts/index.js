@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '3:31:22';
+const tStamp = '3:39:47';
 var testing = false;
 
 var stack = [];
@@ -1507,7 +1507,7 @@ function parseCommand() {
         setFixDecimal(commandArray[1]);
       }
       deleteKey();
-      updateDisplay();
+      deleteKey();
     }
     if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])^saveAs ?[A-Za-z]*/)) {    
       
@@ -1518,6 +1518,7 @@ function parseCommand() {
         saveFile(commandArray[1], true);
       }
       deleteKey();
+      deleteKey();
     }    
     if (command.match(/(?!toString[A-Za-z]+)(?!toString ?[0-9])^toString ?[A-Za-z]*/)) {    
 
@@ -1527,6 +1528,7 @@ function parseCommand() {
       } else {
         saveFile(commandArray[1], false)
       }
+      deleteKey();
       deleteKey();
     }
   
