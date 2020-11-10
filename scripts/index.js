@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '0:27:11';
+const tStamp = '3:31:22';
 var testing = false;
 
 var stack = [];
@@ -689,7 +689,7 @@ function btn_inverse() {
   }
   else {
     var newUnits = inverseUnits();
-    console.log(extractReal($('txtInput'.value)));
+    //console.log(extractReal($('txtInput'.value)));
     var isNumber = !isNaN(extractReal($('txtInput').value));
     var isImaginary = !isNaN(extractImaginary($('txtInput').value));
     //console.log(newUnits, isNumber, isImaginary);
@@ -1389,11 +1389,11 @@ function internetSearch(domainString) {
 
 function help(command) {
 
-  var queryString = command.split(' ');
+  var commandArray = command.split(' ');
   
-  if (queryString[1] !== undefined) {
+  if (commandArray[1] !== undefined) {
 
-    switch (queryString[1]) {
+    switch (commandArray[1]) {
     case 'about':
       inputText($('lstStack').getAttribute('placeholder'));
       break;
@@ -1406,11 +1406,11 @@ function help(command) {
     case 'embed':
       inputText('Embed last stack entry into Tricorder iFrame. Must be in the format of https://www.youtube.com/embed/G2re3s0kQgM');
       break;
-    case 'flightlogger':
+    case 'flightLogger':
       inputText('Opens Flight Logger in a new tab.');
       break;
     case 'fix':
-      inputText('Fix number of decimals shown on stack. Last entry on stack is used as argument. Use -1 to turn Fixed Decimals off.');
+      inputText('fix [n] Fix number of decimals shown on the stack. If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
       break;
     case 'go':
       inputText('Google last stack entry.');
@@ -1418,7 +1418,7 @@ function help(command) {
     case 'ip':
       inputText('Returns local IP address.');
       break;
-    case 'ipmapper':
+    case 'ipMapper':
       inputText('Opens IP Mapper in a new tab.');
       break;
     case 'load':
@@ -1442,7 +1442,7 @@ function help(command) {
     case 'open':
       inputText('Open a text file into the Stack.');
       break;
-    case 'opennotes':
+    case 'openNotes':
       inputText('Open a text file into Notes.');
       break;
     case 'off':
@@ -1454,8 +1454,8 @@ function help(command) {
     case 'save':
       inputText('Saves the stack to a browser cookie.');
       break;
-    case 'saveas':
-      inputText('Saves the stack to a text file. File is named using the last entry on the stack.');
+    case 'saveAs':
+      inputText('saveAs [filename] Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'size':
       inputText('Returns the width and height of the browser window.');
@@ -1463,208 +1463,223 @@ function help(command) {
     case 'time':
       inputText('Returns the current time.');
       break;
-    case 'tostring':
-      inputText('Saves the Stack to a text file showing all fields for each Stack entry.');
+    case 'toString':
+      inputText('toString [filename] Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'tricorder':
       inputText('Opens the Tricorder interface.');
       break;
-    case 'unembed':
+    case 'unEmbed':
       inputText('Removes the last embedded video.');
       break;
     case 'you':
       inputText('Search YouTube for last stack entry.');
       break;
     default:
-      rpnAlert('No help command for ' + queryString[1] + '.');
+      rpnAlert('No help command for ' + commandArray[1] + '.');
       break;
     }
-
   } else {
-    inputText('about, clear, date, embed, fix, flightlogger, go, ip, ipmapper, load, locus, napes, notes, open, opennotes, off, print, save, saveas, size, time, tostring, tostring, unembed, you');
+    inputText('about, clear, date, embed, fix, flightLogger, go, ip, ipMapper, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unEmbed, you');
   }  
   btn_enter();
-  deleteKey();
+  btn_delete();
 }
 
 function parseCommand() {
 
-  var command = $('txtInput').value.toLowerCase().trim();
-  // NOT help with word and no space, NOT help with number, NOT help with word and number
-  if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)^help ?[A-Za-z]*/)) {
-    stack.pop();
-    help(command);    
-  }
+  var command = $('txtInput').value.trim();
 
-  switch (command) {
-
-  case 'about':
-    stack.pop();
-    inputText($('lstStack').getAttribute('placeholder'));
-    btn_enter();
-    deleteKey();
-    break;
-  case 'clear':
-  case 'clr':
-  case 'cls':
-    btn_clear();
-    break;
-  case 'date':
-    stack.pop();
-    updateDisplay();
-    insertDate();
-    break;
-  // case 'editstack':
-  //   editStack();
-  //   break;
-  case 'embed':
-    stack.pop();
-    embed(stack[stack.length - 1].getSoul());
-    deleteKey();
-    saveTricorder();
-    break;  
-  case 'fix':
-    stack.pop();
-    setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
-    updateDisplay();
-    break;
-  case 'flightlogger':
-    stack.pop();
-    updateDisplay();
-    window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
-    break;
-  case 'go':
-    internetSearch('https://www.google.com/search?q=');
-    break;
-  case 'gravity':
-    //resetMathmon();
-    gravity();
-    break;
-  case 'how are ya':
-  case 'how are you':
-  case 'how ya doing':
-    inputText('Like a rhinestone cowboy!');
-    btn_enter();
-    deleteKey();
-    break;
-  case 'hello':
-  case 'hi':
-    inputText('Hallo there!');
-    btn_enter();
-    deleteKey();
-    break;
-  case 'ip':
-    stack.pop();
-    updateDisplay();
-    getIP();
-    break;
-  case 'ipmapper':
-    window.open('https://napesweaver.github.io/ip-mapper/', '_blank').focus();
-    break;
-  case 'dir':
-  case 'loa':
-  case 'load':
-  case 'ls':
-    deleteKey();
-    btn_load();
-    break;
-  case 'locus':
-    stack.pop();
-    updateDisplay();
-    inputText('lat:' + lat + ', lon:' + lng);
-    break;
-  // case 'login':
+  if (!/[-,+*/√=ΦπG\\!@#$%^&)(\[\]\_]+/.test(command)) {
     
-  //   break;
-  // case 'logout':
-    
-  //   break;
-  case 'napes':
-    location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
-    break;
-  case 'notes':
-    stack.pop();
-    updateDisplay();
-    btn_xoff();
-    break;
-  case 'exit':
-  case 'off':
-    stack.pop();
-    updateDisplay();
-    btn_off();
-    break;
-  case 'open':
-    deleteKey();
-    deleteKey();
-    openAFile();
-    break;
-  case 'opennotes':
-    deleteKey();
-    deleteKey();
-    $('txtInput').value = 'notes';
-    openAFile();
-    break;
-  case 'print':
-    stack.pop();
-    deleteKey();
-    print();
-    break;
-  case 'save':
-    stack.pop();
-    deleteKey();
-    btn_save();
-    break;
-  case 'saveas':
-    stack.pop();
-    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true);
-    deleteKey();
-    break;
-  case 'size':
-    stack.pop();
-    updateDisplay();
-    rpnAlert(getSize());
-    break;  
-  case 'time':
-    stack.pop();
-    updateDisplay();
-    inputText(getTime());
-    break;
-  case 'tostring':
-    stack.pop();
-    stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, false) : saveFile('', false);
-    deleteKey();
-    break;
-  case 'twig':
-    stack.pop();
-    deleteKey();           
-    monOn();
-    break;
-  case 'twigstat':
-    stack.pop();
-    monStatus();
-    deleteKey();
-    break;
-  case 'tricorder':
-    stack.pop();
-    deleteKey();
-    showTricorder();
-    break;
-  case 'unembed':
-    stack.pop();
-    updateDisplay();
-    deleteKey();
-    widgetSrc.shift();
-    saveTricorder();
-    break;
-  case 'you':
-    internetSearch('https://www.youtube.com/results?search_query=');
-    break;
-  default:
-    if (twig.health > 0) {
-      $('twig').src = 'images/twig/hat-tip.gif';
-      // rpnAlert('pos: ' + twig.xPos + ', ' + twig.yPos);
+    var commandArray = command.split(' ');
+    // NOT help with word and no space, NOT help with number, NOT help with word and number
+    if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)^help ?[A-Za-z]*/)) {
+      stack.pop();
+      help(command);
     }
-    break;
+    if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)^fix ?[0-9]*/)) {    
+      
+      if (commandArray[1] === undefined) {
+        stack.pop();
+        setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+      } else {
+        setFixDecimal(commandArray[1]);
+      }
+      deleteKey();
+      updateDisplay();
+    }
+    if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])^saveAs ?[A-Za-z]*/)) {    
+      
+      if (commandArray[1] === undefined) {
+        stack.pop();
+        stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true);
+      } else {
+        saveFile(commandArray[1], true);
+      }
+      deleteKey();
+    }    
+    if (command.match(/(?!toString[A-Za-z]+)(?!toString ?[0-9])^toString ?[A-Za-z]*/)) {    
+
+      if (commandArray[1] === undefined) {
+        stack.pop();
+        stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, false) : saveFile('', false);
+      } else {
+        saveFile(commandArray[1], false)
+      }
+      deleteKey();
+    }
+  
+    switch (command) {  
+    case 'about':
+      stack.pop();
+      inputText($('lstStack').getAttribute('placeholder'));
+      btn_enter();
+      deleteKey();
+      break;
+    case 'clear':
+    case 'clr':
+    case 'cls':
+      btn_clear();
+      break;
+    case 'date':
+      stack.pop();
+      updateDisplay();
+      insertDate();
+      break;
+    // case 'editstack':
+    //   editStack();
+    //   break;
+    case 'embed':
+      stack.pop();
+      embed(stack[stack.length - 1].getSoul());
+      deleteKey();
+      saveTricorder();
+      break;
+    case 'flightLogger':
+      stack.pop();
+      updateDisplay();
+      window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
+      break;
+    case 'go':
+      internetSearch('https://www.google.com/search?q=');
+      break;
+    case 'gravity':
+      //resetMathmon();
+      gravity();
+      break;
+    case 'how are ya':
+    case 'how are you':
+    case 'how ya doing':
+      inputText('Like a rhinestone cowboy!');
+      btn_enter();
+      deleteKey();
+      break;
+    case 'hello':
+    case 'hi':
+      inputText('Hallo there!');
+      btn_enter();
+      deleteKey();
+      break;
+    case 'ip':
+      stack.pop();
+      updateDisplay();
+      getIP();
+      break;
+    case 'ipMapper':
+      window.open('https://napesweaver.github.io/ip-mapper/', '_blank').focus();
+      break;
+    case 'load':
+      deleteKey();
+      btn_load();
+      break;
+    case 'locus':
+      stack.pop();
+      updateDisplay();
+      inputText('lat:' + lat + ', lon:' + lng);
+      break;
+    // case 'login':
+      
+    //   break;
+    // case 'logout':
+      
+    //   break;
+    case 'napes':
+      location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
+      break;
+    case 'notes':
+      stack.pop();
+      updateDisplay();
+      btn_xoff();
+      break;
+    case 'off':
+      stack.pop();
+      updateDisplay();
+      btn_off();
+      break;
+    case 'open':
+      deleteKey();
+      deleteKey();
+      openAFile();
+      break;
+    case 'openNotes':
+      deleteKey();
+      deleteKey();
+      $('txtInput').value = 'notes';
+      openAFile();
+      break;
+    case 'print':
+      stack.pop();
+      deleteKey();
+      print();
+      break;
+    case 'save':
+      stack.pop();
+      deleteKey();
+      btn_save();
+      break;
+    case 'size':
+      stack.pop();
+      updateDisplay();
+      rpnAlert(getSize());
+      break;  
+    case 'time':
+      stack.pop();
+      updateDisplay();
+      inputText(getTime());
+      break;
+    case 'twig':
+      stack.pop();
+      deleteKey();           
+      monOn();
+      break;
+    case 'twigStat':
+      stack.pop();
+      monStatus();
+      deleteKey();
+      break;
+    case 'tricorder':
+      stack.pop();
+      deleteKey();
+      showTricorder();
+      break;
+    case 'unEmbed':
+      stack.pop();
+      updateDisplay();
+      deleteKey();
+      widgetSrc.shift();
+      saveTricorder();
+      break;
+    case 'you':
+      internetSearch('https://www.youtube.com/results?search_query=');
+      break;
+    default:
+      if (twig.health > 0) {
+        $('twig').src = 'images/twig/hat-tip.gif';
+        // rpnAlert('pos: ' + twig.xPos + ', ' + twig.yPos);
+      }
+      break;
+    }
   }
 }
 
