@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '10:22:20';
+const tStamp = '12:38:29';
 var testing = false;
 
 var stack = [];
@@ -1398,31 +1398,31 @@ function help(command) {
       inputText($('lstStack').getAttribute('placeholder'));
       break;
     case 'date':
-      inputText('Returns the current date.');
+      inputText('date: Returns the current date.');
       break;
     case 'clear':
-      inputText('Clears the displays.');
+      inputText('clear: Clears the displays.');
       break;
     case 'embed':
-      inputText('Embed last stack entry into Tricorder iFrame. Must be in the format of https://www.youtube.com/embed/G2re3s0kQgM');
+      inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL. URL must be in format of https://www.youtube.com/embed/G2re3s0kQgM. ');
       break;
     case 'flightLogger':
-      inputText('Opens Flight Logger in a new tab.');
+      inputText('flightLogger: Opens Flight Logger in a new tab.');
       break;
     case 'fix':
-      inputText('fix [n] Fix number of decimals shown on the stack. If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
+      inputText('fix [n]: Fix number of decimals shown on the stack. If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
       break;
     case 'go':
-      inputText('Google last stack entry.');
+      inputText('go: Google last stack entry.');
       break;
     case 'ip':
-      inputText('Returns local IP address.');
+      inputText('ip: Returns local IP address.');
       break;
     case 'ipMapper':
-      inputText('Opens IP Mapper in a new tab.');
+      inputText('ipMapper: Opens IP Mapper in a new tab.');
       break;
     case 'load':
-      inputText('Loads the Stack to the display.');
+      inputText('load: Loads the Stack to the display.');
       break;
     // case 'login':
     //   inputText('Log into the database.');
@@ -1431,52 +1431,53 @@ function help(command) {
     //   inputText('Logs out of the database.');
     //   break;
     case 'locus':
-      inputText('Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
+      inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'napes':
-      inputText('Switch to Referances interface.');
+      inputText('napes: Switch to Referances interface.');
       break;
     case 'notes':
-      inputText('Switch to Notes interface.');
+      inputText('notes: Switch to Notes interface.');
       break;
     case 'open':
-      inputText('Open a text file into the Stack.');
+      inputText('open: Open a text file into the Stack.');
       break;
     case 'openNotes':
-      inputText('Open a text file into Notes.');
+      inputText('openNotes: Open a text file into Notes.');
       break;
     case 'off':
-      inputText('Close browser window. Works sporadically. Window must be opened with window.open()');
+      inputText('off: Close browser tab. Works sporadically, tab must be opened with window.open()');
       break;
     case 'print':
-      inputText('Opens print dialoge.');
+      inputText('print: Opens print dialoge.');
       break;
     case 'save':
-      inputText('Saves the stack to a browser cookie.');
+      inputText('save: Saves the stack to a browser cookie.');
       break;
     case 'saveAs':
-      inputText('saveAs [filename] Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
+      inputText('saveAs [filename]: Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'size':
-      inputText('Returns the width and height of the browser window.');
+      inputText('size: Returns the width and height of the browser window.');
       break;
     case 'time':
-      inputText('Returns the current time.');
+      inputText('time: Returns the current time.');
       break;
     case 'toString':
-      inputText('toString [filename] Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
+      inputText('toString [filename]: Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'tricorder':
-      inputText('Opens the Tricorder interface.');
+      inputText('tricorder: Opens the Tricorder interface.');
       break;
     case 'unEmbed':
-      inputText('Removes the last embedded video.');
+      inputText('unEmbed: Removes the last embedded video.');
       break;
     case 'you':
-      inputText('Search YouTube for last stack entry.');
+      inputText('you: Search YouTube for last stack entry.');
       break;
     // case NOT a help argument:
     default:
+      enterFunction();
       return;
     }
   } else {
@@ -1490,8 +1491,8 @@ function parseCommand() {
 
   var command = $('txtInput').value.trim();
 
-  // Commands consist of words and numbers only
-  if (!/[-,+*/√=ΦπG\\!@#$%^&)(\[\]\_]+/.test(command)) {
+  // Commands consist of words and numbers and URLs
+  if (!/[,*√=Φπ\\^]+/.test(command)) {
     
     var commandArray = command.split(' ');
     // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
@@ -1535,6 +1536,19 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }
+    // NOT embed with word and no space, NOT embed with number, NOT embed with word and number, NOT embed with word and alphanumeric word
+    if (command.match(/(?!embed[0-9A-Za-z]+)(?!embed ?[0-9])(?!embed [A-Za-z ]+[0-9]+)(?!embed [A-Za-z]+ +[0-9A-Za-z]+)^embed ?[A-Za-z]*/)) {    
+      
+      if (commandArray[1] === undefined) {
+        stack.pop();
+        embed(stack[stack.length - 1].getSoul());
+      } else {
+        embed(commandArray[1]);
+      }
+      saveTricorder();
+      deleteKey();
+      deleteKey();
+    }
   
     switch (command) {  
     case 'about':
@@ -1555,13 +1569,7 @@ function parseCommand() {
       break;
     // case 'editstack':
     //   editStack();
-    //   break;
-    case 'embed':
-      stack.pop();
-      embed(stack[stack.length - 1].getSoul());
-      deleteKey();
-      saveTricorder();
-      break;
+    //   break;  
     case 'flightLogger':
       stack.pop();
       updateDisplay();
@@ -1682,7 +1690,7 @@ function parseCommand() {
     default:
       if (twig.health > 0) {
         $('twig').src = 'images/twig/hat-tip.gif';
-        // rpnAlert('pos: ' + twig.xPos + ', ' + twig.yPos);
+        //rpnAlert('pos: ' + twig.xPos + ', ' + twig.yPos);
       }
       break;
     }
