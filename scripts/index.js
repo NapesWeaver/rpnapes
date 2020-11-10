@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '3:39:47';
+const tStamp = '9:33:12';
 var testing = false;
 
 var stack = [];
@@ -1493,12 +1493,12 @@ function parseCommand() {
   if (!/[-,+*/√=ΦπG\\!@#$%^&)(\[\]\_]+/.test(command)) {
     
     var commandArray = command.split(' ');
-    // NOT help with word and no space, NOT help with number, NOT help with word and number
-    if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)^help ?[A-Za-z]*/)) {
+    // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word with another word
+    if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
       stack.pop();
       help(command);
     }
-    if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)^fix ?[0-9]*/)) {    
+    if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix ?[0-9]*/)) {    
       
       if (commandArray[1] === undefined) {
         stack.pop();
@@ -1509,7 +1509,7 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }
-    if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])^saveAs ?[A-Za-z]*/)) {    
+    if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])(?!saveAs [A-Za-z]+ +[0-9A-Za-z]+)^saveAs ?[A-Za-z]*/)) {    
       
       if (commandArray[1] === undefined) {
         stack.pop();
@@ -1520,7 +1520,7 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }    
-    if (command.match(/(?!toString[A-Za-z]+)(?!toString ?[0-9])^toString ?[A-Za-z]*/)) {    
+    if (command.match(/(?!toString[A-Za-z]+)(?!toString ?[0-9])(?!toString [A-Za-z]+ +[0-9A-Za-z]+)^toString ?[A-Za-z]*/)) {    
 
       if (commandArray[1] === undefined) {
         stack.pop();
