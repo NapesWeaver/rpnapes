@@ -1512,8 +1512,9 @@ function parseCommand() {
         stack.pop();
         setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
       } else {
-        setFixDecimal(commandArray[1]);
+        setFixDecimal(parseInt(commandArray[1]));
       }
+      updateDisplay();
       deleteKey();
       deleteKey();
     }
@@ -1555,8 +1556,12 @@ function parseCommand() {
       deleteKey();
     }
     // YouTube
-    // if (command === 'you' || command.match(/^you .+)) {
-      
+    // if (command === 'you' || command.match(/^you .+/)) {
+    //   if (commandArray[1] === undefined) {
+    //     internetSearch('https://www.youtube.com/results?search_query=');
+    //   } else {
+
+    //   }
     // }
   
     switch (command) {  
