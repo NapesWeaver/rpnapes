@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '10:42:56';
+const tStamp = '11:40:55';
 var testing = false;
 
 var stack = [];
@@ -1396,7 +1396,7 @@ function help(command) {
       inputText('flightLogger: Opens Flight Logger in a new tab.');
       break;
     case 'fix':
-      inputText('fix [n]: Fix number of decimals shown on the stack. If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
+      inputText('fix [n]: Fix number of decimals shown on the stack (0 to 17). If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
       break;
     case 'go':
       inputText('go [query]: Search Google. If no argument is supplied in-line, last entry on stack is used as query.');
@@ -1489,16 +1489,21 @@ function parseCommand() {
     }
     // NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
     if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix ?[0-9]*/)) {    
-      
-      if (commandArray[1] === undefined) {
-        stack.pop();
-        setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
-      } else {
-        setFixDecimal(parseInt(commandArray[1]));
+      try {
+
+        if (commandArray[1] === undefined) {
+          if (isNaN(parseInt(stack[stack.length - 2].getRealPart()))) return;
+          stack.pop();
+          setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+        } else {
+          setFixDecimal(parseInt(commandArray[1]));
+        }
+        updateDisplay();
+        deleteKey();
+        deleteKey();
+      } catch(e) {
+        rpnAlert(e);
       }
-      updateDisplay();
-      deleteKey();
-      deleteKey();
     }
     // NOT saveAs with word and no space, NOT saveAs with number, NOT saveAs with word and alphanumeric word
     if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])(?!saveAs [A-Za-z]+ +[0-9A-Za-z]+)^saveAs ?[A-Za-z]*/)) {    
@@ -2644,13 +2649,11 @@ function removeNegativeExponentSign(factorsArray) {
 }
 
 function setFixDecimal(value) {
-
-  if (value !== '' && !isNaN(value) && parseInt(value) > -2 && parseInt(value) < 18) {
-    fixDecimal = value;
+  
+  if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
+    throw 'Enter an integer from -1 to 17 first.';
   }
-  else {
-    rpnAlert('Enter an integer from -1 to 17 first.');
-  }
+  fixDecimal = value;
 }
 function formatNumber(possibleNumber) {
 
