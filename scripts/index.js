@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '14:14:6';
+const tStamp = '10:42:56';
 var testing = false;
 
 var stack = [];
@@ -424,18 +424,14 @@ function btn_EE() {
 }
 
 function btn_go() {
-
   backupUndo();
 
-  if ($('txtInput').value !== '') {
-    if (shifted) {
-
-      internetSearch('https://www.youtube.com/results?search_query=');
-    }
-    else {
-      internetSearch('https://www.google.com/search?q=');
-    }
+  if (shifted) {   
+    internetSearch('https://www.youtube.com/results?search_query=', $('txtInput').value.trim());    
   }
+  else {
+    internetSearch('https://www.google.com/search?q=', $('txtInput').value.trim());
+  }  
   $('txtInput').select();
 }
 
@@ -1367,19 +1363,9 @@ function getUserIP(onNewIP) {
     ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
   };
 }
-function internetSearch(domainString) {
+function internetSearch(domainString, query) {
 
-  var searchTerm = '';
-  
-  if ($('txtInput').value.trim().toLowerCase() === 'go' || $('txtInput').value.trim().toLowerCase() === 'you') {
-    searchTerm = decodeSpecialChar(stack[stack.length - 2].getSoul());
-    deleteKey();
-    deleteKey();
-  }
-  else if ($('txtInput').value.trim() !== '') {
-    searchTerm = $('txtInput').value.trim();
-  }
-  domainString += searchTerm;
+  domainString += query;
   window.open(domainString, '_blank');
   //window.location.href = domainString;
   //window.location.reload();
@@ -1495,11 +1481,7 @@ function parseCommand() {
   // Commands consist of words and numbers and URLs
   if (!/[,*√=Φπ\\^]+/.test(command)) {
     
-    var commandArray = command.split(' ');
-    // Google
-    // if () {
-
-    // }
+    var commandArray = command.split(' ');   
     // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
       stack.pop();
@@ -1555,14 +1537,28 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }
-    // YouTube
-    // if (command === 'you' || command.match(/^you .+/)) {
-    //   if (commandArray[1] === undefined) {
-    //     internetSearch('https://www.youtube.com/results?search_query=');
-    //   } else {
+    if (command === 'go' || command.match(/^go .+/)) {
 
-    //   }
-    // }
+      if (commandArray[1] === undefined) {
+        stack.pop();
+        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 1].getSoul()));
+      } else {
+        internetSearch('https://www.google.com/search?q=', commandArray[1]);
+        btn_delete();
+      }
+      btn_delete();
+    }
+    if (command === 'you' || command.match(/^you .+/)) {
+
+      if (commandArray[1] === undefined) {
+        stack.pop();
+        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 1].getSoul()));
+      } else {
+        internetSearch('https://www.youtube.com/results?search_query=', commandArray[1]);
+        btn_delete();
+      }
+      btn_delete();
+    }
   
     switch (command) {  
     case 'about':
@@ -1696,9 +1692,9 @@ function parseCommand() {
       widgetSrc.shift();
       saveTricorder();
       break;
-    case 'you':
-      internetSearch('https://www.youtube.com/results?search_query=');
-      break;
+    // case 'you':
+    //   internetSearch('https://www.youtube.com/results?search_query=');
+    //   break;
     default:
       if (twig.health > 0) {
         $('twig').src = 'images/twig/hat-tip.gif';
