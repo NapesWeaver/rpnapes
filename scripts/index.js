@@ -1399,7 +1399,7 @@ function help(command) {
       inputText('fix [n]: Fix number of decimals shown on the stack. If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
       break;
     case 'go':
-      inputText('go: Google last stack entry.');
+      inputText('go [query]: Search Google. If no argument is supplied in-line, last entry on stack is used as query.');
       break;
     case 'ip':
       inputText('ip: Returns local IP address.');
@@ -1459,7 +1459,7 @@ function help(command) {
       inputText('unembed: Removes the last embedded video.');
       break;
     case 'you':
-      inputText('you: Search YouTube for last stack entry.');
+      inputText('you [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query.');
       break;
     // case NOT a help argument:
     default:
