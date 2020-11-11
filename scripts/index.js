@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '16:29:19';
+const tStamp = '17:10:57';
 var testing = false;
 
 var stack = [];
@@ -82,7 +82,7 @@ function hapticResponse() {
 function haptic() {
 
   if (isMobile) {
-    navigator.vibrate([3]);
+    navigator.vibrate([1]);
   }
 }
 function mobileKeyboardAllow() {
@@ -140,6 +140,19 @@ function showTricorder() {
   }
   $('tricorder').className = 'visible';
   $('viewport').className = 'visible';
+}
+
+function toggleKeyboard() {
+
+  if ($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
+    $('txtInput').readOnly = true;
+    $('menuKeyboard').innerHTML = 'Key&nbsp;On';
+  }
+  else {
+    $('txtInput').readOnly = false;
+    $('menuKeyboard').innerHTML = 'Key&nbsp;Off';
+  }
+  $('txtInput').focus();
 }
 
 function btn_copy() {
@@ -3635,6 +3648,7 @@ window.onload = function () {
   $('menuAngle').onclick = btn_angle;
   $('menuNotes').onclick = btn_xoff;
   $('menuShift').onclick = btn_shift;
+  $('menuKeyboard').onclick = toggleKeyboard;
 
   // Menu Constants
   $('menuPhi').onclick = (function() {
@@ -3714,6 +3728,8 @@ window.onload = function () {
   if (isMobile) {
     $('menuOff').style = 'display:none';
     $('menuTwig').style = 'display:none';
+  } else {
+    $('menuKeyboard').style = 'display:none';
   }
   
   // Menu Symbols
