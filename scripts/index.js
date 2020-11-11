@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '11:40:55';
+const tStamp = '16:29:19';
 var testing = false;
 
 var stack = [];
@@ -1387,7 +1387,7 @@ function help(command) {
       inputText('date: Returns the current date.');
       break;
     case 'clear':
-      inputText('clear: Clears the displays.');
+      inputText('clear: Clears the displays. Alias: cls');
       break;
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL. URL must be in format of https://www.youtube.com/embed/G2re3s0kQgM. ');
@@ -1408,7 +1408,7 @@ function help(command) {
       inputText('ipMapper: Opens IP Mapper in a new tab.');
       break;
     case 'load':
-      inputText('load: Loads the Stack to the display.');
+      inputText('load: Loads the Stack to the display. Alias: ls');
       break;
     // case 'login':
     //   inputText('Log into the database.');
@@ -1488,22 +1488,18 @@ function parseCommand() {
       help(command);
     }
     // NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
-    if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix ?[0-9]*/)) {    
-      try {
-
-        if (commandArray[1] === undefined) {
-          if (isNaN(parseInt(stack[stack.length - 2].getRealPart()))) return;
-          stack.pop();
-          setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
-        } else {
-          setFixDecimal(parseInt(commandArray[1]));
-        }
-        updateDisplay();
-        deleteKey();
-        deleteKey();
-      } catch(e) {
-        rpnAlert(e);
+    if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix (-?[1]|[0-9]|1[0-7])$/)) {    
+    
+      if (commandArray[1] === undefined) {
+        if (isNaN(parseInt(stack[stack.length - 2].getRealPart()))) return;
+        stack.pop();
+        setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+      } else {
+        setFixDecimal(parseInt(commandArray[1]));
       }
+      updateDisplay();
+      deleteKey();
+      deleteKey();      
     }
     // NOT saveAs with word and no space, NOT saveAs with number, NOT saveAs with word and alphanumeric word
     if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])(?!saveAs [A-Za-z]+ +[0-9A-Za-z]+)^saveAs ?[A-Za-z]*/)) {    
