@@ -1573,7 +1573,6 @@ function parseCommand() {
       deleteKey();
       break;
     case 'clear':
-    case 'clr':
     case 'cls':
       btn_clear();
       break;
@@ -1597,15 +1596,21 @@ function parseCommand() {
       //resetMathmon();
       gravity();
       break;
-    case 'how are ya':
-    case 'how are you':
-    case 'how ya doing':
+    case 'How are ya':
+    case 'How are ya doing':
+    case 'How are you':
+    case 'How are you doing':
+    case 'How ya doing':
+    case 'How you doing':
       inputText('Like a rhinestone cowboy!');
       btn_enter();
       deleteKey();
       break;
-    case 'hello':
-    case 'hi':
+    case 'Hallo':
+    case 'Hello':
+    case 'Hey':
+    case 'Hey':
+    case 'Hi':
       inputText('Hallo there!');
       btn_enter();
       deleteKey();
@@ -1619,6 +1624,7 @@ function parseCommand() {
       window.open('https://napesweaver.github.io/ip-mapper/', '_blank').focus();
       break;
     case 'load':
+    case 'ls':
       deleteKey();
       btn_load();
       break;
