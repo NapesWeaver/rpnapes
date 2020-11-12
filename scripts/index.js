@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '20:2:47';
+const tStamp = '22:16:33';
 var testing = false;
 
 var stack = [];
@@ -321,12 +321,14 @@ function deleteFromStack() {
   stack.splice(stackIndex, 1);
 }
 function backspaceKey() {
-
-  if ($('txtInput').value === '' || stackFocus) {
+  
+  if (stackFocus) {
     deleteFromStack();
     updateDisplay();
-  }
-  else {
+  } else if ($('txtInput').value === '') {
+    stack.pop();
+    updateDisplay();
+  } else {
     backspace($('txtInput'));
   }
 }
