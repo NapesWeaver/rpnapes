@@ -459,6 +459,8 @@ function btn_shift() {
     $('menuLoad').setAttribute('title', 'Load stack');
     $('menuEnter').innerHTML = 'Enter';
     $('menuEnter').setAttribute('title', 'Enter input');
+    $('menuDelete').innerHTML = 'Delete';
+    $('menuDelete').setAttribute('title', 'Delete input');
     $('menuSine').innerHTML = 'sin';
     $('menuCosine').innerHTML = 'cos';
     $('menuTangent').innerHTML = 'tan'
@@ -502,6 +504,9 @@ function btn_shift() {
     $('menuLoad').setAttribute('title', 'Run stack');
     $('menuEnter').innerHTML = '<span class="symbol-big">=</span>';
     $('menuEnter').setAttribute('title', 'Evaluate input');
+    // $('menuDelete').innerHTML = '<span class="symbol-big">&#60;--</span>';
+    $('menuDelete').innerHTML = '&#60--';
+    $('menuDelete').setAttribute('title', 'Backspace');
     $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
