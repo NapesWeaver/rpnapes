@@ -99,6 +99,25 @@ img {
 .symbol-big, .symbol-med {
     font-size: 1em;
 }
+.g-color {
+    color: #477FF5;
+}
+.o-color {
+    color: #DF2F35;
+}
+.o2-color {
+    color: #F6C400;
+}
+.g2color {
+    color: #3878E5;
+}
+.l-color {
+    color: #36BC50;
+}
+.e-color {
+    color: #DF2F33;
+}
+
 
 .btn-xoff {
     width: 15px;
@@ -142,6 +161,13 @@ img {
 .color-red {
     color: #EA4335;
 }
+.menu-you-tube {
+    background-color: #B92020;
+    color: #FFFFFF;
+}
+    .menu-you-tube:hover {
+        background-color: #B85252;
+    }
 .you-tube {
     background-color: #B92020;
     color: #FFFFFF;
@@ -178,6 +204,17 @@ img {
     border: 3px solid cadetblue;
 }
 
+#menuOff {
+    /* background-color: #B85252; */
+    text-decoration: underline;
+}
+    #menuOff:hover {
+            /****** YouTube red ******/
+            /* background-color: #B92020;
+            color: #FFFFFF; */
+            background-color: #B85252;
+            color: #000000;
+        }
 .btn-off {
     background-color: #B85252;
     text-decoration: underline;
@@ -290,11 +327,6 @@ img {
         background-color:#F0F0F0;
         /* text-decoration-line: underline; */
     }
-
-/***** Sub sub menu *************/
-.sub-sub-menu {
-    background-color: red;
-}
 
 /****** Notes **********************************/
 
