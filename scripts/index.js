@@ -2811,6 +2811,8 @@ function colorNotesSaveButton() {
 function btn_save_notes() {
 
   var tmpY;
+
+  backupUndoNotes();
   $('btnSaveNotes').style.color = '#919191';
 
   tmpY = encodeSpecialChar($('lstNotes').value);
