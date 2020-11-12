@@ -1588,11 +1588,10 @@ function parseCommand() {
   
     switch (command) {  
     case 'about':
-      deleteKey();
-      deleteKey();
+      stack.pop();
       inputText($('lstStack').getAttribute('placeholder'));
       btn_enter();
-      deleteKey();
+      $('txtInput').value = '';
       btn_enter();
       break;
     case 'clear':
@@ -1600,20 +1599,18 @@ function parseCommand() {
       btn_clear();
       break;
     case 'date':
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      updateDisplay();
       insertDate();
       break;
     // case 'editstack':
     //   editStack();
     //   break;  
     case 'flightLogger':
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      $('txtInput').value = '';
+      updateDisplay();
       window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
-      break;
-    case 'go':
-      internetSearch('https://www.google.com/search?q=');
       break;
     case 'gravity':
       //resetMathmon();
@@ -1629,7 +1626,7 @@ function parseCommand() {
     case 'How you doing':
       inputText('Like a rhinestone cowboy!');
       btn_enter();
-      deleteKey();
+      $('txtInput').value = '';
       break;
     case 'Hallo':
     case 'Hello':
@@ -1637,28 +1634,31 @@ function parseCommand() {
     case 'Hi':
       inputText('Hallo there!');
       btn_enter();
-      deleteKey();
+      $('txtInput').value = '';
       break;
     case 'ip':
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      updateDisplay();
       getIP();
       break;
     case 'ipMapper':
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      updateDisplay();
+      $('txtInput').value = '';
       window.open('https://napesweaver.github.io/ip-mapper/', '_blank').focus();
       break;
     case 'keyboard':
       if (isMobile) {
+        stack.pop();
+        updateDisplay();
+        $('txtInput').value = '';      
         toggleKeyboard();
-        deleteKey();
-        deleteKey();      
       }
       break;
     case 'load':
     case 'ls':
-      deleteKey();
+      stack.pop();
+      $('txtInput').value = '';
       btn_load();
       break;
     case 'locus':
@@ -1684,24 +1684,25 @@ function parseCommand() {
       btn_off();
       break;
     case 'open':
-      deleteKey();
-      deleteKey();
+      stack.pop();
       openAFile();
       break;
     case 'openNotes':
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      updateDisplay();      
       $('txtInput').value = 'notes';
       openAFile();
       break;
     case 'print':
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      updateDisplay();
+      $('txtInput').value = '';
       print();
       break;
     case 'save':
-      deleteKey()
-      deleteKey();
+      stack.pop();
+      updateDisplay();
+      $('txtInput').value = '';
       btn_save();
       break;
     case 'size':
@@ -1715,24 +1716,26 @@ function parseCommand() {
       inputText(getTime());
       break;
     case 'twig':
-      deleteKey();
-      deleteKey();         
+      stack.pop();
+      updateDisplay();
+      $('txtInput').value = '';         
       monOn();
       break;
     case 'twigStat':
-      deleteKey();
-      deleteKey();
+      stack.pop();
       monStatus();
-      deleteKey();
+      $('txtInput').value = '';
       break;
     case 'tricorder':
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      updateDisplay();
+      $('txtInput').value = '';
       showTricorder();
       break;
     case 'unembed':
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      updateDisplay();
+      $('txtInput').value = ''; 
       widgetSrc.shift();
       saveTricorder();
       break;
