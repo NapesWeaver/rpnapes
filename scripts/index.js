@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '23:40:5';
+const tStamp = '9:58:10';
 var testing = false;
 
 var stack = [];
@@ -1561,26 +1561,26 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }
-    if (command === 'google' || command === 'go' || command.match(/^go .+/)) {
+    if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
 
       if (commandArray[1] === undefined) {
         stack.pop();
-        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 1].getSoul()));
+        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 1].getSoul()));        
       } else {
         internetSearch('https://www.google.com/search?q=', commandArray[1]);
-        deleteKey();
       }
       deleteKey();
+      deleteKey();
     }
-    if (command === 'youTube' || command === 'you' || command.match(/^you .+/)) {
+    if (command === 'youTube' || command === 'you' || command.match(/^youTube .+/) || command.match(/^you .+/)) {
 
       if (commandArray[1] === undefined) {
         stack.pop();
-        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 1].getSoul()));
+        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 1].getSoul()));        
       } else {
         internetSearch('https://www.youtube.com/results?search_query=', commandArray[1]);
-        deleteKey();
       }
+      deleteKey();
       deleteKey();
     }
   
