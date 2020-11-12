@@ -1490,7 +1490,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, date, embed, fix, flightLogger, go, ip, ipMapper, keyboard, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unembed, you');
+    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unembed, youTube');
   }  
   btn_enter();
   deleteKey();
