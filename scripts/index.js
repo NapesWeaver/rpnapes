@@ -87,8 +87,7 @@ function haptic() {
 }
 function mobileKeyboardAllow() {
 
-  if($('menuKeyboard').innerHTML === 'Key&nbsp;On') {
-
+  if($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
     if ($('txtInput').readOnly === true) {
       moveCursorToEnd($('txtInput'));
       $('txtInput').readOnly = false;
@@ -148,11 +147,9 @@ function showTricorder() {
 function toggleKeyboard() {
 
   if ($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
-    //$('txtInput').readOnly = true;
     $('menuKeyboard').innerHTML = 'Key&nbsp;On';
   }
   else {
-    //$('txtInput').readOnly = false;
     $('menuKeyboard').innerHTML = 'Key&nbsp;Off';
   }
   $('txtInput').focus();
