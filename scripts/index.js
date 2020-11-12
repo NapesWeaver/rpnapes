@@ -1377,7 +1377,6 @@ function getUserIP(onNewIP) {
   };
 }
 function internetSearch(domainString, query) {
-
   domainString += query;
   window.open(domainString, '_blank');
   //window.location.href = domainString;
@@ -1419,6 +1418,9 @@ function help(command) {
       break;
     case 'ipMapper':
       inputText('ipMapper: Opens IP Mapper in a new tab.');
+      break;
+    case 'keyboard':
+      inputText('keyboard: For mobile devices only. Toggles the mobile keyboard.');
       break;
     case 'load':
       inputText('load: Loads the Stack to the display. Alias: ls');
@@ -1480,10 +1482,10 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, date, embed, fix, flightLogger, go, ip, ipMapper, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unembed, you');
+    inputText('about, clear, date, embed, fix, flightLogger, go, ip, ipMapper, keyboard, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unembed, you');
   }  
   btn_enter();
-  btn_delete();
+  deleteKey();
   btn_enter();
 }
 
@@ -1558,9 +1560,9 @@ function parseCommand() {
         internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 1].getSoul()));
       } else {
         internetSearch('https://www.google.com/search?q=', commandArray[1]);
-        btn_delete();
+        deleteKey();
       }
-      btn_delete();
+      deleteKey();
     }
     if (command === 'you' || command.match(/^you .+/)) {
 
@@ -1569,9 +1571,9 @@ function parseCommand() {
         internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 1].getSoul()));
       } else {
         internetSearch('https://www.youtube.com/results?search_query=', commandArray[1]);
-        btn_delete();
+        deleteKey();
       }
-      btn_delete();
+      deleteKey();
     }
   
     switch (command) {  
@@ -1618,7 +1620,6 @@ function parseCommand() {
     case 'Hallo':
     case 'Hello':
     case 'Hey':
-    case 'Hey':
     case 'Hi':
       inputText('Hallo there!');
       btn_enter();
@@ -1631,6 +1632,13 @@ function parseCommand() {
       break;
     case 'ipMapper':
       window.open('https://napesweaver.github.io/ip-mapper/', '_blank').focus();
+      break;
+    case 'keyboard':
+      if (isMobile) {
+        toggleKeyboard();
+        deleteKey();
+        deleteKey();      
+      }
       break;
     case 'load':
     case 'ls':
@@ -1683,7 +1691,7 @@ function parseCommand() {
     case 'size':
       stack.pop();
       updateDisplay();
-      rpnAlert(getSize());
+      inputText(getSize());
       break;  
     case 'time':
       stack.pop();
