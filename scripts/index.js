@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '9:58:10';
+const tStamp = '14:13:40';
 var testing = false;
 
 var stack = [];
@@ -1480,7 +1480,7 @@ function help(command) {
       inputText('tricorder: Opens the Tricorder interface.');
       break;
     case 'unembed':
-      inputText('unembed: Removes the last embedded video.');
+      inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
       break;
     case 'youTube':
       inputText('youTube [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
@@ -1511,8 +1511,8 @@ function parseCommand() {
       help(command);
     }
     // NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
-    if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix (-?[1]|[0-9]|1[0-7])$/)) {    
-    
+    if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix$|(^fix (-?[1]|[0-9]|1[0-7])$)/)) {    
+      
       if (commandArray[1] === undefined) {
         if (isNaN(parseInt(stack[stack.length - 2].getRealPart()))) return;
         stack.pop();
@@ -1564,23 +1564,25 @@ function parseCommand() {
     if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
 
       if (commandArray[1] === undefined) {
-        stack.pop();
-        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 1].getSoul()));        
+        //stack.pop();
+        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 2].getSoul()));        
+        deleteKey();
       } else {
         internetSearch('https://www.google.com/search?q=', commandArray[1]);
+        deleteKey();
       }
-      deleteKey();
       deleteKey();
     }
     if (command === 'youTube' || command === 'you' || command.match(/^youTube .+/) || command.match(/^you .+/)) {
 
       if (commandArray[1] === undefined) {
-        stack.pop();
-        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 1].getSoul()));        
+        // stack.pop();
+        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 2].getSoul()));       
+        deleteKey();
       } else {
         internetSearch('https://www.youtube.com/results?search_query=', commandArray[1]);
+        deleteKey();     
       }
-      deleteKey();
       deleteKey();
     }
   
@@ -2814,10 +2816,8 @@ function btn_save_notes() {
 
   backupUndoNotes();
   $('btnSaveNotes').style.color = '#919191';
-
   tmpY = encodeSpecialChar($('lstNotes').value);
   notes = tmpY.split('\n');
-
   storeCookie('NOTES', nestArray(notes));
 }
 function btn_load_notes() {
