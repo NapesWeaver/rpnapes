@@ -1419,8 +1419,8 @@ function help(command) {
     case 'fix':
       inputText('fix [n]: Fix number of decimals shown on the stack (0 to 17). If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
       break;
-    case 'go':
-      inputText('go [query]: Search Google. If no argument is supplied in-line, last entry on stack is used as query.');
+    case 'google':
+      inputText('google [query]: Search Google. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
       break;
     case 'ip':
       inputText('ip: Returns local IP address.');
@@ -1482,8 +1482,8 @@ function help(command) {
     case 'unembed':
       inputText('unembed: Removes the last embedded video.');
       break;
-    case 'you':
-      inputText('you [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query.');
+    case 'youTube':
+      inputText('youTube [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
       break;    
     default:// case NOT a help argument
       enterFunction();
@@ -1561,7 +1561,7 @@ function parseCommand() {
       deleteKey();
       deleteKey();
     }
-    if (command === 'go' || command.match(/^go .+/)) {
+    if (command === 'google' || command === 'go' || command.match(/^go .+/)) {
 
       if (commandArray[1] === undefined) {
         stack.pop();
@@ -1572,7 +1572,7 @@ function parseCommand() {
       }
       deleteKey();
     }
-    if (command === 'you' || command.match(/^you .+/)) {
+    if (command === 'youTube' || command === 'you' || command.match(/^you .+/)) {
 
       if (commandArray[1] === undefined) {
         stack.pop();
