@@ -162,8 +162,10 @@ img {
     color: #EA4335;
 }
 .menu-you-tube {
+    padding: .06em;
     background-color: #B92020;
     color: #FFFFFF;
+    border-radius:  3px;
 }
     .menu-you-tube:hover {
         background-color: #B85252;
@@ -206,7 +208,10 @@ img {
 
 #menuOff {
     /* background-color: #B85252; */
+    padding-top: .01em;
+    padding-bottom: .07em;
     text-decoration: underline;
+    border-radius: 2px;
 }
     #menuOff:hover {
             /****** YouTube red ******/
