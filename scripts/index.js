@@ -1484,9 +1484,8 @@ function help(command) {
       break;
     case 'you':
       inputText('you [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query.');
-      break;
-    // case NOT a help argument:
-    default:
+      break;    
+    default:// case NOT a help argument
       enterFunction();
       return;
     }
@@ -2767,11 +2766,11 @@ function btn_redo_notes() {
   colorNotesUndoButton();
 }
 function backupUndoNotes() {
-
+  
   backUpsNotes.push(nestArray(notes));
   notes = $('lstNotes').value.split('\n');
   restoresNotes.length = 0;
-  colorNotesUndoButton();
+  colorNotesUndoButton(); 
 }
 function colorNotesUndoButton() {
 
@@ -3320,11 +3319,8 @@ function moveObj(obj, speed, xMov, yMov) {
 function worldEngine() {
 
   if (worldIsRunning()) {
-
     for (var i = 0; i < theObjects.length; i++) {
-
-      shifted ? transXBorders(i) : collideWithBorders(i);
-      
+      shifted ? transXBorders(i) : collideWithBorders(i);      
       displayGIF(theObjects[i]);
     }            
   }
@@ -3445,8 +3441,7 @@ document.addEventListener('keypress', function (event) {
   if ($('rpnapes').className !== 'hidden') {
 
     switch (event.keyCode) {
-    case 13:
-      // RPNapes ENTER
+    case 13:// RPNapes ENTER
       btn_enter();
       break;
     }
@@ -3459,8 +3454,7 @@ document.addEventListener('keydown', function (event) {
     if ($('twig').className !== 'hidden') {
 
       switch (event.keyCode) {
-      case 37:
-        // LEFT ARROW
+      case 37:// LEFT ARROW
         if (!event) { event = window.event; }
         event.preventDefault ? event.preventDefault() : (event.returnValue = false);
         if (twig.health > 0) {
@@ -3468,8 +3462,7 @@ document.addEventListener('keydown', function (event) {
           moveObj(twig, twig.speed, -1, 0);
         }
         break;
-      case 38:
-        // UP ARROW
+      case 38:// UP ARROW
         if (!event) { event = window.event; }
         event.preventDefault ? event.preventDefault() : (event.returnValue = false);
         if (twig.health > 0) {
@@ -3477,8 +3470,7 @@ document.addEventListener('keydown', function (event) {
           moveObj(twig, twig.speed, 0, -1);
         }
         break;
-      case 39:
-        // RIGHT ARROW
+      case 39:// RIGHT ARROW
         if (!event) { event = window.event; }
         event.preventDefault ? event.preventDefault() : (event.returnValue = false);
         if (twig.health > 0) {
@@ -3486,8 +3478,7 @@ document.addEventListener('keydown', function (event) {
           moveObj(twig, twig.speed, 1, 0);
         }
         break;
-      case 40:
-        // DOWN ARROW
+      case 40:// DOWN ARROW
         if (!event) { event = window.event; }
         event.preventDefault ? event.preventDefault() : (event.returnValue = false);
         if (twig.health > 0) {
@@ -3499,21 +3490,12 @@ document.addEventListener('keydown', function (event) {
     }
     
     switch (event.keyCode) {
-    case 8:
-      // BACKSPACE
+    case 8:// BACKSPACE
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      // backupUndo();
       backspaceKey();
       break;
-    case 27:
-      // ESC
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_xy();
-      break;
-    case 46:
-      // DELETE
+    case 46:// DELETE
       deleteKey();
       break;
     case 106:
@@ -3544,14 +3526,15 @@ document.addEventListener('keyup', function (event) {
   if ($('rpnapes').className !== 'hidden') {
 
     switch (event.keyCode) {
-    case 37:
-      // LEFT ARROW (Falls through)
-    case 38:
-      // UP ARROW (Falls through)
-    case 39:
-      // RIGHT ARROW (Falls through)
-    case 40:
-      // DOWN ARROW
+    case 27:// ESC
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      notesOn();
+      break;
+    case 37:// LEFT ARROW (Falls through)
+    case 38:// UP ARROW (Falls through)
+    case 39:// RIGHT ARROW (Falls through)
+    case 40:// DOWN ARROW
       if (twig.health > 0) {
         $('twig').src = 'images/twig/hat-on.gif';
       }
@@ -3561,10 +3544,14 @@ document.addEventListener('keyup', function (event) {
     $('btnSaveNotes').style.color = '#000000';
 
     switch (event.keyCode) {
-    case 13:
-      // Notes ENTER (Falls through)
-    case 46:
-      // Notes DELETE
+    case 27:// ESC
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      rpnapesOn();
+      break;
+    case 8:// NOTES BACKSPACE (Falls through)
+    case 13:// NOTES ENTER (Falls through)
+    case 46:// NOTES DELETE
       backupUndoNotes();
       notes = $('lstNotes').value.split('\n');
       break;
