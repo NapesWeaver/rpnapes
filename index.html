@@ -39,35 +39,31 @@
                   <a href="#">File</a>
                   <ul class="sub-menu">
                     <li><label id="open" title="Open a file"><input type="file" id="openFile" class="hidden"/>Open</label></li>
+                    <li><a href="#" title="Go to Google" onclick="internetSearch('https\:\/\/www.google.com/search?q=', $('txtInput').value.trim())">Google</a></li>
+                    <li><a href="#" title="Go to YouTube" onclick="internetSearch('https\:\/\/www.youtube.com/results?search_query=', $('txtInput').value.trim())">YouTube</a></li>
                     <li><a id="menuLoad" href="#" title="Load stack">Load</a></li>
                     <li><a id="menuSave" href="#" title="Save to stack">Save</a></li>
                     <li><a href="#" title="Save as a .txt file" onclick="stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true)">Save&nbsp;As</a></li>
-                    <li><a href="#" title="Go to Google" onclick="internetSearch('https\:\/\/www.google.com/search?q=', $('txtInput').value.trim())">Google</a></li>
-                    <li><a href="#" title="Go to YouTube" onclick="internetSearch('https\:\/\/www.youtube.com/results?search_query=', $('txtInput').value.trim())">YouTube</a></li>
                     <li><a id="menuOff" title="Turn off programs and close tab. Problematic :(">Off</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
                   <a href="#">Edit</a>
                   <ul class="sub-menu">
-                    <li><a id="menuEnter" href="#" title="Enter input">Enter</a></li>
                     <li><a id="menuCopy" href="#" title="Copy text">Copy</a></li>
                     <li><a id="menuPaste" href="#" title="Paste text from stack or clipboard">Paste</a></li>
-                    <li><a id="menuDelete" href="#" title="Delete input">Delete</a></li>
-                    <li><a id="menuClear" href="#" title="Clear display and input">Clear</a></li>
-                    <li><a id="menuUndo" href="#">Undo</a></li>
-                    <li><a id="menuRedo" href="#">Redo</a></li>
                     <li><a id="menuXy" href="#" title="Swap input and last stack entry">x&nbsp;&#60;&nbsp;&#62;&nbsp;y</a></li>
                     <li><a id="menuAb" href="#" title="Swap last two stack entries">a&nbsp;&#60;&nbsp;&#62;&nbsp;b</a></li>
+                    <li><a id="menuEnter" href="#" title="Enter input">Enter</a></li>
+                    <li><a id="menuDelete" href="#" title="Delete input">Delete</a></li>
+                    <li><a id="menuUndo" href="#">Undo</a></li>
+                    <li><a id="menuRedo" href="#">Redo</a></li>
+                    <li><a id="menuClear" href="#" title="Clear display and input">Clear</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
                   <a href="#">Maths</a>
                   <ul class="sub-menu">
-                    <li><a id="menuDivide" class="symbol-big" href="#" title="Division">&#247;</a></li>
-                    <li><a id="menuMultiply" href="#" title="Multiplication">x</a></li>
-                    <li><a id="menuSubtract" class="symbol-big" href="#" title="Subtraction">&#65293;</a></li>
-                    <li><a id="menuAdd" class="symbol-big" href="#" title="Addition">+</a></li>
                     <li><a id="menuInverse" href="#" title="Inverse">1&nbsp;/&nbsp;x</a></li>
                     <li><a id="menuFactorial" href="#" title="Factorial">x&nbsp;!</a></li>
                     <li><a id="menuExponential" href="#" title="Exponentail">y&nbsp;<sup>x</sup></a></li>
@@ -76,6 +72,10 @@
                     <li><a id="menuLn" href="#" title="Natural logarithm">log<sub>e</sub></a></li>
                     <li><a id="menuModulus" href="#" title="Modulus">%</a></li>
                     <li><a id="menuSign" class="symbol-big" href="#" title="Sign">±</a></li>
+                    <li><a id="menuDivide" class="symbol-big" href="#" title="Division">&#247;</a></li>
+                    <li><a id="menuMultiply" href="#" title="Multiplication">x</a></li>
+                    <li><a id="menuSubtract" class="symbol-big" href="#" title="Subtraction">&#65293;</a></li>
+                    <li><a id="menuAdd" class="symbol-big" href="#" title="Addition">+</a></li>
                     <li><a id="menuSine" href="#" title="Sine">sin</a></li>
                     <li><a id="menuCosine" href="#" title="Cosine">cos</a></li>
                     <li><a id="menuTangent" href="#" title="Tangent">tan</a></li>
