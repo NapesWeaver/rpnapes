@@ -1556,9 +1556,9 @@ function parseCommand() {
         embed(stack[stack.length - 1].getSoul());
       } else {
         embed(commandArray[1]);
+        deleteKey();
       }
       saveTricorder();
-      deleteKey();
       deleteKey();
     }
     if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
@@ -1588,26 +1588,28 @@ function parseCommand() {
   
     switch (command) {  
     case 'about':
-      stack.pop();
+      deleteKey();
+      deleteKey();
       inputText($('lstStack').getAttribute('placeholder'));
       btn_enter();
       deleteKey();
+      btn_enter();
       break;
     case 'clear':
     case 'cls':
       btn_clear();
       break;
     case 'date':
-      stack.pop();
-      updateDisplay();
+      deleteKey();
+      deleteKey();
       insertDate();
       break;
     // case 'editstack':
     //   editStack();
     //   break;  
     case 'flightLogger':
-      stack.pop();
-      updateDisplay();
+      deleteKey();
+      deleteKey();
       window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
       break;
     case 'go':
@@ -1616,6 +1618,8 @@ function parseCommand() {
     case 'gravity':
       //resetMathmon();
       gravity();
+      deleteKey();
+      deleteKey();
       break;
     case 'How are ya':
     case 'How are ya doing':
@@ -1636,11 +1640,13 @@ function parseCommand() {
       deleteKey();
       break;
     case 'ip':
-      stack.pop();
-      updateDisplay();
+      deleteKey();
+      deleteKey();
       getIP();
       break;
     case 'ipMapper':
+      deleteKey();
+      deleteKey();
       window.open('https://napesweaver.github.io/ip-mapper/', '_blank').focus();
       break;
     case 'keyboard':
@@ -1689,12 +1695,12 @@ function parseCommand() {
       openAFile();
       break;
     case 'print':
-      stack.pop();
+      deleteKey();
       deleteKey();
       print();
       break;
     case 'save':
-      stack.pop();
+      deleteKey()
       deleteKey();
       btn_save();
       break;
@@ -1709,23 +1715,23 @@ function parseCommand() {
       inputText(getTime());
       break;
     case 'twig':
-      stack.pop();
-      deleteKey();           
+      deleteKey();
+      deleteKey();         
       monOn();
       break;
     case 'twigStat':
-      stack.pop();
+      deleteKey();
+      deleteKey();
       monStatus();
       deleteKey();
       break;
     case 'tricorder':
-      stack.pop();
+      deleteKey();
       deleteKey();
       showTricorder();
       break;
     case 'unembed':
-      stack.pop();
-      updateDisplay();
+      deleteKey();
       deleteKey();
       widgetSrc.shift();
       saveTricorder();
