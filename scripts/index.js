@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '22:33:21';
+const tStamp = '23:40:5';
 var testing = false;
 
 var stack = [];
@@ -296,8 +296,6 @@ function evaluate(input) {
 
 function btn_delete() {
 
-  // backupUndo();
-
   if (shifted) {
     backspaceKey();
   }
@@ -306,14 +304,18 @@ function btn_delete() {
   }
 }
 function deleteKey() {
+
   backupUndo();
-  if ($('txtInput').value === '' || stackFocus) {
+  if (stackFocus) {
     deleteFromStack();
-  } else {
-    $('txtInput').value = '';
+    updateDisplay();
+  } else if ($('txtInput').value === '') {
+    stack.pop();
+    updateDisplay();
   }
-  updateDisplay();
-  $('txtInput').focus();
+  else {
+    deleteText($('txtInput'), true);
+  }
 }
 function deleteFromStack() {
 
@@ -321,6 +323,7 @@ function deleteFromStack() {
   stack.splice(stackIndex, 1);
 }
 function backspaceKey() {
+
   backupUndo();
   if (stackFocus) {
     deleteFromStack();
@@ -329,14 +332,15 @@ function backspaceKey() {
     stack.pop();
     updateDisplay();
   } else {
-    backspace($('txtInput'));
+    deleteText($('txtInput', false));
   }
 }
-function backspace(txtField) {
+function deleteText(txtField, forward) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
   
-  if (txtField.selectionStart === txtField.selectionEnd) startPos--;
+  if (txtField.selectionStart === txtField.selectionEnd && forward) endPos++;
+  if (txtField.selectionStart === txtField.selectionEnd && !forward ) startPos--;
 
   txtField.value = txtField.value.substring(0, startPos) + txtField.value.substring(endPos, txtField.value.length);
 
@@ -356,8 +360,7 @@ function btn_undo() {
 }
 function undoFunction() {
 
-  if (backUps.length > 3) {
-    // UNDO
+  if (backUps.length > 3) {    
     restores.push(nestArray(stack));
     restores.push($('txtInput').value);
 
@@ -379,7 +382,6 @@ function undoFunction() {
 function redoFunction() {
 
   if (restores.length > 0) {
-    // REDO
     backUps.push(nestArray(stack));
     backUps.push($('txtInput').value);
 
@@ -3512,7 +3514,7 @@ document.addEventListener('keydown', function (event) {
       break;
     case 46:
       // DELETE
-      btn_delete();
+      deleteKey();
       break;
     case 106:
       if (!event) { event = window.event; }
