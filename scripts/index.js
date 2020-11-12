@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '18:33:29';
+const tStamp = '18:48:59';
 var testing = false;
 
 var stack = [];
@@ -3807,7 +3807,7 @@ window.onload = function () {
   }
 
   // Text Input
-  $('txtInput').onclick = mobileKeyboardAllow;
+  //$('txtInput').onclick = mobileKeyboardAllow;
   $('txtInput').readOnly = true;
 
   // Buttons
