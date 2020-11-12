@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '18:55:15';
+const tStamp = '19:13:0';
 var testing = false;
 
 var stack = [];
@@ -76,7 +76,7 @@ NumberObject.prototype.toString = function () {
 function hapticResponse() {
   if (isMobile) {
     navigator.vibrate([1]);
-    // $('txtInput').readOnly = true;
+    $('txtInput').readOnly = true;
   }
 }
 function haptic() {
@@ -87,9 +87,12 @@ function haptic() {
 }
 function mobileKeyboardAllow() {
 
-  if ($('txtInput').readOnly === true) {
-    moveCursorToEnd($('txtInput'));
-    $('txtInput').readOnly = false;
+  if($('menuKeyboard').innerHTML === 'Key&nbsp;On') {
+
+    if ($('txtInput').readOnly === true) {
+      moveCursorToEnd($('txtInput'));
+      $('txtInput').readOnly = false;
+    }
   }
 }
 
@@ -145,11 +148,11 @@ function showTricorder() {
 function toggleKeyboard() {
 
   if ($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
-    $('txtInput').readOnly = true;
+    //$('txtInput').readOnly = true;
     $('menuKeyboard').innerHTML = 'Key&nbsp;On';
   }
   else {
-    $('txtInput').readOnly = false;
+    //$('txtInput').readOnly = false;
     $('menuKeyboard').innerHTML = 'Key&nbsp;Off';
   }
   $('txtInput').focus();
@@ -3807,8 +3810,8 @@ window.onload = function () {
   }
 
   // Text Input
-  //$('txtInput').onclick = mobileKeyboardAllow;
-  // $('txtInput').readOnly = true;
+  $('txtInput').onclick = mobileKeyboardAllow;
+  $('txtInput').readOnly = true;
 
   // Buttons
   $('btnXoff').onclick = btn_xoff;
