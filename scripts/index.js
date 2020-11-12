@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '22:16:33';
+const tStamp = '22:28:24';
 var testing = false;
 
 var stack = [];
@@ -296,7 +296,7 @@ function evaluate(input) {
 
 function btn_delete() {
 
-  backupUndo();
+  // backupUndo();
 
   if (shifted) {
     backspaceKey();
@@ -306,7 +306,7 @@ function btn_delete() {
   }
 }
 function deleteKey() {
-
+  backupUndo();
   if ($('txtInput').value === '' || stackFocus) {
     deleteFromStack();
   } else {
@@ -321,7 +321,7 @@ function deleteFromStack() {
   stack.splice(stackIndex, 1);
 }
 function backspaceKey() {
-  
+  backupUndo();
   if (stackFocus) {
     deleteFromStack();
     updateDisplay();
@@ -3501,7 +3501,7 @@ document.addEventListener('keydown', function (event) {
       // BACKSPACE
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      backupUndo();
+      // backupUndo();
       backspaceKey();
       break;
     case 27:
