@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '14:13:40';
+const tStamp = '16:38:39';
 var testing = false;
 
 var stack = [];
@@ -699,49 +699,52 @@ function btn_off() {
 
 function btn_inverse() {
 
-  backupUndo();
-
   if (shifted) {
-
     btn_factorial();    
   }
   else {
-    var newUnits = inverseUnits();
-    //console.log(extractReal($('txtInput'.value)));
-    var isNumber = !isNaN(extractReal($('txtInput').value));
-    var isImaginary = !isNaN(extractImaginary($('txtInput').value));
-    //console.log(newUnits, isNumber, isImaginary);
-    if (isNumber || isImaginary) {
-      
-      if (isNumber && !isImaginary) {
-        $('txtInput').value = 1 / extractReal($('txtInput').value);
-      }
-      if (!isNumber && isImaginary) {
-        $('txtInput').value = -1 * (1 / extractImaginary($('txtInput').value));
-        $('txtInput').value += 'j';
-      }
-      if (isNumber && isImaginary) {
-        // write code here please ;)
-      }
-      $('txtInput').value += newUnits;
-      $('txtInput').select();
-    } else {
-      
-      if(/^1\//.test($('txtInput').value)) {
-        $('txtInput').value = $('txtInput').value.slice(2);
-      } else {
-        $('txtInput').value = '1/' + $('txtInput').value;
-      }
-    }
+    inverse();
   } 
 }
+function inverse() {
+  backupUndo();
+
+  var newUnits = inverseUnits();
+  //console.log(extractReal($('txtInput'.value)));
+  var isNumber = !isNaN(extractReal($('txtInput').value));
+  var isImaginary = !isNaN(extractImaginary($('txtInput').value));
+  //console.log(newUnits, isNumber, isImaginary);
+  if (isNumber || isImaginary) {
+      
+    if (isNumber && !isImaginary) {
+      $('txtInput').value = 1 / extractReal($('txtInput').value);
+    }
+    if (!isNumber && isImaginary) {
+      $('txtInput').value = -1 * (1 / extractImaginary($('txtInput').value));
+      $('txtInput').value += 'j';
+    }
+    if (isNumber && isImaginary) {
+      // write code here please ;)
+    }
+    $('txtInput').value += newUnits;
+    $('txtInput').select();
+  } else {
+      
+    if(/^1\//.test($('txtInput').value)) {
+      $('txtInput').value = $('txtInput').value.slice(2);
+    } else {
+      $('txtInput').value = '1/' + $('txtInput').value;
+    }
+  }
+}
 function btn_factorial() {
+  backupUndo();
 
   $('txtInput').value = factorial(extractReal($('txtInput').value));
   $('txtInput').select();
 }
 function factorial(num) {
-  
+
   if (num <= 1) {
     return 1;
   }
@@ -758,8 +761,6 @@ function factorial(num) {
 
 function btn_log() {
 
-  backupUndo();
-
   if (shifted) {
     baseLog();
   }
@@ -768,9 +769,9 @@ function btn_log() {
   }
 }
 function baseLog() {
+  backupUndo();
 
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
-    backupUndo();
     enterFunction();
     $(('txtInput')).value = '10';
   }
@@ -779,6 +780,7 @@ function baseLog() {
   $('txtInput').select();
 }
 function naturalLog() {
+  backupUndo();
 
   $('txtInput').value = Math.log(extractReal($('txtInput').value));
   updateDisplay();
@@ -786,8 +788,6 @@ function naturalLog() {
 }
 
 function btn_root() {
-
-  backupUndo();
 
   if (shifted) {
     rootFunction();
@@ -797,10 +797,10 @@ function btn_root() {
   }
 }
 function exponentialFunction() {
+  backupUndo();
 
   var newUnits = '';
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
-    backupUndo();
     enterFunction();
     $(('txtInput')).value = '2';
   }
@@ -813,10 +813,10 @@ function exponentialFunction() {
   $('txtInput').select();
 }
 function rootFunction() {
+  backupUndo();
 
   var newUnits = '';
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString().trim())) {
-    backupUndo();
     enterFunction();
     $(('txtInput')).value = '2';
   }
@@ -857,160 +857,184 @@ function insertAroundSelection(txtField, txtValue) {
 
 function btn_modulus() {
 
-  backupUndo();
-
+  
   if (shifted) {
+    backupUndo();
     insertText('√');
   }
   else {
-    $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
-    updateDisplay();
-    $('txtInput').select();
+    modulus();
   }  
+}
+
+function modulus() {
+  backupUndo();
+  
+  $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
+  updateDisplay();
+  $('txtInput').select();
 }
 
 function btn_sign() {
 
-  backupUndo();
-
+  
   if (shifted) {
+    backupUndo();
     insertText('^');    
   }
   else {
-    var tmpX = $('txtInput').value;
+    changeSign();
+  }
+}
+function changeSign() {
+  backupUndo();
+
+  var tmpX = $('txtInput').value;
   
-    // If input is blank
-    if (tmpX === '') {
-      tmpX = '-';
+  // If input is blank
+  if (tmpX === '') {
+    tmpX = '-';
+  }
+  else if (tmpX === '+') {
+    tmpX = '-';
+  }
+  else if (tmpX === '-') {
+    tmpX = '+';
+  }
+  // If exponential number
+  else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+    tmpX += '-';
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+    tmpX += '-';
+  }
+  // If imaginary number
+  else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length);
+    tmpX += '-';
+  }
+  else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+    tmpX += '-';
+  }
+  else if (radix === 16 && /^[-+]?[a-e0-9]+ +$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length);
+    tmpX += '-';
+  }
+  else if (radix === 16 && /^[-+]?[a-e0-9]+ +[-]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (radix === 16 && /^[-+]?[a-e0-9]+ +[+]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+    tmpX += '-';
+  }
+  // If exponential imaginary number
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length);
+    tmpX += '-';
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+    tmpX += '-';
+  }
+  // If unit exponent
+  else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
+    tmpX += '-'
+  }
+  else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+  }
+  else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
+    tmpX = tmpX.substring(0, tmpX.length - 1);
+    tmpX += '-';
+  }
+  // Change sign
+  else {
+    if (tmpX.charAt(0) === '+') {
+      tmpX = tmpX.substring(1);
     }
-    else if (tmpX === '+') {
-      tmpX = '-';
+    if (tmpX.charAt(0) === '-') {
+      tmpX = tmpX.substring(1);
     }
-    else if (tmpX === '-') {
-      tmpX = '+';
-    }
-    // If exponential number
-    else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
-      tmpX += '-';
-    }
-    else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-    }
-    else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-      tmpX += '-';
-    }
-    // If imaginary number
-    else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length);
-      tmpX += '-';
-    }
-    else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-    }
-    else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-      tmpX += '-';
-    }
-    else if (radix === 16 && /^[-+]?[a-e0-9]+ +$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length);
-      tmpX += '-';
-    }
-    else if (radix === 16 && /^[-+]?[a-e0-9]+ +[-]$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-    }
-    else if (radix === 16 && /^[-+]?[a-e0-9]+ +[+]$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-      tmpX += '-';
-    }
-    // If exponential imaginary number
-    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length);
-      tmpX += '-';
-    }
-    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-    }
-    else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-      tmpX += '-';
-    }
-    // If unit exponent
-    else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
-      tmpX += '-'
-    }
-    else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-    }
-    else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
-      tmpX = tmpX.substring(0, tmpX.length - 1);
-      tmpX += '-';
-    }
-    // Change sign
     else {
-      if (tmpX.charAt(0) === '+') {
-        tmpX = tmpX.substring(1);
-      }
-      if (tmpX.charAt(0) === '-') {
-        tmpX = tmpX.substring(1);
-      }
-      else {
-        tmpX = '-' + tmpX;
-      }
+      tmpX = '-' + tmpX;
     }
-    $('txtInput').value = tmpX;
-    $('txtInput').focus();
-  } 
+  }
+  $('txtInput').value = tmpX;
+  $('txtInput').focus();
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
 function btn_divide() {
-
-  backupUndo();
-
+  
   if (shifted) {
+    backupUndo();
     insertText('/');    
   }
   else {
-    var newUnits = getDivideUnits(1);
-    $('txtInput').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    updateDisplay();
-    $('txtInput').focus();
+    division();
   }  
 }
-function btn_multiply() {
-
+function division() {
   backupUndo();
 
+  var newUnits = getDivideUnits(1);
+  $('txtInput').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+  updateDisplay();
+  $('txtInput').focus();
+}
+
+function btn_multiply() {
+  
   if (shifted) {
+    backupUndo();
     insertText('*');
   } else {
-    var newUnits = getMultiplyUnits(1);
-    $('txtInput').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    updateDisplay();
-    $('txtInput').focus();
+    multiplication();
   }      
 }
-function btn_subtract() {
-
+function multiplication() {
   backupUndo();
 
+  var newUnits = getMultiplyUnits(1);
+  $('txtInput').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+  updateDisplay();
+  $('txtInput').focus();
+}
+
+function btn_subtract() {
+  
   if (shifted) {
+    backupUndo();
     insertText('-');    
   }
   else {
-    var newUnits = getAddUnits();        
-    $('txtInput').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    updateDisplay();
-    $('txtInput').focus();
+    subtraction();
   }  
 }
-function btn_add() {
-
+function subtraction() {
   backupUndo();
+  var newUnits = getAddUnits();        
+  $('txtInput').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+  updateDisplay();
+  $('txtInput').focus();
+}
 
+function btn_add() {
+  
   if (shifted) {
+    backupUndo();
     insertText('+');    
   }
   else {
@@ -1018,6 +1042,7 @@ function btn_add() {
   }  
 }
 function addition() {
+  backupUndo();
 
   var newUnits = getAddUnits();
   var objX = getX();
@@ -3647,18 +3672,18 @@ window.onload = function () {
   $('menuAb').onclick = btn_ab;
 
   // Menu Maths
-  $('menuDivide').onclick = btn_divide;
-  $('menuMultiply').onclick = btn_multiply;
-  $('menuSubtract').onclick = btn_subtract;
-  $('menuAdd').onclick = btn_add;
   $('menuRoot').onclick = rootFunction;
   $('menuExponential').onclick = exponentialFunction;
   $('menuLog').onclick = baseLog;
   $('menuLn').onclick = naturalLog;
-  $('menuInverse').onclick = btn_inverse;
+  $('menuInverse').onclick = inverse;
   $('menuFactorial').onclick = btn_factorial;
-  $('menuModulus').onclick = btn_modulus;
-  $('menuSign').onclick = btn_sign;
+  $('menuModulus').onclick = modulus;
+  $('menuSign').onclick = changeSign;
+  $('menuDivide').onclick = division;
+  $('menuMultiply').onclick = multiplication;
+  $('menuSubtract').onclick = subtraction;
+  $('menuAdd').onclick = addition;
   $('menuSine').onclick = btn_sine;
   $('menuCosine').onclick = btn_cosine;
   $('menuTangent').onclick = btn_tangent;
