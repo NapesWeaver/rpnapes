@@ -17,8 +17,8 @@ const tStamp = '16:38:39';
 var testing = false;
 
 var stack = [];
-var backUps = [33];
-var restores = [33];
+var backUps = [];
+var restores = [];
 var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
@@ -2767,8 +2767,8 @@ function toFixed(value, p) {
 //////// Notes ///////////////////////////////////////////////////////////////////////
 
 var notes = [];
-var backUpsNotes = [33];
-var restoresNotes = [33];
+var backUpsNotes = [];
+var restoresNotes = [];
 
 function btn_copy_notes() {
 
@@ -2790,7 +2790,7 @@ function btn_paste_notes() {
 }
 function btn_undo_notes() {
 
-  if (backUpsNotes.length > 2) {
+  if (backUpsNotes.length > 1) {
     restoresNotes.push(nestArray(notes));
     notes = splitArrayByBrowser(backUpsNotes.pop());
     updateDisplayNotes();
@@ -2815,7 +2815,7 @@ function backupUndoNotes() {
 }
 function colorNotesUndoButton() {
 
-  if (backUpsNotes.length > 2) {
+  if (backUpsNotes.length > 1) {
     $('btnUndoNotes').style.color = '#01c401';
   }
   else {
