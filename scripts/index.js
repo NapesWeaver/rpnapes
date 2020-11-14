@@ -3533,29 +3533,29 @@ document.addEventListener('keydown', function (event) {
     
     switch (event.keyCode) {
     case 8:// BACKSPACE
+      backspaceKey();
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      backspaceKey();
       break;
     case 46:// DELETE
       deleteKey();
       break;
-    case 106:
+    case 106:// NUMPAD *
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btn_multiply();
       break;
-    case 107:
+    case 107:// NUMPAD +
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btn_add();
       break;
-    case 109:
+    case 109:// NUMPAD -
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btn_subtract();
       break;
-    case 111:
+    case 111:// NUMPAD /
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btn_divide();
