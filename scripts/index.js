@@ -1594,7 +1594,8 @@ function parseCommand() {
       if (commandArray[1] === undefined) {
         internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 2].getSoul()));                
       } else {
-        internetSearch('https://www.google.com/search?q=', commandArray[1]);
+        commandArray.shift();
+        internetSearch('https://www.google.com/search?q=', commandArray.join(' '));
       }
       stack.pop();
       $('txtInput').value = '';
@@ -1605,7 +1606,8 @@ function parseCommand() {
       if (commandArray[1] === undefined) {
         internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 2].getSoul()));               
       } else {
-        internetSearch('https://www.youtube.com/results?search_query=', commandArray[1]);            
+        commandArray.shift();
+        internetSearch('https://www.youtube.com/results?search_query=', commandArray.join(' '));
       }
       stack.pop();
       $('txtInput').value = '';
