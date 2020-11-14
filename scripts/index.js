@@ -1491,10 +1491,10 @@ function help(command) {
     }
   } else {
     inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unembed, youTube');
-  }  
-  btn_enter();
-  deleteKey();
-  btn_enter();
+  }
+  enterFunction();
+  $('txtInput').value = '';
+  updateDisplay();
 }
 
 function parseCommand() {
@@ -1520,9 +1520,9 @@ function parseCommand() {
       } else {
         setFixDecimal(parseInt(commandArray[1]));
       }
-      updateDisplay();
-      deleteKey();
-      deleteKey();      
+      stack.pop();
+      $('txtInput').value = '';
+      updateDisplay();    
     }
     // NOT saveAs with word and no space, NOT saveAs with number, NOT saveAs with word and alphanumeric word
     if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])(?!saveAs [A-Za-z]+ +[0-9A-Za-z]+)^saveAs ?[A-Za-z]*/)) {    
@@ -1533,8 +1533,9 @@ function parseCommand() {
       } else {
         saveFile(commandArray[1], true);
       }
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      $('txtInput').value = '';
+      updateDisplay();
     }
     // NOT toString with word and no space, NOT toString with number, NOT toString with word and alphanumeric word
     if (command.match(/(?!toString[A-Za-z]+)(?!toString ?[0-9])(?!toString [A-Za-z]+ +[0-9A-Za-z]+)^toString ?[A-Za-z]*/)) {    
@@ -1545,45 +1546,45 @@ function parseCommand() {
       } else {
         saveFile(commandArray[1], false)
       }
-      deleteKey();
-      deleteKey();
+      stack.pop();
+      $('txtInput').value = '';
+      updateDisplay();
     }
     // If (command === embed and end of stack === URL) or command === embed with URL
     if ((command.match(/^embed$/) && stack[stack.length - 2].getSoul().match(/^http[s]:\/\/[0-9A-Za-z]/)) || command.match(/^embed http[s]:\/\/[0-9A-Za-z]/)) {    
       
       if (commandArray[1] === undefined) {
-        stack.pop();
-        embed(stack[stack.length - 1].getSoul());
+
+        embed(stack[stack.length - 2].getSoul());
       } else {
         embed(commandArray[1]);
-        deleteKey();
       }
+      stack.pop();
+      $('txtInput').value = '';
+      updateDisplay();
       saveTricorder();
-      deleteKey();
     }
     if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
 
       if (commandArray[1] === undefined) {
-        //stack.pop();
-        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 2].getSoul()));        
-        deleteKey();
+        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 2].getSoul()));                
       } else {
         internetSearch('https://www.google.com/search?q=', commandArray[1]);
-        deleteKey();
       }
-      deleteKey();
+      stack.pop();
+      $('txtInput').value = '';
+      updateDisplay();
     }
     if (command === 'youTube' || command === 'you' || command.match(/^youTube .+/) || command.match(/^you .+/)) {
 
       if (commandArray[1] === undefined) {
-        // stack.pop();
-        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 2].getSoul()));       
-        deleteKey();
+        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 2].getSoul()));               
       } else {
-        internetSearch('https://www.youtube.com/results?search_query=', commandArray[1]);
-        deleteKey();     
+        internetSearch('https://www.youtube.com/results?search_query=', commandArray[1]);            
       }
-      deleteKey();
+      stack.pop();
+      $('txtInput').value = '';
+      updateDisplay();
     }
   
     switch (command) {  
@@ -1592,7 +1593,7 @@ function parseCommand() {
       inputText($('lstStack').getAttribute('placeholder'));
       btn_enter();
       $('txtInput').value = '';
-      btn_enter();
+      enterFunction();
       break;
     case 'clear':
     case 'cls':
@@ -1625,16 +1626,18 @@ function parseCommand() {
     case 'How ya doing':
     case 'How you doing':
       inputText('Like a rhinestone cowboy!');
-      btn_enter();
+      enterFunction();
       $('txtInput').value = '';
+      updateDisplay();
       break;
     case 'Hallo':
     case 'Hello':
     case 'Hey':
     case 'Hi':
       inputText('Hallo there!');
-      btn_enter();
+      enterFunction();
       $('txtInput').value = '';
+      updateDisplay();
       break;
     case 'ip':
       stack.pop();
@@ -3191,7 +3194,8 @@ function monStatus() {
 
   for (var i = 0; i < theObjects.length; i++) {
     inputText(theObjects[i].toString());
-    btn_enter();
+    enterFunction();
+    updateDisplay();
   }
 }
 function worldIsRunning() {
