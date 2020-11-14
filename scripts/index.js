@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '16:38:39';
+const tStamp = '17:51:9';
 var testing = false;
 
 var stack = [];
@@ -402,9 +402,8 @@ function redoFunction() {
 }
 function backupUndo() {
   backUps.push(nestArray(stack));
-  backUps.push($('txtInput').value);
+  backUps.push($('txtInput').value.trim());
   restores.length = 0;
-
   colorUndoButton();
 }
 function colorUndoButton() {
@@ -3533,9 +3532,12 @@ document.addEventListener('keydown', function (event) {
     
     switch (event.keyCode) {
     case 8:// BACKSPACE
-      backspaceKey();
       if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      // event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    
+      event.preventDefault();
+      event.stopPropagation();
+      backspaceKey();
       break;
     case 46:// DELETE
       deleteKey();
