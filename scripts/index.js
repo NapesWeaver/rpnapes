@@ -528,7 +528,7 @@ function btn_shift() {
   else {
     // Shifting to true...
     shifted = true;
-    $('fileOpen').innerHTML = 'FileRun';
+    $('fileOpen').innerHTML = 'RunFile';
     $('open').setAttribute('title', 'Run JS file');
     $('menuLoad').innerHTML = 'Run';
     $('menuLoad').setAttribute('title', 'Run stack');
@@ -718,7 +718,8 @@ function btn_off() {
   window.open('','_self').close();
   window.top.close();
   rpnAlert('Window not opened with window.open()');
-  throw new Error();
+  return false;
+  //throw new Error();
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
