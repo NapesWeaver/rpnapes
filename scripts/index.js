@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '4:8:3';
+const tStamp = '4:15:21';
 var testing = false;
 
 var stack = [];
@@ -577,7 +577,7 @@ function btn_shift() {
     $('btnTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';    
   }
   colorUndoButton();
-  // $('txtInput').focus();
+  $('txtInput').focus();
 }
 
 function btn_clear() {
