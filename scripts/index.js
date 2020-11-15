@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '23:4:52';
+const tStamp = '23:24:3';
 var testing = false;
 
 var stack = [];
@@ -245,10 +245,10 @@ function commandRun() {
 function btn_enter() {
 
   backupUndo();
-  // if ($('txtInput').value.trim().match(/^run$/)) {
-  //   commandRun();
-  //   return;
-  // }
+  if ($('txtInput').value.trim().match(/^run$/)) {
+    commandRun();
+    return;
+  }
 
   if (shifted) {
     if (stackFocus) insertAtCursor($('txtInput'), getSelectedText('lstStack'));
@@ -481,7 +481,7 @@ function btn_shift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
-    $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>Open</label>';
+    // $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>Open';
     $('open').setAttribute('title', 'Open a file');
     $('menuLoad').innerHTML = 'Load';
     $('menuLoad').setAttribute('title', 'Load stack');
@@ -526,7 +526,7 @@ function btn_shift() {
   else {
     // Shifting to true...
     shifted = true;
-    $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>FileRun</label>';
+    // $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>FileRun';
     $('open').setAttribute('title', 'Run JS file');
     $('menuLoad').innerHTML = 'Run';
     $('menuLoad').setAttribute('title', 'Run stack');
