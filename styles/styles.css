@@ -118,7 +118,6 @@ img {
     color: #DF2F33;
 }
 
-
 .btn-xoff {
     width: 15px;
     height: 15px;
@@ -332,7 +331,10 @@ img {
         background-color:#F0F0F0;
         /* text-decoration-line: underline; */
     }
-
+    
+    .strikethrough {
+        text-decoration: line-through;
+    }
 /****** Notes **********************************/
 
 .lst-notes {

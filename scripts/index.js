@@ -73,18 +73,23 @@ NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
 
+function toggleHaptic() {
+  if ($('menuHapticLi').classList.contains('strikethrough')) {
+    $('menuHapticLi').classList.remove('strikethrough');
+  } else {
+    $('menuHapticLi').className += ' strikethrough';
+  }
+}
 function hapticResponse() {
   if (isMobile) {
-    navigator.vibrate([1]);
+    haptic();
     $('txtInput').readOnly = true;
   }
 }
 function haptic() {
-
-  if (isMobile) {
-    navigator.vibrate([1]);
-  }
+  if ($('menuHapticLi').className !== 'strikethrough') navigator.vibrate([1]);
 }
+
 function mobileKeyboardAllow() {
 
   if($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
@@ -3478,14 +3483,8 @@ document.addEventListener('click', function (evt) {
   }
 });
 document.addEventListener('keypress', function (event) {
-
   if ($('rpnapes').className !== 'hidden') {
-
     switch (event.keyCode) {
-    case 8:
-      backupUndo();
-      console.log('y');
-      break;
     case 13:// RPNapes ENTER
       btn_enter();
       break;
@@ -3698,6 +3697,7 @@ window.onload = function () {
   $('menuNotes').onclick = btn_xoff;
   $('menuShift').onclick = btn_shift;
   $('menuKeyboard').onclick = toggleKeyboard;
+  $('menuHaptic').onclick = toggleHaptic;
 
   // Menu Constants
   $('menuPhi').onclick = (function() {
@@ -3773,13 +3773,6 @@ window.onload = function () {
   // Menu Programs
   $('menuTricorder').onclick = showTricorder;
   $('menuTwig').onclick = monOn;
-
-  if (isMobile) {
-    $('menuOff').style = 'display:none';
-    $('menuTwig').style = 'display:none';
-  } else {
-    $('menuKeyboard').style = 'display:none';
-  }
   
   // Menu Symbols
   $('menuParentheses').onclick = (function() {
@@ -3832,6 +3825,14 @@ window.onload = function () {
       insertText('♥');
     }
   })();
+
+  if (isMobile) {
+    $('menuOff').style = 'display:none';
+    $('menuTwig').style = 'display:none';
+  } else {
+    $('menuKeyboard').style = 'display:none';
+    // $('menuHaptic').style = 'display:none';
+  }
 
   // Menu Help
   $('menuHelp').onclick = help; 
