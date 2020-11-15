@@ -241,6 +241,12 @@ function btn_enter() {
 
   backupUndo();
 
+  if ($('txtInput').value.trim().match(/^run$/)) {
+    stack.pop();
+    commandRun();
+    return;
+  }
+
   if (shifted) {
     if (stackFocus) insertAtCursor($('txtInput'), getSelectedText('lstStack'));
     evaluate($('txtInput').value);
@@ -1403,7 +1409,7 @@ function getUserIP(onNewIP) {
       line.match(ipRegex).forEach(iterateIP);
     });
     pc.setLocalDescription(sdp, noop, noop);
-  }).catch(function (reason) {
+  }).catch(function (e) {
     // An error occurred, so handle the failure to connect
   });
   //listen for candidate events
@@ -1419,6 +1425,11 @@ function internetSearch(domainString, query) {
   //window.location.reload();
   //history.forward();
   //history.go(-2);
+}
+
+function commandRun() {
+  if (!shifted) btn_shift();
+  btn_load();
 }
 
 function help(command) {
@@ -1488,6 +1499,9 @@ function help(command) {
     case 'print':
       inputText('print: Opens print dialoge.');
       break;
+    case 'run':
+      inputText('run: Run the contents of the stack as a script.');
+      break;
     case 'save':
       inputText('save: Saves the stack to a browser cookie.');
       break;
@@ -1517,7 +1531,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, napes, notes, open, openNotes, off, print, save, saveAs, size, time, toString, unembed, youTube');
+    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, napes, notes, open, openNotes, off, print, run, save, saveAs, size, time, toString, unembed, youTube');
   }
   enterFunction();
   $('txtInput').value = '';
