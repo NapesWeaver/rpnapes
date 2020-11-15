@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '21:7:36';
+const tStamp = '22:53:46';
 var testing = false;
 
 var stack = [];
@@ -237,12 +237,15 @@ function xyFunction() {
   $('txtInput').focus();
 }
 
+function commandRun() {
+  if (!shifted) btn_shift();
+  btn_load();
+}
+
 function btn_enter() {
 
   backupUndo();
-
   if ($('txtInput').value.trim().match(/^run$/)) {
-    stack.pop();
     commandRun();
     return;
   }
@@ -423,8 +426,21 @@ function colorUndoButton() {
   else {
     $('btnUndo').style.color = '#D4D0C8';
   }        
+  colorUndoRedoMenu();
 }
+function colorUndoRedoMenu() {
 
+  if (backUps.length > 3) {
+    $('menuUndo').style.color = '#25FC5A';
+  } else {
+    $('menuUndo').style.color = '#D4D0C8';
+  }
+  if (restores.length > 0) {
+    $('menuRedo').style.color = '#25FC5A';
+  } else {
+    $('menuRedo').style.color = '#D4D0C8';
+  }
+}
 function btn_EE() {
 
   if (shifted) {
@@ -1427,11 +1443,6 @@ function internetSearch(domainString, query) {
   //history.go(-2);
 }
 
-function commandRun() {
-  if (!shifted) btn_shift();
-  btn_load();
-}
-
 function help(command) {
 
   var commandArray = command.split(' ');
@@ -2166,7 +2177,7 @@ function colorSaveButton() {
     var index = 0;
     
     index = getCookie('STACK').indexOf('=') + 1;
-    //console.log(getCookie("STACK").substr(0).trim() + "\n" + nestArray(stack).trim());
+    //console.log(getCookie("STACK").substr(0).trim(), nestArray(stack).trim());
     if (getCookie('STACK').substr(index).trim() !== nestArray(stack).trim()) {
       $('btnSave').style.color = '#000000';
     }
