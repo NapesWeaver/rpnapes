@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '20:3:54';
+const tStamp = '21:7:36';
 var testing = false;
 
 var stack = [];
@@ -88,7 +88,7 @@ function hapticResponse() {
   }
 }
 function haptic() {
-  if ($('menuHapticLi').className !== 'strikethrough') navigator.vibrate([1]);
+  if (!$('menuHapticLi').classList.contains('strikethrough')) navigator.vibrate([1]);
 }
 
 function toggleKeyboard() {
