@@ -79,6 +79,7 @@ function toggleHaptic() {
   } else {
     $('menuHapticLi').className += ' strikethrough';
   }
+  $('txtInput').focus();
 }
 function hapticResponse() {
   if (isMobile) {
@@ -90,9 +91,17 @@ function haptic() {
   if ($('menuHapticLi').className !== 'strikethrough') navigator.vibrate([1]);
 }
 
+function toggleKeyboard() {
+  if ($('menuKeyboardLi').classList.contains('strikethrough')) {
+    $('menuKeyboardLi').classList.remove('strikethrough');
+  } else {
+    $('menuKeyboardLi').className += ' strikethrough';
+  }
+  $('txtInput').focus();
+}
 function mobileKeyboardAllow() {
 
-  if($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
+  if($('menuKeyboardLi').classList.contains('strikethrough')) {
     if ($('txtInput').readOnly === true) {
       moveCursorToEnd($('txtInput'));
       $('txtInput').readOnly = false;
@@ -147,17 +156,6 @@ function showTricorder() {
   }
   $('tricorder').className = 'visible';
   $('viewport').className = 'visible';
-}
-
-function toggleKeyboard() {
-
-  if ($('menuKeyboard').innerHTML === 'Key&nbsp;Off') {
-    $('menuKeyboard').innerHTML = 'Key&nbsp;On';
-  }
-  else {
-    $('menuKeyboard').innerHTML = 'Key&nbsp;Off';
-  }
-  $('txtInput').focus();
 }
 
 function btn_copy() {
@@ -3831,7 +3829,7 @@ window.onload = function () {
     $('menuTwig').style = 'display:none';
   } else {
     $('menuKeyboard').style = 'display:none';
-    // $('menuHaptic').style = 'display:none';
+    $('menuHaptic').style = 'display:none';
   }
 
   // Menu Help
