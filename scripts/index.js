@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '22:53:46';
+const tStamp = '23:4:52';
 var testing = false;
 
 var stack = [];
@@ -245,10 +245,10 @@ function commandRun() {
 function btn_enter() {
 
   backupUndo();
-  if ($('txtInput').value.trim().match(/^run$/)) {
-    commandRun();
-    return;
-  }
+  // if ($('txtInput').value.trim().match(/^run$/)) {
+  //   commandRun();
+  //   return;
+  // }
 
   if (shifted) {
     if (stackFocus) insertAtCursor($('txtInput'), getSelectedText('lstStack'));
