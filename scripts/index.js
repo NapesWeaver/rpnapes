@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '17:51:9';
+const tStamp = '20:3:54';
 var testing = false;
 
 var stack = [];
@@ -3482,6 +3482,10 @@ document.addEventListener('keypress', function (event) {
   if ($('rpnapes').className !== 'hidden') {
 
     switch (event.keyCode) {
+    case 8:
+      backupUndo();
+      console.log('y');
+      break;
     case 13:// RPNapes ENTER
       btn_enter();
       break;
@@ -3533,10 +3537,7 @@ document.addEventListener('keydown', function (event) {
     switch (event.keyCode) {
     case 8:// BACKSPACE
       if (!event) { event = window.event; }
-      // event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    
-      event.preventDefault();
-      event.stopPropagation();
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       backspaceKey();
       break;
     case 46:// DELETE
