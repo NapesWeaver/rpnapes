@@ -483,7 +483,7 @@ function btn_shift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
-    // $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>Open';
+    $('fileOpen').innerHTML = 'Open';
     $('open').setAttribute('title', 'Open a file');
     $('menuLoad').innerHTML = 'Load';
     $('menuLoad').setAttribute('title', 'Load stack');
@@ -528,7 +528,7 @@ function btn_shift() {
   else {
     // Shifting to true...
     shifted = true;
-    // $('open').innerHTML = '<input type="file" id="openFile" class="hidden"/>FileRun';
+    $('fileOpen').innerHTML = 'FileRun';
     $('open').setAttribute('title', 'Run JS file');
     $('menuLoad').innerHTML = 'Run';
     $('menuLoad').setAttribute('title', 'Run stack');
