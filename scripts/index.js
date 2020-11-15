@@ -101,7 +101,7 @@ function toggleKeyboard() {
 }
 function mobileKeyboardAllow() {
 
-  if($('menuKeyboardLi').classList.contains('strikethrough')) {
+  if(!$('menuKeyboardLi').classList.contains('strikethrough')) {
     if ($('txtInput').readOnly === true) {
       moveCursorToEnd($('txtInput'));
       $('txtInput').readOnly = false;
