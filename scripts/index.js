@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '23:24:3';
+const tStamp = '23:31:51';
 var testing = false;
 
 var stack = [];
@@ -431,12 +431,14 @@ function colorUndoButton() {
 function colorUndoRedoMenu() {
 
   if (backUps.length > 3) {
-    $('menuUndo').style.color = '#25FC5A';
+    //$('menuUndo').style.color = '#25FC5A';
+    $('menuUndo').style.color = '#088B00';
   } else {
     $('menuUndo').style.color = '#D4D0C8';
   }
   if (restores.length > 0) {
-    $('menuRedo').style.color = '#25FC5A';
+    //$('menuRedo').style.color = '#25FC5A';
+    $('menuRedo').style.color = '#088B00';
   } else {
     $('menuRedo').style.color = '#D4D0C8';
   }
