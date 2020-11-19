@@ -319,16 +319,16 @@ function evaluateInput(input) {
   }
 }
 
-function btn_delete() {
+function delete_button() {
 
   if (shifted) {
-    backspaceKey();
+    btn_backspace();
   }
   else {
-    deleteKey();
+    btn_delete();
   }
 }
-function deleteKey() {
+function btn_delete() {
 
   backupUndo();
   if (stackFocus) {
@@ -347,7 +347,7 @@ function deleteFromStack() {
   var stackIndex = getIndex('lstStack') - stackSize;
   stack.splice(stackIndex, 1);
 }
-function backspaceKey() {
+function btn_backspace() {
 
   backupUndo();
   if (stackFocus) {
@@ -504,10 +504,6 @@ function btn_shift() {
     $('menuCopy').setAttribute('title', 'Copy text');
     $('menuXy').innerHTML = 'x&nbsp;&#60;&nbsp;&#62;&nbsp;y';
     $('menuXy').setAttribute('title', 'Swap input and last stack entry');
-    // $('menuEnter').innerHTML = 'Enter';
-    // $('menuEnter').setAttribute('title', 'Enter input');
-    $('menuDelete').innerHTML = 'Delete';
-    $('menuDelete').setAttribute('title', 'Delete input');
     $('menuSine').innerHTML = 'sin';
     $('menuCosine').innerHTML = 'cos';
     $('menuTangent').innerHTML = 'tan'
@@ -553,11 +549,6 @@ function btn_shift() {
     $('menuCopy').setAttribute('title', 'Paste text from stack or clipboard');
     $('menuXy').innerHTML = 'a&nbsp;&#60;&nbsp;&#62;&nbsp;b';
     $('menuXy').setAttribute('title', 'Swap last two stack entries');
-    // $('menuEnter').innerHTML = '<span class="symbol-big">=</span>';
-    // $('menuEnter').setAttribute('title', 'Evaluate input');
-    // $('menuDelete').innerHTML = '<span class="symbol-big">&#60;--</span>';
-    $('menuDelete').innerHTML = '&#60--';
-    $('menuDelete').setAttribute('title', 'Backspace');
     $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
@@ -1694,8 +1685,8 @@ function parseCommand() {
     case 'gravity':
       //resetMathmon();
       gravity();
-      deleteKey();
-      deleteKey();
+      btn_delete();
+      btn_delete();
       break;
     case 'How are ya':
     case 'How are ya doing':
@@ -3623,7 +3614,7 @@ document.addEventListener('keydown', function (event) {
     case 8:// BACKSPACE
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      backspaceKey();
+      btn_backspace();
       break;
     // case 20:// CAPS LOCK
     //   if (!event) { event = window.event; }
@@ -3631,7 +3622,7 @@ document.addEventListener('keydown', function (event) {
     //   btn_shift();
     //   break;
     case 46:// DELETE
-      deleteKey();
+      btn_delete();
       break;
     case 106:// NUMPAD *
       if (!event) { event = window.event; }
@@ -3717,7 +3708,7 @@ window.onload = function () {
       fr.onload = function () {
 
         if ($('txtInput').value.toLowerCase().trim() === ('notes')) {
-          deleteKey();
+          btn_delete();
           backupUndoNotes();
           $('lstNotes').value += this.result;
           backupUndoNotes();
@@ -3759,8 +3750,8 @@ window.onload = function () {
   $('menuEnter').onclick = btn_enter;
   $('menuEvaluate').onclick = btn_eval;
   $('menuCopy').onclick = btn_copy;
-  // $('menuPaste').onclick = btn_paste;
   $('menuDelete').onclick = btn_delete;
+  $('menuBackspace').onclick = btn_backspace;
   $('menuClear').onclick = btn_clear;
   $('menuUndo').onclick = undoFunction;
   $('menuRedo').onclick = redoFunction;
@@ -3949,7 +3940,7 @@ window.onload = function () {
   $('btnCopy').onclick = btn_copy;
   $('btnXy').onclick = btn_xy;
   $('btnEnter').onclick = enter_button;
-  $('btnDelete').onclick = btn_delete;
+  $('btnDelete').onclick = delete_button;
 
   $('btnInverse').onclick = btn_inverse;
   $('btnLog').onclick = btn_log;
