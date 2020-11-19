@@ -51,10 +51,11 @@
                   <a href="#">Edit</a>
                   <ul class="sub-menu">
                     <li><a id="menuCopy" href="#" title="Copy text">Copy</a></li>
-                    <li><a id="menuPaste" href="#" title="Paste text from stack or clipboard">Paste</a></li>
+                    <!-- <li><a id="menuPaste" href="#" title="Paste text from stack or clipboard">Paste</a></li> -->
                     <li><a id="menuXy" href="#" title="Swap input and last stack entry">x&nbsp;&#60;&nbsp;&#62;&nbsp;y</a></li>
-                    <li><a id="menuAb" href="#" title="Swap last two stack entries">a&nbsp;&#60;&nbsp;&#62;&nbsp;b</a></li>
+                    <!-- <li><a id="menuAb" href="#" title="Swap last two stack entries">a&nbsp;&#60;&nbsp;&#62;&nbsp;b</a></li> -->
                     <li><a id="menuEnter" href="#" title="Enter input">Enter</a></li>
+                    <li><a id="menuEvaluate" href="#" title="Evaluate input"><span class="symbol-big">=</span></a></li>
                     <li><a id="menuDelete" href="#" title="Delete input">Delete</a></li>
                     <li><a id="menuUndo" class="symbol-big" href="#">Undo</a></li>
                     <li><a id="menuRedo" class="symbol-big" href="#">Redo</a></li>
@@ -207,7 +208,7 @@
             </nav>
           </div>
 
-          <textarea id="lstStack" class="lst-stack haptic-response" name="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Nov 15, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lstStack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lstStack" class="lst-stack haptic-response" name="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Nov 19, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lstStack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txtInput" class="txt-input" name="txtInput" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btnCopy" class="btn-big haptic-response" value="COPY"/>

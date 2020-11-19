@@ -211,7 +211,7 @@ function xyFunction() {
   if (stack.length > 0) {
     backupUndo();
     var tmpX = stack.pop();
-    enterFunction();
+    enterInput();
     $('txtInput').value = '';
 
     if (isNaN(parseFloat(tmpX.getRealPart()))) {
@@ -242,28 +242,41 @@ function commandRun() {
   btn_load();
 }
 
-function btn_enter() {
+function enter_button() {
 
+  if (shifted) {
+    btn_eval();
+  } else {
+    btn_enter();
+  }
+}
+
+function btn_enter() {
   backupUndo();
   if ($('txtInput').value.trim().match(/^run$/)) {
     commandRun();
     return;
   }
-
-  if (shifted) {
-    if (stackFocus) insertAtCursor($('txtInput'), getSelectedText('lstStack'));
-    evaluate($('txtInput').value);
-    $('txtInput').select();
-  } else {
-    if (stackFocus) {
-      insertAtCursor($('txtInput'), getSelectedText('lstStack'));
-    }
-    else {
-      enterFunction();
-    }
-    updateDisplay();
-    parseCommand();
+  if (stackFocus) {
+    insertAtCursor($('txtInput'), getSelectedText('lstStack'));
   }
+  else {
+    enterInput();
+  }
+  updateDisplay();
+  parseCommand();
+}
+
+function btn_eval() {
+  backupUndo();
+  if ($('txtInput').value.trim().match(/^run$/)) {
+    commandRun();
+    return;
+
+  }
+  if (stackFocus) insertAtCursor($('txtInput'), getSelectedText('lstStack'));
+  evaluateInput($('txtInput').value);
+  $('txtInput').select();    
 }
 
 function getX() {
@@ -280,14 +293,14 @@ function getX() {
   
   return new NumberObject(soulX, realPartX, imaginaryX, unitsX, timeStampX);
 }
-function enterFunction() {
+function enterInput() {
 
   var objX = getX();  
 
   stack.push(objX);
   $('txtInput').value = $('txtInput').value.trim();  
 }
-function evaluate(input) {  
+function evaluateInput(input) {  
 
   try{  
     $('txtInput').value = eval(parseEvaluation(input));
@@ -487,8 +500,12 @@ function btn_shift() {
     $('open').setAttribute('title', 'Open a file');
     $('menuLoad').innerHTML = 'Load';
     $('menuLoad').setAttribute('title', 'Load stack');
-    $('menuEnter').innerHTML = 'Enter';
-    $('menuEnter').setAttribute('title', 'Enter input');
+    $('menuCopy').innerHTML = 'Copy';
+    $('menuCopy').setAttribute('title', 'Copy text');
+    $('menuXy').innerHTML = 'x&nbsp;&#60;&nbsp;&#62;&nbsp;y';
+    $('menuXy').setAttribute('title', 'Swap input and last stack entry');
+    // $('menuEnter').innerHTML = 'Enter';
+    // $('menuEnter').setAttribute('title', 'Enter input');
     $('menuDelete').innerHTML = 'Delete';
     $('menuDelete').setAttribute('title', 'Delete input');
     $('menuSine').innerHTML = 'sin';
@@ -532,8 +549,12 @@ function btn_shift() {
     $('open').setAttribute('title', 'Run JS file');
     $('menuLoad').innerHTML = 'Run';
     $('menuLoad').setAttribute('title', 'Run stack');
-    $('menuEnter').innerHTML = '<span class="symbol-big">=</span>';
-    $('menuEnter').setAttribute('title', 'Evaluate input');
+    $('menuCopy').innerHTML = 'Paste';
+    $('menuCopy').setAttribute('title', 'Paste text from stack or clipboard');
+    $('menuXy').innerHTML = 'a&nbsp;&#60;&nbsp;&#62;&nbsp;b';
+    $('menuXy').setAttribute('title', 'Swap last two stack entries');
+    // $('menuEnter').innerHTML = '<span class="symbol-big">=</span>';
+    // $('menuEnter').setAttribute('title', 'Evaluate input');
     // $('menuDelete').innerHTML = '<span class="symbol-big">&#60;--</span>';
     $('menuDelete').innerHTML = '&#60--';
     $('menuDelete').setAttribute('title', 'Backspace');
@@ -683,7 +704,7 @@ function loadStack(tmpStack) {
     tmpArray = tmpStack.shift();
     pushObjectToStack(tmpArray);
     
-    if (shifted) evaluate(decodeSpecialChar(stack[stack.length - 1].soul));
+    if (shifted) evaluateInput(decodeSpecialChar(stack[stack.length - 1].soul));
   }    
 }
 function splitArrayByBrowser(tmpArray) {
@@ -799,7 +820,7 @@ function baseLog() {
   backupUndo();
 
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
-    enterFunction();
+    enterInput();
     $(('txtInput')).value = '10';
   }
   $('txtInput').value = Math.log(parseFloat(stack.pop().getRealPart())) / Math.log(extractReal($('txtInput').value));
@@ -828,7 +849,7 @@ function exponentialFunction() {
 
   var newUnits = '';
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
-    enterFunction();
+    enterInput();
     $(('txtInput')).value = '2';
   }
   if (extractUnits($('txtInput').value) === 'null') {
@@ -844,7 +865,7 @@ function rootFunction() {
 
   var newUnits = '';
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString().trim())) {
-    enterFunction();
+    enterInput();
     $(('txtInput')).value = '2';
   }
   if (extractUnits($('txtInput').value) === 'null') {
@@ -1452,7 +1473,7 @@ function help(command) {
   
   if (commandArray[1] !== undefined) {
 
-    switch (commandArray[1]) {
+    switch (commandArray[1]) {    
     case 'about':
       inputText($('lstStack').getAttribute('placeholder'));
       break;
@@ -1541,13 +1562,13 @@ function help(command) {
       inputText('youTube [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
       break;    
     default:// case NOT a help argument
-      enterFunction();
+      enterInput();
       return;
     }
   } else {
     inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, napes, notes, open, openNotes, off, print, run, save, saveAs, size, time, toString, unembed, youTube');
   }
-  enterFunction();
+  enterInput();
   $('txtInput').value = '';
   updateDisplay();
 }
@@ -1648,9 +1669,9 @@ function parseCommand() {
     case 'about':
       stack.pop();
       inputText($('lstStack').getAttribute('placeholder'));
-      btn_enter();
+      enterInput();
+      updateDisplay();
       $('txtInput').value = '';
-      enterFunction();
       break;
     case 'clear':
     case 'cls':
@@ -1683,7 +1704,7 @@ function parseCommand() {
     case 'How ya doing':
     case 'How you doing':
       inputText('Like a rhinestone cowboy!');
-      enterFunction();
+      enterInput();
       $('txtInput').value = '';
       updateDisplay();
       break;
@@ -1692,7 +1713,7 @@ function parseCommand() {
     case 'Hey':
     case 'Hi':
       inputText('Hallo there!');
-      enterFunction();
+      enterInput();
       $('txtInput').value = '';
       updateDisplay();
       break;
@@ -1726,12 +1747,14 @@ function parseCommand() {
       updateDisplay();
       inputText('lat:' + lat + ', lon:' + lng);
       break;
-    // case 'login':      
-    //   break;
-    // case 'logout':      
-    //   break;
+    case 'login':
+      window.location.href = '/login'; 
+      break;
+    case 'logout':
+      window.location.href = '/logout'; 
+      break;
     case 'napes':
-      location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
+      window.location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
       break;
     case 'notes':
       stack.pop();
@@ -1962,6 +1985,43 @@ function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
   input = inputArr.join('');
   //console.log(input);
   return input;
+}
+
+function loadUserStack() {
+  var xhr = new XMLHttpRequest();
+  // Open - type, url/file, async
+  xhr.open('GET', 'https://api.github.com/users', true);
+  // readyState Values
+  // 0: request not initialized
+  // 1: server connection established
+  // 2: request received
+  // 3: processing request
+  // 4: request finished and response is ready
+  xhr.onreadystatechange = function(){
+    // HTTP status
+    // 200: ok
+    // 403: forbidden
+    // 404: not found
+    if (this.readyState === 4 && this.status === 200) {
+      var users = JSON.parse(this.responseText);
+			
+      for (var i in users) {
+        console.log(users[i].id, users[i].login);
+      }
+    }
+  }
+  xhr.send();
+}
+
+function loadText() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '../test/The Passing Strange.txt', true);
+  xhr.onload = function(){
+    if (this.status === 200) {
+      console.log(this.responseText);
+    }
+  }
+  xhr.send();
 }
 
 // Passed to parsePowerAndRoot()
@@ -3251,7 +3311,7 @@ function monStatus() {
 
   for (var i = 0; i < theObjects.length; i++) {
     inputText(theObjects[i].toString());
-    enterFunction();
+    enterInput();
     updateDisplay();
   }
 }
@@ -3512,7 +3572,7 @@ document.addEventListener('keypress', function (event) {
   if ($('rpnapes').className !== 'hidden') {
     switch (event.keyCode) {
     case 13:// RPNapes ENTER
-      btn_enter();
+      enter_button();
       break;
     }
   }
@@ -3565,11 +3625,11 @@ document.addEventListener('keydown', function (event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       backspaceKey();
       break;
-    case 20:// CAPS LOCK
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_shift();
-      break;
+    // case 20:// CAPS LOCK
+    //   if (!event) { event = window.event; }
+    //   event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    //   btn_shift();
+    //   break;
     case 46:// DELETE
       deleteKey();
       break;
@@ -3669,11 +3729,11 @@ window.onload = function () {
           for (var i in tmpStack) {
             $('txtInput').value = tmpStack[i];
             if (shifted) {
-              evaluate($('txtInput').value);
-              enterFunction();
+              evaluateInput($('txtInput').value);
+              enterInput();
             }
             else {
-              enterFunction();              
+              enterInput();              
             }
           }
           updateDisplay();
@@ -3697,14 +3757,15 @@ window.onload = function () {
 
   // Menu Edit
   $('menuEnter').onclick = btn_enter;
+  $('menuEvaluate').onclick = btn_eval;
   $('menuCopy').onclick = btn_copy;
-  $('menuPaste').onclick = btn_paste;
+  // $('menuPaste').onclick = btn_paste;
   $('menuDelete').onclick = btn_delete;
   $('menuClear').onclick = btn_clear;
   $('menuUndo').onclick = undoFunction;
   $('menuRedo').onclick = redoFunction;
-  $('menuXy').onclick = xyFunction;
-  $('menuAb').onclick = btn_ab;
+  $('menuXy').onclick = btn_xy;
+  // $('menuAb').onclick = btn_ab;
 
   // Menu Maths
   $('menuRoot').onclick = rootFunction;
@@ -3887,7 +3948,7 @@ window.onload = function () {
   $('btnXoff').onclick = btn_xoff;
   $('btnCopy').onclick = btn_copy;
   $('btnXy').onclick = btn_xy;
-  $('btnEnter').onclick = btn_enter;
+  $('btnEnter').onclick = enter_button;
   $('btnDelete').onclick = btn_delete;
 
   $('btnInverse').onclick = btn_inverse;
