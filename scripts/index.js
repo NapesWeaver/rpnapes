@@ -589,7 +589,12 @@ function btn_shift() {
     $('btnTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';    
   }
   colorUndoButton();
-  $('txtInput').focus();
+  
+  if (stackFocus) {
+    $('lstStack').focus();
+  } else {
+    $('txtInput').focus();
+  }
 }
 
 function btn_clear() {
