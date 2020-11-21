@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '23:21:30';
+const tStamp = '10:41:52';
 var testing = false;
 
 var stack = [];
@@ -2971,14 +2971,16 @@ function btn_clear_notes() {
 }
 function btn_delete_notes() {
 
-  backupUndoNotes();  
+  backupUndoNotes();
   var txtField = $('lstNotes').value;
   var startPos = $('lstNotes').selectionStart;
   var endPos = $('lstNotes').selectionEnd;
   $('lstNotes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lstNotes').setSelectionRange(startPos, startPos);
   $('lstNotes').focus();
+  notes = $('lstNotes').value.split('\n');
   if (isMobile) $('lstNotes').readOnly = true;
+  colorNotesSaveButton();
 }
 function updateDisplayNotes() {
 
