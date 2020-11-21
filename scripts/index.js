@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '23:2:45';
+const tStamp = '23:14:5';
 var testing = false;
 
 var stack = [];
@@ -2974,13 +2974,14 @@ function btn_clear_notes() {
 function btn_delete_notes() {
 
   backupUndoNotes();  
+  $('lstNotes').focus();
   var txtField = $('lstNotes').value;
   var startPos = $('lstNotes').selectionStart;
   var endPos = $('lstNotes').selectionEnd;
   $('lstNotes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lstNotes').setSelectionRange(startPos, startPos);
-  $('lstNotes').focus();
   $('lstNotes').readOnly = true;
+  setTimeout($('lstNotes').readOnly = false, 100);
 }
 function updateDisplayNotes() {
 
@@ -4042,9 +4043,9 @@ window.onload = function () {
   $('btnLoadNotes').onclick = btn_load_notes;
   $('btnClearNotes').onclick = btn_clear_notes;
   $('btnDeleteNotes').onclick = btn_delete_notes;
-  $('lstNotes').onfocus = function() {
-    $('lstNotes').readOnly = false;
-  }
+  // $('lstNotes').onfocus = function() {
+  //   $('lstNotes').readOnly = false;
+  // }
   $('lstNotes').addEventListener('paste', function() {
     setTimeout(function() {
       if (notes.length > 0) backupUndoNotes(); 
