@@ -361,7 +361,7 @@ function btn_backspace() {
     stack.pop();
     updateDisplay();
   } else {
-    deleteText($('txtInput', false));
+    deleteText($('txtInput'), false);
   }
 }
 function deleteText(txtField, forward) {
@@ -2968,9 +2968,18 @@ function btn_load_notes() {
 function btn_clear_notes() {
 
   backupUndoNotes();
-
   $('lstNotes').value = '';
   notes = $('lstNotes').value.split('\n');
+}
+function btn_delete_notes() {
+  
+  backupUndoNotes();   
+  var txtField = $('lstNotes').value;
+  var startPos = $('lstNotes').selectionStart;
+  var endPos = $('lstNotes').selectionEnd;
+  $('lstNotes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
+  $('lstNotes').setSelectionRange(startPos, startPos);
+  $('lstNotes').focus();
 }
 function updateDisplayNotes() {
 
@@ -4031,6 +4040,7 @@ window.onload = function () {
   $('btnSaveNotes').onclick = btn_save_notes;
   $('btnLoadNotes').onclick = btn_load_notes;
   $('btnClearNotes').onclick = btn_clear_notes;
+  $('btnDeleteNotes').onclick = btn_delete_notes;
 
   $('lstNotes').addEventListener('paste', function() {
     setTimeout(function() {

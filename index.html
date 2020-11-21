@@ -209,7 +209,7 @@
           </div>
 
           <textarea id="lstStack" class="lst-stack haptic-response" name="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Nov 20, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lstStack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
-          <input type="text" id="txtInput" class="txt-input" name="txtInput" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
+          <input type="text" id="txtInput" class="txt-input" name="txtInput" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btnCopy" class="btn-big haptic-response" value="COPY"/>
           <input type="button" id="btnXy" class="btn-big haptic-response" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y"/>
@@ -268,7 +268,8 @@
           <input type="button" id="btnSaveNotes" class="btn-other haptic-response" value="SAVE"/>
           <input type="button" id="btnLoadNotes" class="btn-other haptic-response" value="LOAD"/>
           <input type="button" id="btnClearNotes" class="btn-other haptic-response" value="CLEAR"/>
-          <textarea id="lstNotes" class="lst-notes haptic-response" name="notes" placeholder="Notes:" cols="28" rows="27"></textarea>
+          <input type="button" id="btnDeleteNotes" class="btn-other haptic-response" value="DELETE"/>
+          <textarea id="lstNotes" class="lst-notes haptic-response" name="notes" placeholder="Notes:" spellcheck="false" cols="28" rows="27"></textarea>
         </div>
 
         <!-- Tricorder -->
