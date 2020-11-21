@@ -163,8 +163,11 @@ function btn_copy() {
   if (shifted) {
     btn_paste();
   } else {
-    document.execCommand('copy');
+    copy();
   }  
+}
+function copy() {
+  document.execCommand('copy');
 }
 function btn_paste() {
 
@@ -500,10 +503,10 @@ function btn_shift() {
     $('open').setAttribute('title', 'Open a file');
     $('menuLoad').innerHTML = 'Load';
     $('menuLoad').setAttribute('title', 'Load stack');
-    $('menuCopy').innerHTML = 'Copy';
-    $('menuCopy').setAttribute('title', 'Copy text');
-    $('menuXy').innerHTML = 'x&nbsp;&#60;&nbsp;&#62;&nbsp;y';
-    $('menuXy').setAttribute('title', 'Swap input and last stack entry');
+    //$('menuCopy').innerHTML = 'Copy';
+    //$('menuCopy').setAttribute('title', 'Copy text');
+    //$('menuXy').innerHTML = 'x&nbsp;&#60;&nbsp;&#62;&nbsp;y';
+    //$('menuXy').setAttribute('title', 'Swap input and last stack entry');
     $('menuSine').innerHTML = 'sin';
     $('menuCosine').innerHTML = 'cos';
     $('menuTangent').innerHTML = 'tan'
@@ -545,10 +548,10 @@ function btn_shift() {
     $('open').setAttribute('title', 'Run JS file');
     $('menuLoad').innerHTML = 'Run';
     $('menuLoad').setAttribute('title', 'Run stack');
-    $('menuCopy').innerHTML = 'Paste';
-    $('menuCopy').setAttribute('title', 'Paste text from stack or clipboard');
-    $('menuXy').innerHTML = 'a&nbsp;&#60;&nbsp;&#62;&nbsp;b';
-    $('menuXy').setAttribute('title', 'Swap last two stack entries');
+    //$('menuCopy').innerHTML = 'Paste';
+    //$('menuCopy').setAttribute('title', 'Paste text from stack or clipboard');
+    //$('menuXy').innerHTML = 'a&nbsp;&#60;&nbsp;&#62;&nbsp;b';
+    //$('menuXy').setAttribute('title', 'Swap last two stack entries');
     $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
@@ -3754,14 +3757,15 @@ window.onload = function () {
   // Menu Edit
   $('menuEnter').onclick = btn_enter;
   $('menuEvaluate').onclick = btn_eval;
-  $('menuCopy').onclick = btn_copy;
+  $('menuCopy').onclick = copy;
   $('menuDelete').onclick = btn_delete;
   $('menuBackspace').onclick = btn_backspace;
   $('menuClear').onclick = btn_clear;
   $('menuUndo').onclick = undoFunction;
   $('menuRedo').onclick = redoFunction;
-  $('menuXy').onclick = btn_xy;
-  // $('menuAb').onclick = btn_ab;
+  //$('menuXy').onclick = btn_xy;
+  //$('menuAb').onclick = btn_ab;
+  $('menuXy').onclick = xyFunction;
 
   // Menu Maths
   $('menuRoot').onclick = rootFunction;
