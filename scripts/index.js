@@ -388,7 +388,6 @@ function btn_undo() {
   }
 }
 function undoFunction() {
-
   if (backUps.length > 3) {    
     restores.push(nestArray(stack));
     restores.push($('txtInput').value);
@@ -2857,8 +2856,8 @@ function toFixed(value, p) {
 //////// Notes ///////////////////////////////////////////////////////////////////////
 
 var notes = [];
-var backUpsNotes = [];
-var restoresNotes = [];
+var backupNotes = [];
+var restoreNotes = [];
 
 function btn_copy_notes() {
 
@@ -2879,39 +2878,38 @@ function btn_paste_notes() {
   }
 }
 function btn_undo_notes() {
-
-  if (backUpsNotes.length > 1) {
-    restoresNotes.push(nestArray(notes));
-    notes = splitArrayByBrowser(backUpsNotes.pop());
+  if (backupNotes.length > 1) {
+    restoreNotes.push(nestArray(notes));
+    notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
   }
   colorNotesUndoButton();
 }
 function btn_redo_notes() {
 
-  if (restoresNotes.length > 0) {
-    backUpsNotes.push(nestArray(notes));
-    notes = splitArrayByBrowser(restoresNotes.pop());
+  if (restoreNotes.length > 0) {
+    backupNotes.push(nestArray(notes));
+    notes = splitArrayByBrowser(restoreNotes.pop());
     updateDisplayNotes();
   }
   colorNotesUndoButton();
 }
 function backupUndoNotes() {
   
-  backUpsNotes.push(nestArray(notes));
+  backupNotes.push(nestArray(notes));
   notes = $('lstNotes').value.split('\n');
-  restoresNotes.length = 0;
-  colorNotesUndoButton(); 
+  restoreNotes.length = 0;
+  colorNotesUndoButton();
 }
 function colorNotesUndoButton() {
 
-  if (backUpsNotes.length > 1) {
+  if (backupNotes.length > 1) {
     $('btnUndoNotes').style.color = '#01c401';
   }
   else {
     $('btnUndoNotes').style.color = '#919191';
   }
-  if (restoresNotes.length >= 1) {
+  if (restoreNotes.length >= 1) {
     $('btnRedoNotes').style.color = '#01c401';
   }
   else {
