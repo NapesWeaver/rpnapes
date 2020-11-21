@@ -1840,12 +1840,12 @@ function parseEvaluation(input) {
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {
     
     // Parse nested symbols
-    while (/\([-+*/^/ΦeπGc0-9\w\s]+\^[-+*/^ΦeπGc0-9\w\s]+\)/.test(input) && !/[ΦeπGc0-9\w\s],[ΦeπGc0-9\w\s]/.test(input)) input = parseParentheses(input, /\^/, 'Math.pow(');
-    while (/\([-+*/√ΦeπGc0-9\w\s]+√[-+*/√ΦeπGc0-9\w\s]+\)/.test(input) || /\(√[-+*/√ΦeπGc0-9\w\s]+\)/.test(input) && !/[ΦeπGc0-9\w\s],[ΦeπGc0-9\w\s]/.test(input)) input = parseParentheses(input, /√/, 'mathsRoot(');
+    while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input) && !/[Φπ\w\s],[Φπ\w\s]/.test(input)) input = parseParentheses(input, /\^/, 'Math.pow(');
+    while (/\([-+*/√Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input) && !/[Φπ\w\s],[Φπ\w\s]/.test(input)) input = parseParentheses(input, /√/, 'mathsRoot(');
 
     // Parse in-line symbols
-    while (/[ΦeπGc0-9\w)]\^[(ΦeπGc0-9\w\s]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
-    while (/√[(ΦeπGc0-9\w\s]/.test(input) || /[ΦeπGc0-9\w)]√[(ΦeπGc0-9\w\s]/.test(input)) input = parsePowerAndRoot(input, /√/, 'mathsRoot(');
+    while (/[Φπ\w)]\^[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
+    while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /√/, 'mathsRoot(');
     
     if (/(?!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
     if (/(?!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
@@ -1881,7 +1881,7 @@ function parseParentheses(input, symbol, prefix) {
   //console.log('maths:', maths);
 
   // Parse nested maths
-  if (/[ΦπG\w\s)]\^[(ΦπG\w\s]/.test(maths) || /[ΦπG\w\s)]√[(ΦπG\w\s]/.test(maths) || /[)√[(ΦπG\w\s]/.test(maths)) {
+  if (/[Φπ\w\s)]\^[(Φπ\w\s]/.test(maths) || /[Φπ\w\s)]√[(ΦπG\w\s]/.test(maths) || /[)√[(Φπ\w\s]/.test(maths)) {
     maths = parsePowerAndRoot(maths, symbol, prefix);
   }
   // Re-insert parsed maths
