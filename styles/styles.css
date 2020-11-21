@@ -10,7 +10,7 @@
 body {
     touch-action: manipulation;
     background-color: #C4C6B1;
-    overflow: hidden;    
+    /* overflow: hidden;     */
 }
 
 #wrap {
@@ -43,7 +43,6 @@ img {
     #open:hover {
         background-color:#F0F0F0;
         color: #0040FF;
-        /* text-decoration: underline; */
     }
 
 #btnDelete {
