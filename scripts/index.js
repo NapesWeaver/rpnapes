@@ -3632,7 +3632,6 @@ document.addEventListener('keydown', function (event) {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btn_backspace();
-      alert('y');
       break;
     case 16:// SHIFT
       if (keyHeld) btn_shift();
