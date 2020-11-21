@@ -2974,14 +2974,13 @@ function btn_clear_notes() {
 function btn_delete_notes() {
 
   backupUndoNotes();  
-  $('lstNotes').focus();
   var txtField = $('lstNotes').value;
   var startPos = $('lstNotes').selectionStart;
   var endPos = $('lstNotes').selectionEnd;
   $('lstNotes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lstNotes').setSelectionRange(startPos, startPos);
-  $('lstNotes').readOnly = true;
-  setTimeout($('lstNotes').readOnly = false, 100);
+  $('lstNotes').focus();
+  if (isMobile) $('lstNotes').readOnly = true;
 }
 function updateDisplayNotes() {
 
@@ -4043,9 +4042,9 @@ window.onload = function () {
   $('btnLoadNotes').onclick = btn_load_notes;
   $('btnClearNotes').onclick = btn_clear_notes;
   $('btnDeleteNotes').onclick = btn_delete_notes;
-  // $('lstNotes').onfocus = function() {
-  //   $('lstNotes').readOnly = false;
-  // }
+  $('lstNotes').onclick = function() {
+    $('lstNotes').readOnly = false;
+  }
   $('lstNotes').addEventListener('paste', function() {
     setTimeout(function() {
       if (notes.length > 0) backupUndoNotes(); 
