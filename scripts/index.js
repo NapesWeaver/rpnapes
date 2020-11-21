@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '4:15:21';
+const tStamp = '22:57:27';
 var testing = false;
 
 var stack = [];
@@ -2977,6 +2977,7 @@ function btn_delete_notes() {
   var txtField = $('lstNotes').value;
   var startPos = $('lstNotes').selectionStart;
   var endPos = $('lstNotes').selectionEnd;
+  $('lstNotes').readOnly = true;
   $('lstNotes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lstNotes').setSelectionRange(startPos, startPos);
   $('lstNotes').focus();
@@ -4042,6 +4043,9 @@ window.onload = function () {
   $('btnLoadNotes').onclick = btn_load_notes;
   $('btnClearNotes').onclick = btn_clear_notes;
   $('btnDeleteNotes').onclick = btn_delete_notes;
+  $('lstNotes').onfocus = function() {
+    $('lstNotes').readOnly = false;
+  }
 
   $('lstNotes').addEventListener('paste', function() {
     setTimeout(function() {
