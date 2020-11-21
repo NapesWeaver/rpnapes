@@ -22,6 +22,7 @@ var restores = [];
 var stackSize = 14;
 var stackFocus = false;
 var shifted = false;
+var keyHeld = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
@@ -3582,7 +3583,7 @@ document.addEventListener('keydown', function (event) {
 
     if ($('twig').className !== 'hidden') {
 
-      switch (event.keyCode) {
+      switch (event.keyCode) {      
       case 37:// LEFT ARROW
         if (!event) { event = window.event; }
         event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -3624,11 +3625,12 @@ document.addEventListener('keydown', function (event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btn_backspace();
       break;
-    // case 20:// CAPS LOCK
-    //   if (!event) { event = window.event; }
-    //   event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    //   btn_shift();
-    //   break;
+    case 16:// SHIFT
+      if (keyHeld) btn_shift();
+      break;
+    case 18:// ALT
+      keyHeld = true;
+      break;
     case 46:// DELETE
       btn_delete();
       break;
@@ -3660,6 +3662,9 @@ document.addEventListener('keyup', function (event) {
   if ($('rpnapes').className !== 'hidden') {
 
     switch (event.keyCode) {
+    case 18:// ALT
+      keyHeld = false;
+      break;
     case 27:// ESC
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
