@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '11:46:45';
+const tStamp = '12:36:35';
 var testing = false;
 
 var stack = [];
@@ -3579,8 +3579,9 @@ document.addEventListener('click', function (evt) {
   }
 });
 document.addEventListener('keypress', function (event) {
+  var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
-    switch (event.keyCode) {
+    switch (key) {
     case 13:// RPNapes ENTER
       enter_button();
       break;
@@ -3588,10 +3589,11 @@ document.addEventListener('keypress', function (event) {
   }
 });
 document.addEventListener('keydown', function (event) {
+  var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
     // Mathmon keys
     if ($('twig').className !== 'hidden') {
-      switch (event.keyCode) {      
+      switch (key) {      
       case 37:// LEFT ARROW
         if (!event) { event = window.event; }
         event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -3627,7 +3629,7 @@ document.addEventListener('keydown', function (event) {
       }
     }
     // RPNapes keys
-    switch (event.keyCode) {
+    switch (key) {
     case 8:// BACKSPACE
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -3666,8 +3668,9 @@ document.addEventListener('keydown', function (event) {
   }
 });
 document.addEventListener('keyup', function (event) {
+  var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
-    switch (event.keyCode) {
+    switch (key) {
     case 18:// ALT
       keyHeld = false;
       break;
@@ -3688,7 +3691,7 @@ document.addEventListener('keyup', function (event) {
   else {
     // Notes keys
     $('btnSaveNotes').style.color = '#000000';
-    switch (event.keyCode) {
+    switch (key) {
     case 27:// ESC
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
