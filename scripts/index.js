@@ -2972,14 +2972,15 @@ function btn_clear_notes() {
   notes = $('lstNotes').value.split('\n');
 }
 function btn_delete_notes() {
-  
-  backupUndoNotes();   
+
+  backupUndoNotes();  
   var txtField = $('lstNotes').value;
   var startPos = $('lstNotes').selectionStart;
   var endPos = $('lstNotes').selectionEnd;
   $('lstNotes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lstNotes').setSelectionRange(startPos, startPos);
   $('lstNotes').focus();
+  colorNotesSaveButton();
 }
 function updateDisplayNotes() {
 
