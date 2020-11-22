@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '13:8:55';
+const tStamp = '18:4:13';
 var testing = false;
 
 var stack = [];
@@ -1844,7 +1844,7 @@ function parseEvaluation(input) {
     while (/\([-+*/√Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input) && !/[Φπ\w\s],[Φπ\w\s]/.test(input)) input = parseParentheses(input, /√/, 'mathsRoot(');
 
     // Parse in-line symbols
-    while (/[Φπ\w)]\^[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
+    while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
     while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /√/, 'mathsRoot(');
     
     if (/(?!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
@@ -1895,7 +1895,7 @@ function parseParentheses(input, symbol, prefix) {
   }  
   // Return input
   input = inputArr.join('');
-  //console.log('Nested:', input);
+  // console.log('Nested:', input);
   return input;
 }
 
@@ -1917,7 +1917,7 @@ function parsePowerAndRoot(input, symbol, prefix) {
   }
   endPos = index;
   // Insert prefix
-  while (index > 0 && (!/[-+*/^√(\s]/.test(inputArr[index]) || /[\w.,]/.test(inputArr[index]) || parentheses > 0)) {
+  while (index > 0 && (!/[-+*/^√(\s]/.test(inputArr[index]) || /[Φπ\w\s.,]/.test(inputArr[index]) || parentheses > 0)) {
     index--;    
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
@@ -1930,15 +1930,18 @@ function parsePowerAndRoot(input, symbol, prefix) {
   // Insert ')'
   parentheses = 0;
   do {
-    endPos++; 
+    endPos++;
     if (inputArr[endPos] === '(') parentheses++;
-    if (inputArr[endPos] === ')') parentheses--;  
+    if (inputArr[endPos] === ')') parentheses--; 
+    if (inputArr[endPos] === ',') {
+      if (inputArr[endPos + 1] === '-') endPos = endPos + 2;
+    } 
   }
-  while (endPos < inputArr.length && (!/[-+*/^√)\s]/.test(inputArr[endPos]) || /[\w.,]/.test(inputArr[endPos]) || parentheses > 0));
+  while (endPos < inputArr.length && (!/[-+*/^√)]/.test(inputArr[endPos]) || /[Φπ\w\s.,]/.test(inputArr[endPos]) || parentheses > 0));
     
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  //console.log('inline:', input);
+  // console.log('inline:', input);
   return input;
 }
 
