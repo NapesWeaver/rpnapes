@@ -1834,23 +1834,19 @@ function parseCommand() {
   }
 }
 
-function parseEvaluation(input) {
-  
+function parseEvaluation(input) {  
   // If input does not contain quotes or regex i.e. input is not part of another program
-  if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {
-    
+  if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {    
     // Parse nested symbols
-    while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input) && !/[Φπ\w\s],[Φπ\w\s]/.test(input)) input = parseParentheses(input, /\^/, 'Math.pow(');
-    while (/\([-+*/√Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input) && !/[Φπ\w\s],[Φπ\w\s]/.test(input)) input = parseParentheses(input, /√/, 'mathsRoot(');
-
+    while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, /\^/, 'Math.pow(');
+    while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, /√/, 'mathsRoot(');
     // Parse in-line symbols
     while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
     while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /√/, 'mathsRoot(');
-    
+    // Parse Trig - needs refactored, duh.
     if (/(?!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
     if (/(?!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
     if (/(?!Math\.a?)tan\(/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);
-
     // ln(x) -> Math.log(x)
     // log(x) -> Math.log(10) / Math.log(x)
     // log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
@@ -1866,8 +1862,9 @@ function parseParentheses(input, symbol, prefix) {
   var leftP = null;
   var rightP = null;
   var maths = '';
-
   // Get nested parentheses indices
+  if (inputArr.join('').indexOf(prefix) > -1) index = inputArr.join('').indexOf('^');
+
   while (index < inputArr.length && rightP === null) {   
     index++;
     if (inputArr[index] === ')') rightP = index;
@@ -1877,15 +1874,12 @@ function parseParentheses(input, symbol, prefix) {
     if (inputArr[index] === '(') leftP = index;
   }
   // Get nested maths
-  maths = inputArr.slice(leftP + 1, rightP).join('');  
-  //console.log('maths:', maths);
-
+  maths = inputArr.slice(leftP + 1, rightP).join('');//console.log('maths:', maths);
   // Parse nested maths
-  if (/[Φπ\w\s)]\^[(Φπ\w\s]/.test(maths) || /[Φπ\w\s)]√[(ΦπG\w\s]/.test(maths) || /[)√[(Φπ\w\s]/.test(maths)) {
+  if (/[Φπ\w\s)]\^[(Φπ\w\s]/.test(maths) || /[Φπ\w\s)]√[(Φπ\w\s]/.test(maths) || /[)√[(Φπ\w\s]/.test(maths)) {
     maths = parsePowerAndRoot(maths, symbol, prefix);
   }
   // Re-insert parsed maths
-  //if (!/\^√/.test(maths)) {
   if (!/\(\)/.test(maths)) {
     // Overwrite parentheses
     inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
@@ -1894,8 +1888,7 @@ function parseParentheses(input, symbol, prefix) {
     inputArr.splice(leftP, rightP - leftP + 1, maths);
   }  
   // Return input
-  input = inputArr.join('');
-  // console.log('Nested:', input);
+  input = inputArr.join('');//console.log('Nested:', input);
   return input;
 }
 
@@ -1926,22 +1919,19 @@ function parsePowerAndRoot(input, symbol, prefix) {
     inputArr.splice(index, 0, prefix);
   } else {
     inputArr.splice(index + 1, 0, prefix);
-  }  
+  }
   // Insert ')'
   parentheses = 0;
   do {
     endPos++;
     if (inputArr[endPos] === '(') parentheses++;
-    if (inputArr[endPos] === ')') parentheses--; 
-    if (inputArr[endPos] === ',') {
-      if (inputArr[endPos + 1] === '-') endPos = endPos + 2;
-    } 
+    if (inputArr[endPos] === ')') parentheses--;
+    if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;
   }
   while (endPos < inputArr.length && (!/[-+*/^√)]/.test(inputArr[endPos]) || /[Φπ\w\s.,]/.test(inputArr[endPos]) || parentheses > 0));
     
   inputArr.splice(endPos, 0, ')');
-  input = inputArr.join('');
-  // console.log('inline:', input);
+  input = inputArr.join('');//console.log('inline:', input);
   return input;
 }
 
@@ -2420,25 +2410,6 @@ function extractReal(tmpArray) {
     if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
-
-      /** Identify constants as numbers?
-      // Φ | e | π | G | c  (?!...negative lookahead)
-      if (/^[-+]?(?!Φ.)Φ/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?Φ/);
-      }
-      if (/^[-+]?(?!e.)e/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?e/);
-      }
-      if (/^[-+]?(?!π.)π/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?π/);
-      }
-      if (/^[-+]?(?!G.)G/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?G/);
-      }
-      if (/^[-+]?(?!c.)c/.test(tmpArray)) {
-        tmpReal = tmpArray.match(/[-+]?c/);
-      }
-      */
     }
   }
   if (radix === 2) {
