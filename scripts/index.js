@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '9:40:32';
+const tStamp = '11:45:40';
 var testing = false;
 
 var stack = [];
@@ -305,7 +305,7 @@ function enterInput() {
   $('txtInput').value = $('txtInput').value.trim();  
 }
 function evaluateInput(input) {  
-
+  input = input.replace(/ /g, '');
   try{  
     $('txtInput').value = eval(parseEvaluation(input));
     // Data Testing
@@ -1838,29 +1838,32 @@ function parseEvaluation(input) {
   // If input does not contain quotes or regex i.e. input is not part of another program
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {    
     // Parse nested symbols
-    while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, '^', 'Math.pow(');
-    while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, '√', 'mathsRoot(');
+    while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input)) input = parseNested(input, '^', 'Math.pow(');
+    while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot(');
     // Parse in-line symbols
-    while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, '^', 'Math.pow(');
-    while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, '√', 'mathsRoot(');   
+    while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parseInline(input, '^', 'Math.pow(');
+    while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
     // ! ->
   }
   return input;
 }
 
-function parseParentheses(input, symbol, prefix) {
-
+function parseNested(input, symbol, prefix) {
   // console.log('input:', input);
   var inputArr = input.split('');
   var index = 0;
+  var startPos = 0;
   var leftP = null;
   var rightP = null;
-  var maths = '';
+  var maths = '';  
   // Get nested parentheses indices
-  // console.log('...indexOf(symbol):', inputArr.join('').indexOf(symbol));
-  if (inputArr.join('').indexOf(symbol) > -1) index = inputArr.join('').indexOf(symbol);
-  // console.log('index:', index);
-  // We are getting hung-up here -> ))^((
+  while (startPos === 0) {
+    index++;
+    if (inputArr[index] === symbol && inputArr[index + 1] !== '(') {
+      startPos = index;
+    }
+  }
+  // console.log('index', index);
   while (index < inputArr.length && rightP === null) {   
     index++;
     if (inputArr[index] === ')') rightP = index;
@@ -1873,8 +1876,8 @@ function parseParentheses(input, symbol, prefix) {
   maths = inputArr.slice(leftP + 1, rightP).join('');
   // Parse nested maths
   if (/[(-Φπ\w\s]\^[-Φπ\w\s)]/.test(maths) || /[(-Φπ\w\s]√[-Φπ\w\s)]/.test(maths)) {
+    maths = parseInline(maths, symbol, prefix);
     // console.log('maths:', maths);
-    maths = parsePowerAndRoot(maths, symbol, prefix);
   }
   // Re-insert parsed maths
   if (!/\(\)/.test(maths)) {
@@ -1886,18 +1889,17 @@ function parseParentheses(input, symbol, prefix) {
   }  
   // Return input
   input = inputArr.join('');
-  // console.log('pp output:', input);
+  // console.log('nested-output:', input);
   return input;
 }
 
-function parsePowerAndRoot(input, symbol, prefix) {  
+function parseInline(input, symbol, prefix) {  
   
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
   var parentheses = 0;  
-  // Overwrite symbol 
-  // while (!symbol.test(inputArr[index])) {
+  // Overwrite symbol
   while (inputArr[index] !== symbol) {
     index++;
   }  
@@ -1931,7 +1933,7 @@ function parsePowerAndRoot(input, symbol, prefix) {
     
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  // console.log('pr output:', input);
+  // console.log('inline-output:', input);
   return input;
 }
 
@@ -2001,7 +2003,7 @@ function loadText() {
   xhr.send();
 }
 
-// Passed to parsePowerAndRoot()
+// Passed to parseInline()
 function mathsRoot(y, x) {
   return Math.pow(x, 1/y);
 }
