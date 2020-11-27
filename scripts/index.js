@@ -1857,15 +1857,16 @@ function parseEvaluation(input) {
 
 function parseParentheses(input, symbol, prefix) {
 
+  // console.log('input:', input);
   var inputArr = input.split('');
   var index = 0;
   var leftP = null;
   var rightP = null;
   var maths = '';
   // Get nested parentheses indices
-  if (inputArr.join('').indexOf(prefix) > -1) index = inputArr.join('').indexOf('^');
-  //if (inputArr.join('').indexOf(',') > -1) index = inputArr.join('').indexOf(',');
-
+  // console.log('...indexOf(symbol):', inputArr.join('').indexOf(symbol));
+  if (inputArr.join('').indexOf(symbol) > -1) index = inputArr.join('').indexOf(symbol);
+  // console.log('index:', index);
   while (index < inputArr.length && rightP === null) {   
     index++;
     if (inputArr[index] === ')') rightP = index;
@@ -1875,9 +1876,10 @@ function parseParentheses(input, symbol, prefix) {
     if (inputArr[index] === '(') leftP = index;
   }
   // Get nested maths
-  maths = inputArr.slice(leftP + 1, rightP).join('');//console.log('maths:', maths);
+  maths = inputArr.slice(leftP + 1, rightP).join('');
   // Parse nested maths
-  if (/[Φπ\w\s)]\^[(Φπ\w\s]/.test(maths) || /[Φπ\w\s)]√[(Φπ\w\s]/.test(maths) || /[)√[(Φπ\w\s]/.test(maths)) {
+  if (/[(-Φπ\w\s)]\^[(-Φπ\w\s)]/.test(maths) || /[(-Φπ\w\s)]√[(-Φπ\w\s)]/.test(maths)) {
+    //console.log('maths:', maths);
     maths = parsePowerAndRoot(maths, symbol, prefix);
   }
   // Re-insert parsed maths
@@ -1889,7 +1891,8 @@ function parseParentheses(input, symbol, prefix) {
     inputArr.splice(leftP, rightP - leftP + 1, maths);
   }  
   // Return input
-  input = inputArr.join('');//console.log('Nested:', input);
+  input = inputArr.join('');
+  // console.log('pp output:', input);
   return input;
 }
 
@@ -1933,7 +1936,8 @@ function parsePowerAndRoot(input, symbol, prefix) {
   while (endPos < inputArr.length && (!/[-+*/^√)]/.test(inputArr[endPos]) || /[Φπ\w\s.,]/.test(inputArr[endPos]) || parentheses > 0));
     
   inputArr.splice(endPos, 0, ')');
-  input = inputArr.join('');//console.log('inline:', input);
+  input = inputArr.join('');
+  // console.log('pr output:', input);
   return input;
 }
 
