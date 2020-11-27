@@ -1838,11 +1838,11 @@ function parseEvaluation(input) {
   // If input does not contain quotes or regex i.e. input is not part of another program
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {    
     // Parse nested symbols
-    while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, /\^/, 'Math.pow(');
-    while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, /√/, 'mathsRoot(');
+    while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, '^', 'Math.pow(');
+    while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, '√', 'mathsRoot(');
     // Parse in-line symbols
-    while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /\^/, 'Math.pow(');
-    while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, /√/, 'mathsRoot(');
+    while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, '^', 'Math.pow(');
+    while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, '√', 'mathsRoot(');
     // Parse Trig - needs refactored, duh.
     if (/(?!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
     if (/(?!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
@@ -1864,6 +1864,7 @@ function parseParentheses(input, symbol, prefix) {
   var maths = '';
   // Get nested parentheses indices
   if (inputArr.join('').indexOf(prefix) > -1) index = inputArr.join('').indexOf('^');
+  //if (inputArr.join('').indexOf(',') > -1) index = inputArr.join('').indexOf(',');
 
   while (index < inputArr.length && rightP === null) {   
     index++;
@@ -1899,7 +1900,8 @@ function parsePowerAndRoot(input, symbol, prefix) {
   var endPos = 0;
   var parentheses = 0;  
   // Overwrite symbol 
-  while (!symbol.test(inputArr[index])) {
+  // while (!symbol.test(inputArr[index])) {
+  while (inputArr[index] !== symbol) {
     index++;
   }  
   // '2,' for implicit notation e.g. √16 => 2√16
