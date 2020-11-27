@@ -305,7 +305,7 @@ function enterInput() {
   $('txtInput').value = $('txtInput').value.trim();  
 }
 function evaluateInput(input) {  
-  input = input.replace(/ /g, '');
+  
   try{  
     $('txtInput').value = eval(parseEvaluation(input));
     // Data Testing
@@ -1834,9 +1834,10 @@ function parseCommand() {
   }
 }
 
-function parseEvaluation(input) {  
+function parseEvaluation(input) {
   // If input does not contain quotes or regex i.e. input is not part of another program
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {    
+    input = input.replace(/ /g, '');
     // Parse nested symbols
     while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input)) input = parseNested(input, '^', 'Math.pow(');
     while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot(');
