@@ -13,7 +13,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '18:4:13';
+const tStamp = '9:40:32';
 var testing = false;
 
 var stack = [];
@@ -1842,14 +1842,7 @@ function parseEvaluation(input) {
     while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseParentheses(input, '√', 'mathsRoot(');
     // Parse in-line symbols
     while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, '^', 'Math.pow(');
-    while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, '√', 'mathsRoot(');
-    // Parse Trig - needs refactored, duh.
-    if (/(?!Math\.a?)sin\(/.test(input)) input = parseTrigs(input, 'sin', Math.asin, Math.sin);
-    if (/(?!Math\.a?)cos\(/.test(input)) input = parseTrigs(input, 'cos', Math.acos, Math.cos);
-    if (/(?!Math\.a?)tan\(/.test(input)) input = parseTrigs(input, 'tan', Math.atan, Math.tan);
-    // ln(x) -> Math.log(x)
-    // log(x) -> Math.log(10) / Math.log(x)
-    // log2(8) = 3 -> log y(x)-> Math.log(y) / Math.log(x)
+    while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parsePowerAndRoot(input, '√', 'mathsRoot(');   
     // ! ->
   }
   return input;
@@ -1867,6 +1860,7 @@ function parseParentheses(input, symbol, prefix) {
   // console.log('...indexOf(symbol):', inputArr.join('').indexOf(symbol));
   if (inputArr.join('').indexOf(symbol) > -1) index = inputArr.join('').indexOf(symbol);
   // console.log('index:', index);
+  // We are getting hung-up here -> ))^((
   while (index < inputArr.length && rightP === null) {   
     index++;
     if (inputArr[index] === ')') rightP = index;
@@ -1878,8 +1872,8 @@ function parseParentheses(input, symbol, prefix) {
   // Get nested maths
   maths = inputArr.slice(leftP + 1, rightP).join('');
   // Parse nested maths
-  if (/[(-Φπ\w\s)]\^[(-Φπ\w\s)]/.test(maths) || /[(-Φπ\w\s)]√[(-Φπ\w\s)]/.test(maths)) {
-    //console.log('maths:', maths);
+  if (/[(-Φπ\w\s]\^[-Φπ\w\s)]/.test(maths) || /[(-Φπ\w\s]√[-Φπ\w\s)]/.test(maths)) {
+    // console.log('maths:', maths);
     maths = parsePowerAndRoot(maths, symbol, prefix);
   }
   // Re-insert parsed maths
@@ -1941,48 +1935,33 @@ function parsePowerAndRoot(input, symbol, prefix) {
   return input;
 }
 
-function parseTrigs(input, prefix, trigFuncA, trigFuncB) {
-
-  var inputArr = input.split('');
-  var startPos = 0;
-  var endPos = 0;
-  var result = 0;
-  var parentheses = 0;
-  
-  for (var i = 0; i < inputArr.length - 3; i++) {
-
-    if (inputArr[i] === 'a' && inputArr[i + 1] === prefix[0] && inputArr[i + 2] === prefix[1] && inputArr[i + 3] === prefix[2] && inputArr[i + 4] === '(') {
-      
-      startPos = i + 5;
-      do {
-        i++; 
-        if (inputArr[i] === '(') parentheses++;
-        if (inputArr[i] === ')') parentheses--; 
-      }
-      while (inputArr[i] !== ')' || parentheses > 0);
-      endPos = i;
-      result = computeTrig(eval(inputArr.slice(startPos, endPos).join('')), trigFuncA);
-      inputArr.splice(startPos - 5, endPos + 6 - startPos, result);
-      i = i - 6;
-    }
-    if (inputArr[i] === prefix[0] && inputArr[i + 1] === prefix[1] && inputArr[i + 2] === prefix[2] && inputArr[i + 3] === '(') {
-            
-      startPos = i + 4;
-      do {
-        i++; 
-        if (inputArr[i] === '(') parentheses++;
-        if (inputArr[i] === ')') parentheses--; 
-      }
-      while (inputArr[i] !== ')' || parentheses > 0);
-      endPos = i;
-      result = computeTrig(eval(inputArr.slice(startPos, endPos).join('')), trigFuncB);
-      inputArr.splice(startPos - 4, endPos + 5 - startPos, result);
-      i = i - 5;
-    }
+function sin(x) {
+  return computeTrig(x, Math.sin);
+}
+function cos(x) {
+  return computeTrig(x, Math.cos);
+}
+function tan(x) {
+  return computeTrig(x, Math.tan);
+}
+function asin(x) {
+  return computeTrig(x, Math.asin);
+}
+function acos(x) {
+  return computeTrig(x, Math.acos);
+}
+function atan(x) {
+  return computeTrig(x, Math.atan);
+}
+function ln(x) {
+  return Math.log(x);
+}
+function log(x, y) {
+  if (y === undefined) {
+    y = x;
+    x = 10;
   }
-  input = inputArr.join('');
-  //console.log(input);
-  return input;
+  return Math.log(y) / Math.log(x);
 }
 
 function loadUserStack() {
