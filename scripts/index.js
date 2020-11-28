@@ -1871,12 +1871,11 @@ function parseEvaluation(input) {
     // Parse nested symbols
     while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input)) input = parseNested(input, '^', 'Math.pow(');
     while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot(');
-    while (/\([-+*/^Φπ\w\s]+![-+*/!Φπ\w\s]+\)/.test(input) || /\(![-+*/√Φπ\w\s]+\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    while (/\([-+*/^Φπ\w\s]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
     // Parse in-line symbols
     while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parseInline(input, '^', 'Math.pow(');
     while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
-    while (/![(Φπ\w\s]/.test(input) || /[Φπ\w)]![(Φπ\w\s]/.test(input)) input = parseInline(input, '!', 'factorial(');   
-    // ! ->
+    while (/[(Φπ\w\s]!/.test(input)) input = parseInline(input, '!', 'factorial(');
   }
   return input;
 }
@@ -1908,9 +1907,9 @@ function parseNested(input, symbol, prefix) {
   // Get nested maths
   maths = inputArr.slice(leftP + 1, rightP).join('');
   // Parse nested maths
-  if (/[(-Φπ\w\s][\^√!][-Φπ\w\s)]/.test(maths)) {
+  if (/[(-Φπ\w\s][\^√][-Φπ\w\s)]/.test(maths) || /[(-Φπ\w\s]![-Φπ\w\s)]*/.test(maths)) {
+    console.log('maths:', maths);
     maths = parseInline(maths, symbol, prefix);
-    // console.log('maths:', maths);
   }
   // Re-insert parsed maths
   if (!/\(\)/.test(maths)) {
@@ -1922,7 +1921,7 @@ function parseNested(input, symbol, prefix) {
   }  
   // Return input
   input = inputArr.join('');
-  // console.log('nested-output:', input);
+  console.log('nested-output:', input);
   return input;
 }
 
@@ -1935,15 +1934,15 @@ function parseInline(input, symbol, prefix) {
   // Overwrite symbol
   while (inputArr[index] !== symbol) {
     index++;
-  }  
-  // '2,' for implicit notation e.g. √16 => 2√16
+  }
   if (inputArr[index - 1] === undefined || /[-+*/(\s]/.test(inputArr[index - 1])) {
-    if (inputArr[index] === '√') {
-      inputArr[index] = '2,';
-    } else {// ! factorial
-      inputArr[index] = '';
-    }
+    // '2,' for implicit notation e.g. √16 => 2√16
+    inputArr[index] = '2,';    
+  } else if (inputArr[index] === '!'){
+    // factorial !
+    inputArr[index] = '';
   } else {
+    // powers
     inputArr[index] = ',';    
   }
   endPos = index;
@@ -1970,7 +1969,7 @@ function parseInline(input, symbol, prefix) {
     
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  // console.log('inline-output:', input);
+  console.log('inline-output:', input);
   return input;
 }
 
