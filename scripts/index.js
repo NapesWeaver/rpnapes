@@ -1546,7 +1546,7 @@ function help(command) {
       inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'maths':
-      inputText('acos() asin() atan() cos() sin() tan() ln() log() pow() root() fact()');
+      inputText('acos() asin() atan() cos() sin() tan() ln() log() root()');
       break;
     case 'napes':
       inputText('napes: Switch to Referances interface.');
@@ -1787,7 +1787,7 @@ function parseCommand() {
       break;
     case 'maths':
       stack.pop();
-      inputText('acos() asin() atan() cos() sin() tan() ln() log() pow() root() fact()');
+      inputText('acos() asin() atan() cos() sin() tan() ln() log() root()');
       enterInput();
       updateDisplay();
       $('txtInput').value = '';
@@ -2020,14 +2020,8 @@ function loadText() {
   xhr.send();
 }
 
-function pow(x, y) {
-  return Math.pow(x, y);
-}
 function root(x, y) {
   return Math.pow(x, 1/y);
-}
-function fact(x) {
-  return factorial(x);
 }
 // Passed to parseInline()
 function mathsRoot(y, x) {
