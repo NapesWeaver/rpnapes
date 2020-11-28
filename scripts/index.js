@@ -595,7 +595,7 @@ function btn_shift() {
     // $('btnDelete').innerHTML = '<span class="btn-big-font">␈</span>';
     // $('btnDelete').innerHTML = '<span class="btn-big-font">⬅</span>';
     // $('btnDelete').innerHTML = '<span class="btn-big-font">⇐</span>';
-    $('btnInverse').value = '! x';
+    $('btnInverse').value = 'x !';
     $('btnLog').innerHTML = 'log<sub>x</sub>y';
     $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
     $('btnUndo').value = 'REDO';
@@ -1545,6 +1545,9 @@ function help(command) {
     case 'locus':
       inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
+    case 'maths':
+      inputText('acos() asin() atan() cos() sin() tan() ln() log() pow() root()');
+      break;
     case 'napes':
       inputText('napes: Switch to Referances interface.');
       break;
@@ -1595,7 +1598,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, napes, notes, open, openNotes, off, print, run, save, saveAs, size, time, toString, unembed, youTube');
+    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, time, toString, unembed, youTube');
   }
   enterInput();
   $('txtInput').value = '';
@@ -1782,6 +1785,13 @@ function parseCommand() {
     case 'logout':
       window.location.href = '/logout'; 
       break;
+    case 'maths':
+      stack.pop();
+      inputText('acos() asin() atan() cos() sin() tan() ln() log() pow() root()');
+      enterInput();
+      updateDisplay();
+      $('txtInput').value = '';
+      break;
     case 'napes':
       window.location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
       break;
@@ -1908,7 +1918,7 @@ function parseNested(input, symbol, prefix) {
   maths = inputArr.slice(leftP + 1, rightP).join('');
   // Parse nested maths
   if (/[(-Φπ\w\s][\^√][-Φπ\w\s)]/.test(maths) || /[(-Φπ\w\s]![-Φπ\w\s)]*/.test(maths)) {
-    console.log('maths:', maths);
+    // console.log('maths:', maths);
     maths = parseInline(maths, symbol, prefix);
   }
   // Re-insert parsed maths
@@ -1921,7 +1931,7 @@ function parseNested(input, symbol, prefix) {
   }  
   // Return input
   input = inputArr.join('');
-  console.log('nested-output:', input);
+  // console.log('nested-output:', input);
   return input;
 }
 
@@ -1969,37 +1979,8 @@ function parseInline(input, symbol, prefix) {
     
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  console.log('inline-output:', input);
+  // console.log('inline-output:', input);
   return input;
-}
-
-function sin(x) {
-  return computeTrig(x, Math.sin);
-}
-function cos(x) {
-  return computeTrig(x, Math.cos);
-}
-function tan(x) {
-  return computeTrig(x, Math.tan);
-}
-function asin(x) {
-  return computeTrig(x, Math.asin);
-}
-function acos(x) {
-  return computeTrig(x, Math.acos);
-}
-function atan(x) {
-  return computeTrig(x, Math.atan);
-}
-function ln(x) {
-  return Math.log(x);
-}
-function log(x, y) {
-  if (y === undefined) {
-    y = x;
-    x = 10;
-  }
-  return Math.log(y) / Math.log(x);
 }
 
 function loadUserStack() {
@@ -2039,9 +2020,43 @@ function loadText() {
   xhr.send();
 }
 
+function pow(x, y) {
+  return Math.pow(x, y);
+}
+function root(x, y) {
+  return Math.pow(x, 1/y);
+}
 // Passed to parseInline()
 function mathsRoot(y, x) {
   return Math.pow(x, 1/y);
+}
+function sin(x) {
+  return computeTrig(x, Math.sin);
+}
+function cos(x) {
+  return computeTrig(x, Math.cos);
+}
+function tan(x) {
+  return computeTrig(x, Math.tan);
+}
+function asin(x) {
+  return computeTrig(x, Math.asin);
+}
+function acos(x) {
+  return computeTrig(x, Math.acos);
+}
+function atan(x) {
+  return computeTrig(x, Math.atan);
+}
+function ln(x) {
+  return Math.log(x);
+}
+function log(x, y) {
+  if (y === undefined) {
+    y = x;
+    x = 10;
+  }
+  return Math.log(y) / Math.log(x);
 }
 // Wired to HTML
 function lstStackFocus() {
