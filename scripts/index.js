@@ -1891,7 +1891,7 @@ function parseEvaluation(input) {
 }
 
 function parseNested(input, symbol, prefix) {
-  // console.log('input:', input);
+
   var inputArr = input.split('');
   var index = 0;
   var startPos = 0;
@@ -1905,7 +1905,6 @@ function parseNested(input, symbol, prefix) {
       startPos = index;
     }
   }
-  // console.log('index', index);
   while (index < inputArr.length && rightP === null) {   
     index++;
     if (inputArr[index] === ')') rightP = index;
@@ -1918,20 +1917,16 @@ function parseNested(input, symbol, prefix) {
   maths = inputArr.slice(leftP + 1, rightP).join('');
   // Parse nested maths
   if (/[(-Φπ\w][\^√][-Φπ\w)]/.test(maths) || /[(-Φπ\w]![-Φπ\w)]*/.test(maths)) {
-    // console.log('maths:', maths);
     maths = parseInline(maths, symbol, prefix);
   }
   // Re-insert parsed maths
-  if (!/\(\)/.test(maths)) {
-    // Overwrite parentheses
+  if (!/\(\)/.test(maths)) {// Overwrite parentheses
     inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
-  } else {
-    // Keep parentheses
+  } else {// Keep parentheses
     inputArr.splice(leftP, rightP - leftP + 1, maths);
-  }  
-  // Return input
+  }
+  
   input = inputArr.join('');
-  // console.log('nested-output:', input);
   return input;
 }
 
@@ -1948,11 +1943,9 @@ function parseInline(input, symbol, prefix) {
   if (inputArr[index - 1] === undefined || /[-+*/(]/.test(inputArr[index - 1])) {
     // '2,' for implicit notation e.g. √16 => 2√16
     inputArr[index] = '2,';    
-  } else if (inputArr[index] === '!'){
-    // factorial !
+  } else if (inputArr[index] === '!'){// factorial !
     inputArr[index] = '';
-  } else {
-    // powers
+  } else {// powers ^
     inputArr[index] = ',';    
   }
   endPos = index;
@@ -1975,54 +1968,18 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos] === ')') parentheses--;
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;
   }
-  while (endPos < inputArr.length && (!/[-+*/^√!)]/.test(inputArr[endPos]) || /[Φπ\w.,]/.test(inputArr[endPos]) || parentheses > 0));
-    
+  while (endPos < inputArr.length && (!/[-+*/^√!)]/.test(inputArr[endPos]) || /[Φπ\w.,]/.test(inputArr[endPos]) || parentheses > 0));    
   inputArr.splice(endPos, 0, ')');
+
   input = inputArr.join('');
-  // console.log('inline-output:', input);
   return input;
 }
 
-function loadUserStack() {
-  var xhr = new XMLHttpRequest();
-  // Open - type, url/file, async
-  xhr.open('GET', 'https://api.github.com/users', true);
-  // readyState Values
-  // 0: request not initialized
-  // 1: server connection established
-  // 2: request received
-  // 3: processing request
-  // 4: request finished and response is ready
-  xhr.onreadystatechange = function(){
-    // HTTP status
-    // 200: ok
-    // 403: forbidden
-    // 404: not found
-    if (this.readyState === 4 && this.status === 200) {
-      var users = JSON.parse(this.responseText);
-			
-      for (var i in users) {
-        console.log(users[i].id, users[i].login);
-      }
-    }
-  }
-  xhr.send();
-}
-
-function loadText() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', '../test/The Passing Strange.txt', true);
-  xhr.onload = function(){
-    if (this.status === 200) {
-      console.log(this.responseText);
-    }
-  }
-  xhr.send();
-}
-
+// User function
 function root(x, y) {
   return Math.pow(x, 1/y);
 }
+
 // Passed to parseInline()
 function mathsRoot(y, x) {
   return Math.pow(x, 1/y);
@@ -2055,15 +2012,14 @@ function log(x, y) {
   }
   return Math.log(y) / Math.log(x);
 }
+
 // Wired to HTML
 function lstStackFocus() {
   stackFocus = true;  
 }
-// Wired to HTML
 function txtInputFocus() {
   stackFocus = false;  
 }
-// Wired to HTML
 function convertBase(r) {
   fixDecimal = -1;
   sciDecimal = -1;
@@ -2083,7 +2039,6 @@ function convertBase(r) {
   }
   $('txtInput').value = outputTxt;
 }
-// Wired to HTML
 function onClickSelection(textarea){
  
   // https://stackoverflow.com/questions/13650534/how-to-select-line-of-text-in-textarea
@@ -2093,6 +2048,43 @@ function onClickSelection(textarea){
   textarea.selectionStart = startPos + 1;
   textarea.selectionEnd = endPos;
   return true;  
+}
+
+// Experimental
+function loadUserStack() {
+  var xhr = new XMLHttpRequest();
+  // Open - type, url/file, async
+  xhr.open('GET', 'https://api.github.com/users', true);
+  // readyState Values
+  // 0: request not initialized
+  // 1: server connection established
+  // 2: request received
+  // 3: processing request
+  // 4: request finished and response is ready
+  xhr.onreadystatechange = function(){
+    // HTTP status
+    // 200: ok
+    // 403: forbidden
+    // 404: not found
+    if (this.readyState === 4 && this.status === 200) {
+      var users = JSON.parse(this.responseText);
+			
+      for (var i in users) {
+        console.log(users[i].id, users[i].login);
+      }
+    }
+  }
+  xhr.send();
+}
+function loadText() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '../test/The Passing Strange.txt', true);
+  xhr.onload = function(){
+    if (this.status === 200) {
+      console.log(this.responseText);
+    }
+  }
+  xhr.send();
 }
 
 function openAFile() {
