@@ -3897,6 +3897,11 @@ window.onload = function () {
       insertText('√');
     }
   })();
+  $('menuBang').onclick = (function() {
+    return function() { 
+      insertText('!');
+    }
+  })();
   $('menuCarat').onclick = (function() {
     return function() { 
       insertText('^');
