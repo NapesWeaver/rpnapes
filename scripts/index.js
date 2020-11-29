@@ -1879,13 +1879,13 @@ function parseEvaluation(input) {
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {    
     input = input.replace(/ /g, '');
     // Parse nested symbols
-    while (/\([-+*/^Φπ\w\s]+\^[-+*/^Φπ\w\s]+\)/.test(input)) input = parseNested(input, '^', 'Math.pow(');
-    while (/\([-+*/^Φπ\w\s]+√[-+*/√Φπ\w\s]+\)/.test(input) || /\(√[-+*/√Φπ\w\s]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot(');
-    while (/\([-+*/^Φπ\w\s]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    while (/\([-+*/!^√Φπ\w]+\^[-+*/!^√Φπ\w]+\)/.test(input)) input = parseNested(input, '^', 'Math.pow(');
+    while (/\([-+*/!^√Φπ\w]+√[-+*/!^√Φπ\w]+\)/.test(input) || /\(√[-+*/!^√Φπ\w]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot(');
+    while (/\([-+*/!^√Φπ\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
     // Parse in-line symbols
-    while (/[Φπ\w)]\^[-(Φπ\w\s]/.test(input)) input = parseInline(input, '^', 'Math.pow(');
-    while (/√[(Φπ\w\s]/.test(input) || /[Φπ\w)]√[(Φπ\w\s]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
-    while (/[(Φπ\w\s]!/.test(input)) input = parseInline(input, '!', 'factorial(');
+    while (/[Φπ\w)]\^[-(Φπ\w]/.test(input)) input = parseInline(input, '^', 'Math.pow(');
+    while (/√[(Φπ\w]/.test(input) || /[Φπ\w)]√[(Φπ\w]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
+    while (/[(Φπ\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');
   }
   return input;
 }
@@ -1917,7 +1917,7 @@ function parseNested(input, symbol, prefix) {
   // Get nested maths
   maths = inputArr.slice(leftP + 1, rightP).join('');
   // Parse nested maths
-  if (/[(-Φπ\w\s][\^√][-Φπ\w\s)]/.test(maths) || /[(-Φπ\w\s]![-Φπ\w\s)]*/.test(maths)) {
+  if (/[(-Φπ\w][\^√][-Φπ\w)]/.test(maths) || /[(-Φπ\w]![-Φπ\w)]*/.test(maths)) {
     // console.log('maths:', maths);
     maths = parseInline(maths, symbol, prefix);
   }
@@ -1945,7 +1945,7 @@ function parseInline(input, symbol, prefix) {
   while (inputArr[index] !== symbol) {
     index++;
   }
-  if (inputArr[index - 1] === undefined || /[-+*/(\s]/.test(inputArr[index - 1])) {
+  if (inputArr[index - 1] === undefined || /[-+*/(]/.test(inputArr[index - 1])) {
     // '2,' for implicit notation e.g. √16 => 2√16
     inputArr[index] = '2,';    
   } else if (inputArr[index] === '!'){
@@ -1957,7 +1957,7 @@ function parseInline(input, symbol, prefix) {
   }
   endPos = index;
   // Insert prefix
-  while (index > 0 && (!/[-+*/^√!(\s]/.test(inputArr[index]) || /[Φπ\w\s.,]/.test(inputArr[index]) || parentheses > 0)) {
+  while (index > 0 && (!/[-+*/^√!(]/.test(inputArr[index]) || /[Φπ\w.,]/.test(inputArr[index]) || parentheses > 0)) {
     index--;    
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
@@ -1975,7 +1975,7 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos] === ')') parentheses--;
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;
   }
-  while (endPos < inputArr.length && (!/[-+*/^√!)]/.test(inputArr[endPos]) || /[Φπ\w\s.,]/.test(inputArr[endPos]) || parentheses > 0));
+  while (endPos < inputArr.length && (!/[-+*/^√!)]/.test(inputArr[endPos]) || /[Φπ\w.,]/.test(inputArr[endPos]) || parentheses > 0));
     
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
