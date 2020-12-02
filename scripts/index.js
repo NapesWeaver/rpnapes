@@ -1875,10 +1875,8 @@ function parseCommand() {
 }
 
 function parseEvaluation(input) {
-  // If input does not contain quotes or regex i.e. input is not part of another program
-  // if (!/(['"]|\/[ig]?\.|\/\))/.test(input)) {
+  // If input does not contain quotes or regex i.e. input is not part of another program AND it contains [!^√]  
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
-    console.log(input);
     input = input.replace(/ /g, '');
     // Parse nested symbols
     while (/\([-+*/!^√Φπ\w]+\^[-+*/!^√Φπ\w]+\)/.test(input)) input = parseNested(input, '^', 'Math.pow(');
