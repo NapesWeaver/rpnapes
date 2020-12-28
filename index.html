@@ -164,6 +164,7 @@
                     </li>
                     <li><a id="menuDate" href="#" title="Current date">Date</a></li>
                     <li><a id="menuTime" href="#" title="Current time">Time</a></li>
+                    <li><a id="menuStopwatch" href="#" title="Starts the stopwatch">Stopwatch</a></li>
                     <li class="menu">
                       <a href="#" onclick="$('equations').className='visible'" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Equations</a>
                       <ul id="equations" onclick="$('equations').className='hidden'">
@@ -209,7 +210,7 @@
             </nav>
           </div>
 
-          <textarea id="lstStack" class="lst-stack haptic-response" name="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Dec 2, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lstStack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lstStack" class="lst-stack haptic-response" name="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Dec 28, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lstStack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txtInput" class="txt-input" name="txtInput" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btnCopy" class="btn-big haptic-response" value="COPY"/>

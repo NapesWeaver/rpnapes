@@ -375,6 +375,7 @@ function btn_delete() {
   else {
     deleteText($('txtInput'), true);
   }
+  if (elapsedTime > 0) stopwatchReset();
 }
 function deleteFromStack() {
 
@@ -1578,6 +1579,9 @@ function help(command) {
     case 'size':
       inputText('size: Returns the width and height of the browser window.');
       break;
+    case 'stopwatch':
+      inputText('stopwatch: Starts the stopwatch. Press DEL key to reset.');
+      break;
     case 'time':
       inputText('time: Returns the current time.');
       break;
@@ -1598,7 +1602,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, time, toString, unembed, youTube');
+    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
   $('txtInput').value = '';
@@ -1831,7 +1835,10 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       inputText(getSize());
-      break;  
+      break;
+    case 'stopwatch':      
+      stopwatchStart();
+      break;
     case 'time':
       stack.pop();
       updateDisplay();
@@ -1889,7 +1896,6 @@ function parseEvaluation(input) {
   }
   return input;
 }
-
 function parseNested(input, symbol, prefix) {
 
   var inputArr = input.split('');
@@ -1929,7 +1935,6 @@ function parseNested(input, symbol, prefix) {
   input = inputArr.join('');
   return input;
 }
-
 function parseInline(input, symbol, prefix) {  
   
   var inputArr = input.split('');
@@ -1975,13 +1980,8 @@ function parseInline(input, symbol, prefix) {
   return input;
 }
 
-// User function
+// User functions
 function root(x, y) {
-  return Math.pow(x, 1/y);
-}
-
-// Passed to parseInline()
-function mathsRoot(y, x) {
   return Math.pow(x, 1/y);
 }
 function sin(x) {
@@ -2012,7 +2012,10 @@ function log(x, y) {
   }
   return Math.log(y) / Math.log(x);
 }
-
+// Passed to parseNested() and parseInline()
+function mathsRoot(y, x) {
+  return Math.pow(x, 1/y);
+}
 // Wired to HTML
 function lstStackFocus() {
   stackFocus = true;  
@@ -2997,6 +3000,58 @@ function updateDisplayNotes() {
   }
 }
 
+//////// Stopwatch ///////////////////////////////////////////////////////////////////
+
+// https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
+
+var startTime;
+var elapsedTime = 0;
+var timerInterval;
+
+function timeToString(time) {
+
+  var diffInHrs = time / 3600000;
+  var hh = Math.floor(diffInHrs);
+
+  var diffInMin = (diffInHrs - hh) * 60;
+  var mm = Math.floor(diffInMin);
+
+  var diffInSec = (diffInMin - mm) * 60;
+  var ss = Math.floor(diffInSec);
+
+  var diffInMs = (diffInSec - ss) * 100;
+  var ms = Math.floor(diffInMs);
+
+  var formattedMM = mm.toString().padStart(2, '0');
+  var formattedSS = ss.toString().padStart(2, '0');
+  var formattedMS = ms.toString().padStart(2, '0');
+
+  return formattedMM + ':' + formattedSS + ':' + formattedMS;
+}
+function stopwatchPrint(txt) {
+  $('txtInput').value = txt;
+}
+function stopwatchStart() {  
+  stack.pop();
+  inputText('Press DEL key to reset stopwatch');
+  enterInput();
+  updateDisplay();
+
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(function printTime() {
+    elapsedTime = Date.now() - startTime;
+    stopwatchPrint(timeToString(elapsedTime));
+  }, 10);
+}
+function stopwatchPause() {
+  clearInterval(timerInterval);
+}
+function stopwatchReset() {
+  clearInterval(timerInterval);
+  $('txtInput').value = '00:00:00';
+  elapsedTime = 0;
+}
+
 //////// Tricorder ///////////////////////////////////////////////////////////////////
 
 var viewPortSrc = [];
@@ -3238,7 +3293,7 @@ function saveTricorder() {
   storeCookie('TRICORDER', nestArray(widgetSrc));
 }
 
-/////////////Mathmon idName, xPos, yPos, objSize, health, speed, ammo ////////////////
+///////////// Mathmon idName, xPos, yPos, objSize, health, speed, ammo ///////////////
 
 var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
 var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
@@ -3839,6 +3894,9 @@ window.onload = function () {
 
   // Menu Time
   $('menuTime').onclick = insertTime;
+
+  // Menu Stopwatch
+  $('menuStopwatch').onclick = stopwatchStart;
 
   // Menu Equations
   $('menuOhmsLaw').onclick = (function() {
