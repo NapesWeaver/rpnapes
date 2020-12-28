@@ -1498,7 +1498,6 @@ function internetSearch(domainString, query) {
 }
 
 function help(command) {
-
   var commandArray = command.split(' ');
   
   if (commandArray[1] !== undefined) {
@@ -2041,6 +2040,9 @@ function convertBase(r) {
     outputTxt += parseInt(inputTxt.imaginary).toString(radix) + 'j';
   }
   $('txtInput').value = outputTxt;
+}
+function menuHelp() {
+  help('help');
 }
 function onClickSelection(textarea){
  
@@ -4004,7 +4006,7 @@ window.onload = function () {
   }
 
   // Menu Help
-  $('menuHelp').onclick = help; 
+  $('menuHelp').onclick = menuHelp; 
 
   // Text Area
   $('lstStack').style.color = '#000000';// noscript warning was red ;)
