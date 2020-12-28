@@ -43,7 +43,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '11:45:40';
+const tStamp = '1:13:27';
 var testing = false;
 
 var stack = [];
@@ -3000,9 +3000,7 @@ function updateDisplayNotes() {
   }
 }
 
-//////// Stopwatch ///////////////////////////////////////////////////////////////////
-
-// https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
+//// https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
 
 var startTime;
 var elapsedTime = 0;
@@ -3048,8 +3046,9 @@ function stopwatchPause() {
 }
 function stopwatchReset() {
   clearInterval(timerInterval);
-  $('txtInput').value = '00:00:00';
   elapsedTime = 0;
+  $('txtInput').value = '00:00:00';
+  $('txtInput').select();
 }
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////

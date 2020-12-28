@@ -33,6 +33,8 @@ Saving and opening text files is supported also - with special thanks to Eli Gre
 
 Thanks to Darryl Snow. Your [moveCursorToEnd](https://gist.github.com/darryl-snow/3990793) function saved the day in my attempts to wrangle with mobile keypads.
 
+Thanks to Omar Benseddik - the [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/) tutorial on tinloof.com was so easily adaptable ;)
+
 ## Tricorder
 
 ![Tricorder](images/screenshots/tricorder.jpg)
