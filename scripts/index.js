@@ -43,7 +43,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '1:13:27';
+const tStamp = '10:16:25';
 var testing = false;
 
 var stack = [];
@@ -3032,16 +3032,19 @@ function stopwatchPrint(txt) {
   $('txtInput').value = txt;
 }
 function stopwatchStart() {  
-  stack.pop();
-  inputText('Press DEL key to reset stopwatch');
-  enterInput();
-  updateDisplay();
 
-  startTime = Date.now() - elapsedTime;
-  timerInterval = setInterval(function printTime() {
-    elapsedTime = Date.now() - startTime;
-    stopwatchPrint(timeToString(elapsedTime));
-  }, 10);
+  if (elapsedTime === 0) {
+    stack.pop();
+    inputText('Press DEL key to reset stopwatch');
+    enterInput();
+    updateDisplay();
+  
+    startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(function printTime() {
+      elapsedTime = Date.now() - startTime;
+      stopwatchPrint(timeToString(elapsedTime));
+    }, 10);
+  }
 }
 function stopwatchPause() {
   clearInterval(timerInterval);
