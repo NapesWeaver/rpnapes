@@ -41,6 +41,7 @@
                     <li><label id="open" title="Open a file"><input type="file" id="open-file" class="hidden"/><span id="file-open">Open</span></label></li>
                     <li><a href="#" title="Go to Google" onclick="internetSearch('https\:\/\/www.google.com/search?q=', $('txt-input').value.trim())"><span class="g-color">G</span><span class="o-color">o</span><span class="o2-color">o</span><span class="g2-color">g</span><span class="l-color">l</span><span class="e-color">e</span></a></li>
                     <li><a href="#" title="Go to YouTube" onclick="internetSearch('https\:\/\/www.youtube.com/results?search_query=', $('txt-input').value.trim())"><span class="menu-you-tube">YouTube</span></a></li>
+                    <li><a id="menu-clear" href="#" title="Clear display and input">Clear</a></li>
                     <li><a id="menu-load" href="#" title="Load stack">Load</a></li>
                     <li><a id="menu-save" href="#" title="Save to stack">Save</a></li>
                     <li><a href="#" title="Save as a .txt file" onclick="stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true)">SaveAs</a></li>
@@ -58,8 +59,7 @@
                     <li><a id="menu-delete" href="#" title="Delete key">Delete</a></li>
                     <li><a id="menu-backspace" href="#" title="Backspace">&#60--</a></li>
                     <li><a id="menu-undo" class="symbol-big" href="#">Undo</a></li>
-                    <li><a id="menu-redo" class="symbol-big" href="#">Redo</a></li>
-                    <li><a id="menu-clear" href="#" title="Clear display and input">Clear</a></li>
+                    <li><a id="menu-redo" class="symbol-big" href="#">Redo</a></li>                    
                   </ul>
                 </li>
                 <li class="haptic-response">
@@ -122,6 +122,7 @@
                     </li>
                     <li id="menu-haptic-li"><a id="menu-haptic" href="#" title="Toggle haptic response">Haptic</a></li>
                     <li id="menu-keyboard-li"><a id="menu-keyboard" href="#" title="Toggle mobile keyboard">Keyboard</a></li>
+                    <li><a id="menu-notes" href="#" title="Switch to Notes">Notes</a></li>
                     <li class="menu">
                       <a href="#" title="Scientific notation" onclick="$('sci').className='visible';$('fix').className='hidden'" onmouseover="$('base').className='hidden'">Sci</a>
                       <ul id="sci" onclick="$('sci').className='hidden'">
@@ -145,9 +146,9 @@
                         <li><a href="#" onclick="sciDecimal=16;updateDisplay()">&nbsp;&nbsp;16</a></li>
                         <li><a href="#" onclick="sciDecimal=17;updateDisplay()">&nbsp;&nbsp;17</a></li>
                       </ul>
-                    </li>
-                    <li><a id="menu-notes" href="#" title="Switch to Notes">Notes</a></li>
+                    </li>                    
                     <li><a id="menu-shift" href="#" title="Toggle shift">Shift</a></li>
+                    <li id="menu-sound-li"><a id="menu-sound" href="#" title="Toggle sound for Tricorder">Sound</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">

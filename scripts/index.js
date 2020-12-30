@@ -157,12 +157,19 @@ function toggleKeyboard() {
   $('txt-input').focus();
 }
 function mobileKeyboardAllow() {
-
   if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
     if ($('txt-input').readOnly === true) {
       moveCursorToEnd($('txt-input'));
       $('txt-input').readOnly = false;
     }
+  }
+}
+
+function toggleSound() {
+  if ($('menu-sound-li').classList.contains('strikethrough')) {
+    $('menu-sound-li').classList.remove('strikethrough');
+  } else {
+    $('menu-sound-li').classList.add('strikethrough');
   }
 }
 
@@ -1556,6 +1563,9 @@ function help(command) {
     case 'ipMapper':
       inputText('ipMapper: Opens IP Mapper in a new tab.');
       break;
+    case 'haptic':
+      inputText('haptic: For mobile devices only. Toggles haptic response for the keypad.');
+      break;
     case 'keyboard':
       inputText('keyboard: For mobile devices only. Toggles the mobile keyboard.');
       break;
@@ -1604,6 +1614,9 @@ function help(command) {
     case 'size':
       inputText('size: Returns the width and height of the browser window.');
       break;
+    case 'sound':
+      inputText('sound: Toggle sound on/off for Tricorder buttons.');
+      break;
     case 'stopwatch':
       inputText('stopwatch: Starts the stopwatch. Press DEL key to reset.');
       break;
@@ -1627,7 +1640,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, stopwatch, time, toString, unembed, youTube');
+    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, sound, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -1797,6 +1810,14 @@ function parseCommand() {
         toggleKeyboard();
       }
       break;
+    case 'haptic':
+      if (isMobile) {
+        stack.pop();
+        updateDisplay();
+        $('txt-input').value = '';      
+        toggleHaptic();
+      }
+      break;
     case 'load':
     case 'ls':
       stack.pop();
@@ -1860,6 +1881,12 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       inputText(getSize());
+      break;
+    case 'sound':
+      stack.pop();
+      updateDisplay();
+      toggleSound();
+      $('txt-input').value = '';
       break;
     case 'stopwatch':      
       stopwatchStart();
@@ -3128,7 +3155,8 @@ function muteAudio(mute) {
 }
 function playAudio(obj) {
 
-  if (!isMobile) {
+  //if (!isMobile) {
+  if (!$('menu-sound-li').classList.contains('strikethrough')) {
     obj.play();
   }
 }
@@ -3889,6 +3917,7 @@ window.onload = function () {
   $('menu-haptic').onclick = toggleHaptic;
   $('menu-darkmode').onclick = toggleDarkMode;
   $('menu-keyboard').onclick = toggleKeyboard;
+  $('menu-sound').onclick = toggleSound;
   $('menu-notes').onclick = btnXoff;
   $('menu-shift').onclick = btnShift;
 
@@ -4025,6 +4054,7 @@ window.onload = function () {
     }
   })();
 
+  $('menu-sound-li').classList.add('strikethrough');
   if (isMobile) {
     $('menu-off').style = 'display:none';
     $('menu-twig').style = 'display:none';
