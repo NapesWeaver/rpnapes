@@ -43,7 +43,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '21:12:28';
+const tStamp = '2:13:32';
 var testing = false;
 
 var stack = [];
@@ -145,7 +145,9 @@ function hapticResponse() {
   }
 }
 function haptic() {
-  if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([.6]);
+  if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([1]);
+  // For Timer - Vibrate 'SOS' in Morse :)
+  //window.navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);
 }
 
 function toggleKeyboard() {
