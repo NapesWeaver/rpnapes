@@ -45,14 +45,14 @@ img {
         color: #0040FF;
     }
 
-#btnDelete {
+#btn-delete {
     margin-left: 1px;
 }
 
-#btnDelete, #btnUndo, #btnClear, #btnSave, #btnLoad {
+#btn-delete, #btn-undo, #btn-clear, #btn-save, #btn-load {
     background-color: #808080;
 }
-    #btnDelete:hover, #btnUndo:hover, #btnClear:hover, #btnSave:hover, #btnLoad:hover {
+    #btn-delete:hover, #btn-undo:hover, #btn-clear:hover, #btn-save:hover, #btn-load:hover {
         background-color: #6D8EBF;
     }
 
@@ -107,7 +107,7 @@ img {
 .o2-color {
     color: #F6C400;
 }
-.g2color {
+.g2-color {
     color: #3878E5;
 }
 .l-color {
@@ -137,7 +137,7 @@ img {
     outline: none;
 }
 
-#txtInput {
+#txt-input {
     display: block;
     width: 240px; 
     margin-left: 12px;
@@ -204,14 +204,14 @@ img {
     border: 3px solid cadetblue;
 }
 
-#menuOff {
+#menu-off {
     /* background-color: #B85252; */
     padding-top: .01em;
     padding-bottom: .07em;
     text-decoration: underline;
     border-radius: 2px;
 }
-    #menuOff:hover {
+    #menu-off:hover {
             /****** YouTube red ******/
             /* background-color: #B92020;
             color: #FFFFFF; */
@@ -334,6 +334,7 @@ img {
     .strikethrough {
         text-decoration: line-through;
     }
+
 /****** Notes **********************************/
 
 .lst-notes {
@@ -347,6 +348,12 @@ img {
     font-size: .7em;
     font-weight: bold;
     outline: none;
+}
+
+/****** Dark Mode ******************************/
+
+.dark-mode {
+    filter: invert(100%);
 }
 
 /****** Tricorder ******************************/
@@ -431,7 +438,7 @@ img {
         width: 334px;
     }
 
-    #txtInput {
+    #txt-input {
         font-size: 1em;
         width: 334px;
     }

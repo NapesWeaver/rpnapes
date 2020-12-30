@@ -26,7 +26,7 @@
     <div id="wrap">
 
       <header>
-        <input id="btnXoff" class='btn-other btn-xoff haptic-response' type="button" name="btnXoff" value="&nbsp;"/>
+        <input id="btn-xoff" class='btn-other btn-xoff haptic-response' type="button" name="btn-xoff" value="&nbsp;"/>
       </header>
       
       <main>
@@ -38,48 +38,48 @@
                 <li class="haptic-response">
                   <a href="#">File</a>
                   <ul class="sub-menu">
-                    <li><label id="open" title="Open a file"><input type="file" id="openFile" class="hidden"/><span id="fileOpen">Open</span></label></li>
-                    <li><a href="#" title="Go to Google" onclick="internetSearch('https\:\/\/www.google.com/search?q=', $('txtInput').value.trim())"><span class="g-color">G</span><span class="o-color">o</span><span class="o2-color">o</span><span class="g2-color">g</span><span class="l-color">l</span><span class="e-color">e</span></a></li>
-                    <li><a href="#" title="Go to YouTube" onclick="internetSearch('https\:\/\/www.youtube.com/results?search_query=', $('txtInput').value.trim())"><span class="menu-you-tube">YouTube</span></a></li>
-                    <li><a id="menuLoad" href="#" title="Load stack">Load</a></li>
-                    <li><a id="menuSave" href="#" title="Save to stack">Save</a></li>
+                    <li><label id="open" title="Open a file"><input type="file" id="open-file" class="hidden"/><span id="file-open">Open</span></label></li>
+                    <li><a href="#" title="Go to Google" onclick="internetSearch('https\:\/\/www.google.com/search?q=', $('txt-input').value.trim())"><span class="g-color">G</span><span class="o-color">o</span><span class="o2-color">o</span><span class="g2-color">g</span><span class="l-color">l</span><span class="e-color">e</span></a></li>
+                    <li><a href="#" title="Go to YouTube" onclick="internetSearch('https\:\/\/www.youtube.com/results?search_query=', $('txt-input').value.trim())"><span class="menu-you-tube">YouTube</span></a></li>
+                    <li><a id="menu-load" href="#" title="Load stack">Load</a></li>
+                    <li><a id="menu-save" href="#" title="Save to stack">Save</a></li>
                     <li><a href="#" title="Save as a .txt file" onclick="stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true)">SaveAs</a></li>
-                    <li><a id="menuOff" title="Turn off programs and close tab. Problematic :(">Off</a></li>
+                    <li><a id="menu-off" title="Turn off programs and close tab. Problematic :(">Off</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
                   <a href="#">Edit</a>
                   <ul class="sub-menu">
-                    <li><a id="menuCopy" href="#" title="Copy text">Copy</a></li>
-                    <li><a id="menuXy" href="#" title="Swap input and last stack entry">x&nbsp;&#60;&nbsp;&#62;&nbsp;y</a></li>
-                    <!-- <li><a id="menuAb" href="#" title="Swap last two stack entries">a&nbsp;&#60;&nbsp;&#62;&nbsp;b</a></li> -->
-                    <li><a id="menuEnter" href="#" title="Enter input">Enter</a></li>
-                    <li><a id="menuEvaluate" href="#" title="Evaluate input"><span class="symbol-big">=</span></a></li>
-                    <li><a id="menuDelete" href="#" title="Delete key">Delete</a></li>
-                    <li><a id="menuBackspace" href="#" title="Backspace">&#60--</a></li>
-                    <li><a id="menuUndo" class="symbol-big" href="#">Undo</a></li>
-                    <li><a id="menuRedo" class="symbol-big" href="#">Redo</a></li>
-                    <li><a id="menuClear" href="#" title="Clear display and input">Clear</a></li>
+                    <li><a id="menu-copy" href="#" title="Copy text">Copy</a></li>
+                    <li><a id="menu-xy" href="#" title="Swap input and last stack entry">x&nbsp;&#60;&nbsp;&#62;&nbsp;y</a></li>
+                    <!-- <li><a id="menu-ab" href="#" title="Swap last two stack entries">a&nbsp;&#60;&nbsp;&#62;&nbsp;b</a></li> -->
+                    <li><a id="menu-enter" href="#" title="Enter input">Enter</a></li>
+                    <li><a id="menu-evaluate" href="#" title="Evaluate input"><span class="symbol-big">=</span></a></li>
+                    <li><a id="menu-delete" href="#" title="Delete key">Delete</a></li>
+                    <li><a id="menu-backspace" href="#" title="Backspace">&#60--</a></li>
+                    <li><a id="menu-undo" class="symbol-big" href="#">Undo</a></li>
+                    <li><a id="menu-redo" class="symbol-big" href="#">Redo</a></li>
+                    <li><a id="menu-clear" href="#" title="Clear display and input">Clear</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
                   <a href="#">Maths</a>
                   <ul class="sub-menu">
-                    <li><a id="menuInverse" href="#" title="Inverse">1&nbsp;/&nbsp;x</a></li>
-                    <li><a id="menuFactorial" href="#" title="Factorial">x&nbsp;!</a></li>
+                    <li><a id="menu-inverse" href="#" title="Inverse">1&nbsp;/&nbsp;x</a></li>
+                    <li><a id="menu-factorial" href="#" title="Factorial">x&nbsp;!</a></li>
                     <li><a id="menuExponential" href="#" title="Exponentail">y&nbsp;<sup>x</sup></a></li>
-                    <li><a id="menuRoot" href="#" title="Root"><sup>x</sup>&nbsp;&#8730;¯y</a></li>
-                    <li><a id="menuLog" href="#" title="Logarithm">log<sub>x</sub>y</a></li>
-                    <li><a id="menuLn" href="#" title="Natural logarithm">log<sub>e</sub></a></li>
-                    <li><a id="menuModulus" href="#" title="Modulus">%</a></li>
-                    <li><a id="menuSign" class="symbol-big" href="#" title="Sign">±</a></li>
-                    <li><a id="menuDivide" class="symbol-big" href="#" title="Division">&#247;</a></li>
-                    <li><a id="menuMultiply" href="#" title="Multiplication">x</a></li>
-                    <li><a id="menuSubtract" class="symbol-big" href="#" title="Subtraction">&#65293;</a></li>
-                    <li><a id="menuAdd" class="symbol-big" href="#" title="Addition">+</a></li>
-                    <li><a id="menuSine" href="#" title="Sine">sin</a></li>
-                    <li><a id="menuCosine" href="#" title="Cosine">cos</a></li>
-                    <li><a id="menuTangent" href="#" title="Tangent">tan</a></li>
+                    <li><a id="menu-root" href="#" title="Root"><sup>x</sup>&nbsp;&#8730;¯y</a></li>
+                    <li><a id="menu-log" href="#" title="Logarithm">log<sub>x</sub>y</a></li>
+                    <li><a id="menu-ln" href="#" title="Natural logarithm">log<sub>e</sub></a></li>
+                    <li><a id="menu-modulus" href="#" title="Modulus">%</a></li>
+                    <li><a id="menu-sign" class="symbol-big" href="#" title="Sign">±</a></li>
+                    <li><a id="menu-divide" class="symbol-big" href="#" title="Division">&#247;</a></li>
+                    <li><a id="menu-multiply" href="#" title="Multiplication">x</a></li>
+                    <li><a id="menu-subtract" class="symbol-big" href="#" title="Subtraction">&#65293;</a></li>
+                    <li><a id="menu-add" class="symbol-big" href="#" title="Addition">+</a></li>
+                    <li><a id="menu-sine" href="#" title="Sine">sin</a></li>
+                    <li><a id="menu-cosine" href="#" title="Cosine">cos</a></li>
+                    <li><a id="menu-tangent" href="#" title="Tangent">tan</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
@@ -88,13 +88,14 @@
                     <li class="menu">
                       <a href="#" title="Change base" onclick="$('base').className='visible'" onmouseover="$('fix').className='hidden'">Base</a>
                       <ul id="base" onclick="$('base').className='hidden'">
-                        <li><a id="menuBinary" href="#" title="Binary" onclick="convertBase(2); updateDisplay()">&nbsp;&nbsp;binary</a></li>
-                        <li><a id="menuOctal" href="#" title="Octal" onclick="convertBase(8); updateDisplay()">&nbsp;&nbsp;octal</a></li>
-                        <li><a id="menuHex" href="#" title="Hexidecimal" onclick="convertBase(16); updateDisplay()">&nbsp;&nbsp;hex</a></li>
-                        <li><a id="menuDecimal" href="#" title="Decimal" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;decimal</a></li>
+                        <li><a href="#" title="Binary" onclick="convertBase(2); updateDisplay()">&nbsp;&nbsp;binary</a></li>
+                        <li><a href="#" title="Octal" onclick="convertBase(8); updateDisplay()">&nbsp;&nbsp;octal</a></li>
+                        <li><a href="#" title="Hexidecimal" onclick="convertBase(16); updateDisplay()">&nbsp;&nbsp;hex</a></li>
+                        <li><a href="#" title="Decimal" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;decimal</a></li>
                       </ul>
                     </li>                    
-                    <li><a id="menuAngle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>
+                    <li><a id="menu-darkmode" href="#" title="Toggle dark/light mode">Dark</a></li>
+                    <li><a id="menu-angle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>
                     <li class="menu">
                       <a href="#" title="Fix decimal position" onclick="$('fix').className='visible'" onmouseover="$('base').className='hidden';$('sci').className='hidden'">Fix</a>
                       <ul id="fix" onclick="$('fix').className='hidden'">
@@ -119,8 +120,8 @@
                         <li><a href="#" onclick="fixDecimal=17;updateDisplay()">&nbsp;&nbsp;17</a></li>
                       </ul>
                     </li>
-                    <li id="menuHapticLi"><a id="menuHaptic" href="#" title="Toggle haptic response">Haptic</a></li>
-                    <li id="menuKeyboardLi"><a id="menuKeyboard" href="#" title="Toggle mobile keyboard">Keyboard</a></li>
+                    <li id="menu-haptic-li"><a id="menu-haptic" href="#" title="Toggle haptic response">Haptic</a></li>
+                    <li id="menu-keyboard-li"><a id="menu-keyboard" href="#" title="Toggle mobile keyboard">Keyboard</a></li>
                     <li class="menu">
                       <a href="#" title="Scientific notation" onclick="$('sci').className='visible';$('fix').className='hidden'" onmouseover="$('base').className='hidden'">Sci</a>
                       <ul id="sci" onclick="$('sci').className='hidden'">
@@ -145,8 +146,8 @@
                         <li><a href="#" onclick="sciDecimal=17;updateDisplay()">&nbsp;&nbsp;17</a></li>
                       </ul>
                     </li>
-                    <li><a id="menuNotes" href="#" title="Switch to Notes">Notes</a></li>
-                    <li><a id="menuShift" href="#" title="Toggle shift">Shift</a></li>
+                    <li><a id="menu-notes" href="#" title="Switch to Notes">Notes</a></li>
+                    <li><a id="menu-shift" href="#" title="Toggle shift">Shift</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
@@ -155,122 +156,122 @@
                     <li class="menu">
                       <a href="#" onclick="$('constants').className='visible'" onmouseover="$('equations').className='hidden'">Constants</a>
                       <ul id="constants" onclick="$('constants').className='hidden'">
-                        <li><a id="menuPhi" href="#" title="Phi ~ Golden Ratio">&nbsp;&nbsp;&#934;</a></li>
-                        <li><a id="menuEulers" href="#" title="Euler's Number">&nbsp;&nbsp;e</a></li>
-                        <li><a id="menuGravitationalConstant" href="#" title="Gravitational Constant">&nbsp;&nbsp;G</a></li>
-                        <li><a id="menuLightSpeed" href="#" title="light speed">&nbsp;&nbsp;c</a></li>
-                        <li><a id="menuPI" href="#" title="PI">&nbsp;&nbsp;&#960;</a></li>
+                        <li><a id="menu-phi" href="#" title="Phi ~ Golden Ratio">&nbsp;&nbsp;&#934;</a></li>
+                        <li><a id="menu-eulers" href="#" title="Euler's Number">&nbsp;&nbsp;e</a></li>
+                        <li><a id="menu-gravitational-constant" href="#" title="Gravitational Constant">&nbsp;&nbsp;G</a></li>
+                        <li><a id="menu-light-speed" href="#" title="light speed">&nbsp;&nbsp;c</a></li>
+                        <li><a id="menu-pi" href="#" title="PI">&nbsp;&nbsp;&#960;</a></li>
                       </ul>
                     </li>
-                    <li><a id="menuDate" href="#" title="Current date">Date</a></li>
-                    <li><a id="menuTime" href="#" title="Current time">Time</a></li>                    
+                    <li><a id="menu-date" href="#" title="Current date">Date</a></li>
+                    <li><a id="menu-time" href="#" title="Current time">Time</a></li>                    
                     <li class="menu">
                       <a href="#" onclick="$('equations').className='visible'" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Equations</a>
                       <ul id="equations" onclick="$('equations').className='hidden'">
-                        <li><a id="menuOhmsLaw" href="#">&nbsp;&nbsp;Ohm's&nbsp;Law</a></li>
-                        <li><a id="menuCircumference" href="#">&nbsp;&nbsp;Circumference</a></li>
-                        <li><a id="menuCircleArea" href="#">&nbsp;&nbsp;Circle Area</a></li>
-                        <li><a id="menuSphereArea" href="#">&nbsp;&nbsp;Sphere Area</a></li>
-                        <li><a id="menuSphereVolume" href="#">&nbsp;&nbsp;Sphere Vol</a></li>
-                        <li><a id="menuConeArea" href="#">&nbsp;&nbsp;Cone Area</a></li>
-                        <li><a id="menuConeVolume" href="#">&nbsp;&nbsp;Cone Vol</a></li>
+                        <li><a id="menu-ohms-law" href="#">&nbsp;&nbsp;Ohm's&nbsp;Law</a></li>
+                        <li><a id="menu-circumference" href="#">&nbsp;&nbsp;Circumference</a></li>
+                        <li><a id="menu-circle-area" href="#">&nbsp;&nbsp;Circle Area</a></li>
+                        <li><a id="menu-sphere-area" href="#">&nbsp;&nbsp;Sphere Area</a></li>
+                        <li><a id="menu-sphere-volume" href="#">&nbsp;&nbsp;Sphere Vol</a></li>
+                        <li><a id="menu-cone-area" href="#">&nbsp;&nbsp;Cone Area</a></li>
+                        <li><a id="menu-cone-volume" href="#">&nbsp;&nbsp;Cone Vol</a></li>
                       </ul>
                     </li>
                     <li class="menu">
                       <a href="#" onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('equations').className='hidden';$('symbols').className='hidden'">Programs</a>
                       <ul id="programs" onclick="$('programs').className='hidden'">
-                        <li><a id="menuIpMapper" href="https://napesweaver.github.io/ip-mapper/" target="_blank">&nbsp;&nbsp;IP Mapper</a></li>
+                        <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank">&nbsp;&nbsp;IP Mapper</a></li>
                         <li><a href="reference/index.html">&nbsp;&nbsp;Reference</a></li>
-                        <li><a id="menuStopwatch" href="#" title="Starts the stopwatch">&nbsp;&nbsp;Stopwatch</a></li>
-                        <li><a id="menuTricorder" href="#">&nbsp;&nbsp;Tricorder</a></li>
-                        <li><a id="menuTwig" href="#">&nbsp;&nbsp;Twig</a></li>
+                        <li><a id="menu-stopwatch" href="#" title="Starts the stopwatch">&nbsp;&nbsp;Stopwatch</a></li>
+                        <li><a id="menu-tricorder" href="#">&nbsp;&nbsp;Tricorder</a></li>
+                        <li><a id="menu-twig" href="#">&nbsp;&nbsp;Twig</a></li>
                       </ul>
                     </li>
                     <li class="menu">
                       <a href="#" onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden';$('equations').className='hidden';$('programs').className='hidden'">Symbols</a>
                       <ul id="symbols" onclick="$('symbols').className='hidden'">
-                        <li><a id="menuParentheses" href="#" title="Parentheses">&nbsp;&nbsp;&#40;&nbsp;&#41;</a></li>
-                        <li><a id="menuEquals" href="#" title="Equals">&nbsp;&nbsp;&#61;</a></li>
-                        <li><a id="menuRadical" href="#" title="Radical">&nbsp;&nbsp;&#8730;</a></li>
-                        <li><a id="menuBang" class="symbol-big" href="#" title="Bang"><sub class="symbol-big">&nbsp;&nbsp;&#33;</sub></a></li>
-                        <li><a id="menuCarat" class="symbol-big" href="#" title="Carat"><sub class="symbol-big">&nbsp;&nbsp;&#94;</sub></a></li>
-                        <li><a id="menuSolidus" href="#" title="Solidus">&nbsp;&nbsp;&#47;</a></li>
-                        <li><a id="menuAsterisk" class="symbol-big" href="#" title="Times">&nbsp;&nbsp;<sub class="symbol-big">&#42;</sub></a></li>
-                        <!-- <li><a id="menuMinus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#45;</a></li> -->
-                        <li><a id="menuMinus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#8722;</a></li>
-                        <li><a id="menuPlus" class="symbol-big" href="#" title="Plus">&nbsp;&nbsp;&#43;</a></li>
-                        <li><a id="menuOhm" href="#" title="Ohms">&nbsp;&nbsp;&#937;</a></li>
-                        <li><a id="menuHeart" href="#" title="Hearts">&nbsp;&nbsp;&#9829;</a></li>
+                        <li><a id="menu-parentheses" href="#" title="Parentheses">&nbsp;&nbsp;&#40;&nbsp;&#41;</a></li>
+                        <li><a id="menu-equals" href="#" title="Equals">&nbsp;&nbsp;&#61;</a></li>
+                        <li><a id="menu-radical" href="#" title="Radical">&nbsp;&nbsp;&#8730;</a></li>
+                        <li><a id="menu-bang" class="symbol-big" href="#" title="Bang"><sub class="symbol-big">&nbsp;&nbsp;&#33;</sub></a></li>
+                        <li><a id="menu-carat" class="symbol-big" href="#" title="Carat"><sub class="symbol-big">&nbsp;&nbsp;&#94;</sub></a></li>
+                        <li><a id="menu-solidus" href="#" title="Solidus">&nbsp;&nbsp;&#47;</a></li>
+                        <li><a id="menu-asterisk" class="symbol-big" href="#" title="Times">&nbsp;&nbsp;<sub class="symbol-big">&#42;</sub></a></li>
+                        <!-- <li><a id="menu-minus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#45;</a></li> -->
+                        <li><a id="menu-minus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#8722;</a></li>
+                        <li><a id="menu-plus" class="symbol-big" href="#" title="Plus">&nbsp;&nbsp;&#43;</a></li>
+                        <li><a id="menu-ohm" href="#" title="Ohms">&nbsp;&nbsp;&#937;</a></li>
+                        <li><a id="menu-heart" href="#" title="Hearts">&nbsp;&nbsp;&#9829;</a></li>
                       </ul>
                     </li>
-                    <li><a id="menuHelp" href="#">&nbsp;Help&nbsp;</a></li>
+                    <li><a id="menu-help" href="#">&nbsp;Help&nbsp;</a></li>
                   </ul>
                 </li>
               </ul>
             </nav>
           </div>
 
-          <textarea id="lstStack" class="lst-stack haptic-response" name="lstStack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Dec 28, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lstStack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
-          <input type="text" id="txtInput" class="txt-input" name="txtInput" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Dec 28, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
-          <input type="button" id="btnCopy" class="btn-big haptic-response" value="COPY"/>
-          <input type="button" id="btnXy" class="btn-big haptic-response" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y"/>
-          <input type="button" id="btnEnter" class="btn-big haptic-response" value="ENTER"/>
-          <button type="button" id="btnDelete" class="btn-med haptic-response">DEL</button>
+          <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
+          <input type="button" id="btn-xy" class="btn-big haptic-response" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y"/>
+          <input type="button" id="btn-enter" class="btn-big haptic-response" value="ENTER"/>
+          <button type="button" id="btn-delete" class="btn-med haptic-response">DEL</button>
           <br/>
-          <input type="button" id="btnInverse" class="btn-big haptic-response" value="1&nbsp;/&nbsp;x"/>
-          <button type="button" id ="btnLog" class="btn-big haptic-response">log<sub>e</sub></button>
-          <button type="button" id="btnRoot" class="btn-big haptic-response">y&nbsp;<sup>x</sup></button>
-          <input type="button" id="btnUndo" class="btn-med haptic-response" value="UND"/>
+          <input type="button" id="btn-inverse" class="btn-big haptic-response" value="1&nbsp;/&nbsp;x"/>
+          <button type="button" id ="btn-log" class="btn-big haptic-response">log<sub>e</sub></button>
+          <button type="button" id="btn-root" class="btn-big haptic-response">y&nbsp;<sup>x</sup></button>
+          <input type="button" id="btn-undo" class="btn-med haptic-response" value="UND"/>
           <br/>
-          <input type="button" id="btnEE" class="btn-small btn-small-font btn-char haptic-response" value="EE"/>
-          <button type="button" id="btnPI" class="btn-small btn-char btn-pi haptic-response">&#120587;</button>
-          <input type="button" id="btnModulus" class="btn-small haptic-response" value="%"/>
-          <button type="button" id="btnSign" class="btn-small symbol-med haptic-response">±</button>
-          <button type="button" id="btnGo" class="google btn-small haptic-response"><span class="color-blue">G</span><span class="color-red">o</span></button>
-          <input type="button" id="btnShift" class="btn-med btn-shift haptic-response" value="Shift"/>
+          <input type="button" id="btn-ee" class="btn-small btn-small-font btn-char haptic-response" value="EE"/>
+          <button type="button" id="btn-pi" class="btn-small btn-char btn-pi haptic-response">&#120587;</button>
+          <input type="button" id="btn-modulus" class="btn-small haptic-response" value="%"/>
+          <button type="button" id="btn-sign" class="btn-small symbol-med haptic-response">±</button>
+          <button type="button" id="btn-go" class="google btn-small haptic-response"><span class="color-blue">G</span><span class="color-red">o</span></button>
+          <input type="button" id="btn-shift" class="btn-med btn-shift haptic-response" value="Shift"/>
           <br/>
           <br/>
-          <input type="button" id="btnSeven" class="btn-small btn-char haptic-response" value="7"/>
-          <input type="button" id="btnEight" class="btn-small btn-char haptic-response" value="8"/>
-          <input type="button" id="btnNine" class="btn-small btn-char haptic-response" value="9"/>
-          <input type="button" id="btnDivide" class="btn-small symbol-big haptic-response" value="&#247;"/>
-          <input type="button" id="btnAngle" class="btn-small btn-angle degree-style haptic-response" value="deg"/>
-          <input type="button" id="btnClear" class="btn-med haptic-response" value="CLR"/>
+          <input type="button" id="btn-seven" class="btn-small btn-char haptic-response" value="7"/>
+          <input type="button" id="btn-eight" class="btn-small btn-char haptic-response" value="8"/>
+          <input type="button" id="btn-nine" class="btn-small btn-char haptic-response" value="9"/>
+          <input type="button" id="btn-divide" class="btn-small symbol-big haptic-response" value="&#247;"/>
+          <input type="button" id="btn-angle" class="btn-small btn-angle degree-style haptic-response" value="deg"/>
+          <input type="button" id="btn-clear" class="btn-med haptic-response" value="CLR"/>
           <br/>
-          <input type="button" id="btnFour" class="btn-small btn-char haptic-response" value="4"/>
-          <input type="button" id="btnFive" class="btn-small btn-char haptic-response" value="5"/>
-          <input type="button" id="btnSix" class="btn-small btn-char haptic-response" value="6"/>
-          <button type="button" id="btnMultiply" class="btn-small haptic-response">x</button>
-          <button type="button" id="btnSine" class="btn-small degree-style haptic-response">sin</button>
-          <input type="button" id="btnLoad" class="btn-med haptic-response" value="LOA"/>          
+          <input type="button" id="btn-four" class="btn-small btn-char haptic-response" value="4"/>
+          <input type="button" id="btn-five" class="btn-small btn-char haptic-response" value="5"/>
+          <input type="button" id="btn-six" class="btn-small btn-char haptic-response" value="6"/>
+          <button type="button" id="btn-multiply" class="btn-small haptic-response">x</button>
+          <button type="button" id="btn-sine" class="btn-small degree-style haptic-response">sin</button>
+          <input type="button" id="btn-load" class="btn-med haptic-response" value="LOA"/>          
           <br/>
-          <input type="button" id="btnOne" class="btn-small btn-char haptic-response" value="1"/>
-          <input type="button" id="btnTwo" class="btn-small btn-char haptic-response" value="2"/>
-          <input type="button" id="btnThree" class="btn-small btn-char haptic-response" value="3"/>
-          <input type="button" id="btnSubtract" class="btn-small symbol-big haptic-response" value="−"/>
-          <button type="button" id="btnCosine" class="btn-small degree-style haptic-response">cos</button>
-          <input type="button" id="btnSave" class="btn-med haptic-response" value="SAV"/>
+          <input type="button" id="btn-one" class="btn-small btn-char haptic-response" value="1"/>
+          <input type="button" id="btn-two" class="btn-small btn-char haptic-response" value="2"/>
+          <input type="button" id="btn-three" class="btn-small btn-char haptic-response" value="3"/>
+          <input type="button" id="btn-subtract" class="btn-small symbol-big haptic-response" value="−"/>
+          <button type="button" id="btn-cosine" class="btn-small degree-style haptic-response">cos</button>
+          <input type="button" id="btn-save" class="btn-med haptic-response" value="SAV"/>
           <br/>
-          <input type="button" id="btnZero" class="btn-small btn-char haptic-response" value="0"/>
-          <button type="button" id="btnDot" class="btn-small btn-char haptic-response"><sup class="symbol-big">.</sup></button>
-          <input type="button" id="btnSpace" class="btn-small symbol-big btn-char haptic-response" value="&nbsp;"/>
-          <input type="button" id="btnAdd" class="btn-small symbol-big haptic-response" value="+"/>
-          <button type="button" id="btnTangent" class="btn-small degree-style haptic-response">tan</button>
-          <input type="button" id="btnOff" class="btn-med btn-off haptic-response" value="OFF"/>
+          <input type="button" id="btn-zero" class="btn-small btn-char haptic-response" value="0"/>
+          <button type="button" id="btn-dot" class="btn-small btn-char haptic-response"><sup class="symbol-big">.</sup></button>
+          <input type="button" id="btn-space" class="btn-small symbol-big btn-char haptic-response" value="&nbsp;"/>
+          <input type="button" id="btn-add" class="btn-small symbol-big haptic-response" value="+"/>
+          <button type="button" id="btn-tangent" class="btn-small degree-style haptic-response">tan</button>
+          <input type="button" id="btn-off" class="btn-med btn-off haptic-response" value="OFF"/>
         </div>
 
         <!-- Notes -->
         <div id="notes" class="hidden">
-          <input type="button" id="btnLoadNotes" class="btn-other haptic-response" value="LOAD"/>
-          <input type="button" id="btnSaveNotes" class="btn-other haptic-response" value="SAVE"/>
-          <input type="button" id="btnCopyNotes" class="btn-other haptic-response" value="COPY"/>
-          <input type="button" id="btnPasteNotes" class="btn-other haptic-response" value="PASTE"/>
+          <input type="button" id="btn-load-notes" class="btn-other haptic-response" value="LOAD"/>
+          <input type="button" id="btn-save-notes" class="btn-other haptic-response" value="SAVE"/>
+          <input type="button" id="btn-copy-notes" class="btn-other haptic-response" value="COPY"/>
+          <input type="button" id="btn-paste-notes" class="btn-other haptic-response" value="PASTE"/>
           <br/>
-          <input type="button" id="btnUndoNotes" class="btn-other haptic-response" value="UNDO"/>
-          <input type="button" id="btnRedoNotes" class="btn-other haptic-response" value="REDO"/>          
-          <input type="button" id="btnClearNotes" class="btn-other haptic-response" value="CLEAR"/>
-          <input type="button" id="btnDeleteNotes" class="btn-other haptic-response" value="DELETE"/>
+          <input type="button" id="btn-undo-notes" class="btn-other haptic-response" value="UNDO"/>
+          <input type="button" id="btn-redo-notes" class="btn-other haptic-response" value="REDO"/>          
+          <input type="button" id="btn-clear-notes" class="btn-other haptic-response" value="CLEAR"/>
+          <input type="button" id="btn-delete-notes" class="btn-other haptic-response" value="DELETE"/>
           <textarea id="lstNotes" class="lst-notes haptic-response" name="notes" placeholder="Notes:" spellcheck="false" cols="28" rows="27"></textarea>
         </div>
 
@@ -278,14 +279,14 @@
         <div id="tricorder" class="hidden">
           <!--<audio id="astrogator" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_astrogator_1.mp3"></audio>-->
           <!--<audio id="beta5computer" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_beta5computer.mp3"></audio>-->
-          <audio id="communications_static" preload="none" src="http://www.trekcore.com/audio/other/tos_communications_static.mp3"></audio>
-          <audio id="computerthinking" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_computerthinking1_ep.mp3"></audio>
+          <audio id="communications-static" preload="none" src="http://www.trekcore.com/audio/other/tos_communications_static.mp3"></audio>
+          <audio id="computer-thinking" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_computerthinking1_ep.mp3"></audio>
           <!--<audio id="datainsufficient" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_datainsufficient_ep.mp3"></audio>-->
-          <audio id="datareceived" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_datareceived_ep.mp3"></audio>
+          <audio id="data-received" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_datareceived_ep.mp3"></audio>
           <audio id="destruct" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_destructsequence_ep.mp3"></audio>
           <!--<audio id="hailing" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_hailing.mp3"></audio>-->
-          <audio id="hailing_frequencies" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_hailing_frequencies_open.mp3"></audio>
-          <!--<audio id="inaccurateerror" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_inaccurateerror_ep.mp3"></audio>-->
+          <audio id="hailing-frequencies" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_hailing_frequencies_open.mp3"></audio>
+          <!--<audio id="inaccurate-error" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_inaccurateerror_ep.mp3"></audio>-->
           <!--<audio id="incorrect" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_incorrect_ep.mp3"></audio>-->
           <audio id="keypress1" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress1.mp3"></audio>
           <audio id="keypress2" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress2.mp3"></audio>
@@ -294,11 +295,11 @@
           <audio id="keypress6" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress6.mp3"></audio>
           <audio id="keypress7" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress7.mp3"></audio>
           <!--<audio id="negative" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_negative_ep.mp3"></audio>-->
-          <!--<audio id="red_alert" preload="none" src="http://www.trekcore.com/audio/redalertandklaxons/tos_red_alert.mp3"></audio>-->
+          <!--<audio id="red-alert" preload="none" src="http://www.trekcore.com/audio/redalertandklaxons/tos_red_alert.mp3"></audio>-->
           <audio id="scanner" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_scanner.mp3"></audio>
-          <audio id="spocksviewer" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_spocksviewer_bridge.mp3"></audio>
-          <audio id="tricorder_alert" preload="none" src="http://www.trekcore.com/audio/tricorder/tos_tricoder_alert.mp3"></audio>
-          <!--<audio id="unabletocomply" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_unabletocomply.mp3"></audio>-->
+          <audio id="spocks-viewer" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_spocksviewer_bridge.mp3"></audio>
+          <audio id="tricorder-alert" preload="none" src="http://www.trekcore.com/audio/tricorder/tos_tricoder_alert.mp3"></audio>
+          <!--<audio id="unable-to-comply" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_unabletocomply.mp3"></audio>-->
           <audio id="verified" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_verified.mp3"></audio>
           <!--<audio id="viewscreen" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_viewscreen_fast.mp3"></audio>-->
           <audio id="working" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_working.mp3"></audio>
@@ -322,7 +323,6 @@
       <img id="twig" class="hidden" src="images/twig/hat-on.gif" alt="animated gif" width="64" height="64" style="top: -310px; left: 135px;"/>
       <img id="tv" class="hidden" src="images/twig/tv-off.gif" alt="animated gif" width="64" height="64" style="top: -330px; left: -45px;"/>
       <img id="don" class="hidden" src="images/twig/don-jon.gif" alt="animated gif" width="64" height="64" style="top: -420px; left: -45px;"/>
-      <!-- <div class="mapouter"><div class="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=lincoln%20ne&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.net">embedgooglemap.net</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:600px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:600px;}</style></div> -->
     </div>
     <script src="scripts/utils/filesaver.js"></script>
     <script src="scripts/index.js"></script>

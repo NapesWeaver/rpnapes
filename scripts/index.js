@@ -43,7 +43,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '10:16:25';
+const tStamp = '21:12:28';
 var testing = false;
 
 var stack = [];
@@ -104,45 +104,71 @@ NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
 
-function toggleHaptic() {
-  if ($('menuHapticLi').classList.contains('strikethrough')) {
-    $('menuHapticLi').classList.remove('strikethrough');
+function toggleDarkMode() {
+  if ($('menu-darkmode').textContent === 'Light') {
+    $('menu-darkmode').innerHTML = 'Dark';
+    
+    // $('lst-stack').classList.remove('dark-mode');
+    // $('txt-input').classList.remove('dark-mode');
+    // $('lstNotes').classList.remove('dark-mode');
+    // $('twig').classList.remove('dark-mode');
+    // $('don').classList.remove('dark-mode');
+    // $('tv').classList.remove('dark-mode');
+
+    $('wrap').classList.remove('dark-mode');
   } else {
-    $('menuHapticLi').className += ' strikethrough';
+    $('menu-darkmode').innerHTML = 'Light';
+
+    // $('lst-stack').classList.add('dark-mode');
+    // $('txt-input').classList.add('dark-mode');
+    // $('lstNotes').classList.add('dark-mode');
+    // $('twig').classList.add('dark-mode');
+    // $('don').classList.add('dark-mode');
+    // $('tv').classList.add('dark-mode');
+
+    $('wrap').classList.add('dark-mode');
   }
-  $('txtInput').focus();
+}
+
+function toggleHaptic() {
+  if ($('menu-haptic-li').classList.contains('strikethrough')) {
+    $('menu-haptic-li').classList.remove('strikethrough');
+  } else {
+    $('menu-haptic-li').className += ' strikethrough';
+  }
+  $('txt-input').focus();
 }
 function hapticResponse() {
   if (isMobile) {
     haptic();
-    $('txtInput').readOnly = true;
+    $('txt-input').readOnly = true;
   }
 }
 function haptic() {
-  if (!$('menuHapticLi').classList.contains('strikethrough')) navigator.vibrate([1]);
+  if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([1]);
 }
 
 function toggleKeyboard() {
-  if ($('menuKeyboardLi').classList.contains('strikethrough')) {
-    $('menuKeyboardLi').classList.remove('strikethrough');
+  if ($('menu-keyboard-li').classList.contains('strikethrough')) {
+    $('menu-keyboard-li').classList.remove('strikethrough');
   } else {
-    $('menuKeyboardLi').className += ' strikethrough';
+    $('menu-keyboard-li').className += ' strikethrough';
   }
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 function mobileKeyboardAllow() {
 
-  if(!$('menuKeyboardLi').classList.contains('strikethrough')) {
-    if ($('txtInput').readOnly === true) {
-      moveCursorToEnd($('txtInput'));
-      $('txtInput').readOnly = false;
+  if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
+    if ($('txt-input').readOnly === true) {
+      moveCursorToEnd($('txt-input'));
+      $('txt-input').readOnly = false;
     }
   }
 }
 
 //////// Buttons /////////////////////////////////////////////////////////////////////
 
-function btn_xoff() {
+function btnXoff() {
 
   if ($('rpnapes').className === 'hidden') {
     // Notes is visible - turn on RPNapes
@@ -163,7 +189,7 @@ function rpnapesOn() {
     playAudio($('keypress3'));
   }
   $('rpnapes').className = 'visible';
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 function notesOn() {
 
@@ -183,13 +209,13 @@ function showTricorder() {
   monOff();
   $('notes').className = 'hidden';
   if (power()) {
-    playAudio($('tricorder_alert'));
+    playAudio($('tricorder-alert'));
   }
   $('tricorder').className = 'visible';
   $('viewport').className = 'visible';
 }
 
-function btn_copy() {
+function btnCopy() {
 
   if (shifted) {
     btn_paste();
@@ -205,30 +231,30 @@ function btn_paste() {
   backupUndo();
 
   if (stackFocus) {
-    insertAtCursor($('txtInput'), getSelectedText('lstStack'));
+    insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   }
   else {
     if (/*@cc_on!@*/false || !!document.documentMode) {
       // IE
-      insertAtCursor($('txtInput'), window.clipboardData.getData('Text'));
+      insertAtCursor($('txt-input'), window.clipboardData.getData('Text'));
     }
     else {
       rpnAlert('This functionality prohibited by your browser.');
     }
   }
-  $('txtInput').select();
+  $('txt-input').select();
 }
 
-function btn_xy() {
+function btnXy() {
 
   if (shifted) {
-    btn_ab();
+    btnAb();
   }
   else {
     xyFunction();
   }
 }
-function btn_ab() {
+function btnAb() {
 
   if (stack.length > 1) {
     backupUndo();
@@ -238,7 +264,7 @@ function btn_ab() {
     stack.push(tmp2);
     updateDisplay();
   }
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 function xyFunction() {
 
@@ -246,53 +272,53 @@ function xyFunction() {
     backupUndo();
     var tmpX = stack.pop();
     enterInput();
-    $('txtInput').value = '';
+    $('txt-input').value = '';
 
     if (isNaN(parseFloat(tmpX.getRealPart()))) {
-      $('txtInput').value += decodeSpecialChar(tmpX.getSoul());
+      $('txt-input').value += decodeSpecialChar(tmpX.getSoul());
     }
     else {
-      $('txtInput').value += formatNumber(tmpX.getRealPart().toString());
+      $('txt-input').value += formatNumber(tmpX.getRealPart().toString());
 
       if (!isNaN(parseFloat(tmpX.getImaginary()))) {
         if (parseFloat(tmpX.getImaginary()) > 0) {
-          $('txtInput').value += ' + ' + formatNumber(tmpX.getImaginary().toString()) + 'j';
+          $('txt-input').value += ' + ' + formatNumber(tmpX.getImaginary().toString()) + 'j';
         }
         else {
-          $('txtInput').value += ' - ' + formatNumber(tmpX.getImaginary().toString().substring(1)) + 'j';
+          $('txt-input').value += ' - ' + formatNumber(tmpX.getImaginary().toString().substring(1)) + 'j';
         }
       }
       if (tmpX.getUnits() !== 'null') {
-        $('txtInput').value += ' ' + decodeSpecialChar(tmpX.getUnits());
+        $('txt-input').value += ' ' + decodeSpecialChar(tmpX.getUnits());
       }
     }
     updateDisplay();
   }
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 
 function commandRun() {
-  if (!shifted) btn_shift();
-  btn_load();
+  if (!shifted) btnShift();
+  btnLoad();
 }
 
-function enter_button() {
+function enterButton() {
 
   if (shifted) {
-    btn_eval();
+    btnEval();
   } else {
-    btn_enter();
+    btnEnter();
   }
 }
 
-function btn_enter() {
+function btnEnter() {
   backupUndo();
-  if ($('txtInput').value.trim().match(/^run$/)) {
+  if ($('txt-input').value.trim().match(/^run$/)) {
     commandRun();
     return;
   }
   if (stackFocus) {
-    insertAtCursor($('txtInput'), getSelectedText('lstStack'));
+    insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   }
   else {
     enterInput();
@@ -301,21 +327,21 @@ function btn_enter() {
   parseCommand();
 }
 
-function btn_eval() {
+function btnEval() {
   backupUndo();
-  if ($('txtInput').value.trim().match(/^run$/)) {
+  if ($('txt-input').value.trim().match(/^run$/)) {
     commandRun();
     return;
 
   }
-  if (stackFocus) insertAtCursor($('txtInput'), getSelectedText('lstStack'));
-  evaluateInput($('txtInput').value);
-  $('txtInput').select();    
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  evaluateInput($('txt-input').value);
+  $('txt-input').select();    
 }
 
 function getX() {
 
-  var soulX = $('txtInput').value.trim();
+  var soulX = $('txt-input').value.trim();
   var realPartX = extractReal(soulX);
   var imaginaryX = extractImaginary(soulX);
   var unitsX = extractUnits(soulX);
@@ -332,12 +358,12 @@ function enterInput() {
   var objX = getX();  
 
   stack.push(objX);
-  $('txtInput').value = $('txtInput').value.trim();  
+  $('txt-input').value = $('txt-input').value.trim();  
 }
 function evaluateInput(input) {  
   
   try{  
-    $('txtInput').value = eval(parseEvaluation(input));
+    $('txt-input').value = eval(parseEvaluation(input));
     // Data Testing
     if (testing) {
       try {
@@ -353,46 +379,46 @@ function evaluateInput(input) {
   }
 }
 
-function delete_button() {
+function deleteButton() {
 
   if (shifted) {
-    btn_backspace();
+    btnBackspace();
   }
   else {
-    btn_delete();
+    btnDelete();
   }
 }
-function btn_delete() {
+function btnDelete() {
 
   backupUndo();
   if (stackFocus) {
     deleteFromStack();
     updateDisplay();
-  } else if ($('txtInput').value === '') {
+  } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
   }
   else {
-    deleteText($('txtInput'), true);
+    deleteText($('txt-input'), true);
   }
   if (elapsedTime > 0) stopwatchReset();
 }
 function deleteFromStack() {
 
-  var stackIndex = getIndex('lstStack') - stackSize;
+  var stackIndex = getIndex('lst-stack') - stackSize;
   stack.splice(stackIndex, 1);
 }
-function btn_backspace() {
+function btnBackspace() {
 
   backupUndo();
   if (stackFocus) {
     deleteFromStack();
     updateDisplay();
-  } else if ($('txtInput').value === '') {
+  } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
   } else {
-    deleteText($('txtInput'), false);
+    deleteText($('txt-input'), false);
   }
 }
 function deleteText(txtField, forward) {
@@ -406,10 +432,10 @@ function deleteText(txtField, forward) {
 
   txtField.selectionStart = startPos;
   txtField.selectionEnd = startPos;
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 
-function btn_undo() {
+function btnUndo() {
 
   if (shifted) {
     redoFunction();
@@ -421,9 +447,9 @@ function btn_undo() {
 function undoFunction() {
   if (backUps.length > 3) {    
     restores.push(nestArray(stack));
-    restores.push($('txtInput').value);
+    restores.push($('txt-input').value);
 
-    $('txtInput').value = backUps.pop();
+    $('txt-input').value = backUps.pop();
     var tmpArray = backUps.pop();
 
     stack.length = 0;
@@ -442,9 +468,9 @@ function redoFunction() {
 
   if (restores.length > 0) {
     backUps.push(nestArray(stack));
-    backUps.push($('txtInput').value);
+    backUps.push($('txt-input').value);
 
-    $('txtInput').value = restores.pop();
+    $('txt-input').value = restores.pop();
     var tmpArray = restores.pop();
 
     stack.length = 0;
@@ -461,192 +487,192 @@ function redoFunction() {
 }
 function backupUndo() {
   backUps.push(nestArray(stack));
-  backUps.push($('txtInput').value.trim());
+  backUps.push($('txt-input').value.trim());
   restores.length = 0;
   colorUndoButton();
 }
 function colorUndoButton() {
 
-  if (($('btnUndo').value === 'UND' && backUps.length > 3) || ($('btnUndo').value === 'REDO' && restores.length > 0)) {
-    $('btnUndo').style.color = '#25FC5A';
+  if (($('btn-undo').value === 'UND' && backUps.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
+    $('btn-undo').style.color = '#25FC5A';
   }
   else {
-    $('btnUndo').style.color = '#D4D0C8';
+    $('btn-undo').style.color = '#D4D0C8';
   }        
   colorUndoRedoMenu();
 }
 function colorUndoRedoMenu() {
 
   if (backUps.length > 3) {
-    //$('menuUndo').style.color = '#25FC5A';
-    $('menuUndo').style.color = '#088B00';
+    //$('menu-undo').style.color = '#25FC5A';
+    $('menu-undo').style.color = '#088B00';
   } else {
-    $('menuUndo').style.color = '#D4D0C8';
+    $('menu-undo').style.color = '#D4D0C8';
   }
   if (restores.length > 0) {
-    //$('menuRedo').style.color = '#25FC5A';
-    $('menuRedo').style.color = '#088B00';
+    //$('menu-redo').style.color = '#25FC5A';
+    $('menu-redo').style.color = '#088B00';
   } else {
-    $('menuRedo').style.color = '#D4D0C8';
+    $('menu-redo').style.color = '#D4D0C8';
   }
 }
-function btn_EE() {
+function btnEe() {
 
   if (shifted) {
 
     if (radix !== 16) {
-      if (isANumber($('txtInput').value) && $('txtInput').value.indexOf('j') === -1) {
-        insertAtCursor($('txtInput'), 'j');
+      if (isANumber($('txt-input').value) && $('txt-input').value.indexOf('j') === -1) {
+        insertAtCursor($('txt-input'), 'j');
       }
     } else {
-      if ((/[-+]?[a-e0-9]/g.test($('txtInput').value) || /[-+]?[ΦeπGc]/g.test($('txtInput').value)) && $('txtInput').value.indexOf('j') === -1) {
-        insertAtCursor($('txtInput'), 'j');
+      if ((/[-+]?[a-e0-9]/g.test($('txt-input').value) || /[-+]?[ΦeπGc]/g.test($('txt-input').value)) && $('txt-input').value.indexOf('j') === -1) {
+        insertAtCursor($('txt-input'), 'j');
       }
     }
   }
   else {
-    if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txtInput').value) && !/.*[eE].*[eE].*/g.test($('txtInput').value)) {
-    //if ((/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txtInput').value) || /[-+]?[ΦeπGc]/g.test($('txtInput').value)) && !/.*[eE].*[eE].*/g.test($('txtInput').value)) {
-      insertAtCursor($('txtInput'), 'e');
+    if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txt-input').value) && !/.*[eE].*[eE].*/g.test($('txt-input').value)) {
+    //if ((/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txt-input').value) || /[-+]?[ΦeπGc]/g.test($('txt-input').value)) && !/.*[eE].*[eE].*/g.test($('txt-input').value)) {
+      insertAtCursor($('txt-input'), 'e');
     }
   }
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 
-function btn_go() {
+function btnGo() {
   backupUndo();
 
   if (shifted) {   
-    internetSearch('https://www.youtube.com/results?search_query=', $('txtInput').value.trim());    
+    internetSearch('https://www.youtube.com/results?search_query=', $('txt-input').value.trim());    
   }
   else {
-    internetSearch('https://www.google.com/search?q=', $('txtInput').value.trim());
+    internetSearch('https://www.google.com/search?q=', $('txt-input').value.trim());
   }  
-  $('txtInput').select();
+  $('txt-input').select();
 }
 
-function btn_shift() {
+function btnShift() {
 
   if (shifted) {
     // Shifting to false...
     shifted = false;
-    $('fileOpen').innerHTML = 'Open';
+    $('file-open').innerHTML = 'Open';
     $('open').setAttribute('title', 'Open a file');
-    $('menuLoad').innerHTML = 'Load';
-    $('menuLoad').setAttribute('title', 'Load stack');
-    //$('menuCopy').innerHTML = 'Copy';
-    //$('menuCopy').setAttribute('title', 'Copy text');
-    //$('menuXy').innerHTML = 'x&nbsp;&#60;&nbsp;&#62;&nbsp;y';
-    //$('menuXy').setAttribute('title', 'Swap input and last stack entry');
-    $('menuSine').innerHTML = 'sin';
-    $('menuCosine').innerHTML = 'cos';
-    $('menuTangent').innerHTML = 'tan'
-    $('btnCopy').value = 'COPY';
-    $('btnXy').value = 'x < > y';
-    $('btnEnter').className = 'btn-big';
-    $('btnEnter').value = 'ENTER';
-    $('btnDelete').innerHTML = 'DEL';
-    $('btnInverse').value = '1 / x';
-    $('btnLog').innerHTML = 'log<sub>e</sub>';
-    $('btnRoot').innerHTML = 'y&nbsp;<sup>x</sup>';
-    $('btnUndo').value = 'UND';
-    $('btnEE').className = 'btn-small btn-small-font btn-char';
-    $('btnEE').value = 'EE';
-    $('btnPI').innerHTML = '&#120587;';
-    $('btnModulus').style.color = '#000000';
-    $('btnModulus').value = '%';
-    $('btnSign').style.color = '#000000';
-    $('btnSign').innerHTML = '±';
-    $('btnGo').className = 'btn-small google';
-    $('btnGo').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
-    $('btnShift').className = 'btn-med btn-shift';
-    $('btnDivide').style.color = '#000000';
-    $('btnDivide').value = '÷';
-    $('btnMultiply').style.color = '#000000';
-    $('btnMultiply').innerHTML = 'x';
-    $('btnSine').innerHTML = 'sin';
-    $('btnSubtract').style.color = '#000000';
-    $('btnCosine').innerHTML = 'cos';
-    $('btnLoad').value = 'LOA';
-    $('btnSpace').value = '';
-    $('btnAdd').style.color = '#000000';
-    $('btnTangent').innerHTML = 'tan';
+    $('menu-load').innerHTML = 'Load';
+    $('menu-load').setAttribute('title', 'Load stack');
+    //$('menu-copy').innerHTML = 'Copy';
+    //$('menu-copy').setAttribute('title', 'Copy text');
+    //$('menu-xy').innerHTML = 'x&nbsp;&#60;&nbsp;&#62;&nbsp;y';
+    //$('menu-xy').setAttribute('title', 'Swap input and last stack entry');
+    $('menu-sine').innerHTML = 'sin';
+    $('menu-cosine').innerHTML = 'cos';
+    $('menu-tangent').innerHTML = 'tan'
+    $('btn-copy').value = 'COPY';
+    $('btn-xy').value = 'x < > y';
+    $('btn-enter').className = 'btn-big';
+    $('btn-enter').value = 'ENTER';
+    $('btn-delete').innerHTML = 'DEL';
+    $('btn-inverse').value = '1 / x';
+    $('btn-log').innerHTML = 'log<sub>e</sub>';
+    $('btn-root').innerHTML = 'y&nbsp;<sup>x</sup>';
+    $('btn-undo').value = 'UND';
+    $('btn-ee').className = 'btn-small btn-small-font btn-char';
+    $('btn-ee').value = 'EE';
+    $('btn-pi').innerHTML = '&#120587;';
+    $('btn-modulus').style.color = '#000000';
+    $('btn-modulus').value = '%';
+    $('btn-sign').style.color = '#000000';
+    $('btn-sign').innerHTML = '±';
+    $('btn-go').className = 'btn-small google';
+    $('btn-go').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
+    $('btn-shift').className = 'btn-med btn-shift';
+    $('btn-divide').style.color = '#000000';
+    $('btn-divide').value = '÷';
+    $('btn-multiply').style.color = '#000000';
+    $('btn-multiply').innerHTML = 'x';
+    $('btn-sine').innerHTML = 'sin';
+    $('btn-subtract').style.color = '#000000';
+    $('btn-cosine').innerHTML = 'cos';
+    $('btn-load').value = 'LOA';
+    $('btn-space').value = '';
+    $('btn-add').style.color = '#000000';
+    $('btn-tangent').innerHTML = 'tan';
   }
   else {
     // Shifting to true...
     shifted = true;
-    $('fileOpen').innerHTML = 'RunFile';
+    $('file-open').innerHTML = 'RunFile';
     $('open').setAttribute('title', 'Run JS file');
-    $('menuLoad').innerHTML = 'Run';
-    $('menuLoad').setAttribute('title', 'Run stack');
-    //$('menuCopy').innerHTML = 'Paste';
-    //$('menuCopy').setAttribute('title', 'Paste text from stack or clipboard');
-    //$('menuXy').innerHTML = 'a&nbsp;&#60;&nbsp;&#62;&nbsp;b';
-    //$('menuXy').setAttribute('title', 'Swap last two stack entries');
-    $('menuSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
-    $('menuCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
-    $('menuTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
-    $('btnCopy').value = 'PASTE';
-    $('btnXy').value = 'a < > b';
-    $('btnEnter').className = 'btn-big btn-big-font';
-    $('btnEnter').value = '=';
-    // $('btnDelete').innerHTML = '<---';
-    // $('btnDelete').innerHTML = '◀---';
-    $('btnDelete').innerHTML = '<−−';
-    // $('btnDelete').innerHTML = '<span class="btn-big-font">␈</span>';
-    // $('btnDelete').innerHTML = '<span class="btn-big-font">⬅</span>';
-    // $('btnDelete').innerHTML = '<span class="btn-big-font">⇐</span>';
-    $('btnInverse').value = 'x !';
-    $('btnLog').innerHTML = 'log<sub>x</sub>y';
-    $('btnRoot').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
-    $('btnUndo').value = 'REDO';
-    $('btnEE').className = 'btn-small btn-char';
-    $('btnEE').value = 'j';
-    $('btnPI').innerHTML = '(  )';
-    $('btnModulus').style.color = '#0000A0';
-    $('btnModulus').value = '√¯';
-    $('btnSign').style.color = '#0000A0';
-    $('btnSign').innerHTML = '<sub class="symbol-big">^</sub>';
-    $('btnGo').className = 'btn-small you-tube';
-    $('btnGo').innerHTML = '&#9654';
-    $('btnShift').className = 'btn-med btn-shifted';
-    $('btnDivide').style.color = '#0000A0';
-    $('btnDivide').value = '/';
-    $('btnMultiply').style.color = '#0000A0';
-    $('btnMultiply').innerHTML = '<sub class="symbol-big">*</sub>';
-    $('btnSine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>'
-    $('btnSubtract').style.color = '#0000A0';
-    $('btnCosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
-    $('btnLoad').value = 'RUN';
-    $('btnSpace').value = '=';
-    $('btnAdd').style.color = '#0000A0';
-    $('btnTangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';    
+    $('menu-load').innerHTML = 'Run';
+    $('menu-load').setAttribute('title', 'Run stack');
+    //$('menu-copy').innerHTML = 'Paste';
+    //$('menu-copy').setAttribute('title', 'Paste text from stack or clipboard');
+    //$('menu-xy').innerHTML = 'a&nbsp;&#60;&nbsp;&#62;&nbsp;b';
+    //$('menu-xy').setAttribute('title', 'Swap last two stack entries');
+    $('menu-sine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
+    $('menu-cosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
+    $('menu-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
+    $('btn-copy').value = 'PASTE';
+    $('btn-xy').value = 'a < > b';
+    $('btn-enter').className = 'btn-big btn-big-font';
+    $('btn-enter').value = '=';
+    // $('btn-delete').innerHTML = '<---';
+    // $('btn-delete').innerHTML = '◀---';
+    $('btn-delete').innerHTML = '<−−';
+    // $('btn-delete').innerHTML = '<span class="btn-big-font">␈</span>';
+    // $('btn-delete').innerHTML = '<span class="btn-big-font">⬅</span>';
+    // $('btn-delete').innerHTML = '<span class="btn-big-font">⇐</span>';
+    $('btn-inverse').value = 'x !';
+    $('btn-log').innerHTML = 'log<sub>x</sub>y';
+    $('btn-root').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
+    $('btn-undo').value = 'REDO';
+    $('btn-ee').className = 'btn-small btn-char';
+    $('btn-ee').value = 'j';
+    $('btn-pi').innerHTML = '(  )';
+    $('btn-modulus').style.color = '#0000A0';
+    $('btn-modulus').value = '√¯';
+    $('btn-sign').style.color = '#0000A0';
+    $('btn-sign').innerHTML = '<sub class="symbol-big">^</sub>';
+    $('btn-go').className = 'btn-small you-tube';
+    $('btn-go').innerHTML = '&#9654';
+    $('btn-shift').className = 'btn-med btn-shifted';
+    $('btn-divide').style.color = '#0000A0';
+    $('btn-divide').value = '/';
+    $('btn-multiply').style.color = '#0000A0';
+    $('btn-multiply').innerHTML = '<sub class="symbol-big">*</sub>';
+    $('btn-sine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>'
+    $('btn-subtract').style.color = '#0000A0';
+    $('btn-cosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
+    $('btn-load').value = 'RUN';
+    $('btn-space').value = '=';
+    $('btn-add').style.color = '#0000A0';
+    $('btn-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';    
   }
   colorUndoButton();
   
   if (stackFocus) {
-    $('lstStack').focus();
+    $('lst-stack').focus();
   } else {
-    $('txtInput').focus();
+    $('txt-input').focus();
   }
 }
 
-function btn_clear() {
+function btnClear() {
 
   backupUndo();
   monOff();
-  $('txtInput').value = '';
-  $('lstStack').value = '';
+  $('txt-input').value = '';
+  $('lst-stack').value = '';
   stack.length = 0;
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 
-function btn_save() {
+function btnSave() {
 
-  $('btnSave').style.color = '#D4D0C8';
+  $('btn-save').style.color = '#D4D0C8';
   storeCookie('STACK', nestArray(stack));
   storeCookie('MATHMON', nestArray(theObjects));
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 function nestArray(srcArray) {
   var newArray = '';
@@ -699,12 +725,12 @@ function saveFile(fileName, pretty) {
   }
 }
 
-function btn_load() {
+function btnLoad() {
 
   var index = 0;
   backupUndo();
   try { 
-    $('btnSave').style.color = '#D4D0C8';        
+    $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
     if (getCookie('STACK').substr(index) !== '') {
       loadStack(getCookie('STACK').substr(index));
@@ -762,7 +788,7 @@ function pushObjectToStack(tmpArray) {
   stack.push(objY);
 }
 
-function btn_off() {
+function btnOff() {
 
   monOff();
   tricorderOff();
@@ -775,7 +801,7 @@ function btn_off() {
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
 
-function btn_inverse() {
+function btnInverse() {
 
   if (shifted) {
     btn_factorial();    
@@ -788,38 +814,38 @@ function inverse() {
   backupUndo();
 
   var newUnits = inverseUnits();
-  //console.log(extractReal($('txtInput'.value)));
-  var isNumber = !isNaN(extractReal($('txtInput').value));
-  var isImaginary = !isNaN(extractImaginary($('txtInput').value));
+  //console.log(extractReal($('txt-input'.value)));
+  var isNumber = !isNaN(extractReal($('txt-input').value));
+  var isImaginary = !isNaN(extractImaginary($('txt-input').value));
   //console.log(newUnits, isNumber, isImaginary);
   if (isNumber || isImaginary) {
       
     if (isNumber && !isImaginary) {
-      $('txtInput').value = 1 / extractReal($('txtInput').value);
+      $('txt-input').value = 1 / extractReal($('txt-input').value);
     }
     if (!isNumber && isImaginary) {
-      $('txtInput').value = -1 * (1 / extractImaginary($('txtInput').value));
-      $('txtInput').value += 'j';
+      $('txt-input').value = -1 * (1 / extractImaginary($('txt-input').value));
+      $('txt-input').value += 'j';
     }
     if (isNumber && isImaginary) {
       // write code here please ;)
     }
-    $('txtInput').value += newUnits;
-    $('txtInput').select();
+    $('txt-input').value += newUnits;
+    $('txt-input').select();
   } else {
       
-    if(/^1\//.test($('txtInput').value)) {
-      $('txtInput').value = $('txtInput').value.slice(2);
+    if(/^1\//.test($('txt-input').value)) {
+      $('txt-input').value = $('txt-input').value.slice(2);
     } else {
-      $('txtInput').value = '1/' + $('txtInput').value;
+      $('txt-input').value = '1/' + $('txt-input').value;
     }
   }
 }
 function btn_factorial() {
   backupUndo();
 
-  $('txtInput').value = factorial(extractReal($('txtInput').value));
-  $('txtInput').select();
+  $('txt-input').value = factorial(extractReal($('txt-input').value));
+  $('txt-input').select();
 }
 function factorial(num) {
 
@@ -837,7 +863,7 @@ function factorial(num) {
   }
 }
 
-function btn_log() {
+function btnLog() {
 
   if (shifted) {
     baseLog();
@@ -851,21 +877,21 @@ function baseLog() {
 
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
     enterInput();
-    $(('txtInput')).value = '10';
+    $(('txt-input')).value = '10';
   }
-  $('txtInput').value = Math.log(parseFloat(stack.pop().getRealPart())) / Math.log(extractReal($('txtInput').value));
+  $('txt-input').value = Math.log(parseFloat(stack.pop().getRealPart())) / Math.log(extractReal($('txt-input').value));
   updateDisplay();
-  $('txtInput').select();
+  $('txt-input').select();
 }
 function naturalLog() {
   backupUndo();
 
-  $('txtInput').value = Math.log(extractReal($('txtInput').value));
+  $('txt-input').value = Math.log(extractReal($('txt-input').value));
   updateDisplay();
-  $('txtInput').select();
+  $('txt-input').select();
 }
 
-function btn_root() {
+function btnRoot() {
 
   if (shifted) {
     rootFunction();
@@ -880,15 +906,15 @@ function exponentialFunction() {
   var newUnits = '';
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
     enterInput();
-    $(('txtInput')).value = '2';
+    $(('txt-input')).value = '2';
   }
-  if (extractUnits($('txtInput').value) === 'null') {
-    newUnits = multiplyUnits(extractReal($('txtInput').value));
+  if (extractUnits($('txt-input').value) === 'null') {
+    newUnits = multiplyUnits(extractReal($('txt-input').value));
     if (newUnits === ' ') newUnits = '';
   }
-  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
+  $('txt-input').value = Math.pow(parseFloat(stack.pop().getRealPart()), extractReal($('txt-input').value)) + decodeSpecialChar(newUnits);
   updateDisplay();
-  $('txtInput').select();
+  $('txt-input').select();
 }
 function rootFunction() {
   backupUndo();
@@ -896,17 +922,17 @@ function rootFunction() {
   var newUnits = '';
   if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString().trim())) {
     enterInput();
-    $(('txtInput')).value = '2';
+    $(('txt-input')).value = '2';
   }
-  if (extractUnits($('txtInput').value) === 'null') {
-    newUnits = divideUnits(1 / extractReal($('txtInput').value));
+  if (extractUnits($('txt-input').value) === 'null') {
+    newUnits = divideUnits(1 / extractReal($('txt-input').value));
   }
-  $('txtInput').value = Math.pow(parseFloat(stack.pop().getRealPart()), 1 / extractReal($('txtInput').value)) + decodeSpecialChar(newUnits);
+  $('txt-input').value = Math.pow(parseFloat(stack.pop().getRealPart()), 1 / extractReal($('txt-input').value)) + decodeSpecialChar(newUnits);
   updateDisplay();
-  $('txtInput').select();
+  $('txt-input').select();
 }
 
-function btn_pi() {
+function btnPi() {
 
   backupUndo();
 
@@ -920,8 +946,8 @@ function btn_pi() {
 }
 function btn_parentheses() {
   
-  insertAroundSelection($('txtInput'), '(' + returnSelectedText('txtInput') + ')');
-  $('txtInput').focus();
+  insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
+  $('txt-input').focus();
 }
 function insertAroundSelection(txtField, txtValue) {
 
@@ -933,7 +959,7 @@ function insertAroundSelection(txtField, txtValue) {
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
-function btn_modulus() {
+function btnModulus() {
 
   
   if (shifted) {
@@ -948,12 +974,12 @@ function btn_modulus() {
 function modulus() {
   backupUndo();
   
-  $('txtInput').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txtInput').value);
+  $('txt-input').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txt-input').value);
   updateDisplay();
-  $('txtInput').select();
+  $('txt-input').select();
 }
 
-function btn_sign() {
+function btnSign() {
 
   
   if (shifted) {
@@ -967,7 +993,7 @@ function btn_sign() {
 function changeSign() {
   backupUndo();
 
-  var tmpX = $('txtInput').value;
+  var tmpX = $('txt-input').value;
   
   // If input is blank
   if (tmpX === '') {
@@ -1048,13 +1074,13 @@ function changeSign() {
       tmpX = '-' + tmpX;
     }
   }
-  $('txtInput').value = tmpX;
-  $('txtInput').focus();
+  $('txt-input').value = tmpX;
+  $('txt-input').focus();
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
-function btn_divide() {
+function btnDivide() {
   
   if (shifted) {
     backupUndo();
@@ -1068,12 +1094,12 @@ function division() {
   backupUndo();
 
   var newUnits = getDivideUnits(1);
-  $('txtInput').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+  $('txt-input').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
   updateDisplay();
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 
-function btn_multiply() {
+function btnMultiply() {
   
   if (shifted) {
     backupUndo();
@@ -1086,12 +1112,12 @@ function multiplication() {
   backupUndo();
 
   var newUnits = getMultiplyUnits(1);
-  $('txtInput').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+  $('txt-input').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
   updateDisplay();
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 
-function btn_subtract() {
+function btnSubtract() {
   
   if (shifted) {
     backupUndo();
@@ -1104,12 +1130,12 @@ function btn_subtract() {
 function subtraction() {
   backupUndo();
   var newUnits = getAddUnits();        
-  $('txtInput').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
+  $('txt-input').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
   updateDisplay();
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 
-function btn_add() {
+function btnAdd() {
   
   if (shifted) {
     backupUndo();
@@ -1126,75 +1152,75 @@ function addition() {
   var objX = getX();
   
   if (radix === 10) {
-    $('txtInput').value = parseFloat(stack.pop().getRealPart()) + parseFloat($('txtInput').value) + decodeSpecialChar(newUnits);
-    // $('txtInput').value = parseFloat(stack.pop().getRealPart()) + objX.getRealPart() + decodeSpecialChar(newUnits);
+    $('txt-input').value = parseFloat(stack.pop().getRealPart()) + parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+    // $('txt-input').value = parseFloat(stack.pop().getRealPart()) + objX.getRealPart() + decodeSpecialChar(newUnits);
   } else {
-    $('txtInput').value = (stack.pop().getRealPart() + objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
+    $('txt-input').value = (stack.pop().getRealPart() + objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
   }  
   updateDisplay();
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
 
-function btn_angle() {
+function btnAngle() {
 
-  if ($('btnAngle').value === 'deg') {
-    $('btnAngle').value = 'rad';
-    $('btnAngle').className = 'btn-small btn-angle radian-style';
-    $('btnSine').className = 'btn-small radian-style';
-    $('btnCosine').className = 'btn-small radian-style';
-    $('btnTangent').className = 'btn-small radian-style';
+  if ($('btn-angle').value === 'deg') {
+    $('btn-angle').value = 'rad';
+    $('btn-angle').className = 'btn-small btn-angle radian-style';
+    $('btn-sine').className = 'btn-small radian-style';
+    $('btn-cosine').className = 'btn-small radian-style';
+    $('btn-tangent').className = 'btn-small radian-style';
   }
   else {
-    $('btnAngle').value = 'deg';
-    $('btnAngle').className = 'btn-small btn-angle degree-style';
-    $('btnSine').className = 'btn-small degree-style';
-    $('btnCosine').className = 'btn-small degree-style';
-    $('btnTangent').className = 'btn-small degree-style';
+    $('btn-angle').value = 'deg';
+    $('btn-angle').className = 'btn-small btn-angle degree-style';
+    $('btn-sine').className = 'btn-small degree-style';
+    $('btn-cosine').className = 'btn-small degree-style';
+    $('btn-tangent').className = 'btn-small degree-style';
   }
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
-function btn_sine() {
+function btnSine() {
 
   backupUndo();
 
   if (shifted) {
-    $('txtInput').value = computeTrig($('txtInput').value, Math.asin);
+    $('txt-input').value = computeTrig($('txt-input').value, Math.asin);
   } else {
-    $('txtInput').value = computeTrig($('txtInput').value, Math.sin);
+    $('txt-input').value = computeTrig($('txt-input').value, Math.sin);
   }
   updateDisplay();
-  $('txtInput').select();  
+  $('txt-input').select();  
 }
-function btn_cosine() {
+function btnCosine() {
 
   backupUndo();
 
   if (shifted) {
-    $('txtInput').value = computeTrig($('txtInput').value, Math.acos);
+    $('txt-input').value = computeTrig($('txt-input').value, Math.acos);
   } else {
-    $('txtInput').value = computeTrig($('txtInput').value, Math.cos);
+    $('txt-input').value = computeTrig($('txt-input').value, Math.cos);
   }
   updateDisplay();
-  $('txtInput').select();
+  $('txt-input').select();
 }
-function btn_tangent() {
+function btnTangent() {
 
   backupUndo();
 
   if (shifted) {
-    $('txtInput').value = computeTrig($('txtInput').value, Math.atan);
+    $('txt-input').value = computeTrig($('txt-input').value, Math.atan);
   }
   else {
-    $('txtInput').value = computeTrig($('txtInput').value, Math.tan);
+    $('txt-input').value = computeTrig($('txt-input').value, Math.tan);
   }
   updateDisplay();
-  $('txtInput').select();
+  $('txt-input').select();
 }
 function computeTrig(input, trigFunc) {
   
-  if ($('btnAngle').value === 'rad') {  
+  if ($('btn-angle').value === 'rad') {  
     input = trigFunc(extractReal(input));
   }
   else {
@@ -1205,59 +1231,59 @@ function computeTrig(input, trigFunc) {
 
 //////// Input Buttons ///////////////////////////////////////////////////////////////
 
-function btn_dot() {
-  insertAtCursor($('txtInput'), '.');
-  $('txtInput').focus();
+function btnDot() {
+  insertAtCursor($('txt-input'), '.');
+  $('txt-input').focus();
 }
-function btn_zero() {
-  insertAtCursor($('txtInput'), '0');
-  $('txtInput').focus();
+function btnZero() {
+  insertAtCursor($('txt-input'), '0');
+  $('txt-input').focus();
 }
-function btn_one() {
-  insertAtCursor($('txtInput'), '1');
-  $('txtInput').focus();
+function btnOne() {
+  insertAtCursor($('txt-input'), '1');
+  $('txt-input').focus();
 }
-function btn_two() {
-  insertAtCursor($('txtInput'), '2');
-  $('txtInput').focus();
+function btnTwo() {
+  insertAtCursor($('txt-input'), '2');
+  $('txt-input').focus();
 }
-function btn_three() {
-  insertAtCursor($('txtInput'), '3');
-  $('txtInput').focus();
+function btnThree() {
+  insertAtCursor($('txt-input'), '3');
+  $('txt-input').focus();
 }
-function btn_space() {
+function btnSpace() {
     
   if (shifted) {
-    insertAtCursor($('txtInput'), '=');
+    insertAtCursor($('txt-input'), '=');
   }
   else {
-    insertAtCursor($('txtInput'), ' ');
+    insertAtCursor($('txt-input'), ' ');
   } 
-  $('txtInput').focus();
+  $('txt-input').focus();
 }
-function btn_four() {
-  insertAtCursor($('txtInput'), '4');
-  $('txtInput').focus();
+function btnFour() {
+  insertAtCursor($('txt-input'), '4');
+  $('txt-input').focus();
 }
-function btn_five() {
-  insertAtCursor($('txtInput'), '5');
-  $('txtInput').focus();
+function btnFive() {
+  insertAtCursor($('txt-input'), '5');
+  $('txt-input').focus();
 }
-function btn_six() {
-  insertAtCursor($('txtInput'), '6');
-  $('txtInput').focus();
+function btnSix() {
+  insertAtCursor($('txt-input'), '6');
+  $('txt-input').focus();
 }
-function btn_seven() {
-  insertAtCursor($('txtInput'), '7');
-  $('txtInput').focus();
+function btnSeven() {
+  insertAtCursor($('txt-input'), '7');
+  $('txt-input').focus();
 }
-function btn_eight() {
-  insertAtCursor($('txtInput'), '8');
-  $('txtInput').focus();
+function btnEight() {
+  insertAtCursor($('txt-input'), '8');
+  $('txt-input').focus();
 }
-function btn_nine() {
-  insertAtCursor($('txtInput'), '9');
-  $('txtInput').focus();
+function btnNine() {
+  insertAtCursor($('txt-input'), '9');
+  $('txt-input').focus();
 }
 
 //////// More Calcamatrons ///////////////////////////////////////////////////////////
@@ -1504,7 +1530,7 @@ function help(command) {
 
     switch (commandArray[1]) {    
     case 'about':
-      inputText($('lstStack').getAttribute('placeholder'));
+      inputText($('lst-stack').getAttribute('placeholder'));
       break;
     case 'date':
       inputText('date: Returns the current date.');
@@ -1604,13 +1630,13 @@ function help(command) {
     inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
-  $('txtInput').value = '';
+  $('txt-input').value = '';
   updateDisplay();
 }
 
 function parseCommand() {
 
-  var command = $('txtInput').value.trim();
+  var command = $('txt-input').value.trim();
 
   // Commands consist of words and numbers and URLs
   if (!/[,*√=Φπ\\^]+/.test(command)) {
@@ -1632,7 +1658,7 @@ function parseCommand() {
         setFixDecimal(parseInt(commandArray[1]));
       }
       stack.pop();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();    
     }
     // NOT saveAs with word and no space, NOT saveAs with number, NOT saveAs with word and alphanumeric word
@@ -1645,7 +1671,7 @@ function parseCommand() {
         saveFile(commandArray[1], true);
       }
       stack.pop();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();
     }
     // NOT toString with word and no space, NOT toString with number, NOT toString with word and alphanumeric word
@@ -1658,7 +1684,7 @@ function parseCommand() {
         saveFile(commandArray[1], false)
       }
       stack.pop();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();
     }
     // If (command === embed and end of stack === URL) or command === embed with URL
@@ -1671,7 +1697,7 @@ function parseCommand() {
         embed(commandArray[1]);
       }
       stack.pop();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();
       saveTricorder();
     }
@@ -1684,7 +1710,7 @@ function parseCommand() {
         internetSearch('https://www.google.com/search?q=', commandArray.join(' '));
       }
       stack.pop();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();
     }
     if (command === 'youTube' || command === 'you' || command.match(/^youTube .+/) || command.match(/^you .+/)) {
@@ -1696,21 +1722,21 @@ function parseCommand() {
         internetSearch('https://www.youtube.com/results?search_query=', commandArray.join(' '));
       }
       stack.pop();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();
     }
   
     switch (command) {  
     case 'about':
       stack.pop();
-      inputText($('lstStack').getAttribute('placeholder'));
+      inputText($('lst-stack').getAttribute('placeholder'));
       enterInput();
       updateDisplay();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       break;
     case 'clear':
     case 'cls':
-      btn_clear();
+      btnClear();
       break;
     case 'date':
       stack.pop();
@@ -1722,15 +1748,15 @@ function parseCommand() {
     //   break;  
     case 'flightLogger':
       stack.pop();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();
       window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
       break;
     case 'gravity':
       //resetMathmon();
       gravity();
-      btn_delete();
-      btn_delete();
+      btnDelete();
+      btnDelete();
       break;
     case 'How are ya':
     case 'How are ya doing':
@@ -1740,7 +1766,7 @@ function parseCommand() {
     case 'How you doing':
       inputText('Like a rhinestone cowboy!');
       enterInput();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();
       break;
     case 'Hallo':
@@ -1749,7 +1775,7 @@ function parseCommand() {
     case 'Hi':
       inputText('Hallo there!');
       enterInput();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       updateDisplay();
       break;
     case 'ip':
@@ -1760,22 +1786,22 @@ function parseCommand() {
     case 'ipMapper':
       stack.pop();
       updateDisplay();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       window.open('https://napesweaver.github.io/ip-mapper/', '_blank').focus();
       break;
     case 'keyboard':
       if (isMobile) {
         stack.pop();
         updateDisplay();
-        $('txtInput').value = '';      
+        $('txt-input').value = '';      
         toggleKeyboard();
       }
       break;
     case 'load':
     case 'ls':
       stack.pop();
-      $('txtInput').value = '';
-      btn_load();
+      $('txt-input').value = '';
+      btnLoad();
       break;
     case 'locus':
       stack.pop();
@@ -1793,7 +1819,7 @@ function parseCommand() {
       inputText('acos() asin() atan() cos() sin() tan() ln() log() root()');
       enterInput();
       updateDisplay();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       break;
     case 'napes':
       window.location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
@@ -1801,12 +1827,12 @@ function parseCommand() {
     case 'notes':
       stack.pop();
       updateDisplay();
-      btn_xoff();
+      btnXoff();
       break;
     case 'off':
       stack.pop();
       updateDisplay();
-      btn_off();
+      btnOff();
       break;
     case 'open':
       stack.pop();
@@ -1815,20 +1841,20 @@ function parseCommand() {
     case 'openNotes':
       stack.pop();
       updateDisplay();      
-      $('txtInput').value = 'notes';
+      $('txt-input').value = 'notes';
       openAFile();
       break;
     case 'print':
       stack.pop();
       updateDisplay();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       print();
       break;
     case 'save':
       stack.pop();
       updateDisplay();
-      $('txtInput').value = '';
-      btn_save();
+      $('txt-input').value = '';
+      btnSave();
       break;
     case 'size':
       stack.pop();
@@ -1846,24 +1872,24 @@ function parseCommand() {
     case 'twig':
       stack.pop();
       updateDisplay();
-      $('txtInput').value = '';         
+      $('txt-input').value = '';         
       monOn();
       break;
     case 'twigStat':
       stack.pop();
       monStatus();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       break;
     case 'tricorder':
       stack.pop();
       updateDisplay();
-      $('txtInput').value = '';
+      $('txt-input').value = '';
       showTricorder();
       break;
     case 'unembed':
       stack.pop();
       updateDisplay();
-      $('txtInput').value = ''; 
+      $('txt-input').value = ''; 
       widgetSrc.shift();
       saveTricorder();
       break;
@@ -2039,7 +2065,7 @@ function convertBase(r) {
     if (!isNaN(inputTxt.realPart)) outputTxt += ' ';
     outputTxt += parseInt(inputTxt.imaginary).toString(radix) + 'j';
   }
-  $('txtInput').value = outputTxt;
+  $('txt-input').value = outputTxt;
 }
 function menuHelp() {
   help('help');
@@ -2093,14 +2119,14 @@ function loadText() {
 }
 
 function openAFile() {
-  $('openFile').click();
+  $('open-file').click();
 }
 
 function getStackEntry() {
 
   backupUndo();  
-  insertAtCursor($('txtInput'), getSelectedText('lstStack'));
-  $('txtInput').select();
+  insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  $('txt-input').select();
 }
 
 function getIndex(name) {
@@ -2175,36 +2201,36 @@ function moveCursorToEnd(el) {
 function rpnAlert(text) {
 
   backupUndo();
-  $('txtInput').value = text;
-  $('txtInput').select();
+  $('txt-input').value = text;
+  $('txt-input').select();
 }
 function inputText(text) {
   
   backupUndo();
-  $('txtInput').value = text;
+  $('txt-input').value = text;
 }
 function insertText(text) {
 
   backupUndo();
-  insertAtCursor($('txtInput'), text);
-  $('txtInput').focus();
+  insertAtCursor($('txt-input'), text);
+  $('txt-input').focus();
 }
 
 function updateDisplay() {
 
-  $('lstStack').value = '';
+  $('lst-stack').value = '';
   // Buffer stack display
-  for (var i = 0; i < $('lstStack').getAttribute('rows') ; i++) {
-    $('lstStack').value += ' \n';
+  for (var i = 0; i < $('lst-stack').getAttribute('rows') ; i++) {
+    $('lst-stack').value += ' \n';
   }
   // Print to stack display
   for (var sta in stack) {
-    $('lstStack').value += '\n';
-    $('lstStack').value = prettyPrint(sta,$('lstStack').value);
+    $('lst-stack').value += '\n';
+    $('lst-stack').value = prettyPrint(sta,$('lst-stack').value);
   }
   colorSaveButton();
-  $('lstStack').scrollTop = $('lstStack').scrollHeight;
-  $('txtInput').select();
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  $('txt-input').select();
 }
 
 function isANumber(testString) {
@@ -2266,13 +2292,13 @@ function colorSaveButton() {
     index = getCookie('STACK').indexOf('=') + 1;
     //console.log(getCookie("STACK").substr(0).trim(), nestArray(stack).trim());
     if (getCookie('STACK').substr(index).trim() !== nestArray(stack).trim()) {
-      $('btnSave').style.color = '#000000';
+      $('btn-save').style.color = '#000000';
     }
     else {
-      $('btnSave').style.color = '#D4D0C8';
+      $('btn-save').style.color = '#D4D0C8';
     }
   }  else {
-    $('btnSave').style.color = '#000000';
+    $('btn-save').style.color = '#000000';
   }  
 }
 
@@ -2545,11 +2571,11 @@ function addUnits() {
   var newUnits = '';
 
   // If x and y have the same units or y has no units
-  if (extractUnits($('txtInput').value) === decodeSpecialChar(stack[stack.length - 1].getUnits()) || (extractUnits($('txtInput').value) !== 'null' && stack[stack.length - 1].getUnits()) === '') {
-    newUnits = ' ' + extractUnits($('txtInput').value);
+  if (extractUnits($('txt-input').value) === decodeSpecialChar(stack[stack.length - 1].getUnits()) || (extractUnits($('txt-input').value) !== 'null' && stack[stack.length - 1].getUnits()) === '') {
+    newUnits = ' ' + extractUnits($('txt-input').value);
   }
   // If y has units but x does not
-  if (extractUnits($('txtInput').value) === 'null' && stack[stack.length - 1].getUnits() !== '') {
+  if (extractUnits($('txt-input').value) === 'null' && stack[stack.length - 1].getUnits() !== '') {
     newUnits = ' ' + stack[stack.length - 1].getUnits();
   }
   return newUnits;
@@ -2558,7 +2584,7 @@ function multiplyUnits(multiplier) {
 
   var unitsMultiplied = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
-  var unitsX = extractUnits($('txtInput').value);
+  var unitsX = extractUnits($('txt-input').value);
 
   if (unitsY !== '' || unitsX !== 'null') {
     unitsMultiplied = ' ' + processUnits(unitsY, unitsX, multiplier, true);
@@ -2569,7 +2595,7 @@ function divideUnits(multiplier) {
 
   var unitsDivided = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
-  var unitsX = extractUnits($('txtInput').value);
+  var unitsX = extractUnits($('txt-input').value);
 
   if ((unitsY !== '' || unitsX !== 'null') && unitsY !== unitsX) {
     unitsDivided = ' ' + processUnits(unitsY, unitsX, multiplier, false);
@@ -2580,7 +2606,7 @@ function inverseUnits() {
 
   var tmpArray = [];
   var invertedUnits = '';
-  var unitsX = extractUnits($('txtInput').value);
+  var unitsX = extractUnits($('txt-input').value);
 
   if (unitsX !== 'null') {
     unitsX = rewriteNegUnitExp(unitsX);
@@ -2865,11 +2891,11 @@ var notes = [];
 var backupNotes = [];
 var restoreNotes = [];
 
-function btn_copy_notes() {
+function btnCopyNotes() {
 
   document.execCommand('copy');
 }
-function btn_paste_notes() {
+function btnPasteNotes() {
 
   backupUndoNotes();
 
@@ -2883,7 +2909,7 @@ function btn_paste_notes() {
     alert('Not supported by this browser.');
   }
 }
-function btn_undo_notes() {
+function btnUndoNotes() {
   if (backupNotes.length > 1) {
     restoreNotes.push(nestArray(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
@@ -2891,7 +2917,7 @@ function btn_undo_notes() {
   }
   colorNotesUndoButton();
 }
-function btn_redo_notes() {
+function btnRedoNotes() {
 
   if (restoreNotes.length > 0) {
     backupNotes.push(nestArray(notes));
@@ -2910,16 +2936,16 @@ function backupUndoNotes() {
 function colorNotesUndoButton() {
 
   if (backupNotes.length > 1) {
-    $('btnUndoNotes').style.color = '#01c401';
+    $('btn-undo-notes').style.color = '#01c401';
   }
   else {
-    $('btnUndoNotes').style.color = '#919191';
+    $('btn-undo-notes').style.color = '#919191';
   }
   if (restoreNotes.length >= 1) {
-    $('btnRedoNotes').style.color = '#01c401';
+    $('btn-redo-notes').style.color = '#01c401';
   }
   else {
-    $('btnRedoNotes').style.color = '#919191';
+    $('btn-redo-notes').style.color = '#919191';
   }
   colorNotesSaveButton();
 }
@@ -2937,23 +2963,23 @@ function colorNotesSaveButton() {
   notesValue = notesValue.replace(/_/g, ' ').trim();
 
   if (cookieValue !== notesValue) {
-    $('btnSaveNotes').style.color = '#000000';
+    $('btn-save-notes').style.color = '#000000';
   }
   else {
-    $('btnSaveNotes').style.color = '#919191';
+    $('btn-save-notes').style.color = '#919191';
   }
 }
-function btn_save_notes() {
+function btnSaveNotes() {
 
   var tmpY;
 
   backupUndoNotes();
-  $('btnSaveNotes').style.color = '#919191';
+  $('btn-save-notes').style.color = '#919191';
   tmpY = encodeSpecialChar($('lstNotes').value);
   notes = tmpY.split('\n');
   storeCookie('NOTES', nestArray(notes));
 }
-function btn_load_notes() {
+function btnLoadNotes() {
 
   var index = 0;
 
@@ -2966,16 +2992,16 @@ function btn_load_notes() {
     notes.push('Load error.');
   }
   updateDisplayNotes();
-  $('btnSaveNotes').style.color = '#919191';
+  $('btn-save-notes').style.color = '#919191';
   $('lstNotes').scrollTop = $('lstNotes').scrollHeight;
 }
-function btn_clear_notes() {
+function btnClearNotes() {
 
   backupUndoNotes();
   $('lstNotes').value = '';
   notes = $('lstNotes').value.split('\n');
 }
-function btn_delete_notes() {
+function btnDeleteNotes() {
 
   backupUndoNotes();
   var txtField = $('lstNotes').value;
@@ -3029,7 +3055,7 @@ function timeToString(time) {
   return formattedMM + ':' + formattedSS + ':' + formattedMS;
 }
 function stopwatchPrint(txt) {
-  $('txtInput').value = txt;
+  $('txt-input').value = txt;
 }
 function stopwatchStart() {  
 
@@ -3052,8 +3078,8 @@ function stopwatchPause() {
 function stopwatchReset() {
   clearInterval(timerInterval);
   elapsedTime = 0;
-  $('txtInput').value = '00:00:00';
-  $('txtInput').select();
+  $('txt-input').value = '00:00:00';
+  $('txt-input').select();
 }
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
@@ -3134,7 +3160,7 @@ function tricorderOn() {
   
   $('viewport').className = 'visible';
   playAudio($('working'));
-  playAudio($('hailing_frequencies'));
+  playAudio($('hailing-frequencies'));
   getLocation();
 }
 function button2() {
@@ -3175,7 +3201,7 @@ function button3() {
       $('viewport').src = viewPort2Src[0];
     }
     playAudio($('keypress1'));
-    playAudio($('datareceived'));
+    playAudio($('data-received'));
   }
 }
 function button4() {
@@ -3228,7 +3254,7 @@ function button5() {
       }
       $('widget').className = 'visible';
       playAudio($('keypress6'));
-      playAudio($('computerthinking'));
+      playAudio($('computer-thinking'));
     }
     else {
       $('widget').className = 'hidden';
@@ -3418,7 +3444,7 @@ function monOff() {
 
 function resetMathmon() {
 
-  $('txtInput').value = '';
+  $('txt-input').value = '';
   $('twig').src = 'images/twig/piece-frog.gif';
   for (var i = 0; i < theObjects.length; i++) {
     theObjects[i].setHealth(100);
@@ -3634,7 +3660,7 @@ function donMove() {
 //////// Event listeners & window.onload /////////////////////////////////////////////
 
 document.addEventListener('click', function (evt) {
-  if (evt.detail === 2 && evt.target === $('lstStack')) {
+  if (evt.detail === 2 && evt.target === $('lst-stack')) {
     getStackEntry();
   }
 });
@@ -3643,7 +3669,7 @@ document.addEventListener('keypress', function (event) {
   if ($('rpnapes').className !== 'hidden') {
     switch (key) {
     case 13:// RPNapes ENTER
-      enter_button();
+      enterButton();
       break;
     }
   }
@@ -3693,36 +3719,36 @@ document.addEventListener('keydown', function (event) {
     case 8:// BACKSPACE
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_backspace();
+      btnBackspace();
       break;
     case 16:// SHIFT
-      if (keyHeld) btn_shift();
+      if (keyHeld) btnShift();
       break;
     case 18:// ALT
       keyHeld = true;
       break;
     case 46:// DELETE
-      btn_delete();
+      btnDelete();
       break;
     case 106:// NUMPAD *
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_multiply();
+      btnMultiply();
       break;
     case 107:// NUMPAD +
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_add();
+      btnAdd();
       break;
     case 109:// NUMPAD -
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_subtract();
+      btnSubtract();
       break;
     case 111:// NUMPAD /
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btn_divide();
+      btnDivide();
       break;
     }
   }
@@ -3750,7 +3776,7 @@ document.addEventListener('keyup', function (event) {
   }
   else {
     // Notes keys
-    $('btnSaveNotes').style.color = '#000000';
+    $('btn-save-notes').style.color = '#000000';
     switch (key) {
     case 27:// ESC
       if (!event) { event = window.event; }
@@ -3769,7 +3795,7 @@ document.addEventListener('keyup', function (event) {
 
 window.onload = function () {
 
-  // Internet Explorer needs this for "btnOff" ~ window.close()   
+  // Internet Explorer needs this for "btn-off" ~ window.close()   
   window.open('', '_self');
 
   // MathMon
@@ -3782,15 +3808,15 @@ window.onload = function () {
   $('don').onclick = monStatus;
 
   // Menu File 
-  $('menuLoad').onclick = btn_load;
-  $('openFile').addEventListener('change', function () {
+  $('menu-load').onclick = btnLoad;
+  $('open-file').addEventListener('change', function () {
     try{
       var fr = new FileReader();
 
       fr.onload = function () {
 
-        if ($('txtInput').value.toLowerCase().trim() === ('notes')) {
-          btn_delete();
+        if ($('txt-input').value.toLowerCase().trim() === ('notes')) {
+          btnDelete();
           backupUndoNotes();
           $('lstNotes').value += this.result;
           backupUndoNotes();
@@ -3800,9 +3826,9 @@ window.onload = function () {
           backupUndo();
           tmpStack = this.result.split('\n');
           for (var i in tmpStack) {
-            $('txtInput').value = tmpStack[i];
+            $('txt-input').value = tmpStack[i];
             if (shifted) {
-              evaluateInput($('txtInput').value);
+              evaluateInput($('txt-input').value);
               enterInput();
             }
             else {
@@ -3818,204 +3844,203 @@ window.onload = function () {
       rpnAlert(err.toString());
     }
   });
-  $('menuSave').onclick = btn_save;
-  $('menuOff').onclick = function() {
+  $('menu-save').onclick = btnSave;
+  $('menu-off').onclick = function() {
     monOff();
     tricorderOff();
     window.open('','_self').close();
     window.top.close();
     rpnAlert('Window not opened with window.open()');
-    throw new Error();
+    //throw new Error();
   };
 
   // Menu Edit
-  $('menuEnter').onclick = btn_enter;
-  $('menuEvaluate').onclick = btn_eval;
-  $('menuCopy').onclick = copy;
-  $('menuDelete').onclick = btn_delete;
-  $('menuBackspace').onclick = btn_backspace;
-  $('menuClear').onclick = btn_clear;
-  $('menuUndo').onclick = undoFunction;
-  $('menuRedo').onclick = redoFunction;
-  //$('menuXy').onclick = btn_xy;
-  //$('menuAb').onclick = btn_ab;
-  $('menuXy').onclick = xyFunction;
+  $('menu-enter').onclick = btnEnter;
+  $('menu-evaluate').onclick = btnEval;
+  $('menu-copy').onclick = copy;
+  $('menu-delete').onclick = btnDelete;
+  $('menu-backspace').onclick = btnBackspace;
+  $('menu-clear').onclick = btnClear;
+  $('menu-undo').onclick = undoFunction;
+  $('menu-redo').onclick = redoFunction;
+  //$('menu-xy').onclick = btnXy;
+  //$('menu-ab').onclick = btnAb;
+  $('menu-xy').onclick = xyFunction;
 
   // Menu Maths
-  $('menuRoot').onclick = rootFunction;
+  $('menu-root').onclick = rootFunction;
   $('menuExponential').onclick = exponentialFunction;
-  $('menuLog').onclick = baseLog;
-  $('menuLn').onclick = naturalLog;
-  $('menuInverse').onclick = inverse;
-  $('menuFactorial').onclick = btn_factorial;
-  $('menuModulus').onclick = modulus;
-  $('menuSign').onclick = changeSign;
-  $('menuDivide').onclick = division;
-  $('menuMultiply').onclick = multiplication;
-  $('menuSubtract').onclick = subtraction;
-  $('menuAdd').onclick = addition;
-  $('menuSine').onclick = btn_sine;
-  $('menuCosine').onclick = btn_cosine;
-  $('menuTangent').onclick = btn_tangent;
+  $('menu-log').onclick = baseLog;
+  $('menu-ln').onclick = naturalLog;
+  $('menu-inverse').onclick = inverse;
+  $('menu-factorial').onclick = btn_factorial;
+  $('menu-modulus').onclick = modulus;
+  $('menu-sign').onclick = changeSign;
+  $('menu-divide').onclick = division;
+  $('menu-multiply').onclick = multiplication;
+  $('menu-subtract').onclick = subtraction;
+  $('menu-add').onclick = addition;
+  $('menu-sine').onclick = btnSine;
+  $('menu-cosine').onclick = btnCosine;
+  $('menu-tangent').onclick = btnTangent;
 
   // Menu View
-  $('menuAngle').onclick = btn_angle;
-  $('menuNotes').onclick = btn_xoff;
-  $('menuShift').onclick = btn_shift;
-  $('menuKeyboard').onclick = toggleKeyboard;
-  $('menuHaptic').onclick = toggleHaptic;
+  $('menu-angle').onclick = btnAngle;
+  $('menu-haptic').onclick = toggleHaptic;
+  $('menu-darkmode').onclick = toggleDarkMode;
+  $('menu-keyboard').onclick = toggleKeyboard;
+  $('menu-notes').onclick = btnXoff;
+  $('menu-shift').onclick = btnShift;
 
   // Menu Constants
-  $('menuPhi').onclick = (function() {
+  $('menu-phi').onclick = (function() {
     return function() { 
       insertText('Φ');
     }
   })();
-  $('menuEulers').onclick = (function() {
+  $('menu-eulers').onclick = (function() {
     return function() { 
       // insertText(Math.exp(1));
       insertText('e');      
     }
   })();
-  $('menuPI').onclick = (function() {
-    return function() { 
-      insertText('π');
-    }
-  })();
-  $('menuGravitationalConstant').onclick = (function() {
+  $('menu-gravitational-constant').onclick = (function() {
     return function() { 
       insertText('G');
     }
   })();
-  $('menuLightSpeed').onclick = (function() {
+  $('menu-light-speed').onclick = (function() {
     return function() { 
       insertText('c');
     }
   })(); 
+  $('menu-pi').onclick = (function() {
+    return function() { 
+      insertText('π');
+    }
+  })();
 
   // Menu Date
-  $('menuDate').onclick = insertDate;
+  $('menu-date').onclick = insertDate;
 
   // Menu Time
-  $('menuTime').onclick = insertTime;
-
-  // Menu Stopwatch
-  $('menuStopwatch').onclick = stopwatchStart;
+  $('menu-time').onclick = insertTime;
 
   // Menu Equations
-  $('menuOhmsLaw').onclick = (function() {
+  $('menu-ohms-law').onclick = (function() {
     return function() {
       insertText('E=I*R');
     }
   })();
-  $('menuCircumference').onclick = (function() {
+  $('menu-circumference').onclick = (function() {
     return function() {
       insertText('2*π*r');
     }
   })();
-  $('menuCircleArea').onclick = (function() {
+  $('menu-circle-area').onclick = (function() {
     return function() {
       insertText('π*r^2');
     }
   })();
-  $('menuSphereArea').onclick = (function() {
+  $('menu-sphere-area').onclick = (function() {
     return function() {
       insertText('4*π*r^2');
     }
   })();
-  $('menuSphereVolume').onclick = (function() {
+  $('menu-sphere-volume').onclick = (function() {
     return function() {
       insertText('4/3*π*r^3');
     }
   })();
-  $('menuConeArea').onclick = (function() {
+  $('menu-cone-area').onclick = (function() {
     return function() {
       insertText('π*r^2 + π*r*l');
     }
   })();
-  $('menuConeVolume').onclick = (function() {
+  $('menu-cone-volume').onclick = (function() {
     return function() {
       insertText('h/3*π*r^2');
     }
   })();
 
   // Menu Programs
-  $('menuTricorder').onclick = showTricorder;
-  $('menuTwig').onclick = monOn;
+  $('menu-stopwatch').onclick = stopwatchStart;
+  $('menu-tricorder').onclick = showTricorder;
+  $('menu-twig').onclick = monOn;
   
   // Menu Symbols
-  $('menuParentheses').onclick = (function() {
+  $('menu-parentheses').onclick = (function() {
     return function() { 
       btn_parentheses();
     }
   })();
-  $('menuEquals').onclick = (function() {
+  $('menu-equals').onclick = (function() {
     return function() { 
       insertText('=');
     }
   })();
-  $('menuRadical').onclick = (function() {
+  $('menu-radical').onclick = (function() {
     return function() { 
       insertText('√');
     }
   })();
-  $('menuBang').onclick = (function() {
+  $('menu-bang').onclick = (function() {
     return function() { 
       insertText('!');
     }
   })();
-  $('menuCarat').onclick = (function() {
+  $('menu-carat').onclick = (function() {
     return function() { 
       insertText('^');
     }
   })();
-  $('menuSolidus').onclick = (function() {
+  $('menu-solidus').onclick = (function() {
     return function() { 
       insertText('/');
     }
   })();
-  $('menuAsterisk').onclick = (function() {
+  $('menu-asterisk').onclick = (function() {
     return function() { 
       insertText('*');
     }
   })();
-  $('menuMinus').onclick = (function() {
+  $('menu-minus').onclick = (function() {
     return function() { 
       insertText('-');
     }
   })();
-  $('menuPlus').onclick = (function() {
+  $('menu-plus').onclick = (function() {
     return function() { 
       insertText('+');
     }
   })();
-  $('menuOhm').onclick = (function() {
+  $('menu-ohm').onclick = (function() {
     return function() { 
       insertText('Ω');
     }
   })();
-  $('menuHeart').onclick = (function() {
+  $('menu-heart').onclick = (function() {
     return function() { 
       insertText('♥');
     }
   })();
 
   if (isMobile) {
-    $('menuOff').style = 'display:none';
-    $('menuTwig').style = 'display:none';
+    $('menu-off').style = 'display:none';
+    $('menu-twig').style = 'display:none';
   } else {
-    $('menuKeyboard').style = 'display:none';
-    $('menuHaptic').style = 'display:none';
+    $('menu-keyboard').style = 'display:none';
+    $('menu-haptic').style = 'display:none';
   }
 
   // Menu Help
-  $('menuHelp').onclick = menuHelp; 
+  $('menu-help').onclick = menuHelp; 
 
   // Text Area
-  $('lstStack').style.color = '#000000';// noscript warning was red ;)
-  $('lstStack').value = '';
+  $('lst-stack').style.color = '#000000';// noscript warning was red ;)
+  $('lst-stack').value = '';
   // Stop long tap menu on mobile
-  $('lstStack').oncontextmenu = function(event) {
+  $('lst-stack').oncontextmenu = function(event) {
     event.preventDefault();
     event.stopPropagation();
     event.stopImmediatePropagation();
@@ -4023,57 +4048,57 @@ window.onload = function () {
   }
 
   // Text Input
-  $('txtInput').onclick = mobileKeyboardAllow;
-  $('txtInput').readOnly = true;
+  $('txt-input').onclick = mobileKeyboardAllow;
+  $('txt-input').readOnly = true;
 
   // Buttons
-  $('btnXoff').onclick = btn_xoff;
-  $('btnCopy').onclick = btn_copy;
-  $('btnXy').onclick = btn_xy;
-  $('btnEnter').onclick = enter_button;
-  $('btnDelete').onclick = delete_button;
+  $('btn-xoff').onclick = btnXoff;
+  $('btn-copy').onclick = btnCopy;
+  $('btn-xy').onclick = btnXy;
+  $('btn-enter').onclick = enterButton;
+  $('btn-delete').onclick = deleteButton;
 
-  $('btnInverse').onclick = btn_inverse;
-  $('btnLog').onclick = btn_log;
-  $('btnRoot').onclick = btn_root;
-  $('btnUndo').onclick = btn_undo;
+  $('btn-inverse').onclick = btnInverse;
+  $('btn-log').onclick = btnLog;
+  $('btn-root').onclick = btnRoot;
+  $('btn-undo').onclick = btnUndo;
 
-  $('btnEE').onclick = btn_EE;
-  $('btnPI').onclick = btn_pi;
-  $('btnModulus').onclick = btn_modulus;
-  $('btnSign').onclick = btn_sign;
-  $('btnGo').onclick = btn_go;
-  $('btnShift').onclick = btn_shift;
+  $('btn-ee').onclick = btnEe;
+  $('btn-pi').onclick = btnPi;
+  $('btn-modulus').onclick = btnModulus;
+  $('btn-sign').onclick = btnSign;
+  $('btn-go').onclick = btnGo;
+  $('btn-shift').onclick = btnShift;
 
-  $('btnSeven').onclick = btn_seven;
-  $('btnEight').onclick = btn_eight;
-  $('btnNine').onclick = btn_nine;
-  $('btnDivide').onclick = btn_divide;
-  $('btnAngle').onclick = btn_angle;
-  $('btnClear').onclick = btn_clear;
+  $('btn-seven').onclick = btnSeven;
+  $('btn-eight').onclick = btnEight;
+  $('btn-nine').onclick = btnNine;
+  $('btn-divide').onclick = btnDivide;
+  $('btn-angle').onclick = btnAngle;
+  $('btn-clear').onclick = btnClear;
 
-  $('btnFour').onclick = btn_four;
-  $('btnFive').onclick = btn_five;
-  $('btnSix').onclick = btn_six;
-  $('btnMultiply').onclick = btn_multiply;
-  $('btnSine').onclick = btn_sine;
-  $('btnLoad').onclick = btn_load;  
+  $('btn-four').onclick = btnFour;
+  $('btn-five').onclick = btnFive;
+  $('btn-six').onclick = btnSix;
+  $('btn-multiply').onclick = btnMultiply;
+  $('btn-sine').onclick = btnSine;
+  $('btn-load').onclick = btnLoad;  
 
-  $('btnOne').onclick = btn_one;
-  $('btnTwo').onclick = btn_two;
-  $('btnThree').onclick = btn_three;
-  $('btnSubtract').onclick = btn_subtract;
-  $('btnCosine').onclick = btn_cosine;
-  $('btnSave').onclick = btn_save;
+  $('btn-one').onclick = btnOne;
+  $('btn-two').onclick = btnTwo;
+  $('btn-three').onclick = btnThree;
+  $('btn-subtract').onclick = btnSubtract;
+  $('btn-cosine').onclick = btnCosine;
+  $('btn-save').onclick = btnSave;
 
-  $('btnZero').onclick = btn_zero;
-  $('btnDot').onclick = btn_dot;
-  $('btnSpace').onclick = btn_space;
-  $('btnAdd').onclick = btn_add;
-  $('btnTangent').onclick = btn_tangent;
-  $('btnOff').onclick = btn_off;
+  $('btn-zero').onclick = btnZero;
+  $('btn-dot').onclick = btnDot;
+  $('btn-space').onclick = btnSpace;
+  $('btn-add').onclick = btnAdd;
+  $('btn-tangent').onclick = btnTangent;
+  $('btn-off').onclick = btnOff;
 
-  $('txtInput').addEventListener('paste', function() {
+  $('txt-input').addEventListener('paste', function() {
     backupUndo();
   });
 
@@ -4101,14 +4126,14 @@ window.onload = function () {
   muteAudio(true);
 
   // Notes
-  $('btnCopyNotes').onclick = btn_copy_notes;
-  $('btnPasteNotes').onclick = btn_paste_notes;
-  $('btnUndoNotes').onclick = btn_undo_notes;
-  $('btnRedoNotes').onclick = btn_redo_notes;
-  $('btnSaveNotes').onclick = btn_save_notes;
-  $('btnLoadNotes').onclick = btn_load_notes;
-  $('btnClearNotes').onclick = btn_clear_notes;
-  $('btnDeleteNotes').onclick = btn_delete_notes;
+  $('btn-load-notes').onclick = btnLoadNotes;
+  $('btn-save-notes').onclick = btnSaveNotes;
+  $('btn-copy-notes').onclick = btnCopyNotes;
+  $('btn-paste-notes').onclick = btnPasteNotes;
+  $('btn-undo-notes').onclick = btnUndoNotes;
+  $('btn-redo-notes').onclick = btnRedoNotes;
+  $('btn-clear-notes').onclick = btnClearNotes;
+  $('btn-delete-notes').onclick = btnDeleteNotes;
   $('lstNotes').onclick = function() {
     $('lstNotes').readOnly = false;
   }
@@ -4128,7 +4153,7 @@ window.onload = function () {
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lstNotes').value = '';
-    btn_load_notes();
+    btnLoadNotes();
   }
   else {
     backupUndoNotes();
@@ -4142,14 +4167,14 @@ window.onload = function () {
     widgetSrc.push('https://www.youtube.com/embed/yXQz-VU5iVc?autoplay=1');
   }
   if (document.cookie.indexOf('STACK') !== -1) {
-    $('lstStack').value = '';
-    $('txtInput').value = '';
-    btn_load();
+    $('lst-stack').value = '';
+    $('txt-input').value = '';
+    btnLoad();
   }
   else
   {
     backupUndo();
-    $('btnSave').style.color = '#D4D0C8';
+    $('btn-save').style.color = '#D4D0C8';
   }
-  $('txtInput').readOnly = false;
+  $('txt-input').readOnly = false;
 };
