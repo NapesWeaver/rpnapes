@@ -105,28 +105,27 @@ NumberObject.prototype.toString = function () {
 };
 
 function toggleDarkMode() {
+  var header = document.getElementsByTagName('header');
+
   if ($('menu-darkmode').textContent === 'Light') {
     $('menu-darkmode').innerHTML = 'Dark';
-    
-    // $('lst-stack').classList.remove('dark-mode');
-    // $('txt-input').classList.remove('dark-mode');
-    // $('lstNotes').classList.remove('dark-mode');
-    // $('twig').classList.remove('dark-mode');
-    // $('don').classList.remove('dark-mode');
-    // $('tv').classList.remove('dark-mode');
 
-    $('wrap').classList.remove('dark-mode');
+    // $('wrap').classList.remove('dark-mode');
+
+    header[0].classList.remove('dark-mode');
+    $('btn-xoff').classList.remove('dark-mode');
+    $('rpnapes').classList.remove('dark-mode');
+    $('notes').classList.remove('dark-mode');
+    $('private-twig').classList.remove('dark-mode');
   } else {
     $('menu-darkmode').innerHTML = 'Light';
 
-    // $('lst-stack').classList.add('dark-mode');
-    // $('txt-input').classList.add('dark-mode');
-    // $('lstNotes').classList.add('dark-mode');
-    // $('twig').classList.add('dark-mode');
-    // $('don').classList.add('dark-mode');
-    // $('tv').classList.add('dark-mode');
+    //$('wrap').classList.add('dark-mode');
 
-    $('wrap').classList.add('dark-mode');
+    header[0].classList.add('dark-mode');
+    $('rpnapes').classList.add('dark-mode');
+    $('notes').classList.add('dark-mode');
+    $('private-twig').classList.add('dark-mode');
   }
 }
 
@@ -179,49 +178,63 @@ function toggleSound() {
 
 function btnXoff() {
 
-  if ($('rpnapes').className === 'hidden') {
+  if ($('rpnapes').classList.contains('hidden')) {
     // Notes is visible - turn on RPNapes
     rpnapesOn();
   }
-  else if ($('notes').className === 'hidden' && $('tricorder').className === 'hidden') {
+  else if ($('notes').classList.contains('hidden') && $('tricorder').classList.contains('hidden')) {
     // RPNapes is visible - turn on Notes
     notesOn();
   }
 }
 function rpnapesOn() {
 
-  $('notes').className = 'hidden';
-  $('widget').className = 'hidden';
-  $('viewport').className = 'hidden';
-  $('tricorder').className = 'hidden';
+  $('notes').classList.remove('visible');
+  $('notes').classList.add('hidden');
+  $('widget').classList.remove('visible');
+  $('widget').classList.add('hidden');
+  $('viewport').classList.remove('visible');
+  $('viewport').classList.add('hidden');
+  $('tricorder').classList.remove('visible');
+  $('tricorder').classList.add('hidden');
   if (power()) {
     playAudio($('keypress3'));
   }
-  $('rpnapes').className = 'visible';
+  $('rpnapes').classList.remove('hidden');
+  $('rpnapes').classList.add('visible');
   $('txt-input').focus();
 }
 function notesOn() {
 
-  $('rpnapes').className = 'hidden';
+  $('rpnapes').classList.remove('visible');
+  $('rpnapes').classList.add('hidden');
   monOff();
-  $('widget').className = 'hidden';
-  $('viewport').className = 'hidden';
-  $('tricorder').className = 'hidden';
+  $('widget').classList.remove('visible');
+  $('widget').classList.add('hidden');
+  $('viewport').classList.remove('visible');
+  $('viewport').classList.add('hidden');
+  $('tricorder').classList.remove('visible');
+  $('tricorder').classList.add('hidden');
   if (power()) {
     playAudio($('keypress3'));
   }
-  $('notes').className = 'visible';
+  $('notes').classList.remove('hidden');
+  $('notes').classList.add('visible');
 }
 function showTricorder() {
   
-  $('rpnapes').className = 'hidden';
+  $('rpnapes').classList.remove('visible');
+  $('rpnapes').classList.add('hidden');
   monOff();
-  $('notes').className = 'hidden';
+  $('notes').classList.remove('visible');
+  $('notes').classList.add('hidden');
   if (power()) {
     playAudio($('tricorder-alert'));
   }
-  $('tricorder').className = 'visible';
-  $('viewport').className = 'visible';
+  $('tricorder').classList.remove('hidden');
+  $('tricorder').classList.add('visible');
+  $('viewport').classList.remove('hidden');
+  $('viewport').classList.add('visible');
 }
 
 function btnCopy() {

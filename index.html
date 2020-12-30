@@ -212,7 +212,7 @@
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Dec 28, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Dec 30, 2020." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
@@ -321,9 +321,11 @@
         </div>
       </main>
       <!-- Private Twig -->
-      <img id="twig" class="hidden" src="images/twig/hat-on.gif" alt="animated gif" width="64" height="64" style="top: -310px; left: 135px;"/>
-      <img id="tv" class="hidden" src="images/twig/tv-off.gif" alt="animated gif" width="64" height="64" style="top: -330px; left: -45px;"/>
-      <img id="don" class="hidden" src="images/twig/don-jon.gif" alt="animated gif" width="64" height="64" style="top: -420px; left: -45px;"/>
+      <div id="private-twig">
+        <img id="twig" class="hidden" src="images/twig/hat-on.gif" alt="animated gif" width="64" height="64" style="top: -310px; left: 135px;"/>
+        <img id="tv" class="hidden" src="images/twig/tv-off.gif" alt="animated gif" width="64" height="64" style="top: -330px; left: -45px;"/>
+        <img id="don" class="hidden" src="images/twig/don-jon.gif" alt="animated gif" width="64" height="64" style="top: -420px; left: -45px;"/>
+      </div>
     </div>
     <script src="scripts/utils/filesaver.js"></script>
     <script src="scripts/index.js"></script>
