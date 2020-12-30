@@ -145,8 +145,7 @@ function hapticResponse() {
   }
 }
 function haptic() {
-  if (!$('menu-haptic-li').classList.contains('strikethrough')) {}
-  navigator.vibrate([.6]);
+  if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([.6]);
 }
 
 function toggleKeyboard() {
