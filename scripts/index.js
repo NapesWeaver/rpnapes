@@ -1539,6 +1539,9 @@ function help(command) {
     case 'about':
       inputText($('lst-stack').getAttribute('placeholder'));
       break;
+    case 'darkmode':
+      inputText('darkmode: Toggle between dark and light mode.');
+      break;
     case 'date':
       inputText('date: Returns the current date.');
       break;
@@ -1640,7 +1643,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, date, embed, fix, flightLogger, google, ip, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, sound, stopwatch, time, toString, unembed, youTube');
+    inputText('about, clear, darkmode, date, embed, fix, flightLogger, google, ip, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, sound, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -1750,6 +1753,12 @@ function parseCommand() {
     case 'clear':
     case 'cls':
       btnClear();
+      break;
+    case 'darkmode':
+      stack.pop();
+      toggleDarkMode();
+      updateDisplay(); 
+      $('txt-input').value = '';
       break;
     case 'date':
       stack.pop();
