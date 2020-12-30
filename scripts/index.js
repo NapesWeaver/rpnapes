@@ -145,7 +145,8 @@ function hapticResponse() {
   }
 }
 function haptic() {
-  if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([1]);
+  if (!$('menu-haptic-li').classList.contains('strikethrough')) {}
+  navigator.vibrate([.6]);
 }
 
 function toggleKeyboard() {
@@ -1538,6 +1539,8 @@ function help(command) {
     switch (commandArray[1]) {    
     case 'about':
       inputText($('lst-stack').getAttribute('placeholder'));
+      enterInput();
+      inputText('https://github.com/NapesWeaver/rpnapes');
       break;
     case 'darkmode':
       inputText('darkmode: Toggle between dark and light mode.');
@@ -1746,6 +1749,8 @@ function parseCommand() {
     case 'about':
       stack.pop();
       inputText($('lst-stack').getAttribute('placeholder'));
+      enterInput();
+      inputText('https://github.com/NapesWeaver/rpnapes');
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
@@ -3800,7 +3805,7 @@ document.addEventListener('keyup', function (event) {
     case 27:// ESC
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      notesOn();
+      btnXy();
       break;
     case 37:// LEFT ARROW (Falls through)
     case 38:// UP ARROW (Falls through)
