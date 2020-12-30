@@ -104,28 +104,23 @@ NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
 
-function toggleDarkMode() {
-  var header = document.getElementsByTagName('header');
+function toggleDarkMode() {  
+  var body = document.getElementsByTagName('body');
 
   if ($('menu-darkmode').textContent === 'Light') {
     $('menu-darkmode').innerHTML = 'Dark';
-
-    // $('wrap').classList.remove('dark-mode');
-
-    header[0].classList.remove('dark-mode');
-    $('btn-xoff').classList.remove('dark-mode');
-    $('rpnapes').classList.remove('dark-mode');
-    $('notes').classList.remove('dark-mode');
-    $('private-twig').classList.remove('dark-mode');
+    $('wrap').classList.remove('dark-mode');
+    $('tricorderskin').classList.remove('dark-mode');
+    $('widget').classList.remove('dark-mode');
+    $('viewport').classList.remove('dark-mode');
+    body[0].style.backgroundColor = '#D4D0C8';
   } else {
-    $('menu-darkmode').innerHTML = 'Light';
-
-    //$('wrap').classList.add('dark-mode');
-
-    header[0].classList.add('dark-mode');
-    $('rpnapes').classList.add('dark-mode');
-    $('notes').classList.add('dark-mode');
-    $('private-twig').classList.add('dark-mode');
+    $('menu-darkmode').innerHTML = 'Light';    
+    $('wrap').classList.add('dark-mode');   
+    $('tricorderskin').classList.add('dark-mode');
+    $('widget').classList.add('dark-mode');
+    $('viewport').classList.add('dark-mode');
+    body[0].style.backgroundColor = '#2B2F37';
   }
 }
 
@@ -3204,17 +3199,19 @@ function button1() {
 function tricorderOff() {
   muteAudio(true);
   $('widget').src = '';
-  $('widget').className = 'hidden';
+  $('widget').classList.remove('visible');
+  $('widget').classList.add('hidden');
   $('viewport').src = '';
-  $('viewport').className = 'hidden';
+  $('viewport').classList.remove('visible');
+  $('viewport').classList.add('hidden');
   $('tricorderskin').src = 'images/tricorder.png';
 }
 function tricorderOn() {
   muteAudio(false);
   $('tricorderskin').src = 'images/tricorderon.png';
-  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1';
-  
-  $('viewport').className = 'visible';
+  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1';  
+  $('viewport').classList.remove('hidden');
+  $('viewport').classList.add('visible');
   playAudio($('working'));
   playAudio($('hailing-frequencies'));
   getLocation();
@@ -3266,7 +3263,7 @@ function button4() {
     
     haptic();
 
-    if ($('widget').className === 'hidden') {
+    if ($('widget').classList.contains('hidden')) {
       if (widgetSrc.indexOf($('widget').src) !== -1) {
         var i = widgetSrc.indexOf($('widget').src);
 
@@ -3278,12 +3275,14 @@ function button4() {
       else {
         $('widget').src = widgetSrc[0];
       }
-      $('widget').className = 'visible';
+      $('widget').classList.remove('hidden');
+      $('widget').classList.add('visible');
       playAudio($('scanner'));
       playAudio($('keypress6'));
     }
     else {
-      $('widget').className = 'hidden';
+      $('widget').classList.add('visible');
+      $('widget').classList.add('hidden');
       playAudio($('keypress5'));
     }
   }
@@ -3294,7 +3293,7 @@ function button5() {
 
     haptic();
 
-    if ($('widget').className === 'hidden') {
+    if ($('widget').classList.contains('hidden')) {
       var srcString = '';
       var uniqueString = 'forecast';
 
@@ -3308,12 +3307,14 @@ function button5() {
         srcString += 'https://maps.darksky.net/@temperature,' + lat + ',' + lng + ',4?embed=true&timeControl=false&fieldControl=true&defaultField=temperature&defaultUnits=_f';
         $('widget').src = srcString;
       }
-      $('widget').className = 'visible';
+      $('widget').classList.remove('hidden');
+      $('widget').classList.add('visible');
       playAudio($('keypress6'));
       playAudio($('computer-thinking'));
     }
     else {
-      $('widget').className = 'hidden';
+      $('widget').classList.remove('visible');
+      $('widget').classList.add('hidden');
       playAudio($('keypress5'));
     }
   }
