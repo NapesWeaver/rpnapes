@@ -3218,16 +3218,13 @@ function tricorderOn() {
 }
 function button2() {
 
-  if (power()) {
-    
+  if (power()) {    
     haptic();
 
     if (viewPortSrc.indexOf($('viewport').src) !== -1) {
       var i = viewPortSrc.indexOf($('viewport').src);
 
-      if (i === viewPortSrc.length - 1) {
-        i = -1;
-      }
+      if (i === viewPortSrc.length - 1) i = -1;
       $('viewport').src = viewPortSrc[i + 1];
     }
     else {
@@ -3239,15 +3236,12 @@ function button2() {
 function button3() {
 
   if (power()) {
-
     haptic();
 
     if (viewPort2Src.indexOf($('viewport').src) !== -1) {
       var i = viewPort2Src.indexOf($('viewport').src);
 
-      if (i === viewPort2Src.length - 1) {
-        i = -1;
-      }
+      if (i === viewPort2Src.length - 1) i = -1;
       $('viewport').src = viewPort2Src[i + 1];
     }
     else {
@@ -3259,17 +3253,14 @@ function button3() {
 }
 function button4() {
 
-  if (power()) {
-    
+  if (power()) {    
     haptic();
 
     if ($('widget').classList.contains('hidden')) {
       if (widgetSrc.indexOf($('widget').src) !== -1) {
         var i = widgetSrc.indexOf($('widget').src);
 
-        if (i === widgetSrc.length - 1) {
-          i = -1;
-        }
+        if (i === widgetSrc.length - 1) i = -1;
         $('widget').src = widgetSrc[i + 1];
       }
       else {
@@ -3281,7 +3272,7 @@ function button4() {
       playAudio($('keypress6'));
     }
     else {
-      $('widget').classList.add('visible');
+      $('widget').classList.remove('visible');
       $('widget').classList.add('hidden');
       playAudio($('keypress5'));
     }
@@ -3325,19 +3316,21 @@ function button6() {
 
     haptic();
 
-    if ($('widget').className === 'hidden') {
+    if ($('widget').classList.contains('hidden')) {
       
       var srcString = '';
       // IP Mapper
       srcString += 'https://napesweaver.github.io/ip-mapper/';
       $('widget').src = srcString;
-      $('widget').className = 'visible';
+      $('widget').classList.remove('hidden');
+      $('widget').classList.add('visible');
       playAudio($('keypress6'));
       playAudio($('verified'));
     }
     else {
       $('widget').src = '';
-      $('widget').className = 'hidden';
+      $('widget').classList.remove('visible');
+      $('widget').classList.add('hidden');
       playAudio($('keypress5'));
     }
   }
