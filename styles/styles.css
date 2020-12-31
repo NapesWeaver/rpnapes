@@ -7,8 +7,10 @@
     padding: 0;
 }
 
-#lst-stack,
 #btn-xoff,
+#open,
+#menu-off,
+#lst-stack,
 button,
 input[type="button"] {
     cursor: pointer;
