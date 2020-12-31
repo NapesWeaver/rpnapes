@@ -1356,6 +1356,18 @@ function editStack() {
   // toCamelCase
 }
 
+// Fire click event
+// eventFire(document.getElementById('test'), 'click');
+function eventFire(el, etype){
+  if (el.fireEvent) {
+    el.fireEvent('on' + etype);
+  } else {
+    var evObj = document.createEvent('Events');
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
+}
+
 // Extract any substring that follows a number
 function extractSubString(tmpArray) {
 
