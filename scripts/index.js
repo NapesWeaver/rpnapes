@@ -43,7 +43,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '21:13:14';
+const tStamp = '21:29:29';
 var testing = false;
 
 var stack = [];
@@ -463,6 +463,10 @@ function deleteText(txtField, forward) {
   txtField.selectionStart = startPos;
   txtField.selectionEnd = startPos;
   $('txt-input').focus();
+}
+
+function printHtml() {
+  print();
 }
 
 function btnUndo() {
@@ -1917,7 +1921,7 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       $('txt-input').value = '';
-      print();
+      printHtml();
       break;
     case 'save':
       stack.pop();
@@ -3920,9 +3924,8 @@ window.onload = function () {
     }
   });
   $('menu-save').onclick = btnSave;
-  $('menu-print').onclick = function() {
-    print();
-  }
+  $('menu-print').onclick = printHtml;
+  //$('menu-print').onclick = print;
   $('menu-off').onclick = function() {
     monOff();
     tricorderOff();
@@ -4105,7 +4108,7 @@ window.onload = function () {
 
   $('menu-sound-li').classList.add('strikethrough');
   if (isMobile) {
-    // $('menu-off').style = 'display:none';
+    $('menu-off').style = 'display:none';
     $('menu-twig').style = 'display:none';
   } else {
     $('menu-keyboard').style = 'display:none';
