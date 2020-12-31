@@ -113,14 +113,14 @@ function toggleDarkMode() {
     $('tricorderskin').classList.remove('dark-mode');
     $('widget').classList.remove('dark-mode');
     $('viewport').classList.remove('dark-mode');
-    body[0].style.backgroundColor = '#D4D0C8';
+    body[0].style.backgroundColor = '#C4C6B1';
   } else {
     $('menu-darkmode').innerHTML = 'Light';    
     $('wrap').classList.add('dark-mode');   
     $('tricorderskin').classList.add('dark-mode');
     $('widget').classList.add('dark-mode');
     $('viewport').classList.add('dark-mode');
-    body[0].style.backgroundColor = '#2B2F37';
+    body[0].style.backgroundColor = '#3B394E';
   }
 }
 
@@ -265,13 +265,13 @@ function btn_paste() {
 function btnXy() {
 
   if (shifted) {
-    btnAb();
+    abFunction();
   }
   else {
     xyFunction();
   }
 }
-function btnAb() {
+function abFunction() {
 
   if (stack.length > 1) {
     backupUndo();
@@ -3920,8 +3920,7 @@ window.onload = function () {
   $('menu-clear').onclick = btnClear;
   $('menu-undo').onclick = undoFunction;
   $('menu-redo').onclick = redoFunction;
-  //$('menu-xy').onclick = btnXy;
-  //$('menu-ab').onclick = btnAb;
+  $('menu-ab').onclick = abFunction;
   $('menu-xy').onclick = xyFunction;
 
   // Menu Maths
