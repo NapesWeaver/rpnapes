@@ -43,7 +43,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '2:13:32';
+const tStamp = '21:13:14';
 var testing = false;
 
 var stack = [];
@@ -106,7 +106,11 @@ NumberObject.prototype.toString = function () {
 
 function toggleDarkMode() {  
   var body = document.getElementsByTagName('body');
-
+  var smBtns = document.getElementsByClassName('btn-small');
+  var medBtns = document.getElementsByClassName('btn-med');
+  var bgBtns = document.getElementsByClassName('btn-big');
+  var others = document.getElementsByClassName('btn-other');
+  
   if ($('menu-darkmode').textContent === 'Light') {
     $('menu-darkmode').innerHTML = 'Dark';
     $('wrap').classList.remove('dark-mode');
@@ -114,13 +118,22 @@ function toggleDarkMode() {
     $('widget').classList.remove('dark-mode');
     $('viewport').classList.remove('dark-mode');
     body[0].style.backgroundColor = '#C4C6B1';
+    for (var b = 0; b < smBtns.length; b++) smBtns[b].classList.remove('dark-button');
+    for (b = 0; b < medBtns.length; b++) medBtns[b].classList.remove('dark-button');
+    for (b = 0; b < bgBtns.length; b++) bgBtns[b].classList.remove('dark-button');
+    for (b = 0; b < others.length; b++) others[b].classList.remove('dark-button');
   } else {
     $('menu-darkmode').innerHTML = 'Light';    
     $('wrap').classList.add('dark-mode');   
     $('tricorderskin').classList.add('dark-mode');
     $('widget').classList.add('dark-mode');
     $('viewport').classList.add('dark-mode');
+    $('btn-seven').classList.add('dark-button');
     body[0].style.backgroundColor = '#3B394E';
+    for (b = 0; b < smBtns.length; b++) smBtns[b].classList.add('dark-button');
+    for (b = 0; b < medBtns.length; b++) medBtns[b].classList.add('dark-button');
+    for (b = 0; b < bgBtns.length; b++) bgBtns[b].classList.add('dark-button');
+    for (b = 0; b < others.length; b++) others[b].classList.add('dark-button');
   }
 }
 
@@ -1627,7 +1640,7 @@ function help(command) {
       inputText('off: Close browser tab. Works sporadically, tab must be opened with window.open()');
       break;
     case 'print':
-      inputText('print: Opens print dialoge.');
+      inputText('print: Open printer dialoge.');
       break;
     case 'run':
       inputText('run: Run the contents of the stack as a script.');
@@ -3907,6 +3920,9 @@ window.onload = function () {
     }
   });
   $('menu-save').onclick = btnSave;
+  $('menu-print').onclick = function() {
+    print();
+  }
   $('menu-off').onclick = function() {
     monOff();
     tricorderOff();
@@ -4089,7 +4105,7 @@ window.onload = function () {
 
   $('menu-sound-li').classList.add('strikethrough');
   if (isMobile) {
-    $('menu-off').style = 'display:none';
+    // $('menu-off').style = 'display:none';
     $('menu-twig').style = 'display:none';
   } else {
     $('menu-keyboard').style = 'display:none';

@@ -9,7 +9,6 @@
 
 #btn-xoff,
 #open,
-#menu-off,
 #lst-stack,
 button,
 input[type="button"] {
@@ -369,6 +368,13 @@ img {
 .dark-mode {
     filter: invert(100%);
 }
+
+.dark-button {
+    border-style: inset;
+}
+    .dark-button:focus {
+        border-style: outset;
+    }
 
 /****** Tricorder ******************************/
 
