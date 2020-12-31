@@ -1371,18 +1371,6 @@ function editStack() {
   // toCamelCase
 }
 
-// Fire click event
-// eventFire(document.getElementById('test'), 'click');
-function eventFire(el, etype){
-  if (el.fireEvent) {
-    el.fireEvent('on' + etype);
-  } else {
-    var evObj = document.createEvent('Events');
-    evObj.initEvent(etype, true, false);
-    el.dispatchEvent(evObj);
-  }
-}
-
 // Extract any substring that follows a number
 function extractSubString(tmpArray) {
 
@@ -3738,7 +3726,18 @@ function donMove() {
   }  
 }
 
-//////// Event listeners & window.onload /////////////////////////////////////////////
+//////// Event Firing and Listening //////////////////////////////////////////////////
+
+// Fire Click Event
+function eventFire(el, etype){
+  if (el.fireEvent) {
+    el.fireEvent('on' + etype);
+  } else {
+    var evObj = document.createEvent('Events');
+    evObj.initEvent(etype, true, false);
+    el.dispatchEvent(evObj);
+  }
+}// eventFire(document.getElementById('test'), 'click');
 
 document.addEventListener('click', function (evt) {
   if (evt.detail === 2 && evt.target === $('lst-stack')) {
@@ -3873,6 +3872,8 @@ document.addEventListener('keyup', function (event) {
     }
   }
 });
+
+//////// window.onload ///////////////////////////////////////////////////////////////
 
 window.onload = function () {
 
