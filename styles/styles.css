@@ -21,6 +21,7 @@ body {
 }
 
 main {
+    min-height: 460px;
     overflow: hidden;
 }
 
