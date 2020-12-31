@@ -166,6 +166,9 @@ img {
 .google {
     background-color: #F1F1F1;
 }
+    .google:hover {
+        filter: invert(1);
+    }
 .color-blue {
     color: #4285F4;
 }
@@ -179,14 +182,18 @@ img {
     border-radius:  3px;
 }
     .menu-you-tube:hover {
-        background-color: #B85252;
+        /* background-color: #B85252; */
+        background-color: #B92020;
+        filter: invert(1);
     }
 .you-tube {
     background-color: #B92020;
     color: #FFFFFF;
 }
     .you-tube:hover {
-        background-color: #B85252;
+        /* background-color: #B85252; */
+        background-color: #B92020;
+        filter: invert(1);
     }
 .google, .you-tube {
     background-size: 29px 19px;
@@ -355,6 +362,9 @@ img {
     
     .strikethrough {
         text-decoration: line-through;
+    }
+    .strikethrough a {
+        color: #0040FF;
     }
 
 /****** Notes **********************************/
