@@ -43,7 +43,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '21:29:29';
+const tStamp = '21:34:7';
 var testing = false;
 
 var stack = [];
@@ -463,10 +463,6 @@ function deleteText(txtField, forward) {
   txtField.selectionStart = startPos;
   txtField.selectionEnd = startPos;
   $('txt-input').focus();
-}
-
-function printHtml() {
-  print();
 }
 
 function btnUndo() {
@@ -2310,6 +2306,10 @@ function updateDisplay() {
   colorSaveButton();
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
+}
+
+function printHtml() {
+  print();
 }
 
 function isANumber(testString) {

@@ -211,11 +211,20 @@ img {
     background-color: #B0C4DE;
 }
 .degree-style {
-    border: 3px solid #6D8EBF;
+    border-color: #6D8EBF;
 }
 .radian-style {
-    border: 3px solid cadetblue;
+    border-color: cadetblue;
 }
+
+.degree-style,
+.radian-style {
+    border-style: outset;
+}
+    .degree-style:active,
+    .radian-style:active {
+        border-style: inset;
+    }
 
 #menu-off {
     /* background-color: #B85252; */
@@ -372,7 +381,7 @@ img {
 .dark-button {
     border-style: inset;
 }
-    .dark-button:focus {
+    .dark-button:active {
         border-style: outset;
     }
 
