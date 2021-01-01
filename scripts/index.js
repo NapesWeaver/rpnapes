@@ -1199,6 +1199,7 @@ function btnAngle() {
 
   if ($('btn-angle').value === 'deg') {
     $('btn-angle').value = 'rad';
+    $('btn-angle').style.backgroundColor = 'cadetblue';
     $('btn-angle').className = 'btn-small btn-angle radian-style';
     $('btn-sine').className = 'btn-small radian-style';
     $('btn-cosine').className = 'btn-small radian-style';
@@ -1206,6 +1207,7 @@ function btnAngle() {
   }
   else {
     $('btn-angle').value = 'deg';
+    $('btn-angle').style.backgroundColor = '#6D8EBF';
     $('btn-angle').className = 'btn-small btn-angle degree-style';
     $('btn-sine').className = 'btn-small degree-style';
     $('btn-cosine').className = 'btn-small degree-style';
