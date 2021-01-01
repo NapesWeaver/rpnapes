@@ -220,19 +220,21 @@ img {
     /* background-color: #B0C4DE; */
     background-color: #6D8EBF;
 }
-.degree-style {
+.btn-radian {
+    background-color: cadetblue;
+}
+.degree-border {
     border-color: #6D8EBF;
 }
-.radian-style {
+.radian-border {
     border-color: cadetblue;
 }
-
-.degree-style,
-.radian-style {
+.degree-border,
+.radian-border {
     border-style: outset;
 }
-    .degree-style:active,
-    .radian-style:active {
+    .degree-border:active,
+    .radian-border:active {
         border-style: inset;
     }
 

@@ -1199,19 +1199,17 @@ function btnAngle() {
 
   if ($('btn-angle').value === 'deg') {
     $('btn-angle').value = 'rad';
-    $('btn-angle').style.backgroundColor = 'cadetblue';
-    $('btn-angle').className = 'btn-small btn-angle radian-style';
-    $('btn-sine').className = 'btn-small radian-style';
-    $('btn-cosine').className = 'btn-small radian-style';
-    $('btn-tangent').className = 'btn-small radian-style';
+    $('btn-angle').className = 'btn-small btn-radian radian-border';
+    $('btn-sine').className = 'btn-small radian-border';
+    $('btn-cosine').className = 'btn-small radian-border';
+    $('btn-tangent').className = 'btn-small radian-border';
   }
   else {
     $('btn-angle').value = 'deg';
-    $('btn-angle').style.backgroundColor = '#6D8EBF';
-    $('btn-angle').className = 'btn-small btn-angle degree-style';
-    $('btn-sine').className = 'btn-small degree-style';
-    $('btn-cosine').className = 'btn-small degree-style';
-    $('btn-tangent').className = 'btn-small degree-style';
+    $('btn-angle').className = 'btn-small btn-angle degree-border';
+    $('btn-sine').className = 'btn-small degree-border';
+    $('btn-cosine').className = 'btn-small degree-border';
+    $('btn-tangent').className = 'btn-small degree-border';
   }
   $('txt-input').focus();
 }
