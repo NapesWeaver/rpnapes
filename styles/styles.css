@@ -126,6 +126,8 @@ img {
     color: #36BC50;
 }
 .e-color {
+    display: inline-block;
+    transform: rotate(-23deg);
     color: #DF2F33;
 }
 
