@@ -266,15 +266,16 @@
 
         <!-- Notes -->
         <div id="notes" class="hidden">
-          <input type="button" id="btn-load-notes" class="btn-other haptic-response" value="LOAD"/>
-          <input type="button" id="btn-save-notes" class="btn-other haptic-response" value="SAVE"/>
-          <input type="button" id="btn-copy-notes" class="btn-other haptic-response" value="COPY"/>
-          <input type="button" id="btn-paste-notes" class="btn-other haptic-response" value="PASTE"/>
-          <br/>
-          <input type="button" id="btn-undo-notes" class="btn-other haptic-response" value="UNDO"/>
-          <input type="button" id="btn-redo-notes" class="btn-other haptic-response" value="REDO"/>          
-          <input type="button" id="btn-clear-notes" class="btn-other haptic-response" value="CLEAR"/>
-          <input type="button" id="btn-delete-notes" class="btn-other haptic-response" value="DELETE"/>
+          <div class="notes-keypad">
+            <input type="button" id="btn-clear-notes" class="btn-other haptic-response" value="CLR"/>
+            <input type="button" id="btn-load-notes" class="btn-other haptic-response" value="LOAD"/>
+            <input type="button" id="btn-save-notes" class="btn-other haptic-response" value="SAV"/>
+            <input type="button" id="btn-copy-notes" class="btn-other haptic-response" value="COPY"/>
+            <!-- <input type="button" id="btn-paste-notes" class="btn-other haptic-response" value="PASTE"/> -->
+            <input type="button" id="btn-undo-notes" class="btn-other haptic-response" value="UNDO"/>
+            <input type="button" id="btn-redo-notes" class="btn-other haptic-response" value="REDO"/>          
+            <input type="button" id="btn-delete-notes" class="btn-other haptic-response" value="DEL"/>
+          </div>
           <textarea id="lstNotes" class="lst-notes haptic-response" name="notes" placeholder="Notes:" spellcheck="false" cols="28" rows="27"></textarea>
         </div>
 

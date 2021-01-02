@@ -67,7 +67,7 @@ header {
 }
 
 .lst-notes {
-    min-height: 34em;
+    min-height: 34.9em;
     min-width: 257px;
     resize: vertical;
     overflow-y: scroll;
@@ -75,6 +75,7 @@ header {
     font-size: .7em;
     font-weight: bold;
     outline: none;
+    border: none;
 }
 
 #txt-input {
@@ -144,14 +145,38 @@ img {
 }
 
 #btn-delete,
-#btn-undo,
 #btn-shift,
 #btn-clear,
 #btn-load,
 #btn-save,
-#btn-off {
+#btn-undo,
+#btn-off,
+#btn-clear-notes,
+#btn-load-notes,
+#btn-save-notes,
+#btn-copy-notes,
+#btn-undo-notes,
+#btn-redo-notes,
+#btn-delete-notes {
     margin-right: 0;
 }
+
+#btn-clear-notes,
+#btn-load-notes,
+#btn-save-notes,
+#btn-copy-notes,
+#btn-undo-notes,
+#btn-redo-notes,
+#btn-delete-notes {
+     margin-bottom: 3px;
+}
+
+.notes-keypad {
+    margin-top: 7px;
+    margin-bottom: 3px;
+}
+
+
 
 .btn-med {
     height: 23px;
@@ -456,9 +481,30 @@ img {
         padding: 0px 18px 3px 18px;
     }
 
+    .lst-stack {
+        min-width: 334px;
+        font-size: 1em;        
+    }
+
+    .lst-notes {
+        min-height: 33.5em;
+        min-width: 334px;
+        font-size: 1em;
+    }
+
+    #txt-input {
+        width: 334px;
+        font-size: 1em;
+    }
+   
     .btn-big, .btn-med, .btn-small, .btn-other {
         margin-bottom: 7px;
         font-size: 1em;
+    }
+
+    .notes-keypad {
+        margin-top: 10px;
+        margin-bottom: 5px;
     }
 
     .btn-big {
@@ -487,22 +533,6 @@ img {
         font-size: 1.1em;
     }
     
-    .lst-stack {
-        min-width: 334px;
-        font-size: 1em;        
-    }
-
-    .lst-notes {
-        min-height: 32.3em;
-        min-width: 334px;
-        font-size: 1em;
-    }
-
-    #txt-input {
-        width: 334px;
-        font-size: 1em;
-    }
-   
     .google, .you-tube {
         background-size: 41px 26px;
     }
