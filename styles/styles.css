@@ -21,8 +21,12 @@ body {
 }
 
 main {
-    padding-bottom: 1.2em;
+    padding-bottom: .9em;
     overflow: hidden;
+}
+
+.num-pad {
+    margin-top: .6em;
 }
 
 #wrap {
@@ -67,7 +71,7 @@ img {
     }
 
 .btn-big, .btn-med, .btn-small, .btn-other {
-    margin-bottom: 3px;
+    margin-bottom: .3em;
     font-size: .7em;
     font-weight: bold;        
     font-family: "Microsoft Sans Serif", "Sans Serif";
@@ -136,9 +140,9 @@ img {
 }
 
 .lst-stack {    
-    height: 15em;/* Height reinforcement across browsers */
+    height: 18em;
     min-width: 240px;
-    margin-bottom: 7px;
+    margin-bottom: .3em;
     overflow-y: scroll;
     resize: none;
     font-family: "Microsoft Sans Serif", "Sans Serif";
@@ -153,7 +157,7 @@ img {
     display: block;
     width: 240px; 
     margin-left: 12px;
-    margin-bottom: 5px;
+    margin-bottom: .6em;
     font-size: .7em;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     background-color: #FFFFFF;
@@ -367,7 +371,7 @@ img {
 /****** Notes **********************************/
 
 .lst-notes {
-    height: 380px;/* Height reinforcement across browsers */
+    height: 380px;
     min-width: 240px;
     overflow-y: scroll;
     /* resize: vertical;     */
