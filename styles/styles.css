@@ -15,6 +15,11 @@ input[type="button"] {
     cursor: pointer;
 }
 
+#btn-xoff {
+    margin-top: .16em;
+    margin-right: 1.1em;
+}
+
 body {
     touch-action: manipulation;
     background-color: #C4C6B1;
@@ -41,6 +46,7 @@ main {
 
 header {
     height: 18px;
+    margin-bottom: .3em;
     font-size: .81em;
     color: #6D8EBF;
     background-color: #6D8EBF;
@@ -71,7 +77,8 @@ img {
     }
 
 .btn-big, .btn-med, .btn-small, .btn-other {
-    margin-bottom: .3em;
+    margin-right: .3em;
+    margin-bottom: .39em;
     font-size: .7em;
     font-weight: bold;        
     font-family: "Microsoft Sans Serif", "Sans Serif";
@@ -88,7 +95,8 @@ img {
 
 .btn-big {
     width: 57px;
-    height: 23px
+    height: 23px;
+    margin-right: .57em;
 
 }
 .btn-med {
@@ -161,7 +169,6 @@ img {
     font-size: .7em;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     background-color: #FFFFFF;
-    /* border-color: #E3E3E3; */
     outline: none;
     border: none;
     font-weight: bold;
@@ -194,7 +201,6 @@ img {
     color: #FFFFFF;
 }
     .you-tube:hover {
-        /* background-color: #B85252; */
         background-color: #B92020;
         filter: invert(1);
     }
@@ -276,7 +282,6 @@ img {
 }
 
 .menu {
-    /* width:255px; */
     margin: 0px auto;
 }
     .menu li {
@@ -348,8 +353,8 @@ img {
             padding-bottom: 3px;
             padding-left:3px;
             padding-right:3px;
-            /* margin-left:5px;
-            margin-right:5px; */
+            /* margin-left:5px; */
+            /* margin-right:5px; */
             display: block;
             text-decoration: none;
             background-color: #FFFFFF;
@@ -374,7 +379,7 @@ img {
     height: 380px;
     min-width: 240px;
     overflow-y: scroll;
-    /* resize: vertical;     */
+    /* resize: vertical; */
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .7em;
     font-weight: bold;
@@ -429,6 +434,11 @@ img {
     header {
         height: 24px;
     }   
+
+    #btn-xoff {
+        margin-top: 0;
+        margin-right: .3em;
+    }
     
     #open {
         padding: 0px 18px 3px 18px;

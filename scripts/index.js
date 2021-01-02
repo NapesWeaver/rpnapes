@@ -46,7 +46,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '22:56:48';
+const tStamp = '0:2:19';
 var testing = false;
 
 var stack = [];
@@ -117,6 +117,7 @@ function toggleDarkMode() {
   if ($('menu-darkmode').textContent === 'Light') {
     $('menu-darkmode').innerHTML = 'Dark';
     $('wrap').classList.remove('dark-mode');
+    $('wrap').style.borderStyle = 'outnset';
     $('tricorderskin').classList.remove('dark-mode');
     $('widget').classList.remove('dark-mode');
     $('viewport').classList.remove('dark-mode');
@@ -128,6 +129,7 @@ function toggleDarkMode() {
   } else {
     $('menu-darkmode').innerHTML = 'Light';    
     $('wrap').classList.add('dark-mode');   
+    $('wrap').style.borderStyle = 'inset';
     $('tricorderskin').classList.add('dark-mode');
     $('widget').classList.add('dark-mode');
     $('viewport').classList.add('dark-mode');
