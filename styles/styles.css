@@ -7,17 +7,18 @@
     padding: 0;
 }
 
-#btn-xoff,
 #open,
 #lst-stack,
+.btn-xoff,
 button,
 input[type="button"] {
     cursor: pointer;
 }
 
-#btn-xoff {
-    margin-top: .16em;
-    margin-right: 1.1em;
+.btn-xoff {
+    height: 18px;
+    width: 18px;
+    margin-left: 243px;
 }
 
 body {
@@ -46,10 +47,48 @@ main {
 
 header {
     height: 18px;
-    margin-bottom: .1em;
     font-size: .81em;
     color: #6D8EBF;
     background-color: #6D8EBF;
+}
+
+.lst-stack {    
+    min-height: 15.6em;
+    min-width: 257px;
+    margin-bottom: .3em;
+    resize: none;
+    overflow-y: scroll;
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: .7em;
+    font-weight: bold;
+    color: #B92020;
+    outline: none;
+    border: none;
+}
+
+.lst-notes {
+    min-height: 34em;
+    min-width: 257px;
+    resize: vertical;
+    overflow-y: scroll;
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: .7em;
+    font-weight: bold;
+    outline: none;
+}
+
+#txt-input {
+    display: block;
+    width: 257px; 
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: .6em;
+    font-size: .7em;
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    background-color: #FFFFFF;
+    outline: none;
+    border: none;
+    font-weight: bold;
 }
 
 img {
@@ -78,7 +117,7 @@ img {
 
 .btn-big, .btn-med, .btn-small, .btn-other {
     margin-right: 5px;
-    margin-bottom: 9px;
+    margin-bottom: 5px;
     font-size: .7em;
     font-weight: bold;        
     font-family: "Microsoft Sans Serif", "Sans Serif";
@@ -139,50 +178,6 @@ img {
     display: inline-block;
     transform: rotate(-23deg);
     color: #DF2F33;
-}
-
-.btn-xoff {
-    height: 15px;
-    width: 15px;
-    margin-left: 233px;
-}
-
-.lst-stack {    
-    min-height: 15.6em;
-    min-width: 240px;
-    margin-bottom: .3em;
-    resize: none;
-    overflow-y: scroll;
-    font-family: "Microsoft Sans Serif", "Sans Serif";
-    font-size: .7em;
-    font-weight: bold;
-    color: #B92020;
-    outline: none;
-    border: none;
-}
-
-.lst-notes {
-    min-height: 34em;
-    min-width: 240px;
-    resize: vertical;
-    overflow-y: scroll;
-    font-family: "Microsoft Sans Serif", "Sans Serif";
-    font-size: .7em;
-    font-weight: bold;
-    outline: none;
-}
-
-#txt-input {
-    display: block;
-    width: 240px; 
-    margin-left: 12px;
-    margin-bottom: .6em;
-    font-size: .7em;
-    font-family: "Microsoft Sans Serif", "Sans Serif";
-    background-color: #FFFFFF;
-    outline: none;
-    border: none;
-    font-weight: bold;
 }
 
 .google {
@@ -285,12 +280,12 @@ img {
 
 /****** Menu ***********************************/
 #menu-wrap {
+    margin-left: 15px;
+    padding-bottom: 17px;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .8em;
     width: 100%;
     /* box-shadow:0px 1px 3px rgba(0,0,0,.2); */
-    margin-left: 15px;
-    padding-bottom: 1.3em;
 }
 
 .menu {
@@ -347,7 +342,7 @@ img {
 
 /***** Sub menu *****************/
 .sub-menu {
-    padding-top: .2em;
+    padding-top: 2px;
     padding-bottom: 3px;
     padding-left: 5px;
     position: absolute;
@@ -435,13 +430,11 @@ img {
         height: 24px;
     }   
 
-    #btn-xoff {
+    .btn-xoff {
+        height: 24px;
+        width: 24px;
         margin-top: 0;
-        margin-right: .3em;
-    }
-
-    .sub-menu {
-        padding-top: .24em;
+        margin-left: 319px;
     }
    
     #open {
@@ -449,6 +442,7 @@ img {
     }
 
     .btn-big, .btn-med, .btn-small, .btn-other {
+        margin-bottom: 7px;
         font-size: 1em;
     }
 
@@ -478,12 +472,6 @@ img {
         font-size: 1.1em;
     }
     
-    .btn-xoff {
-        height: 24px;
-        width: 24px;
-        margin-left: 318px;
-    }
-    
     .lst-stack {
         min-width: 334px;
         font-size: 1em;        
@@ -500,6 +488,7 @@ img {
 
     #menu-wrap {
         margin-left: 32px;
+        padding-bottom: 23px;
         font-size: 1.2em;
     }
 
