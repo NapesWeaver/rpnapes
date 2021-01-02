@@ -35,18 +35,17 @@ main {
 }
 
 #wrap {
-    background-color: #D4D0C8;
+    width: 266px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    width: 266px;
-    border-style: outset;
+    background-color: #D4D0C8;
     border-width: 2px;
+    border-style: outset;
 }
 
 header {
     height: 18px;
-    margin-bottom: .3em;
     font-size: .81em;
     color: #6D8EBF;
     background-color: #6D8EBF;
@@ -94,18 +93,18 @@ img {
     }
 
 .btn-big {
-    width: 57px;
     height: 23px;
+    width: 57px;
     margin-right: .57em;
 
 }
 .btn-med {
-    width: 42px;
     height: 23px;
+    width: 42px;
 }
 .btn-small {
-    width: 33px;
     height: 23px;
+    width: 33px;
 }
 
 .btn-big-font {
@@ -142,23 +141,34 @@ img {
 }
 
 .btn-xoff {
-    width: 15px;
     height: 15px;
+    width: 15px;
     margin-left: 233px;
 }
 
 .lst-stack {    
-    height: 15.6em;
+    min-height: 15.6em;
     min-width: 240px;
     margin-bottom: .3em;
-    overflow-y: scroll;
     resize: none;
+    overflow-y: scroll;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .7em;
     font-weight: bold;
     color: #B92020;
     outline: none;
     border: none;
+}
+
+.lst-notes {
+    min-height: 34em;
+    min-width: 240px;
+    resize: vertical;
+    overflow-y: scroll;
+    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-size: .7em;
+    font-weight: bold;
+    outline: none;
 }
 
 #txt-input {
@@ -278,7 +288,9 @@ img {
     font-size: .8em;
     width: 100%;
     /* box-shadow:0px 1px 3px rgba(0,0,0,.2); */
+    margin-top: .1em;
     margin-left: 15px;
+    padding-bottom: 1.3em;
 }
 
 .menu {
@@ -335,6 +347,7 @@ img {
 
 /***** Sub menu *****************/
 .sub-menu {
+    margin-top: .1em;
     padding-bottom: 3px;
     padding-left: 5px;
     position: absolute;
@@ -372,19 +385,6 @@ img {
     .strikethrough a {
         color: #0040FF;
     }
-
-/****** Notes **********************************/
-
-.lst-notes {
-    height: 380px;
-    min-width: 240px;
-    overflow-y: scroll;
-    /* resize: vertical; */
-    font-family: "Microsoft Sans Serif", "Sans Serif";
-    font-size: .7em;
-    font-weight: bold;
-    outline: none;
-}
 
 /****** Dark Mode ******************************/
 
@@ -439,7 +439,7 @@ img {
         margin-top: 0;
         margin-right: .3em;
     }
-    
+   
     #open {
         padding: 0px 18px 3px 18px;
     }
@@ -449,16 +449,16 @@ img {
     }
 
     .btn-big {
-        width: 77px;
         height: 30px;
+        width: 77px;
     }
     .btn-med {
-        width: 57px;
         height: 30px;
+        width: 57px;
     }
     .btn-small {
-        width: 45px;
         height: 30px;
+        width: 45px;
     }
 
     .btn-big-font {
@@ -475,19 +475,19 @@ img {
     }
     
     .btn-xoff {
-        width: 24px;
         height: 24px;
+        width: 24px;
         margin-left: 318px;
     }
     
     .lst-stack {
-        font-size: 1em;
         min-width: 334px;
+        font-size: 1em;        
     }
 
     #txt-input {
-        font-size: 1em;
         width: 334px;
+        font-size: 1em;
     }
    
     .google, .you-tube {
@@ -495,14 +495,14 @@ img {
     }
 
     #menu-wrap {
-        font-size: 1.2em;
         margin-left: 32px;
+        font-size: 1.2em;
     }
 
     .lst-notes {
-        font-size: 1em;
-        height: 496px;
+        min-height: 32.3em;
         min-width: 325px;
+        font-size: 1em;
     }
     
     #tricorderskin {
