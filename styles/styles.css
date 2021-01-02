@@ -21,7 +21,7 @@ body {
 }
 
 main {
-    min-height: 460px;
+    padding-bottom: 1.2em;
     overflow: hidden;
 }
 
@@ -31,9 +31,7 @@ main {
     margin-right: auto;
     text-align: center;
     width: 266px;
-    height: 460px;
     border-style: outset;
-    border-color: #808080;
     border-width: 2px;
 }
 
@@ -137,10 +135,9 @@ img {
     margin-left: 233px;
 }
 
-.lst-stack {
-    /* Height reinforcement across browsers */
-    height: 15em;
-    width: 240px;
+.lst-stack {    
+    height: 15em;/* Height reinforcement across browsers */
+    min-width: 240px;
     margin-bottom: 7px;
     overflow-y: scroll;
     resize: none;
@@ -245,8 +242,8 @@ img {
     border-radius: 2px;
 }
     #menu-off:hover {
-            /****** YouTube red ******/
-            background-color: #B85252;
+            
+            background-color: #B85252;/** YouTube red **/
             color: #000000;
         }
 .btn-off {
@@ -254,8 +251,7 @@ img {
     text-decoration: underline;
 }
     .btn-off:hover {
-            /****** YouTube red ******/
-            background-color: #B92020;
+            background-color: #B92020;/** YouTube red **/
             color: #FFFFFF;
         }
 
@@ -371,12 +367,10 @@ img {
 /****** Notes **********************************/
 
 .lst-notes {
-    resize: vertical;
-    /* Height reinforcement across browsers */
-    height: 380px;
-    width: 240px;
+    height: 380px;/* Height reinforcement across browsers */
+    min-width: 240px;
     overflow-y: scroll;
-    /* resize: none; */
+    /* resize: vertical;     */
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .7em;
     font-weight: bold;
@@ -426,7 +420,6 @@ img {
 @media only screen and (min-width: 360px) {
     #wrap {
         width: 360px;
-        height: 600px;
     }
 
     header {
@@ -475,7 +468,7 @@ img {
     
     .lst-stack {
         font-size: 1em;
-        width: 334px;
+        min-width: 334px;
     }
 
     #txt-input {
@@ -495,7 +488,7 @@ img {
     .lst-notes {
         font-size: 1em;
         height: 496px;
-        width: 325px;
+        min-width: 325px;
     }
     
     #tricorderskin {

@@ -1,6 +1,7 @@
 ﻿var $ = function (id) {
   return document.getElementById(id);
 };
+
 /*
   Array.prototype.indexOf()
   Added to the ECMA-262 standard in the 5th edition may not work in all browsers.
@@ -30,7 +31,9 @@ if (!Array.prototype.indexOf)
 
       return -1// if the value was not found, then return -1
     }
-  })(Object, Math.max, Math.min)
+  })(Object, Math.max, Math.min);
+
+new ResizeObserver(elementSize).observe($('lst-stack'));
 
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
@@ -1445,6 +1448,13 @@ function getSize() {
     y = w.innerHeight || e.clientHeight || g.clientHeight;
   // insertText(x + ' × ' + y);
   return [x, y];
+}
+
+function elementSize() {
+  var width = $('lst-stack').offsetWidth;
+  var height = $('lst-stack').offsetHeight;
+  // console.log('lst-stack width:', width, 'lst-stack height:', height);
+  // console.log('window size:', getSize());
 }
 
 function embed(src) {
@@ -4121,6 +4131,9 @@ window.onload = function () {
   // Menu Help
   $('menu-help').onclick = menuHelp; 
 
+  $('wrap').onresize = function () {
+    console.log('yes');
+  }
   // Text Area
   $('lst-stack').style.color = '#000000';// noscript warning was red ;)
   $('lst-stack').value = '';
