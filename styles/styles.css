@@ -15,6 +15,13 @@ input[type="button"] {
     cursor: pointer;
 }
 
+header {
+    height: 18px;
+    font-size: .81em;
+    color: #6D8EBF;
+    background-color: #6D8EBF;
+}
+
 .btn-xoff {
     height: 18px;
     width: 18px;
@@ -43,13 +50,6 @@ main {
     background-color: #D4D0C8;
     border-width: 2px;
     border-style: outset;
-}
-
-header {
-    height: 18px;
-    font-size: .81em;
-    color: #6D8EBF;
-    background-color: #6D8EBF;
 }
 
 .lst-stack {    
@@ -168,15 +168,9 @@ img {
 #btn-undo-notes,
 #btn-redo-notes,
 #btn-delete-notes {
-     margin-bottom: 3px;
-}
-
-.notes-keypad {
     margin-top: 7px;
-    margin-bottom: 3px;
+    margin-bottom: 7px;
 }
-
-
 
 .btn-med {
     height: 23px;
@@ -501,10 +495,16 @@ img {
         margin-bottom: 7px;
         font-size: 1em;
     }
-
-    .notes-keypad {
+    
+    #btn-clear-notes,
+    #btn-load-notes,
+    #btn-save-notes,
+    #btn-copy-notes,
+    #btn-undo-notes,
+    #btn-redo-notes,
+    #btn-delete-notes {
         margin-top: 10px;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .btn-big {
