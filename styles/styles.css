@@ -38,6 +38,12 @@ select {
     font-size: .8em;
 }
 
+select,
+option {
+    
+    background-color: #FFFFFF;
+}
+
 body {
     touch-action: manipulation;
     background-color: #C4C6B1;
