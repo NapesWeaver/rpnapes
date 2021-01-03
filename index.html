@@ -97,7 +97,7 @@
                     </li>                    
                     <li><a id="menu-darkmode" href="#" title="Toggle dark/light mode">Dark</a></li>
                     <li><a id="menu-angle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>
-                    <li><label for="fix"><a href="#" title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
+                    <li><label id="fix" for="fix"><a href="#" title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
                       <select name="fix"onchange="setFixDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
@@ -124,7 +124,7 @@
                     <li id="menu-haptic-li"><a id="menu-haptic" href="#" title="Toggle haptic response">Haptic</a></li>
                     <li id="menu-keyboard-li"><a id="menu-keyboard" href="#" title="Toggle mobile keyboard">Keyboard</a></li>
                     <li><a id="menu-notes" href="#" title="Switch to Notes">Notes</a></li>                    
-                    <li><label for="sci"><a href="#" title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
+                    <li><label id="sci" for="sci"><a href="#" title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
                       <select name="sci" onchange="setSciDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
                         <option value="0">0</option>

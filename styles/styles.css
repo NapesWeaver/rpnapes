@@ -10,10 +10,18 @@
 #open,
 #lst-stack,
 .btn-xoff,
+select,
+option,
 button,
 input[type="button"] {
     cursor: pointer;
 }
+
+label a {
+    cursor: context-menu;
+}
+
+
 
 header {
     height: 18px;
@@ -30,6 +38,7 @@ header {
 
 label {
     display: flex;
+    padding-right: 0;
 }
 
 select {
@@ -39,8 +48,7 @@ select {
 }
 
 select,
-option {
-    
+option {    
     background-color: #FFFFFF;
 }
 
@@ -430,7 +438,7 @@ img {
     .strikethrough a {
         color: #0040FF;
     }
-
+    
 /****** Dark Mode ******************************/
 
 .dark-mode {
