@@ -113,32 +113,34 @@ function toggleDarkMode() {
   var medBtns = document.getElementsByClassName('btn-med');
   var bgBtns = document.getElementsByClassName('btn-big');
   var others = document.getElementsByClassName('btn-other');
+  var options = document.getElementsByTagName('option');
   
   if ($('menu-darkmode').textContent === 'Light') {
     $('menu-darkmode').innerHTML = 'Dark';
     $('wrap').classList.remove('dark-mode');
-    $('wrap').style.borderStyle = 'outnset';
+    $('wrap').style.borderStyle = 'outset';
     $('tricorderskin').classList.remove('dark-mode');
     $('widget').classList.remove('dark-mode');
     $('viewport').classList.remove('dark-mode');
     body[0].style.backgroundColor = '#C4C6B1';
-    for (var b = 0; b < smBtns.length; b++) smBtns[b].classList.remove('dark-button');
-    for (b = 0; b < medBtns.length; b++) medBtns[b].classList.remove('dark-button');
-    for (b = 0; b < bgBtns.length; b++) bgBtns[b].classList.remove('dark-button');
-    for (b = 0; b < others.length; b++) others[b].classList.remove('dark-button');
+    for (var e = 0; e < smBtns.length; e++) smBtns[e].classList.remove('dark-button');
+    for (e = 0; e < medBtns.length; e++) medBtns[e].classList.remove('dark-button');
+    for (e = 0; e < bgBtns.length; e++) bgBtns[e].classList.remove('dark-button');
+    for (e = 0; e < others.length; e++) others[e].classList.remove('dark-button');
+    for (e = 0; e < options.length; e++) options[e].classList.remove('dark-menu');
   } else {
-    $('menu-darkmode').innerHTML = 'Light';    
+    $('menu-darkmode').innerHTML = 'Light';        
     $('wrap').classList.add('dark-mode');   
     $('wrap').style.borderStyle = 'inset';
     $('tricorderskin').classList.add('dark-mode');
     $('widget').classList.add('dark-mode');
     $('viewport').classList.add('dark-mode');
-    $('btn-seven').classList.add('dark-button');
     body[0].style.backgroundColor = '#3B394E';
-    for (b = 0; b < smBtns.length; b++) smBtns[b].classList.add('dark-button');
-    for (b = 0; b < medBtns.length; b++) medBtns[b].classList.add('dark-button');
-    for (b = 0; b < bgBtns.length; b++) bgBtns[b].classList.add('dark-button');
-    for (b = 0; b < others.length; b++) others[b].classList.add('dark-button');
+    for (e = 0; e < smBtns.length; e++) smBtns[e].classList.add('dark-button');
+    for (e = 0; e < medBtns.length; e++) medBtns[e].classList.add('dark-button');
+    for (e = 0; e < bgBtns.length; e++) bgBtns[e].classList.add('dark-button');
+    for (e = 0; e < others.length; e++) others[e].classList.add('dark-button');
+    for (e = 0; e < options.length; e++) options[e].classList.add('dark-menu');
   }
 }
 
@@ -621,6 +623,11 @@ function btnShift() {
     $('btn-go').classList.remove('you-tube');
     $('btn-go').classList.add('google');
     $('btn-go').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
+    // if ($('menu-darkmode').textContent === 'Dark') {
+    //   $('btn-shift').className = 'btn-med btn-shift';
+    // } else {
+    //   $('btn-shift').className = 'btn-med btn-shifted';      
+    // }
     $('btn-shift').className = 'btn-med btn-shift';
     $('btn-divide').style.color = '#000000';
     $('btn-divide').value = '÷';
@@ -672,6 +679,11 @@ function btnShift() {
     $('btn-go').classList.remove('google');
     $('btn-go').classList.add('you-tube');
     $('btn-go').innerHTML = '&#9654';
+    // if ($('menu-darkmode').textContent === 'Dark') {
+    //   $('btn-shift').className = 'btn-med btn-shifted';
+    // } else {
+    //   $('btn-shift').className = 'btn-med btn-shift';
+    // }
     $('btn-shift').className = 'btn-med btn-shifted';
     $('btn-divide').style.color = '#0000A0';
     $('btn-divide').value = '/';
@@ -783,7 +795,7 @@ function btnLoad() {
 }
 function loadStack(tmpStack) {
 
-  stack.length = 0;
+  //stack.length = 0;
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
     // IE || Chrome - remove underscore from begining of string
@@ -2923,12 +2935,21 @@ function removeNegativeExponentSign(factorsArray) {
 }
 
 function setFixDecimal(value) {
-  
+
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17 first.';
   }
-  fixDecimal = value;
+  fixDecimal = parseInt(value);
 }
+
+function setSciDecimal(value) {
+
+  if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
+    throw 'Enter an integer from -1 to 17 first.';
+  }
+  sciDecimal = parseInt(value);
+}
+
 function formatNumber(possibleNumber) {
 
   if (!/[ΦeπGc]/.test(possibleNumber)) {

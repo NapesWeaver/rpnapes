@@ -26,7 +26,7 @@
     <div id="wrap">
 
       <header>
-        <input id="btn-xoff" class='btn-other btn-xoff haptic-response' type="button" name="btn-xoff" value="&nbsp;"/>
+        <input type="button" id="btn-xoff" class='btn-other btn-xoff haptic-response' name="btn-xoff" title="Toggle interface" value="&nbsp;"/>
       </header>
       
       <main>
@@ -84,10 +84,10 @@
                   </ul>
                 </li>
                 <li class="haptic-response">
-                  <a href="#" onmouseover="$('base').className='hidden';$('fix').className='hidden';$('sci').className='hidden'">View</a>
+                  <a href="#" onmouseover="$('base').className='hidden'">View</a>
                   <ul class="sub-menu">
                     <li class="menu">
-                      <a href="#" title="Change base" onclick="$('base').className='visible'" onmouseover="$('fix').className='hidden'">Base</a>
+                      <a href="#" title="Change base" onclick="$('base').className='visible'">Base</a>
                       <ul id="base" onclick="$('base').className='hidden'">
                         <li><a href="#" title="Binary" onclick="convertBase(2); updateDisplay()">&nbsp;&nbsp;binary</a></li>
                         <li><a href="#" title="Octal" onclick="convertBase(8); updateDisplay()">&nbsp;&nbsp;octal</a></li>
@@ -97,56 +97,56 @@
                     </li>                    
                     <li><a id="menu-darkmode" href="#" title="Toggle dark/light mode">Dark</a></li>
                     <li><a id="menu-angle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>
-                    <li class="menu">
-                      <a href="#" title="Fix decimal position" onclick="$('fix').className='visible'" onmouseover="$('base').className='hidden';$('sci').className='hidden'">Fix</a>
-                      <ul id="fix" onclick="$('fix').className='hidden'">
-                        <li><a href="#" onclick="fixDecimal=-1;updateDisplay()">&nbsp;&nbsp;OFF</a></li>
-                        <li><a href="#" onclick="fixDecimal=0;updateDisplay()">&nbsp;&nbsp;0</a></li>
-                        <li><a href="#" onclick="fixDecimal=1;updateDisplay()">&nbsp;&nbsp;1</a></li>
-                        <li><a href="#" onclick="fixDecimal=2;updateDisplay()">&nbsp;&nbsp;2</a></li>
-                        <li><a href="#" onclick="fixDecimal=3;updateDisplay()">&nbsp;&nbsp;3</a></li>
-                        <li><a href="#" onclick="fixDecimal=4;updateDisplay()">&nbsp;&nbsp;4</a></li>
-                        <li><a href="#" onclick="fixDecimal=5;updateDisplay()">&nbsp;&nbsp;5</a></li>
-                        <li><a href="#" onclick="fixDecimal=6;updateDisplay()">&nbsp;&nbsp;6</a></li>
-                        <li><a href="#" onclick="fixDecimal=7;updateDisplay()">&nbsp;&nbsp;7</a></li>
-                        <li><a href="#" onclick="fixDecimal=8;updateDisplay()">&nbsp;&nbsp;8</a></li>
-                        <li><a href="#" onclick="fixDecimal=9;updateDisplay()">&nbsp;&nbsp;9</a></li>
-                        <li><a href="#" onclick="fixDecimal=10;updateDisplay()">&nbsp;&nbsp;10</a></li>
-                        <li><a href="#" onclick="fixDecimal=11;updateDisplay()">&nbsp;&nbsp;11</a></li>
-                        <li><a href="#" onclick="fixDecimal=12;updateDisplay()">&nbsp;&nbsp;12</a></li>
-                        <li><a href="#" onclick="fixDecimal=13;updateDisplay()">&nbsp;&nbsp;13</a></li>
-                        <li><a href="#" onclick="fixDecimal=14;updateDisplay()">&nbsp;&nbsp;14</a></li>
-                        <li><a href="#" onclick="fixDecimal=15;updateDisplay()">&nbsp;&nbsp;15</a></li>
-                        <li><a href="#" onclick="fixDecimal=16;updateDisplay()">&nbsp;&nbsp;16</a></li>
-                        <li><a href="#" onclick="fixDecimal=17;updateDisplay()">&nbsp;&nbsp;17</a></li>
-                      </ul>
+                    <li><label for="fix"><a href="#" title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
+                      <select name="fix"onchange="setFixDecimal(this.value);updateDisplay()">
+                        <option value="-1">Off</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                      </select>
+                      </label>
                     </li>
                     <li id="menu-haptic-li"><a id="menu-haptic" href="#" title="Toggle haptic response">Haptic</a></li>
                     <li id="menu-keyboard-li"><a id="menu-keyboard" href="#" title="Toggle mobile keyboard">Keyboard</a></li>
-                    <li><a id="menu-notes" href="#" title="Switch to Notes">Notes</a></li>
-                    <li class="menu">
-                      <a href="#" title="Scientific notation" onclick="$('sci').className='visible';$('fix').className='hidden'" onmouseover="$('base').className='hidden'">Sci</a>
-                      <ul id="sci" onclick="$('sci').className='hidden'">
-                        <li><a href="#" onclick="sciDecimal=-1;updateDisplay()">&nbsp;&nbsp;OFF</a></li>
-                        <li><a href="#" onclick="sciDecimal=0;updateDisplay()">&nbsp;&nbsp;0</a></li>
-                        <li><a href="#" onclick="sciDecimal=1;updateDisplay()">&nbsp;&nbsp;1</a></li>
-                        <li><a href="#" onclick="sciDecimal=2;updateDisplay()">&nbsp;&nbsp;2</a></li>
-                        <li><a href="#" onclick="sciDecimal=3;updateDisplay()">&nbsp;&nbsp;3</a></li>
-                        <li><a href="#" onclick="sciDecimal=4;updateDisplay()">&nbsp;&nbsp;4</a></li>
-                        <li><a href="#" onclick="sciDecimal=5;updateDisplay()">&nbsp;&nbsp;5</a></li>
-                        <li><a href="#" onclick="sciDecimal=6;updateDisplay()">&nbsp;&nbsp;6</a></li>
-                        <li><a href="#" onclick="sciDecimal=7;updateDisplay()">&nbsp;&nbsp;7</a></li>
-                        <li><a href="#" onclick="sciDecimal=8;updateDisplay()">&nbsp;&nbsp;8</a></li>
-                        <li><a href="#" onclick="sciDecimal=9;updateDisplay()">&nbsp;&nbsp;9</a></li>
-                        <li><a href="#" onclick="sciDecimal=10;updateDisplay()">&nbsp;&nbsp;10</a></li>
-                        <li><a href="#" onclick="sciDecimal=11;updateDisplay()">&nbsp;&nbsp;11</a></li>
-                        <li><a href="#" onclick="sciDecimal=12;updateDisplay()">&nbsp;&nbsp;12</a></li>
-                        <li><a href="#" onclick="sciDecimal=13;updateDisplay()">&nbsp;&nbsp;13</a></li>
-                        <li><a href="#" onclick="sciDecimal=14;updateDisplay()">&nbsp;&nbsp;14</a></li>
-                        <li><a href="#" onclick="sciDecimal=15;updateDisplay()">&nbsp;&nbsp;15</a></li>
-                        <li><a href="#" onclick="sciDecimal=16;updateDisplay()">&nbsp;&nbsp;16</a></li>
-                        <li><a href="#" onclick="sciDecimal=17;updateDisplay()">&nbsp;&nbsp;17</a></li>
-                      </ul>
+                    <li><a id="menu-notes" href="#" title="Switch to Notes">Notes</a></li>                    
+                    <li><label for="sci"><a href="#" title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
+                      <select name="sci" onchange="setSciDecimal(this.value);updateDisplay()">
+                        <option value="-1">Off</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                      </select>
+                      </label>
                     </li>                    
                     <li><a id="menu-shift" href="#" title="Toggle shift">Shift</a></li>
                     <li id="menu-sound-li"><a id="menu-sound" href="#" title="Toggle sound for Tricorder">Sound</a></li>
@@ -162,7 +162,7 @@
                         <li><a id="menu-eulers" href="#" title="Euler's Number">&nbsp;&nbsp;e</a></li>
                         <li><a id="menu-gravitational-constant" href="#" title="Gravitational Constant">&nbsp;&nbsp;G</a></li>
                         <li><a id="menu-light-speed" href="#" title="light speed">&nbsp;&nbsp;c</a></li>
-                        <li><a id="menu-pi" href="#" title="PI">&nbsp;&nbsp;&#960;</a></li>
+                        <li><a id="menu-pi" href="#" title="PI">&nbsp;&nbsp;&#960;&nbsp;&nbsp;&nbsp;</a></li>
                       </ul>
                     </li>
                     <li><a id="menu-date" href="#" title="Current date">Date</a></li>

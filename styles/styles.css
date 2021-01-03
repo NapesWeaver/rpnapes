@@ -28,6 +28,16 @@ header {
     margin-left: 243px;
 }
 
+label {
+    display: flex;
+}
+
+select {
+    border: 0;
+    outline: 0;
+    font-size: .8em;
+}
+
 body {
     touch-action: manipulation;
     background-color: #C4C6B1;
@@ -35,7 +45,7 @@ body {
 
 main {
     padding-bottom: 1em;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .num-pad {
@@ -427,6 +437,11 @@ img {
     .dark-button:active {
         border-style: outset;
     }
+
+.dark-menu {
+    background-color: black;
+    color: white;
+}
 
 /****** Tricorder ******************************/
 
