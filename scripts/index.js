@@ -39,6 +39,9 @@ var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userA
 
 if (isMobile) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
+new ResizeObserver(unFloat).observe($('lst-stack'));
+new ResizeObserver(unFloat).observe($('lst-notes'));
+
 const Φ = 1.618033988749895;
 const e = 2.718281828459045;
 const π = 3.141592653589793;
@@ -104,6 +107,18 @@ NumberObject.prototype.toString = function () {
 
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
+
+function unFloat() {
+  var wrapWidth = $('wrap').clientWidth;
+  var winWidth = getSize();  
+  var lstWidth = $('rpnapes').classList.contains('hidden') ? $('lst-notes').clientWidth : $('lst-stack').clientWidth;
+
+  if (lstWidth > wrapWidth) {
+    $('wrap').style.marginLeft = ((winWidth[0]  - lstWidth) / winWidth[0]) * 50 + '%';
+  } else {
+    $('wrap').style.marginLeft = 'auto';
+  }
+}
 
 function toggleDarkMode() {  
   var body = document.getElementsByTagName('body');
@@ -4250,9 +4265,6 @@ window.onload = function () {
       if (notes.length > 0) backupUndoNotes(); 
     }, 100);
   });
-  $('lst-notes').addEventListener('mouseup', function(){
-    unFloat();
-  });
 
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
@@ -4289,33 +4301,3 @@ window.onload = function () {
   }
   $('txt-input').readOnly = false;
 };
-
-function unFloatRPN() {
-
-  var wrapWidth = $('wrap').clientWidth;
-  var lstStackWidth = $('lst-stack').clientWidth;
-  var lstNotesWidth = $('lst-notes').clientWidth;
-  var winWidth = getSize();
-  
-  if (lstStackWidth > wrapWidth) {
-    $('wrap').style.marginLeft = ((winWidth[0]  - lstStackWidth) / winWidth[0]) * 50 + '%';
-  } else {
-    $('wrap').style.marginLeft = 'auto';
-  }
-}
-function unFloatNotes() {
-
-  var wrapWidth = $('wrap').clientWidth;
-  var lstStackWidth = $('lst-stack').clientWidth;
-  var lstNotesWidth = $('lst-notes').clientWidth;
-  var winWidth = getSize();
-  
-  if (lstNotesWidth > wrapWidth) {
-    $('wrap').style.marginLeft = ((winWidth[0]  - lstNotesWidth) / winWidth[0]) * 50 + '%';
-  } else {
-    $('wrap').style.marginLeft = 'auto';
-  }
-}
-
-new ResizeObserver(unFloatRPN).observe($('lst-stack'));
-new ResizeObserver(unFloatNotes).observe($('lst-notes'));
