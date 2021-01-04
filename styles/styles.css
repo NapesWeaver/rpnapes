@@ -17,11 +17,29 @@ input[type="button"] {
     cursor: pointer;
 }
 
+.sub-menu li {
+    background-color: #FFFFFF;
+}
+
 label a {
     cursor: context-menu;
 }
 
+label {
+    display: flex;
+}
 
+select {
+    border: 0;
+    outline: 0;
+    font-size: .8em;
+}
+
+select,
+option {    
+    margin-right: 0;
+    background-color: #FFFFFF;
+}
 
 header {
     height: 18px;
@@ -34,22 +52,6 @@ header {
     height: 18px;
     width: 18px;
     margin-left: 243px;
-}
-
-label {
-    display: flex;
-    padding-right: 0;
-}
-
-select {
-    border: 0;
-    outline: 0;
-    font-size: .8em;
-}
-
-select,
-option {    
-    background-color: #FFFFFF;
 }
 
 body {
@@ -540,10 +542,12 @@ img {
         height: 30px;
         width: 77px;
     }
+
     .btn-med {
         height: 30px;
         width: 57px;
     }
+
     .btn-small {
         height: 30px;
         width: 45px;
@@ -552,12 +556,15 @@ img {
     .btn-big-font {
         font-size: 1.5em;
     }
+
     .btn-small-font {
         font-size: .8em;
     }    
+
     .btn-pi {
         font-size: 1.1em;
     }
+    
     .symbol-big {
         font-size: 1.1em;
     }
