@@ -33,8 +33,6 @@ if (!Array.prototype.indexOf)
     }
   })(Object, Math.max, Math.min);
 
-new ResizeObserver(elementSize).observe($('lst-stack'));
-
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
@@ -153,7 +151,6 @@ function toggleHaptic() {
   $('txt-input').focus();
 }
 function hapticResponse() {
-  console.log('yyyyy');
   if (isMobile) {
     haptic();
     $('txt-input').readOnly = true;
@@ -1461,15 +1458,7 @@ function getSize() {
     g = d.getElementsByTagName('body')[0],
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight || e.clientHeight || g.clientHeight;
-  // insertText(x + ' × ' + y);
   return [x, y];
-}
-
-function elementSize() {
-  var width = $('lst-stack').offsetWidth;
-  var height = $('lst-stack').offsetHeight;
-  // console.log('lst-stack width:', width, 'lst-stack height:', height);
-  // console.log('window size:', getSize());
 }
 
 function embed(src) {
@@ -2191,7 +2180,7 @@ function loadUserStack() {
       var users = JSON.parse(this.responseText);
 			
       for (var i in users) {
-        console.log(users[i].id, users[i].login);
+        //console.log(users[i].id, users[i].login);
       }
     }
   }
@@ -2202,7 +2191,7 @@ function loadText() {
   xhr.open('GET', '../test/The Passing Strange.txt', true);
   xhr.onload = function(){
     if (this.status === 200) {
-      console.log(this.responseText);
+      //console.log(this.responseText);
     }
   }
   xhr.send();
@@ -3004,11 +2993,11 @@ function btnPasteNotes() {
 
   if (/*@cc_on!@*/false || !!document.documentMode) {
     // IE
-    insertAtCursor($('lstNotes'), window.clipboardData.getData('Text'));
+    insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
   }
   else {
     // Firefox
-    //insertAtCursor($("lstNotes"), "\nNot supported by this browser.\n");
+    //insertAtCursor($("lst-notes"), "\nNot supported by this browser.\n");
     alert('Not supported by this browser.');
   }
 }
@@ -3032,7 +3021,7 @@ function btnRedoNotes() {
 function backupUndoNotes() {
   
   backupNotes.push(nestArray(notes));
-  notes = $('lstNotes').value.split('\n');
+  notes = $('lst-notes').value.split('\n');
   restoreNotes.length = 0;
   colorNotesUndoButton();
 }
@@ -3078,7 +3067,7 @@ function btnSaveNotes() {
 
   backupUndoNotes();
   $('btn-save-notes').style.color = '#919191';
-  tmpY = encodeSpecialChar($('lstNotes').value);
+  tmpY = encodeSpecialChar($('lst-notes').value);
   notes = tmpY.split('\n');
   storeCookie('NOTES', nestArray(notes));
 }
@@ -3096,38 +3085,38 @@ function btnLoadNotes() {
   }
   updateDisplayNotes();
   $('btn-save-notes').style.color = '#919191';
-  $('lstNotes').scrollTop = $('lstNotes').scrollHeight;
+  $('lst-notes').scrollTop = $('lst-notes').scrollHeight;
 }
 function btnClearNotes() {
 
   backupUndoNotes();
-  $('lstNotes').value = '';
-  notes = $('lstNotes').value.split('\n');
+  $('lst-notes').value = '';
+  notes = $('lst-notes').value.split('\n');
 }
 function btnDeleteNotes() {
 
   backupUndoNotes();
-  var txtField = $('lstNotes').value;
-  var startPos = $('lstNotes').selectionStart;
-  var endPos = $('lstNotes').selectionEnd;
-  $('lstNotes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
-  $('lstNotes').setSelectionRange(startPos, startPos);
-  $('lstNotes').focus();
-  notes = $('lstNotes').value.split('\n');
-  if (isMobile) $('lstNotes').readOnly = true;
+  var txtField = $('lst-notes').value;
+  var startPos = $('lst-notes').selectionStart;
+  var endPos = $('lst-notes').selectionEnd;
+  $('lst-notes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
+  $('lst-notes').setSelectionRange(startPos, startPos);
+  $('lst-notes').focus();
+  notes = $('lst-notes').value.split('\n');
+  if (isMobile) $('lst-notes').readOnly = true;
   colorNotesSaveButton();
 }
 function updateDisplayNotes() {
 
-  $('lstNotes').value = '';
+  $('lst-notes').value = '';
   for (var note in notes) {
-    $('lstNotes').value += decodeSpecialChar(notes[note]);
-    $('lstNotes').value += '\n';
+    $('lst-notes').value += decodeSpecialChar(notes[note]);
+    $('lst-notes').value += '\n';
   }
-  $('lstNotes').value = $('lstNotes').value.trim();
-  $('lstNotes').value += '\n';
+  $('lst-notes').value = $('lst-notes').value.trim();
+  $('lst-notes').value += '\n';
   if (notes.length === 1 && notes[0] === '') {
-    $('lstNotes').value = '';
+    $('lst-notes').value = '';
   }
 }
 
@@ -3901,7 +3890,7 @@ document.addEventListener('keyup', function (event) {
     case 13:// NOTES ENTER (Falls through)
     case 46:// NOTES DELETE
       backupUndoNotes();
-      notes = $('lstNotes').value.split('\n');
+      notes = $('lst-notes').value.split('\n');
       break;
     }
   }
@@ -3934,7 +3923,7 @@ window.onload = function () {
         if ($('txt-input').value.toLowerCase().trim() === ('notes')) {
           btnDelete();
           backupUndoNotes();
-          $('lstNotes').value += this.result;
+          $('lst-notes').value += this.result;
           backupUndoNotes();
         }
         else {
@@ -4144,6 +4133,9 @@ window.onload = function () {
   })();
 
   $('menu-sound-li').classList.add('strikethrough');
+  
+  $('menu-help').onclick = menuHelp;
+
   if (isMobile) {
     $('menu-off').style = 'display:none';
     $('menu-twig').style = 'display:none';
@@ -4152,12 +4144,6 @@ window.onload = function () {
     $('menu-haptic').style = 'display:none';
   }
 
-  // Menu Help
-  $('menu-help').onclick = menuHelp; 
-
-  $('wrap').onresize = function () {
-    console.log('yes');
-  }
   // Text Area
   $('lst-stack').style.color = '#000000';// noscript warning was red ;)
   $('lst-stack').value = '';
@@ -4168,7 +4154,7 @@ window.onload = function () {
     event.stopImmediatePropagation();
     return false;
   }
-
+  
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
   $('txt-input').readOnly = true;
@@ -4256,14 +4242,17 @@ window.onload = function () {
   $('btn-redo-notes').onclick = btnRedoNotes;
   $('btn-clear-notes').onclick = btnClearNotes;
   $('btn-delete-notes').onclick = btnDeleteNotes;
-  $('lstNotes').onclick = function() {
-    $('lstNotes').readOnly = false;
+  $('lst-notes').onclick = function() {
+    $('lst-notes').readOnly = false;
   }
-  $('lstNotes').addEventListener('paste', function() {
+  $('lst-notes').addEventListener('paste', function() {
     setTimeout(function() {
       if (notes.length > 0) backupUndoNotes(); 
     }, 100);
-  });  
+  });
+  $('lst-notes').addEventListener('mouseup', function(){
+    unFloat();
+  });
 
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
@@ -4274,7 +4263,7 @@ window.onload = function () {
 
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
-    $('lstNotes').value = '';
+    $('lst-notes').value = '';
     btnLoadNotes();
   }
   else {
@@ -4300,3 +4289,33 @@ window.onload = function () {
   }
   $('txt-input').readOnly = false;
 };
+
+function unFloatRPN() {
+
+  var wrapWidth = $('wrap').clientWidth;
+  var lstStackWidth = $('lst-stack').clientWidth;
+  var lstNotesWidth = $('lst-notes').clientWidth;
+  var winWidth = getSize();
+  
+  if (lstStackWidth > wrapWidth) {
+    $('wrap').style.marginLeft = ((winWidth[0]  - lstStackWidth) / winWidth[0]) * 50 + '%';
+  } else {
+    $('wrap').style.marginLeft = 'auto';
+  }
+}
+function unFloatNotes() {
+
+  var wrapWidth = $('wrap').clientWidth;
+  var lstStackWidth = $('lst-stack').clientWidth;
+  var lstNotesWidth = $('lst-notes').clientWidth;
+  var winWidth = getSize();
+  
+  if (lstNotesWidth > wrapWidth) {
+    $('wrap').style.marginLeft = ((winWidth[0]  - lstNotesWidth) / winWidth[0]) * 50 + '%';
+  } else {
+    $('wrap').style.marginLeft = 'auto';
+  }
+}
+
+new ResizeObserver(unFloatRPN).observe($('lst-stack'));
+new ResizeObserver(unFloatNotes).observe($('lst-notes'));

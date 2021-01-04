@@ -8,13 +8,20 @@
 }
 
 #open,
-#lst-stack,
 .btn-xoff,
 select,
 option,
 button,
 input[type="button"] {
     cursor: pointer;
+}
+
+#lst-stack {
+    cursor: cell;
+}
+
+#menu-help {
+    cursor: help;
 }
 
 .sub-menu li {
@@ -82,7 +89,6 @@ main {
     min-height: 15.6em;
     min-width: 257px;
     margin-bottom: .3em;
-    resize: none;
     overflow-y: scroll;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .7em;
@@ -95,7 +101,6 @@ main {
 .lst-notes {
     min-height: 34.9em;
     min-width: 257px;
-    resize: vertical;
     overflow-y: scroll;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .7em;
