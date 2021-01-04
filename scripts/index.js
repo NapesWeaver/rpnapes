@@ -153,6 +153,7 @@ function toggleHaptic() {
   $('txt-input').focus();
 }
 function hapticResponse() {
+  console.log('yyyyy');
   if (isMobile) {
     haptic();
     $('txt-input').readOnly = true;

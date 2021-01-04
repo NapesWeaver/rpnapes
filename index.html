@@ -83,10 +83,10 @@
                     <li><a id="menu-tangent" href="#" title="Tangent">tan</a></li>
                   </ul>
                 </li>
-                <li class="haptic-response">
-                  <a href="#" onmouseover="$('base').className='hidden'">View</a>
+                <li>
+                  <a class="haptic-response" href="#" onmouseover="$('base').className='hidden'">View</a>
                   <ul class="sub-menu">
-                    <li class="menu">
+                    <li class="menu haptic-response">
                       <a href="#" title="Change base" onclick="$('base').className='visible'">Base</a>
                       <ul id="base" onclick="$('base').className='hidden'">
                         <li><a href="#" title="Binary" onclick="convertBase(2); updateDisplay()">&nbsp;&nbsp;binary</a></li>
@@ -95,10 +95,10 @@
                         <li><a href="#" title="Decimal" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;decimal</a></li>
                       </ul>
                     </li>                    
-                    <li><a id="menu-darkmode" href="#" title="Toggle dark/light mode">Dark</a></li>
-                    <li><a id="menu-angle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>
-                    <li><label for="fix"><a href="#" title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
-                      <select name="fix"onchange="setFixDecimal(this.value);updateDisplay()">
+                    <li class="haptic-response"><a id="menu-darkmode" href="#" title="Toggle dark/light mode">Dark</a></li>
+                    <li class="haptic-response"><a id="menu-angle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>
+                    <li id="fix"><label for="fix"><a href="#" title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
+                      <select class="haptic-response" name="fix" onchange="setFixDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -121,11 +121,11 @@
                       </select>
                       </label>
                     </li>
-                    <li id="menu-haptic-li"><a id="menu-haptic" href="#" title="Toggle haptic response">Haptic</a></li>
-                    <li id="menu-keyboard-li"><a id="menu-keyboard" href="#" title="Toggle mobile keyboard">Keyboard</a></li>
-                    <li><a id="menu-notes" href="#" title="Switch to Notes">Notes</a></li>                    
-                    <li><label for="sci"><a href="#" title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
-                      <select name="sci" onchange="setSciDecimal(this.value);updateDisplay()">
+                    <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" href="#" title="Toggle haptic response">Haptic</a></li>
+                    <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" href="#" title="Toggle mobile keyboard">Keyboard</a></li>
+                    <li><a id="menu-notes" class="haptic-response" href="#" title="Switch to Notes">Notes</a></li>                    
+                    <li id="sci"><label for="sci"><a href="#" title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
+                      <select class="haptic-response" name="sci" onchange="setSciDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -148,8 +148,8 @@
                       </select>
                       </label>
                     </li>                    
-                    <li><a id="menu-shift" href="#" title="Toggle shift">Shift</a></li>
-                    <li id="menu-sound-li"><a id="menu-sound" href="#" title="Toggle sound for Tricorder">Sound</a></li>
+                    <li class="haptic-response"><a id="menu-shift" href="#" title="Toggle shift">Shift</a></li>
+                    <li id="menu-sound-li" class="haptic-response"><a id="menu-sound" href="#" title="Toggle sound for Tricorder">Sound</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
