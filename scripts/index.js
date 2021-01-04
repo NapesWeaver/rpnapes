@@ -42,6 +42,8 @@ if (isMobile) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate |
 new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 
+window.onresize = unFloat;
+
 const Φ = 1.618033988749895;
 const e = 2.718281828459045;
 const π = 3.141592653589793;
@@ -104,7 +106,6 @@ NumberObject.prototype.getTimeStamp = function () {
   return this.timeStamp;
 };
 NumberObject.prototype.toString = function () {
-
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
 
@@ -112,11 +113,16 @@ function unFloat() {
   var wrapWidth = $('wrap').clientWidth;
   var winWidth = getSize();  
   var lstWidth = $('rpnapes').classList.contains('hidden') ? $('lst-notes').clientWidth : $('lst-stack').clientWidth;
+  var margin = 25;
 
   if (lstWidth > wrapWidth) {
     $('wrap').style.marginLeft = ((winWidth[0]  - lstWidth) / winWidth[0]) * 50 + '%';
   } else {
     $('wrap').style.marginLeft = 'auto';
+  }
+  if (winWidth[0] < lstWidth + margin) {
+    $('lst-stack').style.width = winWidth[0] - margin + 'px';
+    $('lst-notes').style.width = winWidth[0] - margin + 'px';
   }
 }
 
