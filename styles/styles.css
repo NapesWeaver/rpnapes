@@ -69,11 +69,14 @@ body {
 main {
     min-height: 423px;
     padding-bottom: 1em;
-    /* overflow: hidden; */
 }
 
 #rpnapes .num-pad {
     margin-top: .6em;
+}
+
+#notes .num-pad {
+    box-sizing: border-box;
 }
 
 #wrap {

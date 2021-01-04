@@ -49,7 +49,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '0:33:7';
+const tStamp = '14:21:42';
 var testing = false;
 
 var stack = [];
