@@ -71,7 +71,7 @@ main {
     /* overflow: hidden; */
 }
 
-.num-pad {
+#rpnapes .num-pad {
     margin-top: .6em;
 }
 
@@ -199,8 +199,8 @@ img {
 #btn-undo-notes,
 #btn-redo-notes,
 #btn-delete-notes {
-    margin-top: 7px;
-    margin-bottom: 7px;
+    margin-top: 6px;
+    margin-bottom: 6px;
 }
 
 .btn-med {
