@@ -3437,8 +3437,8 @@ function saveTricorder() {
 
 ///////////// Mathmon idName, xPos, yPos, objSize, health, speed, ammo ///////////////
 
-var twig = new Mathmon('twig', 135, -310, 3, 100, 5, 6);
-var tv = new Mathmon('tv', -45, -330, 30, 100, 7, 0);
+var twig = new Mathmon('twig', 135, -365, 3, 100, 5, 6);
+var tv = new Mathmon('tv', -45, -395, 30, 100, 7, 0);
 var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
 var theObjects = [3];
 var wBorders = { };
@@ -3562,7 +3562,7 @@ function resetMathmon() {
     theObjects[i].setHealth(100);
   }
   twig.setXPos(135);
-  twig.setYPos(-310);
+  twig.setYPos(-400);
   tv.setXPos(-45);
   tv.setYPos(-330);
   don.setXPos(-45);
@@ -3673,17 +3673,17 @@ function worldBordersSet() {
 
   if (browserWindow[0] > 330) {
     wBorders = {
-      bTop: -545,
-      bBottom: -330,
-      bLeft: -91,
-      bRight: 209
+      bTop: -593,
+      bBottom: -361,
+      bLeft: -96,
+      bRight: 214
     }
   } else {
     wBorders = {
-      bTop: -420,
-      bBottom: -275,
-      bLeft: -46,
-      bRight: 164
+      bTop: -445,
+      bBottom: -287,
+      bLeft: -59,
+      bRight: 177
     }
   }
 }

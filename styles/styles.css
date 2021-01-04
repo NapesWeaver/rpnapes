@@ -343,6 +343,10 @@ img {
     display: inline;
 }
 
+#private-twig {
+    height: 0;
+}
+
 /****** Menu ***********************************/
 #menu-wrap {
     margin-left: 15px;
