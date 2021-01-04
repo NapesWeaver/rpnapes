@@ -76,7 +76,10 @@ main {
 }
 
 #notes .num-pad {
-    box-sizing: border-box;
+    width: 257px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
 }
 
 #wrap {
@@ -590,6 +593,10 @@ img {
         margin-left: 32px;
         padding-bottom: 23px;
         font-size: 1.2em;
+    }
+
+    #notes .num-pad {
+        width: 334px;
     }
     
     #tricorderskin {
