@@ -49,7 +49,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '11:53:48';
+const tStamp = '0:33:7';
 var testing = false;
 
 var stack = [];
@@ -113,7 +113,7 @@ function unFloat() {
   var wrapWidth = $('wrap').clientWidth;
   var winWidth = getSize();  
   var lstWidth = $('rpnapes').classList.contains('hidden') ? $('lst-notes').clientWidth : $('lst-stack').clientWidth;
-  var margin = 25;
+  var margin = 30;
 
   if (lstWidth > wrapWidth) {
     $('wrap').style.marginLeft = ((winWidth[0]  - lstWidth) / winWidth[0]) * 50 + '%';
@@ -121,8 +121,7 @@ function unFloat() {
     $('wrap').style.marginLeft = 'auto';
   }
   if (winWidth[0] < lstWidth + margin) {
-    $('lst-stack').style.width = winWidth[0] - margin + 'px';
-    $('lst-notes').style.width = winWidth[0] - margin + 'px';
+    $('rpnapes').classList.contains('hidden') ? $('lst-notes').style.width = winWidth[0] - margin + 'px' : $('lst-stack').style.width = winWidth[0] - margin + 'px';
   }
 }
 
