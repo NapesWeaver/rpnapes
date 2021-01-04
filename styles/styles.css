@@ -67,6 +67,7 @@ body {
 }
 
 main {
+    min-height: 423px;
     padding-bottom: 1em;
     /* overflow: hidden; */
 }
