@@ -41,12 +41,13 @@ header {
 
 label {
     display: flex;
+    justify-content: center;
 }
 
 select {
-    font-size: .9em;
-    border: 0;
-    outline: 0;
+    font-size: .9em;    
+    border: none;
+    outline: none;
 }
 
 select:hover {
@@ -68,7 +69,7 @@ select {
 /* for IE10 */ 
 select::-ms-expand { 
     display: none; 
-} 
+}
 
 #menu-help {
     cursor: help;
@@ -563,6 +564,10 @@ label a {
    
     #open {
         padding: 0px 18px 3px 18px;
+    }
+
+    select {
+        margin-top: 2px;
     }
 
     .lst-stack,
