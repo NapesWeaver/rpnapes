@@ -681,6 +681,7 @@ function btnShift() {
     // $('btn-delete').innerHTML = '◀---';
     $('btn-delete').innerHTML = '<−−';
     // $('btn-delete').innerHTML = '<span class="btn-big-font">␈</span>';
+    $('btn-delete').innerHTML = '<span class="btn-backspace">⌫</span>';
     // $('btn-delete').innerHTML = '<span class="btn-big-font">⬅</span>';
     // $('btn-delete').innerHTML = '<span class="btn-big-font">⇐</span>';
     $('btn-inverse').value = 'x !';

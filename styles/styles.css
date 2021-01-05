@@ -212,6 +212,10 @@ main {
     font-size: .6em;
 }
 
+.btn-backspace {
+    font-size: 1.1em;
+}
+
 .btn-pi {
     font-size: .9em;
 }
@@ -604,6 +608,10 @@ label a {
 
     .btn-small {
         width: 45px;
+    }
+
+    .btn-backspace {
+        font-size: 1.3em;
     }
 
     .btn-big-font {
