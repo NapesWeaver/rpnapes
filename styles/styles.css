@@ -34,13 +34,23 @@ header {
         color: #0040FF;
     }
 
+#fix label a:hover,
+#sci label a:hover {
+    color: #000000;
+}
+
 label {
     display: flex;
 }
 
 select {
+    font-size: .9em;
     border: 0;
     outline: 0;
+}
+
+select:hover {
+    color: #0040FF; 
 }
 
 select,
@@ -220,7 +230,6 @@ main {
     font-size: .9em;
 }
 
-select,
 .symbol-big,
 .symbol-med {
     font-size: 1em;

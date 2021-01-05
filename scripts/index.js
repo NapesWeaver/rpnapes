@@ -3093,13 +3093,14 @@ function btnSaveNotes() {
   storeCookie('NOTES', nestArray(notes));
 }
 function btnLoadNotes() {
-
   var index = 0;
-
+  var tmpNotes = [];
+  
   backupUndoNotes();
   index = getCookie('NOTES').indexOf('=') + 1;
   try {
-    notes = splitArrayByBrowser(getCookie('NOTES').substr(index));
+    tmpNotes = splitArrayByBrowser(getCookie('NOTES').substr(index));
+    notes = notes.concat(tmpNotes);
   }
   catch (err) {
     notes.push('Load error.');
