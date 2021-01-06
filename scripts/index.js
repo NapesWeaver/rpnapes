@@ -446,9 +446,12 @@ function deleteButton() {
 function btnDelete() {
 
   backupUndo();
+  $('txt-input').value = $('txt-input').value.trim();
   if (stackFocus) {
     deleteFromStack();
     updateDisplay();
+  } else if ($('txt-input').value !== '' && $('txt-input').value.length === $('txt-input').selectionEnd) {
+    $('txt-input').value = '';
   } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
@@ -576,7 +579,7 @@ function btnEe() {
   if (shifted) {
 
     if (radix !== 16) {
-      if (isANumber($('txt-input').value) && $('txt-input').value.indexOf('j') === -1) {
+      if (isANumber($('txt-input').value) && $('txt-input').value.indexOf('j') === -1 && $('txt-input').value.trim() !== '') {
         insertAtCursor($('txt-input'), 'j');
       }
     } else {
@@ -586,8 +589,7 @@ function btnEe() {
     }
   }
   else {
-    if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txt-input').value) && !/.*[eE].*[eE].*/g.test($('txt-input').value)) {
-    //if ((/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*[eE]?[-+]?\d* *[-+]? *\d*[.]?\d*/g.test($('txt-input').value) || /[-+]?[ΦeπGc]/g.test($('txt-input').value)) && !/.*[eE].*[eE].*/g.test($('txt-input').value)) {
+    if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*/g.test($('txt-input').value) && !/.*[eE]/g.test($('txt-input').value) && !/[-+]?\d?[.][.]+/.test($('txt-input').value) && $('txt-input').value.slice(-1) !== '.') {
       insertAtCursor($('txt-input'), 'e');
     }
   }
