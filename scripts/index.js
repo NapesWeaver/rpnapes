@@ -3143,7 +3143,7 @@ function updateDisplayNotes() {
   }
 }
 
-//// https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
+// https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
 
 var startTime;
 var elapsedTime = 0;
@@ -3274,7 +3274,7 @@ function tricorderOff() {
 function tricorderOn() {
   muteAudio(false);
   $('tricorderskin').src = 'images/tricorderon.png';
-  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1';  
+  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
   $('viewport').classList.remove('hidden');
   $('viewport').classList.add('visible');
   playAudio($('working'));

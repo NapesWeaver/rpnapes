@@ -93,6 +93,7 @@ main {
 .lst-stack {    
     min-height: 15.6em;
     margin-bottom: .3em;
+    color: #B92020;/* no-script warning */
 }
 
 .lst-notes {
