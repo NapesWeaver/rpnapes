@@ -611,7 +611,7 @@ function btnShift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
-    $('file-open').innerHTML = 'Open';
+    $('menu-open').innerHTML = 'Open';
     $('open').setAttribute('title', 'Open a file');
     $('menu-load').innerHTML = 'Load';
     $('menu-load').setAttribute('title', 'Load stack');
@@ -662,7 +662,7 @@ function btnShift() {
   else {
     // Shifting to true...
     shifted = true;
-    $('file-open').innerHTML = 'RunFile';
+    $('menu-open').innerHTML = 'RunFile';
     $('open').setAttribute('title', 'Run JS file');
     $('menu-load').innerHTML = 'Run';
     $('menu-load').setAttribute('title', 'Run stack');
@@ -1935,7 +1935,8 @@ function parseCommand() {
     case 'openNotes':
       stack.pop();
       updateDisplay();      
-      $('txt-input').value = 'notes';
+      btnXoff();
+      $('txt-input').value = '';
       openAFile();
       break;
     case 'print':
@@ -3942,8 +3943,7 @@ window.onload = function () {
 
       fr.onload = function () {
 
-        if ($('txt-input').value.toLowerCase().trim() === ('notes')) {
-          btnDelete();
+        if ($('rpnapes').classList.contains('hidden')) {
           backupUndoNotes();
           $('lst-notes').value += this.result;
           backupUndoNotes();
