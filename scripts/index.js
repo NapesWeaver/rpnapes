@@ -3856,6 +3856,7 @@ document.addEventListener('keydown', function (event) {
       keyHeld = true;
       break;
     case 46:// DELETE
+      event.preventDefault();
       btnDelete();
       break;
     case 106:// NUMPAD *
