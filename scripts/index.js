@@ -304,6 +304,9 @@ function btnCopy() {
   }  
 }
 function copy() {
+  console.log('stackFocus:', stackFocus);
+  console.log('txtInput selected:', isTextSelected($('txt-input')));
+  //if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
   document.execCommand('copy');
 }
 function btn_paste() {
@@ -476,6 +479,7 @@ function btnDelete() {
     updateDisplay();
   } else if ($('txt-input').value !== '' && $('txt-input').value.length === $('txt-input').selectionEnd) {
     $('txt-input').value = '';
+    $('txt-input').focus();
   } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
@@ -2296,6 +2300,16 @@ function returnSelectedText(id) {
   }
   return selectedText;
 }
+
+function isTextSelected(input) {
+  if (typeof input.selectionStart === 'number') {
+    return input.selectionStart === 0 && input.selectionEnd === input.value.length;
+  } else if (typeof document.selection !== 'undefined') {
+    input.focus();
+    return document.selection.createRange().text === input.value;
+  }
+}
+
 
 function insertAtCursor(txtField, txtValue) {
 
