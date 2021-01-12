@@ -40,10 +40,11 @@ var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userA
 
 if (isMobile) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
+window.onresize = resizeTextareas;
+
 new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
-
-window.onresize = unFloat;
+$('main').onresize = unFloat;
 
 const Φ = 1.618033988749895;
 const e = 2.718281828459045;
@@ -56,7 +57,8 @@ var testing = false;
 var stack = [];
 var backUps = [];
 var restores = [];
-var stackSize = 14;
+// var stackSize = 14;
+var stackSize = 99;
 var stackFocus = false;
 var shifted = false;
 var keyHeld = false;
@@ -111,37 +113,38 @@ NumberObject.prototype.toString = function () {
 };
 
 function resizeTextareas() {
-  // var main = document.getElementsByTagName('main');
-  // var mainHeight = main[0].offsetHeight;
-  // var header = document.getElementsByTagName('header');
-  // var headerHeight = header[0].offsetHeight;
-  // var winHeight = getSize();  
-  // var lstStackHeight = $('lst-stack').offsetHeight;
-  // var lstNotesHeight = $('lst-notes').offsetHeight;
+  resizeTextarea($('lst-stack'));
+  resizeTextarea($('lst-notes'));
+  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');
+  if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
+}
 
-  // console.log('mainHeight:', mainHeight);
-  // console.log('headerHeight:', headerHeight);
-  // console.log('winHeight[1]:', winHeight[1]);
-  // console.log('lstStackHeight', lstStackHeight);
-  // console.log('lstNotesHeight', lstNotesHeight);
-
-  // $('lst-stack').style.height = lstStackHeight + winHeight[1] - mainHeight + 'px';
+function resizeTextarea(textarea) {
+  var winSize = getSize();  
+  var textareaHeight = textarea.offsetHeight;
+  var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
+  var headerHeight = document.getElementsByTagName('header')[0].offsetHeight;
+  
+  if (textareaHeight > 0) {
+    textarea.style.height = (winSize[1] + textareaHeight - bodyHeight - headerHeight) + 'px';    
+    textarea.classList.remove('resizable');
+  }
 }
 
 function unFloat() {
   var wrapWidth = $('wrap').clientWidth;
-  var winWidth = getSize();  
+  var winSize = getSize();  
   var lstWidth = $('rpnapes').classList.contains('hidden') ? $('lst-notes').clientWidth : $('lst-stack').clientWidth;
   var margin = 30;
 
   if (lstWidth > wrapWidth) {
-    $('wrap').style.marginLeft = ((winWidth[0]  - lstWidth) / winWidth[0]) * 50 + '%';
+    $('wrap').style.marginLeft = ((winSize[0]  - lstWidth) / winSize[0]) * 50 + '%';
   } else {
     $('wrap').style.marginLeft = 'auto';
   }
-  if (winWidth[0] < lstWidth + margin) {
-    $('rpnapes').classList.contains('hidden') ? $('lst-notes').style.width = winWidth[0] - margin + 'px' : $('lst-stack').style.width = winWidth[0] - margin + 'px';
-  }
+  if (winSize[0] < lstWidth + margin) {
+    $('rpnapes').classList.contains('hidden') ? $('lst-notes').style.width = winSize[0] - margin + 'px' : $('lst-stack').style.width = winSize[0] - margin + 'px';
+  }  
 }
 
 function toggleDarkMode() {  
@@ -238,7 +241,6 @@ function btnXoff() {
     // RPNapes is visible - turn on Notes
     notesOn();
   }
-  resizeTextareas();
 }
 function rpnapesOn() {
 
@@ -250,11 +252,13 @@ function rpnapesOn() {
   $('viewport').classList.add('hidden');
   $('tricorder').classList.remove('visible');
   $('tricorder').classList.add('hidden');
-  if (power()) {
-    playAudio($('keypress3'));
-  }
+  if (power()) playAudio($('keypress3'));
   $('rpnapes').classList.remove('hidden');
   $('rpnapes').classList.add('visible');
+  if ($('lst-stack').classList.contains('resizable')) {
+    $('lst-stack').classList.remove('resizable');
+    resizeTextarea($('lst-stack'));
+  }
   $('txt-input').focus();
 }
 function notesOn() {
@@ -268,11 +272,13 @@ function notesOn() {
   $('viewport').classList.add('hidden');
   $('tricorder').classList.remove('visible');
   $('tricorder').classList.add('hidden');
-  if (power()) {
-    playAudio($('keypress3'));
-  }
+  if (power()) playAudio($('keypress3'));
   $('notes').classList.remove('hidden');
   $('notes').classList.add('visible');
+  if ($('lst-notes').classList.contains('resizable')) {
+    $('lst-notes').classList.remove('resizable');
+    resizeTextarea($('lst-notes'));
+  }
 }
 function showTricorder() {
   
@@ -281,9 +287,7 @@ function showTricorder() {
   monOff();
   $('notes').classList.remove('visible');
   $('notes').classList.add('hidden');
-  if (power()) {
-    playAudio($('tricorder-alert'));
-  }
+  if (power()) playAudio($('tricorder-alert'));
   $('tricorder').classList.remove('hidden');
   $('tricorder').classList.add('visible');
   $('viewport').classList.remove('hidden');
@@ -2339,8 +2343,13 @@ function insertText(text) {
 function updateDisplay() {
 
   $('lst-stack').value = '';
+
+  // console.log('clientHeight', $('lst-stack').clientHeight / 20.25);
+  // console.log('clientHeight / 20.25', $('lst-stack').clientHeight / 20.25);
+  // console.log('rows', $('lst-stack').getAttribute('rows')); 
+  
   // Buffer stack display
-  for (var i = 0; i < $('lst-stack').getAttribute('rows') ; i++) {
+  for (var i = 0; i < $('lst-stack').getAttribute('rows'); i++) {
     $('lst-stack').value += ' \n';
   }
   // Print to stack display
@@ -4195,7 +4204,7 @@ window.onload = function () {
     event.stopImmediatePropagation();
     return false;
   }
-  resizeTextareas();
+  resizeTextarea($('lst-stack'));
   
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;

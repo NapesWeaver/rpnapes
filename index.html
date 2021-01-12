@@ -29,7 +29,7 @@
         <input type="button" id="btn-xoff" class='btn-other btn-xoff haptic-response' name="btn-xoff" title="Toggle interface" value="&nbsp;"/>
       </header>
       
-      <main>
+      <main id="main">
         <!-- RPNapes -->
         <div id="rpnapes">
           <div id="menu-wrap">
@@ -213,7 +213,8 @@
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Jan 11, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <!-- <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Jan 12, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea> -->
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="97" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Jan 12, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
@@ -276,7 +277,7 @@
             <input type="button" id="btn-redo-notes" class="btn-other haptic-response" value="REDO"/>          
             <input type="button" id="btn-delete-notes" class="btn-other haptic-response" value="DEL"/>          
           </div>
-          <textarea id="lst-notes" class="lst-notes haptic-response" name="notes" placeholder="Notes:" cols="28" rows="27"></textarea>
+          <textarea id="lst-notes" class="lst-notes haptic-response resizable" name="notes" placeholder="Notes:" cols="28" rows="27"></textarea>
         </div>
 
         <!-- Tricorder -->

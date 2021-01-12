@@ -76,7 +76,7 @@ select::-ms-expand {
 }
 
 main {
-    min-height: 423px;
+    /* min-height: 423px; */
     padding-bottom: 1em;
 }
 
@@ -91,13 +91,17 @@ main {
 }
 
 .lst-stack {    
-    min-height: 15.6em;
+    min-height: 2.1em;
+    /* height: 15.6em; */
+    height: 2.1em;
     margin-bottom: .3em;
     color: #B92020;/* no-script warning */
 }
 
 .lst-notes {
-    min-height: 34.9em;
+    min-height: 3.3em;
+    height: 34.9em;
+    /* height: 3.3em; */
 }
 
 .lst-stack,
@@ -586,7 +590,7 @@ label a {
     }
 
     .lst-notes {
-        min-height: 33.5em;
+        height: 33.5em;
     }
 
     #txt-input,
