@@ -304,9 +304,7 @@ function btnCopy() {
   }  
 }
 function copy() {
-  console.log('stackFocus:', stackFocus);
-  console.log('txtInput selected:', isTextSelected($('txt-input')));
-  //if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
+  if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
   document.execCommand('copy');
 }
 function btn_paste() {
@@ -2301,13 +2299,26 @@ function returnSelectedText(id) {
   return selectedText;
 }
 
-function isTextSelected(input) {
-  if (typeof input.selectionStart === 'number') {
-    return input.selectionStart === 0 && input.selectionEnd === input.value.length;
-  } else if (typeof document.selection !== 'undefined') {
-    input.focus();
-    return document.selection.createRange().text === input.value;
+// function isTextSelected(input) {
+//   if (typeof input.selectionStart === 'number') {
+//     return input.selectionStart === 0 && input.selectionEnd === input.value.length;
+//   } else if (typeof document.selection !== 'undefined') {
+//     input.focus();
+//     return document.selection.createRange().text === input.value;
+//   }
+// }
+
+function isTextSelected(input){
+  var startPos = input.selectionStart;
+  var endPos = input.selectionEnd;
+  var doc = document.selection;
+
+  if(doc && doc.createRange().text.length != 0){
+    return true;
+  }else if (!doc && input.value.substring(startPos,endPos).length != 0){
+    return true;
   }
+  return false;
 }
 
 
