@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '14:29:34';
+const tStamp = '13:21:38';
 var testing = false;
 
 var stack = [];
@@ -123,10 +123,11 @@ function resizeTextarea(textarea) {
   var winSize = getSize();  
   var textareaHeight = textarea.offsetHeight;
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
-  var headerHeight = document.getElementsByTagName('header')[0].offsetHeight;
+  //var headerHeight = document.getElementsByTagName('header')[0].offsetHeight;
   
   if (textareaHeight > 0) {
-    textarea.style.height = (winSize[1] + textareaHeight - bodyHeight - headerHeight) + 'px';    
+    // textarea.style.height = (winSize[1] + textareaHeight - bodyHeight - headerHeight) + 'px';    
+    textarea.style.height = (winSize[1] + textareaHeight - bodyHeight) + 'px';    
     textarea.classList.remove('resizable');
   }
 }
