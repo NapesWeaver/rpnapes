@@ -34,7 +34,8 @@ if (!Array.prototype.indexOf)
   })(Object, Math.max, Math.min);
 
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+// var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
 if (isMobile) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
@@ -108,6 +109,24 @@ NumberObject.prototype.getTimeStamp = function () {
 NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
+
+function resizeTextareas() {
+  // var main = document.getElementsByTagName('main');
+  // var mainHeight = main[0].offsetHeight;
+  // var header = document.getElementsByTagName('header');
+  // var headerHeight = header[0].offsetHeight;
+  // var winHeight = getSize();  
+  // var lstStackHeight = $('lst-stack').offsetHeight;
+  // var lstNotesHeight = $('lst-notes').offsetHeight;
+
+  // console.log('mainHeight:', mainHeight);
+  // console.log('headerHeight:', headerHeight);
+  // console.log('winHeight[1]:', winHeight[1]);
+  // console.log('lstStackHeight', lstStackHeight);
+  // console.log('lstNotesHeight', lstNotesHeight);
+
+  // $('lst-stack').style.height = lstStackHeight + winHeight[1] - mainHeight + 'px';
+}
 
 function unFloat() {
   var wrapWidth = $('wrap').clientWidth;
@@ -219,6 +238,7 @@ function btnXoff() {
     // RPNapes is visible - turn on Notes
     notesOn();
   }
+  resizeTextareas();
 }
 function rpnapesOn() {
 
@@ -289,8 +309,7 @@ function btn_paste() {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   }
   else {
-    if (/*@cc_on!@*/false || !!document.documentMode) {
-      // IE
+    if (/*@cc_on!@*/false || !!document.documentMode) {// IE
       insertAtCursor($('txt-input'), window.clipboardData.getData('Text'));
     }
     else {
@@ -747,14 +766,13 @@ function btnSave() {
 function nestArray(srcArray) {
   var newArray = '';
 
-  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-    // IE || Chrome
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     for (var chro in srcArray) {
       newArray += '_';
       newArray += srcArray[chro];
     }
   } else {
-    //Firefox        
+    // Firefox
     for (var fire in srcArray) {
       newArray += '\t';
       newArray += srcArray[fire];
@@ -818,8 +836,8 @@ function loadStack(tmpStack) {
 
   //stack.length = 0;
 
-  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-    // IE || Chrome - remove underscore from begining of string
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
+    // Remove underscore from begining of string
     tmpStack = tmpStack.substr(1);
   }
   tmpStack = splitArrayByBrowser(tmpStack);
@@ -834,11 +852,11 @@ function loadStack(tmpStack) {
   }    
 }
 function splitArrayByBrowser(tmpArray) {
-  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-    // IE || Chrome
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     tmpArray = tmpArray.split('_');
   }
   else {
+    // Firefox
     tmpArray = tmpArray.split('\t');
   }
   return tmpArray;
@@ -1533,8 +1551,7 @@ function geolocationError(error) {
 }
 function getIP() {
 
-  if (/*@cc_on!@*/false || !!document.documentMode) {
-    // IE
+  if (/*@cc_on!@*/false || !!document.documentMode) {// IE
     rpnAlert('Not supported by this browser.');
   }
   else {
@@ -3015,12 +3032,10 @@ function btnPasteNotes() {
 
   backupUndoNotes();
 
-  if (/*@cc_on!@*/false || !!document.documentMode) {
-    // IE
+  if (/*@cc_on!@*/false || !!document.documentMode) {// IE
     insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
   }
   else {
-    // Firefox
     //insertAtCursor($("lst-notes"), "\nNot supported by this browser.\n");
     alert('Not supported by this browser.');
   }
@@ -3583,8 +3598,8 @@ function resetMathmon() {
 
 function loadMathMon(tmpStack) {
 
-  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome) {
-    // IE || Chrome - remove underscore from begining of string
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
+    // Remove underscore from begining of string
     tmpStack = tmpStack.substr(1);
   }
   tmpStack = splitArrayByBrowser(tmpStack);  
@@ -3856,7 +3871,8 @@ document.addEventListener('keydown', function (event) {
       keyHeld = true;
       break;
     case 46:// DELETE
-      event.preventDefault();
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDelete();
       break;
     case 106:// NUMPAD *
@@ -4179,6 +4195,7 @@ window.onload = function () {
     event.stopImmediatePropagation();
     return false;
   }
+  resizeTextareas();
   
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
