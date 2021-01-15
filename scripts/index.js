@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '13:43:10';
+const tStamp = '14:8:10';
 var testing = false;
 
 var stack = [];
@@ -3313,20 +3313,34 @@ function tricorderOff() {
   $('tricorderskin').src = 'images/tricorder.png';
 }
 function tricorderOn() {
+  var isOnline = navigator.online;
   muteAudio(false);
   $('tricorderskin').src = 'images/tricorderon.png';
-  try {
+  if (isOnline) {
+    console.log('online');
     $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
-    $('viewport').classList.remove('hidden');
-    $('viewport').classList.add('visible');
     playAudio($('working'));
     playAudio($('hailing-frequencies'));
-    getLocation();
-  } catch(e) {
+  } else {
+    console.log('offline');
     enterInput();
     updateDisplay();
-    rpnAlert('Tricorder is off-line.')
+    rpnAlert('Tricorder is off-line.');
   }
+  // try {
+  //   $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
+  //   playAudio($('working'));
+  //   playAudio($('hailing-frequencies'));
+  //   console.log('online');
+  // } catch(e) {
+  //   enterInput();
+  //   updateDisplay();
+  //   rpnAlert('Tricorder is off-line.');
+  //   console.log('offline');
+  // }
+  $('viewport').classList.remove('hidden');
+  $('viewport').classList.add('visible');
+  getLocation();
 }
 function button2() {
 
