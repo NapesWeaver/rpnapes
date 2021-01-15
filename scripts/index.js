@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '14:8:10';
+const tStamp = '14:18:49';
 var testing = false;
 
 var stack = [];
@@ -3321,26 +3321,16 @@ function tricorderOn() {
     $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
     playAudio($('working'));
     playAudio($('hailing-frequencies'));
+    $('viewport').classList.remove('hidden');
+    $('viewport').classList.add('visible');
+    getLocation();
   } else {
     console.log('offline');
+    // btnEnter();
     enterInput();
     updateDisplay();
     rpnAlert('Tricorder is off-line.');
   }
-  // try {
-  //   $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
-  //   playAudio($('working'));
-  //   playAudio($('hailing-frequencies'));
-  //   console.log('online');
-  // } catch(e) {
-  //   enterInput();
-  //   updateDisplay();
-  //   rpnAlert('Tricorder is off-line.');
-  //   console.log('offline');
-  // }
-  $('viewport').classList.remove('hidden');
-  $('viewport').classList.add('visible');
-  getLocation();
 }
 function button2() {
 
