@@ -3313,7 +3313,7 @@ function tricorderOff() {
   $('tricorderskin').src = 'images/tricorder.png';
 }
 function tricorderOn() {
-  var isOnline = navigator.online;
+  var isOnline = navigator.onLine;
   muteAudio(false);
   $('tricorderskin').src = 'images/tricorderon.png';
   if (isOnline) {
