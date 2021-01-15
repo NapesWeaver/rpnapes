@@ -57,7 +57,6 @@ var testing = false;
 var stack = [];
 var backUps = [];
 var restores = [];
-// var stackSize = 14;
 var stackSize = 99;
 var stackFocus = false;
 var shifted = false;
@@ -123,10 +122,8 @@ function resizeTextarea(textarea) {
   var winSize = getSize();  
   var textareaHeight = textarea.offsetHeight;
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
-  //var headerHeight = document.getElementsByTagName('header')[0].offsetHeight;
   
   if (textareaHeight > 0) {
-    // textarea.style.height = (winSize[1] + textareaHeight - bodyHeight - headerHeight) + 'px';    
     textarea.style.height = (winSize[1] + textareaHeight - bodyHeight) + 'px';    
     textarea.classList.remove('resizable');
   }
@@ -530,7 +527,7 @@ function btnUndo() {
 }
 function undoFunction() {
   if (backUps.length > 3) {    
-    restores.push(nestArray(stack));
+    restores.push(nestArrayByBrowser(stack));
     restores.push($('txt-input').value);
 
     $('txt-input').value = backUps.pop();
@@ -551,7 +548,7 @@ function undoFunction() {
 function redoFunction() {
 
   if (restores.length > 0) {
-    backUps.push(nestArray(stack));
+    backUps.push(nestArrayByBrowser(stack));
     backUps.push($('txt-input').value);
 
     $('txt-input').value = restores.pop();
@@ -570,7 +567,7 @@ function redoFunction() {
   colorUndoButton();
 }
 function backupUndo() {
-  backUps.push(nestArray(stack));
+  backUps.push(nestArrayByBrowser(stack));
   backUps.push($('txt-input').value.trim());
   restores.length = 0;
   colorUndoButton();
@@ -766,11 +763,11 @@ function btnClear() {
 function btnSave() {
 
   $('btn-save').style.color = '#D4D0C8';
-  storeCookie('STACK', nestArray(stack));
-  storeCookie('MATHMON', nestArray(theObjects));
+  storeCookie('STACK', nestArrayByBrowser(stack));
+  storeCookie('MATHMON', nestArrayByBrowser(theObjects));
   $('txt-input').focus();
 }
-function nestArray(srcArray) {
+function nestArrayByBrowser(srcArray) {
   var newArray = '';
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
@@ -792,6 +789,8 @@ function saveFile(fileName, pretty) {
 
   var myBlob;
   var blobContent = '';
+
+  fileName = decodeSpecialChar(fileName.toString());
 
   if (fileName.trim() === '') {
     fileName = 'untitled';
@@ -2285,12 +2284,12 @@ function returnSelectedText(id) {
 
   var textComponent = $(id);
   var selectedText;
-  // IE version
+  // IE
   if (document.selection !== undefined) {
     textComponent.focus();
     var sel = document.selection.createRange();
     selectedText = sel.text;
-  }// Mozilla version
+  }// Firefox
   else if (textComponent.selectionStart !== undefined) {
     var startPos = textComponent.selectionStart;
     var endPos = textComponent.selectionEnd;
@@ -2299,28 +2298,18 @@ function returnSelectedText(id) {
   return selectedText;
 }
 
-// function isTextSelected(input) {
-//   if (typeof input.selectionStart === 'number') {
-//     return input.selectionStart === 0 && input.selectionEnd === input.value.length;
-//   } else if (typeof document.selection !== 'undefined') {
-//     input.focus();
-//     return document.selection.createRange().text === input.value;
-//   }
-// }
-
 function isTextSelected(input){
   var startPos = input.selectionStart;
   var endPos = input.selectionEnd;
   var doc = document.selection;
 
-  if(doc && doc.createRange().text.length != 0){
+  if(doc && doc.createRange().text.length !== 0){
     return true;
   }else if (!doc && input.value.substring(startPos,endPos).length != 0){
     return true;
   }
   return false;
 }
-
 
 function insertAtCursor(txtField, txtValue) {
 
@@ -2449,8 +2438,8 @@ function colorSaveButton() {
     var index = 0;
     
     index = getCookie('STACK').indexOf('=') + 1;
-    //console.log(getCookie("STACK").substr(0).trim(), nestArray(stack).trim());
-    if (getCookie('STACK').substr(index).trim() !== nestArray(stack).trim()) {
+    //console.log(getCookie("STACK").substr(0).trim(), nestArrayByBrowser(stack).trim());
+    if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
       $('btn-save').style.color = '#000000';
     }
     else {
@@ -3077,7 +3066,7 @@ function btnPasteNotes() {
 }
 function btnUndoNotes() {
   if (backupNotes.length > 1) {
-    restoreNotes.push(nestArray(notes));
+    restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
   }
@@ -3086,7 +3075,7 @@ function btnUndoNotes() {
 function btnRedoNotes() {
 
   if (restoreNotes.length > 0) {
-    backupNotes.push(nestArray(notes));
+    backupNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(restoreNotes.pop());
     updateDisplayNotes();
   }
@@ -3094,7 +3083,7 @@ function btnRedoNotes() {
 }
 function backupUndoNotes() {
   
-  backupNotes.push(nestArray(notes));
+  backupNotes.push(nestArrayByBrowser(notes));
   notes = $('lst-notes').value.split('\n');
   restoreNotes.length = 0;
   colorNotesUndoButton();
@@ -3123,7 +3112,7 @@ function colorNotesSaveButton() {
 
   index = getCookie('NOTES').indexOf('=') + 1;
   cookieValue = getCookie('NOTES').substr(index);
-  notesValue = nestArray(notes);
+  notesValue = nestArrayByBrowser(notes);
   // This step is needed for Chrome and IE
   cookieValue = cookieValue.replace(/_/g, ' ').trim();
   notesValue = notesValue.replace(/_/g, ' ').trim();
@@ -3143,7 +3132,7 @@ function btnSaveNotes() {
   $('btn-save-notes').style.color = '#919191';
   tmpY = encodeSpecialChar($('lst-notes').value);
   notes = tmpY.split('\n');
-  storeCookie('NOTES', nestArray(notes));
+  storeCookie('NOTES', nestArrayByBrowser(notes));
 }
 function btnLoadNotes() {
   var index = 0;
@@ -3487,7 +3476,7 @@ function saveTricorder() {
   for (var i in widgetSrc) {
     widgetSrc[i] = encodeSpecialChar(widgetSrc[i]);
   }  
-  storeCookie('TRICORDER', nestArray(widgetSrc));
+  storeCookie('TRICORDER', nestArrayByBrowser(widgetSrc));
 }
 
 ///////////// Mathmon idName, xPos, yPos, objSize, health, speed, ammo ///////////////

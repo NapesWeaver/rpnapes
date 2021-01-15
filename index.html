@@ -44,7 +44,7 @@
                     <li><a id="menu-clear" href="#" title="Clear display and input">Clear</a></li>
                     <li><a id="menu-load" href="#" title="Load stack">Load</a></li>
                     <li><a id="menu-save" href="#" title="Save to stack">Save</a></li>
-                    <li><a href="#" title="Save as a .txt file" onclick="stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true)">SaveAs</a></li>
+                    <li><a href="#" title="Save as a .txt file" onclick="if ($('txt-input').value.trim() !== '') {saveFile($('txt-input').value.trim(), true);} else if (stack[stack.length - 1]) {saveFile(stack[stack.length - 1].soul, true);} else {saveFile('', true)}">SaveAs</a></li>
                     <li><a id="menu-print" href="#" title="Open printer dialog">Print</a></li>
                     <li><a id="menu-off" href="#" title="Turn off programs and close tab. Problematic :(">Off</a></li>
                   </ul>
@@ -213,8 +213,7 @@
             </nav>
           </div>
 
-          <!-- <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="12" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Jan 12, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea> -->
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="97" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Jan 12, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="97" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Jan 15, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
