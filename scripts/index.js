@@ -1860,6 +1860,9 @@ function parseCommand() {
     // case 'editstack':
     //   editStack();
     //   break;  
+    case 'fizzBuzz':
+      fizzBuzz();
+      break;  
     case 'flightLogger':
       stack.pop();
       $('txt-input').value = '';
@@ -2245,6 +2248,20 @@ function loadText() {
     }
   }
   xhr.send();
+}
+
+function fizzBuzz() {
+  if (!shifted) btnShift();
+  inputText('maxCount = prompt("Enter a number number", "25");');
+  enterInput();
+  evaluateInput($('txt-input').value);
+  inputText('getFizzBuzz = function(w){ word = w;if (w % 3 === 0) word = "fizz"; if(w % 5 === 0) word = "buzz"; if (w % 15 === 0) word = "fizzbuzz"; return word}');
+  enterInput();
+  evaluateInput($('txt-input').value);
+  inputText('for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $("txt-input").value=""; $("txt-input").value=word; enterInput(); }');
+  enterInput();
+  evaluateInput($('txt-input').value);
+  updateDisplay();
 }
 
 function openAFile() {
@@ -4143,6 +4160,7 @@ window.onload = function () {
   })();
 
   // Menu Programs
+  $('menu-fizz-buzz').onclick = fizzBuzz;
   $('menu-stopwatch').onclick = stopwatchStart;
   $('menu-tricorder').onclick = showTricorder;
   $('menu-twig').onclick = monOn;
