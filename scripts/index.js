@@ -244,6 +244,7 @@ function rpnapesOn() {
 
   $('notes').classList.remove('visible');
   $('notes').classList.add('hidden');
+  $('wrap').classList.remove('tricorder-min-height');
   $('widget').classList.remove('visible');
   $('widget').classList.add('hidden');
   $('viewport').classList.remove('visible');
@@ -264,6 +265,7 @@ function notesOn() {
   $('rpnapes').classList.remove('visible');
   $('rpnapes').classList.add('hidden');
   monOff();
+  $('wrap').classList.remove('tricorder-min-height');
   $('widget').classList.remove('visible');
   $('widget').classList.add('hidden');
   $('viewport').classList.remove('visible');
@@ -286,6 +288,7 @@ function showTricorder() {
   $('notes').classList.remove('visible');
   $('notes').classList.add('hidden');
   if (power()) playAudio($('tricorder-alert'));
+  $('wrap').classList.add('tricorder-min-height');
   $('tricorder').classList.remove('hidden');
   $('tricorder').classList.add('visible');
   $('viewport').classList.remove('hidden');
@@ -3314,7 +3317,7 @@ function tricorderOff() {
   $('tricorderskin').src = 'images/tricorder.png';
 }
 function tricorderOn() {
-  muteAudio(false);
+  muteAudio(false);  
   $('tricorderskin').src = 'images/tricorderon.png';
   $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
   $('viewport').classList.remove('hidden');
