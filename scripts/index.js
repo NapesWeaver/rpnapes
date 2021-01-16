@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '14:18:49';
+const tStamp = '13:21:38';
 var testing = false;
 
 var stack = [];
@@ -2455,7 +2455,8 @@ function storeCookie(aName, tmpArray) {
   // years * days * hours * min * sec * mili second
   d.setTime(d.getTime() + (1 * 365 * 24 * 60 * 60 * 1000));
   var expires = '; expires=' + d.toUTCString();
-  document.cookie = aName + '=' + tmpArray + expires + ';path=/';
+  //document.cookie = aName + '=' + tmpArray + expires + ';path=/';
+  document.cookie = aName + '=' + tmpArray + expires + + 'SameSite=Lax;'+';path=/';
 }
 
 function getCookie(cname) {
@@ -3313,24 +3314,14 @@ function tricorderOff() {
   $('tricorderskin').src = 'images/tricorder.png';
 }
 function tricorderOn() {
-  var isOnline = navigator.onLine;
   muteAudio(false);
   $('tricorderskin').src = 'images/tricorderon.png';
-  if (isOnline) {
-    console.log('online');
-    $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
-    playAudio($('working'));
-    playAudio($('hailing-frequencies'));
-    $('viewport').classList.remove('hidden');
-    $('viewport').classList.add('visible');
-    getLocation();
-  } else {
-    console.log('offline');
-    // btnEnter();
-    enterInput();
-    updateDisplay();
-    rpnAlert('Tricorder is off-line.');
-  }
+  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
+  $('viewport').classList.remove('hidden');
+  $('viewport').classList.add('visible');
+  playAudio($('working'));
+  playAudio($('hailing-frequencies'));
+  getLocation();
 }
 function button2() {
 
@@ -3599,8 +3590,7 @@ function monOn() {
   worldBordersSet();
   worldEngine();
 }
-function monOff() {
-
+function monOff() {  
   $('twig').src = 'images/twig/pop.gif';
   twig.setHealth(0);
   $('twig').className = 'hidden';
