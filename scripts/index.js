@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '22:45:37';
+const tStamp = '0:21:3';
 var testing = false;
 
 var stack = [];
@@ -2459,7 +2459,7 @@ function storeCookie(aName, tmpArray) {
   d.setTime(d.getTime() + (1 * 365 * 24 * 60 * 60 * 1000));
   var expires = '; expires=' + d.toUTCString();
   //document.cookie = aName + '=' + tmpArray + expires + ';path=/';
-  document.cookie = aName + '=' + tmpArray + expires + + 'SameSite=Lax;'+';path=/';
+  document.cookie = aName + '=' + tmpArray + expires + 'SameSite=Lax;'+';path=/';
 }
 
 function getCookie(cname) {
