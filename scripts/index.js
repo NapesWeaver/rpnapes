@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '13:21:38';
+const tStamp = '22:45:37';
 var testing = false;
 
 var stack = [];
@@ -3326,6 +3326,10 @@ function tricorderOn() {
   playAudio($('hailing-frequencies'));
   getLocation();
 }
+function preloadImages() {
+  var tricorderOnImg = new Image(); 
+  tricorderOnImg.src = 'images/tricorderon.png';
+}
 function button2() {
 
   if (power()) {    
@@ -4280,9 +4284,7 @@ window.onload = function () {
   });
 
   // Tricorder
-  var img = new Image();
-  img.src = '/images/tricorderon.png';
-  
+  preloadImages();
   viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
   viewPortSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
   viewPortSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
