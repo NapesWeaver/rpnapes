@@ -218,6 +218,8 @@ main {
 #btn-delete-notes {
     margin-top: 6px;
     margin-bottom: 6px;
+    padding-left: 2px;
+    padding-right: 2px;
 }
 
 .btn-big-font {
@@ -615,6 +617,8 @@ label a {
     #btn-delete-notes {
         margin-top: 10px;
         margin-bottom: 10px;
+        padding-left: 1px;
+        padding-right: 1px;
     }
 
     .btn-big,
