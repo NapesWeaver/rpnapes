@@ -4280,6 +4280,9 @@ window.onload = function () {
   });
 
   // Tricorder
+  var img = new Image();
+  img.src = '/images/tricorderon.png';
+  
   viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
   viewPortSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
   viewPortSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
