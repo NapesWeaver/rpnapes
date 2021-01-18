@@ -1726,7 +1726,7 @@ function help(command) {
       inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
       break;
     case 'youTube':
-      inputText('youTube [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
+      inputText('youTube [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query. Alias: you');
       break;    
     default:// case NOT a help argument
       enterInput();
