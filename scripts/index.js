@@ -303,9 +303,18 @@ function btnCopy() {
     copy();
   }  
 }
+// function copy() {
+//   if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
+//   document.execCommand('copy');
+// }
 function copy() {
   if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
-  document.execCommand('copy');
+
+  if (!stackFocus) {
+    navigator.clipboard.writeText(getSelectedText('txt-input'));    
+  } else {
+    navigator.clipboard.writeText(getSelectedText('lst-stack'));
+  }
 }
 function btn_paste() {
 
