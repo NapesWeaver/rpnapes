@@ -303,10 +303,6 @@ function btnCopy() {
     copy();
   }  
 }
-// function copy() {
-//   if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
-//   document.execCommand('copy');
-// }
 function copy() {
   if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
 
@@ -3079,8 +3075,8 @@ var backupNotes = [];
 var restoreNotes = [];
 
 function btnCopyNotes() {
-
-  document.execCommand('copy');
+  //document.execCommand('copy');
+  navigator.clipboard.writeText(getSelectedText('lst-notes'));
 }
 function btnPasteNotes() {
 
