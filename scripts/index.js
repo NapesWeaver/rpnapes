@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '0:21:3';
+const tStamp = '18:27:39';
 var testing = false;
 
 var stack = [];
@@ -898,7 +898,7 @@ function btnOff() {
   window.top.close();
   rpnAlert('Window not opened with window.open()');
   return false;
-  //throw new Error();
+  throw new Error();
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
