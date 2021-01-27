@@ -894,9 +894,12 @@ function btnOff() {
 
   monOff();
   tricorderOff();
-  window.open('','_self').close();
-  //window.top.close();
-  rpnAlert('Window not opened with window.open()');
+  try {
+    window.open('','_self').close();
+    window.top.close();
+  } catch (e) {
+    rpnAlert('Window not opened with window.open()', e.toString);
+  }
   return false;
   //throw new Error();
 }
