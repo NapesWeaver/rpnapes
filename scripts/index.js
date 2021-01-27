@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = 3.141592653589793;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '18:51:40';
+const tStamp = '0:21:3';
 var testing = false;
 
 var stack = [];
@@ -892,17 +892,16 @@ function pushObjectToStack(tmpArray) {
 
 function btnOff() {
 
-  try {
-    monOff();
-    tricorderOff();
+  monOff();
+  tricorderOff();
+  // Not working at all for mobile Firefox
+  if (!isMobile && !navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
     window.open('','_self').close();
     window.top.close();
     rpnAlert('Window not opened with window.open()');
+    return false;
     //throw new Error();
-  } catch (e) {
-    rpnAlert('e.toString: ' + e.toString);
   }
-  return false;
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
