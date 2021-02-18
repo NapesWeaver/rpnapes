@@ -894,6 +894,7 @@ function btnOff() {
 
   monOff();
   tricorderOff();
+  
   // Not working at all for mobile Firefox :(
   if (navigator.userAgent.toLowerCase().indexOf('firefox') === -1 || !isMobile) {
     window.open('','_self').close();
