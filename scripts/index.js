@@ -1198,9 +1198,14 @@ function btnDivide() {
 }
 function division() {
   backupUndo();
-
   var newUnits = getDivideUnits(1);
-  $('txt-input').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+  var objX = getX();
+  
+  if (radix === 10) {
+    $('txt-input').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+  } else {
+    $('txt-input').value = (stack.pop().getRealPart() / objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
+  } 
   updateDisplay();
   $('txt-input').focus();
 }
@@ -1216,9 +1221,14 @@ function btnMultiply() {
 }
 function multiplication() {
   backupUndo();
-
   var newUnits = getMultiplyUnits(1);
-  $('txt-input').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+  var objX = getX();
+
+  if (radix === 10) {
+    $('txt-input').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+  } else {
+    $('txt-input').value = (stack.pop().getRealPart() * objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
+  } 
   updateDisplay();
   $('txt-input').focus();
 }
@@ -1235,8 +1245,14 @@ function btnSubtract() {
 }
 function subtraction() {
   backupUndo();
-  var newUnits = getAddUnits();        
-  $('txt-input').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+  var newUnits = getAddUnits();
+  var objX = getX();
+
+  if (radix === 10) {
+    $('txt-input').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+  } else {
+    $('txt-input').value = (stack.pop().getRealPart() - objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
+  } 
   updateDisplay();
   $('txt-input').focus();
 }
@@ -1253,13 +1269,11 @@ function btnAdd() {
 }
 function addition() {
   backupUndo();
-
   var newUnits = getAddUnits();
   var objX = getX();
   
   if (radix === 10) {
     $('txt-input').value = parseFloat(stack.pop().getRealPart()) + parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
-    // $('txt-input').value = parseFloat(stack.pop().getRealPart()) + objX.getRealPart() + decodeSpecialChar(newUnits);
   } else {
     $('txt-input').value = (stack.pop().getRealPart() + objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
   }  
@@ -2048,7 +2062,7 @@ function parseCommand() {
 }
 
 function parseEvaluation(input) {
-  // If input does not contain quotes or regex i.e. input is not part of another program AND it contains [!^√]  
+  // If input does not contain quotes or regex (input is not part of another program) AND it contains [!^√]  
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
     input = input.replace(/ /g, '');
     // Parse nested symbols
