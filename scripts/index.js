@@ -48,7 +48,8 @@ $('main').onresize = unFloat;
 
 const Φ = 1.618033988749895;
 const e = 2.718281828459045;
-const π = 3.141592653589793;
+// const π = 3.141592653589793;
+const π = Math.PI;
 const G = 6.674E-11;
 const c = 299792458;
 const tStamp = '19:4:51';
@@ -453,7 +454,8 @@ function evaluateInput(input) {
     if (testing) {
       try {
         if (stack.length > 0 && stack.length % 2 === 0) {
-          console.log(decodeSpecialChar(stack[stack.length - 2].soul), stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString());
+          // console.log(decodeSpecialChar(stack[stack.length - 2].soul), stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString());
+          console.log(`${decodeSpecialChar(stack[stack.length - 2].soul)} %c${stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString()}`, 'font-weight: bold; color: green');
         }
       } catch(e) {
         console.log(stack[stack.length - 2].soul, e.toString());
@@ -1306,9 +1308,9 @@ function btnSine() {
   backupUndo();
 
   if (shifted) {
-    $('txt-input').value = computeTrig($('txt-input').value, Math.asin);
+    $('txt-input').value = asin($('txt-input').value);
   } else {
-    $('txt-input').value = computeTrig($('txt-input').value, Math.sin);
+    $('txt-input').value = sin(parseFloat($('txt-input').value));
   }
   updateDisplay();
   $('txt-input').select();  
@@ -1317,10 +1319,11 @@ function btnCosine() {
 
   backupUndo();
 
+  var test = parseFloat($('txt-input').value);
   if (shifted) {
-    $('txt-input').value = computeTrig($('txt-input').value, Math.acos);
+    $('txt-input').value = acos(test);
   } else {
-    $('txt-input').value = computeTrig($('txt-input').value, Math.cos);
+    $('txt-input').value = cos($('txt-input').value);
   }
   updateDisplay();
   $('txt-input').select();
@@ -1330,23 +1333,46 @@ function btnTangent() {
   backupUndo();
 
   if (shifted) {
-    $('txt-input').value = computeTrig($('txt-input').value, Math.atan);
+    $('txt-input').value = atan($('txt-input').value);
   }
   else {
-    $('txt-input').value = computeTrig($('txt-input').value, Math.tan);
+    $('txt-input').value = tan($('txt-input').value);
   }
   updateDisplay();
   $('txt-input').select();
 }
-function computeTrig(input, trigFunc) {
-  
-  if ($('btn-angle').value === 'rad') {  
-    input = trigFunc(extractReal(input));
-  }
-  else {
-    input = trigFunc(extractReal(input) * Math.PI / 180);
-  }
-  return input;
+function sin(x) {
+  eval(parseEvaluation(x));
+  //x = parseFloat(x);
+  //console.log('typeof(x):', typeof(x));
+  //console.log('x:', x);
+
+  if ($('btn-angle').value === 'deg' && (x === 0 || x % (360) === 0)) return 0;
+  if ($('btn-angle').value === 'deg' && (x === 270 || x % (270 + 360) === 0)) return -1;
+  if ($('btn-angle').value === 'deg' && (x === 180 || x % (180 + 360) === 0)) return 0;
+  if ($('btn-angle').value === 'deg' && (x === 90 || x % (90 + 360) === 0)) return 1;
+  //if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
+  return Math.sin(x);
+}
+function cos(x) {
+  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
+  return Math.cos(x);
+}
+function tan(x) {
+  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
+  return Math.tan(x);
+}
+function asin(x) {
+  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
+  return Math.asin(x);
+}
+function acos(x) {
+  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
+  return Math.acos(x);
+}
+function atan(x) {
+  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
+  return Math.atan(x);
 }
 
 //////// Input Buttons ///////////////////////////////////////////////////////////////
@@ -2163,24 +2189,6 @@ function parseInline(input, symbol, prefix) {
 // User functions
 function root(x, y) {
   return Math.pow(x, 1/y);
-}
-function sin(x) {
-  return computeTrig(x, Math.sin);
-}
-function cos(x) {
-  return computeTrig(x, Math.cos);
-}
-function tan(x) {
-  return computeTrig(x, Math.tan);
-}
-function asin(x) {
-  return computeTrig(x, Math.asin);
-}
-function acos(x) {
-  return computeTrig(x, Math.acos);
-}
-function atan(x) {
-  return computeTrig(x, Math.atan);
 }
 function ln(x) {
   return Math.log(x);
