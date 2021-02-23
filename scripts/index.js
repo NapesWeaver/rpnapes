@@ -1304,24 +1304,21 @@ function btnAngle() {
   $('txt-input').focus();
 }
 function btnSine() {
-
   backupUndo();
 
   if (shifted) {
     $('txt-input').value = asin($('txt-input').value);
   } else {
-    $('txt-input').value = sin(parseFloat($('txt-input').value));
+    $('txt-input').value = sin($('txt-input').value);
   }
   updateDisplay();
   $('txt-input').select();  
 }
 function btnCosine() {
-
   backupUndo();
 
-  var test = parseFloat($('txt-input').value);
   if (shifted) {
-    $('txt-input').value = acos(test);
+    $('txt-input').value = acos($('txt-input').value);
   } else {
     $('txt-input').value = cos($('txt-input').value);
   }
@@ -1329,36 +1326,53 @@ function btnCosine() {
   $('txt-input').select();
 }
 function btnTangent() {
-
   backupUndo();
 
   if (shifted) {
     $('txt-input').value = atan($('txt-input').value);
-  }
-  else {
+  } else {
     $('txt-input').value = tan($('txt-input').value);
   }
   updateDisplay();
   $('txt-input').select();
 }
 function sin(x) {
-  eval(parseEvaluation(x));
-  //x = parseFloat(x);
-  //console.log('typeof(x):', typeof(x));
-  //console.log('x:', x);
+  try {
+    x = eval(parseEvaluation(x));
+  } catch(e) {
+    //
+  }
+  if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
+  if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return -1;
+  if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return 0;
+  if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return 1;
 
-  if ($('btn-angle').value === 'deg' && (x === 0 || x % (360) === 0)) return 0;
-  if ($('btn-angle').value === 'deg' && (x === 270 || x % (270 + 360) === 0)) return -1;
-  if ($('btn-angle').value === 'deg' && (x === 180 || x % (180 + 360) === 0)) return 0;
-  if ($('btn-angle').value === 'deg' && (x === 90 || x % (90 + 360) === 0)) return 1;
-  //if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
+  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.sin(x);
 }
 function cos(x) {
+  try {
+    x = eval(parseEvaluation(x));
+  } catch(e) {
+    //
+  }
+  if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 1;
+  if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return 0;
+  if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return -1;
+  if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return 0;
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.cos(x);
 }
 function tan(x) {
+  try {
+    x = eval(parseEvaluation(x));
+  } catch(e) {
+    //
+  }
+  if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
+  if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return NaN;
+  if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return NaN;
+  if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return 1;
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.tan(x);
 }
