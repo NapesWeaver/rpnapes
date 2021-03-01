@@ -448,22 +448,25 @@ function enterInput() {
 }
 function evaluateInput(input) {  
   
-  try{  
-    $('txt-input').value = eval(parseEvaluation(input));
+  $('txt-input').value = xEval(input);  
+  if (testing) {
     // Data Testing
-    if (testing) {
-      try {
-        if (stack.length > 0 && stack.length % 2 === 0) {
-          // console.log(decodeSpecialChar(stack[stack.length - 2].soul), stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString());
-          console.log(`${decodeSpecialChar(stack[stack.length - 2].soul)} %c${stack[stack.length - 1].soul === eval(parseEvaluation((decodeSpecialChar(stack[stack.length - 2].soul)))).toString()}`, 'font-weight: bold; color: green');
-        }
-      } catch(e) {
-        console.log(stack[stack.length - 2].soul, e.toString());
+    try {
+      if (stack.length > 0 && stack.length % 2 === 0) {
+        console.log(`${decodeSpecialChar(stack[stack.length - 2].soul)} %c${stack[stack.length - 1].soul === xEval((decodeSpecialChar(stack[stack.length - 2].soul))).toString()}`, 'font-weight: bold; color: green');
       }
+    } catch(e) {
+      console.log(stack[stack.length - 2].soul, e.toString());
     }
-  } catch (err) {
-    rpnAlert(err.toString());
+  }  
+}
+function xEval(x) {
+  try {
+    x = eval(parseEvaluation(x));
+  } catch(e) {
+    return e.toString();
   }
+  return x;
 }
 
 function deleteButton() {
@@ -952,11 +955,7 @@ function inverse() {
 function btn_factorial() {
   backupUndo();
 
-  try {
-    $('txt-input').value = eval(parseEvaluation($('txt-input').value));
-  } catch(e) {
-    //
-  }
+  $('txt-input').value = xEval($('txt-input').value);
   $('txt-input').value = factorial(extractReal($('txt-input').value));
   $('txt-input').select();
 }
@@ -1093,7 +1092,6 @@ function modulus() {
 }
 
 function btnSign() {
-
   
   if (shifted) {
     backupUndo();
@@ -1106,11 +1104,9 @@ function btnSign() {
 function changeSign() {
   backupUndo();
 
-  var tmpX = $('txt-input').value;
-  
-  // if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  var tmpX = $('txt-input').value;  
   if (stackFocus) tmpX = getSelectedText('lst-stack');
-  console.log(tmpX);
+
   // If input is blank
   if (tmpX === '') {
     tmpX = '-';
@@ -1352,11 +1348,7 @@ function btnTangent() {
   $('txt-input').select();
 }
 function sin(x) {
-  try {
-    x = eval(parseEvaluation(x));
-  } catch(e) {
-    //
-  }
+  x = xEval(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
   if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return -1;
   if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return 0;
@@ -1366,11 +1358,7 @@ function sin(x) {
   return Math.sin(x);
 }
 function cos(x) {
-  try {
-    x = eval(parseEvaluation(x));
-  } catch(e) {
-    //
-  }
+  x = xEval(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 1;
   if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return 0;
   if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return -1;
@@ -1379,11 +1367,7 @@ function cos(x) {
   return Math.cos(x);
 }
 function tan(x) {
-  try {
-    x = eval(parseEvaluation(x));
-  } catch(e) {
-    //
-  }
+  x = xEval(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
   if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return NaN;
   if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return NaN;
