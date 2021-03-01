@@ -911,6 +911,8 @@ function btnOff() {
 
 function btnInverse() {
 
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+
   if (shifted) {
     btn_factorial();    
   }
@@ -922,10 +924,9 @@ function inverse() {
   backupUndo();
 
   var newUnits = inverseUnits();
-  //console.log(extractReal($('txt-input'.value)));
   var isNumber = !isNaN(extractReal($('txt-input').value));
   var isImaginary = !isNaN(extractImaginary($('txt-input').value));
-  //console.log(newUnits, isNumber, isImaginary);
+  
   if (isNumber || isImaginary) {
       
     if (isNumber && !isImaginary) {
@@ -939,24 +940,28 @@ function inverse() {
       // write code here please ;)
     }
     $('txt-input').value += newUnits;
-    $('txt-input').select();
-  } else {
-      
+  } else {    
     if(/^1\//.test($('txt-input').value)) {
       $('txt-input').value = $('txt-input').value.slice(2);
     } else {
       $('txt-input').value = '1/' + $('txt-input').value;
     }
   }
+  $('txt-input').select();
 }
 function btn_factorial() {
   backupUndo();
 
+  try {
+    $('txt-input').value = eval(parseEvaluation($('txt-input').value));
+  } catch(e) {
+    //
+  }
   $('txt-input').value = factorial(extractReal($('txt-input').value));
   $('txt-input').select();
 }
 function factorial(num) {
-
+  
   if (num <= 1) {
     return 1;
   }
@@ -1103,6 +1108,9 @@ function changeSign() {
 
   var tmpX = $('txt-input').value;
   
+  // if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  if (stackFocus) tmpX = getSelectedText('lst-stack');
+  console.log(tmpX);
   // If input is blank
   if (tmpX === '') {
     tmpX = '-';
@@ -1182,7 +1190,8 @@ function changeSign() {
       tmpX = '-' + tmpX;
     }
   }
-  $('txt-input').value = tmpX;
+  // $('txt-input').value = tmpX;
+  stackFocus ? insertAtCursor($('txt-input'), tmpX) : $('txt-input').value = tmpX;
   $('txt-input').focus();
 }
 
