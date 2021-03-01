@@ -1306,6 +1306,8 @@ function btnAngle() {
 function btnSine() {
   backupUndo();
 
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+
   if (shifted) {
     $('txt-input').value = asin($('txt-input').value);
   } else {
@@ -1317,6 +1319,8 @@ function btnSine() {
 function btnCosine() {
   backupUndo();
 
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+
   if (shifted) {
     $('txt-input').value = acos($('txt-input').value);
   } else {
@@ -1327,6 +1331,8 @@ function btnCosine() {
 }
 function btnTangent() {
   backupUndo();
+
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
 
   if (shifted) {
     $('txt-input').value = atan($('txt-input').value);
@@ -1377,7 +1383,7 @@ function tan(x) {
   return Math.tan(x);
 }
 function asin(x) {
-  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
+  if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
   return Math.asin(x);
 }
 function acos(x) {
