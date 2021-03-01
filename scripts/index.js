@@ -1072,7 +1072,6 @@ function insertAroundSelection(txtField, txtValue) {
 }
 
 function btnModulus() {
-
   
   if (shifted) {
     backupUndo();
@@ -1084,8 +1083,7 @@ function btnModulus() {
 }
 
 function modulus() {
-  backupUndo();
-  
+  backupUndo();  
   $('txt-input').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txt-input').value);
   updateDisplay();
   $('txt-input').select();
@@ -1376,14 +1374,17 @@ function tan(x) {
   return Math.tan(x);
 }
 function asin(x) {
+  x = xEval(x);
   if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
   return Math.asin(x);
 }
 function acos(x) {
+  x = xEval(x);
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.acos(x);
 }
 function atan(x) {
+  x = xEval(x);
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.atan(x);
 }
