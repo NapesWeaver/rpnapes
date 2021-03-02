@@ -74,9 +74,9 @@ function NumberObject(soul, realPart, imaginary, units, timeStamp) {
   this.units = units;
   this.timeStamp = timeStamp;
   
-  if (isNaN(this.realPart) && isNaN(this.imaginary)) {
-    this.units = 'null';
-  }
+  // if (isNaN(this.realPart) && isNaN(this.imaginary)) {
+  //   this.units = 'null';
+  // }
 }
 NumberObject.prototype.setSoul = function (s) {
   this.soul = s;
@@ -432,17 +432,14 @@ function getX() {
   var imaginaryX = extractImaginary(soulX);
   var unitsX = extractUnits(soulX);
   var timeStampX = Date.now();
-
   soulX = encodeSpecialChar(soulX);
-  //unitsX = rewriteNegUnitExp(unitsX);
   unitsX = encodeSpecialChar(unitsX);
-  
   return new NumberObject(soulX, realPartX, imaginaryX, unitsX, timeStampX);
 }
+
 function enterInput() {
 
-  var objX = getX();  
-
+  var objX = getX();
   stack.push(objX);
   $('txt-input').value = $('txt-input').value.trim();  
 }
@@ -1083,8 +1080,19 @@ function btnModulus() {
 }
 
 function modulus() {
-  backupUndo();  
-  $('txt-input').value = parseFloat(stack.pop().getRealPart()) % parseFloat($('txt-input').value);
+  backupUndo(); 
+  var objY = stack.pop();
+  var objX = getX();
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
+  var result;
+
+  if (radix === 10) {
+    result = y % x;
+  } else {
+    result = (y % x).toString(radix);
+  }  
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
 }
@@ -1204,13 +1212,21 @@ function btnDivide() {
 function division() {
   backupUndo();
   var newUnits = getDivideUnits(1);
+  var objY = stack.pop();
   var objX = getX();
-  
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
+  // var yI;
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();
+  // var xI;
+  var result;
+   
   if (radix === 10) {
-    $('txt-input').value = parseFloat(stack.pop().getRealPart()) / parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+    result = y / x;
   } else {
-    $('txt-input').value = (stack.pop().getRealPart() / objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
-  } 
+    result = (y / x).toString(radix);
+  }  
+  result += decodeSpecialChar(newUnits);
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').focus();
 }
@@ -1227,13 +1243,19 @@ function btnMultiply() {
 function multiplication() {
   backupUndo();
   var newUnits = getMultiplyUnits(1);
+  var objY = stack.pop();
   var objX = getX();
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
+  var result;
 
   if (radix === 10) {
-    $('txt-input').value = parseFloat(stack.pop().getRealPart()) * parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+    result = y * x;
   } else {
-    $('txt-input').value = (stack.pop().getRealPart() * objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
-  } 
+    result = (y * x).toString(radix);
+  }
+  result += decodeSpecialChar(newUnits);
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').focus();
 }
@@ -1251,13 +1273,19 @@ function btnSubtract() {
 function subtraction() {
   backupUndo();
   var newUnits = getAddUnits();
+  var objY = stack.pop();
   var objX = getX();
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
+  var result;
 
   if (radix === 10) {
-    $('txt-input').value = parseFloat(stack.pop().getRealPart()) - parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+    result = y - x;
   } else {
-    $('txt-input').value = (stack.pop().getRealPart() - objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
-  } 
+    result = (y - x).toString(radix);
+  }
+  result += decodeSpecialChar(newUnits);
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').focus();
 }
@@ -1275,13 +1303,19 @@ function btnAdd() {
 function addition() {
   backupUndo();
   var newUnits = getAddUnits();
+  var objY = stack.pop();
   var objX = getX();
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
+  var result;
   
   if (radix === 10) {
-    $('txt-input').value = parseFloat(stack.pop().getRealPart()) + parseFloat($('txt-input').value) + decodeSpecialChar(newUnits);
+    result = y + x;
   } else {
-    $('txt-input').value = (stack.pop().getRealPart() + objX.getRealPart()).toString(radix) + decodeSpecialChar(newUnits);
-  }  
+    result = (y + x).toString(radix);
+  }
+  result += decodeSpecialChar(newUnits);
+  $('txt-input').value = result; 
   updateDisplay();
   $('txt-input').focus();
 }
