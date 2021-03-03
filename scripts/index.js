@@ -48,11 +48,10 @@ $('main').onresize = unFloat;
 
 const Φ = 1.618033988749895;
 const e = 2.718281828459045;
-// const π = 3.141592653589793;
 const π = Math.PI;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '19:4:51';
+const tStamp = '20:30:37';
 var testing = false;
 
 var stack = [];
@@ -421,7 +420,7 @@ function btnEval() {
 
   }
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  evaluateInput($('txt-input').value);
+  evaluateExpression($('txt-input').value);
   $('txt-input').select();    
 }
 
@@ -443,21 +442,21 @@ function enterInput() {
   stack.push(objX);
   $('txt-input').value = $('txt-input').value.trim();  
 }
-function evaluateInput(input) {  
+function evaluateExpression(input) {  
   
-  $('txt-input').value = xEval(input);  
+  $('txt-input').value = calculate(input);  
   if (testing) {
     // Data Testing
     try {
       if (stack.length > 0 && stack.length % 2 === 0) {
-        console.log(`${decodeSpecialChar(stack[stack.length - 2].soul)} %c${stack[stack.length - 1].soul === xEval((decodeSpecialChar(stack[stack.length - 2].soul))).toString()}`, 'font-weight: bold; color: green');
+        console.log(`${decodeSpecialChar(stack[stack.length - 2].soul)} %c${stack[stack.length - 1].soul === calculate((decodeSpecialChar(stack[stack.length - 2].soul))).toString()}`, 'font-weight: bold; color: green');
       }
     } catch(e) {
       console.log(stack[stack.length - 2].soul, e.toString());
     }
   }  
 }
-function xEval(x) {
+function calculate(x) {
   try {
     x = eval(parseEvaluation(x));
   } catch(e) {
@@ -864,7 +863,7 @@ function loadStack(tmpStack) {
     tmpArray = tmpStack.shift();
     pushObjectToStack(tmpArray);
     
-    if (shifted) evaluateInput(decodeSpecialChar(stack[stack.length - 1].soul));
+    if (shifted) evaluateExpression(decodeSpecialChar(stack[stack.length - 1].soul));
   }    
 }
 function splitArrayByBrowser(tmpArray) {
@@ -952,7 +951,7 @@ function inverse() {
 function btn_factorial() {
   backupUndo();
 
-  $('txt-input').value = xEval($('txt-input').value);
+  $('txt-input').value = calculate($('txt-input').value);
   $('txt-input').value = factorial(extractReal($('txt-input').value));
   $('txt-input').select();
 }
@@ -981,21 +980,40 @@ function btnLog() {
     naturalLog();
   }
 }
+
+function log(x, y) {
+  if (y === undefined) y = 10;
+  return Math.log(x) / Math.log(y);
+}
 function baseLog() {
   backupUndo();
+  var objY;
+  var objX;
+  var y;
+  var x;
 
-  if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
     $(('txt-input')).value = '10';
   }
-  $('txt-input').value = Math.log(parseFloat(stack.pop().getRealPart())) / Math.log(extractReal($('txt-input').value));
+  objY = stack.pop();
+  objX = getX();
+  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart(); 
+
+  $('txt-input').value = log(y, x);  
   updateDisplay();
   $('txt-input').select();
+}
+function ln(x) {
+  return Math.log(x);
 }
 function naturalLog() {
   backupUndo();
 
-  $('txt-input').value = Math.log(extractReal($('txt-input').value));
+  var objX = getX();
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();
+  $('txt-input').value = ln(x);
   updateDisplay();
   $('txt-input').select();
 }
@@ -1083,8 +1101,8 @@ function modulus() {
   backupUndo(); 
   var objY = stack.pop();
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
   var result;
 
   if (radix === 10) {
@@ -1214,9 +1232,9 @@ function division() {
   var newUnits = getDivideUnits(1);
   var objY = stack.pop();
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
   // var yI;
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();
   // var xI;
   var result;
    
@@ -1245,8 +1263,8 @@ function multiplication() {
   var newUnits = getMultiplyUnits(1);
   var objY = stack.pop();
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
   var result;
 
   if (radix === 10) {
@@ -1275,8 +1293,8 @@ function subtraction() {
   var newUnits = getAddUnits();
   var objY = stack.pop();
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
   var result;
 
   if (radix === 10) {
@@ -1305,8 +1323,8 @@ function addition() {
   var newUnits = getAddUnits();
   var objY = stack.pop();
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? xEval(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? xEval(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();  
   var result;
   
   if (radix === 10) {
@@ -1380,7 +1398,7 @@ function btnTangent() {
   $('txt-input').select();
 }
 function sin(x) {
-  x = xEval(x);
+  x = calculate(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
   if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return -1;
   if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return 0;
@@ -1390,7 +1408,7 @@ function sin(x) {
   return Math.sin(x);
 }
 function cos(x) {
-  x = xEval(x);
+  x = calculate(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 1;
   if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return 0;
   if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return -1;
@@ -1399,7 +1417,7 @@ function cos(x) {
   return Math.cos(x);
 }
 function tan(x) {
-  x = xEval(x);
+  x = calculate(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
   if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return NaN;
   if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return NaN;
@@ -1408,17 +1426,17 @@ function tan(x) {
   return Math.tan(x);
 }
 function asin(x) {
-  x = xEval(x);
+  x = calculate(x);
   if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
   return Math.asin(x);
 }
 function acos(x) {
-  x = xEval(x);
+  x = calculate(x);
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.acos(x);
 }
 function atan(x) {
-  x = xEval(x);
+  x = calculate(x);
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.atan(x);
 }
@@ -2238,16 +2256,7 @@ function parseInline(input, symbol, prefix) {
 function root(x, y) {
   return Math.pow(x, 1/y);
 }
-function ln(x) {
-  return Math.log(x);
-}
-function log(x, y) {
-  if (y === undefined) {
-    y = x;
-    x = 10;
-  }
-  return Math.log(y) / Math.log(x);
-}
+
 // Passed to parseNested() and parseInline()
 function mathsRoot(y, x) {
   return Math.pow(x, 1/y);
@@ -2333,13 +2342,13 @@ function fizzBuzz() {
   if (!shifted) btnShift();
   inputText('maxCount = prompt("Enter a number number", "25");');
   enterInput();
-  evaluateInput($('txt-input').value);
+  evaluateExpression($('txt-input').value);
   inputText('getFizzBuzz = function(w){ word = w;if (w % 3 === 0) word = "fizz"; if(w % 5 === 0) word = "buzz"; if (w % 15 === 0) word = "fizzbuzz"; return word}');
   enterInput();
-  evaluateInput($('txt-input').value);
+  evaluateExpression($('txt-input').value);
   inputText('for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $("txt-input").value=""; $("txt-input").value=word; enterInput(); }');
   enterInput();
-  evaluateInput($('txt-input').value);
+  evaluateExpression($('txt-input').value);
   updateDisplay();
 }
 
@@ -4101,7 +4110,7 @@ window.onload = function () {
           for (var i in tmpStack) {
             $('txt-input').value = tmpStack[i];
             if (shifted) {
-              evaluateInput($('txt-input').value);
+              evaluateExpression($('txt-input').value);
               enterInput();
             }
             else {
