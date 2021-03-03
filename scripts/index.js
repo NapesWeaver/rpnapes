@@ -417,7 +417,6 @@ function btnEval() {
   if ($('txt-input').value.trim().match(/^run$/)) {
     commandRun();
     return;
-
   }
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   evaluateExpression($('txt-input').value);
@@ -442,20 +441,6 @@ function enterInput() {
   stack.push(objX);
   $('txt-input').value = $('txt-input').value.trim();  
 }
-function evaluateExpression(input) {  
-  
-  $('txt-input').value = calculate(input);  
-  if (testing) {
-    // Data Testing
-    try {
-      if (stack.length > 0 && stack.length % 2 === 0) {
-        console.log(`${decodeSpecialChar(stack[stack.length - 2].soul)} %c${stack[stack.length - 1].soul === calculate((decodeSpecialChar(stack[stack.length - 2].soul))).toString()}`, 'font-weight: bold; color: green');
-      }
-    } catch(e) {
-      console.log(stack[stack.length - 2].soul, e.toString());
-    }
-  }  
-}
 function calculate(x) {
   try {
     x = eval(parseEvaluation(x));
@@ -463,6 +448,24 @@ function calculate(x) {
     return e.toString();
   }
   return x;
+}
+function runTest() {
+
+  try {
+    if (stack.length > 0 && stack.length % 2 === 0) {
+      var y = decodeSpecialChar(stack[stack.length - 2].getSoul());
+      var x = stack[stack.length - 1].getSoul()
+      var color = calculate(y).toString() === x ? 'green' : 'red';      
+      console.log(`${y} %c${calculate(y).toString() === x}`, `font-weight: bold; color: ${color};`);   
+    }
+  } catch(e) {
+    console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
+  }
+}
+function evaluateExpression(input) {  
+  
+  $('txt-input').value = calculate(input);  
+  if (testing) runTest();  
 }
 
 function deleteButton() {
@@ -1034,24 +1037,21 @@ function pow(x, y) {
 }
 function exponentialFunction() {
   backupUndo();
-  var newUnits = '';
+
+  var newUnits;
   var objY;
   var objX;
   var y;
   var x;
-
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
     $(('txt-input')).value = '2';
-  }  
-  if (extractUnits($('txt-input').value) === 'null') {
-    newUnits = multiplyUnits(extractReal($('txt-input').value));
-    if (newUnits === ' ') newUnits = '';
   }
-  objY = stack.pop();
   objX = getX();
-  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();
+  newUnits = getMultiplyUnits(x);
+  objY = stack.pop();
+  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
 
   $('txt-input').value = pow(y, x) + decodeSpecialChar(newUnits);
   updateDisplay();
@@ -1063,6 +1063,8 @@ function root(x, y) {
 }
 function rootFunction() {
   backupUndo();  
+
+  var newUnits;
   var objY;
   var objX;
   var y;
@@ -1072,12 +1074,14 @@ function rootFunction() {
     enterInput();
     $(('txt-input')).value = '2';
   }
-  objY = stack.pop();
   objX = getX();
-  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();
+  // newUnits = getDivideUnits(1/x);
+  newUnits = getMultiplyUnits(1/x);
+  objY = stack.pop();
+  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
 
-  $('txt-input').value = root(y, x);
+  $('txt-input').value = root(y, x) + decodeSpecialChar(newUnits);
   updateDisplay();
   $('txt-input').select();
 }
