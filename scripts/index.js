@@ -1027,34 +1027,57 @@ function btnRoot() {
     exponentialFunction();
   }
 }
+
+function pow(x, y) {
+  if (y === undefined) y = 2;
+  return Math.pow(x, y);
+}
 function exponentialFunction() {
   backupUndo();
-
   var newUnits = '';
-  if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString())) {
+  var objY;
+  var objX;
+  var y;
+  var x;
+
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
     $(('txt-input')).value = '2';
-  }
+  }  
   if (extractUnits($('txt-input').value) === 'null') {
     newUnits = multiplyUnits(extractReal($('txt-input').value));
     if (newUnits === ' ') newUnits = '';
   }
-  $('txt-input').value = Math.pow(parseFloat(stack.pop().getRealPart()), extractReal($('txt-input').value)) + decodeSpecialChar(newUnits);
+  objY = stack.pop();
+  objX = getX();
+  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();
+
+  $('txt-input').value = pow(y, x) + decodeSpecialChar(newUnits);
   updateDisplay();
   $('txt-input').select();
 }
+function root(x, y) {
+  if (y === undefined) y = 2;
+  return Math.pow(x, 1/y);
+}
 function rootFunction() {
-  backupUndo();
+  backupUndo();  
+  var objY;
+  var objX;
+  var y;
+  var x;
 
-  var newUnits = '';
-  if (stack.length - 1 < 0 || isNaN(stack[stack.length - 1].getRealPart().toString().trim())) {
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
     $(('txt-input')).value = '2';
   }
-  if (extractUnits($('txt-input').value) === 'null') {
-    newUnits = divideUnits(1 / extractReal($('txt-input').value));
-  }
-  $('txt-input').value = Math.pow(parseFloat(stack.pop().getRealPart()), 1 / extractReal($('txt-input').value)) + decodeSpecialChar(newUnits);
+  objY = stack.pop();
+  objX = getX();
+  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objY.getRealPart();
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : objX.getRealPart();
+
+  $('txt-input').value = root(y, x);
   updateDisplay();
   $('txt-input').select();
 }
@@ -1790,7 +1813,7 @@ function help(command) {
       inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'maths':
-      inputText('acos() asin() atan() cos() sin() tan() ln() log() root()');
+      inputText('acos(), asin(), atan(), cos(), sin(), tan(), ln(), log(), pow(), root()');
       break;
     case 'napes':
       inputText('napes: Switch to Referances interface.');
@@ -2250,11 +2273,6 @@ function parseInline(input, symbol, prefix) {
 
   input = inputArr.join('');
   return input;
-}
-
-// User functions
-function root(x, y) {
-  return Math.pow(x, 1/y);
 }
 
 // Passed to parseNested() and parseInline()
