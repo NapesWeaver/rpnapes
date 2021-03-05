@@ -2846,17 +2846,10 @@ function getDivideUnits(exponent) {
   return newUnits;
 }
 function addUnits() {
-
-  var newUnits = '';
-
-  // If x and y have the same units or y has no units
-  if (extractUnits($('txt-input').value) === decodeSpecialChar(stack[stack.length - 1].getUnits()) || (extractUnits($('txt-input').value) !== 'null' && stack[stack.length - 1].getUnits()) === '') {
-    newUnits = ' ' + extractUnits($('txt-input').value);
-  }
-  // If y has units but x does not
-  if (extractUnits($('txt-input').value) === 'null' && stack[stack.length - 1].getUnits() !== '') {
-    newUnits = ' ' + stack[stack.length - 1].getUnits();
-  }
+  var newUnits = ' ';
+  var yUnits = stack[stack.length - 1].getUnits();
+  var xUnits = extractUnits($('txt-input').value);
+  newUnits += (extractUnits($('txt-input').value) === 'null') ? yUnits : xUnits;
   return newUnits;
 }
 function multiplyUnits(multiplier) {
