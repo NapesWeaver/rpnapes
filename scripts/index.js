@@ -2823,7 +2823,7 @@ function extractUnits(tmpArray) {
 function getAddUnits() {
 
   var newUnits = addUnits();
-  if (newUnits === ' null') {
+  if (newUnits === ' ') {
     newUnits = '';
   }
   return newUnits;
@@ -2848,7 +2848,9 @@ function addUnits() {
   var newUnits = ' ';
   var yUnits = stack[stack.length - 1].getUnits();
   var xUnits = extractUnits($('txt-input').value);
-  newUnits += (extractUnits($('txt-input').value) === 'null') ? yUnits : xUnits;
+
+  if (yUnits !== 'null' && (xUnits === 'null' || xUnits === yUnits)) return yUnits;
+  if (xUnits !== 'null') return xUnits;
   return newUnits;
 }
 function multiplyUnits(multiplier) {
