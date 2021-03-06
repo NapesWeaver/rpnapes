@@ -234,8 +234,7 @@ function btnXoff() {
   if ($('rpnapes').classList.contains('hidden')) {
     // Notes is visible - turn on RPNapes
     rpnapesOn();
-  }
-  else if ($('notes').classList.contains('hidden') && $('tricorder').classList.contains('hidden')) {
+  } else if ($('notes').classList.contains('hidden') && $('tricorder').classList.contains('hidden')) {
     // RPNapes is visible - turn on Notes
     notesOn();
   }
@@ -318,12 +317,10 @@ function btn_paste() {
 
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  }
-  else {
+  } else {
     if (/*@cc_on!@*/false || !!document.documentMode) {// IE
       insertAtCursor($('txt-input'), window.clipboardData.getData('Text'));
-    }
-    else {
+    } else {
       rpnAlert('This functionality prohibited by your browser.');
     }
   }
@@ -334,8 +331,7 @@ function btnXy() {
 
   if (shifted) {
     abFunction();
-  }
-  else {
+  } else {
     xyFunction();
   }
 }
@@ -361,15 +357,13 @@ function xyFunction() {
 
     if (isNaN(parseFloat(tmpX.getRealPart()))) {
       $('txt-input').value += decodeSpecialChar(tmpX.getSoul());
-    }
-    else {
+    } else {
       $('txt-input').value += formatNumber(tmpX.getRealPart().toString());
 
       if (!isNaN(parseFloat(tmpX.getImaginary()))) {
         if (parseFloat(tmpX.getImaginary()) > 0) {
           $('txt-input').value += ' + ' + formatNumber(tmpX.getImaginary().toString()) + 'j';
-        }
-        else {
+        } else {
           $('txt-input').value += ' - ' + formatNumber(tmpX.getImaginary().toString().substring(1)) + 'j';
         }
       }
@@ -416,17 +410,18 @@ function btnEval() {
   var objX = getX();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+
   if (objX.getSoul().match(/^run$/)) {
     runProgram();
     return;
   }
   $('txt-input').value = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+
   if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + objX.getUnits();
   $('txt-input').select();    
 }
 
 function getX() {
-
   var soulX = $('txt-input').value.trim();
   var realPartX = extractReal(soulX);
   var imaginaryX = extractImaginary(soulX);
@@ -453,7 +448,6 @@ function calculate(x) {
 }
 
 function runTest() {
-
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
       var y = decodeSpecialChar(stack[stack.length - 2].getSoul());
@@ -474,8 +468,7 @@ function evaluateExpression(input) {
 function deleteButton() {
   if (shifted) {
     btnBackspace();
-  }
-  else {
+  } else {
     btnDelete();
   }
 }
@@ -492,8 +485,7 @@ function btnDelete() {
   } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
-  }
-  else {
+  } else {
     deleteText($('txt-input'), true);
   }
   if (elapsedTime > 0) stopwatchReset();
@@ -533,8 +525,7 @@ function btnUndo() {
 
   if (shifted) {
     redoFunction();
-  }
-  else {
+  } else {
     undoFunction();
   }
 }
@@ -589,8 +580,7 @@ function colorUndoButton() {
 
   if (($('btn-undo').value === 'UND' && backUps.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
     $('btn-undo').style.color = '#25FC5A';
-  }
-  else {
+  } else {
     $('btn-undo').style.color = '#D4D0C8';
   }        
   colorUndoRedoMenu();
@@ -623,8 +613,7 @@ function btnEe() {
         insertAtCursor($('txt-input'), 'j');
       }
     }
-  }
-  else {
+  } else {
     if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*/g.test($('txt-input').value) && !/.*[eE]/g.test($('txt-input').value) && !/[-+]?\d?[.][.]+/.test($('txt-input').value) && $('txt-input').value.slice(-1) !== '.') {
       insertAtCursor($('txt-input'), 'e');
     }
@@ -637,8 +626,7 @@ function btnGo() {
 
   if (shifted) {   
     internetSearch('https://www.youtube.com/results?search_query=', $('txt-input').value.trim());    
-  }
-  else {
+  } else {
     internetSearch('https://www.google.com/search?q=', $('txt-input').value.trim());
   }  
   $('txt-input').select();
@@ -851,6 +839,7 @@ function btnLoad() {
   catch(err) { rpnAlert('load MathMon error'); }
   updateDisplay();
 }
+
 function loadStack(tmpStack) {
 
   //stack.length = 0;
@@ -862,24 +851,25 @@ function loadStack(tmpStack) {
   tmpStack = splitArrayByBrowser(tmpStack);
     
   while (tmpStack.length > 0) {
-
     var tmpArray = [];
+
     tmpArray = tmpStack.shift();
     pushObjectToStack(tmpArray);
     
     if (shifted) evaluateExpression(decodeSpecialChar(stack[stack.length - 1].soul));
   }    
 }
+
 function splitArrayByBrowser(tmpArray) {
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     tmpArray = tmpArray.split('_');
-  }
-  else {
+  } else {
     // Firefox
     tmpArray = tmpArray.split('\t');
   }
   return tmpArray;
 }
+
 function pushObjectToStack(tmpArray) {
 
   tmpArray = tmpArray.split(',');
@@ -918,8 +908,7 @@ function btnInverse() {
 
   if (shifted) {
     btnFactorial();    
-  }
-  else {
+  } else {
     inverse();
   } 
 }
@@ -963,8 +952,7 @@ function factorial(num) {
   
   if (num <= 1) {
     return 1;
-  }
-  else {
+  } else {
     try {
       var theResult = num * factorial(num - 1);
     }
@@ -979,8 +967,7 @@ function btnLog() {
 
   if (shifted) {
     baseLog();
-  }
-  else {
+  } else {
     naturalLog();
   }
 }
@@ -1026,8 +1013,7 @@ function btnRoot() {
 
   if (shifted) {
     rootFunction();
-  }
-  else {
+  } else {
     exponentialFunction();
   }
 }
@@ -1092,8 +1078,7 @@ function btnPi() {
 
   if (shifted) {
     btn_parentheses();
-  }
-  else {
+  } else {
     insertText('π');
   }
 }
@@ -1117,8 +1102,7 @@ function btnModulus() {
   if (shifted) {
     backupUndo();
     insertText('√');
-  }
-  else {
+  } else {
     modulus();
   }  
 }
@@ -1146,8 +1130,7 @@ function btnSign() {
   if (shifted) {
     backupUndo();
     insertText('^');    
-  }
-  else {
+  } else {
     changeSign();
   }
 }
@@ -1160,79 +1143,59 @@ function changeSign() {
   // If input is blank
   if (tmpX === '') {
     tmpX = '-';
-  }
-  else if (tmpX === '+') {
+  } else if (tmpX === '+') {
     tmpX = '-';
-  }
-  else if (tmpX === '-') {
+  } else if (tmpX === '-') {
     tmpX = '+';
-  }
-  // If exponential number
-  else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+    // If exponential number
     tmpX += '-';
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
     tmpX += '-';
-  }
-  // If imaginary number
-  else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
+  } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
+    // If imaginary number
     tmpX = tmpX.substring(0, tmpX.length);
     tmpX += '-';
-  }
-  else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
+  } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
+  } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
     tmpX += '-';
-  }
-  else if (radix === 16 && /^[-+]?[a-e0-9]+ +$/.test(tmpX)) {
+  } else if (radix === 16 && /^[-+]?[a-e0-9]+ +$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length);
     tmpX += '-';
-  }
-  else if (radix === 16 && /^[-+]?[a-e0-9]+ +[-]$/.test(tmpX)) {
+  } else if (radix === 16 && /^[-+]?[a-e0-9]+ +[-]$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (radix === 16 && /^[-+]?[a-e0-9]+ +[+]$/.test(tmpX)) {
+  } else if (radix === 16 && /^[-+]?[a-e0-9]+ +[+]$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
     tmpX += '-';
-  }
-  // If exponential imaginary number
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+    // If exponential imaginary number
     tmpX = tmpX.substring(0, tmpX.length);
     tmpX += '-';
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
     tmpX += '-';
-  }
-  // If unit exponent
-  else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
+    // If unit exponent
     tmpX += '-'
-  }
-  else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
-  }
-  else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
+  } else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
     tmpX += '-';
-  }
-  // Change sign
-  else {
+  } else {// Change sign
     if (tmpX.charAt(0) === '+') {
       tmpX = tmpX.substring(1);
     }
     if (tmpX.charAt(0) === '-') {
       tmpX = tmpX.substring(1);
-    }
-    else {
+    } else {
       tmpX = '-' + tmpX;
     }
   }
@@ -1248,8 +1211,7 @@ function btnDivide() {
   if (shifted) {
     backupUndo();
     insertText('/');    
-  }
-  else {
+  } else {
     division();
   }  
 }
@@ -1309,8 +1271,7 @@ function btnSubtract() {
   if (shifted) {
     backupUndo();
     insertText('-');    
-  }
-  else {
+  } else {
     subtraction();
   }  
 }
@@ -1339,8 +1300,7 @@ function btnAdd() {
   if (shifted) {
     backupUndo();
     insertText('+');    
-  }
-  else {
+  } else {
     addition();
   }  
 }
@@ -1374,8 +1334,7 @@ function btnAngle() {
     $('btn-sine').className = 'btn-small radian-border';
     $('btn-cosine').className = 'btn-small radian-border';
     $('btn-tangent').className = 'btn-small radian-border';
-  }
-  else {
+  } else {
     $('btn-angle').value = 'deg';
     $('btn-angle').className = 'btn-small btn-angle degree-border';
     $('btn-sine').className = 'btn-small degree-border';
@@ -1493,8 +1452,7 @@ function btnSpace() {
     
   if (shifted) {
     insertAtCursor($('txt-input'), '=');
-  }
-  else {
+  } else {
     insertAtCursor($('txt-input'), ' ');
   } 
   $('txt-input').focus();
@@ -1626,12 +1584,13 @@ String.prototype.insertAt = function (index, input) {
 function insertTime() {
   insertText(getTime());
 }
-function getTime() {
 
+function getTime() {
   var currentdate = new Date();
   var datetime = currentdate.getHours() + ':' + currentdate.getMinutes() + ':' + currentdate.getSeconds();
   return datetime;
 }
+
 function insertDate() {
 
   var today = new Date();
@@ -1682,6 +1641,7 @@ function getLocation() {
     rpnAlert('Geolocation not supported.');
   }
 }
+
 function geolocationError(error) {
 
   switch (error.code) {
@@ -1699,6 +1659,7 @@ function geolocationError(error) {
     break;
   }
 }
+
 function getIP() {
 
   if (/*@cc_on!@*/false || !!document.documentMode) {// IE
@@ -2348,6 +2309,7 @@ function loadUserStack() {
   }
   xhr.send();
 }
+
 function loadText() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', '../test/The Passing Strange.txt', true);
@@ -2360,16 +2322,17 @@ function loadText() {
 }
 
 function fizzBuzz() {
+  backupUndo();
   if (!shifted) btnShift();
-  inputText('maxCount = prompt("Enter a number number", "25");');
+  $('txt-input').value = 'maxCount = prompt("Enter a number number", "25");';
   enterInput();
-  evaluateExpression($('txt-input').value);
-  inputText('getFizzBuzz = function(w){ word = w;if (w % 3 === 0) word = "fizz"; if(w % 5 === 0) word = "buzz"; if (w % 15 === 0) word = "fizzbuzz"; return word}');
+  calculate($('txt-input').value);
+  $('txt-input').value = 'getFizzBuzz = function(w){ word = w;if (w % 3 === 0) word = "fizz"; if(w % 5 === 0) word = "buzz"; if (w % 15 === 0) word = "fizzbuzz"; return word}';
   enterInput();
-  evaluateExpression($('txt-input').value);
-  inputText('for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $("txt-input").value=""; $("txt-input").value=word; enterInput(); }');
+  calculate($('txt-input').value);
+  $('txt-input').value = 'for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $("txt-input").value=""; $("txt-input").value=word; enterInput(); }';
   enterInput();
-  evaluateExpression($('txt-input').value);
+  calculate($('txt-input').value);
   updateDisplay();
 }
 
@@ -2418,8 +2381,8 @@ function returnSelectedText(id) {
     textComponent.focus();
     var sel = document.selection.createRange();
     selectedText = sel.text;
-  }// Firefox
-  else if (textComponent.selectionStart !== undefined) {
+  } else if (textComponent.selectionStart !== undefined) {
+    // Firefox
     var startPos = textComponent.selectionStart;
     var endPos = textComponent.selectionEnd;
     selectedText = textComponent.value.substring(startPos, endPos);
@@ -2434,7 +2397,7 @@ function isTextSelected(input){
 
   if(doc && doc.createRange().text.length !== 0){
     return true;
-  }else if (!doc && input.value.substring(startPos,endPos).length != 0){
+  } else if (!doc && input.value.substring(startPos,endPos).length != 0){
     return true;
   }
   return false;
@@ -2467,25 +2430,23 @@ function moveCursorToEnd(el) {
 }
 
 function rpnAlert(text) {
-
   backupUndo();
   $('txt-input').value = text;
   $('txt-input').select();
 }
-function inputText(text) {
-  
+
+function inputText(text) {  
   backupUndo();
   $('txt-input').value = text;
 }
-function insertText(text) {
 
+function insertText(text) {
   backupUndo();
   insertAtCursor($('txt-input'), text);
   $('txt-input').focus();
 }
 
 function updateDisplay() {
-
   $('lst-stack').value = '';
 
   // console.log('clientHeight', $('lst-stack').clientHeight / 20.25);
@@ -2510,8 +2471,7 @@ function printHtml() {
   print();
 }
 
-function isANumber(testString) {
-  
+function isANumber(testString) {  
   var isNumber = true;
 
   if (isNaN(testString)) isNumber = false;
@@ -2570,11 +2530,10 @@ function colorSaveButton() {
     //console.log(getCookie("STACK").substr(0).trim(), nestArrayByBrowser(stack).trim());
     if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
       $('btn-save').style.color = '#000000';
-    }
-    else {
+    } else {
       $('btn-save').style.color = '#D4D0C8';
     }
-  }  else {
+  } else {
     $('btn-save').style.color = '#000000';
   }  
 }
@@ -2732,13 +2691,11 @@ function decodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/&#9829/g, '♥');
   //tmpString = tmpString.replace(/&#9830/g, "♦");
   // tmpString = tmpString.replace(/&#960/g, 'π');
-
   return tmpString;
 }
 
 // Extract Real component from 'soul' of argument
 function extractReal(tmpArray) {
-
   var tmpReal = '';
   
   if (radix === 10) {
@@ -2806,12 +2763,12 @@ function extractImaginary(tmpArray) {
 
 function extractUnits(tmpArray) {
   var tmpUnits = '';
-  // if (tmpArray.indexOf('Infinity') !== -1) {
-  //   tmpArray = tmpArray.replace(/Infinity/g, '');
-  // }
+
+  if (tmpArray.indexOf('Infinity') !== -1) tmpArray = tmpArray.replace(/Infinity/g, '');
+
   if (radix !== 16) {
     if (isNaN(extractReal($('txt-input').value))) {
-      // Extract from end, after explicit space
+      // Extract from the end, after an explicit space
       tmpUnits += tmpArray.match(/[ ](?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
       if (tmpUnits !== 'null') tmpUnits = tmpUnits.slice(1);
     } else {
@@ -3107,8 +3064,8 @@ function formatNumber(possibleNumber) {
   return possibleNumber;
 }
 function toFixed(value, p) {
-
   var precision = p || 0,
+
     power = Math.pow(10, precision),
     absValue = Math.abs(Math.round(value * power)),
     result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
@@ -3137,8 +3094,7 @@ function btnPasteNotes() {
 
   if (/*@cc_on!@*/false || !!document.documentMode) {// IE
     insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
-  }
-  else {
+  } else {
     //insertAtCursor($("lst-notes"), "\nNot supported by this browser.\n");
     alert('Not supported by this browser.');
   }
@@ -3171,14 +3127,12 @@ function colorNotesUndoButton() {
 
   if (backupNotes.length > 1) {
     $('btn-undo-notes').style.color = '#01c401';
-  }
-  else {
+  } else {
     $('btn-undo-notes').style.color = '#919191';
   }
   if (restoreNotes.length >= 1) {
     $('btn-redo-notes').style.color = '#01c401';
-  }
-  else {
+  } else {
     $('btn-redo-notes').style.color = '#919191';
   }
   colorNotesSaveButton();
@@ -3198,8 +3152,7 @@ function colorNotesSaveButton() {
 
   if (cookieValue !== notesValue) {
     $('btn-save-notes').style.color = '#000000';
-  }
-  else {
+  } else {
     $('btn-save-notes').style.color = '#919191';
   }
 }
@@ -3222,8 +3175,7 @@ function btnLoadNotes() {
   try {
     tmpNotes = splitArrayByBrowser(getCookie('NOTES').substr(index));
     notes = notes.concat(tmpNotes);
-  }
-  catch (err) {
+  } catch (err) {
     notes.push('Load error.');
   }
   updateDisplayNotes();
@@ -3339,13 +3291,11 @@ function loadTricorder() {
 }
 
 function power() {
-
   var onOff;
+
   onOff = $('tricorderskin').src.toString().indexOf('tricorderon');
 
-  if (onOff === -1) {
-    return false;
-  }
+  if (onOff === -1) return false;
   return true;
 }
 function muteAudio(mute) {
@@ -3362,7 +3312,6 @@ function muteAudio(mute) {
   }
 }
 function playAudio(obj) {
-
   //if (!isMobile) {
   if (!$('menu-sound-li').classList.contains('strikethrough')) {
     obj.play();
@@ -3371,13 +3320,11 @@ function playAudio(obj) {
 
 // Power On/Off.
 function button1() {
-
   haptic();
 
   if (power()) {
     tricorderOff();
-  }
-  else {
+  } else {
     tricorderOn();
   }
 }
@@ -3415,8 +3362,7 @@ function button2() {
 
       if (i === viewPortSrc.length - 1) i = -1;
       $('viewport').src = viewPortSrc[i + 1];
-    }
-    else {
+    } else {
       $('viewport').src = viewPortSrc[0];
     }
     playAudio($('keypress2'));
@@ -3432,8 +3378,7 @@ function button3() {
 
       if (i === viewPort2Src.length - 1) i = -1;
       $('viewport').src = viewPort2Src[i + 1];
-    }
-    else {
+    } else {
       $('viewport').src = viewPort2Src[0];
     }
     playAudio($('keypress1'));
@@ -3451,16 +3396,14 @@ function button4() {
 
         if (i === widgetSrc.length - 1) i = -1;
         $('widget').src = widgetSrc[i + 1];
-      }
-      else {
+      } else {
         $('widget').src = widgetSrc[0];
       }
       $('widget').classList.remove('hidden');
       $('widget').classList.add('visible');
       playAudio($('scanner'));
       playAudio($('keypress6'));
-    }
-    else {
+    } else {
       $('widget').classList.remove('visible');
       $('widget').classList.add('hidden');
       playAudio($('keypress5'));
@@ -3481,8 +3424,7 @@ function button5() {
         // Forcast widget
         srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';
         $('widget').src = srcString;
-      }
-      else {
+      } else {
         // Dark Sky Map
         srcString += 'https://maps.darksky.net/@temperature,' + lat + ',' + lng + ',4?embed=true&timeControl=false&fieldControl=true&defaultField=temperature&defaultUnits=_f';
         $('widget').src = srcString;
@@ -3491,8 +3433,7 @@ function button5() {
       $('widget').classList.add('visible');
       playAudio($('keypress6'));
       playAudio($('computer-thinking'));
-    }
-    else {
+    } else {
       $('widget').classList.remove('visible');
       $('widget').classList.add('hidden');
       playAudio($('keypress5'));
@@ -3515,8 +3456,7 @@ function button6() {
       $('widget').classList.add('visible');
       playAudio($('keypress6'));
       playAudio($('verified'));
-    }
-    else {
+    } else {
       $('widget').src = '';
       $('widget').classList.remove('visible');
       $('widget').classList.add('hidden');
@@ -3654,8 +3594,7 @@ function worldIsRunning() {
 
   if ($('twig').src.indexOf('pop') === -1) {
     return true;
-  }
-  else {
+  } else {
     return false;
   }
 }
@@ -3714,9 +3653,10 @@ function loadMathMon(tmpStack) {
 
 function mathMonConstructor(tmpStack) {
   var i = 0;
-  while (tmpStack.length > 0) {
 
+  while (tmpStack.length > 0) {
     var tmpArray = [];
+
     tmpArray = tmpStack.shift();
     tmpArray = tmpArray.split(',');
 
@@ -3863,8 +3803,7 @@ function pongTV() {
     $('tv').src = 'images/twig/tv-pong.gif';
     setTimeout(staticTV, 600);
     brownianMovement(tv);
-  }
-  else {
+  } else {
     $('tv').src = 'images/twig/tv-off.gif';
   }
 }
@@ -3874,8 +3813,7 @@ function staticTV() {
     $('tv').src = 'images/twig/tv-static.gif';
     setTimeout(pongTV, 900);
     brownianMovement(tv);
-  }
-  else {
+  } else {
     $('tv').src = 'images/twig/tv-off.gif';
   }
 }
@@ -3889,8 +3827,7 @@ function donMove() {
     }   
     setTimeout(donMove, 600);
     brownianMovement(don);
-  }
-  else {
+  } else {
     $('don').src = 'images/twig/don-jon.gif';
   }  
 }
@@ -4063,7 +4000,7 @@ window.onload = function () {
   // Menu File 
   $('menu-load').onclick = btnLoad;
   $('open-file').addEventListener('change', function () {
-    try{
+    try {
       var fr = new FileReader();
 
       fr.onload = function () {
@@ -4072,8 +4009,7 @@ window.onload = function () {
           backupUndoNotes();
           $('lst-notes').value += this.result;
           backupUndoNotes();
-        }
-        else {
+        } else {
           var tmpStack = [];
           backupUndo();
           tmpStack = this.result.split('\n');
@@ -4082,8 +4018,7 @@ window.onload = function () {
             if (shifted) {
               evaluateExpression($('txt-input').value);
               enterInput();
-            }
-            else {
+            } else {
               enterInput();              
             }
           }
@@ -4091,8 +4026,7 @@ window.onload = function () {
         }
       };
       fr.readAsText(this.files[0]);
-    }
-    catch (err) {
+    } catch (err) {
       rpnAlert(err.toString());
     }
   });
@@ -4412,14 +4346,12 @@ window.onload = function () {
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lst-notes').value = '';
     btnLoadNotes();
-  }
-  else {
+  } else {
     backupUndoNotes();
   }
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
-  }
-  else {
+  } else {
     widgetSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');
     widgetSrc.push('https://www.youtube.com/embed/Fn44paKMX4E?autoplay=1');
     widgetSrc.push('https://www.youtube.com/embed/yXQz-VU5iVc?autoplay=1');
@@ -4428,9 +4360,7 @@ window.onload = function () {
     $('lst-stack').value = '';
     $('txt-input').value = '';
     btnLoad();
-  }
-  else
-  {
+  } else {
     backupUndo();
     $('btn-save').style.color = '#D4D0C8';
   }
