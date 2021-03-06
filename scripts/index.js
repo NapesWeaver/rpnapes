@@ -382,13 +382,12 @@ function xyFunction() {
   $('txt-input').focus();
 }
 
-function commandRun() {
+function runProgram() {
   if (!shifted) btnShift();
   btnLoad();
 }
 
 function enterButton() {
-
   if (shifted) {
     btnEval();
   } else {
@@ -399,7 +398,7 @@ function enterButton() {
 function btnEnter() {
   backupUndo();
   if ($('txt-input').value.trim().match(/^run$/)) {
-    commandRun();
+    runProgram();
     return;
   }
   if (stackFocus) {
@@ -412,21 +411,29 @@ function btnEnter() {
   parseCommand();
 }
 
+// function btnEval() {
+//   backupUndo();
+//   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+//   if ($('txt-input').value.trim().match(/^run$/)) {
+//     runProgram();
+//     return;
+//   }
+//   evaluateExpression($('txt-input').value);
+//   $('txt-input').select();    
+// }
+
 function btnEval() {
   backupUndo();
-  if ($('txt-input').value.trim().match(/^run$/)) {
-    commandRun();
+  var objX = getX();
+
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  if (objX.getSoul().match(/^run$/)) {
+    runProgram();
     return;
   }
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  var units = getX().getUnits();
-  
-  if (units !== 'null') {
-    evaluateExpression($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-    $('txt-input').value += ' ' + units;
-  } else {
-    evaluateExpression($('txt-input').value);    
-  }  
+  $('txt-input').value = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+
+  if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + objX.getUnits();
   $('txt-input').select();    
 }
 
@@ -443,11 +450,11 @@ function getX() {
 }
 
 function enterInput() {
-
   var objX = getX();
   stack.push(objX);
   $('txt-input').value = $('txt-input').value.trim();  
 }
+
 function calculate(x) {
   try {
     x = eval(parseEvaluation(x));
@@ -456,7 +463,9 @@ function calculate(x) {
   }
   return x;
 }
+
 function runTest() {
+
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
       var y = decodeSpecialChar(stack[stack.length - 2].getSoul());
@@ -468,6 +477,7 @@ function runTest() {
     console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
   }
 }
+
 function evaluateExpression(input) {   
   $('txt-input').value = calculate(input);  
   if (testing) runTest();  
@@ -1558,7 +1568,7 @@ function editStack() {
 
   for (var sta in stack) {
 
-    var stackEntry = stack[sta].soul;
+    var stackEntry = stack[sta].getSoul();
     var searchTerm = /btn[A-Z]/;
     var tmpIndex = 1;
     // While 'btn[A-Z]' exists globally
