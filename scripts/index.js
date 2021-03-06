@@ -411,17 +411,6 @@ function btnEnter() {
   parseCommand();
 }
 
-// function btnEval() {
-//   backupUndo();
-//   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-//   if ($('txt-input').value.trim().match(/^run$/)) {
-//     runProgram();
-//     return;
-//   }
-//   evaluateExpression($('txt-input').value);
-//   $('txt-input').select();    
-// }
-
 function btnEval() {
   backupUndo();
   var objX = getX();
@@ -432,7 +421,6 @@ function btnEval() {
     return;
   }
   $('txt-input').value = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-
   if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + objX.getUnits();
   $('txt-input').select();    
 }
