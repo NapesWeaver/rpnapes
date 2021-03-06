@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = Math.PI;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '20:30:37';
+const tStamp = '20:26:48';
 var testing = false;
 
 var stack = [];
@@ -1049,7 +1049,7 @@ function exponentialFunction() {
   }
   objX = getX();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  newUnits = getMultiplyUnits(x);
+  newUnits = multiplyUnits(x);
   objY = stack.pop();
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
 
@@ -1076,8 +1076,7 @@ function rootFunction() {
   }
   objX = getX();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  // newUnits = getDivideUnits(1/x);
-  newUnits = getMultiplyUnits(1/x);
+  newUnits = multiplyUnits(1/x);
   objY = stack.pop();
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
 
@@ -1255,7 +1254,7 @@ function btnDivide() {
 }
 function division() {
   backupUndo();
-  var newUnits = getDivideUnits(1);
+  var newUnits = divideUnits(1);
   var objY = stack.pop();
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
@@ -1286,7 +1285,7 @@ function btnMultiply() {
 }
 function multiplication() {
   backupUndo();
-  var newUnits = getMultiplyUnits(1);
+  var newUnits = multiplyUnits(1);
   var objY = stack.pop();
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
@@ -1316,7 +1315,7 @@ function btnSubtract() {
 }
 function subtraction() {
   backupUndo();
-  var newUnits = getAddUnits();
+  var newUnits = addUnits();
   var objY = stack.pop();
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
@@ -1346,7 +1345,7 @@ function btnAdd() {
 }
 function addition() {
   backupUndo();
-  var newUnits = getAddUnits();
+  var newUnits = addUnits();
   var objY = stack.pop();
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
@@ -2820,63 +2819,38 @@ function extractUnits(tmpArray) {
   return tmpUnits;
 }
 
-function getAddUnits() {
-
-  var newUnits = addUnits();
-  if (newUnits === ' ') {
-    newUnits = '';
-  }
-  return newUnits;
-}
-function getMultiplyUnits(exponent) {
-
-  var newUnits = multiplyUnits(exponent);    
-  if (newUnits === ' ') {
-    newUnits = '';
-  }
-  return newUnits;
-}
-function getDivideUnits(exponent) {
-
-  var newUnits = divideUnits(exponent);    
-  if (newUnits === ' ') {
-    newUnits = '';
-  }
-  return newUnits;
-}
 function addUnits() {
-  var newUnits = ' ';
-  var yUnits = stack[stack.length - 1].getUnits();
-  var xUnits = extractUnits($('txt-input').value);
+  var units = '';
+  var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
+  var unitsX = extractUnits($('txt-input').value);
 
-  if (yUnits !== 'null' && (xUnits === 'null' || xUnits === yUnits)) return yUnits;
-  if (xUnits !== 'null') return xUnits;
-  return newUnits;
+  if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = ' ' + unitsY;
+  if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = ' ' + unitsX;
+  return units;
 }
+
 function multiplyUnits(multiplier) {
-
-  var unitsMultiplied = '';
+  var units = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
   var unitsX = extractUnits($('txt-input').value);
-
-  if (unitsY !== '' || unitsX !== 'null') {
-    unitsMultiplied = ' ' + processUnits(unitsY, unitsX, multiplier, true);
+  if ((unitsY !== 'null' || unitsX !== 'null')) {
+    units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
   }
-  return unitsMultiplied;
+  return units;
 }
+
 function divideUnits(multiplier) {
-
-  var unitsDivided = '';
+  var units = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
   var unitsX = extractUnits($('txt-input').value);
 
-  if ((unitsY !== '' || unitsX !== 'null') && unitsY !== unitsX) {
-    unitsDivided = ' ' + processUnits(unitsY, unitsX, multiplier, false);
+  if ((unitsY !== 'null' || unitsX !== 'null') && unitsY !== unitsX) {
+    units = ' ' + processUnits(unitsY, unitsX, multiplier, false);
   }
-  return unitsDivided;
+  return units;
 }
-function inverseUnits() {
 
+function inverseUnits() {
   var tmpArray = [];
   var invertedUnits = '';
   var unitsX = extractUnits($('txt-input').value);
@@ -2889,12 +2863,10 @@ function inverseUnits() {
 
       if (tmpArray[0].indexOf('1') === -1) {
         invertedUnits += ' ' + tmpArray[1] + '/' + tmpArray[0];
-      }
-      else {
+      } else {
         invertedUnits += ' ' + tmpArray[1];
       }
-    }
-    else {
+    } else {
       invertedUnits += ' 1/' + unitsX;
     }
   }
@@ -2902,7 +2874,6 @@ function inverseUnits() {
 }
 
 function splitUnits(tmpUnits) {
-
   var unitsA = '';
   var unitsB = '';
 
@@ -2910,8 +2881,7 @@ function splitUnits(tmpUnits) {
     tmpUnits = tmpUnits.split('/');
     unitsA = tmpUnits[0];
     unitsB = tmpUnits[1];
-  }
-  else {
+  } else {
     unitsA += tmpUnits;
   }
   unitsA = unitsA.split('*');
@@ -2919,6 +2889,7 @@ function splitUnits(tmpUnits) {
 
   return [unitsA, unitsB];
 }
+
 function processUnits(unitsY, unitsX, multiplier, multiply) {
 
   var unitsSplit = [];
@@ -2931,7 +2902,6 @@ function processUnits(unitsY, unitsX, multiplier, multiply) {
   unitsSplit = splitUnits(unitsY);
   numeratorY = unitsSplit[0];
   denominatorY = unitsSplit[1];
-
   unitsSplit = splitUnits(unitsX);
   numeratorX = unitsSplit[0];
   denominatorX = unitsSplit[1];
@@ -2940,25 +2910,21 @@ function processUnits(unitsY, unitsX, multiplier, multiply) {
     // Multiplication
     numeratorX = unitAddition(numeratorY, numeratorX, multiplier, true);
     denominatorX = unitAddition(denominatorY, denominatorX, multiplier, true);
-  }
-  else {
+  } else {
     // Division
     numeratorY = unitAddition(numeratorY, denominatorX, multiplier, true);
 
     if (denominatorY !== '') {
       denominatorY = unitAddition(denominatorY, numeratorX, multiplier, true);
-    }
-    else {
+    } else {
       denominatorY = numeratorX.join('*');
     }
     numeratorX = numeratorY;
     denominatorX = denominatorY;
   }
-  //unitsCombined = numeratorX + "/" + denominatorX;
   unitsCombined = unitAddition(numeratorX.split('*'), denominatorX.split('*'), 1, false);
-  if (unitsCombined.indexOf('-') !== -1) {
-    unitsCombined = rewriteNegUnitExp(unitsCombined);
-  }
+
+  if (unitsCombined.indexOf('-') !== -1) unitsCombined = rewriteNegUnitExp(unitsCombined);
   return unitsCombined;
 }
 
@@ -2973,34 +2939,28 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
     unitsDoNotMatch = true;
 
     tmpUnitsA += unitsA[a].match(/[Ω♥a-zA-Z]+/);
-    if (unitsA[a].indexOf('^') !== -1) {
-      expA = unitsA[a].match(/[-]?[.0-9]+/);
-    }
+    if (unitsA[a].indexOf('^') !== -1) expA = unitsA[a].match(/[-]?[.0-9]+/);
     // Check for matches between tmpUnitsA and unitsB
     for (var b in unitsB) {
       var tmpUnitsB = '';
       var expB = 1;
 
       tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
-      if (unitsB[b].indexOf('^') !== -1) {
-        expB = unitsB[b].match(/[-]?[.0-9]+/);
-      }
+      if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
+
       if (tmpUnitsA === tmpUnitsB) {
         unitsDoNotMatch = false;
 
         if (add) {
           expA = (parseFloat(expA) * multiplier) + parseFloat(expB);
-        }
-        else {
+        } else {
           expA = parseFloat(expA) - parseFloat(expB);
         }
         unitsCombined = appendUnits(unitsCombined, tmpUnitsA, expA);
       }
     }
     if (unitsDoNotMatch) {
-      if (add) {
-        expA = expA * multiplier;
-      }
+      if (add) expA = expA * multiplier;
       unitsCombined = appendUnits(unitsCombined, tmpUnitsA, expA);
     }
   }
@@ -3011,22 +2971,17 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
 
     unitsDoNotMatch = true;
     tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
-    if (unitsB[b].indexOf('^') !== -1) {
-      expB = unitsB[b].match(/[-]?[.0-9]+/);
-    }
+
+    if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
+
     for (a in unitsA) {
       tmpUnitsA = '';
-
       tmpUnitsA += unitsA[a].match(/[Ω♥a-zA-Z]+/);
 
-      if (tmpUnitsB === tmpUnitsA) {
-        unitsDoNotMatch = false;
-      }
+      if (tmpUnitsB === tmpUnitsA) unitsDoNotMatch = false;
     }
     if (unitsDoNotMatch) {
-      if (!add) {
-        expB = expB * -1;
-      }
+      if (!add) expB = expB * -1;
       unitsCombined = appendUnits(unitsCombined, tmpUnitsB, parseFloat(expB));
     }
   }
@@ -3036,19 +2991,15 @@ function appendUnits(unitString, tmpUnits, exponent) {
 
   if (tmpUnits !== 'null') {
     if (exponent === 1) {
-      if (unitString.length > 0) {
-        unitString += '*';
-      }
+
+      if (unitString.length > 0) unitString += '*';
       unitString += tmpUnits;
-    }
-    else if (exponent !== 0) {
-      if (unitString.length > 0) {
-        unitString += '*';
-      }
+    } else if (exponent !== 0) {
+
+      if (unitString.length > 0) unitString += '*';
       if (exponent.toString().indexOf('.') < 0) {
         unitString += tmpUnits + '^' + exponent;
-      }
-      else {
+      } else {
         unitString += tmpUnits + '^' + toFixed(exponent, 2);
       }
     }
@@ -3057,7 +3008,6 @@ function appendUnits(unitString, tmpUnits, exponent) {
 }
 
 function rewriteNegUnitExp(tmpUnits) {
-
   var newUnits = '';
 
   if (tmpUnits.indexOf('-') !== -1) {
@@ -3082,16 +3032,11 @@ function rewriteNegUnitExp(tmpUnits) {
     changedUnits = [];
     denominator = unitAddition(denominator, changedUnits, 1, true);
 
-    if (numerator === '' && denominator !== '') {
-      numerator += '1';
-    }
+    if (numerator === '' && denominator !== '') numerator += '1';
     newUnits += numerator;
 
-    if (denominator !== '') {
-      newUnits += '/' + denominator;
-    }
-  }
-  else {
+    if (denominator !== '') newUnits += '/' + denominator;
+  } else {
     newUnits = tmpUnits;
   }
   return newUnits;
