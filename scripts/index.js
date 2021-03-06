@@ -2816,24 +2816,27 @@ function extractImaginary(tmpArray) {
   return tmpImaginary;
 }
 
-// Extract units from 'soul' of argument
 function extractUnits(tmpArray) {
-
   var tmpUnits = '';
-
-  if (tmpArray.indexOf('Infinity') !== -1) {
-    tmpArray = tmpArray.replace(/Infinity/g, '');
-  }
+  // if (tmpArray.indexOf('Infinity') !== -1) {
+  //   tmpArray = tmpArray.replace(/Infinity/g, '');
+  // }
   if (radix !== 16) {
-    // tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
-
-    // Extract from end, after explicit space
-    tmpUnits += tmpArray.match(/[ ](?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
+    if (isNaN(extractReal($('txt-input').value))) {
+      // Extract from end, after explicit space
+      tmpUnits += tmpArray.match(/[ ](?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
+      if (tmpUnits !== 'null') tmpUnits = tmpUnits.slice(1);
+    } else {
+      tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
+    }
   } else {
-    // tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*/);
-    tmpUnits += tmpArray.match(/[ ](?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
+    if (isNaN(extractReal($('txt-input').value))) {
+      tmpUnits += tmpArray.match(/[ ](?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);      
+      if (tmpUnits !== 'null') tmpUnits = tmpUnits.slice(1);
+    } else {
+      tmpUnits += tmpArray.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
+    }
   }
-  console.log('tmpUnits', tmpUnits);
   return tmpUnits;
 }
 
