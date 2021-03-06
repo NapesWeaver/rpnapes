@@ -419,7 +419,14 @@ function btnEval() {
     return;
   }
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  evaluateExpression($('txt-input').value);
+  var units = getX().getUnits();
+  
+  if (units !== 'null') {
+    evaluateExpression($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+    $('txt-input').value += ' ' + units;
+  } else {
+    evaluateExpression($('txt-input').value);    
+  }  
   $('txt-input').select();    
 }
 
@@ -450,7 +457,6 @@ function calculate(x) {
   return x;
 }
 function runTest() {
-
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
       var y = decodeSpecialChar(stack[stack.length - 2].getSoul());
@@ -462,14 +468,12 @@ function runTest() {
     console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
   }
 }
-function evaluateExpression(input) {  
-  
+function evaluateExpression(input) {   
   $('txt-input').value = calculate(input);  
   if (testing) runTest();  
 }
 
 function deleteButton() {
-
   if (shifted) {
     btnBackspace();
   }
@@ -497,7 +501,6 @@ function btnDelete() {
   if (elapsedTime > 0) stopwatchReset();
 }
 function deleteFromStack() {
-
   var stackIndex = getIndex('lst-stack') - stackSize;
   stack.splice(stackIndex, 1);
 }
@@ -2178,7 +2181,7 @@ function parseCommand() {
   }
 }
 
-function parseEvaluation(input) {
+function parseEvaluation(input) {  
   // If input does not contain quotes or regex (input is not part of another program) AND it contains [!^√]  
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
     input = input.replace(/ /g, '');
