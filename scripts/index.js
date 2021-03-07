@@ -71,8 +71,7 @@ function NumberObject(soul, realPart, imaginary, units, timeStamp) {
   this.realPart = realPart;
   this.imaginary = imaginary;
   this.units = units;
-  this.timeStamp = timeStamp;
-  
+  this.timeStamp = timeStamp;  
   // if (isNaN(this.realPart) && isNaN(this.imaginary)) {
   //   this.units = 'null';
   // }
@@ -190,12 +189,14 @@ function toggleHaptic() {
   }
   $('txt-input').focus();
 }
+
 function hapticResponse() {
   if (isMobile) {
     haptic();
     $('txt-input').readOnly = true;
   }
 }
+
 function haptic() {
   if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([1]);
   // For Timer - Vibrate 'SOS' in Morse :)
@@ -210,6 +211,7 @@ function toggleKeyboard() {
   }
   $('txt-input').focus();
 }
+
 function mobileKeyboardAllow() {
   if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
     if ($('txt-input').readOnly === true) {
@@ -239,8 +241,8 @@ function btnXoff() {
     notesOn();
   }
 }
-function rpnapesOn() {
 
+function rpnapesOn() {
   $('notes').classList.remove('visible');
   $('notes').classList.add('hidden');
   $('wrap').classList.remove('tricorder-min-height');
@@ -259,8 +261,8 @@ function rpnapesOn() {
   }
   $('txt-input').focus();
 }
-function notesOn() {
 
+function notesOn() {
   $('rpnapes').classList.remove('visible');
   $('rpnapes').classList.add('hidden');
   monOff();
@@ -279,8 +281,8 @@ function notesOn() {
     resizeTextarea($('lst-notes'));
   }
 }
-function showTricorder() {
-  
+
+function showTricorder() {  
   $('rpnapes').classList.remove('visible');
   $('rpnapes').classList.add('hidden');
   monOff();
@@ -295,13 +297,13 @@ function showTricorder() {
 }
 
 function btnCopy() {
-
   if (shifted) {
     btn_paste();
   } else {
     copy();
   }  
 }
+
 function copy() {
   if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
 
@@ -311,8 +313,8 @@ function copy() {
     navigator.clipboard.writeText(getSelectedText('lst-stack'));
   }
 }
-function btn_paste() {
 
+function btn_paste() {
   backupUndo();
 
   if (stackFocus) {
@@ -328,15 +330,14 @@ function btn_paste() {
 }
 
 function btnXy() {
-
   if (shifted) {
     abFunction();
   } else {
     xyFunction();
   }
 }
-function abFunction() {
 
+function abFunction() {
   if (stack.length > 1) {
     backupUndo();
     var tmp = stack.pop();
@@ -347,8 +348,8 @@ function abFunction() {
   }
   $('txt-input').focus();
 }
-function xyFunction() {
 
+function xyFunction() {
   if (stack.length > 0) {
     backupUndo();
     var tmpX = stack.pop();
@@ -397,8 +398,7 @@ function btnEnter() {
   }
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  }
-  else {
+  } else {
     enterInput();
   }
   updateDisplay();
@@ -410,13 +410,11 @@ function btnEval() {
   var objX = getX();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-
   if (objX.getSoul().match(/^run$/)) {
     runProgram();
     return;
   }
   $('txt-input').value = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-
   if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + objX.getUnits();
   $('txt-input').select();    
 }
@@ -472,10 +470,11 @@ function deleteButton() {
     btnDelete();
   }
 }
-function btnDelete() {
 
-  backupUndo();
+function btnDelete() {
+  backupUndo();  
   $('txt-input').value = $('txt-input').value.trim();
+
   if (stackFocus) {
     deleteFromStack();
     updateDisplay();
@@ -490,13 +489,15 @@ function btnDelete() {
   }
   if (elapsedTime > 0) stopwatchReset();
 }
+
 function deleteFromStack() {
   var stackIndex = getIndex('lst-stack') - stackSize;
   stack.splice(stackIndex, 1);
 }
-function btnBackspace() {
 
+function btnBackspace() {
   backupUndo();
+
   if (stackFocus) {
     deleteFromStack();
     updateDisplay();
@@ -507,6 +508,7 @@ function btnBackspace() {
     deleteText($('txt-input'), false);
   }
 }
+
 function deleteText(txtField, forward) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
@@ -522,14 +524,15 @@ function deleteText(txtField, forward) {
 }
 
 function btnUndo() {
-
   if (shifted) {
     redoFunction();
   } else {
     undoFunction();
   }
 }
+
 function undoFunction() {
+
   if (backUps.length > 3) {    
     restores.push(nestArrayByBrowser(stack));
     restores.push($('txt-input').value);
@@ -549,6 +552,7 @@ function undoFunction() {
   }
   colorUndoButton();
 }
+
 function redoFunction() {
 
   if (restores.length > 0) {
@@ -570,14 +574,15 @@ function redoFunction() {
   }
   colorUndoButton();
 }
+
 function backupUndo() {
   backUps.push(nestArrayByBrowser(stack));
   backUps.push($('txt-input').value.trim());
   restores.length = 0;
   colorUndoButton();
 }
-function colorUndoButton() {
 
+function colorUndoButton() {
   if (($('btn-undo').value === 'UND' && backUps.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
     $('btn-undo').style.color = '#25FC5A';
   } else {
@@ -585,8 +590,8 @@ function colorUndoButton() {
   }        
   colorUndoRedoMenu();
 }
-function colorUndoRedoMenu() {
 
+function colorUndoRedoMenu() {
   if (backUps.length > 3) {
     //$('menu-undo').style.color = '#25FC5A';
     $('menu-undo').style.color = '#088B00';
@@ -600,8 +605,8 @@ function colorUndoRedoMenu() {
     $('menu-redo').style.color = '#D4D0C8';
   }
 }
-function btnEe() {
 
+function btnEe() {
   if (shifted) {
 
     if (radix !== 16) {
@@ -633,7 +638,6 @@ function btnGo() {
 }
 
 function btnShift() {
-
   if (shifted) {
     // Shifting to false...
     shifted = false;
@@ -641,10 +645,6 @@ function btnShift() {
     $('open').setAttribute('title', 'Open a file');
     $('menu-load').innerHTML = 'Load';
     $('menu-load').setAttribute('title', 'Load stack');
-    //$('menu-copy').innerHTML = 'Copy';
-    //$('menu-copy').setAttribute('title', 'Copy text');
-    //$('menu-xy').innerHTML = 'x&nbsp;&#60;&nbsp;&#62;&nbsp;y';
-    //$('menu-xy').setAttribute('title', 'Swap input and last stack entry');
     $('menu-sine').innerHTML = 'sin';
     $('menu-cosine').innerHTML = 'cos';
     $('menu-tangent').innerHTML = 'tan'
@@ -667,11 +667,6 @@ function btnShift() {
     $('btn-go').classList.remove('you-tube');
     $('btn-go').classList.add('google');
     $('btn-go').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
-    // if ($('menu-darkmode').textContent === 'Dark') {
-    //   $('btn-shift').className = 'btn-med btn-shift';
-    // } else {
-    //   $('btn-shift').className = 'btn-med btn-shifted';      
-    // }
     $('btn-shift').className = 'btn-med btn-shift';
     $('btn-divide').style.color = '#000000';
     $('btn-divide').value = '÷';
@@ -692,10 +687,6 @@ function btnShift() {
     $('open').setAttribute('title', 'Run JS file');
     $('menu-load').innerHTML = 'Run';
     $('menu-load').setAttribute('title', 'Run stack');
-    //$('menu-copy').innerHTML = 'Paste';
-    //$('menu-copy').setAttribute('title', 'Paste text from stack or clipboard');
-    //$('menu-xy').innerHTML = 'a&nbsp;&#60;&nbsp;&#62;&nbsp;b';
-    //$('menu-xy').setAttribute('title', 'Swap last two stack entries');
     $('menu-sine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menu-cosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menu-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
@@ -705,11 +696,11 @@ function btnShift() {
     $('btn-enter').value = '=';
     // $('btn-delete').innerHTML = '<---';
     // $('btn-delete').innerHTML = '◀---';
-    $('btn-delete').innerHTML = '<−−';
+    // $('btn-delete').innerHTML = '<−−';
     // $('btn-delete').innerHTML = '<span class="btn-big-font">␈</span>';
-    $('btn-delete').innerHTML = '<span class="btn-backspace">⌫</span>';
     // $('btn-delete').innerHTML = '<span class="btn-big-font">⬅</span>';
     // $('btn-delete').innerHTML = '<span class="btn-big-font">⇐</span>';
+    $('btn-delete').innerHTML = '<span class="btn-backspace">⌫</span>';
     $('btn-inverse').value = 'x !';
     $('btn-log').innerHTML = 'log<sub>x</sub>y';
     $('btn-root').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
@@ -724,11 +715,6 @@ function btnShift() {
     $('btn-go').classList.remove('google');
     $('btn-go').classList.add('you-tube');
     $('btn-go').innerHTML = '&#9654';
-    // if ($('menu-darkmode').textContent === 'Dark') {
-    //   $('btn-shift').className = 'btn-med btn-shifted';
-    // } else {
-    //   $('btn-shift').className = 'btn-med btn-shift';
-    // }
     $('btn-shift').className = 'btn-med btn-shifted';
     $('btn-divide').style.color = '#0000A0';
     $('btn-divide').value = '/';
@@ -752,7 +738,6 @@ function btnShift() {
 }
 
 function btnClear() {
-
   backupUndo();
   monOff();
   $('txt-input').value = '';
@@ -762,12 +747,12 @@ function btnClear() {
 }
 
 function btnSave() {
-
   $('btn-save').style.color = '#D4D0C8';
   storeCookie('STACK', nestArrayByBrowser(stack));
   storeCookie('MATHMON', nestArrayByBrowser(theObjects));
   $('txt-input').focus();
 }
+
 function nestArrayByBrowser(srcArray) {
   var newArray = '';
 
@@ -787,7 +772,6 @@ function nestArrayByBrowser(srcArray) {
 }
 
 function saveFile(fileName, pretty) {
-
   var myBlob;
   var blobContent = '';
 
@@ -814,35 +798,30 @@ function saveFile(fileName, pretty) {
     myBlob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
     fileName += '.txt';
     saveAs(myBlob, fileName);
-  }
-  else {
+  } else {
     rpnAlert('Error: There is no data to save.');
   }
 }
 
 function btnLoad() {
-
-  var index = 0;
   backupUndo();
+  var index = 0;
+
   try { 
     $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
     if (getCookie('STACK').substr(index) !== '') {
       loadStack(getCookie('STACK').substr(index));
     }        
-  }
-  catch (err) { rpnAlert('load Stack error.'); }
+  } catch (err) { rpnAlert('load Stack error.'); }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
     loadMathMon(getCookie('MATHMON').substr(index));
-  }
-  catch(err) { rpnAlert('load MathMon error'); }
+  } catch(err) { rpnAlert('load MathMon error'); }
   updateDisplay();
 }
 
 function loadStack(tmpStack) {
-
-  //stack.length = 0;
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     // Remove underscore from begining of string
@@ -852,7 +831,6 @@ function loadStack(tmpStack) {
     
   while (tmpStack.length > 0) {
     var tmpArray = [];
-
     tmpArray = tmpStack.shift();
     pushObjectToStack(tmpArray);
     
@@ -861,6 +839,7 @@ function loadStack(tmpStack) {
 }
 
 function splitArrayByBrowser(tmpArray) {
+
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     tmpArray = tmpArray.split('_');
   } else {
@@ -871,7 +850,6 @@ function splitArrayByBrowser(tmpArray) {
 }
 
 function pushObjectToStack(tmpArray) {
-
   tmpArray = tmpArray.split(',');
 
   var soulY = tmpArray[0].trim();
@@ -879,17 +857,14 @@ function pushObjectToStack(tmpArray) {
   var unitsY = tmpArray[2].trim();
   var imaginaryY = tmpArray[3].trim();
   var timeStampY = tmpArray[4].trim();
+  var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY, timeStampY);  
 
-  var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY, timeStampY);
-  
   stack.push(objY);
 }
 
 function btnOff() {
-
   monOff();
-  tricorderOff();
-  
+  tricorderOff();  
   // Not working at all for mobile Firefox :(
   if (navigator.userAgent.toLowerCase().indexOf('firefox') === -1 || !isMobile) {
     window.open('','_self').close();
@@ -912,9 +887,9 @@ function btnInverse() {
     inverse();
   } 
 }
+
 function inverse() {
   backupUndo();
-
   var newUnits = inverseUnits();
   var isNumber = !isNaN(extractReal($('txt-input').value));
   var isImaginary = !isNaN(extractImaginary($('txt-input').value));
@@ -941,22 +916,21 @@ function inverse() {
   }
   $('txt-input').select();
 }
+
 function btnFactorial() {
   backupUndo();
-
   $('txt-input').value = calculate($('txt-input').value);
   $('txt-input').value = factorial(extractReal($('txt-input').value));
   $('txt-input').select();
 }
-function factorial(num) {
-  
+
+function factorial(num) {  
   if (num <= 1) {
     return 1;
   } else {
     try {
       var theResult = num * factorial(num - 1);
-    }
-    catch (err) {
+    } catch (e) {
       return 'Infinity';
     }
     return theResult;
@@ -964,7 +938,6 @@ function factorial(num) {
 }
 
 function btnLog() {
-
   if (shifted) {
     baseLog();
   } else {
@@ -976,6 +949,7 @@ function log(x, y) {
   if (y === undefined) y = 10;
   return Math.log(x) / Math.log(y);
 }
+
 function baseLog() {
   backupUndo();
   var objY;
@@ -996,12 +970,13 @@ function baseLog() {
   updateDisplay();
   $('txt-input').select();
 }
+
 function ln(x) {
   return Math.log(x);
 }
+
 function naturalLog() {
   backupUndo();
-
   var objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   $('txt-input').value = ln(x);
@@ -1010,7 +985,6 @@ function naturalLog() {
 }
 
 function btnRoot() {
-
   if (shifted) {
     rootFunction();
   } else {
@@ -1022,14 +996,15 @@ function pow(x, y) {
   if (y === undefined) y = 2;
   return Math.pow(x, y);
 }
+
 function exponentialFunction() {
   backupUndo();
-
   var newUnits;
   var objY;
   var objX;
   var y;
   var x;
+
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
     $(('txt-input')).value = '2';
@@ -1044,13 +1019,14 @@ function exponentialFunction() {
   updateDisplay();
   $('txt-input').select();
 }
+
 function root(x, y) {
   if (y === undefined) y = 2;
   return Math.pow(x, 1/y);
 }
+
 function rootFunction() {
   backupUndo();  
-
   var newUnits;
   var objY;
   var objX;
@@ -1073,32 +1049,28 @@ function rootFunction() {
 }
 
 function btnPi() {
-
   backupUndo();
-
   if (shifted) {
     btn_parentheses();
   } else {
     insertText('π');
   }
 }
-function btn_parentheses() {
-  
+
+function btn_parentheses() {  
   insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
   $('txt-input').focus();
 }
-function insertAroundSelection(txtField, txtValue) {
 
+function insertAroundSelection(txtField, txtValue) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
-
   txtField.value = txtField.value.substring(0, startPos) + txtValue + txtField.value.substring(endPos, txtField.value.length);
   txtField.selectionEnd = endPos + 1;  
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
-function btnModulus() {
-  
+function btnModulus() {  
   if (shifted) {
     backupUndo();
     insertText('√');
@@ -1108,7 +1080,8 @@ function btnModulus() {
 }
 
 function modulus() {
-  backupUndo(); 
+  backupUndo();
+  var newUnits = divideUnits(1);
   var objY = stack.pop();
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
@@ -1120,13 +1093,13 @@ function modulus() {
   } else {
     result = (y % x).toString(radix);
   }  
+  result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
 }
 
-function btnSign() {
-  
+function btnSign() {  
   if (shifted) {
     backupUndo();
     insertText('^');    
@@ -1134,12 +1107,12 @@ function btnSign() {
     changeSign();
   }
 }
+
 function changeSign() {
   backupUndo();
-
   var tmpX = $('txt-input').value;  
-  if (stackFocus) tmpX = getSelectedText('lst-stack');
 
+  if (stackFocus) tmpX = getSelectedText('lst-stack');
   // If input is blank
   if (tmpX === '') {
     tmpX = '-';
@@ -1189,7 +1162,8 @@ function changeSign() {
   } else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
     tmpX = tmpX.substring(0, tmpX.length - 1);
     tmpX += '-';
-  } else {// Change sign
+  } else {
+    // Change sign
     if (tmpX.charAt(0) === '+') {
       tmpX = tmpX.substring(1);
     }
@@ -1206,8 +1180,7 @@ function changeSign() {
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
-function btnDivide() {
-  
+function btnDivide() {  
   if (shifted) {
     backupUndo();
     insertText('/');    
@@ -1215,6 +1188,7 @@ function btnDivide() {
     division();
   }  
 }
+
 function division() {
   backupUndo();
   var newUnits = divideUnits(1);
@@ -1237,8 +1211,7 @@ function division() {
   $('txt-input').focus();
 }
 
-function btnMultiply() {
-  
+function btnMultiply() {  
   if (shifted) {
     backupUndo();
     insertText('*');
@@ -1246,6 +1219,7 @@ function btnMultiply() {
     multiplication();
   }      
 }
+
 function multiplication() {
   backupUndo();
   var newUnits = multiplyUnits(1);
@@ -1266,8 +1240,7 @@ function multiplication() {
   $('txt-input').focus();
 }
 
-function btnSubtract() {
-  
+function btnSubtract() {  
   if (shifted) {
     backupUndo();
     insertText('-');    
@@ -1275,6 +1248,7 @@ function btnSubtract() {
     subtraction();
   }  
 }
+
 function subtraction() {
   backupUndo();
   var newUnits = addUnits();
@@ -1295,8 +1269,7 @@ function subtraction() {
   $('txt-input').focus();
 }
 
-function btnAdd() {
-  
+function btnAdd() {  
   if (shifted) {
     backupUndo();
     insertText('+');    
@@ -1304,6 +1277,7 @@ function btnAdd() {
     addition();
   }  
 }
+
 function addition() {
   backupUndo();
   var newUnits = addUnits();
@@ -1327,7 +1301,6 @@ function addition() {
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
 
 function btnAngle() {
-
   if ($('btn-angle').value === 'deg') {
     $('btn-angle').value = 'rad';
     $('btn-angle').className = 'btn-small btn-radian radian-border';
@@ -1343,6 +1316,7 @@ function btnAngle() {
   }
   $('txt-input').focus();
 }
+
 function btnSine() {
   backupUndo();
 
@@ -1356,6 +1330,7 @@ function btnSine() {
   updateDisplay();
   $('txt-input').select();  
 }
+
 function btnCosine() {
   backupUndo();
 
@@ -1369,6 +1344,7 @@ function btnCosine() {
   updateDisplay();
   $('txt-input').select();
 }
+
 function btnTangent() {
   backupUndo();
 
@@ -1382,6 +1358,7 @@ function btnTangent() {
   updateDisplay();
   $('txt-input').select();
 }
+
 function sin(x) {
   x = calculate(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
@@ -1392,6 +1369,7 @@ function sin(x) {
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.sin(x);
 }
+
 function cos(x) {
   x = calculate(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 1;
@@ -1401,6 +1379,7 @@ function cos(x) {
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.cos(x);
 }
+
 function tan(x) {
   x = calculate(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
@@ -1410,16 +1389,19 @@ function tan(x) {
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.tan(x);
 }
+
 function asin(x) {
   x = calculate(x);
   if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
   return Math.asin(x);
 }
+
 function acos(x) {
   x = calculate(x);
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.acos(x);
 }
+
 function atan(x) {
   x = calculate(x);
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
@@ -1432,24 +1414,28 @@ function btnDot() {
   insertAtCursor($('txt-input'), '.');
   $('txt-input').focus();
 }
+
 function btnZero() {
   insertAtCursor($('txt-input'), '0');
   $('txt-input').focus();
 }
+
 function btnOne() {
   insertAtCursor($('txt-input'), '1');
   $('txt-input').focus();
 }
+
 function btnTwo() {
   insertAtCursor($('txt-input'), '2');
   $('txt-input').focus();
 }
+
 function btnThree() {
   insertAtCursor($('txt-input'), '3');
   $('txt-input').focus();
 }
-function btnSpace() {
-    
+
+function btnSpace() {    
   if (shifted) {
     insertAtCursor($('txt-input'), '=');
   } else {
@@ -1457,26 +1443,32 @@ function btnSpace() {
   } 
   $('txt-input').focus();
 }
+
 function btnFour() {
   insertAtCursor($('txt-input'), '4');
   $('txt-input').focus();
 }
+
 function btnFive() {
   insertAtCursor($('txt-input'), '5');
   $('txt-input').focus();
 }
+
 function btnSix() {
   insertAtCursor($('txt-input'), '6');
   $('txt-input').focus();
 }
+
 function btnSeven() {
   insertAtCursor($('txt-input'), '7');
   $('txt-input').focus();
 }
+
 function btnEight() {
   insertAtCursor($('txt-input'), '8');
   $('txt-input').focus();
 }
+
 function btnNine() {
   insertAtCursor($('txt-input'), '9');
   $('txt-input').focus();
@@ -1485,10 +1477,9 @@ function btnNine() {
 //////// More Calcamatrons ///////////////////////////////////////////////////////////
 
 function averageStack() {
-
 }
-function inArray(arrayToCheck, value) {
 
+function inArray(arrayToCheck, value) {
   for (var i = 0; i < arrayToCheck.length; i++) {
     if (arrayToCheck[i] === value) {
       return true;
@@ -1496,9 +1487,10 @@ function inArray(arrayToCheck, value) {
   }
   return false;
 }
-function sortStack(maxMin) {
 
+function sortStack(maxMin) {
 }
+
 // Sum an unknown number of arguments eg. getSum(1,2,3,4,5,6) = 21
 function getSum() {
   var sum = 0;
@@ -1507,11 +1499,11 @@ function getSum() {
   }
   return sum;
 }
+
 function totalStack() {
-
 }
-function editStack() {
 
+function editStack() {
   for (var sta in stack) {
 
     var stackEntry = stack[sta].getSoul();
@@ -1523,9 +1515,7 @@ function editStack() {
       var index = stackEntry.search(searchTerm);
       // Insert '-'
       stackEntry.insertAt(index, '-');
-
       // toLowerCase        
-
       tmpIndex ++;
       if (tmpIndex > 2) break;  
     }      
@@ -1537,7 +1527,6 @@ function editStack() {
 
 // Extract any substring that follows a number
 function extractSubString(tmpArray) {
-
   var subString = '';
   var subIndex = -1;
   var noExponent = true;
@@ -1560,8 +1549,7 @@ function extractSubString(tmpArray) {
             if ((tmpSubString[i + 1] === '-' || tmpSubString[i + 1] === '+') && !isNaN(tmpSubString[i + 2])) {
               i++;
             }
-          }
-          else {
+          } else {
             // Found substring
             subIndex = i;
           }
@@ -1592,7 +1580,6 @@ function getTime() {
 }
 
 function insertDate() {
-
   var today = new Date();
   var month = today.getMonth() + 1;
   var date = today.getDate();
@@ -1601,7 +1588,6 @@ function insertDate() {
 }
 
 function getSize() {
-
   var w = window,
     d = document,
     e = d.documentElement,
@@ -1614,8 +1600,7 @@ function getSize() {
 function embed(src) {
   if (src.indexOf('http') !== -1 && src.indexOf('embed') !== -1) {
     widgetSrc.unshift(src);//https://www.youtube.com/embed/25QpDHCLOUc
-  }
-  else {
+  } else {
     rpnAlert('Enter web address to embed.');
   }
 }
@@ -1636,14 +1621,12 @@ function getLocation() {
       lat = lat.substr(0, 8);
       lng = lng.substr(0, 8);
     }, geolocationError);
-  }
-  else {
+  } else {
     rpnAlert('Geolocation not supported.');
   }
 }
 
 function geolocationError(error) {
-
   switch (error.code) {
   case error.PERMISSION_DENIED:
     rpnAlert('Request for Geolocation denied.');
@@ -1661,23 +1644,21 @@ function geolocationError(error) {
 }
 
 function getIP() {
-
   if (/*@cc_on!@*/false || !!document.documentMode) {// IE
     rpnAlert('Not supported by this browser.');
-  }
-  else {
+  } else {
     getUserIP(function (ip) {
       inputText(ip);
     });
   }
 }
+
 /**
  * Get the user IP throught the webkitRTCPeerConnection
  * @param onNewIP {Function} listener function to expose the IP locally
  * @return undefined
  */
 function getUserIP(onNewIP) {
-
   // onNewIp - your listener function for new IPs
   // compatibility for firefox and chrome
   var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
@@ -1711,6 +1692,7 @@ function getUserIP(onNewIP) {
     ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
   };
 }
+
 function internetSearch(domainString, query) {
   domainString += query;
   window.open(domainString, '_blank');
@@ -1724,7 +1706,6 @@ function help(command) {
   var commandArray = command.split(' ');
   
   if (commandArray[1] !== undefined) {
-
     switch (commandArray[1]) {    
     case 'about':
       inputText($('lst-stack').getAttribute('placeholder'));
@@ -1843,12 +1824,10 @@ function help(command) {
 }
 
 function parseCommand() {
-
   var command = $('txt-input').value.trim();
 
   // Commands consist of words and numbers and URLs
-  if (!/[,*√=Φπ\\^]+/.test(command)) {
-    
+  if (!/[,*√=Φπ\\^]+/.test(command)) {    
     var commandArray = command.split(' ');   
     // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
@@ -1932,8 +1911,7 @@ function parseCommand() {
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();
-    }
-  
+    }  
     switch (command) {  
     case 'about':
       stack.pop();
@@ -2127,9 +2105,6 @@ function parseCommand() {
       widgetSrc.shift();
       saveTricorder();
       break;
-    // case 'you':
-    //   internetSearch('https://www.youtube.com/results?search_query=');
-    //   break;
     default:
       if (twig.health > 0) {
         $('twig').src = 'images/twig/hat-tip.gif';
@@ -2155,8 +2130,8 @@ function parseEvaluation(input) {
   }
   return input;
 }
-function parseNested(input, symbol, prefix) {
 
+function parseNested(input, symbol, prefix) {
   var inputArr = input.split('');
   var index = 0;
   var startPos = 0;
@@ -2189,13 +2164,12 @@ function parseNested(input, symbol, prefix) {
     inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
   } else {// Keep parentheses
     inputArr.splice(leftP, rightP - leftP + 1, maths);
-  }
-  
+  }  
   input = inputArr.join('');
   return input;
 }
-function parseInline(input, symbol, prefix) {  
-  
+
+function parseInline(input, symbol, prefix) {    
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
@@ -2231,8 +2205,7 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos] === '(') parentheses++;
     if (inputArr[endPos] === ')') parentheses--;
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;
-  }
-  while (endPos < inputArr.length && (!/[-+*/^√!)]/.test(inputArr[endPos]) || /[Φπ\w.,]/.test(inputArr[endPos]) || parentheses > 0));    
+  } while (endPos < inputArr.length && (!/[-+*/^√!)]/.test(inputArr[endPos]) || /[Φπ\w.,]/.test(inputArr[endPos]) || parentheses > 0));    
   inputArr.splice(endPos, 0, ')');
 
   input = inputArr.join('');
@@ -2243,13 +2216,16 @@ function parseInline(input, symbol, prefix) {
 function mathsRoot(y, x) {
   return Math.pow(x, 1/y);
 }
+
 // Wired to HTML
 function lstStackFocus() {
   stackFocus = true;  
 }
+
 function txtInputFocus() {
   stackFocus = false;  
 }
+
 function convertBase(r) {
   fixDecimal = -1;
   sciDecimal = -1;
@@ -2269,11 +2245,12 @@ function convertBase(r) {
   }
   $('txt-input').value = outputTxt;
 }
+
 function menuHelp() {
   help('help');
 }
-function onClickSelection(textarea){
- 
+
+function onClickSelection(textarea){ 
   // https://stackoverflow.com/questions/13650534/how-to-select-line-of-text-in-textarea
   if (typeof textarea.selectionStart ==='undefined') return false;
   var startPos = (textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') : 0;
@@ -2341,14 +2318,12 @@ function openAFile() {
 }
 
 function getStackEntry() {
-
   backupUndo();  
   insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   $('txt-input').select();
 }
 
 function getIndex(name) {
-
   var t = document.getElementsByName(name)[0];
   return (t.value.substr(0, t.selectionStart).split('\n').length);
 }
@@ -2363,8 +2338,8 @@ function getSelectedText(id) {
     textComponent.focus();
     var sel = document.selection.createRange();
     selectedText = sel.text;
-  }// Mozilla version
-  else if (textComponent.selectionStart !== undefined) {
+  } else if (textComponent.selectionStart !== undefined) {
+    // Mozilla version
     var startPos = textComponent.selectionStart;
     var endPos = textComponent.selectionEnd;
     selectedText = textComponent.value.substring(startPos, endPos);
@@ -2404,7 +2379,6 @@ function isTextSelected(input){
 }
 
 function insertAtCursor(txtField, txtValue) {
-
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
 
@@ -2447,12 +2421,7 @@ function insertText(text) {
 }
 
 function updateDisplay() {
-  $('lst-stack').value = '';
-
-  // console.log('clientHeight', $('lst-stack').clientHeight / 20.25);
-  // console.log('clientHeight / 20.25', $('lst-stack').clientHeight / 20.25);
-  // console.log('rows', $('lst-stack').getAttribute('rows')); 
-  
+  $('lst-stack').value = '';  
   // Buffer stack display
   for (var i = 0; i < $('lst-stack').getAttribute('rows'); i++) {
     $('lst-stack').value += ' \n';
@@ -2473,14 +2442,12 @@ function printHtml() {
 
 function isANumber(testString) {  
   var isNumber = true;
-
   if (isNaN(testString)) isNumber = false;
   if (testString.toString().match(/Φ/)) isNumber = true;
   if (testString.toString().match(/e/)) isNumber = true;
   if (testString.toString().match(/π/)) isNumber = true;
   if (testString.toString().match(/G/)) isNumber = true;
   if (testString.toString().match(/c/)) isNumber = true;
-
   return isNumber;
 }
 
@@ -2521,6 +2488,7 @@ function prettyPrint(i, content) {
   }
   return content;
 }
+
 function colorSaveButton() {
 
   if (document.cookie.indexOf('STACK') !== -1) {
@@ -2548,7 +2516,6 @@ function storeCookie(aName, tmpArray) {
 }
 
 function getCookie(cname) {
-
   var name = cname + '=';
   var decodedCookie = decodeURIComponent(document.cookie);
   var ca = decodedCookie.split(';');
@@ -2567,9 +2534,6 @@ function getCookie(cname) {
 }
 
 function encodeSpecialChar(tmpString) {
-
-  // tmpString = tmpString.replace(/×/g, '*');// What the what ???
-
   tmpString = tmpString.replace(/%/g, '&#37');
   //tmpString = tmpString.replace(/\*/g, "&#42");
   tmpString = tmpString.replace(/,/g, '&#44');
@@ -2628,11 +2592,10 @@ function encodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/♥/g, '&#9829');
   //tmpString = tmpString.replace(/♦/g, "&#9830");
   // tmpString = tmpString.replace(/π/g, '&#960');
-
   return tmpString;
 }
-function decodeSpecialChar(tmpString) {
 
+function decodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/&#37/g, '%');
   //tmpString = tmpString.replace(/&#42/g, "*");
   tmpString = tmpString.replace(/&#44/g, ',');
@@ -2729,7 +2692,6 @@ function extractReal(tmpArray) {
 
 // Extract Imaginary component from 'soul' of argument
 function extractImaginary(tmpArray) {
-
   var tmpImaginary = '';  
 
   if (radix === 10) {
@@ -2895,7 +2857,6 @@ function processUnits(unitsY, unitsX, multiplier, multiply) {
 }
 
 function unitAddition(unitsA, unitsB, multiplier, add) {
-
   var unitsCombined = '';
   var unitsDoNotMatch = true;
 
@@ -2910,8 +2871,8 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
     for (var b in unitsB) {
       var tmpUnitsB = '';
       var expB = 1;
-
       tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
+
       if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
 
       if (tmpUnitsA === tmpUnitsB) {
@@ -2934,7 +2895,6 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
   for (b in unitsB) {
     tmpUnitsB = '';
     expB = 1;
-
     unitsDoNotMatch = true;
     tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
 
@@ -3008,7 +2968,6 @@ function rewriteNegUnitExp(tmpUnits) {
   return newUnits;
 }
 function removeNegativeExponentSign(factorsArray) {
-
   var tmpArray = [];
   var i = 0;
 
@@ -3026,7 +2985,6 @@ function removeNegativeExponentSign(factorsArray) {
 }
 
 function setFixDecimal(value) {
-
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17 first.';
   }
@@ -3034,7 +2992,6 @@ function setFixDecimal(value) {
 }
 
 function setSciDecimal(value) {
-
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17 first.';
   }
@@ -3063,9 +3020,10 @@ function formatNumber(possibleNumber) {
   }
   return possibleNumber;
 }
-function toFixed(value, p) {
-  var precision = p || 0,
 
+function toFixed(value, p) {
+
+  var precision = p || 0,
     power = Math.pow(10, precision),
     absValue = Math.abs(Math.round(value * power)),
     result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
@@ -3088,17 +3046,19 @@ function btnCopyNotes() {
   //document.execCommand('copy');
   navigator.clipboard.writeText(getSelectedText('lst-notes'));
 }
-function btnPasteNotes() {
 
+function btnPasteNotes() {
   backupUndoNotes();
 
   if (/*@cc_on!@*/false || !!document.documentMode) {// IE
     insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
-  } else {
+  }
+  else {
     //insertAtCursor($("lst-notes"), "\nNot supported by this browser.\n");
     alert('Not supported by this browser.');
   }
 }
+
 function btnUndoNotes() {
   if (backupNotes.length > 1) {
     restoreNotes.push(nestArrayByBrowser(notes));
@@ -3107,8 +3067,8 @@ function btnUndoNotes() {
   }
   colorNotesUndoButton();
 }
-function btnRedoNotes() {
 
+function btnRedoNotes() {
   if (restoreNotes.length > 0) {
     backupNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(restoreNotes.pop());
@@ -3116,13 +3076,14 @@ function btnRedoNotes() {
   }
   colorNotesUndoButton();
 }
-function backupUndoNotes() {
-  
+
+function backupUndoNotes() {  
   backupNotes.push(nestArrayByBrowser(notes));
   notes = $('lst-notes').value.split('\n');
   restoreNotes.length = 0;
   colorNotesUndoButton();
 }
+
 function colorNotesUndoButton() {
 
   if (backupNotes.length > 1) {
@@ -3137,8 +3098,8 @@ function colorNotesUndoButton() {
   }
   colorNotesSaveButton();
 }
-function colorNotesSaveButton() {
 
+function colorNotesSaveButton() {
   var index = 0;
   var cookieValue = '';
   var notesValue = '';
@@ -3156,21 +3117,21 @@ function colorNotesSaveButton() {
     $('btn-save-notes').style.color = '#919191';
   }
 }
+
 function btnSaveNotes() {
-
-  var tmpY;
-
   backupUndoNotes();
+  var tmpY;
   $('btn-save-notes').style.color = '#919191';
   tmpY = encodeSpecialChar($('lst-notes').value);
   notes = tmpY.split('\n');
   storeCookie('NOTES', nestArrayByBrowser(notes));
 }
+
 function btnLoadNotes() {
+  backupUndoNotes();
   var index = 0;
   var tmpNotes = [];
   
-  backupUndoNotes();
   index = getCookie('NOTES').indexOf('=') + 1;
   try {
     tmpNotes = splitArrayByBrowser(getCookie('NOTES').substr(index));
@@ -3182,18 +3143,19 @@ function btnLoadNotes() {
   $('btn-save-notes').style.color = '#919191';
   $('lst-notes').scrollTop = $('lst-notes').scrollHeight;
 }
-function btnClearNotes() {
 
+function btnClearNotes() {
   backupUndoNotes();
   $('lst-notes').value = '';
   notes = $('lst-notes').value.split('\n');
 }
-function btnDeleteNotes() {
 
+function btnDeleteNotes() {
   backupUndoNotes();
   var txtField = $('lst-notes').value;
   var startPos = $('lst-notes').selectionStart;
   var endPos = $('lst-notes').selectionEnd;
+
   $('lst-notes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lst-notes').setSelectionRange(startPos, startPos);
   $('lst-notes').focus();
@@ -3201,28 +3163,30 @@ function btnDeleteNotes() {
   if (isMobile) $('lst-notes').readOnly = true;
   colorNotesSaveButton();
 }
-function updateDisplayNotes() {
 
+function updateDisplayNotes() {
   $('lst-notes').value = '';
+
   for (var note in notes) {
     $('lst-notes').value += decodeSpecialChar(notes[note]);
     $('lst-notes').value += '\n';
   }
   $('lst-notes').value = $('lst-notes').value.trim();
   $('lst-notes').value += '\n';
+
   if (notes.length === 1 && notes[0] === '') {
     $('lst-notes').value = '';
   }
 }
 
-// https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
-
+/*
+ https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
+*/
 var startTime;
 var elapsedTime = 0;
 var timerInterval;
 
 function timeToString(time) {
-
   var diffInHrs = time / 3600000;
   var hh = Math.floor(diffInHrs);
 
@@ -3241,9 +3205,11 @@ function timeToString(time) {
 
   return formattedMM + ':' + formattedSS + ':' + formattedMS;
 }
+
 function stopwatchPrint(txt) {
   $('txt-input').value = txt;
 }
+
 function stopwatchStart() {  
 
   if (elapsedTime === 0) {
@@ -3259,9 +3225,11 @@ function stopwatchStart() {
     }, 10);
   }
 }
+
 function stopwatchPause() {
   clearInterval(timerInterval);
 }
+
 function stopwatchReset() {
   clearInterval(timerInterval);
   elapsedTime = 0;
@@ -3280,8 +3248,10 @@ var lng;
 
 function loadTricorder() {
   var index = 0;
+
   index = getCookie('TRICORDER').indexOf('=') + 1;
   widgetSrc = splitArrayByBrowser(getCookie('TRICORDER').substr(index));
+
   for (var i in widgetSrc) {
     widgetSrc[i] = decodeSpecialChar(widgetSrc[i]);
     if (widgetSrc[i] === '') {
@@ -3292,42 +3262,39 @@ function loadTricorder() {
 
 function power() {
   var onOff;
-
   onOff = $('tricorderskin').src.toString().indexOf('tricorderon');
 
   if (onOff === -1) return false;
   return true;
 }
+
 function muteAudio(mute) {
 
   if (mute) {
     for (var i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
       $('tricorder').getElementsByTagName('audio')[i].muted = true;
     }
-  }
-  else {
+  } else {
     for (i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
       $('tricorder').getElementsByTagName('audio')[i].muted = false;
     }
   }
 }
+
 function playAudio(obj) {
-  //if (!isMobile) {
-  if (!$('menu-sound-li').classList.contains('strikethrough')) {
-    obj.play();
-  }
+  if (!$('menu-sound-li').classList.contains('strikethrough')) obj.play();
 }
 
 // Power On/Off.
 function button1() {
   haptic();
-
   if (power()) {
     tricorderOff();
   } else {
     tricorderOn();
   }
 }
+
 function tricorderOff() {
   muteAudio(true);
   $('widget').src = '';
@@ -3338,6 +3305,7 @@ function tricorderOff() {
   $('viewport').classList.add('hidden');
   $('tricorderskin').src = 'images/tricorder.png';
 }
+
 function tricorderOn() {
   muteAudio(false);  
   $('tricorderskin').src = 'images/tricorderon.png';
@@ -3348,12 +3316,13 @@ function tricorderOn() {
   playAudio($('hailing-frequencies'));
   getLocation();
 }
+
 function preloadImages() {
   var tricorderOnImg = new Image(); 
   tricorderOnImg.src = 'images/tricorderon.png';
 }
-function button2() {
 
+function button2() {
   if (power()) {    
     haptic();
 
@@ -3368,8 +3337,8 @@ function button2() {
     playAudio($('keypress2'));
   }
 }
-function button3() {
 
+function button3() {
   if (power()) {
     haptic();
 
@@ -3385,8 +3354,8 @@ function button3() {
     playAudio($('data-received'));
   }
 }
-function button4() {
 
+function button4() {
   if (power()) {    
     haptic();
 
@@ -3411,9 +3380,7 @@ function button4() {
   }
 }
 function button5() {
-
   if (power()) {
-
     haptic();
 
     if ($('widget').classList.contains('hidden')) {
@@ -3440,14 +3407,12 @@ function button5() {
     }
   }
 }
+
 function button6() {
-
   if (power()) {
-
     haptic();
 
-    if ($('widget').classList.contains('hidden')) {
-      
+    if ($('widget').classList.contains('hidden')) {      
       var srcString = '';
       // IP Mapper
       srcString += 'https://napesweaver.github.io/ip-mapper/';
@@ -3467,11 +3432,8 @@ function button6() {
 
 // Tricorder sensors
 function sensor1() {
-
-  if (power()) {
-    
+  if (power()) {    
     haptic();
-
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
@@ -3480,12 +3442,10 @@ function sensor1() {
     // $('viewport').src = 'https://tunein.com/embed/player/s51173/';// 1920's
   }
 }
+
 function sensor2() {
-
   if (power()) {
-
     haptic();
-
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
@@ -3495,10 +3455,7 @@ function sensor2() {
 }
 
 function saveTricorder() {
-
-  for (var i in widgetSrc) {
-    widgetSrc[i] = encodeSpecialChar(widgetSrc[i]);
-  }  
+  for (var i in widgetSrc) widgetSrc[i] = encodeSpecialChar(widgetSrc[i]);  
   storeCookie('TRICORDER', nestArrayByBrowser(widgetSrc));
 }
 
@@ -3583,15 +3540,14 @@ function displayGIF(obj) {
 }
 
 function monStatus() {
-
   for (var i = 0; i < theObjects.length; i++) {
     inputText(theObjects[i].toString());
     enterInput();
     updateDisplay();
   }
 }
-function worldIsRunning() {
 
+function worldIsRunning() {
   if ($('twig').src.indexOf('pop') === -1) {
     return true;
   } else {
@@ -3600,7 +3556,6 @@ function worldIsRunning() {
 }
 
 function monOn() {
-
   $('don').src = 'images/twig/don-jon.gif';
   $('don').className = 'visible';
   $('tv').src = 'images/twig/tv-off.gif';
@@ -3611,6 +3566,7 @@ function monOn() {
   worldBordersSet();
   worldEngine();
 }
+
 function monOff() {  
   $('twig').src = 'images/twig/pop.gif';
   twig.setHealth(0);
@@ -3620,9 +3576,9 @@ function monOff() {
 }
 
 function resetMathmon() {
-
   $('txt-input').value = '';
   $('twig').src = 'images/twig/piece-frog.gif';
+
   for (var i = 0; i < theObjects.length; i++) {
     theObjects[i].setHealth(100);
   }
@@ -3642,7 +3598,6 @@ function resetMathmon() {
 }
 
 function loadMathMon(tmpStack) {
-
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     // Remove underscore from begining of string
     tmpStack = tmpStack.substr(1);
@@ -3653,10 +3608,9 @@ function loadMathMon(tmpStack) {
 
 function mathMonConstructor(tmpStack) {
   var i = 0;
-
   while (tmpStack.length > 0) {
-    var tmpArray = [];
 
+    var tmpArray = [];
     tmpArray = tmpStack.shift();
     tmpArray = tmpArray.split(',');
 
@@ -3673,7 +3627,6 @@ function mathMonConstructor(tmpStack) {
 }
 
 function moveObj(obj, speed, xMov, yMov) {
-
   var index = 0;
   // Move obj
   obj.movXPos(speed * xMov);
@@ -3723,7 +3676,6 @@ function moveObj(obj, speed, xMov, yMov) {
 }
 
 function worldEngine() {
-
   if (worldIsRunning()) {
     for (var i = 0; i < theObjects.length; i++) {
       shifted ? transXBorders(i) : collideWithBorders(i);      
@@ -3734,7 +3686,6 @@ function worldEngine() {
 }
 
 function worldBordersSet() {
-
   var browserWindow = getSize();
 
   if (browserWindow[0] > 330) {
@@ -3757,15 +3708,14 @@ function worldBordersSet() {
 function collideWithBorders(i) {
   // The gifs are offset from each other in the html. Each is 64px * 64px.
   var gifWidth = 64;
-
   if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bTop + theObjects[i].objSize); }// Top border
   if (theObjects[i].yPos > wBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bBottom - theObjects[i].objSize); }// Bottom border
   if (theObjects[i].xPos < wBorders.bLeft - (i * gifWidth) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bLeft - (i * gifWidth) + theObjects[i].objSize); }// Left border
   if (theObjects[i].xPos > wBorders.bRight - (i * gifWidth) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bRight - (i * gifWidth) - theObjects[i].objSize); }// Right border
 }
+
 function transXBorders(i) {
-  var gifWidth = 64;
-  
+  var gifWidth = 64;  
   if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bBottom - theObjects[i].objSize); }// Top border
   if (theObjects[i].yPos > wBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bTop + theObjects[i].objSize); }// Bottom border
   if (theObjects[i].xPos < wBorders.bLeft - (i * gifWidth) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bRight - (i * gifWidth) - theObjects[i].objSize); }// Left border
@@ -3773,24 +3723,17 @@ function transXBorders(i) {
 }
 
 function brownianMovement(obj) {
-
   var x = Math.floor(Math.random() * 2);
   var y = Math.floor(Math.random() * 2);
 
-  if (Math.floor(Math.random() * 2) === 0) {
-    x = x * -1;
-  }
-  if (Math.floor(Math.random() * 2) === 0) {
-    y = y * -1;
-  }
+  if (Math.floor(Math.random() * 2) === 0) x = x * -1;
+  if (Math.floor(Math.random() * 2) === 0) y = y * -1;
   moveObj(obj, obj.speed, x, y);
 }
 
 function gravity() {
-
   if (worldIsRunning()) {
-    for (var i = 0; i < theObjects.length; i++)
-    {
+    for (var i = 0; i < theObjects.length; i++) {
       moveObj(theObjects[i], 1, 0, 1);
     }
     setTimeout(gravity, 1);
@@ -3798,7 +3741,6 @@ function gravity() {
 }
 
 function pongTV() {
-
   if (worldIsRunning()) {
     $('tv').src = 'images/twig/tv-pong.gif';
     setTimeout(staticTV, 600);
@@ -3807,8 +3749,8 @@ function pongTV() {
     $('tv').src = 'images/twig/tv-off.gif';
   }
 }
-function staticTV() {
 
+function staticTV() {
   if (worldIsRunning()) {
     $('tv').src = 'images/twig/tv-static.gif';
     setTimeout(pongTV, 900);
@@ -3817,9 +3759,10 @@ function staticTV() {
     $('tv').src = 'images/twig/tv-off.gif';
   }
 }
-function donMove() {
 
+function donMove() {
   if (worldIsRunning()) {
+
     if ($('don').src.indexOf('left') === -1) {
       $('don').src = 'images/twig/don-walk-left.gif';
     } else {
@@ -3835,7 +3778,7 @@ function donMove() {
 //////// Event Firing and Listening //////////////////////////////////////////////////
 
 // Fire Click Event
-function eventFire(el, etype){
+function eventFire(el, etype) {
   if (el.fireEvent) {
     el.fireEvent('on' + etype);
   } else {
@@ -3850,6 +3793,7 @@ document.addEventListener('click', function (evt) {
     getStackEntry();
   }
 });
+
 document.addEventListener('keypress', function (event) {
   var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
@@ -3860,6 +3804,7 @@ document.addEventListener('keypress', function (event) {
     }
   }
 });
+
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
@@ -3941,6 +3886,7 @@ document.addEventListener('keydown', function (event) {
     }
   }
 });
+
 document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
@@ -3961,8 +3907,7 @@ document.addEventListener('keyup', function (event) {
         $('twig').src = 'images/twig/hat-on.gif';
       }
     }
-  }
-  else {
+  } else {
     // Notes keys
     $('btn-save-notes').style.color = '#000000';
     switch (key) {
@@ -3984,7 +3929,6 @@ document.addEventListener('keyup', function (event) {
 //////// window.onload ///////////////////////////////////////////////////////////////
 
 window.onload = function () {
-
   // Internet Explorer needs this for "btn-off" ~ window.close()   
   window.open('', '_self');
 
@@ -4013,8 +3957,10 @@ window.onload = function () {
           var tmpStack = [];
           backupUndo();
           tmpStack = this.result.split('\n');
+
           for (var i in tmpStack) {
             $('txt-input').value = tmpStack[i];
+
             if (shifted) {
               evaluateExpression($('txt-input').value);
               enterInput();
@@ -4030,9 +3976,9 @@ window.onload = function () {
       rpnAlert(err.toString());
     }
   });
+
   $('menu-save').onclick = btnSave;
   $('menu-print').onclick = printHtml;
-  //$('menu-print').onclick = print;
   $('menu-off').onclick = function() {
     monOff();
     tricorderOff();
