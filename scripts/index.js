@@ -959,7 +959,7 @@ function baseLog() {
 
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
-    $(('txt-input')).value = '10';
+    $('txt-input').value = '10';
   }
   objY = stack.pop();
   objX = getX();
@@ -1007,10 +1007,11 @@ function exponentialFunction() {
 
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
-    $(('txt-input')).value = '2';
+    $('txt-input').value = '2';
   }
   objX = getX();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  $('txt-input').value = '';
   newUnits = multiplyUnits(x);
   objY = stack.pop();
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
@@ -1035,10 +1036,11 @@ function rootFunction() {
 
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
-    $(('txt-input')).value = '2';
+    $('txt-input').value = '2';
   }
   objX = getX();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  $('txt-input').value = '';
   newUnits = multiplyUnits(1/x);
   objY = stack.pop();
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
