@@ -3175,7 +3175,6 @@ function btnDeleteNotes() {
   $('lst-notes').focus();
   notes = $('lst-notes').value.split('\n');
   if (isMobile) $('lst-notes').readOnly = true;
-  colorNotesSaveButton();
 }
 
 function updateDisplayNotes() {
@@ -3813,7 +3812,7 @@ document.addEventListener('keypress', function (event) {
   var key = event.keyCode || event.charCode;
 
   switch (key) {
-  case 13:// RPNapes ENTER
+  case 13:// ENTER
     if ($('rpnapes').className !== 'hidden') enterButton();
     break;
   }
@@ -3994,9 +3993,10 @@ document.addEventListener('keyup', function (event) {
   case 46:// NOTES DELETE
     if ($('notes').classname !== 'hidden') {
       backupUndoNotes();
-      notes = $('lst-notes').value.split('\n');
     }
     break;
+  default:
+    colorNotesSaveButton();
   }
 });
 
