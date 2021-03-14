@@ -3135,7 +3135,7 @@ function colorNotesSaveButton() {
 }
 
 function btnSaveNotes() {
-  backupUndoNotes();
+  // backupUndoNotes();
   var tmpY;
   $('btn-save-notes').style.color = '#919191';
   tmpY = encodeSpecialChar($('lst-notes').value);
@@ -3824,8 +3824,9 @@ document.addEventListener('keypress', function (event) {
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
-    // Mathmon keys
+    
     if ($('twig').className !== 'hidden') {
+      // Mathmon keys
       switch (key) {      
       case 37:// LEFT ARROW
         if (!event) { event = window.event; }
@@ -3872,6 +3873,9 @@ document.addEventListener('keydown', function (event) {
       if (altHeld) btnShift();
       break;
     case 17:// CTRL
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      console.log('Ctrl');
       ctrlHeld = true;
       break;
     case 18:// ALT
@@ -3882,14 +3886,26 @@ document.addEventListener('keydown', function (event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDelete();
       break;
-    case 89:// y
+    case 83:// S
+      if (ctrlHeld) {
+        if (!event) { event = window.event; }
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+
+        if ($('notes').classList.contains('hidden')) {
+          btnSave();
+        } else {
+          btnSaveNotes();
+        }
+      }
+      break;
+    case 89:// Y
       if ($('notes').classList.contains('hidden')) {
         if (ctrlHeld) redoFunction();
       } else {
         if (ctrlHeld) btnUndoNotes();
       }
       break;
-    case 90:// z
+    case 90:// Z
       if ($('notes').classList.contains('hidden')) {
         if (ctrlHeld) undoFunction();
       } else {

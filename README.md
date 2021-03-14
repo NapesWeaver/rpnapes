@@ -3,9 +3,6 @@
 <!-- [Reverse Polish Notation Calcamatron](https://napesweaver.github.io/rpnapes/) -->
 <a href="https://napesweaver.github.io/rpnapes/" target="_blank">Reverse Polish Notation Calcamatron</a>
 
-This has been an ongoing project since my earliest coding in JS. It works well, is rather spaghettified and contains a number of stubs (I still need to implement maths for imaginary numbers, for instance).
-The code I lifted from [Stack Overflow](https://stackoverflow.com/) and similar sites is especially good ;)
-
 This project does not use any JQuery and Works offline :)
 
 ## Calcamatron
@@ -21,12 +18,13 @@ Features include the ability to load and run simple code scripted thus:
 
 `getFizzBuzz = function(w){ word = w;if (w % 3 === 0) word = 'fizz'; if(w % 5 === 0) word = 'buzz'; if (w % 15 === 0) word = 'fizzbuzz'; return word}`
 
-`for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $('txt-input').value=''; $('txt-input').value=word; enterFunction(); }`
+`for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $('txt-input').value=''; $('txt-input').value=word; enterInput(); }`
 
 ## Notes
 A separate interface for note taking is also implemented.
 
 ![Notes](images/screenshots/notes.jpg)
+![Notes](images/screenshots/notes2.jpg)
 
 Stack and Notes can be saved independently, locally, to browser cookie. 
 Saving and opening text files is supported also - with special thanks to Eli Grey for the use of [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
