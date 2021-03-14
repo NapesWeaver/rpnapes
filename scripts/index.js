@@ -608,15 +608,8 @@ function colorUndoRedoMenu() {
 
 function btnEe() {
   if (shifted) {
-
-    if (radix !== 16) {
-      if (isANumber($('txt-input').value) && $('txt-input').value.indexOf('j') === -1 && $('txt-input').value.trim() !== '') {
-        insertAtCursor($('txt-input'), 'j');
-      }
-    } else {
-      if ((/[-+]?[a-e0-9]/g.test($('txt-input').value) || /[-+]?[ΦeπGc]/g.test($('txt-input').value)) && $('txt-input').value.indexOf('j') === -1) {
-        insertAtCursor($('txt-input'), 'j');
-      }
+    if ($('txt-input').value.indexOf('j') === -1 && $('txt-input').value.trim() !== '') {
+      insertAtCursor($('txt-input'), 'j');
     }
   } else {
     if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*/g.test($('txt-input').value) && !/.*[eE]/g.test($('txt-input').value) && !/[-+]?\d?[.][.]+/.test($('txt-input').value) && $('txt-input').value.slice(-1) !== '.') {
@@ -628,7 +621,6 @@ function btnEe() {
 
 function btnGo() {
   backupUndo();
-
   if (shifted) {   
     internetSearch('https://www.youtube.com/results?search_query=', $('txt-input').value.trim());    
   } else {
