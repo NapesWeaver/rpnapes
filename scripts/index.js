@@ -3809,9 +3809,9 @@ document.addEventListener('click', function (evt) {
   }
 });
 
-// keypress
 document.addEventListener('keypress', function (event) {
   var key = event.keyCode || event.charCode;
+
   switch (key) {
   case 13:// RPNapes ENTER
     if ($('rpnapes').className !== 'hidden') enterButton();
@@ -3819,11 +3819,32 @@ document.addEventListener('keypress', function (event) {
   }
 });
 
-// keydown
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
-  // Mathmon keys
-  switch (key) {      
+
+  switch (key) {
+  case 8:// BACKSPACE
+    if ($('rpnapes').className !== 'hidden') {
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btnBackspace();
+    }
+    break;
+  case 16:// SHIFT
+    if ($('rpnapes').className !== 'hidden') {
+      if (altHeld) btnShift();        
+    }
+    break;
+  case 17:// CTRL
+    if (!event) { event = window.event; }
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    ctrlHeld = true;        
+    break;
+  case 18:// ALT
+    if ($('rpnapes').className !== 'hidden') {
+      altHeld = true;        
+    }
+    break;
   case 37:// LEFT ARROW
     if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden') {
       if (!event) { event = window.event; }
@@ -3862,32 +3883,6 @@ document.addEventListener('keydown', function (event) {
         $('twig').src = 'images/twig/walk-right.gif';
         moveObj(twig, twig.speed, 0, 1);
       }
-    }
-    break;
-  }
-  // RPNapes keys
-  switch (key) {
-  case 8:// BACKSPACE
-    if ($('rpnapes').className !== 'hidden') {
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btnBackspace();
-    }
-    break;
-  case 16:// SHIFT
-    if ($('rpnapes').className !== 'hidden') {
-      if (altHeld) btnShift();        
-    }
-    break;
-  case 17:// CTRL
-    if (!event) { event = window.event; }
-    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    console.log('Ctrl');
-    ctrlHeld = true;        
-    break;
-  case 18:// ALT
-    if ($('rpnapes').className !== 'hidden') {
-      altHeld = true;        
     }
     break;
   case 46:// DELETE
@@ -3954,46 +3949,42 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
-// keyup
 document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
-  if ($('rpnapes').className !== 'hidden') {
-    switch (key) {
-    case 17:// CTRL
-      ctrlHeld = false;
-      break;
-    case 18:// ALT
-      altHeld = false;
-      break;
-    case 27:// ESC
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+
+  switch (key) {
+  case 17:// CTRL
+    ctrlHeld = false;
+    break;
+  case 18:// ALT
+    altHeld = false;
+    break;
+  case 27:// ESC
+    if (!event) { event = window.event; }
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+
+    if ($('rpnapes').className !== 'hidden') {      
       btnXy();
-      break;
-    case 37:// LEFT ARROW (Falls through)
-    case 38:// UP ARROW (Falls through)
-    case 39:// RIGHT ARROW (Falls through)
-    case 40:// DOWN ARROW
-      if (twig.health > 0) {
-        $('twig').src = 'images/twig/hat-on.gif';
-      }
-    }
-  } else {
-    // Notes keys
-    $('btn-save-notes').style.color = '#000000';
-    switch (key) {
-    case 27:// ESC
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    } else {
       rpnapesOn();
-      break;
-    case 8:// NOTES BACKSPACE (Falls through)
-    case 13:// NOTES ENTER (Falls through)
-    case 46:// NOTES DELETE
+    }
+    break;
+  case 37:// LEFT ARROW (Falls through)
+  case 38:// UP ARROW (Falls through)
+  case 39:// RIGHT ARROW (Falls through)
+  case 40:// DOWN ARROW
+    if ($('rpnapes').className !== 'hidden' && twig.health > 0) {      
+      $('twig').src = 'images/twig/hat-on.gif';
+    }
+    break;
+  case 8:// NOTES BACKSPACE (Falls through)
+  case 13:// NOTES ENTER (Falls through)
+  case 46:// NOTES DELETE
+    if ($('notes').classname !== 'hidden') {
       backupUndoNotes();
       notes = $('lst-notes').value.split('\n');
-      break;
     }
+    break;
   }
 });
 
