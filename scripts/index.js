@@ -957,17 +957,20 @@ function baseLog() {
   var objX;
   var y;
   var x;
+  var result;
 
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
-    $('txt-input').value = '10';
+    $('txt-input').value = Number(10).toString(radix);
   }
-  objY = stack.pop();
   objX = getX();
-  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart()); 
+  objY = stack.pop();
+  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
+  result = log(y, x);  
 
-  $('txt-input').value = log(y, x);  
+  if (radix !== 10) result = result.toString(radix);
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
 }
@@ -980,7 +983,10 @@ function naturalLog() {
   backupUndo();
   var objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  $('txt-input').value = ln(x);
+  var result = ln(x);
+
+  if (radix !== 10) result = result.toString(radix);
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
 }
