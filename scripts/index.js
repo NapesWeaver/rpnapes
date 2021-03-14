@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = Math.PI;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '20:26:48';
+const tStamp = 'xx:xx:xx';
 var testing = false;
 
 var stack = [];
@@ -1005,6 +1005,7 @@ function exponentialFunction() {
   var objX;
   var y;
   var x;
+  var result;
 
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
@@ -1012,12 +1013,15 @@ function exponentialFunction() {
   }
   objX = getX();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  $('txt-input').value = '';
   newUnits = multiplyUnits(x);
   objY = stack.pop();
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
 
-  $('txt-input').value = pow(y, x) + decodeSpecialChar(newUnits);
+  result = pow(y, x);
+
+  if (radix !== 10) result = result.toString(radix);
+  result += decodeSpecialChar(newUnits);
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
 }
@@ -1034,6 +1038,7 @@ function rootFunction() {
   var objX;
   var y;
   var x;
+  var result;
 
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
     enterInput();
@@ -1041,12 +1046,15 @@ function rootFunction() {
   }
   objX = getX();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  $('txt-input').value = '';
   newUnits = multiplyUnits(1/x);
   objY = stack.pop();
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
 
-  $('txt-input').value = root(y, x) + decodeSpecialChar(newUnits);
+  result = root(y, x);
+
+  if (radix !== 10) result = result.toString(radix);
+  result += decodeSpecialChar(newUnits);
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
 }
@@ -1060,17 +1068,17 @@ function btnPi() {
   }
 }
 
-function btn_parentheses() {  
-  insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
-  $('txt-input').focus();
-}
-
 function insertAroundSelection(txtField, txtValue) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
   txtField.value = txtField.value.substring(0, startPos) + txtValue + txtField.value.substring(endPos, txtField.value.length);
   txtField.selectionEnd = endPos + 1;  
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
+}
+
+function btn_parentheses() {  
+  insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
+  $('txt-input').focus();
 }
 
 function btnModulus() {  
