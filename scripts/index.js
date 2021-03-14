@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = Math.PI;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = '4:15:45';
+const tStamp = '4:25:25';
 var testing = false;
 
 var stack = [];
@@ -3823,11 +3823,14 @@ document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
 
   switch (key) {
-  case 8:// BACKSPACE
+  case 8:// BACKSPACE  
     if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnBackspace();
+    } else {
+      backupUndoNotes();
+      notes = $('lst-notes').value.split('\n');
     }
     break;
   case 16:// SHIFT
@@ -3987,7 +3990,6 @@ document.addEventListener('keyup', function (event) {
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
-  case 8:// NOTES BACKSPACE (Falls through)
   case 13:// NOTES ENTER (Falls through)
   case 46:// NOTES DELETE
     if ($('notes').classname !== 'hidden') {
