@@ -3791,7 +3791,7 @@ function donMove() {
 
 //////// Event Firing and Listening //////////////////////////////////////////////////
 
-// Fire Click Event
+// Fire A Click Event
 function eventFire(el, etype) {
   if (el.fireEvent) {
     el.fireEvent('on' + etype);
@@ -3800,140 +3800,161 @@ function eventFire(el, etype) {
     evObj.initEvent(etype, true, false);
     el.dispatchEvent(evObj);
   }
-}// eventFire(document.getElementById('test'), 'click');
+}//eventFire(document.getElementById('test'), 'click');
 
+// Custom 'double click' for Stack
 document.addEventListener('click', function (evt) {
   if (evt.detail === 2 && evt.target === $('lst-stack')) {
     getStackEntry();
   }
 });
 
+// keypress
 document.addEventListener('keypress', function (event) {
   var key = event.keyCode || event.charCode;
-  if ($('rpnapes').className !== 'hidden') {
-    switch (key) {
-    case 13:// RPNapes ENTER
-      enterButton();
-      break;
-    }
+  switch (key) {
+  case 13:// RPNapes ENTER
+    if ($('rpnapes').className !== 'hidden') enterButton();
+    break;
   }
 });
 
+// keydown
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
-  if ($('rpnapes').className !== 'hidden') {
-    
-    if ($('twig').className !== 'hidden') {
-      // Mathmon keys
-      switch (key) {      
-      case 37:// LEFT ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-left.gif';
-          moveObj(twig, twig.speed, -1, 0);
-        }
-        break;
-      case 38:// UP ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-left.gif';
-          moveObj(twig, twig.speed, 0, -1);
-        }
-        break;
-      case 39:// RIGHT ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-right.gif';
-          moveObj(twig, twig.speed, 1, 0);
-        }
-        break;
-      case 40:// DOWN ARROW
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        if (twig.health > 0) {
-          $('twig').src = 'images/twig/walk-right.gif';
-          moveObj(twig, twig.speed, 0, 1);
-        }
-        break;
+  // Mathmon keys
+  switch (key) {      
+  case 37:// LEFT ARROW
+    if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden') {
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      if (twig.health > 0) {
+        $('twig').src = 'images/twig/walk-left.gif';
+        moveObj(twig, twig.speed, -1, 0);
       }
     }
-    // RPNapes keys
-    switch (key) {
-    case 8:// BACKSPACE
+    break;
+  case 38:// UP ARROW
+    if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden') {
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      if (twig.health > 0) {
+        $('twig').src = 'images/twig/walk-left.gif';
+        moveObj(twig, twig.speed, 0, -1);
+      }
+    }
+    break;
+  case 39:// RIGHT ARROW
+    if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden') {
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      if (twig.health > 0) {
+        $('twig').src = 'images/twig/walk-right.gif';
+        moveObj(twig, twig.speed, 1, 0);
+      }
+    }
+    break;
+  case 40:// DOWN ARROW
+    if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden')  {
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      if (twig.health > 0) {
+        $('twig').src = 'images/twig/walk-right.gif';
+        moveObj(twig, twig.speed, 0, 1);
+      }
+    }
+    break;
+  }
+  // RPNapes keys
+  switch (key) {
+  case 8:// BACKSPACE
+    if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnBackspace();
-      break;
-    case 16:// SHIFT
-      if (altHeld) btnShift();
-      break;
-    case 17:// CTRL
+    }
+    break;
+  case 16:// SHIFT
+    if ($('rpnapes').className !== 'hidden') {
+      if (altHeld) btnShift();        
+    }
+    break;
+  case 17:// CTRL
+    if (!event) { event = window.event; }
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    console.log('Ctrl');
+    ctrlHeld = true;        
+    break;
+  case 18:// ALT
+    if ($('rpnapes').className !== 'hidden') {
+      altHeld = true;        
+    }
+    break;
+  case 46:// DELETE
+    if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      console.log('Ctrl');
-      ctrlHeld = true;
-      break;
-    case 18:// ALT
-      altHeld = true;
-      break;
-    case 46:// DELETE
+      btnDelete();        
+    }
+    break;
+  case 83:// S
+    if (ctrlHeld) {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btnDelete();
-      break;
-    case 83:// S
-      if (ctrlHeld) {
-        if (!event) { event = window.event; }
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-
-        if ($('notes').classList.contains('hidden')) {
-          btnSave();
-        } else {
-          btnSaveNotes();
-        }
-      }
-      break;
-    case 89:// Y
-      if ($('notes').classList.contains('hidden')) {
-        if (ctrlHeld) redoFunction();
+  
+      if ($('rpnapes').className !== 'hidden') {
+        btnSave();
       } else {
-        if (ctrlHeld) btnUndoNotes();
+        btnSaveNotes();
       }
-      break;
-    case 90:// Z
-      if ($('notes').classList.contains('hidden')) {
-        if (ctrlHeld) undoFunction();
-      } else {
-        if (ctrlHeld) btnRedoNotes();
-      }
-      break;
-    case 106:// NUMPAD *
+    }        
+    break;
+  case 89:// Y
+    if ($('rpnapes').className !== 'hidden') {
+      if (ctrlHeld) redoFunction();
+    } else {
+      if (ctrlHeld) btnUndoNotes();
+    }        
+    break;
+  case 90:// Z
+    if ($('rpnapes').className !== 'hidden') {
+      if (ctrlHeld) undoFunction();
+    } else {
+      if (ctrlHeld) btnRedoNotes();
+    }
+    break;        
+  case 106:// NUMPAD *
+    if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnMultiply();
-      break;
-    case 107:// NUMPAD +
+    }
+    break;        
+  case 107:// NUMPAD +
+    if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnAdd();
-      break;
-    case 109:// NUMPAD -
+    }
+    break;        
+  case 109:// NUMPAD -
+    if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnSubtract();
-      break;
-    case 111:// NUMPAD /
+    }
+    break;      
+  case 111:// NUMPAD /
+    if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDivide();
-      break;
     }
+    break;        
   }
 });
 
+// keyup
 document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
