@@ -7,7 +7,7 @@ This project does not use any JQuery and Works offline :)
 
 ## Calcamatron
 
-This calcamatron makes use of a visible stack . Units are supported (no conversion as yet).
+The calcamatron makes use of a visible stack . Units are supported (no conversion as yet).
 
 ![Calcamatron](images/screenshots/rpnapes.jpg)
 ![Shifted calcamatron](images/screenshots/rpnapes-2.jpg)

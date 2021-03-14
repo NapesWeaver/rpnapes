@@ -876,9 +876,7 @@ function btnOff() {
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
 
 function btnInverse() {
-
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-
   if (shifted) {
     btnFactorial();    
   } else {
@@ -898,7 +896,7 @@ function inverse() {
       $('txt-input').value = 1 / extractReal($('txt-input').value);
     }
     if (!isNumber && isImaginary) {
-      $('txt-input').value = -1 * (1 / extractImaginary($('txt-input').value));
+      $('txt-input').value =  1 / extractImaginary($('txt-input').value);
       $('txt-input').value += 'j';
     }
     if (isNumber && isImaginary) {
