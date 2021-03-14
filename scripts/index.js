@@ -897,7 +897,8 @@ function inverse() {
       $('txt-input').value += 'j';
     }
     if (isNumber && isImaginary) {
-      // write code here please ;)
+      // Write code here please ;)
+      return;
     }
     $('txt-input').value += newUnits;
   } else {    
@@ -915,8 +916,12 @@ function inverse() {
 
 function btnFactorial() {
   backupUndo();
-  $('txt-input').value = calculate($('txt-input').value);
-  $('txt-input').value = factorial(extractReal($('txt-input').value));
+  var objX = getX();
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  var result = factorial(x);
+  
+  if (radix !== 10) result = result.toString(radix);
+  $('txt-input').value = result;
   $('txt-input').select();
 }
 
@@ -1084,13 +1089,9 @@ function modulus() {
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
-  var result;
-
-  if (radix === 10) {
-    result = y % x;
-  } else {
-    result = (y % x).toString(radix);
-  }  
+  var result = y % x;
+  
+  if (radix !== 10) result = result.toString(radix);
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1196,13 +1197,9 @@ function division() {
   // var yI;
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   // var xI;
-  var result;
-   
-  if (radix === 10) {
-    result = y / x;
-  } else {
-    result = (y / x).toString(radix);
-  }  
+  var result = y / x;
+  
+  if (radix !== 10) result = result.toString(radix);
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1225,13 +1222,9 @@ function multiplication() {
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
-  var result;
-
-  if (radix === 10) {
-    result = y * x;
-  } else {
-    result = (y * x).toString(radix);
-  }
+  var result = y * x;
+  
+  if (radix !== 10) result = result.toString(radix);  
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1254,13 +1247,9 @@ function subtraction() {
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
-  var result;
-
-  if (radix === 10) {
-    result = y - x;
-  } else {
-    result = (y - x).toString(radix);
-  }
+  var result = y - x;
+  
+  if (radix !== 10) result = result.toString(radix);
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1283,13 +1272,9 @@ function addition() {
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
-  var result;
-  
-  if (radix === 10) {
-    result = y + x;
-  } else {
-    result = (y + x).toString(radix);
-  }
+  var result = y + x;
+
+  if (radix !== 10) result = result.toString(radix);
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result; 
   updateDisplay();
@@ -1319,7 +1304,6 @@ function btnSine() {
   backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
 
   if (shifted) {
@@ -1335,7 +1319,6 @@ function btnCosine() {
   backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
 
   if (shifted) {
@@ -1351,7 +1334,6 @@ function btnTangent() {
   backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
 
   if (shifted) {
