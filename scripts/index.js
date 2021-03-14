@@ -1320,6 +1320,8 @@ function btnSine() {
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
 
+  $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
+
   if (shifted) {
     $('txt-input').value = asin($('txt-input').value);
   } else {
@@ -1334,6 +1336,8 @@ function btnCosine() {
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
 
+  $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
+
   if (shifted) {
     $('txt-input').value = acos($('txt-input').value);
   } else {
@@ -1347,6 +1351,8 @@ function btnTangent() {
   backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+
+  $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
 
   if (shifted) {
     $('txt-input').value = atan($('txt-input').value);
