@@ -408,9 +408,11 @@ function btnEnter() {
 
 function btnEval() {
   backupUndo();
-  var objX = getX();
+  var objX;
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  objX  = getX();
+  
   if (objX.getSoul().match(/^run$/)) {
     runProgram();
     return;
