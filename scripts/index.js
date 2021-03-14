@@ -60,7 +60,8 @@ var restores = [];
 var stackSize = 99;
 var stackFocus = false;
 var shifted = false;
-var keyHeld = false;
+var altHeld = false;
+var ctrlHeld = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
@@ -3850,15 +3851,32 @@ document.addEventListener('keydown', function (event) {
       btnBackspace();
       break;
     case 16:// SHIFT
-      if (keyHeld) btnShift();
+      if (altHeld) btnShift();
+      break;
+    case 17:// CTRL
+      ctrlHeld = true;
       break;
     case 18:// ALT
-      keyHeld = true;
+      altHeld = true;
       break;
     case 46:// DELETE
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDelete();
+      break;
+    case 89:// y
+      if ($('notes').classList.contains('hidden')) {
+        if (ctrlHeld) redoFunction();
+      } else {
+        if (ctrlHeld) btnUndoNotes();
+      }
+      break;
+    case 90:// z
+      if ($('notes').classList.contains('hidden')) {
+        if (ctrlHeld) undoFunction();
+      } else {
+        if (ctrlHeld) btnRedoNotes();
+      }
       break;
     case 106:// NUMPAD *
       if (!event) { event = window.event; }
@@ -3888,8 +3906,11 @@ document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
   if ($('rpnapes').className !== 'hidden') {
     switch (key) {
+    case 17:// CTRL
+      ctrlHeld = false;
+      break;
     case 18:// ALT
-      keyHeld = false;
+      altHeld = false;
       break;
     case 27:// ESC
       if (!event) { event = window.event; }
