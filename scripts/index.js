@@ -412,7 +412,7 @@ function btnEval() {
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   objX  = getX();
-  
+
   if (objX.getSoul().match(/^run$/)) {
     runProgram();
     return;
@@ -860,13 +860,16 @@ function pushObjectToStack(tmpArray) {
 function btnOff() {
   monOff();
   tricorderOff();  
-  // Not working at all for mobile Firefox :(
+  // Not working at all for mobile Firefox - causing browser to hang :(
   if (navigator.userAgent.toLowerCase().indexOf('firefox') === -1 || !isMobile) {
-    window.open('','_self').close();
+    //window.open('','_self').close();
+    window.open('', '_self', ''); 
+    window.close();
     window.top.close();
-    rpnAlert('Window not opened with window.open()');
-    return false;
+    rpnAlert('Scripts may only close windows they opened.');
     //throw new Error();
+    window.location.assign('https://www.google.com');
+    return false;
   }
 }
 
@@ -1769,13 +1772,13 @@ function help(command) {
       inputText('notes: Switch to Notes interface.');
       break;
     case 'open':
-      inputText('open: Open a text file into the Stack.');
+      inputText('open: Open a text file onto the Stack. A bug prohibits loading the same file successively ;(');
       break;
     case 'openNotes':
       inputText('openNotes: Open a text file into Notes.');
       break;
     case 'off':
-      inputText('off: Close browser tab. Works sporadically, tab must be opened with window.open()');
+      inputText('off: Close browser tab or redirect to google.com');
       break;
     case 'print':
       inputText('print: Open printer dialoge.');
@@ -1788,6 +1791,9 @@ function help(command) {
       break;
     case 'saveAs':
       inputText('saveAs [filename]: Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
+      break;
+    case 'shortcuts':
+      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = X<>Y button (for Notes: Toggle interface button).');
       break;
     case 'size':
       inputText('size: Returns the width and height of the browser window.');
@@ -1818,7 +1824,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, darkmode, date, embed, fix, flightLogger, google, ip, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, size, sound, stopwatch, time, toString, unembed, youTube');
+    inputText('about, clear, darkmode, date, embed, fix, flightLogger, google, ip, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2043,6 +2049,7 @@ function parseCommand() {
       break;
     case 'open':
       stack.pop();
+      $('txt-input').value = '';
       openAFile();
       break;
     case 'openNotes':
@@ -2063,6 +2070,13 @@ function parseCommand() {
       updateDisplay();
       $('txt-input').value = '';
       btnSave();
+      break;
+    case 'shortcuts':
+      stack.pop();
+      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = X<>Y button (for Notes: Toggle interface button).');
+      enterInput();
+      updateDisplay();
+      $('txt-input').value = '';
       break;
     case 'size':
       stack.pop();
