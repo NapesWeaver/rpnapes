@@ -51,7 +51,7 @@ const e = 2.718281828459045;
 const π = Math.PI;
 const G = 6.674E-11;
 const c = 299792458;
-const tStamp = 'xx:xx:xx';
+const tStamp = '4:15:45';
 var testing = false;
 
 var stack = [];
@@ -3838,7 +3838,7 @@ document.addEventListener('keydown', function (event) {
   case 17:// CTRL
     if (!event) { event = window.event; }
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    ctrlHeld = true;        
+    ctrlHeld = true;
     break;
   case 18:// ALT
     if ($('rpnapes').className !== 'hidden') {
@@ -3905,17 +3905,27 @@ document.addEventListener('keydown', function (event) {
     }        
     break;
   case 89:// Y
-    if ($('rpnapes').className !== 'hidden') {
-      if (ctrlHeld) redoFunction();
-    } else {
-      if (ctrlHeld) btnUndoNotes();
+    if (ctrlHeld) {
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+
+      if ($('rpnapes').className !== 'hidden') {
+        redoFunction();
+      } else {
+        btnRedoNotes();
+      }
     }        
     break;
   case 90:// Z
-    if ($('rpnapes').className !== 'hidden') {
-      if (ctrlHeld) undoFunction();
-    } else {
-      if (ctrlHeld) btnRedoNotes();
+    if (ctrlHeld) {
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+
+      if ($('rpnapes').className !== 'hidden') {
+        undoFunction();
+      } else {
+        btnUndoNotes();
+      }
     }
     break;        
   case 106:// NUMPAD *
