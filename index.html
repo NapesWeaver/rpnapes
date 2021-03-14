@@ -48,7 +48,7 @@
                     <li><a id="menu-save" href="#" title="Save to stack">Save</a></li>
                     <li><a href="#" title="Save as a .txt file" onclick="backupUndo(); if ($('txt-input').value.trim() !== '') {saveFile($('txt-input').value.trim(), true);} else if (stack[stack.length - 1]) {saveFile(stack[stack.length - 1].soul, true); stack.pop();} else {saveFile('', true)} $('txt-input').value = ''; updateDisplay()">SaveAs</a></li>
                     <li><a id="menu-print" href="#" title="Open printer dialog">Print</a></li>
-                    <li><a id="menu-off" href="#" title="Turn off programs and close tab. Problematic :(">Off</a></li>
+                    <li><a id="menu-off" href="#" title="Close tab or redirect to google.com">Off</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
@@ -182,7 +182,7 @@
                       </ul>
                     </li>
                     <li class="menu">
-                      <a href="#" onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('equations').className='hidden';$('symbols').className='hidden'">Programs</a>
+                      <a href="#" onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('symbols').className='hidden'">Programs</a>
                       <ul id="programs" onclick="$('programs').className='hidden'">
                         <li><a id="menu-fizz-buzz" href="#" title="Example calcamatron script">&nbsp;&nbsp;Fizz Buzz</a></li>
                         <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;IP Mapper</a></li>
@@ -193,7 +193,7 @@
                       </ul>
                     </li>
                     <li class="menu">
-                      <a href="#" onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden';$('equations').className='hidden';$('programs').className='hidden'">Symbols</a>
+                      <a href="#" onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden';$('equations').className='hidden';">Symbols</a>
                       <ul id="symbols" onclick="$('symbols').className='hidden'">
                         <li><a id="menu-parentheses" href="#" title="Parentheses">&nbsp;&nbsp;&#40;&nbsp;&#41;</a></li>
                         <li><a id="menu-equals" href="#" title="Equals">&nbsp;&nbsp;&#61;</a></li>

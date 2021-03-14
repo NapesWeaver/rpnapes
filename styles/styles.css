@@ -406,6 +406,10 @@ label a {
     cursor: context-menu;
 }
 
+#menu-off {
+    cursor: not-allowed;
+}
+
 /****** Menu ***********************************/
 #menu-wrap {
     margin-left: 15px;
