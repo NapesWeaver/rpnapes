@@ -610,22 +610,31 @@ function colorUndoRedoMenu() {
 }
 
 function btnEe() {
+  var input = $('txt-input').value;
+
   if (shifted) {
-    if ($('txt-input').value.indexOf('j') === -1 && $('txt-input').value.trim() !== '') {
-      insertAtCursor($('txt-input'), 'j');
-    }
+    if (/[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'j');
   } else {
-    if (/(?!^[-+]?\d+[.]?\d*[eE])[-+]?\d+[.]?\d*/g.test($('txt-input').value) && !/.*[eE]/g.test($('txt-input').value) && !/[-+]?\d?[.][.]+/.test($('txt-input').value) && $('txt-input').value.slice(-1) !== '.') {
-      insertAtCursor($('txt-input'), 'e');
-    }
+    if (/[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'e');
   }
   $('txt-input').focus();
 }
 
+function internetSearch(domainString, query) {
+  var domain = domainString.match(/^http[s]?:[/][/]\w+[.]\w+[.]\w+[/]/g);
+  
+  if (query !== null && query !== '') {
+    domainString += query;
+    window.open(domainString, '_blank');
+  } else {
+    window.open(domain);
+  }
+}
+
 function btnGo() {
   backupUndo();
-  if (shifted) {   
-    internetSearch('https://www.youtube.com/results?search_query=', $('txt-input').value.trim());    
+  if (shifted) {
+    internetSearch('https://www.youtube.com/results?search_query=', $('txt-input').value.trim());
   } else {
     internetSearch('https://www.google.com/search?q=', $('txt-input').value.trim());
   }  
@@ -868,7 +877,7 @@ function btnOff() {
     window.top.close();
     rpnAlert('Scripts may only close windows they opened.');
     //throw new Error();
-    window.location.assign('https://www.google.com');
+    window.location.href = 'https://www.google.com';
     return false;
   }
 }
@@ -1696,15 +1705,6 @@ function getUserIP(onNewIP) {
   };
 }
 
-function internetSearch(domainString, query) {
-  domainString += query;
-  window.open(domainString, '_blank');
-  //window.location.href = domainString;
-  //window.location.reload();
-  //history.forward();
-  //history.go(-2);
-}
-
 function help(command) {
   var commandArray = command.split(' ');
   
@@ -1831,6 +1831,7 @@ function help(command) {
 
 function parseCommand() {
   var command = $('txt-input').value.trim();
+  var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', null, null, null, null);
 
   // Commands consist of words and numbers and URLs
   if (!/[,*√=Φπ\\^]+/.test(command)) {    
@@ -1844,7 +1845,7 @@ function parseCommand() {
     if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix$|(^fix (-?[1]|[0-9]|1[0-7])$)/)) {    
       
       if (commandArray[1] === undefined) {
-        if (isNaN(parseInt(stack[stack.length - 2].getRealPart()))) return;
+        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
         stack.pop();
         setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
       } else {
@@ -1881,11 +1882,11 @@ function parseCommand() {
       updateDisplay();
     }
     // If (command === embed and end of stack === URL) or command === embed with URL
-    if ((command.match(/^embed$/) && stack[stack.length - 2].getSoul().match(/^http[s]:\/\/[0-9A-Za-z]/)) || command.match(/^embed http[s]:\/\/[0-9A-Za-z]/)) {    
+    if ((command.match(/^embed$/) && stackedCommand.getSoul().match(/^http[s]:\/\/[0-9A-Za-z]/)) || command.match(/^embed http[s]:\/\/[0-9A-Za-z]/)) {    
       
       if (commandArray[1] === undefined) {
 
-        embed(stack[stack.length - 2].getSoul());
+        embed(stackedCommand.getSoul());
       } else {
         embed(commandArray[1]);
       }
@@ -1897,7 +1898,8 @@ function parseCommand() {
     if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
 
       if (commandArray[1] === undefined) {
-        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stack[stack.length - 2].getSoul()));                
+        console.log('stackedCommand', stackedCommand);
+        internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stackedCommand.getSoul()));                
       } else {
         commandArray.shift();
         internetSearch('https://www.google.com/search?q=', commandArray.join(' '));
@@ -1907,9 +1909,8 @@ function parseCommand() {
       updateDisplay();
     }
     if (command === 'youTube' || command === 'you' || command.match(/^youTube .+/) || command.match(/^you .+/)) {
-
       if (commandArray[1] === undefined) {
-        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stack[stack.length - 2].getSoul()));               
+        internetSearch('https://www.youtube.com/results?search_query=', decodeSpecialChar(stackedCommand.getSoul()));               
       } else {
         commandArray.shift();
         internetSearch('https://www.youtube.com/results?search_query=', commandArray.join(' '));
