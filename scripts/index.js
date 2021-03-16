@@ -563,6 +563,28 @@ function btnUndo() {
   }
 }
 
+function colorUndoButton() {
+  if (($('btn-undo').value === 'UND' && backUps.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
+    $('btn-undo').style.color = '#25FC5A';
+  } else {
+    $('btn-undo').style.color = '#D4D0C8';
+  }        
+  colorUndoRedoMenu();
+}
+
+function colorUndoRedoMenu() {
+  if (backUps.length > 3) {
+    $('menu-undo').style.color = '#088B00';
+  } else {
+    $('menu-undo').style.color = '#D4D0C8';
+  }
+  if (restores.length > 0) {
+    $('menu-redo').style.color = '#088B00';
+  } else {
+    $('menu-redo').style.color = '#D4D0C8';
+  }
+}
+
 function undoFunction() {
 
   if (backUps.length > 3) {    
@@ -574,8 +596,8 @@ function undoFunction() {
 
     stack.length = 0;
     tmpArray = splitArrayByBrowser(tmpArray);
-    var i = 1;
 
+    var i = 1;
     while (i < tmpArray.length) {
       pushObjectToStack(tmpArray[i]);
       i++;
@@ -596,8 +618,8 @@ function redoFunction() {
 
     stack.length = 0;
     tmpArray = splitArrayByBrowser(tmpArray);
-    var i = 1;
 
+    var i = 1;
     while (i < tmpArray.length) {
       pushObjectToStack(tmpArray[i]);
       i++;
@@ -612,30 +634,6 @@ function backupUndo() {
   backUps.push($('txt-input').value.trim());
   restores.length = 0;
   colorUndoButton();
-}
-
-function colorUndoButton() {
-  if (($('btn-undo').value === 'UND' && backUps.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
-    $('btn-undo').style.color = '#25FC5A';
-  } else {
-    $('btn-undo').style.color = '#D4D0C8';
-  }        
-  colorUndoRedoMenu();
-}
-
-function colorUndoRedoMenu() {
-  if (backUps.length > 3) {
-    //$('menu-undo').style.color = '#25FC5A';
-    $('menu-undo').style.color = '#088B00';
-  } else {
-    $('menu-undo').style.color = '#D4D0C8';
-  }
-  if (restores.length > 0) {
-    //$('menu-redo').style.color = '#25FC5A';
-    $('menu-redo').style.color = '#088B00';
-  } else {
-    $('menu-redo').style.color = '#D4D0C8';
-  }
 }
 
 function btnEe() {
@@ -2554,7 +2552,6 @@ function colorSaveButton() {
   var index = 0;
   
   index = getCookie('STACK').indexOf('=') + 1;
-
   if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
     $('btn-save').style.color = '#000000';
   } else {
@@ -4000,7 +3997,7 @@ document.addEventListener('keydown', function (event) {
 
 document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
-
+  
   switch (key) {
   case 17:// CTRL
     ctrlHeld = false;
@@ -4026,13 +4023,30 @@ document.addEventListener('keyup', function (event) {
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
-  case 13:// NOTES ENTER (Falls through)
-  case 46:// NOTES DELETE
-    if ($('notes').classname !== 'hidden') backupUndoNotes();
-    break;
-  default:
-    //if ($('notes').classname !== 'hidden') colorSaveNotesButton();
-    if ($('notes').classname !== 'hidden') backupUndoNotes();
+
+  // case 9:// TAB (Falls through)
+  // case 16:// SHIFT (Falls through)
+  // case 19:// PAUSE (Falls through)
+  // case 20:// CAP LOCK (Falls through)
+  // case 32:// SPACE (Falls through)
+  // case 33:// PAGE UP (Falls through)
+  // case 34:// PAGE DOWN (Falls through)
+  // case 35:// END (Falls through)
+  // case 36:// HOME (Falls through)
+  // case 45:// INSERT (Falls through)
+  // case 91:// WINDOWS KEY (Falls through)
+  // case 144:// NUM LOCK (Falls through)
+  // case 145:// SCROLL LOCK
+  //   return;
+
+  // case 8:// BACKSPACE (Falls through)
+  // case 13:// ENTER (Falls through)
+  // case 46:// NOTES DELETE
+  //   if ($('notes').classname !== 'hidden') backupUndoNotes();
+  //   break;
+
+  // default:
+  //   if ($('notes').classname !== 'hidden') colorSaveNotesButton();
   }
 });
 
@@ -4390,11 +4404,12 @@ window.onload = function () {
   $('lst-notes').onclick = function() {
     $('lst-notes').readOnly = false;
   }
-  $('lst-notes').addEventListener('paste', function() {
-    setTimeout(function() {
-      if (notes.length > 0) backupUndoNotes(); 
-    }, 100);
-  });
+  // $('lst-notes').addEventListener('paste', function() {
+  //   setTimeout(function() {
+  //     if (notes.length > 0) backupUndoNotes(); 
+  //   }, 100);
+  // });
+  $('lst-notes').oninput = backupUndoNotes;  
 
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
@@ -4427,3 +4442,9 @@ window.onload = function () {
   }
   $('txt-input').readOnly = false;
 };
+function testChange() {
+  console.log('testChange');
+  setTimeout(function() {
+    if (notes.length > 0) backupUndoNotes(); 
+  }, 100);
+}
