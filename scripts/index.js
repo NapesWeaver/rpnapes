@@ -1751,6 +1751,9 @@ function help(command) {
     case 'clear':
       inputText('clear: Clears the displays. Alias: cls');
       break;
+    case 'constants':
+      inputText('constants: Display values of constants. Reassingment of \'constants\' are allowed. \'Constants\' are reset if Equations / Contants menu items are opened.');
+      break;
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL. URL must be in format of https://www.youtube.com/embed/G2re3s0kQgM. ');
       break;
@@ -1952,6 +1955,23 @@ function parseCommand() {
       inputText($('lst-stack').getAttribute('placeholder'));
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
+      enterInput();
+      updateDisplay();
+      $('txt-input').value = '';
+      break;
+    case 'constants':
+      stack.pop();
+      // inputText('Reassingment of \'constants\' are allowed. \'Constants\' are reset if Equations / Contants menu items are opened.');
+      // enterInput();
+      inputText('Φ ' + Φ);
+      enterInput();
+      inputText('e ' + e);
+      enterInput();
+      inputText('G ' + G);
+      enterInput();
+      inputText('c ' + c);
+      enterInput();
+      inputText('π ' + π);
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
