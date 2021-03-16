@@ -2551,19 +2551,14 @@ function prettyPrint(i, content) {
 }
 
 function colorSaveButton() {
+  var index = 0;
+  
+  index = getCookie('STACK').indexOf('=') + 1;
 
-  if (document.cookie.indexOf('STACK') !== -1) {
-    var index = 0;
-    
-    index = getCookie('STACK').indexOf('=') + 1;
-    //console.log(getCookie("STACK").substr(0).trim(), nestArrayByBrowser(stack).trim());
-    if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
-      $('btn-save').style.color = '#000000';
-    } else {
-      $('btn-save').style.color = '#D4D0C8';
-    }
-  } else {
+  if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
     $('btn-save').style.color = '#000000';
+  } else {
+    $('btn-save').style.color = '#D4D0C8';
   }  
 }
 
