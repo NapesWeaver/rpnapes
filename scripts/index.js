@@ -1852,7 +1852,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, darkmode, date, embed, fix, flightLogger, google, ip, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
+    inputText('about, clear, constants, darkmode, date, embed, fix, flightLogger, google, ip, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -1928,7 +1928,6 @@ function parseCommand() {
     if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
 
       if (commandArray[1] === undefined) {
-        console.log('stackedCommand', stackedCommand);
         internetSearch('https://www.google.com/search?q=', decodeSpecialChar(stackedCommand.getSoul()));                
       } else {
         commandArray.shift();
@@ -3139,7 +3138,7 @@ function btnRedoNotes() {
   colorUndoNotesButton();
 }
 
-function backupUndoNotes() {  
+function backupUndoNotes() {
   backupNotes.push(nestArrayByBrowser(notes));
   notes = $('lst-notes').value.split('\n');
   restoreNotes.length = 0;
@@ -3147,7 +3146,6 @@ function backupUndoNotes() {
 }
 
 function colorUndoNotesButton() {
-
   if (backupNotes.length > 1) {
     $('btn-undo-notes').style.color = '#01c401';
   } else {
@@ -3158,30 +3156,26 @@ function colorUndoNotesButton() {
   } else {
     $('btn-redo-notes').style.color = '#919191';
   }
-  colorNotesSaveButton();
+  colorSaveNotesButton();
 }
 
-function colorNotesSaveButton() {
-  var index = 0;
-  var cookieValue = '';
-  var notesValue = '';
-
-  index = getCookie('NOTES').indexOf('=') + 1;
-  cookieValue = getCookie('NOTES').substr(index);
-  notesValue = nestArrayByBrowser(notes);
+function colorSaveNotesButton() {
+  var index = getCookie('NOTES').indexOf('=') + 1;
+  var cookieValue = getCookie('NOTES').substr(index);
+  var tmpNotes = encodeSpecialChar($('lst-notes').value);
+  var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
   // This step is needed for Chrome and IE
   cookieValue = cookieValue.replace(/_/g, ' ').trim();
   notesValue = notesValue.replace(/_/g, ' ').trim();
 
-  if (cookieValue !== notesValue) {
-    $('btn-save-notes').style.color = '#000000';
-  } else {
+  if (cookieValue === notesValue) {
     $('btn-save-notes').style.color = '#919191';
+  } else {
+    $('btn-save-notes').style.color = '#000000';
   }
 }
 
 function btnSaveNotes() {
-  // backupUndoNotes();
   var tmpY;
   $('btn-save-notes').style.color = '#919191';
   tmpY = encodeSpecialChar($('lst-notes').value);
@@ -4039,12 +4033,10 @@ document.addEventListener('keyup', function (event) {
     break;
   case 13:// NOTES ENTER (Falls through)
   case 46:// NOTES DELETE
-    if ($('notes').classname !== 'hidden') {
-      backupUndoNotes();
-    }
+    if ($('notes').classname !== 'hidden') backupUndoNotes();
     break;
   default:
-    colorNotesSaveButton();
+    if ($('notes').classname !== 'hidden') colorSaveNotesButton();
   }
 });
 
