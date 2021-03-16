@@ -158,7 +158,7 @@
                   <a href="#" onmouseover="$('constants').className='hidden';$('equations').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Tools</a>
                   <ul class="sub-menu">
                     <li class="menu">
-                      <a href="#" onclick="$('constants').className='visible'" onmouseover="$('equations').className='hidden'">Constants</a>
+                      <a href="#" onclick="$('constants').className='visible';resetConstants()" onmouseover="$('equations').className='hidden'">Constants</a>
                       <ul id="constants" onclick="$('constants').className='hidden'">
                         <li><a id="menu-phi" href="#" title="Phi ~ Golden Ratio">&nbsp;&nbsp;&#934;</a></li>
                         <li><a id="menu-eulers" href="#" title="Euler's Number">&nbsp;&nbsp;e</a></li>
@@ -216,7 +216,7 @@
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="97" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified March 15, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="97" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified March 16, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>

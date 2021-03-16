@@ -46,12 +46,12 @@ new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 $('main').onresize = unFloat;
 
-const Φ = 1.618033988749895;
-const e = 2.718281828459045;
-const π = Math.PI;
-const G = 6.674E-11;
-const c = 299792458;
-const tStamp = '4:25:25';
+var Φ = 1.618033988749895;
+var e = Math.exp(1);// 2.718281828459045
+var π = Math.PI;// 3.141592653589793
+var G = 6.674e-11;
+var c = 299792458;
+var tStamp = '4:25:25';
 var testing = false;
 
 var stack = [];
@@ -110,6 +110,35 @@ NumberObject.prototype.getTimeStamp = function () {
 NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
 };
+
+function resetPhi() {
+  Φ = 1.618033988749895;
+}
+
+function resetEulers() {
+  e = Math.exp(1);
+}
+
+function resetPi(){
+  π = Math.PI
+}
+
+function resetGravitational() {
+  G = 6.674e-11;
+}
+
+function resetLightspeed() {
+  c = 299792458;
+}
+
+// Wired to HTML
+function resetConstants() {
+  resetPhi();
+  resetEulers();
+  resetPi();
+  resetGravitational();
+  resetLightspeed();
+}
 
 function resizeTextareas() {
   resizeTextarea($('lst-stack'));
@@ -611,7 +640,6 @@ function colorUndoRedoMenu() {
 
 function btnEe() {
   var input = $('txt-input').value;
-
   if (shifted) {
     if (/[0-9]$/.test(input) && !/[0-9]j[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'j');
   } else {
@@ -621,8 +649,7 @@ function btnEe() {
 }
 
 function internetSearch(domainString, query) {
-  var domain = domainString.match(/^http[s]?:[/][/]\w+[.]\w+[.]\w+[/]/g);
-  
+  var domain = domainString.match(/^http[s]?:[/][/]\w+[.]\w+[.]\w+[/]/g);  
   if (query !== null && query !== '') {
     domainString += query;
     window.open(domainString, '_blank');
@@ -3080,7 +3107,7 @@ function btnUndoNotes() {
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
   }
-  colorNotesUndoButton();
+  colorUndoNotesButton();
 }
 
 function btnRedoNotes() {
@@ -3089,17 +3116,17 @@ function btnRedoNotes() {
     notes = splitArrayByBrowser(restoreNotes.pop());
     updateDisplayNotes();
   }
-  colorNotesUndoButton();
+  colorUndoNotesButton();
 }
 
 function backupUndoNotes() {  
   backupNotes.push(nestArrayByBrowser(notes));
   notes = $('lst-notes').value.split('\n');
   restoreNotes.length = 0;
-  colorNotesUndoButton();
+  colorUndoNotesButton();
 }
 
-function colorNotesUndoButton() {
+function colorUndoNotesButton() {
 
   if (backupNotes.length > 1) {
     $('btn-undo-notes').style.color = '#01c401';
@@ -4103,28 +4130,33 @@ window.onload = function () {
 
   // Menu Constants
   $('menu-phi').onclick = (function() {
-    return function() { 
+    return function() {
+      resetPhi();
       insertText('Φ');
     }
   })();
   $('menu-eulers').onclick = (function() {
     return function() { 
       // insertText(Math.exp(1));
+      resetEulers();
       insertText('e');      
     }
   })();
   $('menu-gravitational-constant').onclick = (function() {
-    return function() { 
+    return function() {
+      resetGravitational();
       insertText('G');
     }
   })();
   $('menu-light-speed').onclick = (function() {
-    return function() { 
+    return function() {
+      resetLightspeed();
       insertText('c');
     }
   })(); 
   $('menu-pi').onclick = (function() {
-    return function() { 
+    return function() {
+      resetPi();
       insertText('π');
     }
   })();
