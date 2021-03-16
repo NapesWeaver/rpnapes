@@ -613,9 +613,9 @@ function btnEe() {
   var input = $('txt-input').value;
 
   if (shifted) {
-    if (/[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'j');
+    if (/[0-9]$/.test(input) && !/[0-9]j[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'j');
   } else {
-    if (/[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'e');
+    if (/[0-9]$/.test(input) && !/[0-9]e[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'e');
   }
   $('txt-input').focus();
 }
