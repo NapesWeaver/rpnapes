@@ -4036,7 +4036,8 @@ document.addEventListener('keyup', function (event) {
     if ($('notes').classname !== 'hidden') backupUndoNotes();
     break;
   default:
-    if ($('notes').classname !== 'hidden') colorSaveNotesButton();
+    //if ($('notes').classname !== 'hidden') colorSaveNotesButton();
+    if ($('notes').classname !== 'hidden') backupUndoNotes();
   }
 });
 
