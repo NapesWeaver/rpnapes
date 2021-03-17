@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '4:25:25';
+var tStamp = '22:22:20';
 var testing = false;
 
 var stack = [];
@@ -310,6 +310,7 @@ function notesOn() {
     $('lst-notes').classList.remove('resizable');
     resizeTextarea($('lst-notes'));
   }
+  $('lst-notes').focus();
 }
 
 function showTricorder() {  
@@ -3170,7 +3171,7 @@ function colorSaveNotesButton() {
 }
 
 function colorUndoNotesButton() {
-  if (backupNotes.length > 0) {
+  if (backupNotes.length > 1) {
     $('btn-undo-notes').style.color = '#01c401';
   } else {
     $('btn-undo-notes').style.color = '#919191';
@@ -3184,13 +3185,18 @@ function colorUndoNotesButton() {
 }
 
 function writeNote() {
-  if (backupNotes.length > 1) backupNotes.pop();
-  backupUndoNotes();
+  console.log('notes:', notes);
+  console.log('notes.length:', notes.length);
+  console.log('backupNotes:', backupNotes);
+  console.log('backupNotes.length:', backupNotes.length);
 }
 
 function backupUndoNotes() {
   backupNotes.push(nestArrayByBrowser(notes));
+
   notes = $('lst-notes').value.split('\n');
+  if (notes[notes.length - 1] === '') notes.pop();
+
   restoreNotes.length = 0;
   colorUndoNotesButton();
 }
@@ -3216,7 +3222,7 @@ function btnRedoNotes() {
 function btnClearNotes() {
   backupUndoNotes();
   $('lst-notes').value = '';
-  notes = $('lst-notes').value.split('\n');
+  notes = [''];
 }
 
 function btnCopyNotes() {
@@ -3267,7 +3273,7 @@ function btnDeleteNotes() {
   $('lst-notes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lst-notes').setSelectionRange(startPos, startPos);
   $('lst-notes').focus();
-  notes = $('lst-notes').value.split('\n');
+
   if (isMobile) $('lst-notes').readOnly = true;
 }
 
@@ -3865,7 +3871,6 @@ document.addEventListener('keydown', function (event) {
       btnBackspace();
     } else {
       backupUndoNotes();
-      notes = $('lst-notes').value.split('\n');
     }
     break;
   case 16:// SHIFT
@@ -4025,7 +4030,7 @@ document.addEventListener('keyup', function (event) {
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
-  //case 8:// BACKSPACE (Falls through)
+  // case 8:// BACKSPACE (Falls through)
   case 13:// ENTER (Falls through)
   case 46:// NOTES DELETE
     if ($('notes').classname !== 'hidden') backupUndoNotes();
@@ -4396,7 +4401,7 @@ window.onload = function () {
   //   }, 100);
   // });
   // $('lst-notes').oninput = backupUndoNotes;  
-  $('lst-notes').oninput = writeNote; 
+  // $('lst-notes').oninput = writeNote; 
   
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
@@ -4410,8 +4415,8 @@ window.onload = function () {
     $('lst-notes').value = '';
     btnLoadNotes();
   } else {
-    // backupUndoNotes();
-    colorUndoNotesButton();
+    backupUndoNotes();
+    // colorUndoNotesButton();
   }
   
   if (document.cookie.indexOf('TRICORDER') !== -1) {
