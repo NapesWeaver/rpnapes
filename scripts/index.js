@@ -310,7 +310,7 @@ function notesOn() {
     $('lst-notes').classList.remove('resizable');
     resizeTextarea($('lst-notes'));
   }
-  $('lst-notes').focus();
+  if (!isMobile) $('lst-notes').focus();
 }
 
 function showTricorder() {  
