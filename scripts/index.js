@@ -1878,7 +1878,7 @@ function help(command) {
       inputText('saveAs [filename]: Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'shortcuts':
-      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = X<>Y button (for Notes: Toggle interface button).');
+      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       break;
     case 'size':
       inputText('size: Returns the width and height of the browser window.');
@@ -2175,7 +2175,7 @@ function parseCommand() {
       break;
     case 'shortcuts':
       stack.pop();
-      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = X<>Y button (for Notes: Toggle interface button).');
+      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
@@ -4008,12 +4008,12 @@ document.addEventListener('keyup', function (event) {
   case 27:// ESC
     if (!event) { event = window.event; }
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-
-    if ($('rpnapes').className !== 'hidden') {      
-      btnXy();
-    } else {
-      rpnapesOn();
-    }
+    // if ($('rpnapes').className !== 'hidden') {      
+    //   btnXy();
+    // } else {
+    //   rpnapesOn();
+    // }
+    btnXoff();
     break;
   case 37:// LEFT ARROW (Falls through)
   case 38:// UP ARROW (Falls through)
@@ -4023,7 +4023,7 @@ document.addEventListener('keyup', function (event) {
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
-  case 229: // ANDROID BACKSPACE (Falls through)
+  case 229:// ANDROID BACKSPACE (Falls through)
   case 8:// BACKSPACE (Falls through)
   case 13:// ENTER (Falls through)
   case 46:// NOTES DELETE
@@ -4409,6 +4409,7 @@ window.onload = function () {
     btnLoadNotes();
   } else {
     backupUndoNotes();
+    colorSaveNotesButton();
   }
   
   if (document.cookie.indexOf('TRICORDER') !== -1) {
