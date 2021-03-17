@@ -3162,7 +3162,7 @@ function colorSaveNotesButton() {
 
   cookieValue = cookieValue.replace(/_/g, ' ').trim();
   notesValue = notesValue.replace(/_/g, ' ').trim();
-
+  
   if (cookieValue === notesValue) {
     $('btn-save-notes').style.color = '#919191';
   } else {
@@ -3181,33 +3181,24 @@ function colorUndoNotesButton() {
   } else {
     $('btn-redo-notes').style.color = '#919191';
   }
-  colorSaveNotesButton();
-}
-
-function writeNote() {
-  console.log('notes:', notes);
-  console.log('notes.length:', notes.length);
-  console.log('backupNotes:', backupNotes);
-  console.log('backupNotes.length:', backupNotes.length);
 }
 
 function backupUndoNotes() {
   backupNotes.push(nestArrayByBrowser(notes));
-
   notes = $('lst-notes').value.split('\n');
   if (notes[notes.length - 1] === '') notes.pop();
-
   restoreNotes.length = 0;
   colorUndoNotesButton();
 }
 
 function btnUndoNotes() {
-  if (backupNotes.length > 0) {
+  if (backupNotes.length > 1) {
     restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
   }
   colorUndoNotesButton();
+  colorSaveNotesButton();
 }
 
 function btnRedoNotes() {
@@ -3217,12 +3208,14 @@ function btnRedoNotes() {
     updateDisplayNotes();
   }
   colorUndoNotesButton();
+  colorSaveNotesButton();
 }
 
 function btnClearNotes() {
   backupUndoNotes();
   $('lst-notes').value = '';
   notes = [''];
+  colorSaveNotesButton();
 }
 
 function btnCopyNotes() {
@@ -3237,9 +3230,11 @@ function btnPasteNotes() {
   } else {
     alert('Not supported by this browser.');
   }
+  colorSaveNotesButton();
 }
 
 function btnSaveNotes() {
+  backupUndoNotes();
   var tmpY;
   $('btn-save-notes').style.color = '#919191';
   tmpY = encodeSpecialChar($('lst-notes').value);
@@ -3265,16 +3260,16 @@ function btnLoadNotes() {
 }
 
 function btnDeleteNotes() {
-  backupUndoNotes();
   var txtField = $('lst-notes').value;
   var startPos = $('lst-notes').selectionStart;
   var endPos = $('lst-notes').selectionEnd;
-
+  
   $('lst-notes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lst-notes').setSelectionRange(startPos, startPos);
-  $('lst-notes').focus();
-
+  $('lst-notes').focus();  
   if (isMobile) $('lst-notes').readOnly = true;
+
+  backupUndoNotes();
 }
 
 function updateDisplayNotes() {
@@ -3869,8 +3864,6 @@ document.addEventListener('keydown', function (event) {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnBackspace();
-    } else {
-      backupUndoNotes();
     }
     break;
   case 16:// SHIFT
@@ -4030,13 +4023,11 @@ document.addEventListener('keyup', function (event) {
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
+  case 8:// BACKSPACE (Falls through)
   case 13:// ENTER (Falls through)
   case 46:// NOTES DELETE
     if ($('notes').classname !== 'hidden') backupUndoNotes();
     break;
-
-  // default:
-  //   if ($('notes').classname !== 'hidden') colorSaveNotesButton();
   }
 });
 
@@ -4391,17 +4382,16 @@ window.onload = function () {
   $('btn-redo-notes').onclick = btnRedoNotes;
   $('btn-clear-notes').onclick = btnClearNotes;
   $('btn-delete-notes').onclick = btnDeleteNotes;
+
   $('lst-notes').onclick = function() {
     $('lst-notes').readOnly = false;
-  }
-  
+  }  
   $('lst-notes').addEventListener('paste', function() {
     setTimeout(function() {
       if (notes.length > 0) backupUndoNotes(); 
     }, 100);
   });
-  // $('lst-notes').oninput = backupUndoNotes;  
-  // $('lst-notes').oninput = writeNote; 
+  $('lst-notes').oninput = colorSaveNotesButton; 
   
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
@@ -4416,7 +4406,6 @@ window.onload = function () {
     btnLoadNotes();
   } else {
     backupUndoNotes();
-    // colorUndoNotesButton();
   }
   
   if (document.cookie.indexOf('TRICORDER') !== -1) {
