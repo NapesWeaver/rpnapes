@@ -1730,6 +1730,64 @@ function getUserIP(onNewIP) {
   };
 }
 
+/*
+ https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
+*/
+var startTime;
+var elapsedTime = 0;
+var timerInterval;
+
+function timeToString(time) {
+  var diffInHrs = time / 3600000;
+  var hh = Math.floor(diffInHrs);
+
+  var diffInMin = (diffInHrs - hh) * 60;
+  var mm = Math.floor(diffInMin);
+
+  var diffInSec = (diffInMin - mm) * 60;
+  var ss = Math.floor(diffInSec);
+
+  var diffInMs = (diffInSec - ss) * 100;
+  var ms = Math.floor(diffInMs);
+
+  var formattedMM = mm.toString().padStart(2, '0');
+  var formattedSS = ss.toString().padStart(2, '0');
+  var formattedMS = ms.toString().padStart(2, '0');
+
+  return formattedMM + ':' + formattedSS + ':' + formattedMS;
+}
+
+function stopwatchPrint(txt) {
+  $('txt-input').value = txt;
+}
+
+function stopwatchStart() {  
+
+  if (elapsedTime === 0) {
+    stack.pop();
+    inputText('Press DEL key to reset stopwatch');
+    enterInput();
+    updateDisplay();
+  
+    startTime = Date.now() - elapsedTime;
+    timerInterval = setInterval(function printTime() {
+      elapsedTime = Date.now() - startTime;
+      stopwatchPrint(timeToString(elapsedTime));
+    }, 10);
+  }
+}
+
+function stopwatchPause() {
+  clearInterval(timerInterval);
+}
+
+function stopwatchReset() {
+  clearInterval(timerInterval);
+  elapsedTime = 0;
+  $('txt-input').value = '00:00:00';
+  $('txt-input').select();
+}
+
 function help(command) {
   var commandArray = command.split(' ');
   
@@ -3095,25 +3153,50 @@ var notes = [];
 var backupNotes = [];
 var restoreNotes = [];
 
-function btnCopyNotes() {
-  //document.execCommand('copy');
-  navigator.clipboard.writeText(getSelectedText('lst-notes'));
+function colorSaveNotesButton() {
+  var index = getCookie('NOTES').indexOf('=') + 1;
+  var cookieValue = getCookie('NOTES').substr(index);
+  var tmpNotes = encodeSpecialChar($('lst-notes').value);
+  var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
+
+  cookieValue = cookieValue.replace(/_/g, ' ').trim();
+  notesValue = notesValue.replace(/_/g, ' ').trim();
+
+  if (cookieValue === notesValue) {
+    $('btn-save-notes').style.color = '#919191';
+  } else {
+    $('btn-save-notes').style.color = '#000000';
+  }
 }
 
-function btnPasteNotes() {
-  backupUndoNotes();
+function colorUndoNotesButton() {
+  if (backupNotes.length > 0) {
+    $('btn-undo-notes').style.color = '#01c401';
+  } else {
+    $('btn-undo-notes').style.color = '#919191';
+  }
+  if (restoreNotes.length > 0) {
+    $('btn-redo-notes').style.color = '#01c401';
+  } else {
+    $('btn-redo-notes').style.color = '#919191';
+  }
+  colorSaveNotesButton();
+}
 
-  if (/*@cc_on!@*/false || !!document.documentMode) {// IE
-    insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
-  }
-  else {
-    //insertAtCursor($("lst-notes"), "\nNot supported by this browser.\n");
-    alert('Not supported by this browser.');
-  }
+function writeNote() {
+  if (backupNotes.length > 1) backupNotes.pop();
+  backupUndoNotes();
+}
+
+function backupUndoNotes() {
+  backupNotes.push(nestArrayByBrowser(notes));
+  notes = $('lst-notes').value.split('\n');
+  restoreNotes.length = 0;
+  colorUndoNotesButton();
 }
 
 function btnUndoNotes() {
-  if (backupNotes.length > 1) {
+  if (backupNotes.length > 0) {
     restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
@@ -3130,40 +3213,23 @@ function btnRedoNotes() {
   colorUndoNotesButton();
 }
 
-function backupUndoNotes() {
-  backupNotes.push(nestArrayByBrowser(notes));
+function btnClearNotes() {
+  backupUndoNotes();
+  $('lst-notes').value = '';
   notes = $('lst-notes').value.split('\n');
-  restoreNotes.length = 0;
-  colorUndoNotesButton();
 }
 
-function colorUndoNotesButton() {
-  if (backupNotes.length > 1) {
-    $('btn-undo-notes').style.color = '#01c401';
-  } else {
-    $('btn-undo-notes').style.color = '#919191';
-  }
-  if (restoreNotes.length >= 1) {
-    $('btn-redo-notes').style.color = '#01c401';
-  } else {
-    $('btn-redo-notes').style.color = '#919191';
-  }
-  colorSaveNotesButton();
+function btnCopyNotes() {
+  //document.execCommand('copy');
+  navigator.clipboard.writeText(getSelectedText('lst-notes'));
 }
 
-function colorSaveNotesButton() {
-  var index = getCookie('NOTES').indexOf('=') + 1;
-  var cookieValue = getCookie('NOTES').substr(index);
-  var tmpNotes = encodeSpecialChar($('lst-notes').value);
-  var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
-  // This step is needed for Chrome and IE
-  cookieValue = cookieValue.replace(/_/g, ' ').trim();
-  notesValue = notesValue.replace(/_/g, ' ').trim();
-
-  if (cookieValue === notesValue) {
-    $('btn-save-notes').style.color = '#919191';
+function btnPasteNotes() {
+  backupUndoNotes();
+  if (/*@cc_on!@*/false || !!document.documentMode) {// IE
+    insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
   } else {
-    $('btn-save-notes').style.color = '#000000';
+    alert('Not supported by this browser.');
   }
 }
 
@@ -3192,12 +3258,6 @@ function btnLoadNotes() {
   $('lst-notes').scrollTop = $('lst-notes').scrollHeight;
 }
 
-function btnClearNotes() {
-  backupUndoNotes();
-  $('lst-notes').value = '';
-  notes = $('lst-notes').value.split('\n');
-}
-
 function btnDeleteNotes() {
   backupUndoNotes();
   var txtField = $('lst-notes').value;
@@ -3224,64 +3284,6 @@ function updateDisplayNotes() {
   if (notes.length === 1 && notes[0] === '') {
     $('lst-notes').value = '';
   }
-}
-
-/*
- https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
-*/
-var startTime;
-var elapsedTime = 0;
-var timerInterval;
-
-function timeToString(time) {
-  var diffInHrs = time / 3600000;
-  var hh = Math.floor(diffInHrs);
-
-  var diffInMin = (diffInHrs - hh) * 60;
-  var mm = Math.floor(diffInMin);
-
-  var diffInSec = (diffInMin - mm) * 60;
-  var ss = Math.floor(diffInSec);
-
-  var diffInMs = (diffInSec - ss) * 100;
-  var ms = Math.floor(diffInMs);
-
-  var formattedMM = mm.toString().padStart(2, '0');
-  var formattedSS = ss.toString().padStart(2, '0');
-  var formattedMS = ms.toString().padStart(2, '0');
-
-  return formattedMM + ':' + formattedSS + ':' + formattedMS;
-}
-
-function stopwatchPrint(txt) {
-  $('txt-input').value = txt;
-}
-
-function stopwatchStart() {  
-
-  if (elapsedTime === 0) {
-    stack.pop();
-    inputText('Press DEL key to reset stopwatch');
-    enterInput();
-    updateDisplay();
-  
-    startTime = Date.now() - elapsedTime;
-    timerInterval = setInterval(function printTime() {
-      elapsedTime = Date.now() - startTime;
-      stopwatchPrint(timeToString(elapsedTime));
-    }, 10);
-  }
-}
-
-function stopwatchPause() {
-  clearInterval(timerInterval);
-}
-
-function stopwatchReset() {
-  clearInterval(timerInterval);
-  elapsedTime = 0;
-  $('txt-input').value = '00:00:00';
-  $('txt-input').select();
 }
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
@@ -4023,27 +4025,11 @@ document.addEventListener('keyup', function (event) {
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
-
-  // case 9:// TAB (Falls through)
-  // case 16:// SHIFT (Falls through)
-  // case 19:// PAUSE (Falls through)
-  // case 20:// CAP LOCK (Falls through)
-  // case 32:// SPACE (Falls through)
-  // case 33:// PAGE UP (Falls through)
-  // case 34:// PAGE DOWN (Falls through)
-  // case 35:// END (Falls through)
-  // case 36:// HOME (Falls through)
-  // case 45:// INSERT (Falls through)
-  // case 91:// WINDOWS KEY (Falls through)
-  // case 144:// NUM LOCK (Falls through)
-  // case 145:// SCROLL LOCK
-  //   return;
-
-  // case 8:// BACKSPACE (Falls through)
-  // case 13:// ENTER (Falls through)
-  // case 46:// NOTES DELETE
-  //   if ($('notes').classname !== 'hidden') backupUndoNotes();
-  //   break;
+  //case 8:// BACKSPACE (Falls through)
+  case 13:// ENTER (Falls through)
+  case 46:// NOTES DELETE
+    if ($('notes').classname !== 'hidden') backupUndoNotes();
+    break;
 
   // default:
   //   if ($('notes').classname !== 'hidden') colorSaveNotesButton();
@@ -4409,22 +4395,25 @@ window.onload = function () {
   //     if (notes.length > 0) backupUndoNotes(); 
   //   }, 100);
   // });
-  $('lst-notes').oninput = backupUndoNotes;  
-
+  // $('lst-notes').oninput = backupUndoNotes;  
+  $('lst-notes').oninput = writeNote; 
+  
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
   
   for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener('click', hapticResponse, false);
   }
-
+  
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lst-notes').value = '';
     btnLoadNotes();
   } else {
-    backupUndoNotes();
+    // backupUndoNotes();
+    colorUndoNotesButton();
   }
+  
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   } else {
@@ -4442,9 +4431,3 @@ window.onload = function () {
   }
   $('txt-input').readOnly = false;
 };
-function testChange() {
-  console.log('testChange');
-  setTimeout(function() {
-    if (notes.length > 0) backupUndoNotes(); 
-  }, 100);
-}
