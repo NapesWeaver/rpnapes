@@ -4030,7 +4030,6 @@ document.addEventListener('keyup', function (event) {
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
-  // case 8:// BACKSPACE (Falls through)
   case 13:// ENTER (Falls through)
   case 46:// NOTES DELETE
     if ($('notes').classname !== 'hidden') backupUndoNotes();
@@ -4395,11 +4394,12 @@ window.onload = function () {
   $('lst-notes').onclick = function() {
     $('lst-notes').readOnly = false;
   }
-  // $('lst-notes').addEventListener('paste', function() {
-  //   setTimeout(function() {
-  //     if (notes.length > 0) backupUndoNotes(); 
-  //   }, 100);
-  // });
+  
+  $('lst-notes').addEventListener('paste', function() {
+    setTimeout(function() {
+      if (notes.length > 0) backupUndoNotes(); 
+    }, 100);
+  });
   // $('lst-notes').oninput = backupUndoNotes;  
   // $('lst-notes').oninput = writeNote; 
   
