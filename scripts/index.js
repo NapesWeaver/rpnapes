@@ -73,9 +73,9 @@ function NumberObject(soul, realPart, imaginary, units, timeStamp) {
   this.imaginary = imaginary;
   this.units = units;
   this.timeStamp = timeStamp;  
-  // if (isNaN(this.realPart) && isNaN(this.imaginary)) {
-  //   this.units = 'null';
-  // }
+  if (isNaN(this.realPart) && isNaN(this.imaginary)) {
+    this.units = 'null';
+  }
 }
 NumberObject.prototype.setSoul = function (s) {
   this.soul = s;
@@ -2775,7 +2775,7 @@ function extractReal(tmpArray) {
   
   if (radix === 10) {
     // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number && not a numbered string
-    if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d+[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray) && !/[0-9]+\s*\w+\s+\w+/g.test(tmpArray)) {
+    if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray) && !/^[0-9]*[.]?[0-9]*[ ]*[a-df-ik-zA-Z0-9]+[ ]+[a-zA-Z0-9]+/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
     }
@@ -2807,7 +2807,7 @@ function extractImaginary(tmpArray) {
   var tmpImaginary = '';  
 
   if (radix === 10) {
-    tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-9]+[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
+    tmpImaginary += tmpArray.match(/[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j/);
     
     // Remove any space following a '+' or '-'
     if (tmpImaginary.charAt(1) === ' ') {
