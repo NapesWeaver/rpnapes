@@ -773,6 +773,7 @@ function btnClear() {
   $('txt-input').value = '';
   $('lst-stack').value = '';
   stack.length = 0;
+  colorSaveButton();
   $('txt-input').focus();
 }
 
@@ -2609,7 +2610,9 @@ function prettyPrint(i, content) {
 
 function colorSaveButton() {
   var index = 0;
-  
+  console.log('getCookie(STACK).substr(index).trim()', getCookie('STACK').substr(index).trim());
+  console.log('nestArrayByBrowser(stack).trim()', nestArrayByBrowser(stack).trim());
+  console.log('true???:', getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim())
   index = getCookie('STACK').indexOf('=') + 1;
   if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
     $('btn-save').style.color = '#000000';
