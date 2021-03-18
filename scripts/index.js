@@ -3189,10 +3189,11 @@ function colorUndoNotesButton() {
 }
 
 function backupUndoNotes() {
-  if (notes[0] !== $('lst-notes').value.split('\n')[0]) {
+  var listNotes = $('lst-notes').value.split('\n');
+  if (notes[notes.length - 1] !== listNotes[listNotes.length -1]) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
-  notes = $('lst-notes').value.split('\n');  
+  notes = listNotes;  
   if (notes[notes.length - 1] === '') notes.pop();
 
   restoreNotes.length = 0;
@@ -3242,7 +3243,6 @@ function btnPasteNotes() {
 }
 
 function btnSaveNotes() {
-  backupUndoNotes();
   var tmpY;
   $('btn-save-notes').style.color = '#919191';
   tmpY = encodeSpecialChar($('lst-notes').value.trim());
