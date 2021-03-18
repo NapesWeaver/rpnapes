@@ -4280,6 +4280,7 @@ window.onload = function () {
     }
   })();
 
+  $('menu-haptic-li').classList.add('strikethrough');
   $('menu-sound-li').classList.add('strikethrough');
   
   $('menu-help').onclick = menuHelp;

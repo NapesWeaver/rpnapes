@@ -411,10 +411,6 @@ label a {
     cursor: not-allowed;
 }
 
-#menu-haptic-li {
-    text-decoration: strike-through;
-}
-
 /****** Menu ***********************************/
 #menu-wrap {
     margin-left: 15px;
