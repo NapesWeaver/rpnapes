@@ -2549,10 +2549,7 @@ function insertText(text) {
 
 function updateDisplay() {
   $('lst-stack').value = '';  
-  // Buffer stack display
-  for (var i = 0; i < $('lst-stack').getAttribute('rows'); i++) {
-    $('lst-stack').value += ' \n';
-  }
+  unFloat();// Needed for responsive textarea
   // Print to stack display
   for (var sta in stack) {
     $('lst-stack').value += '\n';
@@ -3286,7 +3283,8 @@ function btnDeleteNotes() {
 
 function updateDisplayNotes() {
   $('lst-notes').value = '';
-
+  unFloat();// Needed for responsive textarea
+  // Print to notes display
   for (var note in notes) {
     $('lst-notes').value += decodeSpecialChar(notes[note]);
     $('lst-notes').value += '\n';
