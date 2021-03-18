@@ -1732,6 +1732,14 @@ function getUserIP(onNewIP) {
   };
 }
 
+function autoDark() {
+  var hour = new Date().getHours();
+  if (hour <= 6 || hour >= 18) {
+    $('menu-darkmode').innerHTML = 'Dark';
+    toggleDarkMode();
+  }
+}
+
 /*
  https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
 */
@@ -2610,9 +2618,6 @@ function prettyPrint(i, content) {
 
 function colorSaveButton() {
   var index = 0;
-  console.log('getCookie(STACK).substr(index).trim()', getCookie('STACK').substr(index).trim());
-  console.log('nestArrayByBrowser(stack).trim()', nestArrayByBrowser(stack).trim());
-  console.log('true???:', getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim())
   index = getCookie('STACK').indexOf('=') + 1;
   if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
     $('btn-save').style.color = '#000000';
@@ -4397,14 +4402,13 @@ window.onload = function () {
     }, 100);
   });
   $('lst-notes').oninput = colorSaveNotesButton; 
-  
+
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
   
   for (var i = 0; i < elements.length; i++) {
     elements[i].addEventListener('click', hapticResponse, false);
-  }
-  
+  }  
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lst-notes').value = '';
@@ -4412,8 +4416,7 @@ window.onload = function () {
   } else {
     backupUndoNotes();
     colorSaveNotesButton();
-  }
-  
+  }  
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   } else {
@@ -4429,5 +4432,6 @@ window.onload = function () {
     backupUndo();
     $('btn-save').style.color = '#D4D0C8';
   }
+  autoDark();
   $('txt-input').readOnly = false;
 };
