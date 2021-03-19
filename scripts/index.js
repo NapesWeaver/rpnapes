@@ -3187,21 +3187,20 @@ function colorUndoNotesButton() {
     $('btn-redo-notes').style.color = '#919191';
   }
 }
-
 function backupUndoNotes() {
   var listNotes = $('lst-notes').value.split('\n');
-  if (notes[notes.length - 1] !== listNotes[listNotes.length -1]) {
+  
+  if (notes.length !== 0 || notes[notes.length - 1] !== listNotes[listNotes.length -1]) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = listNotes;  
   if (notes[notes.length - 1] === '') notes.pop();
-
   restoreNotes.length = 0;
   colorUndoNotesButton();
 }
 
 function btnUndoNotes() {
-  if (backupNotes.length > 1) {
+  if (backupNotes.length > 0) {
     restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
