@@ -2549,7 +2549,12 @@ function insertText(text) {
 
 function updateDisplay() {
   $('lst-stack').value = '';  
-  unFloat();// Needed for responsive textarea
+  // Needed for responsive textarea
+  unFloat();
+  // Buffer stack display
+  for (var i = 0; i < $('lst-stack').getAttribute('rows') ; i++) {
+    $('lst-stack').value += ' \n';
+  }
   // Print to stack display
   for (var sta in stack) {
     $('lst-stack').value += '\n';
