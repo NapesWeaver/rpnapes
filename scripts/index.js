@@ -2283,7 +2283,6 @@ function parseEvaluation(input) {
 }
 
 function parseNested(input, symbol, prefix) {
-  console.log('input:', input);
   var inputArr = input.split('');
   var index = 0;
   var startPos = 0;
@@ -2307,7 +2306,6 @@ function parseNested(input, symbol, prefix) {
   }
   // Get nested maths
   maths = inputArr.slice(leftP + 1, rightP).join('');
-  console.log('maths:', maths);
   // Parse nested maths
   if (/[(-Φπ\w][\^√][-Φπ\w)]/.test(maths) || /[(-Φπ\w]![-Φπ\w)]*/.test(maths)) {
     maths = parseInline(maths, symbol, prefix);
@@ -2319,7 +2317,6 @@ function parseNested(input, symbol, prefix) {
     inputArr.splice(leftP, rightP - leftP + 1, maths);
   }
   input = inputArr.join('');
-  console.log('returned input:', input);
   return input;
 }
 
@@ -2347,7 +2344,7 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
   }
-  if (index === 0 || (inputArr[index] === '(' && parentheses === 0)) {
+  if (parentheses > -1 && index === 0 || (inputArr[index] === '(' && parentheses === 0)) {
     inputArr.splice(index, 0, prefix);
   } else {
     inputArr.splice(index + 1, 0, prefix);
