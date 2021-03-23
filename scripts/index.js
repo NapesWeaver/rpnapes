@@ -1515,6 +1515,30 @@ function btnNine() {
 
 //////// More Calcamatrons ///////////////////////////////////////////////////////////
 
+function linearSearch(array, key) {
+  for (var i = 0; i< array.length; i++) {
+    if (array[i] === key) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+function binarySearch(array, key) {
+  var left = 0;
+  var right = array.length - 1;
+  while (left <= right) {
+    var mid = left + Math.floor((right + left) / 2);
+    if (array[mid] === key) return mid;
+    if (array[mid] < key) {
+      left = mid + 1;
+    } else {
+      right = mid -1;
+    }
+    return -1; 
+  }
+}
+
 function averageStack() {
 }
 
@@ -2259,6 +2283,7 @@ function parseEvaluation(input) {
 }
 
 function parseNested(input, symbol, prefix) {
+  console.log('input:', input);
   var inputArr = input.split('');
   var index = 0;
   var startPos = 0;
@@ -2282,6 +2307,7 @@ function parseNested(input, symbol, prefix) {
   }
   // Get nested maths
   maths = inputArr.slice(leftP + 1, rightP).join('');
+  console.log('maths:', maths);
   // Parse nested maths
   if (/[(-Φπ\w][\^√][-Φπ\w)]/.test(maths) || /[(-Φπ\w]![-Φπ\w)]*/.test(maths)) {
     maths = parseInline(maths, symbol, prefix);
@@ -2291,8 +2317,9 @@ function parseNested(input, symbol, prefix) {
     inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
   } else {// Keep parentheses
     inputArr.splice(leftP, rightP - leftP + 1, maths);
-  }  
+  }
   input = inputArr.join('');
+  console.log('returned input:', input);
   return input;
 }
 
@@ -2339,7 +2366,7 @@ function parseInline(input, symbol, prefix) {
   return input;
 }
 
-// Passed to parseNested() and parseInline()
+// Passed to parseNested() and parseInline() as partial strings eg. 'mathsRoot('
 function mathsRoot(y, x) {
   return Math.pow(x, 1/y);
 }
@@ -3192,10 +3219,11 @@ function colorUndoNotesButton() {
     $('btn-redo-notes').style.color = '#919191';
   }
 }
+
 function backupUndoNotes() {
   var listNotes = $('lst-notes').value.split('\n');
   
-  if (notes.length !== 0 || notes[notes.length - 1] !== listNotes[listNotes.length -1]) {
+  if (listNotes.length !== 0 || notes[notes.length - 1] !== listNotes[listNotes.length -1]) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = listNotes;  
@@ -3205,7 +3233,7 @@ function backupUndoNotes() {
 }
 
 function btnUndoNotes() {
-  if (backupNotes.length > 0) {
+  if (backupNotes.length > 1) {
     restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
@@ -4383,7 +4411,6 @@ window.onload = function () {
   $('button4').onclick = button4;
   $('button5').onclick = button5;
   $('button6').onclick = button6;
-
   muteAudio(true);
 
   // Notes
