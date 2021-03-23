@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '3:40:40';
+var tStamp = '5:53:16';
 var testing = false;
 
 var stack = [];
@@ -3188,6 +3188,22 @@ var notes = [];
 var backupNotes = [];
 var restoreNotes = [];
 
+function updateDisplayNotes() {
+  $('lst-notes').value = '';
+  unFloat();// Needed for responsive textarea
+  // Print to notes display
+  for (var note in notes) {
+    $('lst-notes').value += decodeSpecialChar(notes[note]);
+    $('lst-notes').value += '\n';
+  }
+  $('lst-notes').value = $('lst-notes').value.trim();
+  $('lst-notes').value += '\n';
+
+  if (notes.length === 1 && notes[0] === '') {
+    $('lst-notes').value = '';
+  }
+}
+
 function colorSaveNotesButton() {
   var index = getCookie('NOTES').indexOf('=') + 1;
   var cookieValue = getCookie('NOTES').substr(index);
@@ -3218,15 +3234,51 @@ function colorUndoNotesButton() {
 }
 
 function backupUndoNotes() {
+  var tmpNotes = encodeSpecialChar($('lst-notes').value);
+  var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
+  var prevBackup = backupNotes[backupNotes.length - 1];
   var listNotes = $('lst-notes').value.split('\n');
-  
-  if (listNotes.length !== 0 || notes[notes.length - 1] !== listNotes[listNotes.length -1]) {
+
+  notesValue = notesValue.replace(/_/g, ' ').trim();
+  if (backupNotes.length > 0) prevBackup = prevBackup.replace(/_/g, ' ').trim();
+
+  if (notesValue !== prevBackup) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = listNotes;  
   if (notes[notes.length - 1] === '') notes.pop();
   restoreNotes.length = 0;
   colorUndoNotesButton();
+}
+
+function loadNotes() {
+  var index = 0;
+  var tmpNotes = [];
+  
+  index = getCookie('NOTES').indexOf('=') + 1;
+  try {
+    tmpNotes = splitArrayByBrowser(getCookie('NOTES').substr(index));
+    notes = notes.concat(tmpNotes);
+    if (notes[0] === '' && notes[1] === '') notes.pop();
+  } catch (err) {
+    notes.push('Load error.');
+  }
+  updateDisplayNotes();
+  $('btn-save-notes').style.color = '#919191';
+  $('lst-notes').scrollTop = $('lst-notes').scrollHeight;
+}
+
+function btnLoadNotes() {
+  backupUndoNotes();
+  loadNotes();
+}
+
+function btnSaveNotes() {
+  var tmpY;
+  $('btn-save-notes').style.color = '#919191';
+  tmpY = encodeSpecialChar($('lst-notes').value.trim());
+  notes = tmpY.split('\n');
+  storeCookie('NOTES', nestArrayByBrowser(notes));
 }
 
 function btnUndoNotes() {
@@ -3256,47 +3308,6 @@ function btnClearNotes() {
   colorSaveNotesButton();
 }
 
-function btnCopyNotes() {
-  //document.execCommand('copy');
-  navigator.clipboard.writeText(getSelectedText('lst-notes'));
-}
-
-function btnPasteNotes() {
-  backupUndoNotes();
-  if (/*@cc_on!@*/false || !!document.documentMode) {// IE
-    insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
-  } else {
-    alert('Not supported by this browser.');
-  }
-  colorSaveNotesButton();
-}
-
-function btnSaveNotes() {
-  var tmpY;
-  $('btn-save-notes').style.color = '#919191';
-  tmpY = encodeSpecialChar($('lst-notes').value.trim());
-  notes = tmpY.split('\n');
-  storeCookie('NOTES', nestArrayByBrowser(notes));
-}
-
-function btnLoadNotes() {
-  backupUndoNotes();
-  var index = 0;
-  var tmpNotes = [];
-  
-  index = getCookie('NOTES').indexOf('=') + 1;
-  try {
-    tmpNotes = splitArrayByBrowser(getCookie('NOTES').substr(index));
-    notes = notes.concat(tmpNotes);
-    if (notes[0] === '' && notes[1] === '') notes.pop();
-  } catch (err) {
-    notes.push('Load error.');
-  }
-  updateDisplayNotes();
-  $('btn-save-notes').style.color = '#919191';
-  $('lst-notes').scrollTop = $('lst-notes').scrollHeight;
-}
-
 function btnDeleteNotes() {
   var txtField = $('lst-notes').value;
   var startPos = $('lst-notes').selectionStart;
@@ -3310,20 +3321,19 @@ function btnDeleteNotes() {
   backupUndoNotes();
 }
 
-function updateDisplayNotes() {
-  $('lst-notes').value = '';
-  unFloat();// Needed for responsive textarea
-  // Print to notes display
-  for (var note in notes) {
-    $('lst-notes').value += decodeSpecialChar(notes[note]);
-    $('lst-notes').value += '\n';
-  }
-  $('lst-notes').value = $('lst-notes').value.trim();
-  $('lst-notes').value += '\n';
+function btnCopyNotes() {
+  //document.execCommand('copy');
+  navigator.clipboard.writeText(getSelectedText('lst-notes'));
+}
 
-  if (notes.length === 1 && notes[0] === '') {
-    $('lst-notes').value = '';
+function btnPasteNotes() {
+  backupUndoNotes();
+  if (/*@cc_on!@*/false || !!document.documentMode) {// IE
+    insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
+  } else {
+    alert('Not supported by this browser.');
   }
+  colorSaveNotesButton();
 }
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
@@ -4441,11 +4451,11 @@ window.onload = function () {
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lst-notes').value = '';
-    btnLoadNotes();
+    loadNotes();
   } else {
-    backupUndoNotes();
     colorSaveNotesButton();
   }  
+  backupUndoNotes();
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   } else {
