@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '5:53:16';
+var tStamp = '23:10:39';
 var testing = false;
 
 var stack = [];
@@ -3218,6 +3218,10 @@ function colorSaveNotesButton() {
   } else {
     $('btn-save-notes').style.color = '#000000';
   }
+  // console.log('backupNotes.length:', backupNotes.length);
+  // console.log('notes:', notes);
+  // notes = $('lst-notes').value.split('\n');
+  // if (notes[notes.length - 1] === '') notes.pop();  
 }
 
 function colorUndoNotesButton() {
@@ -3230,22 +3234,24 @@ function colorUndoNotesButton() {
     $('btn-redo-notes').style.color = '#01c401';
   } else {
     $('btn-redo-notes').style.color = '#919191';
-  }
+  }  
 }
 
 function backupUndoNotes() {
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
   var prevBackup = backupNotes[backupNotes.length - 1];
-  var listNotes = $('lst-notes').value.split('\n');
 
   notesValue = notesValue.replace(/_/g, ' ').trim();
   if (backupNotes.length > 0) prevBackup = prevBackup.replace(/_/g, ' ').trim();
 
   if (notesValue !== prevBackup) {
+    console.log('backup');
+    console.log('notesValue', notesValue);
+    console.log('prevBackup', prevBackup);
     backupNotes.push(nestArrayByBrowser(notes));
   }
-  notes = listNotes;  
+  notes = $('lst-notes').value.split('\n');
   if (notes[notes.length - 1] === '') notes.pop();
   restoreNotes.length = 0;
   colorUndoNotesButton();
@@ -3282,7 +3288,7 @@ function btnSaveNotes() {
 }
 
 function btnUndoNotes() {
-  if (backupNotes.length > 1) {
+  if (backupNotes.length > 0) {
     restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
@@ -3900,6 +3906,11 @@ document.addEventListener('keypress', function (event) {
   switch (key) {
   case 13:// ENTER
     if ($('rpnapes').className !== 'hidden') enterButton();
+    // if ($('rpnapes').className !== 'hidden') {
+    //   enterButton();
+    // } else {
+    //   backupUndoNotes();
+    // }
     break;
   }
 });
@@ -4074,7 +4085,10 @@ document.addEventListener('keyup', function (event) {
     if ($('notes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      backupUndoNotes();
+      // backupUndoNotes();
+      setTimeout(function() {
+        if (notes.length > 0) backupUndoNotes(); 
+      }, 10);
     }
     break;
   }
