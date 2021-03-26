@@ -4088,7 +4088,7 @@ document.addEventListener('keyup', function (event) {
       // backupUndoNotes();
       setTimeout(function() {
         if (notes.length > 0) backupUndoNotes(); 
-      }, 10);
+      }, 100);
     }
     break;
   }
