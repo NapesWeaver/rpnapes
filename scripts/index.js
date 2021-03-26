@@ -3246,7 +3246,8 @@ function backupUndoNotes() {
   if (backupNotes.length > 0) prevBackup = prevBackup.replace(/_/g, ' ').trim();
 
   if (notesValue !== prevBackup) {
-    console.log('backup');
+    // console.log('backup');
+    alert('backup');
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = $('lst-notes').value.split('\n');
