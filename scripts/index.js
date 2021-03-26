@@ -3240,8 +3240,7 @@ function backupUndoNotes() {
 
   notesValue = notesValue.replace(/_/g, ' ').trim();
   if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
-  
-  if (notesValue !== prevBackup) {
+  if (notesValue !== prevBackup || backupNotes.length === 1) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = $('lst-notes').value.split('\n');
@@ -4048,10 +4047,10 @@ document.addEventListener('keyup', function (event) {
 
   switch (key) {
   case 8:// BACKSPACE
-    if ($('notes').className !== 'hidden') backupUndoNotes();
+    if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
   case 13:// ENTER
-    if ($('notes').className !== 'hidden') backupUndoNotes();
+    if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
   case 17:// CTRL
     ctrlHeld = false;
@@ -4073,10 +4072,10 @@ document.addEventListener('keyup', function (event) {
     }
     break;  
   case 46:// DELETE
-    if ($('notes').className !== 'hidden') backupUndoNotes();
+    if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
   // case 229:// ANDROID BACKSPACE
-  //   if ($('notes').className !== 'hidden') backupUndoNotes();
+  //   if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
   //   break;
   }
 });
