@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '23:29:48';
+var tStamp = '23:45:48';
 var testing = false;
 
 var stack = [];
@@ -3246,7 +3246,7 @@ function backupUndoNotes() {
   if (backupNotes.length > 0) prevBackup = prevBackup.replace(/_/g, ' ').trim();
 
   if (notesValue !== prevBackup) {
-    // console.log('backup');
+    console.log('backup');
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = $('lst-notes').value.split('\n');
@@ -3286,7 +3286,7 @@ function btnSaveNotes() {
 }
 
 function btnUndoNotes() {
-  if (backupNotes.length > 0) {
+  if (backupNotes.length > 1) {
     restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
@@ -4052,9 +4052,6 @@ document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
   
   switch (key) {
-  case 13:// ENTER
-    if ($('notes').className !== 'hidden') backupUndoNotes();
-    break;
   case 17:// CTRL
     ctrlHeld = false;
     break;
@@ -4074,10 +4071,10 @@ document.addEventListener('keyup', function (event) {
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
-  case 229:// ANDROID BACKSPACE (Falls through)
   case 8:// BACKSPACE (Falls through)
-  //case 13:// ENTER (Falls through)
+  case 13:// ENTER (Falls through)
   case 46:// DELETE
+  case 229:// ANDROID BACKSPACE (Falls through)
     if ($('notes').className !== 'hidden') {
       // if (!event) { event = window.event; }
       // event.preventDefault ? event.preventDefault() : (event.returnValue = false);
