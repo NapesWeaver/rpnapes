@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '23:57:32';
+var tStamp = '00:03:00';
 var testing = false;
 
 var stack = [];
@@ -4050,7 +4050,8 @@ document.addEventListener('keydown', function (event) {
 
 document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
-  
+  console.log('e.keyCode:', event.keyCode);
+  alert('e.keyCode: ' + event.keyCode);
   switch (key) {
   case 8:// BACKSPACE
     if ($('notes').className !== 'hidden') backupUndoNotes();
