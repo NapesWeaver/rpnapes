@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '5:53:16';
+var tStamp = '23:29:48';
 var testing = false;
 
 var stack = [];
@@ -4052,6 +4052,9 @@ document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
   
   switch (key) {
+  case 13:// ENTER
+    if ($('notes').className !== 'hidden') backupUndoNotes();
+    break;
   case 17:// CTRL
     ctrlHeld = false;
     break;
@@ -4073,7 +4076,7 @@ document.addEventListener('keyup', function (event) {
     break;
   case 229:// ANDROID BACKSPACE (Falls through)
   case 8:// BACKSPACE (Falls through)
-  case 13:// ENTER (Falls through)
+  //case 13:// ENTER (Falls through)
   case 46:// DELETE
     if ($('notes').className !== 'hidden') {
       // if (!event) { event = window.event; }
