@@ -3218,10 +3218,6 @@ function colorSaveNotesButton() {
   } else {
     $('btn-save-notes').style.color = '#000000';
   }
-  // console.log('backupNotes.length:', backupNotes.length);
-  // console.log('notes:', notes);
-  // notes = $('lst-notes').value.split('\n');
-  // if (notes[notes.length - 1] === '') notes.pop();  
 }
 
 function colorUndoNotesButton() {
@@ -3243,10 +3239,9 @@ function backupUndoNotes() {
   var prevBackup = backupNotes[backupNotes.length - 1];
 
   notesValue = notesValue.replace(/_/g, ' ').trim();
-  if (backupNotes.length > 0) prevBackup = prevBackup.replace(/_/g, ' ').trim();
-
+  if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
+  
   if (notesValue !== prevBackup) {
-    // console.log('backup');
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = $('lst-notes').value.split('\n');
@@ -4050,6 +4045,7 @@ document.addEventListener('keydown', function (event) {
 
 document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
+
   switch (key) {
   case 8:// BACKSPACE
     if ($('notes').className !== 'hidden') backupUndoNotes();
@@ -4079,9 +4075,9 @@ document.addEventListener('keyup', function (event) {
   case 46:// DELETE
     if ($('notes').className !== 'hidden') backupUndoNotes();
     break;
-  case 4:// ANDROID BACKSPACE
-    if ($('notes').className !== 'hidden') backupUndoNotes();
-    break;
+  // case 229:// ANDROID BACKSPACE
+  //   if ($('notes').className !== 'hidden') backupUndoNotes();
+  //   break;
   }
 });
 
