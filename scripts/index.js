@@ -4050,8 +4050,6 @@ document.addEventListener('keydown', function (event) {
 
 document.addEventListener('keyup', function (event) {
   var key = event.keyCode || event.charCode;
-  // console.log('e.keyCode:', event.keyCode);
-  // alert('e.keyCode: ' + event.keyCode);
   switch (key) {
   case 8:// BACKSPACE
     if ($('notes').className !== 'hidden') backupUndoNotes();
@@ -4081,8 +4079,8 @@ document.addEventListener('keyup', function (event) {
   case 46:// DELETE
     if ($('notes').className !== 'hidden') backupUndoNotes();
     break;
-  case 229:// ANDROID BACKSPACE
-    // if ($('notes').className !== 'hidden') backupUndoNotes();
+  case 4:// ANDROID BACKSPACE
+    if ($('notes').className !== 'hidden') backupUndoNotes();
     break;
   }
 });
