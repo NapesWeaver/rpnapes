@@ -4046,7 +4046,8 @@ document.addEventListener('keydown', function (event) {
 });
 
 document.addEventListener('keyup', function (event) {
-  alert('event: ' + event);
+  //console.log('event: ', event.key);
+  alert('event.key ' + event.key);
   switch (event.key) {
   case 'Backspace':// BACKSPACE
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
