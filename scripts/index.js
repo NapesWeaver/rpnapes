@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '00:03:00';
+var tStamp = '03:57:00';
 var testing = false;
 
 var stack = [];
@@ -3190,7 +3190,8 @@ var restoreNotes = [];
 
 function updateDisplayNotes() {
   $('lst-notes').value = '';
-  unFloat();// Needed for responsive textarea
+  // Needed for responsive textarea
+  unFloat();
   // Print to notes display
   for (var note in notes) {
     $('lst-notes').value += decodeSpecialChar(notes[note]);
@@ -3240,11 +3241,13 @@ function backupUndoNotes() {
 
   notesValue = notesValue.replace(/_/g, ' ').trim();
   if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
+
   if (notesValue !== prevBackup || backupNotes.length === 1) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = $('lst-notes').value.split('\n');
   if (notes[notes.length - 1] === '') notes.pop();
+  
   restoreNotes.length = 0;
   colorUndoNotesButton();
 }
@@ -4043,40 +4046,36 @@ document.addEventListener('keydown', function (event) {
 });
 
 document.addEventListener('keyup', function (event) {
-  var key = event.keyCode || event.charCode;
-
-  switch (key) {
-  case 8:// BACKSPACE
+ 
+  switch (event.key) {
+  case 'Backspace':// BACKSPACE
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
-  case 13:// ENTER
+  case 'Enter':// ENTER
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
-  case 17:// CTRL
+  case 'Control':// CTRL
     ctrlHeld = false;
     break;
-  case 18:// ALT
+  case 'Alt':// ALT
     altHeld = false; 
     break;
-  case 27:// ESC
+  case 'Escape':// ESC
     if (!event) { event = window.event; }
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     btnXoff();
     break;
-  case 37:// LEFT ARROW (Falls through)
-  case 38:// UP ARROW (Falls through)
-  case 39:// RIGHT ARROW (Falls through)
-  case 40:// DOWN ARROW
+  case 'ArrowLeft':// ARROW LEFT (Falls through)
+  case 'ArrowUp':// ARROW UP (Falls through)
+  case 'ArrowRight':// ARROW RIGHT (Falls through)
+  case 'ArrowDown':// ARROW DOWN
     if ($('rpnapes').className !== 'hidden' && twig.health > 0) {      
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;  
-  case 46:// DELETE
+  case 'Delete':// DELETE
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
-  // case 229:// ANDROID BACKSPACE
-  //   if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
-  //   break;
   }
 });
 
