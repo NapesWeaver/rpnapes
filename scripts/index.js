@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '14:41:56';
+var tStamp = '14:45:56';
 var testing = false;
 
 var stack = [];
@@ -4084,7 +4084,7 @@ document.addEventListener('keydown', function (event) {
   }
 });
 
-$('notes').addEventListener('keyup', function (event) {
+$('lst-notes').addEventListener('keyup', function (event) {
   alert(event.key);
   switch (event.key) {
   case 'Backspace':// BACKSPACE
