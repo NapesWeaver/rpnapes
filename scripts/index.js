@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '14:32:38';
+var tStamp = '14:35:12';
 var testing = false;
 
 var stack = [];
@@ -3936,7 +3936,7 @@ document.addEventListener('click', function (evt) {
 
 document.addEventListener('keypress', function (event) {
   var key = event.keyCode || event.charCode;
-  alert(event.key);
+  
   switch (key) {
   case 13:// ENTER
     if ($('rpnapes').className !== 'hidden') enterButton();
@@ -4085,7 +4085,7 @@ document.addEventListener('keydown', function (event) {
 });
 
 document.addEventListener('keyup', function (event) {
-  
+  alert(event.key);
   switch (event.key) {
   case 'Backspace':// BACKSPACE
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
