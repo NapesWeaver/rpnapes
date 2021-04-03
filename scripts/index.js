@@ -3193,8 +3193,8 @@ function updateDisplayNotes() {
   // Needed for responsive textarea
   unFloat();
   // Print to notes display
-  for (var note in notes) {
-    $('lst-notes').value += decodeSpecialChar(notes[note]);
+  for (var n in notes) {
+    $('lst-notes').value += decodeSpecialChar(notes[n]);
     $('lst-notes').value += '\n';
   }
   $('lst-notes').value = $('lst-notes').value.trim();
@@ -3221,8 +3221,21 @@ function colorSaveNotesButton() {
   }
 }
 
+// function colorUndoNotesButton() {
+//   if (backupNotes.length > 1) {
+//     $('btn-undo-notes').style.color = '#01c401';
+//   } else {
+//     $('btn-undo-notes').style.color = '#919191';
+//   }
+//   if (restoreNotes.length > 0) {
+//     $('btn-redo-notes').style.color = '#01c401';
+//   } else {
+//     $('btn-redo-notes').style.color = '#919191';
+//   }  
+// }
 function colorUndoNotesButton() {
   if (backupNotes.length > 1) {
+  // if (backupNotes.length > 2) {
     $('btn-undo-notes').style.color = '#01c401';
   } else {
     $('btn-undo-notes').style.color = '#919191';
@@ -3232,35 +3245,55 @@ function colorUndoNotesButton() {
   } else {
     $('btn-redo-notes').style.color = '#919191';
   }  
+  colorSaveNotesButton();
 }
 
-function backupUndoNotes() {
-  var tmpNotes = encodeSpecialChar($('lst-notes').value);
-  var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
-  var prevBackup = backupNotes[backupNotes.length - 1];
+// function backupUndoNotes() {
+//   var tmpNotes = encodeSpecialChar($('lst-notes').value);
+//   var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
+//   var prevBackup = backupNotes[backupNotes.length - 1];
 
-  notesValue = notesValue.replace(/_/g, ' ').trim();
-  if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
+//   notesValue = notesValue.replace(/_/g, ' ').trim();
+//   if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
 
-  if (notesValue !== prevBackup || backupNotes.length === 1) {
-    backupNotes.push(nestArrayByBrowser(notes));
-  }
-  notes = $('lst-notes').value.split('\n');
-  if (notes[notes.length - 1] === '') notes.pop();
+//   if (notesValue !== prevBackup || backupNotes.length === 1) {
+//     backupNotes.push(nestArrayByBrowser(notes));
+//   }
+//   notes = $('lst-notes').value.split('\n');
+//   if (notes[notes.length - 1] === '') notes.pop();
   
+//   restoreNotes.length = 0;
+//   colorUndoNotesButton();
+// }
+function backupUndoNotes() {
+  backupNotes.push(nestArrayByBrowser(notes));
+  notes = $('lst-notes').value.split('\n');
   restoreNotes.length = 0;
   colorUndoNotesButton();
 }
 
+// function loadNotes() {
+//   var index = 0;
+//   var tmpNotes = [];
+  
+//   index = getCookie('NOTES').indexOf('=') + 1;
+//   try {
+//     tmpNotes = splitArrayByBrowser(getCookie('NOTES').substr(index));
+//     notes = notes.concat(tmpNotes);
+//     if (notes[0] === '' && notes[1] === '') notes.pop();
+//   } catch (err) {
+//     notes.push('Load error.');
+//   }
+//   updateDisplayNotes();
+//   $('btn-save-notes').style.color = '#919191';
+//   $('lst-notes').scrollTop = $('lst-notes').scrollHeight;
+// }
 function loadNotes() {
   var index = 0;
-  var tmpNotes = [];
   
   index = getCookie('NOTES').indexOf('=') + 1;
   try {
-    tmpNotes = splitArrayByBrowser(getCookie('NOTES').substr(index));
-    notes = notes.concat(tmpNotes);
-    if (notes[0] === '' && notes[1] === '') notes.pop();
+    notes = splitArrayByBrowser(getCookie('NOTES').substr(index));
   } catch (err) {
     notes.push('Load error.');
   }
@@ -3275,21 +3308,22 @@ function btnLoadNotes() {
 }
 
 function btnSaveNotes() {
-  var tmpY;
+  var tmpNotes;
   $('btn-save-notes').style.color = '#919191';
-  tmpY = encodeSpecialChar($('lst-notes').value.trim());
-  notes = tmpY.split('\n');
+  tmpNotes = encodeSpecialChar($('lst-notes').value.trim());
+  notes = tmpNotes.split('\n');
   storeCookie('NOTES', nestArrayByBrowser(notes));
 }
 
 function btnUndoNotes() {
   if (backupNotes.length > 1) {
+  // if (backupNotes.length > 2) {
     restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
   }
   colorUndoNotesButton();
-  colorSaveNotesButton();
+  // colorSaveNotesButton();
 }
 
 function btnRedoNotes() {
@@ -3299,14 +3333,19 @@ function btnRedoNotes() {
     updateDisplayNotes();
   }
   colorUndoNotesButton();
-  colorSaveNotesButton();
+  // colorSaveNotesButton();
 }
 
+// function btnClearNotes() {
+//   backupUndoNotes();
+//   $('lst-notes').value = '';
+//   notes = [];
+//   colorSaveNotesButton();
+// }
 function btnClearNotes() {
   backupUndoNotes();
-  $('lst-notes').value = '';
-  notes = [];
-  colorSaveNotesButton();
+  $('lstNotes').value = '';
+  notes = $('lstNotes').value.split('\n');
 }
 
 function btnDeleteNotes() {
@@ -3334,7 +3373,7 @@ function btnPasteNotes() {
   } else {
     alert('Not supported by this browser.');
   }
-  colorSaveNotesButton();
+  // colorSaveNotesButton();
 }
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
@@ -4046,7 +4085,7 @@ document.addEventListener('keydown', function (event) {
 });
 
 document.addEventListener('keyup', function (event) {
-  
+  alert(event.key);
   switch (event.key) {
   case 'Backspace':// BACKSPACE
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
@@ -4439,7 +4478,7 @@ window.onload = function () {
       if (notes.length > 0) backupUndoNotes(); 
     }, 100);
   });
-  $('lst-notes').oninput = colorSaveNotesButton; 
+  // $('lst-notes').oninput = colorSaveNotesButton; 
 
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
@@ -4450,11 +4489,13 @@ window.onload = function () {
   // Check for cookies
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lst-notes').value = '';
-    loadNotes();
+    // loadNotes();
+    btnLoadNotes();
   } else {
-    colorSaveNotesButton();
-  }  
-  backupUndoNotes();
+    // colorSaveNotesButton();
+    backupUndoNotes();
+  }
+  // backupUndoNotes();
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   } else {
