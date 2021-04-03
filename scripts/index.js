@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '14:25:8';
+var tStamp = '14:32:38';
 var testing = false;
 
 var stack = [];
@@ -3936,7 +3936,7 @@ document.addEventListener('click', function (evt) {
 
 document.addEventListener('keypress', function (event) {
   var key = event.keyCode || event.charCode;
-
+  alert(event.key);
   switch (key) {
   case 13:// ENTER
     if ($('rpnapes').className !== 'hidden') enterButton();
@@ -3946,7 +3946,7 @@ document.addEventListener('keypress', function (event) {
 
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
-  alert(event.key);
+  
   switch (key) {
   case 8:// BACKSPACE  
     if ($('rpnapes').className !== 'hidden') {
