@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '16:07:56';
+var tStamp = '16:18:56';
 var testing = false;
 
 var stack = [];
@@ -4118,6 +4118,15 @@ document.addEventListener('keyup', function (event) {
   }
 });
 
+function onDeviceReady() {
+  // Register the event listener
+  document.addEventListener('backbutton', onBackKeyDown, false);
+}
+
+function onBackKeyDown() {
+  alert('backbutton');
+}
+
 //////// window.onload ///////////////////////////////////////////////////////////////
 
 window.onload = function () {
@@ -4513,4 +4522,5 @@ window.onload = function () {
   }
   autoDark();
   $('txt-input').readOnly = false;
+  document.addEventListener('deviceready', onDeviceReady, false);
 };
