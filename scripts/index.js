@@ -4085,7 +4085,7 @@ document.addEventListener('keydown', function (event) {
 });
 
 document.addEventListener('keyup', function (event) {
-  
+  alert(event.key);
   switch (event.key) {
   case 'Backspace':// BACKSPACE
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
@@ -4374,12 +4374,12 @@ window.onload = function () {
   $('lst-stack').style.color = '#000000';// noscript warning was red ;)
   $('lst-stack').value = '';
   // Stop long tap menu on mobile
-  $('lst-stack').oncontextmenu = function(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    event.stopImmediatePropagation();
-    return false;
-  }
+  // $('lst-stack').oncontextmenu = function(event) {
+  //   event.preventDefault();
+  //   event.stopPropagation();
+  //   event.stopImmediatePropagation();
+  //   return false;
+  // }
   resizeTextarea($('lst-stack'));
   
   // Text Input
