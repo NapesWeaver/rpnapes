@@ -4118,15 +4118,6 @@ document.addEventListener('keyup', function (event) {
   }
 });
 
-function onDeviceReady() {
-  // Register the event listener
-  document.addEventListener('backbutton', onBackKeyDown, false);
-}
-
-function onBackKeyDown() {
-  alert('backbutton');
-}
-
 //////// window.onload ///////////////////////////////////////////////////////////////
 
 window.onload = function () {
@@ -4522,5 +4513,4 @@ window.onload = function () {
   }
   autoDark();
   $('txt-input').readOnly = false;
-  document.addEventListener('deviceready', onDeviceReady, false);
 };
