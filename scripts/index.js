@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '16:01:56';
+var tStamp = '16:07:56';
 var testing = false;
 
 var stack = [];
@@ -4381,9 +4381,7 @@ window.onload = function () {
     return false;
   }
   resizeTextarea($('lst-stack'));
-  
-  $('lst-stack').onclick = mobileKeyboardAllow;
-  
+    
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
   $('txt-input').readOnly = true;
