@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '14:45:56';
+var tStamp = '15:52:56';
 var testing = false;
 
 var stack = [];
@@ -2370,11 +2370,21 @@ function mathsRoot(y, x) {
 
 // Wired to HTML
 function lstStackFocus() {
-  stackFocus = true;  
+  // stackFocus = true;  
 }
 
 function txtInputFocus() {
   stackFocus = false;  
+}
+
+function onClickSelection(textarea){ 
+  // https://stackoverflow.com/questions/13650534/how-to-select-line-of-text-in-textarea
+  if (typeof textarea.selectionStart ==='undefined') return false;
+  var startPos = (textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') : 0;
+  var endPos = (textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') : textarea.value.length;
+  textarea.selectionStart = startPos + 1;
+  textarea.selectionEnd = endPos;
+  return true;  
 }
 
 function convertBase(r) {
@@ -2399,16 +2409,6 @@ function convertBase(r) {
 
 function menuHelp() {
   help('help');
-}
-
-function onClickSelection(textarea){ 
-  // https://stackoverflow.com/questions/13650534/how-to-select-line-of-text-in-textarea
-  if (typeof textarea.selectionStart ==='undefined') return false;
-  var startPos = (textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') : 0;
-  var endPos = (textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') : textarea.value.length;
-  textarea.selectionStart = startPos + 1;
-  textarea.selectionEnd = endPos;
-  return true;  
 }
 
 // Experimental
@@ -4374,12 +4374,12 @@ window.onload = function () {
   $('lst-stack').style.color = '#000000';// noscript warning was red ;)
   $('lst-stack').value = '';
   // Stop long tap menu on mobile
-  // $('lst-stack').oncontextmenu = function(event) {
-  //   event.preventDefault();
-  //   event.stopPropagation();
-  //   event.stopImmediatePropagation();
-  //   return false;
-  // }
+  $('lst-stack').oncontextmenu = function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    return false;
+  }
   resizeTextarea($('lst-stack'));
   
   // Text Input
