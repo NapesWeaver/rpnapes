@@ -2806,10 +2806,9 @@ function decodeSpecialChar(tmpString) {
 // Extract Real component from 'soul' of argument
 function extractReal(tmpArray) {
   var tmpReal = '';
-  
   if (radix === 10) {
-    // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number && not a numbered string
-    if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray) && !/^[0-9]*[.]?[0-9]*[ ]*[a-df-ik-zA-Z0-9]+[ ]+[a-zA-Z0-9]+/g.test(tmpArray)) {
+    // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number
+    if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
     }
@@ -3242,7 +3241,7 @@ function backupUndoNotes() {
   notesValue = notesValue.replace(/_/g, ' ').trim();
   if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
 
-  if (notesValue !== prevBackup || backupNotes.length === 1) {
+  if (notesValue !== prevBackup) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = $('lst-notes').value.split('\n');
@@ -4455,6 +4454,7 @@ window.onload = function () {
     colorSaveNotesButton();
   }  
   backupUndoNotes();
+
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   } else {
