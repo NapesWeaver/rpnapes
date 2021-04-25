@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '04:06:00';
+var tStamp = '15:29:00';
 var testing = false;
 
 var stack = [];
@@ -907,15 +907,7 @@ function btnOff() {
   //   window.location.href = 'https://www.google.com';
   //   return false;
   // }
-  
-  //window.open('','_self').close();
-  window.open('', '_self', ''); 
-  window.close();
-  window.top.close();
-  rpnAlert('Scripts may only close windows they opened.');
-  //throw new Error();
-  window.location.href = 'https://www.google.com';
-  return false;
+  window.close('','_parent','');
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
