@@ -443,10 +443,10 @@ label a {
     
     /***** Top Level ******************/
     .menu > ul > li {
-        overflow: hidden;
         float: left;
         display: inline-block;
         position: relative;
+        overflow: hidden;
         font-size: .85em;
     }
     .menu > ul > li:hover {
