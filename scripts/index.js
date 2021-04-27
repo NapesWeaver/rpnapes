@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '15:48:00';
+var tStamp = '04:06:00';
 var testing = false;
 
 var stack = [];
@@ -896,17 +896,17 @@ function pushObjectToStack(tmpArray) {
 function btnOff() {
   monOff();
   tricorderOff();  
-  // Not working for mobile Firefox - causing browser to hang :(
+  // Not working at all for mobile Firefox - causing browser to hang :(
   if (navigator.userAgent.toLowerCase().indexOf('firefox') === -1 || !isMobile) {
+    //window.open('','_self').close();
     window.open('', '_self', ''); 
     window.close();
     window.top.close();
     rpnAlert('Scripts may only close windows they opened.');
+    //throw new Error();
     window.location.href = 'https://www.google.com';
     return false;
   }
-  rpnAlert('Scripts may only close windows they opened.');
-  window.location.href = 'https://www.google.com';
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
@@ -4435,7 +4435,7 @@ window.onload = function () {
   }  
   $('lst-notes').addEventListener('paste', function() {
     setTimeout(function() {
-      if (notes.length > 0) backupUndoNotes(); 
+      backupUndoNotes(); 
     }, 100);
   });
   $('lst-notes').oninput = colorSaveNotesButton; 
