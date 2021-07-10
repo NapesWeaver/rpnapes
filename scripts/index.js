@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '04:06:00';
+var tStamp = '17:8:11';
 var testing = false;
 
 var stack = [];
@@ -897,16 +897,20 @@ function btnOff() {
   monOff();
   tricorderOff();  
   // Not working at all for mobile Firefox - causing browser to hang :(
-  if (isChrome || !isMobile) {
-    //window.open('','_self').close();
-    window.open('', '_self', ''); 
+  //if (isChrome || !isMobile) {
+    window.open('','_self').close();
+    //open(location, '_self').close();
+    //window.open('', '_self', ''); 
+    window.open('', '_self');
     window.close();
     window.top.close();
     //throw new Error();
     //return false;
-  }
-  rpnAlert('Scripts may only close windows they opened.');
-  window.location.href = 'https://www.google.com';
+  //}
+  rpnAlert('Testing for mobile');
+  //rpnAlert('Scripts may only close windows they opened.');
+  //window.location.href = 'https://www.google.com';
+
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
@@ -1896,7 +1900,8 @@ function help(command) {
       inputText('openNotes: Open a text file into Notes.');
       break;
     case 'off':
-      inputText('off: Close browser tab or redirect to google.com');
+      //inputText('off: Close browser tab or redirect to google.com. Firefox users may go to about:config dom.allow_scripts_to_close_windows = true');
+      inputText('off: Close browser tab or redirect to google.com.');
       break;
     case 'print':
       inputText('print: Open printer dialoge.');
