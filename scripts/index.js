@@ -897,16 +897,16 @@ function btnOff() {
   monOff();
   tricorderOff();  
   // Not working at all for mobile Firefox - causing browser to hang :(
-  if (navigator.userAgent.toLowerCase().indexOf('firefox') === -1 || !isMobile) {
+  if (isChrome || !isMobile) {
     //window.open('','_self').close();
     window.open('', '_self', ''); 
     window.close();
     window.top.close();
-    rpnAlert('Scripts may only close windows they opened.');
     //throw new Error();
-    window.location.href = 'https://www.google.com';
-    return false;
+    //return false;
   }
+  rpnAlert('Scripts may only close windows they opened.');
+  window.location.href = 'https://www.google.com';
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
