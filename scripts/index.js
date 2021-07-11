@@ -899,13 +899,13 @@ function btnOff() {
   // Not working at all for mobile Firefox - causing browser to hang :(
   //if (isChrome || !isMobile) {
     window.open('','_self').close();
-    open(location, '_self').close();
-    window.open('', '_self', ''); 
-    window.open('', '_self');
-    window.close();
+    //open(location, '_self').close();
+    //window.open('', '_self', ''); 
+    //window.open('', '_self');
+    //window.close();
     window.top.close();
     //throw new Error();
-    return false;
+    //return false;
   //}
   rpnAlert('Testing for mobile');
   //rpnAlert('Scripts may only close windows they opened.');
