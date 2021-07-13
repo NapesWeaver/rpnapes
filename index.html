@@ -38,17 +38,17 @@
             <nav class="menu">
               <ul class="clearfix">
                 <li class="haptic-response">
-                  <a href="#">File</a>
+                  <a>File</a>
                   <ul class="sub-menu">
                     <li><label id="open" title="Open a file"><input type="file" id="open-file" class="hidden"/><span id="menu-open">Open</span></label></li>
-                    <li><a class="google" href="#" title="Go to Google" onclick="internetSearch('https\:\/\/www.google.com/search?q=', $('txt-input').value.trim())"><span class="g-color">G</span><span class="o-color">o</span><span class="o2-color">o</span><span class="g2-color">g</span><span class="l-color">l</span><span class="e-color">e</span></a></li>
-                    <li><a href="#" title="Go to YouTube" onclick="internetSearch('https\:\/\/www.youtube.com/results?search_query=', $('txt-input').value.trim())"><span class="menu-you-tube">YouTube</span></a></li>
-                    <li><a id="menu-clear" href="#" title="Clear stack and input">Clear</a></li>
-                    <li><a id="menu-load" href="#" title="Load stack">Load</a></li>
-                    <li><a id="menu-save" href="#" title="Save to stack">Save</a></li>
-                    <li><a href="#" title="Save as a .txt file" onclick="backupUndo(); if ($('txt-input').value.trim() !== '') {saveFile($('txt-input').value.trim(), true);} else if (stack[stack.length - 1]) {saveFile(stack[stack.length - 1].soul, true); stack.pop();} else {saveFile('', true)} $('txt-input').value = ''; updateDisplay()">SaveAs</a></li>
-                    <li><a id="menu-print" href="#" title="Open printer dialog">Print</a></li>
-                    <li><a id="menu-off" href="#" title="Close tab or redirect to google.com">Off</a></li>
+                    <li><a class="google" title="Go to Google" onclick="internetSearch('https\:\/\/www.google.com/search?q=', $('txt-input').value.trim())"><span class="g-color">G</span><span class="o-color">o</span><span class="o2-color">o</span><span class="g2-color">g</span><span class="l-color">l</span><span class="e-color">e</span></a></li>
+                    <li><a title="Go to YouTube" onclick="internetSearch('https\:\/\/www.youtube.com/results?search_query=', $('txt-input').value.trim())"><span class="menu-you-tube">YouTube</span></a></li>
+                    <li><a id="menu-clear" title="Clear stack and input">Clear</a></li>
+                    <li><a id="menu-load" title="Load stack">Load</a></li>
+                    <li><a id="menu-save" title="Save to stack">Save</a></li>
+                    <li><a  title="Save as a .txt file" onclick="backupUndo(); if ($('txt-input').value.trim() !== '') {saveFile($('txt-input').value.trim(), true);} else if (stack[stack.length - 1]) {saveFile(stack[stack.length - 1].soul, true); stack.pop();} else {saveFile('', true)} $('txt-input').value = ''; updateDisplay()">SaveAs</a></li>
+                    <li><a id="menu-print" title="Open printer dialog">Print</a></li>
+                    <li><a id="menu-off" title="Close tab or redirect to google.com">Off</a></li>
                   </ul>
                 </li>
                 <li class="haptic-response">
@@ -97,9 +97,9 @@
                         <li><a href="#" title="Decimal" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;decimal</a></li>
                       </ul>
                     </li>                    
-                    <li class="haptic-response"><a id="menu-darkmode" href="#" title="Toggle dark/light mode">Dark</a></li>
+                    <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode">Dark</a></li>
                     <li class="haptic-response"><a id="menu-angle" href="#" title="Toggle degree/radian mode">deg/rad</a></li>
-                    <li id="fix"><label for="fix"><a href="#" title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
+                    <li id="fix"><label><a href="#" title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
                       <select class="haptic-response" name="fix" onchange="setFixDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
@@ -126,7 +126,7 @@
                     <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" href="#" title="Toggle haptic response">Haptic</a></li>
                     <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" href="#" title="Toggle mobile keyboard">Keyboard</a></li>
                     <li><a id="menu-notes" class="haptic-response" href="#" title="Switch to Notes">Notes</a></li>                    
-                    <li id="sci"><label for="sci"><a href="#" title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
+                    <li id="sci"><label><a href="#" title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
                       <select class="haptic-response" name="sci" onchange="setSciDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
@@ -182,13 +182,13 @@
                       </ul>
                     </li>
                     <li class="menu">
-                      <a href="#" onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('symbols').className='hidden'">Programs</a>
+                      <a onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('symbols').className='hidden'">Programs</a>
                       <ul id="programs" onclick="$('programs').className='hidden'">
-                        <li><a id="menu-fizz-buzz" href="#" title="Example calcamatron script">&nbsp;&nbsp;Fizz Buzz</a></li>
+                        <li><a id="menu-fizz-buzz" title="Example calcamatron script">&nbsp;&nbsp;Fizz Buzz</a></li>
                         <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;IP Mapper</a></li>
                         <li><a href="reference/index.html" title="Coding notes">&nbsp;&nbsp;Reference</a></li>
-                        <li><a id="menu-stopwatch" href="#" title="Start stopwatch">&nbsp;&nbsp;Stopwatch</a></li>
-                        <li><a id="menu-tricorder" href="#" title="Open Tricorder">&nbsp;&nbsp;Tricorder</a></li>
+                        <li><a id="menu-stopwatch" title="Start stopwatch">&nbsp;&nbsp;Stopwatch</a></li>
+                        <li><a id="menu-tricorder" title="Open Tricorder">&nbsp;&nbsp;Tricorder</a></li>
                         <li><a id="menu-twig" href="#" title="Game stub ;)">&nbsp;&nbsp;Twig</a></li>
                       </ul>
                     </li>
@@ -202,21 +202,21 @@
                         <li><a id="menu-carat" class="symbol-big" href="#" title="Carat"><sub class="symbol-big">&nbsp;&nbsp;&#94;</sub></a></li>
                         <li><a id="menu-solidus" href="#" title="Solidus">&nbsp;&nbsp;&#47;</a></li>
                         <li><a id="menu-asterisk" class="symbol-big" href="#" title="Times">&nbsp;&nbsp;<sub class="symbol-big">&#42;</sub></a></li>
-                        <!-- <li><a id="menu-minus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#45;</a></li> -->
-                        <li><a id="menu-minus" class="symbol-big" href="#" title="Minus">&nbsp;&nbsp;&#8722;</a></li>
-                        <li><a id="menu-plus" class="symbol-big" href="#" title="Plus">&nbsp;&nbsp;&#43;</a></li>
-                        <li><a id="menu-ohm" href="#" title="Ohms">&nbsp;&nbsp;&#937;</a></li>
-                        <li><a id="menu-heart" href="#" title="Hearts"><span class="o-color">&nbsp;&nbsp;&#9829;</span></a></li>
+                        <!-- <li><a id="menu-minus" class="symbol-big" title="Minus">&nbsp;&nbsp;&#45;</a></li> -->
+                        <li><a id="menu-minus" class="symbol-big" title="Minus">&nbsp;&nbsp;&#8722;</a></li>
+                        <li><a id="menu-plus" class="symbol-big" title="Plus">&nbsp;&nbsp;&#43;</a></li>
+                        <li><a id="menu-ohm" title="Ohms">&nbsp;&nbsp;&#937;</a></li>
+                        <li><a id="menu-heart" title="Hearts"><span class="o-color">&nbsp;&nbsp;&#9829;</span></a></li>
                       </ul>
                     </li>
-                    <li><a id="menu-help" href="#" title="Show a list of commands">&nbsp;Help&nbsp;</a></li>
+                    <li><a id="menu-help" title="Show a list of commands">&nbsp;Help&nbsp;</a></li>
                   </ul>
                 </li>
               </ul>
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="97" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified July 11, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" cols="28" rows="97" tabindex="2" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified July 12, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" size="32" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
