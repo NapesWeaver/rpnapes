@@ -71,10 +71,6 @@ select::-ms-expand {
     display: none; 
 }
 
-#menu-help {
-    cursor: help;
-}
-
 main {
     /* min-height: 274px; */
     padding-bottom: 1em;
@@ -389,11 +385,12 @@ img {
     display: inline;
 }
 
+li a,
 #open,
 .btn-xoff,
 select,
-option,
 button,
+.btn-mapped,
 input[type="button"] {
     cursor: pointer;
 }
@@ -409,6 +406,10 @@ label a {
 #menu-off,
 #btn-off {
     cursor: not-allowed;
+}
+
+#menu-help {
+    cursor: help;
 }
 
 /****** Menu ***********************************/
