@@ -1897,8 +1897,14 @@ function help(command) {
       inputText('openNotes: Open a text file into Notes.');
       break;
     case 'off':
-      //inputText('off: Close browser tab or redirect to google.com. Firefox users may go to about:config dom.allow_scripts_to_close_windows = true');
+      //inputText('off: Close browser tab or redirect to google.com.');
       inputText('off: Close browser tab or redirect to google.com.');
+      btnEnter();
+      inputText('Firefox users may go to about:config dom.allow_scripts_to_close_windows = true.');
+      btnEnter();
+      inputText('Try \'Open in new tab\' first though. Or set as home page ;)');
+      btnEnter();
+      inputText('Not currently working for browsers on mobile devices :(');
       break;
     case 'print':
       inputText('print: Open printer dialoge.');
