@@ -1898,13 +1898,13 @@ function help(command) {
       break;
     case 'off':
       //inputText('off: Close browser tab or redirect to google.com.');
-      inputText('off: Close browser tab or redirect to google.com.');
-      btnEnter();
-      inputText('Firefox users may go to about:config dom.allow_scripts_to_close_windows = true.');
-      btnEnter();
-      inputText('Try \'Open in new tab\' first though. Or set as home page ;)');
-      btnEnter();
-      inputText('Not currently working for browsers on mobile devices :(');
+      $('txt-input').value = 'off: Close browser tab or redirect to google.com.';
+      enterInput();
+      $('txt-input').value ='Firefox users may go to about:config dom.allow_scripts_to_close_windows = true.';
+      enterInput();
+      $('txt-input').value ='Try \'Open in new tab\' first though. Or set as home page ;)';
+      enterInput();
+      $('txt-input').value ='Not currently working for browsers on mobile devices :(';
       break;
     case 'print':
       inputText('print: Open printer dialoge.');
