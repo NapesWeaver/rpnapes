@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '13:27:0';
+var tStamp = '13:57:0';
 var testing = false;
 
 var stack = [];
@@ -915,6 +915,10 @@ function btnOff() {
   monOff();
   tricorderOff();
   window.open('','_self').close();
+  window.open(location, '_self').close();
+  window.close();
+  window.open('', '_self', '');
+  window.close();
   window.top.close();
   rpnAlert('Window not opened with window.open()');
   return false;
