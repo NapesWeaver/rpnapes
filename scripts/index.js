@@ -3280,6 +3280,7 @@ function btnLoadNotes() {
 }
 
 function btnSaveNotes() {
+  backupUndoNotes();
   var tmpY;
   $('btn-save-notes').style.color = '#919191';
   tmpY = encodeSpecialChar($('lst-notes').value.trim());
