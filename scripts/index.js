@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '14:10:20';
+var tStamp = '13:10:20';
 var testing = false;
 
 var stack = [];
@@ -4439,7 +4439,7 @@ window.onload = function () {
   $('btn-load-notes').onclick = btnLoadNotes;
   $('btn-save-notes').onclick = btnSaveNotes;
   $('btn-copy-notes').onclick = btnCopyNotes;
-  $('btn-paste-notes').onclick = btnPasteNotes;
+  // $('btn-paste-notes').onclick = btnPasteNotes;
   $('btn-undo-notes').onclick = btnUndoNotes;
   $('btn-redo-notes').onclick = btnRedoNotes;
   $('btn-clear-notes').onclick = btnClearNotes;
