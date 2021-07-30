@@ -199,6 +199,7 @@ main {
 #btn-load-notes,
 #btn-save-notes,
 #btn-copy-notes,
+#btn-paste-notes,
 #btn-undo-notes,
 #btn-redo-notes,
 #btn-delete-notes {
@@ -209,6 +210,7 @@ main {
 #btn-load-notes,
 #btn-save-notes,
 #btn-copy-notes,
+#btn-paste-notes,
 #btn-undo-notes,
 #btn-redo-notes,
 #btn-delete-notes {
@@ -623,6 +625,7 @@ label a {
     #btn-load-notes,
     #btn-save-notes,
     #btn-copy-notes,
+    #btn-paste-notes,
     #btn-undo-notes,
     #btn-redo-notes,
     #btn-delete-notes {

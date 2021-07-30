@@ -3333,13 +3333,21 @@ function btnCopyNotes() {
   navigator.clipboard.writeText(getSelectedText('lst-notes'));
 }
 
+// function btnPasteNotes() {
+//   backupUndoNotes();
+//   if (/*@cc_on!@*/false || !!document.documentMode) {// IE
+//     insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
+//   } else {
+//     alert('Not supported by this browser.');
+//   }
+//   colorSaveNotesButton();
+// }
+
 function btnPasteNotes() {
-  backupUndoNotes();
-  if (/*@cc_on!@*/false || !!document.documentMode) {// IE
-    insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
-  } else {
-    alert('Not supported by this browser.');
-  }
+  // Firefox only supports reading the clipboard in browser extensions, using the "clipboardRead" extension permission.
+  backupUndoNotes();  
+  var text = navigator.clipboard.readText();
+  text.then(text => { insertAtCursor($('lst-notes'), text) });
   colorSaveNotesButton();
 }
 
@@ -4431,7 +4439,7 @@ window.onload = function () {
   $('btn-load-notes').onclick = btnLoadNotes;
   $('btn-save-notes').onclick = btnSaveNotes;
   $('btn-copy-notes').onclick = btnCopyNotes;
-  // $('btn-paste-notes').onclick = btnPasteNotes;
+  $('btn-paste-notes').onclick = btnPasteNotes;
   $('btn-undo-notes').onclick = btnUndoNotes;
   $('btn-redo-notes').onclick = btnRedoNotes;
   $('btn-clear-notes').onclick = btnClearNotes;
