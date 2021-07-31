@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '21:01:20';
+var tStamp = '2:9:18';
 var testing = false;
 
 var stack = [];
@@ -3243,19 +3243,19 @@ function colorUndoNotesButton() {
 }
 
 function backupUndoNotes() {
-  var tmpNotes = encodeSpecialChar($('lst-notes').value);
+  var tmpNotes = $('lst-notes').value;
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
-  var prevBackup = backupNotes[backupNotes.length - 1];
+  var backup = backupNotes[backupNotes.length - 1];
 
   notesValue = notesValue.replace(/_/g, ' ').trim();
-  if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
+  backup = backup.replace(/_/g, ' ').trim();
   
-  if (notesValue !== prevBackup) {
+  if (notesValue !== backup) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
   notes = $('lst-notes').value.split('\n');
-  if (notes[notes.length - 1] === '') notes.pop();
-  
+  if (notes[notes.length - 1] === '') notes.pop(); 
+
   restoreNotes.length = 0;
   colorUndoNotesButton();
 }
@@ -3283,11 +3283,11 @@ function btnLoadNotes() {
 }
 
 function btnSaveNotes() {
-  backupUndoNotes();
-  var tmpY;
+  // backupUndoNotes();
+  var tmpNotes;
   $('btn-save-notes').style.color = '#919191';
-  tmpY = encodeSpecialChar($('lst-notes').value.trim());
-  notes = tmpY.split('\n');
+  tmpNotes = encodeSpecialChar($('lst-notes').value.trim());
+  notes = tmpNotes.split('\n');
   storeCookie('NOTES', nestArrayByBrowser(notes));
 }
 
@@ -4464,7 +4464,8 @@ window.onload = function () {
   } else {
     colorSaveNotesButton();
   }  
-  backupUndoNotes();
+  backupNotes.push(nestArrayByBrowser(notes));
+  colorUndoNotesButton();
 
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
