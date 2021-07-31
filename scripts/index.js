@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '13:10:20';
+var tStamp = '21:01:20';
 var testing = false;
 
 var stack = [];
@@ -329,7 +329,7 @@ function showTricorder() {
 
 function btnCopy() {
   if (shifted) {
-    btn_paste();
+    btnPaste();
   } else {
     copy();
   }  
@@ -345,19 +345,32 @@ function copy() {
   }
 }
 
-function btn_paste() {
+// function btnPaste() {
+//   backupUndo();
+
+//   if (stackFocus) {
+//     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+//   } else {
+//     if (/*@cc_on!@*/false || !!document.documentMode) {// IE
+//       insertAtCursor($('txt-input'), window.clipboardData.getData('Text'));
+//     } else {
+//       rpnAlert('This functionality prohibited by your browser.');
+//     }
+//   }
+//   $('txt-input').select();
+// }
+
+function btnPaste() {
   backupUndo();
 
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
-    if (/*@cc_on!@*/false || !!document.documentMode) {// IE
-      insertAtCursor($('txt-input'), window.clipboardData.getData('Text'));
-    } else {
-      rpnAlert('This functionality prohibited by your browser.');
-    }
+    var copiedText = navigator.clipboard.readText();
+    copiedText.then(copiedText => {
+      insertAtCursor($('txt-input'), copiedText);
+    });
   }
-  $('txt-input').select();
 }
 
 function btnXy() {
@@ -3331,6 +3344,7 @@ function btnDeleteNotes() {
 function btnCopyNotes() {
   //document.execCommand('copy');
   navigator.clipboard.writeText(getSelectedText('lst-notes'));
+  $('lst-notes').focus();
 }
 
 // function btnPasteNotes() {
