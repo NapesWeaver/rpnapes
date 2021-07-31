@@ -3344,11 +3344,13 @@ function btnCopyNotes() {
 // }
 
 function btnPasteNotes() {
-  // Firefox only supports reading the clipboard in browser extensions, using the "clipboardRead" extension permission.
-  backupUndoNotes();  
-  var text = navigator.clipboard.readText();
-  text.then(text => { insertAtCursor($('lst-notes'), text) });
-  colorSaveNotesButton();
+  // Firefox only supports reading clipboard in browser extensions using "clipboardRead" extension permission :(
+  var copiedText = navigator.clipboard.readText();
+  copiedText.then(copiedText => {
+    insertAtCursor($('lst-notes'), copiedText)
+    backupUndoNotes();  
+    colorSaveNotesButton();
+  });
 }
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
@@ -4439,7 +4441,7 @@ window.onload = function () {
   $('btn-load-notes').onclick = btnLoadNotes;
   $('btn-save-notes').onclick = btnSaveNotes;
   $('btn-copy-notes').onclick = btnCopyNotes;
-  // $('btn-paste-notes').onclick = btnPasteNotes;
+  $('btn-paste-notes').onclick = btnPasteNotes;
   $('btn-undo-notes').onclick = btnUndoNotes;
   $('btn-redo-notes').onclick = btnRedoNotes;
   $('btn-clear-notes').onclick = btnClearNotes;
