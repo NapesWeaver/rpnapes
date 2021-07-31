@@ -3347,7 +3347,7 @@ function btnPasteNotes() {
   // Firefox only supports reading clipboard in browser extensions using "clipboardRead" extension permission :(
   var copiedText = navigator.clipboard.readText();
   copiedText.then(copiedText => {
-    insertAtCursor($('lst-notes'), copiedText)
+    insertAtCursor($('lst-notes'), copiedText);
     backupUndoNotes();  
     colorSaveNotesButton();
   });
