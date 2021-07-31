@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '3:8:19';
+var tStamp = '3:54:5';
 var testing = false;
 
 var stack = [];
@@ -3247,11 +3247,29 @@ function processNoteBackup() {
   colorUndoNotesButton();
 }
 
+function notEqualToBackup() {
+
+  var tmpNotes = encodeSpecialChar($('lst-notes').value);
+  var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
+  var prevBackup = backupNotes[backupNotes.length - 1];
+
+  notesValue = notesValue.replace(/_/g, ' ').trim();
+  if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
+
+  console.log('notesValue', notesValue);
+  console.log('prevBackup', prevBackup);
+
+  return prevBackup !== notesValue;
+}
+
 function backupUndoNotes() {
-  restoreNotes.length = 0;
-  processNoteBackup();  
-  notes = $('lst-notes').value.split('\n');
-  if (notes[notes.length - 1] === '') notes.pop(); 
+  if (notEqualToBackup()) {
+    console.log('not equal');
+    restoreNotes.length = 0;
+    processNoteBackup();  
+    notes = $('lst-notes').value.split('\n');
+    if (notes[notes.length - 1] === '') notes.pop();
+  }
 }
 
 function loadNotes() {
@@ -3272,7 +3290,7 @@ function loadNotes() {
 }
 
 function btnLoadNotes() {
-  backupUndoNotes();
+  processNoteBackup();
   loadNotes();
 }
 
@@ -3308,23 +3326,24 @@ function btnRedoNotes() {
 }
 
 function btnClearNotes() {
-  backupUndoNotes();
-  $('lst-notes').value = '';
-  notes = [];
-  colorSaveNotesButton();
+  if ($('lst-notes').value !== '') {
+    processNoteBackup();
+    $('lst-notes').value = '';
+    notes = [];
+    colorSaveNotesButton();
+  }
 }
 
 function btnDeleteNotes() {
   var txtField = $('lst-notes').value;
   var startPos = $('lst-notes').selectionStart;
-  var endPos = $('lst-notes').selectionEnd;
-  
+  var endPos = $('lst-notes').selectionEnd;  
   $('lst-notes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lst-notes').setSelectionRange(startPos, startPos);
   $('lst-notes').focus();  
   if (isMobile) $('lst-notes').readOnly = true;
-
   backupUndoNotes();
+  colorSaveNotesButton();
 }
 
 function btnCopyNotes() {
