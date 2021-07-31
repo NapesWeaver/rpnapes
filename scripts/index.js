@@ -344,32 +344,21 @@ function copy() {
     navigator.clipboard.writeText(getSelectedText('lst-stack'));
   }
 }
-
-// function btnPaste() {
-//   backupUndo();
-
-//   if (stackFocus) {
-//     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-//   } else {
-//     if (/*@cc_on!@*/false || !!document.documentMode) {// IE
-//       insertAtCursor($('txt-input'), window.clipboardData.getData('Text'));
-//     } else {
-//       rpnAlert('This functionality prohibited by your browser.');
-//     }
-//   }
-//   $('txt-input').select();
-// }
-
+  
 function btnPaste() {
   backupUndo();
-
+    
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
-    var copiedText = navigator.clipboard.readText();
-    copiedText.then(copiedText => {
-      insertAtCursor($('txt-input'), copiedText);
-    });
+    if (navigator.clipboard.readText) {
+      var copiedText = navigator.clipboard.readText();
+      copiedText.then(copiedText => {
+        insertAtCursor($('txt-input'), copiedText);
+      });
+    } else {
+      rpnAlert('Not supported by browser.');
+    }
   }
 }
 
@@ -907,6 +896,7 @@ function pushObjectToStack(tmpArray) {
 }
 
 function btnOff() {
+  // Works for Chrome and Firefox-desktop if set as a home page ;)
   monOff();
   tricorderOff();  
 
@@ -3259,7 +3249,7 @@ function backupUndoNotes() {
 
   notesValue = notesValue.replace(/_/g, ' ').trim();
   if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
-
+  
   if (notesValue !== prevBackup) {
     backupNotes.push(nestArrayByBrowser(notes));
   }
@@ -3346,16 +3336,6 @@ function btnCopyNotes() {
   navigator.clipboard.writeText(getSelectedText('lst-notes'));
   $('lst-notes').focus();
 }
-
-// function btnPasteNotes() {
-//   backupUndoNotes();
-//   if (/*@cc_on!@*/false || !!document.documentMode) {// IE
-//     insertAtCursor($('lst-notes'), window.clipboardData.getData('Text'));
-//   } else {
-//     alert('Not supported by this browser.');
-//   }
-//   colorSaveNotesButton();
-// }
 
 function btnPasteNotes() {
   // Firefox only supports reading clipboard in browser extensions using "clipboardRead" extension permission :(
