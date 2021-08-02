@@ -346,8 +346,9 @@ function copy() {
 }
   
 function btnPaste() {
-  backupUndo();
-    
+  // Firefox only supports reading clipboard in browser extensions
+  // using the "clipboardRead" extension permission :(
+  backupUndo();    
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
@@ -3218,10 +3219,8 @@ function colorSaveNotesButton() {
   var cookieValue = getCookie('NOTES').substr(index);
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
-
-  cookieValue = cookieValue.replace(/_/g, ' ').trim();
-  notesValue = notesValue.replace(/_/g, ' ').trim();
-  
+  cookieValue = cookieValue.replace(/_/g, '');
+  notesValue = notesValue.replace(/_/g, '');  
   if (cookieValue === notesValue) {
     $('btn-save-notes').style.color = '#919191';
   } else {
@@ -3248,38 +3247,27 @@ function processNoteBackup() {
 }
 
 function notEqualToBackup() {
-
-  var tmpNotes = encodeSpecialChar($('lst-notes').value);
-  var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
+  var notesValue = nestArrayByBrowser(encodeSpecialChar($('lst-notes').value).split('\n'));
   var prevBackup = backupNotes[backupNotes.length - 1];
-
-  notesValue = notesValue.replace(/_/g, ' ').trim();
-  if (prevBackup) prevBackup = prevBackup.replace(/_/g, ' ').trim();
-
-  console.log('notesValue', notesValue);
-  console.log('prevBackup', prevBackup);
-
+  notesValue = notesValue.replace(/_/g, '');
+  prevBackup = prevBackup.replace(/_/g, '');
   return prevBackup !== notesValue;
 }
 
 function backupUndoNotes() {
   if (notEqualToBackup()) {
-    console.log('not equal');
     restoreNotes.length = 0;
-    processNoteBackup();  
+    processNoteBackup();
     notes = $('lst-notes').value.split('\n');
     if (notes[notes.length - 1] === '') notes.pop();
   }
 }
 
 function loadNotes() {
-  var index = 0;
-  var tmpNotes = [];
-  
+  var index = 0;  
   index = getCookie('NOTES').indexOf('=') + 1;
   try {
-    tmpNotes = splitArrayByBrowser(getCookie('NOTES').substr(index));
-    notes = notes.concat(tmpNotes);
+    notes = notes.concat(splitArrayByBrowser(getCookie('NOTES').substr(index)));
     if (notes[0] === '' && notes[1] === '') notes.pop();
   } catch (err) {
     notes.push('Load error.');
@@ -3298,10 +3286,8 @@ function btnSaveNotes() {
   if ($('btn-save-notes').style.color !== 'rgb(145, 145, 145)') {
     processNoteBackup();
   }
-  var tmpNotes;
   $('btn-save-notes').style.color = 'rgb(145, 145, 145)';
-  tmpNotes = encodeSpecialChar($('lst-notes').value.trim());
-  notes = tmpNotes.split('\n');
+  notes = encodeSpecialChar($('lst-notes').value.trim()).split('\n');
   storeCookie('NOTES', nestArrayByBrowser(notes));
 }
 
@@ -3352,8 +3338,7 @@ function btnCopyNotes() {
   $('lst-notes').focus();
 }
 
-function btnPasteNotes() {
-  // Firefox only supports reading clipboard in browser extensions using "clipboardRead" extension permission :(
+function btnPasteNotes() {  
   var copiedText = navigator.clipboard.readText();
   copiedText.then(copiedText => {
     insertAtCursor($('lst-notes'), copiedText);
