@@ -4062,7 +4062,10 @@ document.addEventListener('keyup', function (event) {
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
   case 'Enter':// ENTER
-    if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
+    if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) {
+      processNoteBackup();
+      $('btn-save-notes').style.color = '#000000';
+    }
     break;
   case 'Control':// CTRL
     ctrlHeld = false;
