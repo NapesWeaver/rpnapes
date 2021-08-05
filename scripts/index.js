@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '12:44:5';
+var tStamp = '14:01:5';
 var testing = false;
 
 var stack = [];
@@ -3220,12 +3220,7 @@ function colorSaveNotesButton() {
   var cookieValue = getCookie('NOTES').substr(index);
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
-  // cookieValue = cookieValue.replace(/_/g, '');
-  // notesValue = notesValue.replace(/_/g, '');  
   if (notesValue.substring(notesValue.length -1) === '_') notesValue = notesValue.slice(0, -1);
-  // console.log('substring', notesValue.substring(notesValue.length - 1));
-  // console.log('cookieValue', cookieValue);
-  // console.log('notesValue', notesValue);
   if (cookieValue === notesValue) {
     $('btn-save-notes').style.color = '#919191';
   } else {
@@ -3247,14 +3242,9 @@ function colorUndoNotesButton() {
 }
 
 function notEqualToBackup() {
-  var n1 = backupNotes[backupNotes.length - 1].replace(/_/g, '');
-  var n2 = nestArrayByBrowser(encodeSpecialChar($('lst-notes').value).split('\n')).replace(/_/g, '');
-  // var n1 = backupNotes[backupNotes.length - 1];
-  // var n2 = nestArrayByBrowser(encodeSpecialChar($('lst-notes').value).split('\n'));
-  // console.log('n1', n1);
-  // console.log('n2', n2);
-  // console.log('notEqual', n1 !== n2);
-  return n1 !== n2;
+  var prevNote = backupNotes[backupNotes.length - 1];
+  var currentNote = $('lst-notes').value;
+  return prevNote !== currentNote;
 }
 
 function processNoteBackup() {
@@ -4067,9 +4057,7 @@ document.addEventListener('keydown', function (event) {
 document.addEventListener('keyup', function (event) {
   
   switch (event.key) {
-  case 'Backspace':// BACKSPACE
-    if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
-    break;
+  case 'Backspace':// BACKSPACE (Falls through)
   case 'Enter':// ENTER
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
