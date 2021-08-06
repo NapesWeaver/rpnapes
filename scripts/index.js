@@ -532,7 +532,7 @@ function deleteFromStack() {
 }
 
 function btnBackspace() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
 
   if (stackFocus) {
     deleteFromStack();
