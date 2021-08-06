@@ -633,10 +633,32 @@ function redoFunction() {
   colorUndoButton();
 }
 
+// function notEqualToBackup() {
+//   var prevBak;
+//   var prevStack = nestArrayByBrowser(stack);
+
+//   if (backUps.length > 1) prevBak = backUps[backUps.length - 2];
+//   console.log('prevBak:', prevBak);
+//   console.log('prevStack:', prevStack);
+//   console.log('notEqual:', prevBak !== prevStack);
+//   return prevBak !== prevStack;
+// }
+
+// function equalToBackup() {
+//   var bak1;
+//   var bak2;
+//   if (backUps.length > 1) bak1 = backUps[backUps.length - 2];
+//   if (backUps.length > 3) bak2 = backUps[backUps.length - 4];
+//   return bak1 === bak2;
+// }
+
 function backupUndo() {
+  // console.log('backUps.length:', backUps.length);
+  // notEqualToBackup();
   backUps.push(nestArrayByBrowser(stack));
   backUps.push($('txt-input').value.trim());
   restores.length = 0;
+  // console.log(equalToBackup());
   colorUndoButton();
 }
 
@@ -771,7 +793,7 @@ function btnShift() {
 }
 
 function btnClear() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
   monOff();
   $('txt-input').value = '';
   $('lst-stack').value = '';
@@ -838,15 +860,18 @@ function saveFile(fileName, pretty) {
 }
 
 function btnLoad() {
-  backupUndo();  
   var index = 0;
-  stack = [];
+  var prevStack = nestArrayByBrowser(stack);
+  var cookie;
 
   try { 
     $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
     if (getCookie('STACK').substr(index) !== '') {
-      loadStack(getCookie('STACK').substr(index));
+      cookie = cookie = getCookie('STACK').substr(index);
+      if (prevStack !== cookie) backupUndo();
+      stack = [];
+      loadStack(cookie);
     }        
   } catch (err) { rpnAlert('load Stack error.'); }
   try {
@@ -855,7 +880,6 @@ function btnLoad() {
   } catch(err) { rpnAlert('load MathMon error'); }
   updateDisplay();
 }
-
 function loadStack(tmpStack) {
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
@@ -2091,9 +2115,6 @@ function parseCommand() {
       updateDisplay();
       insertDate();
       break;
-    // case 'editstack':
-    //   editStack();
-    //   break;  
     case 'fizzBuzz':
       fizzBuzz();
       break;  
@@ -2104,7 +2125,6 @@ function parseCommand() {
       window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
       break;
     case 'gravity':
-      //resetMathmon();
       gravity();
       btnDelete();
       btnDelete();
@@ -3241,7 +3261,7 @@ function colorUndoNotesButton() {
   }  
 }
 
-function notEqualToBackup() {
+function notEqualToBackupNotes() {
   var prevNote = backupNotes[backupNotes.length - 1];
   var currentNote = $('lst-notes').value;
   return prevNote !== currentNote;
@@ -3253,7 +3273,7 @@ function processNoteBackup() {
 }
 
 function backupUndoNotes() {
-  if (notEqualToBackup()) {
+  if (notEqualToBackupNotes()) {
     restoreNotes.length = 0;
     processNoteBackup();
     notes = $('lst-notes').value.split('\n');
@@ -3283,7 +3303,7 @@ function btnLoadNotes() {
 
 function btnSaveNotes() {
   if ($('btn-save-notes').style.color !== 'rgb(145, 145, 145)') {
-    processNoteBackup();
+    backupUndoNotes();
   }
   $('btn-save-notes').style.color = 'rgb(145, 145, 145)';
   notes = encodeSpecialChar($('lst-notes').value.trim()).split('\n');
