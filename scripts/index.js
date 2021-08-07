@@ -55,7 +55,7 @@ var tStamp = '13:43:00';
 var testing = false;
 
 var stack = [];
-var backUps = [];
+var backups = [];
 var restores = [];
 var stackSize = 99;
 var stackFocus = false;
@@ -441,6 +441,7 @@ function btnEnter() {
 
 function btnEval() {
   backupUndo();
+  // if (stack.toString() !== '') backupUndo();
   var objX;
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
@@ -508,7 +509,7 @@ function deleteButton() {
 }
 
 function btnDelete() {
-  if (stack.toString() !== '') backupUndo(); 
+  if (stack.toString() !== '') backupUndo();
   $('txt-input').value = $('txt-input').value.trim();
 
   if (stackFocus) {
@@ -568,7 +569,7 @@ function btnUndo() {
 }
 
 function colorUndoButton() {
-  if (($('btn-undo').value === 'UND' && backUps.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
+  if (($('btn-undo').value === 'UND' && backups.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
     $('btn-undo').style.color = '#25FC5A';
   } else {
     $('btn-undo').style.color = '#D4D0C8';
@@ -577,7 +578,7 @@ function colorUndoButton() {
 }
 
 function colorUndoRedoMenu() {
-  if (backUps.length > 3) {
+  if (backups.length > 3) {
     $('menu-undo').style.color = '#088B00';
   } else {
     $('menu-undo').style.color = '#D4D0C8';
@@ -591,13 +592,11 @@ function colorUndoRedoMenu() {
 
 function undoFunction() {
 
-  if (backUps.length > 3) {    
+  if (backups.length > 3) {    
     restores.push(nestArrayByBrowser(stack));
     restores.push($('txt-input').value);
-
-    $('txt-input').value = backUps.pop();
-    var tmpArray = backUps.pop();
-
+    $('txt-input').value = backups.pop();    
+    var tmpArray = backups.pop();
     stack.length = 0;
     tmpArray = splitArrayByBrowser(tmpArray);
 
@@ -614,12 +613,10 @@ function undoFunction() {
 function redoFunction() {
 
   if (restores.length > 0) {
-    backUps.push(nestArrayByBrowser(stack));
-    backUps.push($('txt-input').value);
-
+    backups.push(nestArrayByBrowser(stack));
+    backups.push($('txt-input').value);
     $('txt-input').value = restores.pop();
     var tmpArray = restores.pop();
-
     stack.length = 0;
     tmpArray = splitArrayByBrowser(tmpArray);
 
@@ -633,33 +630,28 @@ function redoFunction() {
   colorUndoButton();
 }
 
-// function notEqualToBackup() {
-//   var prevBak;
-//   var prevStack = nestArrayByBrowser(stack);
+function removeTimestamps(obj) {
+  for (var str in obj) {
+    if (obj[str] !== '') {
+      obj[str] = obj[str].slice(0, obj[str].length - 15);
+    }
+  }
+  return obj;
+}
 
-//   if (backUps.length > 1) prevBak = backUps[backUps.length - 2];
-//   console.log('prevBak:', prevBak);
-//   console.log('prevStack:', prevStack);
-//   console.log('notEqual:', prevBak !== prevStack);
-//   return prevBak !== prevStack;
-// }
-
-// function equalToBackup() {
-//   var bak1;
-//   var bak2;
-//   if (backUps.length > 1) bak1 = backUps[backUps.length - 2];
-//   if (backUps.length > 3) bak2 = backUps[backUps.length - 4];
-//   return bak1 === bak2;
-// }
+function deleteRedundantBackups() {
+  var bak1;
+  var bak2;
+  if (backups.length > 1) bak1 = removeTimestamps(splitArrayByBrowser(backups[backups.length - 2]));
+  if (backups.length > 3) bak2 = removeTimestamps(splitArrayByBrowser(backups[backups.length - 4])); 
+  if (backups.length > 3 && JSON.stringify(bak1) === JSON.stringify(bak2)) backups.length = backups.length - 2;
+}
 
 function backupUndo() {
-  // console.log('backUps.length:', backUps.length);
-  // notEqualToBackup();
-  backUps.push(nestArrayByBrowser(stack));
-  backUps.push($('txt-input').value.trim());
+  backups.push(nestArrayByBrowser(stack));
+  backups.push($('txt-input').value.trim());
   restores.length = 0;
-  // console.log(equalToBackup());
-  colorUndoButton();
+  colorUndoButton();  
 }
 
 function btnEe() {
@@ -861,18 +853,14 @@ function saveFile(fileName, pretty) {
 
 function btnLoad() {
   var index = 0;
-  var prevStack = nestArrayByBrowser(stack);
-  var cookie;
-
   try { 
     $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
     if (getCookie('STACK').substr(index) !== '') {
-      cookie = cookie = getCookie('STACK').substr(index);
-      if (prevStack !== cookie) backupUndo();
-      stack = [];
-      loadStack(cookie);
-    }        
+      loadStack(getCookie('STACK').substr(index));
+    } else {
+      backupUndo();
+    } 
   } catch (err) { rpnAlert('load Stack error.'); }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
@@ -880,7 +868,12 @@ function btnLoad() {
   } catch(err) { rpnAlert('load MathMon error'); }
   updateDisplay();
 }
+
 function loadStack(tmpStack) {
+  var prevStack = nestArrayByBrowser(stack);
+  if (prevStack !== tmpStack || shifted) backupUndo();
+  deleteRedundantBackups();
+  stack = [];
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     // Remove underscore from begining of string
@@ -891,8 +884,7 @@ function loadStack(tmpStack) {
   while (tmpStack.length > 0) {
     var tmpArray = [];
     tmpArray = tmpStack.shift();
-    pushObjectToStack(tmpArray);
-    
+    pushObjectToStack(tmpArray);    
     if (shifted) evaluateExpression(decodeSpecialChar(stack[stack.length - 1].soul));
   }    
 }
