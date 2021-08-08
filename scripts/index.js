@@ -2576,12 +2576,12 @@ function rpnAlert(text) {
 }
 
 function inputText(text) {  
-  if (text.length > 1) backupUndo();
+  backupUndo();
   $('txt-input').value = text;
 }
 
 function insertText(text) {
-  if (text.length > 1) backupUndo();
+  backupUndo();
   insertAtCursor($('txt-input'), text);
   $('txt-input').focus();
 }
