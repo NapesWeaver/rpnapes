@@ -1917,6 +1917,9 @@ function help(command) {
       enterInput();
       $('txt-input').value ='Not currently working for browsers on mobile devices :(';
       break;
+    case 'paste':
+      inputText('paste: Firefox only supports reading the clipboard in browser extensions using the "clipboardRead" extension permission :(');
+      break;
     case 'print':
       inputText('print: Open printer dialoge.');
       break;
@@ -1961,7 +1964,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, constants, darkmode, date, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
+    inputText('about, clear, constants, darkmode, date, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
   $('txt-input').value = '';
