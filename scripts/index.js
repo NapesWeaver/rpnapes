@@ -3338,7 +3338,11 @@ function btnDeleteNotes() {
 
 function btnCopyNotes() {
   //document.execCommand('copy');
-  navigator.clipboard.writeText(getSelectedText('lst-notes'));
+  if (getSelectedText('lst-notes') === '') {
+    navigator.clipboard.writeText($('lst-notes').value);
+  } else {
+    navigator.clipboard.writeText(getSelectedText('lst-notes'));
+  }
   $('lst-notes').focus();
 }
 
