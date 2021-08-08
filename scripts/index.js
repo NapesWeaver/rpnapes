@@ -648,10 +648,15 @@ function deleteRedundantBackups() {
 }
 
 function backupUndo() {
-  backups.push(nestArrayByBrowser(stack));
-  backups.push($('txt-input').value.trim());
-  restores.length = 0;
-  colorUndoButton();  
+  // console.log('stack:', stack);
+  // console.log('input:', $('txt-input').value.trim());
+  if ($('txt-input').value.trim() !== 'NaN' && stack !== []) {
+    // console.log('y');
+    backups.push(nestArrayByBrowser(stack));
+    backups.push($('txt-input').value.trim());
+    restores.length = 0;
+    colorUndoButton();  
+  }
 }
 
 function btnEe() {
@@ -1039,6 +1044,7 @@ function ln(x) {
 }
 
 function naturalLog() {
+  // console.log();
   backupUndo();
   var objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
