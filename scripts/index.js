@@ -1844,8 +1844,8 @@ function help(command) {
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
       break;
-    case 'darkmode':
-      inputText('darkmode: Toggle between dark and light mode.');
+    case 'darkMode':
+      inputText('darkMode: Toggle between light and dark themes.');
       break;
     case 'date':
       inputText('date: Returns the current date.');
@@ -1964,7 +1964,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, constants, darkmode, date, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
+    inputText('about, clear, constants, darkMode, date, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2091,7 +2091,7 @@ function parseCommand() {
     case 'cls':
       btnClear();
       break;
-    case 'darkmode':
+    case 'darkMode':
       stack.pop();
       toggleDarkMode();
       updateDisplay(); 
