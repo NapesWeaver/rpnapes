@@ -613,7 +613,7 @@ label a {
     }
 
     #txt-input,
-    #notes {
+    #notes .num-pad {
         width: 334px;
     }
    
