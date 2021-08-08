@@ -135,8 +135,7 @@ main {
 }
 
 #notes .num-pad {
-    /* width: 257px; */
-    width: auto;
+    width: 257px;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -632,6 +631,8 @@ label a {
     #btn-delete-notes {
         margin-top: 10px;
         margin-bottom: 10px;
+        padding-left: 1px;
+        padding-right: 1px;
     }
 
     .btn-big,
