@@ -4161,6 +4161,7 @@ window.onload = function () {
   $('menu-enter').onclick = btnEnter;
   $('menu-evaluate').onclick = btnEval;
   $('menu-copy').onclick = copy;
+  $('menu-paste').onclick = btnPaste;
   $('menu-delete').onclick = btnDelete;
   $('menu-backspace').onclick = btnBackspace;
   $('menu-clear').onclick = btnClear;
