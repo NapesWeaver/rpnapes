@@ -674,7 +674,6 @@ function internetSearch(domainString, query) {
 }
 
 function btnGo() {
-  backupUndo();
   if (shifted) {
     internetSearch('https://www.youtube.com/results?search_query=', $('txt-input').value.trim());
   } else {
