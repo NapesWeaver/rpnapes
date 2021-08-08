@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '12:27:00';
+var tStamp = '1:32:00';
 var testing = false;
 
 var stack = [];
@@ -972,7 +972,7 @@ function inverse() {
 }
 
 function btnFactorial() {
-  backupUndo();
+  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
   var objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
   var result = factorial(x);
@@ -1366,7 +1366,7 @@ function btnAngle() {
 }
 
 function btnSine() {
-  backupUndo();
+  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
@@ -1381,7 +1381,7 @@ function btnSine() {
 }
 
 function btnCosine() {
-  backupUndo();
+  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
@@ -1396,7 +1396,7 @@ function btnCosine() {
 }
 
 function btnTangent() {
-  backupUndo();
+  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
