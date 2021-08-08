@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '13:43:00';
+var tStamp = '12:27:00';
 var testing = false;
 
 var stack = [];
@@ -441,7 +441,6 @@ function btnEnter() {
 
 function btnEval() {
   backupUndo();
-  // if (stack.toString() !== '') backupUndo();
   var objX;
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
@@ -648,15 +647,10 @@ function deleteRedundantBackups() {
 }
 
 function backupUndo() {
-  // console.log('stack:', stack);
-  // console.log('input:', $('txt-input').value.trim());
-  if ($('txt-input').value.trim() !== 'NaN' && stack !== []) {
-    // console.log('y');
-    backups.push(nestArrayByBrowser(stack));
-    backups.push($('txt-input').value.trim());
-    restores.length = 0;
-    colorUndoButton();  
-  }
+  backups.push(nestArrayByBrowser(stack));
+  backups.push($('txt-input').value.trim());
+  restores.length = 0;
+  colorUndoButton();  
 }
 
 function btnEe() {
@@ -1016,7 +1010,7 @@ function log(x, y) {
 }
 
 function baseLog() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
   var objY;
   var objX;
   var y;
@@ -1044,8 +1038,7 @@ function ln(x) {
 }
 
 function naturalLog() {
-  // console.log();
-  backupUndo();
+  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
   var objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = ln(x);
@@ -1070,7 +1063,7 @@ function pow(x, y) {
 }
 
 function exponentialFunction() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
   var newUnits;
   var objY;
   var objX;
@@ -1103,7 +1096,7 @@ function root(x, y) {
 }
 
 function rootFunction() {
-  backupUndo();  
+  if (stack.toString() !== '') backupUndo();  
   var newUnits;
   var objY;
   var objX;
@@ -1162,7 +1155,7 @@ function btnModulus() {
 }
 
 function modulus() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
   var newUnits = divideUnits(1);
   var objY = stack.pop();
   var objX = getX();
@@ -1268,7 +1261,7 @@ function btnDivide() {
 }
 
 function division() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
   var newUnits = divideUnits(1);
   var objY = stack.pop();
   var objX = getX();
@@ -1295,7 +1288,7 @@ function btnMultiply() {
 }
 
 function multiplication() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
   var newUnits = multiplyUnits(1);
   var objY = stack.pop();
   var objX = getX();
@@ -1320,7 +1313,7 @@ function btnSubtract() {
 }
 
 function subtraction() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
   var newUnits = addUnits();
   var objY = stack.pop();
   var objX = getX();
@@ -1345,7 +1338,7 @@ function btnAdd() {
 }
 
 function addition() {
-  backupUndo();
+  if (stack.toString() !== '') backupUndo();
   var newUnits = addUnits();
   var objY = stack.pop();
   var objX = getX();
