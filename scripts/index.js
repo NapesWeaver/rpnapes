@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '1:32:00';
+var tStamp = '2:46:00';
 var testing = false;
 
 var stack = [];
@@ -2575,8 +2575,7 @@ function rpnAlert(text) {
   $('txt-input').select();
 }
 
-function inputText(text) {  
-  backupUndo();
+function inputText(text) {
   $('txt-input').value = text;
 }
 
