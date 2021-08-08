@@ -1147,7 +1147,6 @@ function btn_parentheses() {
 
 function btnModulus() {  
   if (shifted) {
-    backupUndo();
     insertText('√');
   } else {
     modulus();
@@ -1172,7 +1171,6 @@ function modulus() {
 
 function btnSign() {  
   if (shifted) {
-    backupUndo();
     insertText('^');    
   } else {
     changeSign();
@@ -1253,7 +1251,6 @@ function changeSign() {
 
 function btnDivide() {  
   if (shifted) {
-    backupUndo();
     insertText('/');    
   } else {
     division();
@@ -1280,7 +1277,6 @@ function division() {
 
 function btnMultiply() {  
   if (shifted) {
-    backupUndo();
     insertText('*');
   } else {
     multiplication();
@@ -1305,7 +1301,6 @@ function multiplication() {
 
 function btnSubtract() {  
   if (shifted) {
-    backupUndo();
     insertText('-');    
   } else {
     subtraction();
@@ -1330,7 +1325,6 @@ function subtraction() {
 
 function btnAdd() {  
   if (shifted) {
-    backupUndo();
     insertText('+');    
   } else {
     addition();
@@ -2583,12 +2577,12 @@ function rpnAlert(text) {
 }
 
 function inputText(text) {  
-  backupUndo();
+  if (text.length > 1) backupUndo();
   $('txt-input').value = text;
 }
 
 function insertText(text) {
-  backupUndo();
+  if (text.length > 1) backupUndo();
   insertAtCursor($('txt-input'), text);
   $('txt-input').focus();
 }
@@ -2666,12 +2660,14 @@ function prettyPrint(i, content) {
 
 function colorSaveButton() {
   var index = 0;
-  index = getCookie('STACK').indexOf('=') + 1;
-  if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
-    $('btn-save').style.color = '#000000';
-  } else {
-    $('btn-save').style.color = '#D4D0C8';
-  }  
+  try {
+    index = getCookie('STACK').indexOf('=') + 1;
+    if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
+      $('btn-save').style.color = '#000000';
+    } else {
+      $('btn-save').style.color = '#D4D0C8';
+    }
+  } catch (err) { rpnAlert('load Stack error.'); }
 }
 
 function storeCookie(aName, tmpArray) {
@@ -4364,6 +4360,9 @@ window.onload = function () {
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
   $('txt-input').readOnly = true;
+  $('txt-input').addEventListener('paste', function() {
+    backupUndo();
+  });
 
   // Buttons
   $('btn-xoff').onclick = btnXoff;
@@ -4411,10 +4410,6 @@ window.onload = function () {
   $('btn-add').onclick = btnAdd;
   $('btn-tangent').onclick = btnTangent;
   $('btn-off').onclick = btnOff;
-
-  $('txt-input').addEventListener('paste', function() {
-    backupUndo();
-  });
 
   // Tricorder
   preloadImages();
