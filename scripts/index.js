@@ -51,7 +51,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '2:46:00';
+var tStamp = '3:16:00';
 var testing = false;
 
 var stack = [];
@@ -1868,9 +1868,9 @@ function help(command) {
     case 'google':
       inputText('google [query]: Search Google. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
       break;
-    case 'ip':
-      inputText('ip: Returns local IP address.');
-      break;
+    // case 'ip':
+    //   inputText('ip: Returns local IP address.');
+    //   break;
     case 'ipMapper':
       inputText('ipMapper: Opens IP Mapper in a new tab.');
       break;
@@ -1961,7 +1961,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, constants, darkmode, date, embed, fix, flightLogger, google, ip, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
+    inputText('about, clear, constants, darkmode, date, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2133,11 +2133,11 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
       break;
-    case 'ip':
-      stack.pop();
-      updateDisplay();
-      getIP();
-      break;
+    // case 'ip':
+    //   stack.pop();
+    //   updateDisplay();
+    //   getIP();
+    //   break;
     case 'ipMapper':
       stack.pop();
       updateDisplay();
