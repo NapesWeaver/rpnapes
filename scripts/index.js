@@ -34,6 +34,7 @@ if (!Array.prototype.indexOf)
   })(Object, Math.max, Math.min);
 
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+var isFirefox = /firefox/i.test(navigator.userAgent);
 // var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
@@ -694,6 +695,7 @@ function btnShift() {
     $('menu-cosine').innerHTML = 'cos';
     $('menu-tangent').innerHTML = 'tan'
     $('btn-copy').value = 'COPY';
+    $('btn-copy').style.color = '#000000';
     $('btn-xy').value = 'x < > y';
     $('btn-enter').classList.remove('btn-big-font');
     $('btn-enter').value = 'ENTER';
@@ -736,6 +738,7 @@ function btnShift() {
     $('menu-cosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menu-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
     $('btn-copy').value = 'PASTE';
+    if (isFirefox) $('btn-copy').style.color = '#808080';
     $('btn-xy').value = 'a < > b';
     $('btn-enter').classList.add('btn-big-font');
     $('btn-enter').value = '=';
@@ -3349,7 +3352,7 @@ function btnCopyNotes() {
   $('lst-notes').focus();
 }
 
-function btnPasteNotes() {  
+function btnPasteNotes() {
   var copiedText = navigator.clipboard.readText();
   copiedText.then(copiedText => {
     insertAtCursor($('lst-notes'), copiedText);
@@ -4445,6 +4448,7 @@ window.onload = function () {
   $('btn-save-notes').onclick = btnSaveNotes;
   $('btn-copy-notes').onclick = btnCopyNotes;
   $('btn-paste-notes').onclick = btnPasteNotes;
+  if (isFirefox) $('btn-paste-notes').style.color = '#808080';
   $('btn-undo-notes').onclick = btnUndoNotes;
   $('btn-redo-notes').onclick = btnRedoNotes;
   $('btn-clear-notes').onclick = btnClearNotes;
