@@ -47,7 +47,7 @@
                     <li><a id="menu-load" title="Load stack">Load</a></li>
                     <li><a id="menu-save" title="Save to stack">Save</a></li>
                     <li><a  title="Save as a .txt file" onclick="backupUndo(); if ($('txt-input').value.trim() !== '') {saveFile($('txt-input').value.trim(), true);} else if (stack[stack.length - 1]) {saveFile(stack[stack.length - 1].soul, true); stack.pop();} else {saveFile('', true)} $('txt-input').value = ''; updateDisplay()">SaveAs</a></li>
-                    <li><a id="menu-print" title="Open printer dialog">Print</a></li>
+                    <li><a id="menu-print" title="Open printer dialog" onclick="$('txt-input').focus()">Print</a></li>
                     <li><a id="menu-off" title="Close tab or redirect to google.com">Off</a></li>
                   </ul>
                 </li>
