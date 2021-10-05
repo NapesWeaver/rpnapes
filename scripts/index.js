@@ -58,7 +58,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '16:47:51';
+var tStamp = '19:44:25';
 var testing = false;
 
 var stack = [];
@@ -2305,6 +2305,11 @@ function parseEvaluation(input) {
     while (/[Φπ\w)]\^[-(Φπ\w]/.test(input)) input = parseInline(input, '^', 'Math.pow(');
     while (/√[(Φπ\w]/.test(input) || /[Φπ\w)]√[(Φπ\w]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
     while (/[(Φπ\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');
+    // while (/[(Φπ\w]!/.test(input)) {
+    while (/[()Φπ\w]!/.test(input)) {
+      // console.log('y');
+      input = parseInline(input, '!', 'factorial(');
+    }
   }
   return input;
 }
@@ -2366,12 +2371,17 @@ function parseInline(input, symbol, prefix) {
   }
   endPos = index;
   // Insert prefix
-  while (index > 0 && (!/[-+*/^√!(]/.test(inputArr[index]) || /[Φπ\w.,]/.test(inputArr[index]) || parentheses > 0)) {
+  while (index > 0 && (!/[-+*/^√(]/.test(inputArr[index]) || /[Φπ\w.,]/.test(inputArr[index]) || parentheses > 0)) {
     index--;    
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
   }
   if (parentheses > -1 && index === 0 || (inputArr[index] === '(' && parentheses === 0)) {
+    if (symbol === '!') {
+      while (index > 0 && (/[acinost(]/.test(inputArr[index]))) {
+        index--;
+      }
+    }
     inputArr.splice(index, 0, prefix);
   } else {
     inputArr.splice(index + 1, 0, prefix);
