@@ -408,7 +408,7 @@ label a {
 
 /****** Menu ***********************************/
 #menu-wrap {
-    margin-left: 15px;
+    margin-left: 10%;
     padding-bottom: 17px;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .8em;
@@ -579,10 +579,6 @@ label a {
         margin-top: 0;
         margin-left: 319px;
     }
-
-    #main {
-        padding-bottom: 3%;
-    }
    
     #open {
         padding: 0px 18px 3px 18px;
@@ -658,7 +654,6 @@ label a {
 
     #menu-wrap {
         width: 300px;
-        margin-left: 32px;
         padding-bottom: 23px;
         font-size: 1.2em;
     } 
@@ -670,13 +665,4 @@ label a {
     #widget {
         top: 473px;
     }       
-}
-@media only screen and (min-width: 640px) {
-
-}
-@media only screen and (min-width: 800px) {
-
-}
-@media only screen and (min-width: 1024px) {
-
 }
