@@ -7,10 +7,6 @@
     padding: 0;
 }
 
-#main {
-    padding-bottom: 1%;
-}
-
 body {
     touch-action: manipulation;
     background-color: #C4C6B1;
@@ -75,8 +71,12 @@ select::-ms-expand {
     display: none; 
 }
 
+main {
+    padding-bottom: 1em;
+}
+
 #wrap {
-    min-width: 266px;
+    width: 266px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -99,7 +99,7 @@ select::-ms-expand {
 
 .lst-stack,
 .lst-notes {
-    min-width: 97%;
+    min-width: 257px;
     overflow-y: scroll;
 
 }
@@ -116,7 +116,7 @@ select::-ms-expand {
 
 #txt-input {
     display: block;
-    width: 97%;
+    width: 257px; 
     margin-left: auto;
     margin-right: auto;
     margin-bottom: .6em;
@@ -132,7 +132,7 @@ select::-ms-expand {
 }
 
 #notes .num-pad {
-    width: 97%;
+    width: 257px;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -412,7 +412,7 @@ label a {
 
 /****** Menu ***********************************/
 #menu-wrap {
-    margin-left: 10%;
+    margin-left: 15px;
     padding-bottom: 17px;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .8em;
@@ -570,7 +570,7 @@ label a {
 
 @media only screen and (min-width: 360px) {
     #wrap {
-        max-width: 414px;
+        width: 360px;
     }
 
     header,
@@ -599,8 +599,18 @@ label a {
         font-size: 1em;
     }
 
+    .lst-stack,
+    .lst-notes {
+        min-width: 334px;
+    }
+
     .lst-notes {
         height: 33.5em;
+    }
+
+    #txt-input,
+    #notes .num-pad {
+        width: 334px;
     }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
@@ -658,6 +668,7 @@ label a {
 
     #menu-wrap {
         width: 300px;
+        margin-left: 32px;
         padding-bottom: 23px;
         font-size: 1.2em;
     } 
