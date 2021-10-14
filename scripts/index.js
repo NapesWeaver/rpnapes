@@ -58,7 +58,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '22:3:37';
+var tStamp = '22:19:34';
 var testing = false;
 
 var stack = [];

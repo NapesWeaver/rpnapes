@@ -7,6 +7,10 @@
     padding: 0;
 }
 
+#main {
+    padding-bottom: 1%;
+}
+
 body {
     touch-action: manipulation;
     background-color: #C4C6B1;
