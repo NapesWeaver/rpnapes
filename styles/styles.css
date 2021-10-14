@@ -73,11 +73,12 @@ select::-ms-expand {
 
 main {
     /* min-height: 274px; */
-    padding-bottom: 1em;
+    /* padding-bottom: 1em; */
 }
 
 #wrap {
-    width: 266px;
+    width: 86%;
+    min-width: 266px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -102,7 +103,8 @@ main {
 
 .lst-stack,
 .lst-notes {
-    min-width: 257px;
+    /* min-width: 257px; */
+    min-width: 97%;
     overflow-y: scroll;
 
 }
@@ -119,7 +121,8 @@ main {
 
 #txt-input {
     display: block;
-    width: 257px; 
+    /* width: 257px;  */
+    width: 97%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: .6em;
@@ -135,7 +138,8 @@ main {
 }
 
 #notes .num-pad {
-    width: 257px;
+    /* width: 257px; */
+    width: 97%;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -574,7 +578,9 @@ label a {
 
 @media only screen and (min-width: 360px) {
     #wrap {
-        width: 360px;
+        /* width: 360px; */
+        width: 97%;
+        max-width: 360px;
     }
 
     header,
@@ -586,6 +592,11 @@ label a {
         width: 24px;
         margin-top: 0;
         margin-left: 319px;
+    }
+
+    #main {
+        /* padding-bottom: 1em; */
+        padding-bottom: 3%;
     }
    
     #open {
@@ -614,7 +625,8 @@ label a {
 
     #txt-input,
     #notes .num-pad {
-        width: 334px;
+        /* width: 334px; */
+        width: 93%;
     }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
