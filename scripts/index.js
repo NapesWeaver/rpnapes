@@ -2435,6 +2435,7 @@ function convertBase(r) {
 }
 
 function menuHelp() {
+  backupUndo();
   help('help');
 }
 
