@@ -7,6 +7,12 @@
     padding: 0;
 }
 
+#main {
+    padding-bottom: .1em;
+    /** This also 'anchors' main
+    for Chrome mobile keyboard **/
+}
+
 body {
     touch-action: manipulation;
     background-color: #C4C6B1;
@@ -71,12 +77,8 @@ select::-ms-expand {
     display: none; 
 }
 
-main {
-    padding-bottom: 1em;
-}
-
 #wrap {
-    width: 266px;
+    min-width: 266px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -99,7 +101,7 @@ main {
 
 .lst-stack,
 .lst-notes {
-    min-width: 257px;
+    min-width: 97%;
     overflow-y: scroll;
 
 }
@@ -116,7 +118,7 @@ main {
 
 #txt-input {
     display: block;
-    width: 257px; 
+    width: 97%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: .6em;
@@ -132,7 +134,7 @@ main {
 }
 
 #notes .num-pad {
-    width: 257px;
+    width: 97%;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -412,7 +414,7 @@ label a {
 
 /****** Menu ***********************************/
 #menu-wrap {
-    margin-left: 15px;
+    margin-left: 10%;
     padding-bottom: 17px;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .8em;
@@ -570,7 +572,11 @@ label a {
 
 @media only screen and (min-width: 360px) {
     #wrap {
-        width: 360px;
+        max-width: 414px;
+    }
+
+    #main {
+        padding-bottom: 1em;
     }
 
     header,
@@ -599,18 +605,8 @@ label a {
         font-size: 1em;
     }
 
-    .lst-stack,
-    .lst-notes {
-        min-width: 334px;
-    }
-
     .lst-notes {
         height: 33.5em;
-    }
-
-    #txt-input,
-    #notes .num-pad {
-        width: 334px;
     }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
@@ -668,7 +664,6 @@ label a {
 
     #menu-wrap {
         width: 300px;
-        margin-left: 32px;
         padding-bottom: 23px;
         font-size: 1.2em;
     } 
