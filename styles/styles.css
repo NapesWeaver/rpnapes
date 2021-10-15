@@ -1,16 +1,10 @@
-﻿article, aside, figure, figcaption, footer, header, hgroup, main, menu, nav, section {
+﻿﻿article, aside, figure, figcaption, footer, header, hgroup, main, menu, nav, section {
     display: block;
 }
 
 * {
     margin: 0;
     padding: 0;
-}
-
-#main {
-    padding-bottom: .1em;
-    /** This also 'anchors' main
-    for Chrome mobile keyboard **/
 }
 
 body {
@@ -28,7 +22,7 @@ header {
 .btn-xoff {
     height: 18px;
     width: 18px;
-    margin-left: 92%;
+    margin-left: 243px;
 }
 
 #open {
@@ -77,8 +71,13 @@ select::-ms-expand {
     display: none; 
 }
 
+main {
+    /* min-height: 274px; */
+    padding-bottom: 1em;
+}
+
 #wrap {
-    min-width: 266px;
+    width: 266px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -89,6 +88,7 @@ select::-ms-expand {
 
 .lst-stack {    
     min-height: 2.1em;
+    /* height: 15.6em; */
     height: 2.1em;
     margin-bottom: .3em;
     color: #B92020;/* no-script warning */
@@ -97,11 +97,12 @@ select::-ms-expand {
 .lst-notes {
     min-height: 3.3em;
     height: 34.9em;
+    /* height: 3.3em; */
 }
 
 .lst-stack,
 .lst-notes {
-    min-width: 97%;
+    min-width: 257px;
     overflow-y: scroll;
 
 }
@@ -118,7 +119,7 @@ select::-ms-expand {
 
 #txt-input {
     display: block;
-    min-width: 97%;
+    width: 257px; 
     margin-left: auto;
     margin-right: auto;
     margin-bottom: .6em;
@@ -134,7 +135,7 @@ select::-ms-expand {
 }
 
 #notes .num-pad {
-    width: 97%;
+    width: 257px;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -325,6 +326,7 @@ select::-ms-expand {
 }
 
 .btn-angle {
+    /* background-color: #B0C4DE; */
     background-color: #6D8EBF;
 }
 
@@ -414,7 +416,7 @@ label a {
 
 /****** Menu ***********************************/
 #menu-wrap {
-    margin-left: 10%;
+    margin-left: 15px;
     padding-bottom: 17px;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .8em;
@@ -522,6 +524,7 @@ label a {
     }
     
 /****** Dark Mode ******************************/
+
 .dark-mode {
     filter: invert(100%);
 }
@@ -539,6 +542,7 @@ label a {
 }
 
 /****** Tricorder ******************************/
+
 .tricorder-min-height {
     min-height: 274px;
 }
@@ -567,9 +571,10 @@ label a {
 }
 
 /****** CSS Responsive ******************/
+
 @media only screen and (min-width: 360px) {
     #wrap {
-        max-width: 414px;
+        width: 360px;
     }
 
     header,
@@ -580,8 +585,9 @@ label a {
     .btn-xoff {
         width: 24px;
         margin-top: 0;
+        margin-left: 319px;
     }
-       
+   
     #open {
         padding: 0px 18px 3px 18px;
     }
@@ -597,8 +603,18 @@ label a {
         font-size: 1em;
     }
 
+    .lst-stack,
+    .lst-notes {
+        min-width: 334px;
+    }
+
     .lst-notes {
         height: 33.5em;
+    }
+
+    #txt-input,
+    #notes .num-pad {
+        width: 334px;
     }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
@@ -656,7 +672,7 @@ label a {
 
     #menu-wrap {
         width: 300px;
-        margin-left: 12%;
+        margin-left: 32px;
         padding-bottom: 23px;
         font-size: 1.2em;
     } 
@@ -668,4 +684,7 @@ label a {
     #widget {
         top: 473px;
     }       
+}
+@media only screen and (min-width: 640px) {
+
 }
