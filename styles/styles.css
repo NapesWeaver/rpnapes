@@ -138,10 +138,6 @@ select::-ms-expand {
     justify-content: space-between;
 }
 
-#btn-delete {
-    margin-left: 1px;
-}
-
 #btn-delete, #btn-undo, #btn-clear, #btn-save, #btn-load {
     background-color: #808080;
 }
@@ -150,7 +146,7 @@ select::-ms-expand {
     }
 
 .btn-big, .btn-med, .btn-small, .btn-other {
-    margin-right: 5px;
+    margin-right: 1.9%;
     margin-bottom: 5px;
     font-size: .7em;
     font-weight: bold;        
@@ -173,16 +169,16 @@ select::-ms-expand {
 }
 
 .btn-big {
-    width: 57px;
-    margin-right: 9px;
+    width: 21%;
+    margin-right: 3%;
 }
 
 .btn-med {
-    width: 42px;
+    width: 16%;
 }
 
 .btn-small {
-    width: 33px;
+    width: 12%;
 }
 
 #btn-delete,
@@ -215,6 +211,14 @@ select::-ms-expand {
     margin-bottom: 6px;
     padding-left: 2px;
     padding-right: 2px;
+}
+
+#btn-clear-notes {
+    margin-left: 1%;
+}
+
+#btn-delete-notes {
+    margin-right: 1%;
 }
 
 .btn-big-font {
@@ -300,10 +304,6 @@ select::-ms-expand {
         background-color: #B92020;
         filter: invert(1);
     }
-
-.google, .you-tube {
-    background-size: 29px 19px;
-}
 
 .btn-shift {
     background-color: #808080;
@@ -623,16 +623,8 @@ label a {
         height: 30px;
     }
 
-    .btn-big {
-        width: 77px;
-    }
-
-    .btn-med {
-        width: 57px;
-    }
-
     .btn-small {
-        width: 45px;
+        margin-right: 2%;
     }
 
     .btn-big-font {
@@ -646,10 +638,6 @@ label a {
     .btn-pi,
     .symbol-big {
         font-size: 1.1em;
-    }
-    
-    .google, .you-tube {
-        background-size: 41px 26px;
     }
 
     #menu-wrap {
