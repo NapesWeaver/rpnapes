@@ -57,7 +57,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '16:33:22';
+var tStamp = '18:03:22';
 var testing = false;
 
 var stack = [];
@@ -680,6 +680,8 @@ function internetSearch(domainString, query) {
 }
 
 function btnGo() {
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  
   if (shifted) {
     internetSearch('https://www.youtube.com/results?search_query=', $('txt-input').value.trim());
   } else {
@@ -2067,7 +2069,8 @@ function parseCommand() {
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();
-    }  
+    }
+
     switch (command) {  
     case 'about':
       stack.pop();
