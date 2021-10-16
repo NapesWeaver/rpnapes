@@ -1340,7 +1340,7 @@ function btnAdd() {
 
 function addition() {
   if (stack.toString() !== '') backupUndo();
-  var newUnits = addUnits();
+  var newUnits = addUnits();  
   var objY = stack.pop();
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
@@ -2306,7 +2306,6 @@ function parseEvaluation(input) {
     while (/[(Φπ\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');
     // while (/[(Φπ\w]!/.test(input)) {
     while (/[()Φπ\w]!/.test(input)) {
-      // console.log('y');
       input = parseInline(input, '!', 'factorial(');
     }
   }
@@ -2937,6 +2936,7 @@ function addUnits() {
 
   if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = ' ' + unitsY;
   if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = ' ' + unitsX;
+  if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
   return units;
 }
 
