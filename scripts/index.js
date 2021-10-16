@@ -51,7 +51,7 @@ window.onresize = resizeTextareas;
 
 new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
-$('main').onresize = unFloat;
+// if (isMobile) $('main').onresize = unFloat;
 
 var Φ = 1.618033988749895;
 var e = Math.exp(1);// 2.718281828459045

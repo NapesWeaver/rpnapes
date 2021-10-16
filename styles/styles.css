@@ -1,15 +1,10 @@
-﻿﻿article, aside, figure, figcaption, footer, header, hgroup, main, menu, nav, section {
+﻿article, aside, figure, figcaption, footer, header, hgroup, main, menu, nav, section {
     display: block;
 }
 
 * {
     margin: 0;
     padding: 0;
-}
-
-html,
-body {
-    min-height: 100%;
 }
 
 body {
@@ -24,7 +19,7 @@ header {
     background-color: #6D8EBF;
 }
 
-#main {
+main {
     padding-bottom: .1em;
 }
 
