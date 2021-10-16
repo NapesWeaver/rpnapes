@@ -49,16 +49,16 @@ if (isMobile) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate |
 
 window.onresize = resizeTextareas;
 
-new ResizeObserver(unFloat).observe($('lst-stack'));
-new ResizeObserver(unFloat).observe($('lst-notes'));
-// if (isMobile) $('main').onresize = unFloat;
+// new ResizeObserver(unFloat).observe($('lst-stack'));
+// new ResizeObserver(unFloat).observe($('lst-notes'));
+// $('main').onresize = unFloat;
 
 var Φ = 1.618033988749895;
 var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '23:03:34';
+var tStamp = '13:40:22';
 var testing = false;
 
 var stack = [];
