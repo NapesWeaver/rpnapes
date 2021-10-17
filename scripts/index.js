@@ -418,7 +418,7 @@ function xyFunction() {
 }
 
 function runProgram() {
-  if (!shifted) btnShift();
+  btnShift();
   btnLoad();
 }
 
@@ -431,11 +431,7 @@ function enterButton() {
 }
 
 function btnEnter() {
-  backupUndo();
-  if ($('txt-input').value.trim().match(/^run$/)) {
-    runProgram();
-    return;
-  }
+  backupUndo();  
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
@@ -2295,6 +2291,12 @@ function parseCommand() {
       updateDisplay();
       $('txt-input').value = '';
       btnSave();
+      break;
+    case 'run':
+      stack.pop();
+      updateDisplay();
+      $('txt-input').value = '';
+      runProgram();
       break;
     case 'shortcuts':
       stack.pop();
