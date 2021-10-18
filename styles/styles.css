@@ -537,8 +537,9 @@ label a {
 }
 
 /****** Tricorder ******************************/
-.tricorder-min-height {
-    min-height: 274px;
+.tricorder-background {
+    min-height: 600px;
+    width: 378px;
 }
 
 #tricorderskin {

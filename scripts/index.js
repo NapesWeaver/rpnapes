@@ -281,7 +281,7 @@ function btnXoff() {
 function rpnapesOn() {
   $('notes').classList.remove('visible');
   $('notes').classList.add('hidden');
-  $('wrap').classList.remove('tricorder-min-height');
+  $('wrap').classList.remove('tricorder-background');
   $('widget').classList.remove('visible');
   $('widget').classList.add('hidden');
   $('viewport').classList.remove('visible');
@@ -302,7 +302,7 @@ function notesOn() {
   $('rpnapes').classList.remove('visible');
   $('rpnapes').classList.add('hidden');
   monOff();
-  $('wrap').classList.remove('tricorder-min-height');
+  $('wrap').classList.remove('tricorder-background');
   $('widget').classList.remove('visible');
   $('widget').classList.add('hidden');
   $('viewport').classList.remove('visible');
@@ -326,7 +326,7 @@ function showTricorder() {
   $('notes').classList.remove('visible');
   $('notes').classList.add('hidden');
   if (power()) playAudio($('tricorder-alert'));
-  $('wrap').classList.add('tricorder-min-height');
+  $('wrap').classList.add('tricorder-background');
   $('tricorder').classList.remove('hidden');
   $('tricorder').classList.add('visible');
   $('viewport').classList.remove('hidden');
