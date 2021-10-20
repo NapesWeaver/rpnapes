@@ -85,9 +85,7 @@ select::-ms-expand {
     border-style: outset;
 }
 
-.lst-stack {    
-    min-height: 2.1em;
-    height: 2.1em;
+.lst-stack {
     margin-bottom: .3em;
     color: #B92020;/* no-script warning */
 }
