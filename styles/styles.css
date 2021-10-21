@@ -12,7 +12,7 @@ body {
     background-color: #C4C6B1;
 }
 
-header {
+header {    
     height: 18px;
     font-size: .81em;
     color: #6D8EBF;
@@ -91,8 +91,7 @@ select::-ms-expand {
 }
 
 .lst-notes {
-    min-height: 3.3em;
-    height: 34.9em;
+    min-height: 3.3em;    
 }
 
 .lst-stack,
@@ -125,7 +124,7 @@ select::-ms-expand {
     text-align: center;
 }
 
-#rpnapes .num-pad {
+.num-pad {
     margin-top: .6em;
 }
 
@@ -613,7 +612,7 @@ label a {
     }
 
     .lst-notes {
-        height: 33.5em;
+        /* height: 33.5em; */
     }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
@@ -669,4 +668,24 @@ label a {
     #widget {
         top: 473px;
     }       
+}
+
+@media only screen and (hover: none) and (pointer: coarse) {
+
+    /* header {
+        position: fixed;
+        width: 31.95em;
+    }
+    
+    .num-pad {
+        position: fixed;
+        width: 42em;
+        background-color: #D4D0C8;
+        top: 20px;
+    }
+    
+    #lst-notes {
+        height: 34.9em;
+        margin-top: 53px;
+    } */
 }
