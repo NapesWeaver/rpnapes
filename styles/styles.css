@@ -205,18 +205,8 @@ select::-ms-expand {
 #btn-undo-notes,
 #btn-redo-notes,
 #btn-delete-notes {
-    margin-top: 6px;
-    margin-bottom: 6px;
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
-#btn-clear-notes {
-    margin-left: 1%;
-}
-
-#btn-delete-notes {
-    margin-right: 1%;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 .btn-big-font {
@@ -410,7 +400,8 @@ label a {
 
 /****** Menu ***********************************/
 #menu-wrap {
-    margin-left: 10%;
+    /* margin-left: 10%; */
+    margin-left: 3%;
     padding-bottom: 17px;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .8em;
@@ -564,6 +555,33 @@ label a {
 }
 
 /****** CSS Responsive ******************/
+
+@media only screen and (min-width: 250px) {
+    #menu-wrap {
+        margin-left: 10%;
+    }    
+
+    #btn-clear-notes,
+    #btn-load-notes,
+    #btn-save-notes,
+    #btn-copy-notes,
+    #btn-paste-notes,
+    #btn-undo-notes,
+    #btn-redo-notes,
+    #btn-delete-notes {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+    #btn-clear-notes {
+        margin-left: 1%;
+    }
+
+    #btn-delete-notes {
+        margin-right: 1%;
+    }
+}
+
 @media only screen and (min-width: 360px) {
     #wrap {
         max-width: 414px;
@@ -610,10 +628,16 @@ label a {
     #btn-undo-notes,
     #btn-redo-notes,
     #btn-delete-notes {
-        margin-top: 10px;
-        margin-bottom: 10px;
         padding-left: 1px;
         padding-right: 1px;
+    }
+
+    #btn-clear-notes {
+        margin-left: 1%;
+    }
+
+    #btn-delete-notes {
+        margin-right: 1%;
     }
 
     .btn-big,
