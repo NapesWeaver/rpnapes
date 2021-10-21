@@ -54,15 +54,14 @@ if (isPhone) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate ||
 new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 // $('main').onresize = unFloat;
-// if (!isPhone) window.onresize = resizeTextareas;
-window.onresize = resizeTextareas;
+if (!isPhone) window.onresize = resizeTextareas;
 
 var Φ = 1.618033988749895;
 var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '16:59:48';
+var tStamp = '18:51:51';
 var testing = false;
 
 var stack = [];
@@ -154,8 +153,8 @@ function resetConstants() {
 function resizeTextareas() {
   resizeTextarea($('lst-stack'));
   resizeTextarea($('lst-notes'));
-  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');
   if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
+  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');
 }
 
 function resizeTextarea(textarea) {
