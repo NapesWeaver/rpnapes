@@ -19,10 +19,6 @@ header {
     background-color: #6D8EBF;
 }
 
-main {
-    padding-bottom: .1em;
-}
-
 .btn-xoff {
     height: 18px;
     width: 18px;
@@ -86,7 +82,6 @@ select::-ms-expand {
 }
 
 .lst-stack {
-    margin-bottom: .3em;
     color: #B92020;/* no-script warning */
 }
 
@@ -562,14 +557,6 @@ label a {
     .menu > ul > li > a {
         padding-right: 1.5em;
     }
-
-    #btn-clear-notes {
-        margin-left: 3%;
-    }
-
-    #btn-delete-notes {
-        margin-right: 3%;
-    }
 }
 
 @media only screen and (min-width: 360px) {
@@ -604,6 +591,10 @@ label a {
     #txt-input,
     .btn-big, .btn-med, .btn-small, .btn-other {
         font-size: 1em;
+    }
+
+    .lst-stack {
+        margin-bottom: .2em;
     }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
