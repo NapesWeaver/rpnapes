@@ -61,7 +61,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '20:43:3';
+var tStamp = '18:38:38';
 var testing = false;
 
 var stack = [];
@@ -2788,21 +2788,10 @@ function getCookie(cname) {
 
 function encodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/%/g, '&#37');
-  //tmpString = tmpString.replace(/\*/g, "&#42");
   tmpString = tmpString.replace(/,/g, '&#44');
-  //tmpString = tmpString.replace(/\./g, "&#46");
-  //tmpString = tmpString.replace(/\//g, "&#47");
-  //tmpString = tmpString.replace(/:/g, "&#58");
   tmpString = tmpString.replace(/;/g, '&#59');
-  //tmpString = tmpString.replace(/</g, "&#60");
   tmpString = tmpString.replace(/=/g, '&#61');
-  //tmpString = tmpString.replace(/>/g, "&#62");
-  //tmpString = tmpString.replace(/\[/g, "&#91");
-  //tmpString = tmpString.replace(/]/g, "&#93");
-  // tmpString = tmpString.replace(/_/g, '&#95');
-  //tmpString = tmpString.replace(/{/g, "&#123");
-  //tmpString = tmpString.replace(/}/g, "&#125");
-  //tmpString = tmpString.replace(/~/g, "&#126");    
+  tmpString = tmpString.replace(/_/g, '&#95');
   tmpString = tmpString.replace(/°/g, '&deg');// degree
   //tmpString = tmpString.replace(/±/g, "&#177");
   //tmpString = tmpString.replace(/²/g, "&#178");
@@ -2850,21 +2839,10 @@ function encodeSpecialChar(tmpString) {
 
 function decodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/&#37/g, '%');
-  //tmpString = tmpString.replace(/&#42/g, "*");
   tmpString = tmpString.replace(/&#44/g, ',');
-  //tmpString = tmpString.replace(/&#46/g, ".");
-  //tmpString = tmpString.replace(/&#47/g, "/");
-  //tmpString = tmpString.replace(/&#58/g, ":");
   tmpString = tmpString.replace(/&#59/g, ';');
-  //tmpString = tmpString.replace(/&#60/g, "<");
   tmpString = tmpString.replace(/&#61/g, '=');
-  //tmpString = tmpString.replace(/&#62/g, ">");
-  //tmpString = tmpString.replace(/&#91/g, "[");
-  //tmpString = tmpString.replace(/&#93/g, "]");
-  // tmpString = tmpString.replace(/&#95/g, '_');
-  //tmpString = tmpString.replace(/&#123/g, "{");
-  //tmpString = tmpString.replace(/&#125/g, "}");
-  //tmpString = tmpString.replace(/&#126/g, "~");
+  tmpString = tmpString.replace(/&#95/g, '_');
   tmpString = tmpString.replace(/&deg/g, '°');
   //tmpString = tmpString.replace(/&#177/g, "±");
   //tmpString = tmpString.replace(/&#178/g, "²");

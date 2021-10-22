@@ -624,8 +624,7 @@ label a {
     }
 
     #menu-wrap {
-        /* width: 300px; */
-        margin-left: 12%;
+        margin-left: 10%;
         padding-bottom: 23px;
         font-size: 1.2em;
     } 
