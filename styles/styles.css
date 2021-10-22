@@ -129,7 +129,7 @@ select::-ms-expand {
 }
 
 #notes .num-pad {
-    width: 97%;
+    width: 98%;
     margin: auto;
     display: flex;
     justify-content: space-between;
@@ -442,7 +442,7 @@ label a {
     .menu > ul > li > a {
         padding-top: 3px;
         padding-left: 3px;
-        padding-right: 18px;
+        padding-right: 1em;
         display: inline-block;
         text-decoration: none;
         /* text-shadow: 0px 1px 0px rgba(0, 0, 0, .4); */
@@ -554,36 +554,50 @@ label a {
 }
 
 /****** CSS Responsive ******************/
+@media only screen and (hover: none) and (pointer: coarse) {
+    header {
+        position: fixed;
+        width: 100%;
+    }
+    
+    .notes-fixed {
+        position: fixed;
+        width: 100%;
+        background-color: #D4D0C8;
+        top: 18px;
+        left: 2px;
+    }
+    
+    #lst-notes {
+        margin-top: 39px;
+    }
+}
 
 @media only screen and (min-width: 250px) {
     #menu-wrap {
         margin-left: 10%;
-    }    
+    }
 
-    #btn-clear-notes,
-    #btn-load-notes,
-    #btn-save-notes,
-    #btn-copy-notes,
-    #btn-paste-notes,
-    #btn-undo-notes,
-    #btn-redo-notes,
-    #btn-delete-notes {
-    padding-left: 2px;
-    padding-right: 2px;
-}
+    .menu > ul > li > a {
+        padding-right: 1.2em;
+    }
 
     #btn-clear-notes {
-        margin-left: 1%;
+        margin-left: 3%;
     }
 
     #btn-delete-notes {
-        margin-right: 1%;
+        margin-right: 3%;
     }
 }
 
 @media only screen and (min-width: 360px) {
     #wrap {
         max-width: 414px;
+    }
+
+    .menu > ul > li > a {
+        padding-right: 1.3em;
     }
 
     header,
@@ -610,25 +624,9 @@ label a {
     .btn-big, .btn-med, .btn-small, .btn-other {
         font-size: 1em;
     }
-
-    .lst-notes {
-        /* height: 33.5em; */
-    }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
         margin-bottom: 7px;
-    }
-    
-    #btn-clear-notes,
-    #btn-load-notes,
-    #btn-save-notes,
-    #btn-copy-notes,
-    #btn-paste-notes,
-    #btn-undo-notes,
-    #btn-redo-notes,
-    #btn-delete-notes {
-        padding-left: 1px;
-        padding-right: 1px;
     }
 
     .btn-big,
@@ -667,25 +665,16 @@ label a {
 
     #widget {
         top: 473px;
-    }       
-}
+    } 
 
-@media only screen and (hover: none) and (pointer: coarse) {
-
-    /* header {
-        position: fixed;
-        width: 31.95em;
-    }
+    @media only screen and (hover: none) and (pointer: coarse) {
+        .notes-fixed {
+            top: 26px;
+            left: 5px;
+        }
     
-    .num-pad {
-        position: fixed;
-        width: 42em;
-        background-color: #D4D0C8;
-        top: 20px;
+        #lst-notes {
+            margin-top: 54px;
+        }
     }
-    
-    #lst-notes {
-        height: 34.9em;
-        margin-top: 53px;
-    } */
 }
