@@ -82,6 +82,7 @@ select::-ms-expand {
 }
 
 .lst-stack {
+    min-height: 2.1em;
     color: #B92020;/* no-script warning */
 }
 
@@ -399,8 +400,6 @@ label a {
     padding-bottom: 17px;
     font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .8em;
-    /* width: 100%; */
-    width: 250px;
     /* box-shadow: 0px 1px 3px rgba(0, 0, 0, .2); */
 }
 
@@ -551,7 +550,7 @@ label a {
 /****** CSS Responsive ******************/
 @media only screen and (min-width: 250px) {
     #menu-wrap {
-        margin-left: 10%;
+        margin-left: 7%;
     }
 
     .menu > ul > li > a {
@@ -625,7 +624,7 @@ label a {
     }
 
     #menu-wrap {
-        width: 300px;
+        /* width: 300px; */
         margin-left: 12%;
         padding-bottom: 23px;
         font-size: 1.2em;

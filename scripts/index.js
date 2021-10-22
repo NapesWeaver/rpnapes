@@ -2799,7 +2799,7 @@ function encodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/>/g, "&#62");
   //tmpString = tmpString.replace(/\[/g, "&#91");
   //tmpString = tmpString.replace(/]/g, "&#93");
-  //tmpString = tmpString.replace(/_/g, "&#95");
+  // tmpString = tmpString.replace(/_/g, '&#95');
   //tmpString = tmpString.replace(/{/g, "&#123");
   //tmpString = tmpString.replace(/}/g, "&#125");
   //tmpString = tmpString.replace(/~/g, "&#126");    
@@ -2861,7 +2861,7 @@ function decodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/&#62/g, ">");
   //tmpString = tmpString.replace(/&#91/g, "[");
   //tmpString = tmpString.replace(/&#93/g, "]");
-  //tmpString = tmpString.replace(/&#95/g, "_");
+  // tmpString = tmpString.replace(/&#95/g, '_');
   //tmpString = tmpString.replace(/&#123/g, "{");
   //tmpString = tmpString.replace(/&#125/g, "}");
   //tmpString = tmpString.replace(/&#126/g, "~");
