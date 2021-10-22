@@ -554,25 +554,6 @@ label a {
 }
 
 /****** CSS Responsive ******************/
-@media only screen and (hover: none) and (pointer: coarse) {
-    header {
-        position: fixed;
-        width: 100%;
-    }
-    
-    .notes-fixed {
-        position: fixed;
-        width: 100%;
-        background-color: #D4D0C8;
-        top: 18px;
-        left: 2px;
-    }
-    
-    #lst-notes {
-        margin-top: 39px;
-    }
-}
-
 @media only screen and (min-width: 250px) {
     #menu-wrap {
         margin-left: 10%;
@@ -665,16 +646,5 @@ label a {
 
     #widget {
         top: 473px;
-    } 
-
-    @media only screen and (hover: none) and (pointer: coarse) {
-        .notes-fixed {
-            top: 26px;
-            left: 5px;
-        }
-    
-        #lst-notes {
-            margin-top: 54px;
-        }
     }
 }
