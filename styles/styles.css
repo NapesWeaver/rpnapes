@@ -448,11 +448,11 @@ label a {
         /* text-shadow: 0px 1px 0px rgba(0, 0, 0, .4); */
     }
     /* Top Level Hover Styles */
-     .menu > ul > li:hover > a, .menu > ul > .current-item > a {
-        /* color: #0040FF; */
-        /* background: #ffffff; */
-        /* text-decoration-line: underline; */
-    }     
+    /* .menu > ul > li:hover > a, .menu > ul > .current-item > a {
+        color: #0040FF;
+        background: #ffffff;
+        text-decoration-line: underline;
+    }    */
     /***** Bottom Level ***************/
     /* Side Strip Color */
     .menu li:hover .sub-menu {
@@ -560,7 +560,7 @@ label a {
     }
 
     .menu > ul > li > a {
-        padding-right: 1.2em;
+        padding-right: 1.5em;
     }
 
     #btn-clear-notes {
