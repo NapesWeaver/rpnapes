@@ -2114,11 +2114,12 @@ function parseCommand() {
       saveTricorder();
     }
     if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
-
+      
       if (commandArray[1] === undefined) {
         $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
       } else {
-        $('txt-input').value = commandArray[1];
+        commandArray.shift();
+        $('txt-input').value = commandArray.join(' ');
       }
       internetSearch('https://www.google.com/search?q=');
       stack.pop();
@@ -2130,7 +2131,8 @@ function parseCommand() {
       if (commandArray[1] === undefined) {
         $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
       } else {
-        $('txt-input').value = commandArray[1];
+        commandArray.shift();
+        $('txt-input').value = commandArray.join(' ');
       }
       internetSearch('https://www.youtube.com/results?search_query=');
       stack.pop();
