@@ -61,7 +61,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '18:38:38';
+var tStamp = '19:25:7';
 var testing = false;
 
 var stack = [];
@@ -670,22 +670,24 @@ function btnEe() {
 }
 
 function internetSearch(domainString, query) {
-  var domain = domainString.match(/^http[s]?:[/][/]\w+[.]\w+[.]\w+[/]/g);  
   if (query !== null && query !== '') {
     domainString += query;
     window.open(domainString, '_blank');
-  } else {
-    window.open(domain);
   }
 }
 
 function btnGo() {
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));  
+  var searchTerm = $('txt-input').value.trim();
+
   if (shifted) {
-    internetSearch('https://www.youtube.com/results?search_query=', $('txt-input').value.trim());
+    internetSearch('https://www.youtube.com/results?search_query=', searchTerm);
   } else {
-    internetSearch('https://www.google.com/search?q=', $('txt-input').value.trim());
+    if (/^http[s]?:\/\//.test(searchTerm)) {
+      window.open(searchTerm);
+    } else {
+      internetSearch('https://www.google.com/search?q=', searchTerm);
+    }
   }  
   $('txt-input').select();
 }
