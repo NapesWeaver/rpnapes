@@ -680,15 +680,15 @@ function btnGo() {
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));  
   var searchTerm = $('txt-input').value.trim();
 
-  if (shifted) {
-    internetSearch('https://www.youtube.com/results?search_query=', searchTerm);
+  if (/^http[s]?:\/\//.test(searchTerm)) {
+    window.open(searchTerm);
   } else {
-    if (/^http[s]?:\/\//.test(searchTerm)) {
-      window.open(searchTerm);
+    if (shifted) {
+      internetSearch('https://www.youtube.com/results?search_query=', searchTerm);
     } else {
-      internetSearch('https://www.google.com/search?q=', searchTerm);
+      internetSearch('https://www.google.com/search?q=', searchTerm);    
     }
-  }  
+  }
   $('txt-input').select();
 }
 
