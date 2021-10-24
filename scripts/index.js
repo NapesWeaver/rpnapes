@@ -673,8 +673,11 @@ function internetSearch(domainString) {
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   var query = $('txt-input').value.trim();
 
+  if (/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(query)) query = 'https://' + query;
+
   if (/^http[s]?:\/\//.test(query)) {
     window.open(query);
+    // window.open('192.168.1.1');
   } else {
     var domain = domainString.match(/^http[s]?:[/][/]\w+[.]\w+[.]\w+[/]/g);  
     if (query !== null && query !== '') {
