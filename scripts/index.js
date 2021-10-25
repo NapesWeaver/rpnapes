@@ -62,7 +62,7 @@ var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
 var lastResult = '';
-var tStamp = '4:15:35';
+var tStamp = '4:47:59';
 var testing = false;
 
 var stack = [];
@@ -1000,16 +1000,16 @@ function inverse() {
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     $('txt-input').value = stack[stackIndex].getSoul();
+    backupUndo();// Needed for UI consistency in this case
   }
   var newUnits = inverseUnits();  
   var isNumber = !isNaN(extractReal($('txt-input').value));
   var isImaginary = !isNaN(extractImaginary($('txt-input').value));
-
-  if ($('txt-input').value === lastResult) {
+  
+  if ($('txt-input').value === lastResult) {    
     $('txt-input').value = backups[backups.length - 3];
   } else {
-    if (isNumber || isImaginary) {
-  
+    if (isNumber || isImaginary) {  
       if (isNumber && !isImaginary) {      
         $('txt-input').value = 1 / extractReal($('txt-input').value);
       }
