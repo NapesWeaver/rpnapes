@@ -61,7 +61,8 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '2:26:12';
+var lastResult = '';
+var tStamp = '4:15:35';
 var testing = false;
 
 var stack = [];
@@ -1002,32 +1003,37 @@ function inverse() {
   }
   var newUnits = inverseUnits();  
   var isNumber = !isNaN(extractReal($('txt-input').value));
-  var isImaginary = !isNaN(extractImaginary($('txt-input').value));  
+  var isImaginary = !isNaN(extractImaginary($('txt-input').value));
+
+  if ($('txt-input').value === lastResult) {
+    $('txt-input').value = backups[backups.length - 3];
+  } else {
+    if (isNumber || isImaginary) {
   
-  if (isNumber || isImaginary) {
-
-    if (isNumber && !isImaginary) {
-      $('txt-input').value = 1 / extractReal($('txt-input').value);
+      if (isNumber && !isImaginary) {      
+        $('txt-input').value = 1 / extractReal($('txt-input').value);
+      }
+      if (!isNumber && isImaginary) {
+        $('txt-input').value =  1 / extractImaginary($('txt-input').value);
+        $('txt-input').value += 'j';
+      }
+      if (isNumber && isImaginary) {
+        // Write code here please ;)
+        return;
+      }
+      $('txt-input').value += newUnits;
+    } else {    
+      var x = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
+  
+      if(/^1\//.test(x)) {
+        $('txt-input').value = x.slice(2);
+      } else {      
+        $('txt-input').value = '1/' + x;
+      }
+      $('txt-input').value += newUnits;
     }
-    if (!isNumber && isImaginary) {
-      $('txt-input').value =  1 / extractImaginary($('txt-input').value);
-      $('txt-input').value += 'j';
-    }
-    if (isNumber && isImaginary) {
-      // Write code here please ;)
-      return;
-    }
-    $('txt-input').value += newUnits;
-  } else {    
-    var x = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
-
-    if(/^1\//.test(x)) {
-      $('txt-input').value = x.slice(2);
-    } else {      
-      $('txt-input').value = '1/' + x;
-    }
-    $('txt-input').value += newUnits;
-  }
+  }  
+  lastResult = $('txt-input').value;
   $('txt-input').select();
 }
 
