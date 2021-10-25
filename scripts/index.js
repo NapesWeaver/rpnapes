@@ -62,7 +62,7 @@ var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
 var lastResult = '';
-var tStamp = '4:47:59';
+var tStamp = '6:7:12';
 var testing = false;
 
 var stack = [];
@@ -1023,14 +1023,18 @@ function inverse() {
       }
       $('txt-input').value += newUnits;
     } else {
+      var x = calculate($('txt-input').value);
 
-      
-      
-      if(/^1\//.test($('txt-input').value)) {
-        $('txt-input').value = $('txt-input').value.slice(2);
-      } else {      
-        $('txt-input').value = '1/' + $('txt-input').value;
-      }
+      if (!isNaN(x)) {
+        $('txt-input').value = calculate($('txt-input').value);
+        $('txt-input').value = 1 / $('txt-input').value;    
+      } else {
+        if(/^1\//.test($('txt-input').value)) {
+          $('txt-input').value = $('txt-input').value.slice(2);          
+        } else {
+          $('txt-input').value = '1/' + $('txt-input').value.toString();
+        }
+      }      
     }
   }  
   lastResult = $('txt-input').value;
