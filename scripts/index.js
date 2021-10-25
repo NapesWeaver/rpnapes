@@ -1022,15 +1022,15 @@ function inverse() {
         return;
       }
       $('txt-input').value += newUnits;
-    } else {    
-      var x = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
-  
-      if(/^1\//.test(x)) {
-        $('txt-input').value = x.slice(2);
+    } else {
+
+      
+      
+      if(/^1\//.test($('txt-input').value)) {
+        $('txt-input').value = $('txt-input').value.slice(2);
       } else {      
-        $('txt-input').value = '1/' + x;
+        $('txt-input').value = '1/' + $('txt-input').value;
       }
-      $('txt-input').value += newUnits;
     }
   }  
   lastResult = $('txt-input').value;
