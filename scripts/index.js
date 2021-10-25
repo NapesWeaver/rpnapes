@@ -1005,8 +1005,7 @@ function inverse() {
   var newUnits = inverseUnits();  
   var isNumber = !isNaN(extractReal($('txt-input').value));
   var isImaginary = !isNaN(extractImaginary($('txt-input').value));
-  
-  if ($('txt-input').value === lastResult) {    
+  if ($('txt-input').value === lastResult && $('txt-input').value !== backups[backups.length - 3]) {    
     $('txt-input').value = backups[backups.length - 3];
   } else {
     if (isNumber || isImaginary) {  
