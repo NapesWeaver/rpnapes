@@ -61,7 +61,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '20:10:52';
+var tStamp = '2:26:12';
 var testing = false;
 
 var stack = [];
@@ -181,7 +181,8 @@ function unFloat() {
   }
   if (winSize[0] < lstWidth + margin) {
     $('rpnapes').classList.contains('hidden') ? $('lst-notes').style.width = winSize[0] - margin + 'px' : $('lst-stack').style.width = winSize[0] - margin + 'px';
-  }  
+  }
+  if ($('notes').classList.contains('hidden')) worldBordersSet();
 }
 
 function toggleDarkMode() {  
@@ -3734,7 +3735,7 @@ var twig = new Mathmon('twig', 135, -365, 3, 100, 5, 6);
 var tv = new Mathmon('tv', -45, -395, 30, 100, 7, 0);
 var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
 var theObjects = [3];
-var wBorders = { };
+var worldBorders = { };
 
 function Mathmon(idName, xPos, yPos, objSize, health, speed, ammo) {
 
@@ -3955,21 +3956,22 @@ function worldEngine() {
 }
 
 function worldBordersSet() {
-  var browserWindow = getSize();
+  var height = $('lst-stack').offsetHeight;
+  var width = $('lst-stack').offsetWidth;  
 
-  if (browserWindow[0] > 330) {
-    wBorders = {
-      bTop: -593,
-      bBottom: -361,
-      bLeft: -96,
-      bRight: 214
+  if (window.innerWidth > 360) {
+    worldBorders = {
+      bTop: -(height + 345) + 21,
+      bBottom: -345,
+      bLeft: -129,
+      bRight: width - 129 - 24
     }
   } else {
-    wBorders = {
-      bTop: -445,
-      bBottom: -287,
-      bLeft: -59,
-      bRight: 177
+    worldBorders = {
+      bTop: -(height + 270) + 21,
+      bBottom: -270,
+      bLeft: -84,
+      bRight: width - 84 - 12
     }
   }
 }
@@ -3977,18 +3979,18 @@ function worldBordersSet() {
 function collideWithBorders(i) {
   // The gifs are offset from each other in the html. Each is 64px * 64px.
   var gifWidth = 64;
-  if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bTop + theObjects[i].objSize); }// Top border
-  if (theObjects[i].yPos > wBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bBottom - theObjects[i].objSize); }// Bottom border
-  if (theObjects[i].xPos < wBorders.bLeft - (i * gifWidth) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bLeft - (i * gifWidth) + theObjects[i].objSize); }// Left border
-  if (theObjects[i].xPos > wBorders.bRight - (i * gifWidth) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bRight - (i * gifWidth) - theObjects[i].objSize); }// Right border
+  if (theObjects[i].yPos < worldBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(worldBorders.bTop + theObjects[i].objSize); }// Top border
+  if (theObjects[i].yPos > worldBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(worldBorders.bBottom - theObjects[i].objSize); }// Bottom border
+  if (theObjects[i].xPos < worldBorders.bLeft - (i * gifWidth) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(worldBorders.bLeft - (i * gifWidth) + theObjects[i].objSize); }// Left border
+  if (theObjects[i].xPos > worldBorders.bRight - (i * gifWidth) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(worldBorders.bRight - (i * gifWidth) - theObjects[i].objSize); }// Right border
 }
 
 function transXBorders(i) {
   var gifWidth = 64;  
-  if (theObjects[i].yPos < wBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bBottom - theObjects[i].objSize); }// Top border
-  if (theObjects[i].yPos > wBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(wBorders.bTop + theObjects[i].objSize); }// Bottom border
-  if (theObjects[i].xPos < wBorders.bLeft - (i * gifWidth) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bRight - (i * gifWidth) - theObjects[i].objSize); }// Left border
-  if (theObjects[i].xPos > wBorders.bRight - (i * gifWidth) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(wBorders.bLeft - (i * gifWidth) + theObjects[i].objSize); }// Right border
+  if (theObjects[i].yPos < worldBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(worldBorders.bBottom - theObjects[i].objSize); }// Top border
+  if (theObjects[i].yPos > worldBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(worldBorders.bTop + theObjects[i].objSize); }// Bottom border
+  if (theObjects[i].xPos < worldBorders.bLeft - (i * gifWidth) + (theObjects[i].objSize / 2)) { theObjects[i].setXPos(worldBorders.bRight - (i * gifWidth) - theObjects[i].objSize); }// Left border
+  if (theObjects[i].xPos > worldBorders.bRight - (i * gifWidth) - (theObjects[i].objSize / 2)) { theObjects[i].setXPos(worldBorders.bLeft - (i * gifWidth) + theObjects[i].objSize); }// Right border
 }
 
 function brownianMovement(obj) {
