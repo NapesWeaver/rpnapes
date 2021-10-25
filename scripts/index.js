@@ -61,7 +61,7 @@ var e = Math.exp(1);// 2.718281828459045
 var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
-var tStamp = '21:41:57';
+var tStamp = '20:10:52';
 var testing = false;
 
 var stack = [];
@@ -669,31 +669,69 @@ function btnEe() {
   $('txt-input').focus();
 }
 
-function internetSearch(domainString) {
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+function searchDuckDuckGo() {
+  if (stackFocus) $('txt-input').value = getSelectedText('lst-stack');
   var query = $('txt-input').value.trim();
+  var domainString = 'https://duckduckgo.com/?q=';
 
-  if (/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(query)) query = 'https://' + query;
-
-  if (/^http[s]?:\/\//.test(query)) {
-    window.open(query);
-    // window.open('192.168.1.1');
+  if (query) {    
+    domainString += query;
+    window.open(domainString, '_blank');    
   } else {
-    var domain = domainString.match(/^http[s]?:[/][/]\w+[.]\w+[.]\w+[/]/g);  
-    if (query !== null && query !== '') {
+    window.open('https://duckduckgo.com/');
+  }
+}
+
+function searchGoogle() {
+  if (stackFocus) $('txt-input').value = getSelectedText('lst-stack');
+  var query = $('txt-input').value.trim();
+  var domainString = 'https://www.google.com/search?q=';
+
+  if (/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(query) || /^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$/.test(query)) query = 'https://' + query;
+
+  if (query) {
+    if (/^http[s]?:\/\//.test(query)) {
+      window.open(query);
+    } else {
       domainString += query;
       window.open(domainString, '_blank');
-    } else {
-      window.open(domain);
     }
+  } else {
+    window.open('https://www.google.com/');
+  }
+}
+
+function searchWikipedia() {
+  if (stackFocus) $('txt-input').value = getSelectedText('lst-stack');
+  var query = $('txt-input').value.trim();
+  var domainString = 'https://en.wikipedia.org/w/index.php?search=';
+
+  if (query) {    
+    domainString += query;
+    window.open(domainString, '_blank');    
+  } else {
+    window.open('https://en.wikipedia.org/');
+  }
+}
+
+function searchYouTube() {
+  if (stackFocus) $('txt-input').value = getSelectedText('lst-stack');
+  var query = $('txt-input').value.trim();
+  var domainString = 'https://www.youtube.com/results?search_query=';
+
+  if (query) {    
+    domainString += query;
+    window.open(domainString, '_blank');    
+  } else {
+    window.open('https://www.youtube.com/');
   }
 }
 
 function btnGo() {  
   if (shifted) {
-    internetSearch('https://www.youtube.com/results?search_query=');
+    searchYouTube();
   } else {
-    internetSearch('https://www.google.com/search?q=');
+    searchGoogle();
   }  
   $('txt-input').select();
 }
@@ -1929,6 +1967,9 @@ function help(command) {
     case 'date':
       inputText('date: Returns the current date.');
       break;
+    case 'duckgo':
+      inputText('duckgo [query]: Search DuckDuckGo. If no argument is supplied in-line, last entry on stack is used as query.');
+      break; 
     case 'clear':
       inputText('clear: Clears the displays. Alias: cls');
       break;
@@ -1945,7 +1986,7 @@ function help(command) {
       inputText('fix [n]: Fix number of decimals shown on the stack (0 to 17). If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
       break;
     case 'google':
-      inputText('google [query]: Search Google. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
+      inputText('google [query]: Search Google / open link or IP address. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
       break;
     // case 'ip':
     //   inputText('ip: Returns local IP address.');
@@ -2035,6 +2076,9 @@ function help(command) {
     case 'unembed':
       inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
       break;
+    case 'wiki':
+      inputText('wiki [query]: Search Wikipedia. If no argument is supplied in-line, last entry on stack is used as query.');
+      break;    
     case 'youTube':
       inputText('youTube [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query. Alias: you');
       break;    
@@ -2043,7 +2087,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, constants, darkMode, date, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, youTube');
+    inputText('about, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, wiki, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2116,6 +2160,19 @@ function parseCommand() {
       updateDisplay();
       saveTricorder();
     }
+    if (command === 'duckgo'|| command.match(/^duckgo .+/)) {
+      
+      if (commandArray[1] === undefined) {
+        $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
+      } else {
+        commandArray.shift();
+        $('txt-input').value = commandArray.join(' ');
+      }
+      searchDuckDuckGo();
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();
+    }
     if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
       
       if (commandArray[1] === undefined) {
@@ -2124,7 +2181,20 @@ function parseCommand() {
         commandArray.shift();
         $('txt-input').value = commandArray.join(' ');
       }
-      internetSearch('https://www.google.com/search?q=');
+      searchGoogle();
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();
+    }
+    if (command === 'wiki' || command.match(/^wiki .+/)) {
+      
+      if (commandArray[1] === undefined) {
+        $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
+      } else {
+        commandArray.shift();
+        $('txt-input').value = commandArray.join(' ');
+      }
+      searchWikipedia();
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();
@@ -2137,7 +2207,7 @@ function parseCommand() {
         commandArray.shift();
         $('txt-input').value = commandArray.join(' ');
       }
-      internetSearch('https://www.youtube.com/results?search_query=');
+      searchYouTube();
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();
@@ -4227,7 +4297,8 @@ window.onload = function () {
     }
   });
 
-  // $('menu-go').onclick = menuSearchGo;
+  $('menu-google').onclick = searchGoogle;
+  $('menu-youTube').onclick = searchYouTube;
   $('menu-save').onclick = btnSave;
   $('menu-print').onclick = printHtml;
   $('menu-off').onclick = function() {
