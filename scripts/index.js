@@ -62,7 +62,7 @@ var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
 var lastResult = '';
-var tStamp = '21:29:4';
+var tStamp = '23:59:42';
 var testing = false;
 
 var stack = [];
@@ -999,11 +999,11 @@ function inverse() {
     $('txt-input').value = decodeSpecialChar(stack[stackIndex].getSoul());
     backupUndo();// Needed for UI consistency in this case
   }
-  var newUnits = inverseUnits();  
+  var newUnits = inverseUnits();
   var isNumber = !isNaN(extractReal($('txt-input').value));
   var isImaginary = !isNaN(extractImaginary($('txt-input').value));
-  if ($('txt-input').value === lastResult && $('txt-input').value !== backups[backups.length - 3]) {    
-    $('txt-input').value = backups[backups.length - 3];
+  if ($('txt-input').value === lastResult && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {    
+    $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
   } else {
     if (isNumber || isImaginary) {  
       if (isNumber && !isImaginary) {      
@@ -1019,11 +1019,12 @@ function inverse() {
       }
       $('txt-input').value += newUnits;
     } else {
-      var x = calculate($('txt-input').value);
+      // Remove units from equation and calculate
+      var x = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
 
       if (!isNaN(x)) {
-        $('txt-input').value = calculate($('txt-input').value);
-        $('txt-input').value = 1 / $('txt-input').value;    
+        $('txt-input').value = 1 / x;
+        $('txt-input').value += newUnits; 
       } else {
         if(/^1\//.test($('txt-input').value)) {
           $('txt-input').value = $('txt-input').value.slice(2);          
@@ -3104,10 +3105,9 @@ function inverseUnits() {
 
   if (unitsX !== 'null') {
     unitsX = rewriteNegUnitExp(unitsX);
-
     if (unitsX.indexOf('/') !== -1) {
       tmpArray = unitsX.split('/');
-
+      
       if (tmpArray[0].indexOf('1') === -1) {
         invertedUnits += ' ' + tmpArray[1] + '/' + tmpArray[0];
       } else {
