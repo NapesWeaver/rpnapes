@@ -996,7 +996,7 @@ function inverse() {
   backupUndo();
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
-    $('txt-input').value = stack[stackIndex].getSoul();
+    $('txt-input').value = decodeSpecialChar(stack[stackIndex].getSoul());
     backupUndo();// Needed for UI consistency in this case
   }
   var newUnits = inverseUnits();  
