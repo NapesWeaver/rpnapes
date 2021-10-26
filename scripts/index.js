@@ -1027,9 +1027,16 @@ function inverse() {
         $('txt-input').value += newUnits; 
       } else {
         if(/^1\//.test($('txt-input').value)) {
+          // console.log('y');
           $('txt-input').value = $('txt-input').value.slice(2);          
         } else {
-          $('txt-input').value = '1/' + $('txt-input').value.toString();
+          if ($('txt-input').value.trim() === '') {
+            $('txt-input').value = '0';
+            backupUndo();
+            $('txt-input').value = 1 / 0;
+          } else {
+            $('txt-input').value = '1/' + $('txt-input').value.toString();
+          }
         }
       }      
     }
