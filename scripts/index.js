@@ -2037,7 +2037,6 @@ function help(command) {
       inputText('openNotes: Open a text file into Notes.');
       break;
     case 'off':
-      //inputText('off: Close browser tab or redirect to google.com.');
       $('txt-input').value = 'off: Close browser tab or redirect to google.com.';
       enterInput();
       $('txt-input').value ='Firefox users may go to about:config dom.allow_scripts_to_close_windows = true.';
@@ -2063,9 +2062,6 @@ function help(command) {
       break;
     case 'shortcuts':
       inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
-      break;
-    case 'size':
-      inputText('size: Returns the width and height of the browser window.');
       break;
     case 'sound':
       inputText('sound: Toggle sound on/off for Tricorder buttons.');
@@ -2096,7 +2092,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, size, sound, stopwatch, time, toString, unembed, wiki, youTube');
+    inputText('about, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sound, stopwatch, time, toString, unembed, wiki, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2398,11 +2394,6 @@ function parseCommand() {
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
-      break;
-    case 'size':
-      stack.pop();
-      updateDisplay();
-      inputText(getSize());
       break;
     case 'sound':
       stack.pop();
