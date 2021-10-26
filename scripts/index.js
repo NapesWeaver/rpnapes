@@ -62,7 +62,7 @@ var π = Math.PI;// 3.141592653589793
 var G = 6.674e-11;
 var c = 299792458;
 var lastResult = '';
-var tStamp = '6:7:12';
+var tStamp = '21:29:4';
 var testing = false;
 
 var stack = [];
@@ -84,9 +84,6 @@ function NumberObject(soul, realPart, imaginary, units, timeStamp) {
   this.imaginary = imaginary;
   this.units = units;
   this.timeStamp = timeStamp;  
-  if (isNaN(this.realPart) && isNaN(this.imaginary)) {
-    this.units = 'null';
-  }
 }
 NumberObject.prototype.setSoul = function (s) {
   this.soul = s;
@@ -1453,7 +1450,7 @@ function btnAdd() {
 
 function addition() {
   if (stack.toString() !== '') backupUndo();
-  var newUnits = addUnits();  
+  var newUnits = addUnits();
   var objY;
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1467,6 +1464,7 @@ function addition() {
   var result = y + x;
 
   if (radix !== 10) result = result.toString(radix);
+ 
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result; 
   updateDisplay();
@@ -3046,7 +3044,6 @@ function extractImaginary(tmpArray) {
 
 function extractUnits(tmpArray) {
   var tmpUnits = '';
-
   if (tmpArray.indexOf('Infinity') !== -1) tmpArray = tmpArray.replace(/Infinity/g, '');
 
   if (radix !== 16) {
