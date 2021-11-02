@@ -486,7 +486,7 @@ function calculate(x) {
   return x;
 }
 
-function runTest() {
+function runTest() {  
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
       var y = decodeSpecialChar(stack[stack.length - 2].getSoul());
@@ -496,12 +496,12 @@ function runTest() {
     }
   } catch(e) {
     console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
-  }
+  }  
 }
 
 function evaluateExpression(input) {   
   $('txt-input').value = calculate(input);  
-  if (testing) runTest();  
+  if (testing) runTest();
 }
 
 function deleteButton() {
@@ -905,6 +905,8 @@ function saveFile(fileName, pretty) {
 }
 
 function btnLoad() {
+  // var startTime = performance.now();
+  
   var index = 0;
   try { 
     $('btn-save').style.color = '#D4D0C8';        
@@ -920,6 +922,9 @@ function btnLoad() {
     loadMathMon(getCookie('MATHMON').substr(index));
   } catch(err) { rpnAlert('load MathMon error'); }
   updateDisplay();
+  
+  // var endTime = performance.now();
+  // if (testing) console.log(`%c${endTime - startTime} ms`, `font-weight: bold; color: ${'yellow'};`);
 }
 
 function loadStack(tmpStack) {
@@ -1027,7 +1032,6 @@ function inverse() {
         $('txt-input').value += newUnits; 
       } else {
         if(/^1\//.test($('txt-input').value)) {
-          // console.log('y');
           $('txt-input').value = $('txt-input').value.slice(2);          
         } else {
           if ($('txt-input').value.trim() === '') {
@@ -1054,7 +1058,8 @@ function btnFactorial() {
   } else {
     objX = getX();
   }
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());   
+  // var x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = factorial(x);
   
   if (radix !== 10) result = result.toString(radix);
@@ -1107,8 +1112,10 @@ function baseLog() {
     objY = stack.pop();
   }
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
+  // y = !/(['"]|\/[ig]?\.|\/\))/.test(y) && /[!^√]/.test(y) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
   objX = getX();
-  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart()); 
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  // x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   result = log(y, x);  
 
   if (radix !== 10) result = result.toString(radix);
@@ -1130,7 +1137,8 @@ function naturalLog() {
   } else {
     objX = getX();
   }
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  // var x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = ln(x);
 
   if (radix !== 10) result = result.toString(radix);
@@ -1172,8 +1180,10 @@ function exponentialFunction() {
     objY = stack.pop();
   }
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
+  // y = !/(['"]|\/[ig]?\.|\/\))/.test(y) && /[!^√]/.test(y) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
   objX = getX();
-  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  // x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   newUnits = multiplyUnits(x);
 
   result = pow(y, x);
@@ -1210,8 +1220,10 @@ function rootFunction() {
     objY = stack.pop();
   }
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
+  // y = !/(['"]|\/[ig]?\.|\/\))/.test(y) && /[!^√]/.test(y) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
   objX = getX();
-  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart()); 
+  // x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   newUnits = multiplyUnits(1/x);
   
 
@@ -1267,6 +1279,8 @@ function modulus() {
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  // var y = !/(['"]|\/[ig]?\.|\/\))/.test(y) && /[!^√]/.test(y) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  // var x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = y % x;
   
   if (radix !== 10) result = result.toString(radix);
@@ -1376,9 +1390,9 @@ function division() {
   }
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
-  // var yI;
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  // var xI;
+  // var y = !/(['"]|\/[ig]?\.|\/\))/.test(y) && /[!^√]/.test(y) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  // var x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = y / x;
   
   if (radix !== 10) result = result.toString(radix);
@@ -1408,7 +1422,9 @@ function multiplication() {
   }
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  // var y = !/(['"]|\/[ig]?\.|\/\))/.test(y) && /[!^√]/.test(y) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  // var x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
   var result = y * x;
   
   if (radix !== 10) result = result.toString(radix);  
@@ -1439,6 +1455,8 @@ function subtraction() {
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  // var y = !/(['"]|\/[ig]?\.|\/\))/.test(y) && /[!^√]/.test(y) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  // var x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = y - x;
   
   if (radix !== 10) result = result.toString(radix);
@@ -1468,7 +1486,9 @@ function addition() {
   }
   var objX = getX();
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  // var y = !/(['"]|\/[ig]?\.|\/\))/.test(y) && /[!^√]/.test(y) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  // var x = !/(['"]|\/[ig]?\.|\/\))/.test(x) && /[!^√]/.test(x) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = y + x;
 
   if (radix !== 10) result = result.toString(radix);
@@ -2443,29 +2463,25 @@ function parseCommand() {
     default:
       if (twig.health > 0) {
         $('twig').src = 'images/twig/hat-tip.gif';
-        //rpnAlert('pos: ' + twig.xPos + ', ' + twig.yPos);
       }
       break;
     }
   }
 }
 
-function parseEvaluation(input) {  
+function parseEvaluation(input) {
   // If input does not contain quotes or regex (input is not part of another program) AND it contains [!^√]  
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
     input = input.replace(/ /g, '');
     // Parse nested symbols
-    while (/\([-+*/!^√Φπ\w]+\^[-+*/!^√Φπ\w]+\)/.test(input)) input = parseNested(input, '^', 'Math.pow(');
-    while (/\([-+*/!^√Φπ\w]+√[-+*/!^√Φπ\w]+\)/.test(input) || /\(√[-+*/!^√Φπ\w]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot(');
     while (/\([-+*/!^√Φπ\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    while (/\([-+*/!^√Φπ\w]+√[-+*/!^√Φπ\w]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot('); 
+    while (/\([-+*/!^√Φπ\w]+\^[-+*/!^√Φπ\w]+\)/.test(input)) input = parseNested(input, '^', 'mathsPow(');
     // Parse in-line symbols
-    while (/[Φπ\w)]\^[-(Φπ\w]/.test(input)) input = parseInline(input, '^', 'Math.pow(');
-    while (/√[(Φπ\w]/.test(input) || /[Φπ\w)]√[(Φπ\w]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
     while (/[(Φπ\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');
-    // while (/[(Φπ\w]!/.test(input)) {
-    while (/[()Φπ\w]!/.test(input)) {
-      input = parseInline(input, '!', 'factorial(');
-    }
+    while (/√[(Φπ\w]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
+    while (/[Φπ\w)]\^[-√(Φπ\w]/.test(input)) input = parseInline(input, '^', 'mathsPow(');
+    while (/[()Φπ\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');
   }
   return input;
 }
@@ -2508,22 +2524,21 @@ function parseNested(input, symbol, prefix) {
   return input;
 }
 
-function parseInline(input, symbol, prefix) {    
+function parseInline(input, symbol, prefix) {
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
-  var parentheses = 0;  
+  var parentheses = 0;
+  
   // Overwrite symbol
   while (inputArr[index] !== symbol) {
     index++;
-  }
-  if (inputArr[index - 1] === undefined || /[-+*/(]/.test(inputArr[index - 1])) {
-    // '2,' for implicit notation e.g. √16 => 2√16
-    inputArr[index] = '2,';    
-  } else if (inputArr[index] === '!'){// factorial !
+  }  
+  if (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)]/g.test(inputArr[index - 1]))) {
+  // if (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[-+*/^ΦGecπ)]/g.test(inputArr[index - 1]))) {
     inputArr[index] = '';
-  } else {// powers ^
-    inputArr[index] = ',';    
+  } else {// ^ √
+    inputArr[index] = ',';
   }
   endPos = index;
   // Insert prefix
@@ -2549,7 +2564,8 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos] === '(') parentheses++;
     if (inputArr[endPos] === ')') parentheses--;
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;
-  } while (endPos < inputArr.length && (!/[-+*/^√!)]/.test(inputArr[endPos]) || /[Φπ\w.,]/.test(inputArr[endPos]) || parentheses > 0));    
+  } while (endPos < inputArr.length && (!/[-+*/)]/.test(inputArr[endPos]) || /[Φπ\w.,]/.test(inputArr[endPos]) || parentheses > 0));    
+  
   inputArr.splice(endPos, 0, ')');
 
   input = inputArr.join('');
@@ -2558,7 +2574,15 @@ function parseInline(input, symbol, prefix) {
 
 // Passed to parseNested() and parseInline() as partial strings eg. 'mathsRoot('
 function mathsRoot(y, x) {
+  if (x === undefined) {
+    x = y;
+    y = 2;
+  }
   return Math.pow(x, 1/y);
+}
+
+function mathsPow(y, x) {
+  return Math.pow(y, x);
 }
 
 // Wired to HTML
@@ -2981,7 +3005,8 @@ function extractReal(tmpArray) {
   var tmpReal = '';
   if (radix === 10) {
     // We are checking that it is not a constant or an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address && not containing evaluation symbols && an not an imaginary number
-    if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    // if (!/^[\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
+    if (!/^[-+\dΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpArray) && !/^\d+[.]\d*[.]\d*/g.test(tmpArray) && !/^\d+[.]*\d*\s*[×,;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpArray) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpArray)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpArray);
     }
