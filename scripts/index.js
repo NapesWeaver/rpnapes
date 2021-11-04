@@ -3005,7 +3005,7 @@ function extractReal(tmpString) {
   var tmpReal = '';
   if (radix === 10) {
     // We are checking that it is not a number followed by evaluation symbols && an not an imaginary number && not a constant in an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address
-    if (!/^\d+[.]*\d*\s*[,;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpString) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpString) && !/^[-+ΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
+    if (!/^\d+[.]*\d*\s*[;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpString) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpString) && !/^[-+ΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpString);
     }
