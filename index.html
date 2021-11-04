@@ -26,11 +26,9 @@
   </head>
   <body>
     <div id="wrap">
-
       <header>
         <input type="button" id="btn-xoff" class='btn-other btn-xoff haptic-response' name="btn-xoff" title="Toggle interface" value="&nbsp;"/>
-      </header>
-      
+      </header>      
       <main id="main">
         <!-- RPNapes -->
         <div id="rpnapes">
@@ -203,7 +201,6 @@
                         <li><a id="menu-carat" class="symbol-big" title="Carat"><sub class="symbol-big">&nbsp;&nbsp;&#94;</sub></a></li>
                         <li><a id="menu-solidus" title="Solidus">&nbsp;&nbsp;&#47;</a></li>
                         <li><a id="menu-asterisk" class="symbol-big" title="Times">&nbsp;&nbsp;<sub class="symbol-big">&#42;</sub></a></li>
-                        <!-- <li><a id="menu-minus" class="symbol-big" title="Minus">&nbsp;&nbsp;&#45;</a></li> -->
                         <li><a id="menu-minus" class="symbol-big" title="Minus">&nbsp;&nbsp;&#8722;</a></li>
                         <li><a id="menu-plus" class="symbol-big" title="Plus">&nbsp;&nbsp;&#43;</a></li>
                         <li><a id="menu-ohm" title="Ohms">&nbsp;&nbsp;&#937;</a></li>
@@ -216,10 +213,8 @@
               </ul>
             </nav>
           </div>
-
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="97" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Nov 3, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="97" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Nov 4, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
-
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
           <input type="button" id="btn-xy" class="btn-big haptic-response" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y"/>
           <input type="button" id="btn-enter" class="btn-big haptic-response" value="ENTER"/>
@@ -267,7 +262,6 @@
             <input type="button" id="btn-off" class="btn-med btn-off haptic-response" value="OFF"/>
           </div>
         </div>
-
         <!-- Notes -->
         <div id="notes" class="hidden">
           <div class="num-pad notes-fixed">
@@ -282,54 +276,34 @@
           </div>
           <textarea contenteditable="true" id="lst-notes" class="lst-notes haptic-response resizable" name="notes" placeholder="Notes:"></textarea>
         </div>
-
         <!-- Tricorder -->
         <div id="tricorder" class="hidden">
-          <!--<audio id="astrogator" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_astrogator_1.mp3"></audio>-->
-          <!--<audio id="beta5computer" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_beta5computer.mp3"></audio>-->
           <audio id="communications-static" preload="none" src="http://www.trekcore.com/audio/other/tos_communications_static.mp3"></audio>
           <audio id="computer-thinking" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_computerthinking1_ep.mp3"></audio>
-          <!--<audio id="datainsufficient" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_datainsufficient_ep.mp3"></audio>-->
           <audio id="data-received" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_datareceived_ep.mp3"></audio>
           <audio id="destruct" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_destructsequence_ep.mp3"></audio>
-          <!--<audio id="hailing" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_hailing.mp3"></audio>-->
           <audio id="hailing-frequencies" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_hailing_frequencies_open.mp3"></audio>
-          <!--<audio id="inaccurate-error" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_inaccurateerror_ep.mp3"></audio>-->
-          <!--<audio id="incorrect" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_incorrect_ep.mp3"></audio>-->
           <audio id="keypress1" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress1.mp3"></audio>
           <audio id="keypress2" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress2.mp3"></audio>
           <audio id="keypress3" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress3.mp3"></audio>
           <audio id="keypress5" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress5.mp3"></audio>
           <audio id="keypress6" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress6.mp3"></audio>
           <audio id="keypress7" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_keypress7.mp3"></audio>
-          <!--<audio id="negative" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_negative_ep.mp3"></audio>-->
-          <!--<audio id="red-alert" preload="none" src="http://www.trekcore.com/audio/redalertandklaxons/tos_red_alert.mp3"></audio>-->
           <audio id="scanner" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_scanner.mp3"></audio>
           <audio id="spocks-viewer" preload="none" src="http://www.trekcore.com/audio/toscomputer/sequences/tos_spocksviewer_bridge.mp3"></audio>
           <audio id="tricorder-alert" preload="none" src="http://www.trekcore.com/audio/tricorder/tos_tricoder_alert.mp3"></audio>
-          <!--<audio id="unable-to-comply" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_unabletocomply.mp3"></audio>-->
           <audio id="verified" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_verified.mp3"></audio>
-          <!--<audio id="viewscreen" preload="none" src="http://www.trekcore.com/audio/toscomputer/tos_viewscreen_fast.mp3"></audio>-->
           <audio id="working" preload="none" src="http://www.trekcore.com/audio/toscomputer/voice/tos_working.mp3"></audio>
-
           <img id="tricorderskin" src="images/tricorder.png" alt="tricorder" usemap="#tricordermap" width="379" height="579"/>
           <map name="tricordermap">
-            <!-- <area id="sensor1" shape="rect" coords="250,24,293,72" title="Sensor 1" href="javascript:void(0)" alt="sensor1">
-            <area id="sensor2" shape="circle" coords="273,237,39" title="Sensor 2" href="javascript:void(0)" alt="sensor2">
-            <area id="button1" shape="circle" coords="237,94,10" title="ON/OFF" href="javascript:void(0)" alt="button1">
-            <area id="button2" shape="circle" coords="273,94,10" title="Button 2" href="javascript:void(0)" alt="button2">
-            <area id="button3" shape="circle" coords="310,94,10" title="Button 3" href="javascript:void(0)" alt="button3">
-            <area id="button4" shape="circle" coords="237,125,10" title="Button 4" href="javascript:void(0)" alt="button4">
-            <area id="button5" shape="circle" coords="273,125,10" title="Button 5" href="javascript:void(0)" alt="button5">
-            <area id="button6" shape="circle" coords="310,125,10" title="Button 6" href="javascript:void(0)" alt="button6"> -->
-            <area id="sensor1" class="btn-mapped" shape="rect" coords="250,24,293,72" title="Sensor 1" alt="sensor1">
-            <area id="sensor2" class="btn-mapped" shape="circle" coords="273,237,39" title="Sensor 2" alt="sensor2">
-            <area id="button1" class="btn-mapped" shape="circle" coords="237,94,10" title="ON/OFF" alt="button1">
-            <area id="button2" class="btn-mapped" shape="circle" coords="273,94,10" title="Button 2" alt="button2">
-            <area id="button3" class="btn-mapped" shape="circle" coords="310,94,10" title="Button 3" alt="button3">
-            <area id="button4" class="btn-mapped" shape="circle" coords="237,125,10" title="Button 4" alt="button4">
-            <area id="button5" class="btn-mapped" shape="circle" coords="273,125,10" title="Button 5" alt="button5">
-            <area id="button6" class="btn-mapped" shape="circle" coords="310,125,10" title="Button 6" alt="button6">
+            <area id="sensor1" class="btn-mapped" href="#" shape="rect" coords="250,24,293,72" title="Sensor 1" alt="sensor1">
+            <area id="sensor2" class="btn-mapped" href="#" shape="circle" coords="273,237,39" title="Sensor 2" alt="sensor2">
+            <area id="button1" class="btn-mapped" href="#" shape="circle" coords="237,94,10" title="ON/OFF" alt="button1">
+            <area id="button2" class="btn-mapped" href="#" shape="circle" coords="273,94,10" title="Button 2" alt="button2">
+            <area id="button3" class="btn-mapped" href="#" shape="circle" coords="310,94,10" title="Button 3" alt="button3">
+            <area id="button4" class="btn-mapped" href="#" shape="circle" coords="237,125,10" title="Button 4" alt="button4">
+            <area id="button5" class="btn-mapped" href="#" shape="circle" coords="273,125,10" title="Button 5" alt="button5">
+            <area id="button6" class="btn-mapped" href="#" shape="circle" coords="310,125,10" title="Button 6" alt="button6">
           </map>
           <iframe id="viewport" class="hidden" name="viewport" width="142" height="104" src=""></iframe>
           <iframe id="widget" class="hidden" name="widget" width="285" height="249" src="" allowfullscreen></iframe>
