@@ -904,10 +904,9 @@ function saveFile(fileName, pretty) {
   }
 }
 
-function btnLoad() {
-  // var startTime = performance.now();
-  
+function btnLoad() {  
   var index = 0;
+
   try { 
     $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
@@ -922,9 +921,6 @@ function btnLoad() {
     loadMathMon(getCookie('MATHMON').substr(index));
   } catch(err) { rpnAlert('load MathMon error'); }
   updateDisplay();
-  
-  // var endTime = performance.now();
-  // if (testing) console.log(`%c${endTime - startTime} ms`, `font-weight: bold; color: ${'yellow'};`);
 }
 
 function loadStack(tmpStack) {
@@ -2810,28 +2806,16 @@ function printHtml() {
   print();
 }
 
-function isANumber(testString) {  
-  var isNumber = true;
-  if (isNaN(testString)) isNumber = false;
-  if (testString.toString().match(/Φ/)) isNumber = true;
-  if (testString.toString().match(/e/)) isNumber = true;
-  if (testString.toString().match(/π/)) isNumber = true;
-  if (testString.toString().match(/G/)) isNumber = true;
-  if (testString.toString().match(/c/)) isNumber = true;
-  return isNumber;
-}
-
 function prettyPrint(i, content) {
-  // If not a number and not imaginary
-  if (!isANumber(stack[i].getRealPart()) && !isANumber(stack[i].getImaginary())) {
+  if (isNaN(stack[i].getRealPart()) && isNaN(stack[i].getImaginary())) {
     content += decodeSpecialChar(stack[i].getSoul());
   } else {
     // If a number
-    if (isANumber(stack[i].getRealPart())) {
+    if (!isNaN(stack[i].getRealPart())) {
       // Append number
       content += formatNumber(stack[i].getRealPart().toString());
       // If complex number
-      if (isANumber(stack[i].getImaginary())) {
+      if (!isNaN(stack[i].getImaginary())) {
         // If imaginary number is positive
         if (parseFloat(stack[i].getImaginary()) > 0) {
           // Append positive imaginary number
@@ -3005,7 +2989,8 @@ function extractReal(tmpString) {
   var tmpReal = '';
   if (radix === 10) {
     // We are checking that it is not a number followed by evaluation symbols && an not an imaginary number && not a constant in an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address
-    if (!/^\d+[.]*\d*\s*[;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpString) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpString) && !/^[-+ΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
+    // if (!/^\d+[.]*\d*\s*[;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpString) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpString) && !/^[-+ΦeπGc]+[-+*/^√]\d*[-+]?\d*/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
+    if (!/^\d+[.]*\d*\s*[;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpString) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
       // parseFloat does the rest of the regex work for us
       tmpReal = parseFloat(tmpString);
     }
@@ -3070,20 +3055,9 @@ function extractUnits(tmpString) {
   if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
 
   if (radix !== 16) {
-    if (isNaN(extractReal($('txt-input').value))) {
-      // Extract from the end, after an explicit space
-      tmpUnits += tmpString.match(/[ ](?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
-      if (tmpUnits !== 'null') tmpUnits = tmpUnits.slice(1);
-    } else {
-      tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
-    }
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
   } else {
-    if (isNaN(extractReal($('txt-input').value))) {
-      tmpUnits += tmpString.match(/[ ](?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);      
-      if (tmpUnits !== 'null') tmpUnits = tmpUnits.slice(1);
-    } else {
-      tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
-    }
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
   }
   return tmpUnits;
 }
@@ -3254,6 +3228,7 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
   }
   return unitsCombined;
 }
+
 function appendUnits(unitString, tmpUnits, exponent) {
 
   if (tmpUnits !== 'null') {
@@ -3272,6 +3247,23 @@ function appendUnits(unitString, tmpUnits, exponent) {
     }
   }
   return unitString;
+}
+
+function removeNegativeExponentSign(factorsArray) {
+  var tmpArray = [];
+  var i = 0;
+
+  while (i < factorsArray.length) {
+    if (factorsArray[i].indexOf('-') !== -1) {
+      var tmpString = '';
+      tmpString += factorsArray.splice(i, 1).toString();
+      tmpString = tmpString.replace(/-/g, '');
+      tmpArray.push(tmpString);
+      i--;
+    }
+    i++;
+  }
+  return tmpArray;
 }
 
 function rewriteNegUnitExp(tmpUnits) {
@@ -3307,22 +3299,6 @@ function rewriteNegUnitExp(tmpUnits) {
     newUnits = tmpUnits;
   }
   return newUnits;
-}
-function removeNegativeExponentSign(factorsArray) {
-  var tmpArray = [];
-  var i = 0;
-
-  while (i < factorsArray.length) {
-    if (factorsArray[i].indexOf('-') !== -1) {
-      var tmpString = '';
-      tmpString += factorsArray.splice(i, 1).toString();
-      tmpString = tmpString.replace(/-/g, '');
-      tmpArray.push(tmpString);
-      i--;
-    }
-    i++;
-  }
-  return tmpArray;
 }
 
 function setFixDecimal(value) {
