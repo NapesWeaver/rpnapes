@@ -62,7 +62,7 @@ var π = Math.PI;// 3.141592653589793
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var lastResult = '';
-var tStamp = '20:10:55';
+var tStamp = '21:18:03';
 var testing = false;
 
 var stack = [];
@@ -77,13 +77,14 @@ var fixDecimal = -1;
 var sciDecimal = -1;
 var radix = 10;
 
-function NumberObject(soul, realPart, imaginary, units, timeStamp) {
+// function NumberObject(soul, realPart, imaginary, units, timeStamp) {
+function NumberObject(soul, realPart, imaginary, units) {
 
   this.soul = soul;
   this.realPart = realPart;
   this.imaginary = imaginary;
   this.units = units;
-  this.timeStamp = timeStamp;  
+  // this.timeStamp = timeStamp;  
 }
 NumberObject.prototype.setSoul = function (s) {
   this.soul = s;
@@ -109,14 +110,17 @@ NumberObject.prototype.setUnits = function (u) {
 NumberObject.prototype.getUnits = function () {
   return this.units;
 };
-NumberObject.prototype.setTimestamp = function (t) {
-  this.timeStamp = t;
-};
-NumberObject.prototype.getTimeStamp = function () {
-  return this.timeStamp;
-};
+// NumberObject.prototype.setTimestamp = function (t) {
+//   this.timeStamp = t;
+// };
+// NumberObject.prototype.getTimeStamp = function () {
+//   return this.timeStamp;
+// };
+// NumberObject.prototype.toString = function () {
+//   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
+// };
 NumberObject.prototype.toString = function () {
-  return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units + ', ' + this.timeStamp;
+  return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
 };
 
 function resetPhi() {
@@ -465,10 +469,11 @@ function getX() {
   var realPartX = extractReal(soulX);
   var imaginaryX = extractImaginary(soulX);
   var unitsX = extractUnits(soulX);
-  var timeStampX = Date.now();
+  // var timeStampX = Date.now();
   soulX = encodeSpecialChar(soulX);
   unitsX = encodeSpecialChar(unitsX);
-  return new NumberObject(soulX, realPartX, imaginaryX, unitsX, timeStampX);
+  // return new NumberObject(soulX, realPartX, imaginaryX, unitsX, timeStampX);
+  return new NumberObject(soulX, realPartX, imaginaryX, unitsX);
 }
 
 function enterInput() {
@@ -634,22 +639,22 @@ function redoFunction() {
   colorUndoButton();
 }
 
-function removeTimestamps(obj) {
-  for (var str in obj) {
-    if (obj[str] !== '') {
-      obj[str] = obj[str].slice(0, obj[str].length - 15);
-    }
-  }
-  return obj;
-}
+// function removeTimestamps(obj) {
+//   for (var str in obj) {
+//     if (obj[str] !== '') {
+//       obj[str] = obj[str].slice(0, obj[str].length - 15);
+//     }
+//   }
+//   return obj;
+// }
 
-function deleteRedundantBackups() {
-  var bak1;
-  var bak2;
-  if (backups.length > 1) bak1 = removeTimestamps(splitArrayByBrowser(backups[backups.length - 2]));
-  if (backups.length > 3) bak2 = removeTimestamps(splitArrayByBrowser(backups[backups.length - 4])); 
-  if (backups.length > 3 && JSON.stringify(bak1) === JSON.stringify(bak2)) backups.length = backups.length - 2;
-}
+// function deleteRedundantBackups() {
+//   var bak1;
+//   var bak2;
+//   if (backups.length > 1) bak1 = removeTimestamps(splitArrayByBrowser(backups[backups.length - 2]));
+//   if (backups.length > 3) bak2 = removeTimestamps(splitArrayByBrowser(backups[backups.length - 4])); 
+//   if (backups.length > 3 && JSON.stringify(bak1) === JSON.stringify(bak2)) backups.length = backups.length - 2;
+// }
 
 function backupUndo() {
   backups.push(nestArrayByBrowser(stack));
@@ -926,7 +931,7 @@ function btnLoad() {
 function loadStack(tmpStack) {
   var prevStack = nestArrayByBrowser(stack);
   if (prevStack !== tmpStack || shifted) backupUndo();
-  deleteRedundantBackups();
+  // deleteRedundantBackups();
   stack = [];
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
@@ -961,8 +966,9 @@ function pushObjectToStack(tmpArray) {
   var realPartY = tmpArray[1].trim();
   var unitsY = tmpArray[2].trim();
   var imaginaryY = tmpArray[3].trim();
-  var timeStampY = tmpArray[4].trim();
-  var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY, timeStampY);  
+  // var timeStampY = tmpArray[4].trim();
+  // var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY, timeStampY);  
+  var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY);  
 
   stack.push(objY);
 }
@@ -2124,7 +2130,8 @@ function help(command) {
 
 function parseCommand() {
   var command = $('txt-input').value.trim();
-  var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', null, null, null, null);
+  // var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', null, null, null, null);
+  var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', null, null, null);
 
   // Commands consist of words and numbers and URLs
   if (!/[,*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
@@ -3030,7 +3037,7 @@ function extractReal(tmpString) {
     }
   }  
   if (tmpReal === '' || tmpReal === 'null') tmpReal = NaN;
-  // console.log('tmpReal', '\'' + tmpReal + '\'');
+  console.log('tmpReal', '\'' + tmpReal + '\'');
   return tmpReal;
 }
 
@@ -3054,7 +3061,7 @@ function extractImaginary(tmpString) {
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
   if (tmpImaginary === 'nul' || tmpImaginary === '') tmpImaginary = NaN;
-  // console.log('tmpImaginary:', '\'' + tmpImaginary + '\'');
+  console.log('tmpImaginary:', '\'' + tmpImaginary + '\'');
   return tmpImaginary;
 }
 
