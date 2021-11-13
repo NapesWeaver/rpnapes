@@ -624,9 +624,9 @@ function backupUndo() {
 function btnEe() {
   var input = $('txt-input').value;
   if (shifted) {
-    if (/[0-9]$/.test(input) && !/[0-9]j[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'j');
+    if (/Infinity|[ⅽ℮ɢΦπ0-9]$/.test(input) && !/j/g.test(input)) insertAtCursor($('txt-input'), 'j');
   } else {
-    if (/[0-9]$/.test(input) && !/[0-9]e[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'e');
+    if (/[0-9]$/.test(input) && !/e/g.test(input)) insertAtCursor($('txt-input'), 'e');
   }
   $('txt-input').focus();
 }
@@ -2730,14 +2730,10 @@ function prettyPrint(i, content) {
   // If not a number and not imaginary
   if (!isNumber(stack[i].getRealPart()) && !isNumber(stack[i].getImaginary())) {
     content += decodeSpecialChar(stack[i].getSoul());
-  } else {
-    // If a number
-    if (isNumber(stack[i].getRealPart())) {
-      // Append number
+  } else {// There is a real component
+    if (isNumber(stack[i].getRealPart())) {      
       content += formatNumber(stack[i].getRealPart().toString());
-      // If complex number
-      if (isNumber(stack[i].getImaginary())) {
-        // If imaginary number is positive
+      if (isNumber(stack[i].getImaginary())) {// There is an imanginary component        
         if (stack[i].getImaginary().charAt(0) === '-') {
           // Append negative imaginary number
           content += ' - ' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
@@ -2746,8 +2742,7 @@ function prettyPrint(i, content) {
           content += ' + ' + formatNumber(stack[i].getImaginary().toString()) + 'j';
         }
       }
-    } else {
-      // If imaginary number is positive
+    } else {// There is no real component
       if (stack[i].getImaginary().charAt(0) === '-') {
         // Append negative imaginary number
         content += '-' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
@@ -2755,8 +2750,7 @@ function prettyPrint(i, content) {
         // Append positive imaginary number
         content += formatNumber(stack[i].getImaginary().toString()) + 'j';
       }
-    }
-    // If there are units, append units
+    }// If there are units, append units
     if (stack[i].getUnits() !== 'null') content += ' ' + decodeSpecialChar(stack[i].getUnits());          
   }
   return content;
