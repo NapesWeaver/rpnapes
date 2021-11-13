@@ -2806,75 +2806,41 @@ function printHtml() {
   print();
 }
 
-// function prettyPrint(i, content) {
-//   if (isNaN(stack[i].getRealPart()) && isNaN(stack[i].getImaginary())) {
-//     content += decodeSpecialChar(stack[i].getSoul());
-//   } else {
-//     // If a number
-//     if (!isNaN(stack[i].getRealPart())) {
-//       // Append number
-//       content += formatNumber(stack[i].getRealPart().toString());
-//       // If complex number
-//       if (!isNaN(stack[i].getImaginary())) {
-//         // If imaginary number is positive
-//         if (parseFloat(stack[i].getImaginary()) > 0) {
-//           // Append positive imaginary number
-//           content += ' + ' + formatNumber(stack[i].getImaginary().toString()) + 'j';
-//         } else {
-//           // Append negative imaginary number
-//           content += ' - ' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
-//         }
-//       }
-//     } else {
-//       // If imaginary number is positive
-//       if (parseFloat(stack[i].getImaginary()) > 0) {
-//         // Append positive imaginary number
-//         content += formatNumber(stack[i].getImaginary().toString()) + 'j';
-//       } else {
-//         // Append negative imaginary number
-//         content += '-' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
-//       }
-//     }
-//     // If there are units, append units
-//     if (stack[i].getUnits() !== 'null') {
-//       content += ' ' + decodeSpecialChar(stack[i].getUnits());
-//     }          
-//   }
-//   return content;
-// }
+function isNumber(testString) {  
+  var isNum = true;
+  if (isNaN(testString)) isNum = false;
+  if (/[ⅽ℮ɢΦπ]/g.test(testString)) isNum = true;
+  return isNum;
+}
 
 function prettyPrint(i, content) {
-  // console.log('stack[i].getSoul():', stack[i].getSoul());
-  // console.log('stack[i].getRealPart():', stack[i].getRealPart());
-  // console.log('stack[i].getImaginary():', stack[i].getImaginary());
-  // console.log('stack[i].getUnits():', stack[i].getUnits());
   // If not a number and not imaginary
-  if (isNaN(stack[i].getRealPart()) && isNaN(stack[i].getImaginary())) {
+  if (!isNumber(stack[i].getRealPart()) && !isNumber(stack[i].getImaginary())) {
     content += decodeSpecialChar(stack[i].getSoul());
   } else {
     // If a number
-    if (!isNaN(stack[i].getRealPart())) {
+    if (isNumber(stack[i].getRealPart())) {
       // Append number
       content += formatNumber(stack[i].getRealPart().toString());
       // If complex number
-      if (!isNaN(stack[i].getImaginary())) {
+      if (isNumber(stack[i].getImaginary())) {
         // If imaginary number is positive
-        if (parseFloat(stack[i].getImaginary()) > 0) {
-          // Append positive imaginary number
-          content += ' + ' + formatNumber(stack[i].getImaginary().toString()) + 'j';
-        } else {
+        if (stack[i].getImaginary().charAt(0) === '-') {
           // Append negative imaginary number
           content += ' - ' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
+        } else {
+          // Append positive imaginary number
+          content += ' + ' + formatNumber(stack[i].getImaginary().toString()) + 'j';
         }
       }
     } else {
       // If imaginary number is positive
-      if (parseFloat(stack[i].getImaginary()) > 0) {
-        // Append positive imaginary number
-        content += formatNumber(stack[i].getImaginary().toString()) + 'j';
-      } else {
+      if (stack[i].getImaginary().charAt(0) === '-') {
         // Append negative imaginary number
         content += '-' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
+      } else {
+        // Append positive imaginary number
+        content += formatNumber(stack[i].getImaginary().toString()) + 'j';
       }
     }
     // If there are units, append units
@@ -3032,15 +2998,14 @@ function decodeSpecialChar(tmpString) {
   return tmpString;
 }
 
-// Extract Real component from 'soul' of argument
 function extractReal(tmpString) {
   var tmpReal = '';
   if (radix === 10) {
     // We are checking that it is not a number followed by evaluation symbols && an not an imaginary number && not a constant in an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address
-    // if (!/^\d+[.]*\d*\s*[;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpString) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpString) && !/^[-+ⅽ℮ɢΦπ]+[-+*/^√]\d*[-+]?\d*/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
     if (!/^\d+[.]*\d*\s*[;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpString) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
-      // parseFloat does the rest of the regex work for us
-      tmpReal = parseFloat(tmpString);
+      tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
+      // tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)|[-+]?Infinity(?!j)/);
+      // console.log('tmpReal', '\'' + tmpReal + '\'');
     }
   }
   if (radix === 2) {
@@ -3062,26 +3027,19 @@ function extractReal(tmpString) {
     }
   }  
   if (tmpReal === '') tmpReal = NaN;
+  // console.log('tmpReal', '\'' + tmpReal + '\'');
   return tmpReal;
 }
 
-// Extract Imaginary component from 'soul' of argument
 function extractImaginary(tmpString) {
   var tmpImaginary = '';  
 
-  if (radix === 10) {
-    // tmpImaginary += tmpString.match(/[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j/);    
-    tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j/);    
-    // Remove any space following a '+' or '-'
-    // if (tmpImaginary.charAt(1) === ' ') {
-    //   tmpImaginary = tmpImaginary.replace(/ /g, '');
-    // }
+  if (radix === 10) { 
+    tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|Infinityj/);    
     tmpImaginary = tmpImaginary.replace(/ /g, '');
     if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.substring(1);
-    // console.log('tmpImaginary:', '\'' + tmpImaginary + '\'');
     // Remove 'j'
-    tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
-    // tmpImaginary = parseFloat(tmpImaginary);    
+    tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);     
   } else {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
     if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
@@ -3092,8 +3050,8 @@ function extractImaginary(tmpString) {
     tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
-  // console.log('tmpImaginary:', '\'' + tmpImaginary + '\'');
   if (tmpImaginary === 'nul' || tmpImaginary === '') tmpImaginary = NaN;
+  // console.log('tmpImaginary:', '\'' + tmpImaginary + '\'');
   return tmpImaginary;
 }
 
