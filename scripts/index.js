@@ -62,7 +62,7 @@ var π = Math.PI;// 3.141592653589793
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var lastResult = '';
-var tStamp = '21:18:03';
+var tStamp = '22:26:26';
 var testing = false;
 
 var stack = [];
@@ -3036,8 +3036,9 @@ function extractReal(tmpString) {
       tmpReal = parseInt(tmpString, radix);
     }
   }  
-  if (tmpReal === '' || tmpReal === 'null') tmpReal = NaN;
-  console.log('tmpReal', '\'' + tmpReal + '\'');
+  // console.log('tmpReal', '\'' + tmpReal + '\'');
+  if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
+  // console.log('tmpReal', '\'' + tmpReal + '\'');
   return tmpReal;
 }
 
@@ -3060,8 +3061,8 @@ function extractImaginary(tmpString) {
     tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
-  if (tmpImaginary === 'nul' || tmpImaginary === '') tmpImaginary = NaN;
-  console.log('tmpImaginary:', '\'' + tmpImaginary + '\'');
+  if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;
+  // console.log('tmpImaginary:', '\'' + tmpImaginary + '\'');
   return tmpImaginary;
 }
 
