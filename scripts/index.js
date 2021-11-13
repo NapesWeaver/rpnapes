@@ -60,7 +60,7 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var lastResult = '';
-var tStamp = '0:26:34';
+var tStamp = '1:49:34';
 var testing = false;
 
 var stack = [];
@@ -2036,8 +2036,7 @@ function help(command) {
 
 function parseCommand() {
   var command = $('txt-input').value.trim();
-  // var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', null, null, null, null);
-  var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', null, null, null);
+  var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', NaN, NaN, 'null');
 
   // Commands consist of words and numbers and URLs
   if (!/[,*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
@@ -2758,9 +2757,7 @@ function prettyPrint(i, content) {
       }
     }
     // If there are units, append units
-    if (stack[i].getUnits() !== 'null') {
-      content += ' ' + decodeSpecialChar(stack[i].getUnits());
-    }          
+    if (stack[i].getUnits() !== 'null') content += ' ' + decodeSpecialChar(stack[i].getUnits());          
   }
   return content;
 }
@@ -2984,8 +2981,8 @@ function extractUnits(tmpString) {
 function addUnits() {
   var units = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
-  var unitsX = extractUnits($('txt-input').value);
-
+  var objX = getX();
+  var unitsX = objX.getUnits();
   if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = ' ' + unitsY;
   if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = ' ' + unitsX;
   if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
@@ -2995,7 +2992,8 @@ function addUnits() {
 function multiplyUnits(multiplier) {
   var units = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
-  var unitsX = extractUnits($('txt-input').value);
+  var objX = getX();
+  var unitsX = objX.getUnits();
   if ((unitsY !== 'null' || unitsX !== 'null')) {
     units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
   }
@@ -3005,7 +3003,8 @@ function multiplyUnits(multiplier) {
 function divideUnits(multiplier) {
   var units = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
-  var unitsX = extractUnits($('txt-input').value);
+  var objX = getX();
+  var unitsX = objX.getUnits();
 
   if ((unitsY !== 'null' || unitsX !== 'null') && unitsY !== unitsX) {
     units = ' ' + processUnits(unitsY, unitsX, multiplier, false);
@@ -3016,7 +3015,8 @@ function divideUnits(multiplier) {
 function inverseUnits() {
   var tmpArray = [];
   var invertedUnits = '';
-  var unitsX = extractUnits($('txt-input').value);
+  var objX = getX();
+  var unitsX = objX.getUnits();
 
   if (unitsX !== 'null') {
     unitsX = rewriteNegUnitExp(unitsX);
