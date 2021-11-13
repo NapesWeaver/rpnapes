@@ -60,7 +60,7 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var lastResult = '';
-var tStamp = '1:49:34';
+var tStamp = '9:49:34';
 var testing = false;
 
 var stack = [];
@@ -626,7 +626,7 @@ function btnEe() {
   if (shifted) {
     if (/Infinity|[ⅽ℮ɢΦπ0-9]$/.test(input) && !/j/g.test(input)) insertAtCursor($('txt-input'), 'j');
   } else {
-    if (/[0-9]$/.test(input) && !/e/g.test(input)) insertAtCursor($('txt-input'), 'e');
+    if (/[0-9]$/.test(input) && !/[0-9]e[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'e');
   }
   $('txt-input').focus();
 }
