@@ -62,7 +62,7 @@ var π = Math.PI;// 3.141592653589793
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var lastResult = '';
-var tStamp = '23:59:42';
+var tStamp = '20:10:55';
 var testing = false;
 
 var stack = [];
@@ -3000,12 +3000,15 @@ function decodeSpecialChar(tmpString) {
 
 function extractReal(tmpString) {
   var tmpReal = '';
-  if (radix === 10) {
-    // We are checking that it is not a number followed by evaluation symbols && an not an imaginary number && not a constant in an instance of addition, subtraction, multiplication, division, power-of, root && not an IP address
-    if (!/^\d+[.]*\d*\s*[;/<>?:`~!@#$%^&*(){}[\]|\\_=]+\s*\d*[.]*\d*/g.test(tmpString) && !/^[-+]?\d*[.]?\d*[eE]?[-+]?\d*j/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
-      tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
-      // tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)|[-+]?Infinity(?!j)/);
-      // console.log('tmpReal', '\'' + tmpReal + '\'');
+  if (radix === 10) {  
+    // We are checking that it is not a number followed by evaluation symbols && an not an imaginary number && not an IP address
+    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^&*x(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
+      
+      if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
+        tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
+      } else {
+        tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
+      }
     }
   }
   if (radix === 2) {
@@ -3026,7 +3029,7 @@ function extractReal(tmpString) {
       tmpReal = parseInt(tmpString, radix);
     }
   }  
-  if (tmpReal === '') tmpReal = NaN;
+  if (tmpReal === '' || tmpReal === 'null') tmpReal = NaN;
   // console.log('tmpReal', '\'' + tmpReal + '\'');
   return tmpReal;
 }
@@ -3035,7 +3038,7 @@ function extractImaginary(tmpString) {
   var tmpImaginary = '';  
 
   if (radix === 10) { 
-    tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|Infinityj/);    
+    tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
     tmpImaginary = tmpImaginary.replace(/ /g, '');
     if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.substring(1);
     // Remove 'j'
