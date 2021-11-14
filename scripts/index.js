@@ -951,11 +951,14 @@ function btnInverse() {
 function inverse() {
   backupUndo();
 
+  var objX;  
   if (stackFocus) {
-    $('txt-input').value = decodeSpecialChar(stack[getIndex('lst-stack') - stackSize].getSoul());
+    objX = stack[getIndex('lst-stack') - stackSize];
+    $('txt-input').value = decodeSpecialChar(objX.getSoul());
     backupUndo();// <--Needed for UI consistency in this case
+  } else { 
+    objX = getX()
   }
-  var objX = getX();
   var isNumber = !isNaN(objX.getRealPart());
   var isImaginary = !isNaN(objX.getImaginary());
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
@@ -1303,7 +1306,6 @@ function changeSign() {
       tmpX = '-' + tmpX;
     }
   }
-  // $('txt-input').value = tmpX;
   stackFocus ? insertAtCursor($('txt-input'), tmpX) : $('txt-input').value = tmpX;
   $('txt-input').focus();
 }
