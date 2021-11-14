@@ -60,7 +60,7 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var lastResult = '';
-var tStamp = '9:49:34';
+var tStamp = '18:36:34';
 var testing = false;
 
 var stack = [];
@@ -436,7 +436,7 @@ function btnEval() {
     return;
   }
   $('txt-input').value = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-  if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + objX.getUnits();
+  if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + decodeSpecialChar(objX.getUnits());
   $('txt-input').select();    
 }
 
@@ -2976,7 +2976,8 @@ function addUnits() {
   var units = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
   var objX = getX();
-  var unitsX = objX.getUnits();
+  var unitsX = decodeSpecialChar((objX.getUnits()));
+
   if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = ' ' + unitsY;
   if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = ' ' + unitsX;
   if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
@@ -2987,7 +2988,8 @@ function multiplyUnits(multiplier) {
   var units = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
   var objX = getX();
-  var unitsX = objX.getUnits();
+  var unitsX = decodeSpecialChar(objX.getUnits());
+
   if ((unitsY !== 'null' || unitsX !== 'null')) {
     units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
   }
@@ -2998,7 +3000,7 @@ function divideUnits(multiplier) {
   var units = '';
   var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
   var objX = getX();
-  var unitsX = objX.getUnits();
+  var unitsX = decodeSpecialChar(objX.getUnits());
 
   if ((unitsY !== 'null' || unitsX !== 'null') && unitsY !== unitsX) {
     units = ' ' + processUnits(unitsY, unitsX, multiplier, false);
@@ -3010,7 +3012,7 @@ function inverseUnits() {
   var tmpArray = [];
   var invertedUnits = '';
   var objX = getX();
-  var unitsX = objX.getUnits();
+  var unitsX = decodeSpecialChar(objX.getUnits());
 
   if (unitsX !== 'null') {
     unitsX = rewriteNegUnitExp(unitsX);
