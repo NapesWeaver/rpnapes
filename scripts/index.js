@@ -60,7 +60,7 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var inversed = '';
-var tStamp = '18:36:34';
+var tStamp = '10:04:34';
 var testing = false;
 
 var stack = [];
@@ -2907,7 +2907,7 @@ function extractReal(tmpString) {
   var tmpReal = '';
   if (radix === 10) {  
     // We are checking that it is not a constant or a number followed by evaluation symbols && an not an imaginary number && not an IP address
-    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^&*x×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
+    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*x×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
       
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
         tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
