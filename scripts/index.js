@@ -2916,7 +2916,7 @@ function extractReal(tmpString) {
         tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
       } else {
         tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
-      }
+      }      
     }
   }
   if (radix === 2) {
@@ -2937,6 +2937,8 @@ function extractReal(tmpString) {
       tmpReal = parseInt(tmpString, radix);
     }
   }
+  tmpReal = tmpReal.replace(/ /g, '');
+  if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.substring(1);
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
   return tmpReal;
 }
