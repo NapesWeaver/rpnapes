@@ -59,7 +59,7 @@ var ℮ = Math.exp(1);
 var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
-var lastResult = '';
+var inversed = '';
 var tStamp = '18:36:34';
 var testing = false;
 
@@ -950,28 +950,32 @@ function btnInverse() {
 
 function inverse() {
   backupUndo();
+
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     $('txt-input').value = decodeSpecialChar(stack[stackIndex].getSoul());
     backupUndo();// Needed for UI consistency in this case
   }
+  var realPart = extractReal($('txt-input').value);
+  var imaginaryPart = extractImaginary($('txt-input').value);
   var newUnits = inverseUnits();
-  var isNumber = !isNaN(extractReal($('txt-input').value));
-  var isImaginary = !isNaN(extractImaginary($('txt-input').value));
-  if ($('txt-input').value === lastResult && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {    
+  var isNumber = !isNaN(realPart);
+  var isImaginary = !isNaN(imaginaryPart);
+
+  if ($('txt-input').value === inversed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {    
+    
     $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
   } else {
     if (isNumber || isImaginary) {  
-      if (isNumber && !isImaginary) {      
-        $('txt-input').value = 1 / extractReal($('txt-input').value);
-      }
+
+      if (isNumber && !isImaginary) $('txt-input').value = 1 / realPart;
+
       if (!isNumber && isImaginary) {
-        $('txt-input').value =  1 / extractImaginary($('txt-input').value);
+        $('txt-input').value =  1 / imaginaryPart;
         $('txt-input').value += 'j';
       }
       if (isNumber && isImaginary) {
         // Write code here please ;)
-        return;
       }
       $('txt-input').value += newUnits;
     } else {
@@ -996,7 +1000,7 @@ function inverse() {
       }      
     }
   }  
-  lastResult = $('txt-input').value;
+  inversed = $('txt-input').value;
   $('txt-input').select();
 }
 
