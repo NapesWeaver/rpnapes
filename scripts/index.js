@@ -952,26 +952,21 @@ function inverse() {
   backupUndo();
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    $('txt-input').value = decodeSpecialChar(stack[stackIndex].getSoul());
-    backupUndo();// Needed for UI consistency in this case
+    $('txt-input').value = decodeSpecialChar(stack[getIndex('lst-stack') - stackSize].getSoul());
+    backupUndo();// <--Needed for UI consistency in this case
   }
-  var realPart = extractReal($('txt-input').value);
-  var imaginaryPart = extractImaginary($('txt-input').value);
-  var newUnits = inverseUnits();
-  var isNumber = !isNaN(realPart);
-  var isImaginary = !isNaN(imaginaryPart);
+  var objX = getX();
+  var isNumber = !isNaN(objX.getRealPart());
+  var isImaginary = !isNaN(objX.getImaginary());
+  var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
   if ($('txt-input').value === inversed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {    
-    
     $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
   } else {
-    if (isNumber || isImaginary) {  
-
-      if (isNumber && !isImaginary) $('txt-input').value = 1 / realPart;
-
+    if (isNumber || isImaginary) {
+      if (isNumber && !isImaginary) $('txt-input').value = 1 / objX.getRealPart();
       if (!isNumber && isImaginary) {
-        $('txt-input').value =  1 / imaginaryPart;
+        $('txt-input').value =  1 / objX.getImaginary();
         $('txt-input').value += 'j';
       }
       if (isNumber && isImaginary) {
@@ -980,10 +975,10 @@ function inverse() {
       $('txt-input').value += newUnits;
     } else {
       // Remove units from equation and calculate
-      var x = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+      var result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
 
-      if (!isNaN(x)) {
-        $('txt-input').value = 1 / x;
+      if (!isNaN(result)) {
+        $('txt-input').value = 1 / result;
         $('txt-input').value += newUnits; 
       } else {
         if(/^1\//.test($('txt-input').value)) {
@@ -2723,7 +2718,7 @@ function printHtml() {
   print();
 }
 
-function isNumber(testString) {  
+function isANumber(testString) {  
   var isNum = true;
   if (isNaN(testString)) isNum = false;
   if (/[ⅽ℮ɢΦπ]/g.test(testString)) isNum = true;
@@ -2732,12 +2727,12 @@ function isNumber(testString) {
 
 function prettyPrint(i, content) {
   // If not a number and not imaginary
-  if (!isNumber(stack[i].getRealPart()) && !isNumber(stack[i].getImaginary())) {
+  if (!isANumber(stack[i].getRealPart()) && !isANumber(stack[i].getImaginary())) {
     content += decodeSpecialChar(stack[i].getSoul());
   } else {// There is a real component
-    if (isNumber(stack[i].getRealPart())) {      
+    if (isANumber(stack[i].getRealPart())) {      
       content += formatNumber(stack[i].getRealPart().toString());
-      if (isNumber(stack[i].getImaginary())) {// There is an imanginary component        
+      if (isANumber(stack[i].getImaginary())) {// There is an imanginary component        
         if (stack[i].getImaginary().charAt(0) === '-') {
           // Append negative imaginary number
           content += ' - ' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
@@ -2909,7 +2904,7 @@ function decodeSpecialChar(tmpString) {
 function extractReal(tmpString) {
   var tmpReal = '';
   if (radix === 10) {  
-    // We are checking that it is not a number followed by evaluation symbols && an not an imaginary number && not an IP address
+    // We are checking that it is not a constant or a number followed by evaluation symbols && an not an imaginary number && not an IP address
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^&*x×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
       
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
@@ -3014,16 +3009,14 @@ function divideUnits(multiplier) {
   return units;
 }
 
-function inverseUnits() {
+function inverseUnits(units) {
   var tmpArray = [];
   var invertedUnits = '';
-  var objX = getX();
-  var unitsX = decodeSpecialChar(objX.getUnits());
 
-  if (unitsX !== 'null') {
-    unitsX = rewriteNegUnitExp(unitsX);
-    if (unitsX.indexOf('/') !== -1) {
-      tmpArray = unitsX.split('/');
+  if (units !== 'null') {
+    units = rewriteNegUnitExp(units);
+    if (units.indexOf('/') !== -1) {
+      tmpArray = units.split('/');
       
       if (tmpArray[0].indexOf('1') === -1) {
         invertedUnits += ' ' + tmpArray[1] + '/' + tmpArray[0];
@@ -3031,7 +3024,7 @@ function inverseUnits() {
         invertedUnits += ' ' + tmpArray[1];
       }
     } else {
-      invertedUnits += ' 1/' + unitsX;
+      invertedUnits += ' 1/' + units;
     }
   }
   return invertedUnits;
