@@ -1131,8 +1131,9 @@ function exponentialFunction() {
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
   objX = getX();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  newUnits = multiplyUnits(x);
-
+  
+  // newUnits = multiplyUnits(x);
+  newUnits = '';
   result = pow(y, x);
 
   if (radix !== 10) result = result.toString(radix);
@@ -1169,9 +1170,9 @@ function rootFunction() {
   y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
   objX = getX();
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart()); 
-  newUnits = multiplyUnits(1/x);
   
-
+  // newUnits = multiplyUnits(1/x);
+  newUnits = '';
   result = root(y, x);
 
   if (radix !== 10) result = result.toString(radix);
@@ -2376,14 +2377,14 @@ function parseEvaluation(input) {
   if (!/(['"]|\/[ig]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
     input = input.replace(/ /g, '');
     // Parse nested symbols
-    while (/\([-+*/!^√ⅽ℮ɢΦπ\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
-    while (/\([-+*/!^√ⅽ℮ɢΦπ\w]+√[-+*/!^√ⅽ℮ɢΦπ\w]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot('); 
-    while (/\([-+*/!^√ⅽ℮ɢΦπ\w]+\^[-+*/!^√ⅽ℮ɢΦπ\w]+\)/.test(input)) input = parseNested(input, '^', 'mathsPow(');
+    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot('); 
+    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathsPow(');
     // Parse in-line symbols
-    while (/[(ⅽ℮ɢΦπ\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');
-    while (/√[(ⅽ℮ɢΦπ\w]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
-    while (/[ⅽ℮ɢΦπ\w)]\^[-√(ⅽ℮ɢΦπ\w]/.test(input)) input = parseInline(input, '^', 'mathsPow(');
-    while (/[()ⅽ℮ɢΦπ\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');
+    while (/[(ⅽ℮ɢΦπ.\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');
+    while (/√[(ⅽ℮ɢΦπ.\w]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
+    while (/[ⅽ℮ɢΦπ.\w)]\^[-√(ⅽ℮ɢΦπ.\w]/.test(input)) input = parseInline(input, '^', 'mathsPow(');
+    while (/[()ⅽ℮ɢΦπ.\w]!/.test(input)) input = parseInline(input, '!', 'factorial(');    
   }
   return input;
 }
@@ -2431,7 +2432,6 @@ function parseInline(input, symbol, prefix) {
   var index = 0;
   var endPos = 0;
   var parentheses = 0;
-  
   // Overwrite symbol
   while (inputArr[index] !== symbol) {
     index++;
@@ -2989,10 +2989,15 @@ function addUnits() {
 
 function multiplyUnits(multiplier) {
   var units = '';
-  var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
+  var unitsY = '';
+
+  if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
+    unitsY = 'null';
+  } else {
+    unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
+  }
   var objX = getX();
   var unitsX = decodeSpecialChar(objX.getUnits());
-
   if ((unitsY !== 'null' || unitsX !== 'null')) {
     units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
   }
