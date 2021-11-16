@@ -1235,6 +1235,74 @@ function btnSign() {
   }
 }
 
+// function changeSign() {
+//   backupUndo();
+//   var tmpX = $('txt-input').value;  
+
+//   if (stackFocus) tmpX = getSelectedText('lst-stack');
+//   // If input is blank
+//   if (tmpX === '') {
+//     tmpX = '-';
+//   } else if (tmpX === '+') {
+//     tmpX = '-';
+//   } else if (tmpX === '-') {
+//     tmpX = '+';
+//   } else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+//     // If exponential number
+//     tmpX += '-';
+//   } else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//   } else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//     tmpX += '-';
+//   } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
+//     // If imaginary number
+//     tmpX = tmpX.substring(0, tmpX.length);
+//     tmpX += '-';
+//   } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//   } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//     tmpX += '-';
+//   } else if (radix === 16 && /^[-+]?[a-e0-9]+ +$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length);
+//     tmpX += '-';
+//   } else if (radix === 16 && /^[-+]?[a-e0-9]+ +[-]$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//   } else if (radix === 16 && /^[-+]?[a-e0-9]+ +[+]$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//     tmpX += '-';
+//   } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
+//     // If exponential imaginary number
+//     tmpX = tmpX.substring(0, tmpX.length);
+//     tmpX += '-';
+//   } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//   } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//     tmpX += '-';
+//   } else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
+//     // If unit exponent
+//     tmpX += '-'
+//   } else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//   } else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
+//     tmpX = tmpX.substring(0, tmpX.length - 1);
+//     tmpX += '-';
+//   } else {
+//     // Change sign
+//     if (tmpX.charAt(0) === '+') {
+//       tmpX = tmpX.substring(1);
+//     }
+//     if (tmpX.charAt(0) === '-') {
+//       tmpX = tmpX.substring(1);
+//     } else {
+//       tmpX = '-' + tmpX;
+//     }
+//   }
+//   stackFocus ? insertAtCursor($('txt-input'), tmpX) : $('txt-input').value = tmpX;
+//   $('txt-input').focus();
+// }
 function changeSign() {
   backupUndo();
   var tmpX = $('txt-input').value;  
@@ -2733,6 +2801,7 @@ function prettyPrint(i, content) {
         }
       }
     } else {// There is no real component
+      console.log(typeof stack[i].getImaginary());
       if (stack[i].getImaginary().charAt(0) === '-') {
         // Append negative imaginary number
         content += '-' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
@@ -2904,6 +2973,8 @@ function extractReal(tmpString) {
         tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
       }      
     }
+    tmpReal = tmpReal.replace(/ /g, '');
+    if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.substring(1);
   }
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
@@ -2922,9 +2993,8 @@ function extractReal(tmpString) {
     if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+j/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
-  }
-  tmpReal = tmpReal.replace(/ /g, '');
-  if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.substring(1);
+  } 
+  
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
   return tmpReal;
 }
@@ -4425,7 +4495,7 @@ window.onload = function () {
     return false;
   }
   resizeTextarea($('lst-stack'));
-  $('lst-stack').setAttribute('rows', parseInt(screen.height / 33));
+  $('lst-stack').setAttribute('rows', parseInt(screen.height / 18));
 
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
