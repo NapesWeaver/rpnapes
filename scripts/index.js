@@ -4431,7 +4431,8 @@ window.onload = function () {
     return false;
   }
   resizeTextarea($('lst-stack'));
-  
+  $('lst-stack').setAttribute('rows', parseInt(screen.height / 33));
+
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
   $('txt-input').readOnly = true;
