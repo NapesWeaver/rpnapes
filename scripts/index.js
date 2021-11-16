@@ -625,7 +625,7 @@ function backupUndo() {
 function btnEe() {
   var input = $('txt-input').value;
   if (shifted) {
-    if (/Infinity|[ⅽ℮ɢΦπ0-9]$/.test(input) && !/j/g.test(input)) insertAtCursor($('txt-input'), 'j');
+    if (/Infinity|[ⅽ℮ɢΦπ0-9)]$/.test(input) && !/j/g.test(input)) insertAtCursor($('txt-input'), 'j');
   } else {
     if (/[0-9)]$/.test(input) && !/[0-9]e[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'e');
   }
