@@ -2437,14 +2437,13 @@ function parseInline(input, symbol, prefix) {
     index++;
   }  
   if (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)]/g.test(inputArr[index - 1]))) {
-  // if (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[-+*/^ⅽ℮ɢΦπ)]/g.test(inputArr[index - 1]))) {
     inputArr[index] = '';
   } else {// ^ √
     inputArr[index] = ',';
   }
   endPos = index;
   // Insert prefix
-  while (index > 0 && (!/[-+*/^√(]/.test(inputArr[index]) || /[ⅽ℮ɢΦπ\w.,]/.test(inputArr[index]) || parentheses > 0)) {
+  while (index > 0 && (!/[-+*/^√(]/.test(inputArr[index]) || /[Ee]/.test(inputArr[index - 1]) || parentheses > 0)) {
     index--;    
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
@@ -2465,8 +2464,8 @@ function parseInline(input, symbol, prefix) {
     endPos++;
     if (inputArr[endPos] === '(') parentheses++;
     if (inputArr[endPos] === ')') parentheses--;
-    if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;
-  } while (endPos < inputArr.length && (!/[-+*/)]/.test(inputArr[endPos]) || /[ⅽ℮ɢΦπ\w.,]/.test(inputArr[endPos]) || parentheses > 0));    
+    if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;  
+  } while (endPos < inputArr.length && (!/[-+*/)]/.test(inputArr[endPos]) || parentheses > 0));    
   
   inputArr.splice(endPos, 0, ')');
 
