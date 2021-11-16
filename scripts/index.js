@@ -60,7 +60,7 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var inversed = '';
-var tStamp = '10:04:34';
+var tStamp = '1:29:38';
 var testing = false;
 
 var stack = [];
@@ -2399,9 +2399,7 @@ function parseNested(input, symbol, prefix) {
   // Get nested parentheses indices
   while (startPos === 0) {
     index++;
-    if (inputArr[index] === symbol && inputArr[index + 1] !== '(') {
-      startPos = index;
-    }
+    if (inputArr[index] === symbol && inputArr[index + 1] !== '(') startPos = index;
   }
   while (index < inputArr.length && rightP === null) {   
     index++;
@@ -2433,9 +2431,8 @@ function parseInline(input, symbol, prefix) {
   var endPos = 0;
   var parentheses = 0;
   // Overwrite symbol
-  while (inputArr[index] !== symbol) {
-    index++;
-  }  
+  while (inputArr[index] !== symbol) { index++; }  
+
   if (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)]/g.test(inputArr[index - 1]))) {
     inputArr[index] = '';
   } else {// ^ √
