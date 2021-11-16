@@ -2465,7 +2465,7 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos] === '(') parentheses++;
     if (inputArr[endPos] === ')') parentheses--;
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;  
-  } while (endPos < inputArr.length && (!/[-+*/)]/.test(inputArr[endPos]) || parentheses > 0));    
+  } while (endPos < inputArr.length && (!/[-+*/)]/.test(inputArr[endPos]) || /[Ee]/.test(inputArr[endPos - 1]) || parentheses > 0));    
   
   inputArr.splice(endPos, 0, ')');
 
