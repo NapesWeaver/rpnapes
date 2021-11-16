@@ -375,24 +375,24 @@ function abFunction() {
 function xyFunction() {
   if (stack.length > 0) {
     backupUndo();
-    var tmpX = stack.pop();
+    var objX = stack.pop();
     enterInput();
     $('txt-input').value = '';
 
-    if (isNaN(parseFloat(tmpX.getRealPart()))) {
-      $('txt-input').value += decodeSpecialChar(tmpX.getSoul());
+    if (!isANumber(objX.getRealPart())) {
+      $('txt-input').value += decodeSpecialChar(objX.getSoul());
     } else {
-      $('txt-input').value += formatNumber(tmpX.getRealPart().toString());
+      $('txt-input').value += formatNumber(objX.getRealPart().toString());
 
-      if (!isNaN(parseFloat(tmpX.getImaginary()))) {
-        if (parseFloat(tmpX.getImaginary()) > 0) {
-          $('txt-input').value += ' + ' + formatNumber(tmpX.getImaginary().toString()) + 'j';
+      if (isANumber(objX.getImaginary())) {
+        if (parseFloat(objX.getImaginary()) > 0) {
+          $('txt-input').value += ' + ' + formatNumber(objX.getImaginary().toString()) + 'j';
         } else {
-          $('txt-input').value += ' - ' + formatNumber(tmpX.getImaginary().toString().substring(1)) + 'j';
+          $('txt-input').value += ' - ' + formatNumber(objX.getImaginary().toString().substring(1)) + 'j';
         }
       }
-      if (tmpX.getUnits() !== 'null') {
-        $('txt-input').value += ' ' + decodeSpecialChar(tmpX.getUnits());
+      if (objX.getUnits() !== 'null') {
+        $('txt-input').value += ' ' + decodeSpecialChar(objX.getUnits());
       }
     }
     updateDisplay();
