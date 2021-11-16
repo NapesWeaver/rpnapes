@@ -414,7 +414,7 @@ function enterButton() {
 }
 
 function btnEnter() {
-  backupUndo();  
+  backupUndo();
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
@@ -422,6 +422,7 @@ function btnEnter() {
   }
   updateDisplay();
   parseCommand();
+  inversed = '';
 }
 
 function btnEval() {
@@ -957,7 +958,7 @@ function inverse() {
     $('txt-input').value = decodeSpecialChar(objX.getSoul());
     backupUndo();// <--Needed for UI consistency in this case
   } else { 
-    objX = getX()
+    objX = getX();
   }
   var isNumber = !isNaN(objX.getRealPart());
   var isImaginary = !isNaN(objX.getImaginary());
