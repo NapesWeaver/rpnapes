@@ -432,7 +432,7 @@ function btnEval() {
   objX  = getX();
 
   if (objX.getSoul().match(/^run$/)) {
-    runProgram();
+    btnLoad();
     return;
   }
   $('txt-input').value = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
