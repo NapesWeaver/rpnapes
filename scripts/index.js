@@ -2789,7 +2789,7 @@ function prettyPrint(i, content) {
   if (!isANumber(stack[i].getRealPart()) && !isANumber(stack[i].getImaginary())) {
     content += decodeSpecialChar(stack[i].getSoul());
   } else {// There is a real component
-    if (isANumber(stack[i].getRealPart())) {      
+    if (isANumber(stack[i].getRealPart())) {
       content += formatNumber(stack[i].getRealPart().toString());
       if (isANumber(stack[i].getImaginary())) {// There is an imanginary component        
         if (stack[i].getImaginary().charAt(0) === '-') {
@@ -2801,7 +2801,6 @@ function prettyPrint(i, content) {
         }
       }
     } else {// There is no real component
-      console.log(typeof stack[i].getImaginary());
       if (stack[i].getImaginary().charAt(0) === '-') {
         // Append negative imaginary number
         content += '-' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
@@ -3018,8 +3017,8 @@ function extractImaginary(tmpString) {
     tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
-  if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;
-  return tmpImaginary;
+  if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;  
+  return  '' + tmpImaginary;
 }
 
 function extractUnits(tmpString) {
@@ -3298,9 +3297,7 @@ function setSciDecimal(value) {
 function formatNumber(possibleNumber) {
 
   if (!/[ⅽ℮ɢΦπ]/.test(possibleNumber)) {
-
-    if (radix === 10) {
-      
+    if (radix === 10) {      
       if (!isNaN(possibleNumber)) {
         if (fixDecimal !== -1) {
           possibleNumber = toFixed(possibleNumber, fixDecimal);
