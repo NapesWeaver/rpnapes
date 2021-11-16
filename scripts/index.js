@@ -1112,11 +1112,11 @@ function pow(x, y) {
 
 function exponentialFunction() {
   if (stack.toString() !== '') backupUndo();
-  var newUnits;
   var objY;
-  var objX;
+  var objX = getX();
   var y;
-  var x;
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  var newUnits = multiplyUnits(x);
   var result;
 
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
@@ -1129,15 +1129,11 @@ function exponentialFunction() {
   } else {
     objY = stack.pop();
   }
-  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
-  objX = getX();
-  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  
-  // newUnits = multiplyUnits(x);
-  newUnits = '';
+  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   result = pow(y, x);
 
   if (radix !== 10) result = result.toString(radix);
+
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1151,11 +1147,11 @@ function root(x, y) {
 
 function rootFunction() {
   if (stack.toString() !== '') backupUndo();  
-  var newUnits;
   var objY;
-  var objX;
+  var objX = getX();
   var y;
-  var x;
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  var newUnits = multiplyUnits(1/x);
   var result;
 
   if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
@@ -1168,15 +1164,11 @@ function rootFunction() {
   } else {
     objY = stack.pop();
   }
-  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
-  objX = getX();
-  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart()); 
-  
-  // newUnits = multiplyUnits(1/x);
-  newUnits = '';
+  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   result = root(y, x);
 
   if (radix !== 10) result = result.toString(radix);
+
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -2995,6 +2987,7 @@ function multiplyUnits(multiplier) {
   }
   var objX = getX();
   var unitsX = decodeSpecialChar(objX.getUnits());
+  
   if ((unitsY !== 'null' || unitsX !== 'null')) {
     units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
   }
