@@ -60,13 +60,13 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var inversed = '';
-var tStamp = '1:29:38';
+var tStamp = '20:21:58';
 var testing = false;
 
 var stack = [];
 var backups = [];
 var restores = [];
-var stackSize = 99;
+var stackSize = 0;
 var stackFocus = false;
 var shifted = false;
 var altHeld = false;
@@ -91,7 +91,7 @@ NumberObject.prototype.getSoul = function () {
 NumberObject.prototype.setRealPart = function (r) {
   this.realPart = r;
 };
-NumberObject.prototype.getRealPart = function () {
+NumberObject.prototype.getReal = function () {
   return this.realPart;
 };
 NumberObject.prototype.setImaginary = function (i) {
@@ -379,10 +379,10 @@ function xyFunction() {
     enterInput();
     $('txt-input').value = '';
 
-    if (!isANumber(objX.getRealPart())) {
+    if (!isANumber(objX.getReal())) {
       $('txt-input').value += decodeSpecialChar(objX.getSoul());
     } else {
-      $('txt-input').value += formatNumber(objX.getRealPart().toString());
+      $('txt-input').value += formatNumber(objX.getReal().toString());
 
       if (isANumber(objX.getImaginary())) {
         if (parseFloat(objX.getImaginary()) > 0) {
@@ -960,7 +960,7 @@ function inverse() {
   } else { 
     objX = getX();
   }
-  var isNumber = !isNaN(objX.getRealPart());
+  var isNumber = !isNaN(objX.getReal());
   var isImaginary = !isNaN(objX.getImaginary());
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
@@ -968,7 +968,7 @@ function inverse() {
     $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
   } else {
     if (isNumber || isImaginary) {
-      if (isNumber && !isImaginary) $('txt-input').value = 1 / objX.getRealPart();
+      if (isNumber && !isImaginary) $('txt-input').value = 1 / objX.getReal();
       if (!isNumber && isImaginary) {
         $('txt-input').value =  1 / objX.getImaginary();
         $('txt-input').value += 'j';
@@ -1012,7 +1012,7 @@ function btnFactorial() {
   } else {
     objX = getX();
   }
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
   var result = factorial(x);
   
   if (radix !== 10) result = result.toString(radix);
@@ -1064,9 +1064,9 @@ function baseLog() {
   } else {
     objY = stack.pop();
   }
-  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
+  y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());
   objX = getX();
-  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
   result = log(y, x);  
 
   if (radix !== 10) result = result.toString(radix);
@@ -1088,7 +1088,7 @@ function naturalLog() {
   } else {
     objX = getX();
   }
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
   var result = ln(x);
 
   if (radix !== 10) result = result.toString(radix);
@@ -1111,29 +1111,27 @@ function pow(x, y) {
 }
 
 function exponentialFunction() {
-  if (stack.toString() !== '') backupUndo();
+  backupUndo();
   var objY;
-  var objX = getX();
-  var y;
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var newUnits = multiplyUnits(x);
-  var result;
-
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
-    enterInput();
-    $('txt-input').value = '2';
-  }
+  
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && isNaN(stack[stack.length - 1].getReal()) && isNaN(stack[stack.length - 1].getImaginary()))) {
+      enterInput();
+      $('txt-input').value = '2';
+    }
     objY = stack.pop();
-  }
-  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  result = pow(y, x);
+  }  
+  var objX = getX();
+  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var newUnits = '';
+  var result = pow(y, x);
 
   if (radix !== 10) result = result.toString(radix);
-
+  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1146,29 +1144,27 @@ function root(x, y) {
 }
 
 function rootFunction() {
-  if (stack.toString() !== '') backupUndo();  
+  backupUndo();  
   var objY;
-  var objX = getX();
-  var y;
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var newUnits = multiplyUnits(1/x);
-  var result;
-
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
-    enterInput();
-    $('txt-input').value = '2';
-  }
+  
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && isNaN(stack[stack.length - 1].getReal()) && isNaN(stack[stack.length - 1].getImaginary()))) {
+      enterInput();
+      $('txt-input').value = '2';
+    }
     objY = stack.pop();
   }
-  y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  result = root(y, x);
+  var objX = getX();
+  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var newUnits = '';
+  var result = root(y, x);
 
   if (radix !== 10) result = result.toString(radix);
-
+  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1207,7 +1203,7 @@ function btnModulus() {
 
 function modulus() {
   if (stack.toString() !== '') backupUndo();
-  var newUnits = divideUnits(1);
+  var newUnits = '';
   var objY;
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1216,11 +1212,12 @@ function modulus() {
     objY = stack.pop();
   }
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());  
   var result = y % x;
   
   if (radix !== 10) result = result.toString(radix);
+  newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1235,74 +1232,6 @@ function btnSign() {
   }
 }
 
-// function changeSign() {
-//   backupUndo();
-//   var tmpX = $('txt-input').value;  
-
-//   if (stackFocus) tmpX = getSelectedText('lst-stack');
-//   // If input is blank
-//   if (tmpX === '') {
-//     tmpX = '-';
-//   } else if (tmpX === '+') {
-//     tmpX = '-';
-//   } else if (tmpX === '-') {
-//     tmpX = '+';
-//   } else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
-//     // If exponential number
-//     tmpX += '-';
-//   } else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//   } else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//     tmpX += '-';
-//   } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
-//     // If imaginary number
-//     tmpX = tmpX.substring(0, tmpX.length);
-//     tmpX += '-';
-//   } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//   } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//     tmpX += '-';
-//   } else if (radix === 16 && /^[-+]?[a-e0-9]+ +$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length);
-//     tmpX += '-';
-//   } else if (radix === 16 && /^[-+]?[a-e0-9]+ +[-]$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//   } else if (radix === 16 && /^[-+]?[a-e0-9]+ +[+]$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//     tmpX += '-';
-//   } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
-//     // If exponential imaginary number
-//     tmpX = tmpX.substring(0, tmpX.length);
-//     tmpX += '-';
-//   } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//   } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//     tmpX += '-';
-//   } else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
-//     // If unit exponent
-//     tmpX += '-'
-//   } else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//   } else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
-//     tmpX = tmpX.substring(0, tmpX.length - 1);
-//     tmpX += '-';
-//   } else {
-//     // Change sign
-//     if (tmpX.charAt(0) === '+') {
-//       tmpX = tmpX.substring(1);
-//     }
-//     if (tmpX.charAt(0) === '-') {
-//       tmpX = tmpX.substring(1);
-//     } else {
-//       tmpX = '-' + tmpX;
-//     }
-//   }
-//   stackFocus ? insertAtCursor($('txt-input'), tmpX) : $('txt-input').value = tmpX;
-//   $('txt-input').focus();
-// }
 function changeSign() {
   backupUndo();
   var tmpX = $('txt-input').value;  
@@ -1372,6 +1301,27 @@ function changeSign() {
   $('txt-input').focus();
 }
 
+// function changeSign() {
+//   backupUndo();
+//   var result = '';
+//   var objY;
+//   if (stackFocus) {
+//     var stackIndex = getIndex('lst-stack') - stackSize;
+//     objY = stack[stackIndex];
+//     console.log('soul:', '\'' + objY.getSoul() + '\'')
+//     if (isNaN(objY.getReal()) && isNaN(objY.getImaginary())) {
+//       $('txt-input').value = objY.getSoul();
+//     } else {
+//       console.log('y');
+//       $('txt-input').value = calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+//     }
+//   }
+  
+//   result += $('txt-input').value;   
+//   $('txt-input').value = result;
+//   $('txt-input').focus();
+// }
+
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
 function btnDivide() {  
@@ -1384,7 +1334,7 @@ function btnDivide() {
 
 function division() {
   if (stack.toString() !== '') backupUndo();
-  var newUnits = divideUnits(1);
+  var newUnits = '';
   var objY;
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1393,11 +1343,12 @@ function division() {
     objY = stack.pop();
   }
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
   var result = y / x;
   
   if (radix !== 10) result = result.toString(radix);
+  newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1414,7 +1365,7 @@ function btnMultiply() {
 
 function multiplication() {
   if (stack.toString() !== '') backupUndo();
-  var newUnits = multiplyUnits(1);
+  var newUnits = '';
   var objY;
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1423,11 +1374,12 @@ function multiplication() {
     objY = stack.pop();
   }
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart()); 
+  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal()); 
   var result = y * x;
   
-  if (radix !== 10) result = result.toString(radix);  
+  if (radix !== 10) result = result.toString(radix);
+  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1444,7 +1396,7 @@ function btnSubtract() {
 
 function subtraction() {
   if (stack.toString() !== '') backupUndo();
-  var newUnits = addUnits();
+  var newUnits = '';
   var objY;
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1453,11 +1405,12 @@ function subtraction() {
     objY = stack.pop();
   }
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());  
   var result = y - x;
   
   if (radix !== 10) result = result.toString(radix);
+  newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -1474,7 +1427,7 @@ function btnAdd() {
 
 function addition() {
   if (stack.toString() !== '') backupUndo();
-  var newUnits = addUnits();
+  var newUnits = '';
   var objY;
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1483,12 +1436,12 @@ function addition() {
     objY = stack.pop();
   }
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
   var result = y + x;
 
-  if (radix !== 10) result = result.toString(radix);
- 
+  if (radix !== 10) result = result.toString(radix);  
+  newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result; 
   updateDisplay();
@@ -2113,9 +2066,9 @@ function parseCommand() {
     if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix$|(^fix (-?[1]|[0-9]|1[0-7])$)/)) {    
       
       if (commandArray[1] === undefined) {
-        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
+        if (isNaN(parseInt(stackedCommand.getReal()))) return;
         stack.pop();
-        setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+        setFixDecimal(parseInt(stack[stack.length - 1].getReal()));
       } else {
         setFixDecimal(parseInt(commandArray[1]));
       }
@@ -2786,11 +2739,11 @@ function isANumber(testString) {
 
 function prettyPrint(i, content) {
   // If not a number and not imaginary
-  if (!isANumber(stack[i].getRealPart()) && !isANumber(stack[i].getImaginary())) {
+  if (!isANumber(stack[i].getReal()) && !isANumber(stack[i].getImaginary())) {
     content += decodeSpecialChar(stack[i].getSoul());
   } else {// There is a real component
-    if (isANumber(stack[i].getRealPart())) {
-      content += formatNumber(stack[i].getRealPart().toString());
+    if (isANumber(stack[i].getReal())) {
+      content += formatNumber(stack[i].getReal().toString());
       if (isANumber(stack[i].getImaginary())) {// There is an imanginary component        
         if (stack[i].getImaginary().charAt(0) === '-') {
           // Append negative imaginary number
@@ -2964,7 +2917,7 @@ function extractReal(tmpString) {
   var tmpReal = '';
   if (radix === 10) {  
     // We are checking that it is not a constant or a number followed by evaluation symbols && an not an imaginary number && not an IP address
-    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*x×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
+    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
       
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
         tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
@@ -3033,11 +2986,8 @@ function extractUnits(tmpString) {
   return tmpUnits;
 }
 
-function addUnits() {
+function addUnits(unitsX, unitsY) {
   var units = '';
-  var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
-  var objX = getX();
-  var unitsX = decodeSpecialChar((objX.getUnits()));
 
   if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = ' ' + unitsY;
   if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = ' ' + unitsX;
@@ -3045,32 +2995,22 @@ function addUnits() {
   return units;
 }
 
-function multiplyUnits(multiplier) {
+function multiplyUnits(unitsX, unitsY, multiplier) {
   var units = '';
-  var unitsY = '';
 
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
-    unitsY = 'null';
-  } else {
-    unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
-  }
-  var objX = getX();
-  var unitsX = decodeSpecialChar(objX.getUnits());
-  
   if ((unitsY !== 'null' || unitsX !== 'null')) {
     units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
+    if (units === ' ') units = '';
   }
   return units;
 }
 
-function divideUnits(multiplier) {
+function divideUnits(unitsX, unitsY, multiplier) {
   var units = '';
-  var unitsY = decodeSpecialChar(stack[stack.length - 1].getUnits());
-  var objX = getX();
-  var unitsX = decodeSpecialChar(objX.getUnits());
 
-  if ((unitsY !== 'null' || unitsX !== 'null') && unitsY !== unitsX) {
+  if ((unitsY !== 'null' || unitsX !== 'null')) {
     units = ' ' + processUnits(unitsY, unitsX, multiplier, false);
+    if (units === ' ') units = '';
   }
   return units;
 }
@@ -4493,6 +4433,7 @@ window.onload = function () {
   }
   resizeTextarea($('lst-stack'));
   $('lst-stack').setAttribute('rows', parseInt(screen.height / 18));
+  stackSize = parseInt(screen.height / 18 + 2);
 
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
