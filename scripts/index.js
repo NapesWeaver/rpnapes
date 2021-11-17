@@ -60,7 +60,7 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var inversed = '';
-var tStamp = '20:21:58';
+var tStamp = '20:37:46';
 var testing = false;
 
 var stack = [];
@@ -1118,7 +1118,7 @@ function exponentialFunction() {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && isNaN(stack[stack.length - 1].getReal()) && isNaN(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getReal()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
       $('txt-input').value = '2';
     }
@@ -1151,7 +1151,7 @@ function rootFunction() {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && isNaN(stack[stack.length - 1].getReal()) && isNaN(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getReal()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
       $('txt-input').value = '2';
     }
