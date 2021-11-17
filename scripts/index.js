@@ -4377,6 +4377,11 @@ window.onload = function () {
       insertText('^');
     }
   })();
+  $('menu-modulus-symbol').onclick = (function() {
+    return function() { 
+      insertText('%');
+    }
+  })();
   $('menu-solidus').onclick = (function() {
     return function() { 
       insertText('/');
@@ -4397,7 +4402,7 @@ window.onload = function () {
       insertText('+');
     }
   })();
-  $('menu-ohm').onclick = (function() {
+  $('menu-omega').onclick = (function() {
     return function() { 
       insertText('Ω');
     }
