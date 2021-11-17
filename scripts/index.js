@@ -91,7 +91,7 @@ NumberObject.prototype.getSoul = function () {
 NumberObject.prototype.setRealPart = function (r) {
   this.realPart = r;
 };
-NumberObject.prototype.getReal = function () {
+NumberObject.prototype.getRealPart = function () {
   return this.realPart;
 };
 NumberObject.prototype.setImaginary = function (i) {
@@ -379,10 +379,10 @@ function xyFunction() {
     enterInput();
     $('txt-input').value = '';
 
-    if (!isANumber(objX.getReal())) {
+    if (!isANumber(objX.getRealPart())) {
       $('txt-input').value += decodeSpecialChar(objX.getSoul());
     } else {
-      $('txt-input').value += formatNumber(objX.getReal().toString());
+      $('txt-input').value += formatNumber(objX.getRealPart().toString());
 
       if (isANumber(objX.getImaginary())) {
         if (parseFloat(objX.getImaginary()) > 0) {
@@ -446,7 +446,7 @@ function getX() {
   var realPartX = extractReal(soulX);
   var imaginaryX = extractImaginary(soulX);
   var unitsX;
-  realPartX || imaginaryX ? unitsX = extractUnits(soulX) : unitsX = 'null';  
+  isANumber(realPartX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
   soulX = encodeSpecialChar(soulX);
   unitsX = encodeSpecialChar(unitsX);
   return new NumberObject(soulX, realPartX, imaginaryX, unitsX);
@@ -960,7 +960,7 @@ function inverse() {
   } else { 
     objX = getX();
   }
-  var isNumber = !isNaN(objX.getReal());
+  var isNumber = !isNaN(objX.getRealPart());
   var isImaginary = !isNaN(objX.getImaginary());
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
@@ -968,7 +968,7 @@ function inverse() {
     $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
   } else {
     if (isNumber || isImaginary) {
-      if (isNumber && !isImaginary) $('txt-input').value = 1 / objX.getReal();
+      if (isNumber && !isImaginary) $('txt-input').value = 1 / objX.getRealPart();
       if (!isNumber && isImaginary) {
         $('txt-input').value =  1 / objX.getImaginary();
         $('txt-input').value += 'j';
@@ -1013,7 +1013,7 @@ function btnFactorial() {
   } else {
     objX = getX();
   }
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = factorial(x);
   
   if (radix !== 10) result = result.toString(radix);
@@ -1055,15 +1055,15 @@ function baseLog() {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getReal()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
       $('txt-input').value = Number(10).toString(radix);
     }
     objY = stack.pop();
   }  
   var objX = getX();
-  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = log(y, x);  
 
   if (radix !== 10) result = result.toString(radix);
@@ -1086,7 +1086,7 @@ function naturalLog() {
   } else {
     objX = getX();
   }
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = ln(x);
 
   if (radix !== 10) result = result.toString(radix);
@@ -1115,15 +1115,15 @@ function exponentialFunction() {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getReal()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
       $('txt-input').value = '2';
     }
     objY = stack.pop();
   }  
   var objX = getX();
-  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var newUnits = '';
   var result = pow(y, x);
 
@@ -1148,15 +1148,15 @@ function rootFunction() {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getReal()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
       $('txt-input').value = '2';
     }
     objY = stack.pop();
   }
   var objX = getX();
-  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var newUnits = '';
   var result = root(y, x);
 
@@ -1206,15 +1206,15 @@ function modulus() {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getReal()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
       $('txt-input').value = '2';
     }
     objY = stack.pop();
   }
   var objX = getX();
-  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());  
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
   var newUnits = '';
   var result = y % x;
   
@@ -1305,22 +1305,40 @@ function changeSign() {
 
 // function changeSign() {
 //   backupUndo();
-//   var result = '';
-//   var objY;
-//   if (stackFocus) {
-//     var stackIndex = getIndex('lst-stack') - stackSize;
-//     objY = stack[stackIndex];
-//     console.log('soul:', '\'' + objY.getSoul() + '\'')
-//     if (isNaN(objY.getReal()) && isNaN(objY.getImaginary())) {
-//       $('txt-input').value = objY.getSoul();
-//     } else {
-//       console.log('y');
-//       $('txt-input').value = calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-//     }
-//   }
+//   var x = '';
   
-//   result += $('txt-input').value;   
-//   $('txt-input').value = result;
+//   if (stackFocus) {
+//     var i = getIndex('lst-stack') - stackSize;
+//     // Rebild from stack
+//     if (isANumber(stack[i].getRealPart())) x += stack[i].getRealPart();
+//     if (x) x += ' ';
+//     if (isANumber(stack[i].getImaginary())) {
+//       if (stack[i].getImaginary().charAt(0) === '-') {
+//         if (x) x += '- '
+//         x += (stack[i].getImaginary().toString()).substring(1) + 'j';
+//       } else {
+//         if (x) x += '+ ';
+//         x += stack[i].getImaginary() + 'j';
+//       }
+//     }
+//     if (stack[i].getUnits() !== 'null') x += ' ' + stack[i].getUnits();
+//     if(!x) x = stack[i].getSoul();
+//   } else {
+//     // Direct Editing
+//     x = $('txt-input').value;
+//   }
+
+
+//   //Change Sign
+//   if (x.charAt(0) === '-') {
+//     x =  '+' + x.substring(1);
+//   } else {
+//     if (x.charAt(0) === '+') x = x.substring(1);
+//     x =  '-' + x;
+//   }
+
+//   if (radix !== 10) x = x.toString(radix);
+//   $('txt-input').value = x;
 //   $('txt-input').focus();
 // }
 
@@ -1335,7 +1353,7 @@ function btnDivide() {
 }
 
 function division() {
-  if (stack.toString() !== '') backupUndo();
+  backupUndo();
   var newUnits = '';
   var objY;
   if (stackFocus) {
@@ -1344,9 +1362,11 @@ function division() {
   } else {
     objY = stack.pop();
   }
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
+
   var objX = getX();
-  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = y / x;
   
   if (radix !== 10) result = result.toString(radix);
@@ -1366,7 +1386,7 @@ function btnMultiply() {
 }
 
 function multiplication() {
-  if (stack.toString() !== '') backupUndo();
+  backupUndo();
   var newUnits = '';
   var objY;
   if (stackFocus) {
@@ -1375,9 +1395,11 @@ function multiplication() {
   } else {
     objY = stack.pop();
   }
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
+
   var objX = getX();
-  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal()); 
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart()); 
   var result = y * x;
   
   if (radix !== 10) result = result.toString(radix);
@@ -1397,7 +1419,7 @@ function btnSubtract() {
 }
 
 function subtraction() {
-  if (stack.toString() !== '') backupUndo();
+  backupUndo();
   var newUnits = '';
   var objY;
   if (stackFocus) {
@@ -1406,9 +1428,11 @@ function subtraction() {
   } else {
     objY = stack.pop();
   }
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
+
   var objX = getX();
-  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());  
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
   var result = y - x;
   
   if (radix !== 10) result = result.toString(radix);
@@ -1428,7 +1452,7 @@ function btnAdd() {
 }
 
 function addition() {
-  if (stack.toString() !== '') backupUndo();
+  backupUndo();
   var newUnits = '';
   var objY;
   if (stackFocus) {
@@ -1437,9 +1461,11 @@ function addition() {
   } else {
     objY = stack.pop();
   }
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
+
   var objX = getX();
-  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
-  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = y + x;
   
   if (radix !== 10) result = result.toString(radix);  
@@ -2068,9 +2094,9 @@ function parseCommand() {
     if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix$|(^fix (-?[1]|[0-9]|1[0-7])$)/)) {    
       
       if (commandArray[1] === undefined) {
-        if (isNaN(parseInt(stackedCommand.getReal()))) return;
+        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
         stack.pop();
-        setFixDecimal(parseInt(stack[stack.length - 1].getReal()));
+        setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
       } else {
         setFixDecimal(parseInt(commandArray[1]));
       }
@@ -2721,7 +2747,7 @@ function updateDisplay() {
   // Print to stack display
   for (var sta in stack) {
     $('lst-stack').value += '\n';
-    $('lst-stack').value = prettyPrint(sta,$('lst-stack').value);
+    $('lst-stack').value = prettyPrint(sta, $('lst-stack').value);
   }
   colorSaveButton();
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
@@ -2741,11 +2767,11 @@ function isANumber(testString) {
 
 function prettyPrint(i, content) {
   // If not a number and not imaginary
-  if (!isANumber(stack[i].getReal()) && !isANumber(stack[i].getImaginary())) {
+  if (!isANumber(stack[i].getRealPart()) && !isANumber(stack[i].getImaginary())) {
     content += decodeSpecialChar(stack[i].getSoul());
   } else {// There is a real component
-    if (isANumber(stack[i].getReal())) {
-      content += formatNumber(stack[i].getReal().toString());
+    if (isANumber(stack[i].getRealPart())) {
+      content += formatNumber(stack[i].getRealPart().toString());
       if (isANumber(stack[i].getImaginary())) {// There is an imanginary component        
         if (stack[i].getImaginary().charAt(0) === '-') {
           // Append negative imaginary number
