@@ -999,7 +999,7 @@ function inverse() {
       }      
     }
   }  
-  inversed = $('txt-input').value;
+  if (!/Infinity/g.test(objX.getSoul())) inversed = $('txt-input').value;
   $('txt-input').select();
 }
 
