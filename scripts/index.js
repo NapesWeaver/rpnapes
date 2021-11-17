@@ -438,7 +438,7 @@ function btnEval() {
   }
   $('txt-input').value = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
   if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + decodeSpecialChar(objX.getUnits());
-  $('txt-input').select();    
+  $('txt-input').select();  
 }
 
 function getX() {
@@ -1004,8 +1004,9 @@ function inverse() {
 }
 
 function btnFactorial() {
-  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
+  backupUndo();
   var objX;
+
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objX = stack[stackIndex];
@@ -1047,27 +1048,23 @@ function log(x, y) {
 }
 
 function baseLog() {
-  if (stack.toString() !== '') backupUndo();
+  backupUndo();
   var objY;
-  var objX;
-  var y;
-  var x;
-  var result;
 
-  if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
-    enterInput();
-    $('txt-input').value = Number(10).toString(radix);
-  }
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getReal()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+      enterInput();
+      $('txt-input').value = Number(10).toString(radix);
+    }
     objY = stack.pop();
-  }
-  y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());
-  objX = getX();
-  x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
-  result = log(y, x);  
+  }  
+  var objX = getX();
+  var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());
+  var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
+  var result = log(y, x);  
 
   if (radix !== 10) result = result.toString(radix);
   $('txt-input').value = result;
@@ -1080,8 +1077,9 @@ function ln(x) {
 }
 
 function naturalLog() {
-  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
+  backupUndo();
   var objX;
+
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objX = stack[stackIndex];
@@ -1093,7 +1091,6 @@ function naturalLog() {
 
   if (radix !== 10) result = result.toString(radix);
   $('txt-input').value = result;
-  updateDisplay();
   $('txt-input').select();
 }
 
@@ -1444,7 +1441,7 @@ function addition() {
   var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
   var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());
   var result = y + x;
-
+  
   if (radix !== 10) result = result.toString(radix);  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   result += decodeSpecialChar(newUnits);
@@ -1473,7 +1470,7 @@ function btnAngle() {
 }
 
 function btnSine() {
-  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
+  backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
@@ -1488,7 +1485,7 @@ function btnSine() {
 }
 
 function btnCosine() {
-  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
+  backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
@@ -1503,7 +1500,7 @@ function btnCosine() {
 }
 
 function btnTangent() {
-  if ($('txt-input').value.trim() !== 'NaN') backupUndo();
+  backupUndo();
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
