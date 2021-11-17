@@ -1202,18 +1202,23 @@ function btnModulus() {
 }
 
 function modulus() {
-  if (stack.toString() !== '') backupUndo();
-  var newUnits = '';
+  backupUndo();
   var objY;
+
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
+    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getReal()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+      enterInput();
+      $('txt-input').value = '2';
+    }
     objY = stack.pop();
   }
   var objX = getX();
   var y = isNaN(objY.getReal()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getReal());  
   var x = isNaN(objX.getReal()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getReal());  
+  var newUnits = '';
   var result = y % x;
   
   if (radix !== 10) result = result.toString(radix);
