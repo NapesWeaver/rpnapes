@@ -1703,7 +1703,7 @@ function numberSort() {
   // var units = [];
 
   for (var s in stack) {
-    if (!isANumber(stack[s].getRealPart()) && !isANumber(stack[s].getImaginary())) strings.push(stack[s]);
+    if (!isANumber(stack[s].getRealPart()) && !isANumber(stack[s].getImaginary()) && stack[s].getSoul() !== '') strings.push(stack[s]);
     if (isANumber(stack[s].getRealPart())) numbers.push(stack[s]);
     // if (stack[s].getUnits() !== 'null') units.push(stack[s]);    
   }
