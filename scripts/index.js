@@ -76,6 +76,12 @@ NumberObject.prototype.getUnits = function () {
 NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
 };
+String.prototype.insertAt = function (index, input) {
+  return this.slice(0, index) + input + this.slice(index);
+}
+String.prototype.removeAt = function (startPos, endPos) {
+  return this.slice(0, startPos) + this.slice(endPos);
+}
 /**
  * Array.prototype.indexOf()
  * Added to the ECMA-262 standard in the 5th edition may not work in all browsers.
@@ -106,10 +112,6 @@ if (!Array.prototype.indexOf)
       return -1// If the value was not found, then return -1
     }
   })(Object, Math.max, Math.min);
-
-String.prototype.insertAt = function (index, input) {
-  return this.slice(0,index) + input + this.slice(index);
-}
 
 function resetPhi() {
   Φ = 1.618033988749895;
@@ -1231,7 +1233,7 @@ function btnSign() {
   if (shifted) {
     insertText('^');    
   } else {
-    changeSign();
+    signChange();
   }
 }
 
@@ -1246,7 +1248,7 @@ function leadingSignChange(x) {
   return x.trim();
 }
 
-function changeSign() {
+function signChange() {
   backupUndo();
   var x = '';
   
@@ -1278,8 +1280,8 @@ function changeSign() {
       // Edit txt-input
       if (/[-+]/.test(x.charAt(startPos - 1))) {
         // startPos is at a [-+]
-        if (/-/.test(x.charAt(startPos - 1))) {          
-          x = x.slice(0, startPos - 1) + x.slice(startPos);
+        if (/-/.test(x.charAt(startPos - 1))) {
+          x = x.removeAt(startPos - 1, startPos);
           // If there is a space to the left, explicit '+' inserted
           if (/ /.test(x.charAt(startPos - 2))) {            
             x = x.insertAt(startPos - 1, '+');
@@ -1287,7 +1289,7 @@ function changeSign() {
           }
         }
         if (/[+]/.test(x.charAt(startPos - 1))) {          
-          x = x.slice(0, startPos - 1) + x.slice(startPos);        
+          x = x.removeAt(startPos - 1, startPos);
           x = x.insertAt(startPos - 1, '-');
           startPos ++;
         }
@@ -1303,10 +1305,10 @@ function changeSign() {
         if (/[eE^]/.test(x.charAt(startPos - 1))) { 
 
           if (/[-]/.test(x.charAt(startPos))) {
-            x = x.slice(0, startPos) + x.slice(startPos + 1);
+            x = x.removeAt(startPos, startPos + 1);
             startPos ++;            
           } else if (/[+]/.test(x.charAt(startPos))) {          
-            x = x.slice(0, startPos) + x.slice(startPos + 1);
+            x = x.removeAt(startPos, startPos + 1);
             x = x.insertAt(startPos, '-');
             startPos = startPos + 2;
           } else if (!/[-]/.test(x.charAt(startPos))) {
@@ -4255,7 +4257,7 @@ window.onload = function () {
   $('menu-inverse').onclick = inverse;
   $('menu-factorial').onclick = btnFactorial;
   $('menu-modulus').onclick = modulus;
-  $('menu-sign').onclick = changeSign;
+  $('menu-sign').onclick = signChange;
   $('menu-divide').onclick = division;
   $('menu-multiply').onclick = multiplication;
   $('menu-subtract').onclick = subtraction;
