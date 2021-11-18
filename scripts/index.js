@@ -2109,14 +2109,14 @@ function parseCommand() {
     if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+)^sort ?[A-Za-z]*/)) {   
 
       if (commandArray[1] === undefined || commandArray[1] === 'asc') {
-        numberSort(true);
         stack.pop();
         $('txt-input').value = '';
+        numberSort(true);
         updateDisplay();  
       } else if (commandArray[1] === 'desc') {
-        numberSort(false);
         stack.pop();
         $('txt-input').value = '';
+        numberSort(false);
         updateDisplay();  
       }        
     }
