@@ -1696,7 +1696,7 @@ function minNum() {
   return min;
 }
 
-function numberSort() {
+function numberSort(asc) {
 
   var strings = [];
   var numbers = [];
@@ -1712,10 +1712,14 @@ function numberSort() {
 
   do {
     swap = false;
+    
     for (var i = 0; i < arrLength; i++) {
+
       var s1 = calculate(numbers[i].getRealPart()); 
       var s2 = calculate(numbers[i + 1].getRealPart());
-      if (s1 > s2) {
+      var myVar = asc ? s1 > s2 : s1 < s2;
+
+      if (myVar) {
         var tmpObj = numbers[i];
 
         numbers[i] = numbers[i + 1];
@@ -1726,8 +1730,8 @@ function numberSort() {
     arrLength --;
   } while (swap);
 
-  strings.sort();
-  stack = strings.concat(numbers);
+  asc ? strings.sort() : strings.sort().reverse();
+  asc ? stack = strings.concat(numbers) : stack = numbers.concat(strings);
 }
 
 // Extract any substring that follows a number
@@ -2021,7 +2025,7 @@ function help(command) {
       inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       break;
     case 'sort':
-      inputText('sort: Sort the stack in ascending order.');
+      inputText('sort [order]: Sort stack in ascending order by default. Optional arguments are asc, desc.');
       break;
     case 'sound':
       inputText('sound: Toggle sound on/off for Tricorder buttons.');
@@ -2068,10 +2072,10 @@ function parseCommand() {
 
   // Commands consist of words and numbers and URLs
   if (!/[,*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
-    var commandArray = command.split(' ');   
+    var commandArray = command.split(' ');       
     // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
-      stack.pop();
+      stack.pop();      
       help(command);
     }
     // NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
@@ -2100,6 +2104,21 @@ function parseCommand() {
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();
+    }
+    // NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and alphanumeric word
+    if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+)^sort ?[A-Za-z]*/)) {   
+
+      if (commandArray[1] === undefined || commandArray[1] === 'asc') {
+        numberSort(true);
+        stack.pop();
+        $('txt-input').value = '';
+        updateDisplay();  
+      } else if (commandArray[1] === 'desc') {
+        numberSort(false);
+        stack.pop();
+        $('txt-input').value = '';
+        updateDisplay();  
+      }        
     }
     // NOT tostring with word and no space, NOT tostring with number, NOT tostring with word and alphanumeric word
     if (command.match(/(?!tostring[A-Za-z]+)(?!tostring ?[0-9])(?!tostring [A-Za-z]+ +[0-9A-Za-z]+)^tostring ?[A-Za-z]*/)) {    
@@ -2365,11 +2384,6 @@ function parseCommand() {
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
-      break;
-    case 'sort':
-      stack.pop();
-      numberSort();
-      updateDisplay();
       break;
     case 'sound':
       stack.pop();
