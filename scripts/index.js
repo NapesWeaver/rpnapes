@@ -1641,6 +1641,11 @@ function btnNine() {
 //////// More Calcamatrons ///////////////////////////////////////////////////////////
 
 function totalStack() {
+  var total = 0;
+  for (var s in stack) {
+    if (isANumber(stack[s].getRealPart())) total += calculate(stack[s].getRealPart());
+  }
+  return total;
 }
 
 function averageStack() {
@@ -1960,6 +1965,9 @@ function help(command) {
     case 'time':
       inputText('time: Returns the current time.');
       break;
+    case 'total':
+      inputText('total: Totals stack elements that are !NaN and returns the result.');
+      break;
     case 'toString':
       inputText('toString [filename]: Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
@@ -1980,7 +1988,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sound, stopwatch, time, toString, unembed, wiki, youTube');
+    inputText('about, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sound, stopwatch, time, total, toString, unembed, wiki, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2289,6 +2297,11 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       inputText(getTime());
+      break;
+    case 'total':
+      stack.pop();
+      updateDisplay();
+      inputText(totalStack());
       break;
     case 'twig':
       stack.pop();
