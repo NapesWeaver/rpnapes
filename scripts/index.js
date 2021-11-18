@@ -60,7 +60,7 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var inversed = '';
-var tStamp = '20:37:46';
+var tStamp = '19:28:46';
 var testing = false;
 
 var stack = [];
@@ -1234,113 +1234,95 @@ function btnSign() {
   }
 }
 
-function changeSign() {
-  backupUndo();
-  var tmpX = $('txt-input').value;  
+function leadingSignChange(x) {
 
-  if (stackFocus) tmpX = getSelectedText('lst-stack');
-  // If input is blank
-  if (tmpX === '') {
-    tmpX = '-';
-  } else if (tmpX === '+') {
-    tmpX = '-';
-  } else if (tmpX === '-') {
-    tmpX = '+';
-  } else if (/^[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
-    // If exponential number
-    tmpX += '-';
-  } else if (/^[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  } else if (/^[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
-  } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +$/.test(tmpX)) {
-    // If imaginary number
-    tmpX = tmpX.substring(0, tmpX.length);
-    tmpX += '-';
-  } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  } else if (radix !==  16 && /^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[+]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
-  } else if (radix === 16 && /^[-+]?[a-e0-9]+ +$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length);
-    tmpX += '-';
-  } else if (radix === 16 && /^[-+]?[a-e0-9]+ +[-]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  } else if (radix === 16 && /^[-+]?[a-e0-9]+ +[+]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
-  } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+[eE]$/.test(tmpX)) {
-    // If exponential imaginary number
-    tmpX = tmpX.substring(0, tmpX.length);
-    tmpX += '-';
-  } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][-])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  } else if (/^[-+]?[0-9]+\.?[0-9]*[eE]?[-+]?[0-9]* +[-+]?[0-9]+\.?[0-9]+([eE][+])$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
-  } else if (/^[-+]?[0-9]+.*\^$/.test(tmpX)) {
-    // If unit exponent
-    tmpX += '-'
-  } else if (/^[-+]?[0-9]+.*\^[-]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-  } else if (/^[-+]?[0-9]+.*\^[+]$/.test(tmpX)) {
-    tmpX = tmpX.substring(0, tmpX.length - 1);
-    tmpX += '-';
+  if (x.charAt(0) === '-') {
+    x =  '+' + x.substring(1);
   } else {
-    // Change sign
-    if (tmpX.charAt(0) === '+') {
-      tmpX = tmpX.substring(1);
-    }
-    if (tmpX.charAt(0) === '-') {
-      tmpX = tmpX.substring(1);
-    } else {
-      tmpX = '-' + tmpX;
-    }
+    if (x.charAt(0) === '+') x = x.substring(1);
+    x =  '-' + x;
   }
-  stackFocus ? insertAtCursor($('txt-input'), tmpX) : $('txt-input').value = tmpX;
-  $('txt-input').focus();
+  return x.trim();
 }
 
-// function changeSign() {
-//   backupUndo();
-//   var x = '';
+function changeSign() {
+  backupUndo();
+  var x = '';
   
-//   if (stackFocus) {
-//     var i = getIndex('lst-stack') - stackSize;
-//     // Rebild from stack
-//     if (isANumber(stack[i].getRealPart())) x += stack[i].getRealPart();
-//     if (x) x += ' ';
-//     if (isANumber(stack[i].getImaginary())) {
-//       if (stack[i].getImaginary().charAt(0) === '-') {
-//         if (x) x += '- '
-//         x += (stack[i].getImaginary().toString()).substring(1) + 'j';
-//       } else {
-//         if (x) x += '+ ';
-//         x += stack[i].getImaginary() + 'j';
-//       }
-//     }
-//     if (stack[i].getUnits() !== 'null') x += ' ' + stack[i].getUnits();
-//     if(!x) x = stack[i].getSoul();
-//   } else {
-//     // Direct Editing
-//     x = $('txt-input').value;
-//   }
+  if (stackFocus) {
+    // Rebild x from stack
+    var i = getIndex('lst-stack') - stackSize;
+    if (isANumber(stack[i].getRealPart())) x += stack[i].getRealPart();
+    if (x) x += ' ';
+    if (isANumber(stack[i].getImaginary())) {
+      if (stack[i].getImaginary().charAt(0) === '-') {
+        if (x) x += '- '
+        x += (stack[i].getImaginary().toString()).substring(1) + 'j';
+      } else {
+        if (x) x += '+ ';
+        x += stack[i].getImaginary() + 'j';
+      }
+    }
+    if (stack[i].getUnits() !== 'null') x += ' ' + stack[i].getUnits();
+    if(!x) x = stack[i].getSoul();
+    x = leadingSignChange(x);
+  } else {
+    // Direct Editing
+    var startPos = $('txt-input').selectionStart;
+    x = $('txt-input').value;
+    if (startPos === 0 || (startPos === x.length && !/[-+eE^ ]/.test(x.charAt(startPos - 1)))) {
+      // Change Leading Sign only
+      x = leadingSignChange(x);
+    } else {
+      // Edit txt-input
+      if (/[-+]/.test(x.charAt(startPos - 1))) {
+        // startPos is at a [-+]
+        if (/-/.test(x.charAt(startPos - 1))) {          
+          x = x.slice(0, startPos - 1) + x.slice(startPos);
+          // If there is a space to the left, explicit '+' inserted
+          if (/ /.test(x.charAt(startPos - 2))) {            
+            x = x.slice(0, startPos - 1 ) + '+' + x.slice(startPos - 1);
+            startPos ++;
+          }
+        }
+        if (/[+]/.test(x.charAt(startPos - 1))) {          
+          x = x.slice(0, startPos - 1) + x.slice(startPos);        
+          x = x.slice(0, startPos - 1 ) + '-' + x.slice(startPos - 1);        
+          startPos ++;
+        }
+        $('txt-input').value = x;
+        $('txt-input').selectionStart = startPos - 1;
+        $('txt-input').selectionEnd = startPos - 1;
+      } else if (/[eE^ ]/.test(x.charAt(startPos - 1))) {
+        // startPos is at a [eE^ ]
+        if (/ /.test(x.charAt(startPos - 1))) {          
+          x = x.slice(0, startPos) + '-' + x.slice(startPos);
+          startPos = startPos + 2;
+        }
+        if (/[eE^]/.test(x.charAt(startPos - 1))) { 
 
-
-//   //Change Sign
-//   if (x.charAt(0) === '-') {
-//     x =  '+' + x.substring(1);
-//   } else {
-//     if (x.charAt(0) === '+') x = x.substring(1);
-//     x =  '-' + x;
-//   }
-
-//   if (radix !== 10) x = x.toString(radix);
-//   $('txt-input').value = x;
-//   $('txt-input').focus();
-// }
+          if (/[-]/.test(x.charAt(startPos))) {
+            x = x.slice(0, startPos) + x.slice(startPos + 1);
+            startPos ++;            
+          } else if (/[+]/.test(x.charAt(startPos))) {          
+            x = x.slice(0, startPos) + x.slice(startPos + 1);
+            x = x.slice(0, startPos) + '-' + x.slice(startPos);   
+            startPos = startPos + 2;
+          } else if (!/[-]/.test(x.charAt(startPos))) {
+            x = x.slice(0, startPos) + '-' + x.slice(startPos); 
+            startPos = startPos + 2;
+          }
+        }
+        $('txt-input').value = x;
+        $('txt-input').selectionStart = startPos - 1;
+        $('txt-input').selectionEnd = startPos - 1;
+      }
+    }    
+  }  
+  // if (radix !== 10) { }    
+  $('txt-input').value = x;
+  $('txt-input').focus();
+}
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
