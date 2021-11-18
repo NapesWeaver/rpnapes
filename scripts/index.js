@@ -2,37 +2,6 @@
   return document.getElementById(id);
 };
 
-/**
- * Array.prototype.indexOf()
- * Added to the ECMA-262 standard in the 5th edition may not work in all browsers.
- * You can work around this by utilizing the following code at the beginning of your scripts.
- * This will allow you to use indexOf() when there is still no native support.
- * This algorithm matches the one specified in ECMA-262, 5th edition, assuming TypeError and Math.abs() have their original values.
- * This version tries to optimize by only checking for "in" when looking for undefined and
- * skipping the definitely fruitless NaN search. Other parts are merely cosmetic conciseness.
-*/
-if (!Array.prototype.indexOf)
-  Array.prototype.indexOf = (function(Object, max, min) {
-    'use strict'
-    return function indexOf(member, fromIndex) {
-      if (this === null || this === undefined)
-        throw TypeError('Array.prototype.indexOf called on null or undefined')
-
-      var that = Object(this), Len = that.length >>> 0, i = min(fromIndex | 0, Len)
-      if (i < 0) i = max(0, Len + i)
-      else if (i >= Len) return -1
-
-      if (member === void 0) {// undefined
-        for (; i !== Len; ++i) if (that[i] === void 0 && i in that) return i
-      } else if (member !== member) {// NaN
-        return -1// Since NaN !== NaN, it will never be found. Fast-path it.
-      } else// All else
-        for (; i !== Len; ++i) if (that[i] === member) return i 
-
-      return -1// If the value was not found, then return -1
-    }
-  })(Object, Math.max, Math.min);
-
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 var isFirefox = /firefox/i.test(navigator.userAgent);
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -109,6 +78,41 @@ NumberObject.prototype.getUnits = function () {
 NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
 };
+
+/**
+ * Array.prototype.indexOf()
+ * Added to the ECMA-262 standard in the 5th edition may not work in all browsers.
+ * You can work around this by utilizing the following code at the beginning of your scripts.
+ * This will allow you to use indexOf() when there is still no native support.
+ * This algorithm matches the one specified in ECMA-262, 5th edition, assuming TypeError and Math.abs() have their original values.
+ * This version tries to optimize by only checking for "in" when looking for undefined and
+ * skipping the definitely fruitless NaN search. Other parts are merely cosmetic conciseness.
+*/
+if (!Array.prototype.indexOf)
+  Array.prototype.indexOf = (function(Object, max, min) {
+    'use strict'
+    return function indexOf(member, fromIndex) {
+      if (this === null || this === undefined)
+        throw TypeError('Array.prototype.indexOf called on null or undefined')
+
+      var that = Object(this), Len = that.length >>> 0, i = min(fromIndex | 0, Len)
+      if (i < 0) i = max(0, Len + i)
+      else if (i >= Len) return -1
+
+      if (member === void 0) {// undefined
+        for (; i !== Len; ++i) if (that[i] === void 0 && i in that) return i
+      } else if (member !== member) {// NaN
+        return -1// Since NaN !== NaN, it will never be found. Fast-path it.
+      } else// All else
+        for (; i !== Len; ++i) if (that[i] === member) return i 
+
+      return -1// If the value was not found, then return -1
+    }
+  })(Object, Math.max, Math.min);
+
+String.prototype.insertAt = function (index, input) {
+  return this.slice(0,index) + input + this.slice(index);
+}
 
 function resetPhi() {
   Φ = 1.618033988749895;
@@ -1281,13 +1285,13 @@ function changeSign() {
           x = x.slice(0, startPos - 1) + x.slice(startPos);
           // If there is a space to the left, explicit '+' inserted
           if (/ /.test(x.charAt(startPos - 2))) {            
-            x = x.slice(0, startPos - 1 ) + '+' + x.slice(startPos - 1);
+            x = x.insertAt(startPos - 1, '+');
             startPos ++;
           }
         }
         if (/[+]/.test(x.charAt(startPos - 1))) {          
           x = x.slice(0, startPos - 1) + x.slice(startPos);        
-          x = x.slice(0, startPos - 1 ) + '-' + x.slice(startPos - 1);        
+          x = x.insertAt(startPos - 1, '-');
           startPos ++;
         }
         $('txt-input').value = x;
@@ -1296,7 +1300,7 @@ function changeSign() {
       } else if (/[eE^ ]/.test(x.charAt(startPos - 1))) {
         // startPos is at a [eE^ ]
         if (/ /.test(x.charAt(startPos - 1))) {          
-          x = x.slice(0, startPos) + '-' + x.slice(startPos);
+          x = x.insertAt(startPos, '-');
           startPos = startPos + 2;
         }
         if (/[eE^]/.test(x.charAt(startPos - 1))) { 
@@ -1306,10 +1310,10 @@ function changeSign() {
             startPos ++;            
           } else if (/[+]/.test(x.charAt(startPos))) {          
             x = x.slice(0, startPos) + x.slice(startPos + 1);
-            x = x.slice(0, startPos) + '-' + x.slice(startPos);   
+            x = x.insertAt(startPos, '-');
             startPos = startPos + 2;
           } else if (!/[-]/.test(x.charAt(startPos))) {
-            x = x.slice(0, startPos) + '-' + x.slice(startPos); 
+            x = x.insertAt(startPos, '-')
             startPos = startPos + 2;
           }
         }
@@ -1639,55 +1643,34 @@ function btnNine() {
 
 //////// More Calcamatrons ///////////////////////////////////////////////////////////
 
-function linearSearch(array, key) {
-  for (var i = 0; i< array.length; i++) {
-    if (array[i] === key) {
-      return i;
-    }
-  }
-  return -1;
+function totalStack() {
 }
 
-function binarySearch(array, key) {
+function averageStack() {
+}
+
+function stackMax() {  
+}
+
+function stackMin() {  
+}
+
+function sortStack(maxMin) {
+}
+
+function binarySearch(key) {
   var left = 0;
-  var right = array.length - 1;
+  var right = stack.length - 1;
   while (left <= right) {
     var mid = left + Math.floor((right + left) / 2);
-    if (array[mid] === key) return mid;
-    if (array[mid] < key) {
+    if (stack[mid] === key) return mid;
+    if (stack[mid] < key) {
       left = mid + 1;
     } else {
       right = mid -1;
     }
     return -1; 
   }
-}
-
-function averageStack() {
-}
-
-function inArray(arrayToCheck, value) {
-  for (var i = 0; i < arrayToCheck.length; i++) {
-    if (arrayToCheck[i] === value) {
-      return true;
-    }
-  }
-  return false;
-}
-
-function sortStack(maxMin) {
-}
-
-// Sum an unknown number of arguments eg. getSum(1,2,3,4,5,6) = 21
-function getSum() {
-  var sum = 0;
-  for (var i = 0; i < arguments.length; i++) {
-    sum += arguments[i];
-  }
-  return sum;
-}
-
-function totalStack() {
 }
 
 // Extract any substring that follows a number
@@ -1730,8 +1713,44 @@ function extractSubString(tmpArray) {
   return subString;
 }
 
-String.prototype.insertAt = function (index, input) {
-  return this.slice(0,index) + input + this.slice(index);
+/**
+ * Get the user IP throught the webkitRTCPeerConnection
+ * @param onNewIP {Function} listener function to expose the IP locally
+ * @return undefined
+ */
+function getUserIP(onNewIP) {
+  // onNewIp - your listener function for new IPs
+  // Compatibility for firefox and chrome
+  var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+  var pc = new myPeerConnection({
+      iceServers: []
+    }),
+    noop = function () { },
+    localIPs = {},
+    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
+    key;
+
+  function iterateIP(ip) {
+    if (!localIPs[ip]) onNewIP(ip);
+    localIPs[ip] = true;
+  }
+  // Create a bogus data channel
+  pc.createDataChannel('');
+  // Create offer and set local description
+  pc.createOffer().then(function (sdp) {
+    sdp.sdp.split('\n').forEach(function (line) {
+      if (line.indexOf('candidate') < 0) return;
+      line.match(ipRegex).forEach(iterateIP);
+    });
+    pc.setLocalDescription(sdp, noop, noop);
+  }).catch(function (e) {
+    // An error occurred, so handle the failure to connect
+  });
+  // Listen for candidate events
+  pc.onicecandidate = function (ice) {
+    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+    ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+  };
 }
 
 function insertTime() {
@@ -1818,46 +1837,6 @@ function getIP() {
   }
 }
 
-/**
- * Get the user IP throught the webkitRTCPeerConnection
- * @param onNewIP {Function} listener function to expose the IP locally
- * @return undefined
- */
-function getUserIP(onNewIP) {
-  // onNewIp - your listener function for new IPs
-  // Compatibility for firefox and chrome
-  var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-  var pc = new myPeerConnection({
-      iceServers: []
-    }),
-    noop = function () { },
-    localIPs = {},
-    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
-    key;
-
-  function iterateIP(ip) {
-    if (!localIPs[ip]) onNewIP(ip);
-    localIPs[ip] = true;
-  }
-  // Create a bogus data channel
-  pc.createDataChannel('');
-  // Create offer and set local description
-  pc.createOffer().then(function (sdp) {
-    sdp.sdp.split('\n').forEach(function (line) {
-      if (line.indexOf('candidate') < 0) return;
-      line.match(ipRegex).forEach(iterateIP);
-    });
-    pc.setLocalDescription(sdp, noop, noop);
-  }).catch(function (e) {
-    // An error occurred, so handle the failure to connect
-  });
-  // Listen for candidate events
-  pc.onicecandidate = function (ice) {
-    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-    ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-  };
-}
-
 function autoDark() {
   var hour = new Date().getHours();
   if (hour <= 6 || hour >= 18) {
@@ -1876,13 +1855,10 @@ var timerInterval;
 function timeToString(time) {
   var diffInHrs = time / 3600000;
   var hh = Math.floor(diffInHrs);
-
   var diffInMin = (diffInHrs - hh) * 60;
   var mm = Math.floor(diffInMin);
-
   var diffInSec = (diffInMin - mm) * 60;
   var ss = Math.floor(diffInSec);
-
   var diffInMs = (diffInSec - ss) * 100;
   var ms = Math.floor(diffInMs);
 
@@ -1898,7 +1874,6 @@ function stopwatchPrint(txt) {
 }
 
 function stopwatchStart() {  
-
   if (elapsedTime === 0) {
     stack.pop();
     inputText('Press DEL key to reset stopwatch');
@@ -1922,6 +1897,11 @@ function stopwatchReset() {
   elapsedTime = 0;
   $('txt-input').value = '00:00:00';
   $('txt-input').select();
+}
+
+function menuHelp() {
+  backupUndo();
+  help('help');
 }
 
 function help(command) {
@@ -2542,11 +2522,6 @@ function resetConstants() {
   resetPi();
   resetGravitational();
   resetLightspeed();
-}
-
-function menuHelp() {
-  backupUndo();
-  help('help');
 }
 
 function onClickSelection(textarea){ 
