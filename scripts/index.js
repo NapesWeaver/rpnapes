@@ -1650,10 +1650,14 @@ function totalStack() {
 
 function averageStack() {
   var total = 0;
+  var numElements = 0;
   for (var s in stack) {
-    if (isANumber(stack[s].getRealPart())) total += calculate(stack[s].getRealPart());
+    if (isANumber(stack[s].getRealPart())) {
+      total += calculate(stack[s].getRealPart());
+      numElements ++
+    }
   }
-  return total / stack.length;
+  return total / numElements;
 }
 
 function maxNum() { 
