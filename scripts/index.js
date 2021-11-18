@@ -1924,8 +1924,8 @@ function help(command) {
     case 'average':
       inputText('average: Finds the average of stack elements that are not NaN and returns the result.');
       break;
-    case 'darkMode':
-      inputText('darkMode: Toggle between light and dark themes.');
+    case 'darkmode':
+      inputText('darkmode: Toggle between light and dark themes.');
       break;
     case 'date':
       inputText('date: Returns the current date.');
@@ -1942,8 +1942,8 @@ function help(command) {
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL. URL must be in format of https://www.youtube.com/embed/G2re3s0kQgM. ');
       break;
-    case 'flightLogger':
-      inputText('flightLogger: Opens Flight Logger in a new tab.');
+    case 'flightlogger':
+      inputText('flightlogger: Opens Flight Logger in a new tab.');
       break;
     case 'fix':
       inputText('fix [n]: Fix number of decimals shown on the stack (0 to 17). If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
@@ -1951,8 +1951,8 @@ function help(command) {
     case 'google':
       inputText('google [query]: Search Google / open link or IP address. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
       break;
-    case 'ipMapper':
-      inputText('ipMapper: Opens IP Mapper in a new tab.');
+    case 'ipmapper':
+      inputText('ipmapper: Opens IP Mapper in a new tab.');
       break;
     case 'haptic':
       inputText('haptic: For mobile devices only. Toggles haptic response for the keypad.');
@@ -1990,8 +1990,8 @@ function help(command) {
     case 'open':
       inputText('open: Open a text file onto the Stack. A bug prohibits loading the same file successively ;(');
       break;
-    case 'openNotes':
-      inputText('openNotes: Open a text file into Notes.');
+    case 'opennotes':
+      inputText('opennotes: Open a text file into Notes.');
       break;
     case 'off':
       $('txt-input').value = 'off: Close browser tab or redirect to google.com.';
@@ -2014,8 +2014,8 @@ function help(command) {
     case 'save':
       inputText('save: Saves the stack to a browser cookie.');
       break;
-    case 'saveAs':
-      inputText('saveAs [filename]: Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
+    case 'saveas':
+      inputText('saveas [filename]: Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'shortcuts':
       inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
@@ -2035,8 +2035,8 @@ function help(command) {
     case 'total':
       inputText('total: Totals the stack elements that are not NaN and returns the result.');
       break;
-    case 'toString':
-      inputText('toString [filename]: Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
+    case 'tostring':
+      inputText('tostring [filename]: Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'tricorder':
       inputText('tricorder: Opens the Tricorder interface.');
@@ -2047,15 +2047,15 @@ function help(command) {
     case 'wiki':
       inputText('wiki [query]: Search Wikipedia. If no argument is supplied in-line, last entry on stack is used as query.');
       break;    
-    case 'youTube':
-      inputText('youTube [query]: Search YouTube. If no argument is supplied in-line, last entry on stack is used as query. Alias: you');
+    case 'youtube':
+      inputText('youtube [query]: Search youtube. If no argument is supplied in-line, last entry on stack is used as query. Alias: you');
       break;    
     default:// case NOT a help argument
       enterInput();
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, max, min, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sort, sound, stopwatch, time, total, toString, unembed, wiki, youTube');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, napes, notes, open, opennotes, off, paste, print, run, save, saveas, shortcuts, sort, sound, stopwatch, time, total, tostring, unembed, wiki, youtube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2088,8 +2088,8 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();    
     }
-    // NOT saveAs with word and no space, NOT saveAs with number, NOT saveAs with word and alphanumeric word
-    if (command.match(/(?!saveAs[A-Za-z]+)(?!saveAs ?[0-9])(?!saveAs [A-Za-z]+ +[0-9A-Za-z]+)^saveAs ?[A-Za-z]*/)) {    
+    // NOT saveas with word and no space, NOT saveas with number, NOT saveas with word and alphanumeric word
+    if (command.match(/(?!saveas[A-Za-z]+)(?!saveas ?[0-9])(?!saveas [A-Za-z]+ +[0-9A-Za-z]+)^saveas ?[A-Za-z]*/)) {    
       
       if (commandArray[1] === undefined) {
         stack.pop();
@@ -2101,8 +2101,8 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
     }
-    // NOT toString with word and no space, NOT toString with number, NOT toString with word and alphanumeric word
-    if (command.match(/(?!toString[A-Za-z]+)(?!toString ?[0-9])(?!toString [A-Za-z]+ +[0-9A-Za-z]+)^toString ?[A-Za-z]*/)) {    
+    // NOT tostring with word and no space, NOT tostring with number, NOT tostring with word and alphanumeric word
+    if (command.match(/(?!tostring[A-Za-z]+)(?!tostring ?[0-9])(?!tostring [A-Za-z]+ +[0-9A-Za-z]+)^tostring ?[A-Za-z]*/)) {    
 
       if (commandArray[1] === undefined) {
         stack.pop();
@@ -2167,7 +2167,7 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
     }
-    if (command === 'youTube' || command === 'you' || command.match(/^youTube .+/) || command.match(/^you .+/)) {
+    if (command === 'youtube' || command === 'you' || command.match(/^youtube .+/) || command.match(/^you .+/)) {
       
       if (commandArray[1] === undefined) {
         $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
@@ -2215,7 +2215,7 @@ function parseCommand() {
     case 'cls':
       btnClear();
       break;
-    case 'darkMode':
+    case 'darkmode':
       stack.pop();
       toggleDarkMode();
       updateDisplay(); 
@@ -2229,7 +2229,7 @@ function parseCommand() {
     case 'fizzBuzz':
       fizzBuzz();
       break;  
-    case 'flightLogger':
+    case 'flightlogger':
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();
@@ -2260,7 +2260,7 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
       break;
-    case 'ipMapper':
+    case 'ipmapper':
       stack.pop();
       updateDisplay();
       $('txt-input').value = '';
@@ -2334,7 +2334,7 @@ function parseCommand() {
       $('txt-input').value = '';
       openAFile();
       break;
-    case 'openNotes':
+    case 'opennotes':
       stack.pop();
       updateDisplay();      
       btnXoff();
