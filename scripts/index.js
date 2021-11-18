@@ -1940,10 +1940,10 @@ function help(command) {
       inputText('acos(), asin(), atan(), cos(), sin(), tan(), ln(), log(), pow(), root()');
       break;
     case 'max':
-      inputText('max: Find the stack element with the maximum value that is not NaN');
+      inputText('max: Find the stack element with the maximum value that is not NaN.');
       break;
     case 'min':
-      inputText('min: Find the stack element with the minimum value that is not NaN');
+      inputText('min: Find the stack element with the minimum value that is not NaN.');
       break;
     case 'napes':
       inputText('napes: Switch to Referances interface.');
@@ -2159,15 +2159,15 @@ function parseCommand() {
       break;
     case 'constants':
       stack.pop();
-      inputText('Φ ' + Φ);
+      inputText('Φ = ' + 1.618033988749895);
       enterInput();
-      inputText('℮ ' + ℮);
+      inputText('℮ = ' + 2.718281828459045);
       enterInput();
-      inputText('ɢ ' + ɢ);
+      inputText('ɢ = ' + 6.674e-11);
       enterInput();
-      inputText('ⅽ ' + ⅽ);
+      inputText('ⅽ = ' + 299792458);
       enterInput();
-      inputText('π ' + π);
+      inputText('π = ' + 3.141592653589793);
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
