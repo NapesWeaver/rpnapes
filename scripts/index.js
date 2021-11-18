@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '19:28:46';
+var tStamp = '14:48:38';
 
 var stack = [];
 var backups = [];
@@ -4487,7 +4487,7 @@ window.onload = function () {
     }
   })();
 
-  $('menu-haptic-li').classList.add('strikethrough');
+  // $('menu-haptic-li').classList.add('strikethrough');
   $('menu-sound-li').classList.add('strikethrough');
   
   $('menu-help').onclick = menuHelp;
