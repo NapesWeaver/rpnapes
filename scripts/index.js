@@ -1661,23 +1661,35 @@ function averageStack() {
 }
 
 function maxNum() { 
-  var max = 0;
+  var max;
+
   for (var s in stack) {
-    if (isANumber(stack[s].getRealPart()) && calculate(stack[s].getRealPart()) > max) {
-      max = calculate(stack[s].getRealPart());
+    if (isANumber(stack[s].getRealPart())) {
+      var num = calculate(stack[s].getRealPart());
+      if (max)  {
+        if (num > max) max = num;
+      } else {
+        max = num;
+      }
     }
   }
   return max;
 }
 
 function minNum() { 
-  var max = 0;
+  var min;
+
   for (var s in stack) {
-    if (isANumber(stack[s].getRealPart()) && calculate(stack[s].getRealPart()) < max) {
-      max = calculate(stack[s].getRealPart());
+    if (isANumber(stack[s].getRealPart())) {
+      var num = calculate(stack[s].getRealPart());
+      if (min)  {
+        if (num < min) min = num;
+      } else {
+        min = num;
+      }
     }
   }
-  return max;
+  return min;
 }
 
 function sortStack(maxMin) {
