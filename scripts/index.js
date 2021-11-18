@@ -1649,6 +1649,11 @@ function totalStack() {
 }
 
 function averageStack() {
+  var total = 0;
+  for (var s in stack) {
+    if (isANumber(stack[s].getRealPart())) total += calculate(stack[s].getRealPart());
+  }
+  return total / stack.length;
 }
 
 function stackMax() {  
@@ -1866,6 +1871,9 @@ function help(command) {
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
       break;
+    case 'average':
+      inputText('average: Finds the average of stack elements that are !NaN and returns the result.');
+      break;
     case 'darkMode':
       inputText('darkMode: Toggle between light and dark themes.');
       break;
@@ -1966,7 +1974,7 @@ function help(command) {
       inputText('time: Returns the current time.');
       break;
     case 'total':
-      inputText('total: Totals stack elements that are !NaN and returns the result.');
+      inputText('total: Totals the stack elements that are !NaN and returns the result.');
       break;
     case 'toString':
       inputText('toString [filename]: Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
@@ -1988,7 +1996,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sound, stopwatch, time, total, toString, unembed, wiki, youTube');
+    inputText('about, average, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sound, stopwatch, time, total, toString, unembed, wiki, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2123,6 +2131,11 @@ function parseCommand() {
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
+      break;
+    case 'average':
+      stack.pop();
+      updateDisplay();
+      inputText(averageStack());
       break;
     case 'constants':
       stack.pop();
