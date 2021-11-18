@@ -1701,7 +1701,6 @@ function numberSort(asc) {
   var strings = [];
   var numbers = [];
   // var units = [];
-
   for (var s in stack) {
     if (!isANumber(stack[s].getRealPart()) && !isANumber(stack[s].getImaginary()) && stack[s].getSoul() !== '') strings.push(stack[s]);
     if (isANumber(stack[s].getRealPart())) numbers.push(stack[s]);
@@ -1709,7 +1708,6 @@ function numberSort(asc) {
   }
   var arrLength = numbers.length - 1;
   var swap;
-
   do {
     swap = false;
     
@@ -1729,7 +1727,6 @@ function numberSort(asc) {
     }
     arrLength --;
   } while (swap);
-
   asc ? strings.sort() : strings.sort().reverse();
   asc ? stack = strings.concat(numbers) : stack = numbers.concat(strings);
 }
@@ -4392,8 +4389,39 @@ window.onload = function () {
   })();
 
   // Menu Programs
-  $('menu-fizz-buzz').onclick = fizzBuzz;
+  $('menu-stack-average').onclick = (function() {
+    return function() {
+      backupUndo();
+      inputText(averageStack());
+    }
+  })();
+  $('menu-stack-sort').onclick = (function() {
+    return function() {
+      backupUndo();
+      numberSort(true);
+      updateDisplay();
+    }
+  })();
+  $('menu-stack-total').onclick = (function() {
+    return function() {
+      backupUndo();
+      inputText(totalStack());
+    }
+  })();
+  $('menu-stack-max').onclick = (function() {
+    return function() {
+      backupUndo();
+      inputText(maxNum());
+    }
+  })();
+  $('menu-stack-min').onclick = (function() {
+    return function() {
+      backupUndo();
+      inputText(minNum());
+    }
+  })();
   $('menu-stopwatch').onclick = stopwatchStart;
+  $('menu-fizz-buzz').onclick = fizzBuzz;
   $('menu-tricorder').onclick = showTricorder;
   $('menu-twig').onclick = monOn;
   
