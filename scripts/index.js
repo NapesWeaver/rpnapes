@@ -2780,6 +2780,14 @@ function isANumber(testString) {
   return isNum;
 }
 
+function willCalculate(expression) {
+  var calculated = false;
+  // console.log('expression', expression);
+  // console.log(' = ', !isNaN(calculate(expression)));
+  if (!isNaN(calculate(expression))) calculated = true;
+  return calculated;
+}
+
 function prettyPrint(i, content) {
   // If not a number and not imaginary
   if (!isANumber(stack[i].getRealPart()) && !isANumber(stack[i].getImaginary())) {
