@@ -76,6 +76,7 @@ NumberObject.prototype.getUnits = function () {
 NumberObject.prototype.toString = function () {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
 };
+
 String.prototype.insertAt = function (index, input) {
   return this.slice(0, index) + input + this.slice(index);
 }
@@ -1172,11 +1173,12 @@ function rootFunction() {
 }
 
 function btnPi() {
-  backupUndo();
   if (shifted) {
+    backupUndo();
     btn_parentheses();
   } else {
-    insertText('π');
+    insertAtCursor($('txt-input'), 'π');
+    $('txt-input').focus();
   }
 }
 
