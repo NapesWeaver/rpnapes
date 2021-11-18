@@ -1656,10 +1656,24 @@ function averageStack() {
   return total / stack.length;
 }
 
-function stackMax() {  
+function maxNum() { 
+  var max = 0;
+  for (var s in stack) {
+    if (isANumber(stack[s].getRealPart()) && calculate(stack[s].getRealPart()) > max) {
+      max = calculate(stack[s].getRealPart());
+    }
+  }
+  return max;
 }
 
-function stackMin() {  
+function minNum() { 
+  var max = 0;
+  for (var s in stack) {
+    if (isANumber(stack[s].getRealPart()) && calculate(stack[s].getRealPart()) < max) {
+      max = calculate(stack[s].getRealPart());
+    }
+  }
+  return max;
 }
 
 function sortStack(maxMin) {
@@ -1872,7 +1886,7 @@ function help(command) {
       inputText('https://github.com/NapesWeaver/rpnapes');
       break;
     case 'average':
-      inputText('average: Finds the average of stack elements that are !NaN and returns the result.');
+      inputText('average: Finds the average of stack elements that are not NaN and returns the result.');
       break;
     case 'darkMode':
       inputText('darkMode: Toggle between light and dark themes.');
@@ -1925,6 +1939,12 @@ function help(command) {
     case 'maths':
       inputText('acos(), asin(), atan(), cos(), sin(), tan(), ln(), log(), pow(), root()');
       break;
+    case 'max':
+      inputText('max: Find the stack element with the maximum value that is not NaN');
+      break;
+    case 'min':
+      inputText('min: Find the stack element with the minimum value that is not NaN');
+      break;
     case 'napes':
       inputText('napes: Switch to Referances interface.');
       break;
@@ -1974,7 +1994,7 @@ function help(command) {
       inputText('time: Returns the current time.');
       break;
     case 'total':
-      inputText('total: Totals the stack elements that are !NaN and returns the result.');
+      inputText('total: Totals the stack elements that are not NaN and returns the result.');
       break;
     case 'toString':
       inputText('toString [filename]: Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
@@ -1996,7 +2016,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sound, stopwatch, time, total, toString, unembed, wiki, youTube');
+    inputText('about, average, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, max, min, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sound, stopwatch, time, total, toString, unembed, wiki, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2246,6 +2266,16 @@ function parseCommand() {
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
+      break;
+    case 'max':
+      stack.pop();
+      updateDisplay();
+      inputText(maxNum());
+      break;
+    case 'min':
+      stack.pop();
+      updateDisplay();
+      inputText(minNum());
       break;
     case 'napes':
       window.location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
