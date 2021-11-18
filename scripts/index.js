@@ -1696,22 +1696,38 @@ function minNum() {
   return min;
 }
 
-function sortStack(maxMin) {
-}
+function numberSort() {
 
-function binarySearch(key) {
-  var left = 0;
-  var right = stack.length - 1;
-  while (left <= right) {
-    var mid = left + Math.floor((right + left) / 2);
-    if (stack[mid] === key) return mid;
-    if (stack[mid] < key) {
-      left = mid + 1;
-    } else {
-      right = mid -1;
-    }
-    return -1; 
+  var strings = [];
+  var numbers = [];
+  // var units = [];
+
+  for (var s in stack) {
+    if (!isANumber(stack[s].getRealPart()) && !isANumber(stack[s].getImaginary())) strings.push(stack[s]);
+    if (isANumber(stack[s].getRealPart())) numbers.push(stack[s]);
+    // if (stack[s].getUnits() !== 'null') units.push(stack[s]);    
   }
+  var arrLength = numbers.length - 1;
+  var swap;
+
+  do {
+    swap = false;
+    for (var i = 0; i < arrLength; i++) {
+      var s1 = calculate(numbers[i].getRealPart()); 
+      var s2 = calculate(numbers[i + 1].getRealPart());
+      if (s1 > s2) {
+        var tmpObj = numbers[i];
+
+        numbers[i] = numbers[i + 1];
+        numbers[i + 1] = tmpObj
+        swap = true;
+      }
+    }
+    arrLength --;
+  } while (swap);
+
+  strings.sort();
+  stack = strings.concat(numbers);
 }
 
 // Extract any substring that follows a number
@@ -2004,6 +2020,9 @@ function help(command) {
     case 'shortcuts':
       inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       break;
+    case 'sort':
+      inputText('sort: Sort the stack in ascending order.');
+      break;
     case 'sound':
       inputText('sound: Toggle sound on/off for Tricorder buttons.');
       break;
@@ -2036,7 +2055,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, max, min, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sound, stopwatch, time, total, toString, unembed, wiki, youTube');
+    inputText('about, average, clear, constants, darkMode, date, duckgo, embed, fix, flightLogger, google, ipMapper, haptic, keyboard, load, locus, maths, max, min, napes, notes, open, openNotes, off, paste, print, run, save, saveAs, shortcuts, sort, sound, stopwatch, time, total, toString, unembed, wiki, youTube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2346,6 +2365,11 @@ function parseCommand() {
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
+      break;
+    case 'sort':
+      stack.pop();
+      numberSort();
+      updateDisplay();
       break;
     case 'sound':
       stack.pop();
