@@ -982,7 +982,7 @@ function inverse() {
       }
       $('txt-input').value += newUnits;
     } else {
-      // Remove units from equation and calculate
+      // Remove units from expression and calculate
       var result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
 
       if (!isNaN(result)) {
@@ -1938,7 +1938,7 @@ function help(command) {
       inputText('clear: Clears the displays. Alias: cls');
       break;
     case 'constants':
-      inputText('constants: Display values of constants. Reassingment of \'constants\' are allowed. \'Constants\' are reset if Equations / Contants menu items are opened.');
+      inputText('constants: Display values of constants. Reassingment of \'constants\' are allowed. \'Constants\' are reset if Formulas or Contants menu are opened.');
       break;
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL. URL must be in format of https://www.youtube.com/embed/G2re3s0kQgM. ');
@@ -4359,12 +4359,7 @@ window.onload = function () {
   // Menu Time
   $('menu-time').onclick = insertTime;
 
-  // Menu Equations
-  $('menu-ohms-law').onclick = (function() {
-    return function() {
-      insertText('E=I*R');
-    }
-  })();
+  // Menu Formulas
   $('menu-circumference').onclick = (function() {
     return function() {
       insertText('2*π*r');
