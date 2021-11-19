@@ -19,7 +19,6 @@ if (isPhone) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate ||
 
 new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
-// $('main').onresize = unFloat;
 if (!isPhone) window.onresize = resizeTextareas;
 
 var Φ = 1.618033988749895;
@@ -3910,7 +3909,6 @@ function moveObj(obj, speed, xMov, yMov) {
       }
     }
   }
-  //inputText("twig:" + theObjects[0].xPos.toString() + " " + theObjects[0].yPos.toString() + " tv:" + theObjects[1].xPos.toString() + " " + theObjects[1].yPos.toString() + " don:" + theObjects[2].xPos.toString() + " " + theObjects[2].yPos.toString());
   displayGIF(obj);
 }
 
