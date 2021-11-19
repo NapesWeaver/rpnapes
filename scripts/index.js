@@ -449,6 +449,7 @@ function getX() {
   var realPartX = extractReal(soulX);
   var imaginaryX = extractImaginary(soulX);
   var unitsX;
+
   isANumber(realPartX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
   soulX = encodeSpecialChar(soulX);
   unitsX = encodeSpecialChar(unitsX);
@@ -1695,30 +1696,28 @@ function minNum() {
   return min;
 }
 
-function numberSort(asc) {
-
+function objectSort(sortOrder, sortByUnits) {
   var strings = [];
   var numbers = [];
-  // var units = [];
+  var noUnitNums = [];
+  var unitNums = [];
+
   for (var s in stack) {
     if (!isANumber(stack[s].getRealPart()) && !isANumber(stack[s].getImaginary()) && stack[s].getSoul() !== '') strings.push(stack[s]);
-    if (isANumber(stack[s].getRealPart())) numbers.push(stack[s]);
-    // if (stack[s].getUnits() !== 'null') units.push(stack[s]);    
+    if (!sortByUnits && isANumber(stack[s].getRealPart())) numbers.push(stack[s]);
+    if (sortByUnits && isANumber(stack[s].getRealPart()) && stack[s].getUnits() === 'null') noUnitNums.push(stack[s]);
+    if (sortByUnits && stack[s].getUnits() !== 'null') unitNums.push(stack[s]);
   }
   var arrLength = numbers.length - 1;
   var swap;
   do {
-    swap = false;
-    
+    swap = false;    
     for (var i = 0; i < arrLength; i++) {
-
       var s1 = calculate(numbers[i].getRealPart()); 
       var s2 = calculate(numbers[i + 1].getRealPart());
-      var myVar = asc ? s1 > s2 : s1 < s2;
-
-      if (myVar) {
+      var greaterOrLess = sortOrder ? s1 > s2 : s1 < s2;
+      if (greaterOrLess) {
         var tmpObj = numbers[i];
-
         numbers[i] = numbers[i + 1];
         numbers[i + 1] = tmpObj
         swap = true;
@@ -1726,8 +1725,44 @@ function numberSort(asc) {
     }
     arrLength --;
   } while (swap);
-  asc ? strings.sort() : strings.sort().reverse();
-  asc ? stack = strings.concat(numbers) : stack = numbers.concat(strings);
+  arrLength = noUnitNums.length - 1;
+  swap;
+  do {
+    swap = false;    
+    for (i = 0; i < arrLength; i++) {
+      s1 = calculate(noUnitNums[i].getRealPart()); 
+      s2 = calculate(noUnitNums[i + 1].getRealPart());
+      greaterOrLess = sortOrder ? s1 > s2 : s1 < s2;
+      if (greaterOrLess) {
+        tmpObj = noUnitNums[i];
+        noUnitNums[i] = noUnitNums[i + 1];
+        noUnitNums[i + 1] = tmpObj
+        swap = true;
+      }
+    }
+    arrLength --;
+  } while (swap);
+  arrLength = unitNums.length - 1;
+  swap;
+  do {
+    swap = false;    
+    for (i = 0; i < arrLength; i++) {
+      s1 = unitNums[i].getUnits(); 
+      s2 = unitNums[i + 1].getUnits();
+      greaterOrLess = sortOrder ? s1 > s2 : s1 < s2;
+      if (greaterOrLess) {
+        tmpObj = unitNums[i];
+        unitNums[i] = unitNums[i + 1];
+        unitNums[i + 1] = tmpObj
+        swap = true;
+      }
+    }
+    arrLength --;
+  } while (swap);
+  sortOrder ? strings.sort() : strings.sort().reverse();
+  if (!sortByUnits) sortOrder ? stack = strings.concat(numbers) : stack = numbers.concat(strings);
+  if (sortByUnits) sortOrder ? stack = strings.concat(noUnitNums) : stack = noUnitNums.concat(strings);
+  if (sortByUnits) sortOrder ? stack = stack.concat(unitNums) : stack = unitNums.concat(stack);
 }
 
 // Extract any substring that follows a number
@@ -2021,7 +2056,7 @@ function help(command) {
       inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       break;
     case 'sort':
-      inputText('sort [order]: Sort stack in ascending order by default. Optional arguments are asc, desc.');
+      inputText('sort [unit|asc|desc] [asc|desc]: Sort stack. Ascending order by default. Sorting by units is also supported. Example usage: \'sort unit desc\'.');
       break;
     case 'sound':
       inputText('sound: Toggle sound on/off for Tricorder buttons.');
@@ -2065,7 +2100,7 @@ function help(command) {
 function parseCommand() {
   var command = $('txt-input').value.trim();
   var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', NaN, NaN, 'null');
-
+ 
   // Commands consist of words and numbers and URLs
   if (!/[,*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
     var commandArray = command.split(' ');       
@@ -2101,20 +2136,20 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
     }
-    // NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and alphanumeric word
-    if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+)^sort ?[A-Za-z]*/)) {   
+    // NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and two more alphanumeric words
+    if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+ +[0-9A-Za-z]+)^sort ?[A-Za-z]*/)) { 
+      var com1 = commandArray[1];
+      var com2 = commandArray[2];  
+      var sortOrder;
+      var sortByUnits = false;
+      
+      if (com1 === undefined || com1 === 'asc' || (com1 === 'unit' && (com2 === undefined || com2 === 'asc'))) sortOrder = true;
+      if (com1 === 'desc' || (com1 === 'unit' && com2 === 'desc')) sortOrder = false;
+      if (com1 === 'unit') sortByUnits = true;
 
-      if (commandArray[1] === undefined || commandArray[1] === 'asc') {
-        stack.pop();
-        $('txt-input').value = '';
-        numberSort(true);
-        updateDisplay();  
-      } else if (commandArray[1] === 'desc') {
-        stack.pop();
-        $('txt-input').value = '';
-        numberSort(false);
-        updateDisplay();  
-      }        
+      stack.pop();
+      objectSort(sortOrder, sortByUnits);
+      updateDisplay();
     }
     // NOT tostring with word and no space, NOT tostring with number, NOT tostring with word and alphanumeric word
     if (command.match(/(?!tostring[A-Za-z]+)(?!tostring ?[0-9])(?!tostring [A-Za-z]+ +[0-9A-Za-z]+)^tostring ?[A-Za-z]*/)) {    
@@ -2781,8 +2816,6 @@ function isANumber(testString) {
 
 function willCalculate(expression) {
   var calculated = false;
-  // console.log('expression', expression);
-  // console.log(' = ', !isNaN(calculate(expression)));
   if (!isNaN(calculate(expression))) calculated = true;
   return calculated;
 }
