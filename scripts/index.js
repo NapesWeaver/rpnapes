@@ -1938,7 +1938,7 @@ function help(command) {
       inputText('clear: Clears the displays. Alias: cls');
       break;
     case 'constants':
-      inputText('constants: Display values of constants. Reassingment of \'constants\' are allowed. \'Constants\' are reset if Formulas or Contants menu are opened.');
+      inputText('constants: Display the values of \'constants\'. Reassingment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
       break;
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL. URL must be in format of https://www.youtube.com/embed/G2re3s0kQgM. ');
@@ -2214,15 +2214,15 @@ function parseCommand() {
       break;
     case 'constants':
       stack.pop();
-      inputText('Φ = ' + 1.618033988749895);
+      inputText('Φ = ' + calculate(Φ));
       enterInput();
-      inputText('℮ = ' + 2.718281828459045);
+      inputText('℮ = ' + calculate(℮));
       enterInput();
-      inputText('ɢ = ' + 6.674e-11);
+      inputText('ɢ = ' + calculate(ɢ));
       enterInput();
-      inputText('ⅽ = ' + 299792458);
+      inputText('ⅽ = ' + calculate(ⅽ));
       enterInput();
-      inputText('π = ' + 3.141592653589793);
+      inputText('π = ' + calculate(π));
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
