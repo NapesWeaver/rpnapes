@@ -1938,7 +1938,7 @@ function help(command) {
       inputText('clear: Clears the displays. Alias: cls');
       break;
     case 'constants':
-      inputText('constants: Display the values of \'constants\'. Reassingment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
+      inputText('constants: Displays the values of \'constants\'. Reassingment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
       break;
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL. URL must be in format of https://www.youtube.com/embed/G2re3s0kQgM. ');
@@ -4360,6 +4360,11 @@ window.onload = function () {
   $('menu-time').onclick = insertTime;
 
   // Menu Formulas
+  $('menu-compound-interest').onclick = (function() {
+    return function() {
+      insertText('P*(1+r/n)^(n*t)');
+    }
+  })();
   $('menu-circumference').onclick = (function() {
     return function() {
       insertText('2*π*r');
@@ -4389,7 +4394,7 @@ window.onload = function () {
     return function() {
       insertText('h/3*π*r^2');
     }
-  })();
+  })(); 
 
   // Menu Programs
   $('menu-stack-average').onclick = (function() {
