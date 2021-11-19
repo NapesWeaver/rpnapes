@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '14:48:38';
+var tStamp = '14:36:1';
 
 var stack = [];
 var backups = [];
@@ -4437,7 +4437,7 @@ window.onload = function () {
   $('menu-stack-sort').onclick = (function() {
     return function() {
       backupUndo();
-      numberSort(true);
+      objectSort(true, false);
       updateDisplay();
     }
   })();
