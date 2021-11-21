@@ -1203,7 +1203,7 @@ function rootFunction() {
 function btnPi() {
   if (shifted) {
     backupUndo();
-    btn_parentheses();
+    btn_parenthesis();
   } else {
     insertAtCursor($('txt-input'), 'π');
     $('txt-input').focus();
@@ -1218,8 +1218,16 @@ function insertAroundSelection(txtField, txtValue) {
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
-function btn_parentheses() {  
-  insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
+function btn_parenthesis() {
+  var startPos = $('txt-input').selectionStart;
+  var leftP = $('txt-input').value.split('(').length - 1;
+  var rightP = $('txt-input').value.split(')').length - 1;
+
+  if (startPos === $('txt-input').value.length && leftP > rightP) {
+    $('txt-input').value = $('txt-input').value.trim() + ')';
+  } else {
+    insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
+  }
   $('txt-input').focus();
 }
 
@@ -2520,7 +2528,7 @@ function parseNested(input, symbol, prefix) {
   var leftP = null;
   var rightP = null;
   var maths = '';  
-  // Get nested parentheses indices
+  // Get nested parenthesis indices
   while (startPos === 0) {
     index++;
     if (inputArr[index] === symbol && inputArr[index + 1] !== '(') startPos = index;
@@ -2540,9 +2548,9 @@ function parseNested(input, symbol, prefix) {
     maths = parseInline(maths, symbol, prefix);
   }
   // Re-insert parsed maths
-  if (!/\(\)/.test(maths)) {// Overwrite parentheses
+  if (!/\(\)/.test(maths)) {// Overwrite parenthesis
     inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
-  } else {// Keep parentheses
+  } else {// Keep parenthesis
     inputArr.splice(leftP, rightP - leftP + 1, maths);
   }
   input = inputArr.join('');
@@ -2553,7 +2561,7 @@ function parseInline(input, symbol, prefix) {
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
-  var parentheses = 0;
+  var parenthesis = 0;
   // Overwrite symbol
   while (inputArr[index] !== symbol) { index++; }  
   if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {
@@ -2564,12 +2572,12 @@ function parseInline(input, symbol, prefix) {
   }
   endPos = index;
   // Insert prefix
-  while (index > 0 && ((!/[-+*/^√(]/.test(inputArr[index]) || /[-+a-z]/.test(inputArr[index - 1])) || parentheses > 0)) {
+  while (index > 0 && ((!/[-+*/^√(]/.test(inputArr[index]) || /[-+a-z]/.test(inputArr[index - 1])) || parenthesis > 0)) {
     index--; 
-    if (inputArr[index] === ')') parentheses++;
-    if (inputArr[index] === '(') parentheses--;  
+    if (inputArr[index] === ')') parenthesis++;
+    if (inputArr[index] === '(') parenthesis--;  
   }
-  if (parentheses > -1 && index === 0 || (inputArr[index] === '(' && parentheses === 0)) {    
+  if (parenthesis > -1 && index === 0 || (inputArr[index] === '(' && parenthesis === 0)) {    
     
     if (symbol === '!') {
       while (index > 0 && (/[acinost(]/.test(inputArr[index]))) index--;
@@ -2579,13 +2587,13 @@ function parseInline(input, symbol, prefix) {
     inputArr.splice(index + 1, 0, prefix);
   }
   // Insert ')'
-  parentheses = 0;
+  parenthesis = 0;
   do {
     endPos++;
-    if (inputArr[endPos] === '(') parentheses++;
-    if (inputArr[endPos] === ')') parentheses--;
+    if (inputArr[endPos] === '(') parenthesis++;
+    if (inputArr[endPos] === ')') parenthesis--;
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;  
-  } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos]) && !/[√]/.test(inputArr[endPos - 1])) || /[Ee]/.test(inputArr[endPos - 1]) || parentheses > 0));    
+  } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos]) && !/[√]/.test(inputArr[endPos - 1])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0));    
   if (/[√]/.test(inputArr[endPos - 1])) endPos --;
 
   inputArr.splice(endPos, 0, ')');
@@ -4492,9 +4500,9 @@ window.onload = function () {
   $('menu-twig').onclick = monOn;
   
   // Menu Symbols
-  $('menu-parentheses').onclick = (function() {
+  $('menu-parenthesis').onclick = (function() {
     return function() { 
-      btn_parentheses();
+      btn_parenthesis();
     }
   })();
   $('menu-equals').onclick = (function() {
