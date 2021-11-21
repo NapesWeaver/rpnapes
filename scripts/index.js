@@ -2036,7 +2036,7 @@ function help(command) {
       inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'maths':
-      inputText('acos(), asin(), atan(), cos(), sin(), tan(), ln(), log(), pow(), root()');
+      inputText('acos() asin() atan() cos() sin() tan() ln() log() pow() root()');
       break;
     case 'max':
       inputText('max: Find the stack element with the maximum value that is not NaN.');
@@ -2379,7 +2379,7 @@ function parseCommand() {
       break;
     case 'maths':
       stack.pop();
-      inputText('acos() asin() atan() cos() sin() tan() ln() log() root()');
+      inputText('acos() asin() atan() cos() sin() tan() ln() log() pow() root()');
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
@@ -2505,8 +2505,8 @@ function parseEvaluation(input) {
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot('); 
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathsPow(');
     // Parse in-line symbols
-    while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');    
     // while (/√[ⅽ℮ɢΦπ.\w(]/.test(input) || /[ⅽ℮ɢΦπ.\w)]√[-^ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
+    while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');   
     while (/√[ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
     while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathsPow(');
   }
@@ -2557,14 +2557,15 @@ function parseInline(input, symbol, prefix) {
   // Overwrite symbol
   while (inputArr[index] !== symbol) { index++; }  
 
-  if (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)]/g.test(inputArr[index - 1]))) {
+  if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)]/g.test(inputArr[index - 1])))) {
+    // ! or √n
     inputArr[index] = '';
-  } else {// ^ √
+  } else { // n^n or n√n
     inputArr[index] = ',';
   }
   endPos = index;
   // Insert prefix
-  while (index > 0 && (!/[-+*/^√(]/.test(inputArr[index]) || /[Ee]/.test(inputArr[index - 1]) || parentheses > 0)) {
+  while (index > 0 && (!/[-+*/^√(]/.test(inputArr[index]) || /[factoril(Ee]/.test(inputArr[index - 1]) || parentheses > 0)) {
     index--;    
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
@@ -2586,8 +2587,8 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos] === '(') parentheses++;
     if (inputArr[endPos] === ')') parentheses--;
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;  
-  } while (endPos < inputArr.length && (!/[-+*/)]/.test(inputArr[endPos]) || /[Ee]/.test(inputArr[endPos - 1]) || parentheses > 0));    
-  
+  } while (endPos < inputArr.length && ((!/[-+*/)]/.test(inputArr[endPos]) && !/[√]/.test(inputArr[endPos - 1])) || /[Ee]/.test(inputArr[endPos - 1]) || parentheses > 0));    
+  if (/[√]/.test(inputArr[endPos - 1])) endPos --;
   inputArr.splice(endPos, 0, ')');
 
   input = inputArr.join('');
