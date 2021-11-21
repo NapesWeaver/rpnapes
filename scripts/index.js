@@ -2556,7 +2556,7 @@ function parseInline(input, symbol, prefix) {
   var parentheses = 0;
   // Overwrite symbol
   while (inputArr[index] !== symbol) { index++; }  
-  if (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1]))) {
+  if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {
     // ! or √n
     inputArr[index] = '';
   } else { // n^n or n√n
@@ -2564,19 +2564,18 @@ function parseInline(input, symbol, prefix) {
   }
   endPos = index;
   // Insert prefix
-  while (index > 0 && ((!/[-+*/^√(]/.test(inputArr[index]) || /[-+eE]/.test(inputArr[index - 1])) || parentheses > 0)) {
+  while (index > 0 && ((!/[-+*/^√(]/.test(inputArr[index]) || /[-+a-z]/.test(inputArr[index - 1])) || parentheses > 0)) {
     index--; 
-    // console.log('index:', inputArr[index - 1]);
     if (inputArr[index] === ')') parentheses++;
     if (inputArr[index] === '(') parentheses--;  
   }
-  // console.log('inputArr:', inputArr);
-  // console.log('inputArr:', inputArr.join(''));
-  if (parentheses > -1 && index === 0 || (inputArr[index] === '(' && parentheses === 0)) {
-    // console.log('inputArr.splice(index, 0, prefix)');
+  if (parentheses > -1 && index === 0 || (inputArr[index] === '(' && parentheses === 0)) {    
+    
+    if (symbol === '!') {
+      while (index > 0 && (/[acinost(]/.test(inputArr[index]))) index--;
+    }
     inputArr.splice(index, 0, prefix);
   } else {
-    // console.log('inputArr.splice(index + 1, 0, prefix)');
     inputArr.splice(index + 1, 0, prefix);
   }
   // Insert ')'
@@ -2588,10 +2587,9 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;  
   } while (endPos < inputArr.length && ((!/[-+*/)]/.test(inputArr[endPos]) && !/[√]/.test(inputArr[endPos - 1])) || /[Ee]/.test(inputArr[endPos - 1]) || parentheses > 0));    
   if (/[√]/.test(inputArr[endPos - 1])) endPos --;
-  inputArr.splice(endPos, 0, ')');
 
+  inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  // console.log('output:', input);
   return input;
 }
 
