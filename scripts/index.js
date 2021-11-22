@@ -627,12 +627,27 @@ function backupUndo() {
 }
 
 function btnEe() {
+  backupUndo();
   var input = $('txt-input').value;
   if (shifted) {
     if (/Infinity|[ⅽ℮ɢΦπ0-9)]$/.test(input) && !/j/g.test(input)) insertAtCursor($('txt-input'), 'j');
   } else {
-    if (/[0-9)]$/.test(input) && !/[0-9]e[0-9]$/.test(input)) insertAtCursor($('txt-input'), 'e');
+    var index = $('txt-input').selectionStart;
+    if (/[0-9Ee]/.test(input.charAt(index - 1)) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input) && !/[*/]?[a-df-ik-zA-DF-IK-Z]+[\^]?[-+]?[0-9]*$/.test(input)) {      
+
+      if (/[Ee]/.test(input.charAt(index - 1))) {
+        $('txt-input').value = input.removeAt(index - 1, index);        
+      } else if (/[Ee]/.test(input.charAt(index))) {
+        $('txt-input').value = input.removeAt(index, index + 1);   
+        index ++;
+      } else {
+        insertAtCursor($('txt-input'), 'e');
+        index = index + 2;
+      }            
+    }
   }
+  $('txt-input').selectionStart = index - 1;
+  $('txt-input').selectionEnd = index - 1;
   $('txt-input').focus();
 }
 
