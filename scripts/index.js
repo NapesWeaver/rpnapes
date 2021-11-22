@@ -439,7 +439,7 @@ function btnEval() {
     btnLoad();
     return;
   }
-  $('txt-input').value = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+  $('txt-input').value = calculate($('txt-input').value.replace(/[ ]*$/, ''));
   if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + decodeSpecialChar(objX.getUnits());
   $('txt-input').select();  
 }
@@ -484,7 +484,7 @@ function runTest() {
   }  
 }
 
-function evaluateExpression(input) {   
+function evaluateExpression(input) {  
   $('txt-input').value = calculate(input);  
   if (testing) runTest();
 }
