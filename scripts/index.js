@@ -1203,7 +1203,7 @@ function rootFunction() {
 function btnPi() {
   if (shifted) {
     backupUndo();
-    btn_parenthesis();
+    btnParenthesis();
   } else {
     insertAtCursor($('txt-input'), 'π');
     $('txt-input').focus();
@@ -1218,12 +1218,17 @@ function insertAroundSelection(txtField, txtValue) {
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
-function btn_parenthesis() {
+function btnParenthesis() {
   var startPos = $('txt-input').selectionStart;
   var leftP = $('txt-input').value.split('(').length - 1;
   var rightP = $('txt-input').value.split(')').length - 1;
 
+  if (stackFocus) {
+    $('txt-input').value = getSelectedText('lst-stack');
+    $('txt-input').select();
+  }
   if (startPos === $('txt-input').value.length && leftP > rightP) {
+    // Auto-complete parentesis
     $('txt-input').value = $('txt-input').value.trim() + ')';
   } else {
     insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
@@ -4502,7 +4507,7 @@ window.onload = function () {
   // Menu Symbols
   $('menu-parenthesis').onclick = (function() {
     return function() { 
-      btn_parenthesis();
+      btnParenthesis();
     }
   })();
   $('menu-equals').onclick = (function() {
