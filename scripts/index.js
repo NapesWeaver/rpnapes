@@ -649,8 +649,8 @@ function btnEe() {
   var units = objX.getUnits();
 
   if (shifted) {
-    // (((Cursor is at the end && there is no 'j') || there are units)) && cursor is next to a valid number || (cursor is next to || on a 'j' 'j')
-    if ((((index >= input.length - 1 && input.split('j').length - 1 === 0) || units !== 'null') && /[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
+    // (((Cursor is at the end && there is no 'j') || there are units) && (cursor is next to a valid number && input doesn't contain illegal symbols) || (cursor is next to || on a 'j' 'j')
+    if ((((index >= input.length - 1 && input.split('j').length - 1 === 0) || units !== 'null') && (/[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%^&×(){}|\\_=]+/g.test(input))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
       toggleChar(input, index, /[j]/, 'j');
     }
   } else {
