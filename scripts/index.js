@@ -626,28 +626,37 @@ function backupUndo() {
   colorUndoButton();  
 }
 
+function toggleChar(input, index, regex, char) {
+
+  if (regex.test(input.charAt(index - 1))) {
+    $('txt-input').value = input.removeAt(index - 1, index);        
+  } else if (regex.test(input.charAt(index))) {
+    $('txt-input').value = input.removeAt(index, index + 1);   
+    index ++;
+  } else {
+    insertAtCursor($('txt-input'), char);
+    index = index + 2;
+  }
+  $('txt-input').selectionStart = index - 1;
+  $('txt-input').selectionEnd = index - 1;   
+}
+
 function btnEe() {
   backupUndo();
   var input = $('txt-input').value;
-  if (shifted) {
-    if (/Infinity|[ⅽ℮ɢΦπ0-9)]$/.test(input) && !/j/g.test(input)) insertAtCursor($('txt-input'), 'j');
-  } else {
-    var index = $('txt-input').selectionStart;
-    if (/[0-9Ee]/.test(input.charAt(index - 1)) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input) && !/[*/]?[a-df-ik-zA-DF-IK-Z]+[\^]?[-+]?[0-9]*$/.test(input)) {      
+  var index = $('txt-input').selectionStart;
+  var objX = getX();
+  var units = objX.getUnits();
 
-      if (/[Ee]/.test(input.charAt(index - 1))) {
-        $('txt-input').value = input.removeAt(index - 1, index);        
-      } else if (/[Ee]/.test(input.charAt(index))) {
-        $('txt-input').value = input.removeAt(index, index + 1);   
-        index ++;
-      } else {
-        insertAtCursor($('txt-input'), 'e');
-        index = index + 2;
-      }            
+  if (shifted) {
+    if ((index >= input.length - 1 || units !== 'null') && (/[0-9j]/.test(input.charAt(index - 1)) && /Infinity|[ⅽ℮ɢΦπ0-9j]$/.test(input) && (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j' || input.split('j').length - 1 === 0))) {
+      toggleChar(input, index, /[j]/, 'j');
+    }
+  } else {
+    if (/[0-9Ee]/.test(input.charAt(index - 1)) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input) && !/[*/]?[a-df-ik-zA-DF-IK-Z]+[\^]?[-+]?[0-9]*$/.test(input)) {      
+      toggleChar(input, index, /[Ee]/, 'e');
     }
   }
-  $('txt-input').selectionStart = index - 1;
-  $('txt-input').selectionEnd = index - 1;
   $('txt-input').focus();
 }
 
@@ -2193,7 +2202,7 @@ function parseCommand() {
       updateDisplay();
     }
     // NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and two more alphanumeric words
-    if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+ +[0-9A-Za-z]+)^sort ?[A-Za-z]*/)) { 
+    if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+ +[0-9A-Za-z]+)^sort ?(asc|desc|unit)? ?(asc|desc)?$/)) { 
       var com1 = commandArray[1];
       var com2 = commandArray[2];  
       var sortOrder;
