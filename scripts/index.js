@@ -1321,77 +1321,72 @@ function signChange() {
   backupUndo();
   var x = '';
   
-  if (stackFocus) {
-    // Rebild x from stack
-    var i = getIndex('lst-stack') - stackSize;
-    if (isANumber(stack[i].getRealPart())) x += stack[i].getRealPart();
+  if (stackFocus) {// Rebild x from stack
+    var objY = stack[getIndex('lst-stack') - stackSize];
+
+    if (isANumber(objY.getRealPart())) x += objY.getRealPart();
     if (x) x += ' ';
-    if (isANumber(stack[i].getImaginary())) {
-      if (stack[i].getImaginary().charAt(0) === '-') {
+    if (isANumber(objY.getImaginary())) {
+      if (objY.getImaginary().charAt(0) === '-') {
         if (x) x += '- '
-        x += (stack[i].getImaginary().toString()).substring(1) + 'j';
+        x += (objY.getImaginary().toString()).substring(1) + 'j';
       } else {
         if (x) x += '+ ';
-        x += stack[i].getImaginary() + 'j';
+        x += objY.getImaginary() + 'j';
       }
     }
-    if (stack[i].getUnits() !== 'null') x += ' ' + stack[i].getUnits();
-    if(!x) x = stack[i].getSoul();
+    if (objY.getUnits() !== 'null') x += ' ' + objY.getUnits();
+    if(!x) x = objY.getSoul();
+    $('txt-input').value = x;
+  }  
+  var startPos = $('txt-input').selectionStart;
+  x = $('txt-input').value;
+
+  if (startPos === 0 || (startPos === x.length && !/[-+eE^ ]/.test(x.charAt(startPos - 1)))) {
     x = leadingSignChange(x);
   } else {
-    // Direct Editing
-    var startPos = $('txt-input').selectionStart;
-    x = $('txt-input').value;
-    if (startPos === 0 || (startPos === x.length && !/[-+eE^ ]/.test(x.charAt(startPos - 1)))) {
-      // Change Leading Sign only
-      x = leadingSignChange(x);
-    } else {
-      // Edit txt-input
-      if (/[-+]/.test(x.charAt(startPos - 1))) {
-        // startPos is at a [-+]
-        if (/-/.test(x.charAt(startPos - 1))) {
-          x = x.removeAt(startPos - 1, startPos);
-          // If there is a space to the left, explicit '+' inserted
-          if (/ /.test(x.charAt(startPos - 2))) {            
-            x = x.insertAt(startPos - 1, '+');
-            startPos ++;
-          }
-        }
-        if (/[+]/.test(x.charAt(startPos - 1))) {          
-          x = x.removeAt(startPos - 1, startPos);
-          x = x.insertAt(startPos - 1, '-');
+    if (/[-+]/.test(x.charAt(startPos - 1))) {
+      if (/-/.test(x.charAt(startPos - 1))) {
+        x = x.removeAt(startPos - 1, startPos);
+        if (/ /.test(x.charAt(startPos - 2))) {            
+          // If there is a space to the left, explicit '+' inserted           
+          x = x.insertAt(startPos - 1, '+');
           startPos ++;
         }
-        $('txt-input').value = x;
-        $('txt-input').selectionStart = startPos - 1;
-        $('txt-input').selectionEnd = startPos - 1;
-      } else if (/[eE^ ]/.test(x.charAt(startPos - 1))) {
-        // startPos is at a [eE^ ]
-        if (/ /.test(x.charAt(startPos - 1))) {          
+      }
+      if (/[+]/.test(x.charAt(startPos - 1))) {          
+        x = x.removeAt(startPos - 1, startPos);
+        x = x.insertAt(startPos - 1, '-');
+        startPos ++;
+      }
+      $('txt-input').value = x;
+      $('txt-input').selectionStart = startPos - 1;
+      $('txt-input').selectionEnd = startPos - 1;
+    // } else if (/[eE^ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos))) {
+    } else if (/[eE^ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos)) && !/[-+]/.test(x.charAt(startPos - 2))) {
+      if (/ /.test(x.charAt(startPos - 1))) {    
+        x = x.insertAt(startPos, '-');
+        startPos = startPos + 2;
+      }
+      if (/[eE^]/.test(x.charAt(startPos - 1))) {
+        if (/[-]/.test(x.charAt(startPos))) {
+          x = x.removeAt(startPos, startPos + 1);
+          startPos ++;            
+        } else if (/[+]/.test(x.charAt(startPos))) {                  
+          x = x.removeAt(startPos, startPos + 1);
           x = x.insertAt(startPos, '-');
           startPos = startPos + 2;
+        } else if (!/[-]/.test(x.charAt(startPos))) {
+          x = x.insertAt(startPos, '-')
+          startPos = startPos + 2;
         }
-        if (/[eE^]/.test(x.charAt(startPos - 1))) { 
-
-          if (/[-]/.test(x.charAt(startPos))) {
-            x = x.removeAt(startPos, startPos + 1);
-            startPos ++;            
-          } else if (/[+]/.test(x.charAt(startPos))) {          
-            x = x.removeAt(startPos, startPos + 1);
-            x = x.insertAt(startPos, '-');
-            startPos = startPos + 2;
-          } else if (!/[-]/.test(x.charAt(startPos))) {
-            x = x.insertAt(startPos, '-')
-            startPos = startPos + 2;
-          }
-        }
-        $('txt-input').value = x;
-        $('txt-input').selectionStart = startPos - 1;
-        $('txt-input').selectionEnd = startPos - 1;
       }
-    }    
+      $('txt-input').value = x;
+      $('txt-input').selectionStart = startPos - 1;
+      $('txt-input').selectionEnd = startPos - 1;
+    }       
   }  
-  // if (radix !== 10) { }    
+  // if (radix !== 10) {}    
   $('txt-input').value = x;
   $('txt-input').focus();
 }
