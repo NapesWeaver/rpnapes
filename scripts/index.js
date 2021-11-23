@@ -1348,8 +1348,7 @@ function signChange() {
     if (/[-+]/.test(x.charAt(startPos - 1))) {
       if (/-/.test(x.charAt(startPos - 1))) {
         x = x.removeAt(startPos - 1, startPos);
-        if (/ /.test(x.charAt(startPos - 2))) {            
-          // If there is a space to the left, explicit '+' inserted           
+        if (/ /.test(x.charAt(startPos - 2))) {// If there is a space to the left, explicit '+' inserted           
           x = x.insertAt(startPos - 1, '+');
           startPos ++;
         }
@@ -1362,7 +1361,7 @@ function signChange() {
       $('txt-input').value = x;
       $('txt-input').selectionStart = startPos - 1;
       $('txt-input').selectionEnd = startPos - 1;
-    // } else if (/[eE^ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos))) {
+
     } else if (/[eE^ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos)) && !/[-+]/.test(x.charAt(startPos - 2))) {
       if (/ /.test(x.charAt(startPos - 1))) {    
         x = x.insertAt(startPos, '-');
