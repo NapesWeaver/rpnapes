@@ -627,7 +627,7 @@ function backupUndo() {
 }
 
 function toggleChar(input, index, regex, char) {
-
+  
   if (regex.test(input.charAt(index - 1))) {
     $('txt-input').value = input.removeAt(index - 1, index);        
   } else if (regex.test(input.charAt(index))) {
@@ -639,6 +639,20 @@ function toggleChar(input, index, regex, char) {
   }
   $('txt-input').selectionStart = index - 1;
   $('txt-input').selectionEnd = index - 1;   
+}
+
+function buttonInsert(regex, char) {
+  var input = $('txt-input').value;
+  var index = $('txt-input').selectionStart;
+  
+  if (!regex.test(input.charAt(index))) {
+    if (regex.test(input.charAt(index - 1))) {
+      toggleChar(input, index - 1 ,regex , char);
+    } else {
+      insertAtCursor($('txt-input'), char);
+    }
+  }
+  $('txt-input').focus();
 }
 
 function btnEe() {
@@ -1231,8 +1245,7 @@ function btnPi() {
     backupUndo();
     btnParenthesis();
   } else {
-    insertAtCursor($('txt-input'), 'π');
-    $('txt-input').focus();
+    buttonInsert(/[π]/ , 'π');    
   }
 }
 
@@ -1264,7 +1277,7 @@ function btnParenthesis() {
 
 function btnModulus() {  
   if (shifted) {
-    insertText('√');
+    buttonInsert(/[√]/, '√');
   } else {
     modulus();
   }  
@@ -1300,7 +1313,7 @@ function modulus() {
 
 function btnSign() {  
   if (shifted) {
-    insertText('^');    
+    buttonInsert(/[\^]/, '^')  ;
   } else {
     signChange();
   }
@@ -1394,7 +1407,7 @@ function signChange() {
 
 function btnDivide() {  
   if (shifted) {
-    insertText('/');    
+    buttonInsert(/[/]/, '/');
   } else {
     division();
   }  
@@ -1427,7 +1440,7 @@ function division() {
 
 function btnMultiply() {  
   if (shifted) {
-    insertText('*');
+    buttonInsert(/[*]/, '*');
   } else {
     multiplication();
   }      
@@ -1460,7 +1473,7 @@ function multiplication() {
 
 function btnSubtract() {  
   if (shifted) {
-    insertText('-');    
+    buttonInsert(/[-]/, '-');
   } else {
     subtraction();
   }  
@@ -1493,7 +1506,7 @@ function subtraction() {
 
 function btnAdd() {  
   if (shifted) {
-    insertText('+');    
+    buttonInsert(/[+]/, '+');
   } else {
     addition();
   }  
@@ -4416,31 +4429,31 @@ window.onload = function () {
     return function() {
       resetPhi();
       insertText('Φ');
+      buttonInsert(/[Φ]/ , 'Φ');
     }
   })();
   $('menu-eulers').onclick = (function() {
     return function() { 
-      // insertText(Math.exp(1));
       resetEulers();
-      insertText('℮');      
+      buttonInsert(/[℮]/ , '℮');      
     }
   })();
   $('menu-gravitational-constant').onclick = (function() {
     return function() {
       resetGravitational();
-      insertText('ɢ');
+      buttonInsert(/[ɢ]/ , 'ɢ');
     }
   })();
   $('menu-light-speed').onclick = (function() {
     return function() {
       resetLightspeed();
-      insertText('ⅽ');
+      buttonInsert(/[ⅽ]/ , 'ⅽ');
     }
   })(); 
   $('menu-pi').onclick = (function() {
     return function() {
       resetPi();
-      insertText('π');
+      buttonInsert(/[π]/ , 'π');
     }
   })();
 
@@ -4533,56 +4546,57 @@ window.onload = function () {
   $('menu-equals').onclick = (function() {
     return function() { 
       insertText('=');
+      $('txt-input').focus();
     }
   })();
   $('menu-radical').onclick = (function() {
     return function() { 
-      insertText('√');
+      buttonInsert(/[√]/ , '√');
     }
   })();
   $('menu-bang').onclick = (function() {
     return function() { 
-      insertText('!');
+      buttonInsert(/[!]/ , '!');
     }
   })();
   $('menu-carat').onclick = (function() {
     return function() { 
-      insertText('^');
+      buttonInsert(/[\^]/ , '^');
     }
   })();
   $('menu-modulus-symbol').onclick = (function() {
     return function() { 
-      insertText('%');
+      buttonInsert(/[%]/ , '%');
     }
   })();
   $('menu-solidus').onclick = (function() {
     return function() { 
-      insertText('/');
+      buttonInsert(/[/]/ , '/');
     }
   })();
   $('menu-asterisk').onclick = (function() {
     return function() { 
-      insertText('*');
+      buttonInsert(/[*]/ , '*');
     }
   })();
   $('menu-minus').onclick = (function() {
     return function() { 
-      insertText('-');
+      buttonInsert(/[-]/ , '-');
     }
   })();
   $('menu-plus').onclick = (function() {
-    return function() { 
-      insertText('+');
+    return function() {
+      buttonInsert(/[+]/ , '+');
     }
   })();
   $('menu-omega').onclick = (function() {
     return function() { 
-      insertText('Ω');
+      buttonInsert(/[Ω]/ , 'Ω');
     }
   })();
   $('menu-heart').onclick = (function() {
     return function() { 
-      insertText('♥');
+      buttonInsert(/[♥]/ , '♥');
     }
   })();
 
