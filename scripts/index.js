@@ -1336,7 +1336,7 @@ function signChange() {
       }
     }
     if (objY.getUnits() !== 'null') x += ' ' + objY.getUnits();
-    if(!x) x = objY.getSoul();
+    if(!x) x = decodeSpecialChar(objY.getSoul());
     $('txt-input').value = x;
   }  
   var startPos = $('txt-input').selectionStart;
