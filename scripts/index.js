@@ -113,26 +113,6 @@ if (!Array.prototype.indexOf)
     }
   })(Object, Math.max, Math.min);
 
-function resetPhi() {
-  Φ = 1.618033988749895;
-}
-
-function resetEulers() {
-  ℮ = Math.exp(1);
-}
-
-function resetPi(){
-  π = Math.PI
-}
-
-function resetGravitational() {
-  ɢ = 6.674e-11;
-}
-
-function resetLightspeed() {
-  ⅽ = 299792458;
-}
-
 function resizeTextareas() {
   resizeTextarea($('lst-stack'));
   resizeTextarea($('lst-notes'));
@@ -2661,6 +2641,14 @@ function txtInputFocus() {
   stackFocus = false;  
 }
 
+function resetConstants() {
+  Φ = 1.618033988749895;
+  ℮ = Math.exp(1);
+  π = Math.PI
+  ɢ = 6.674e-11;
+  ⅽ = 299792458;
+}
+
 function convertBase(r) {
   fixDecimal = -1;
   sciDecimal = -1;
@@ -2679,14 +2667,6 @@ function convertBase(r) {
     outputTxt += parseInt(inputTxt.imaginary).toString(radix) + 'j';
   }
   $('txt-input').value = outputTxt;
-}
-
-function resetConstants() {
-  resetPhi();
-  resetEulers();
-  resetPi();
-  resetGravitational();
-  resetLightspeed();
 }
 
 function onClickSelection(textarea){ 
@@ -4427,32 +4407,26 @@ window.onload = function () {
   // Menu Constants
   $('menu-phi').onclick = (function() {
     return function() {
-      resetPhi();
-      insertText('Φ');
       buttonInsert(/[Φ]/ , 'Φ');
     }
   })();
   $('menu-eulers').onclick = (function() {
     return function() { 
-      resetEulers();
       buttonInsert(/[℮]/ , '℮');      
     }
   })();
   $('menu-gravitational-constant').onclick = (function() {
     return function() {
-      resetGravitational();
       buttonInsert(/[ɢ]/ , 'ɢ');
     }
   })();
   $('menu-light-speed').onclick = (function() {
     return function() {
-      resetLightspeed();
       buttonInsert(/[ⅽ]/ , 'ⅽ');
     }
   })(); 
   $('menu-pi').onclick = (function() {
     return function() {
-      resetPi();
       buttonInsert(/[π]/ , 'π');
     }
   })();
