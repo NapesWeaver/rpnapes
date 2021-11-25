@@ -3769,8 +3769,7 @@ function sensor2() {
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
-    // $('viewport').src = 'http://149.56.183.178:8300/stream';// Retro Hits
-    $('viewport').src = 'http://66.206.12.2:8146/stream';// WRJQ Goodtime Radio
+    $('viewport').src = 'https://s8.yesstreaming.net:17004/krnu';// KRNU
   }
 }
 
