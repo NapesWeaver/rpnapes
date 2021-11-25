@@ -3650,8 +3650,8 @@ function button2() {
 
     if (viewPortSrc.indexOf($('viewport').src) !== -1) {
       var i = viewPortSrc.indexOf($('viewport').src);
-
       if (i === viewPortSrc.length - 1) i = -1;
+      
       $('viewport').src = viewPortSrc[i + 1];
     } else {
       $('viewport').src = viewPortSrc[0];
@@ -3666,8 +3666,8 @@ function button3() {
 
     if (viewPortSrc2.indexOf($('viewport').src) !== -1) {
       var i = viewPortSrc2.indexOf($('viewport').src);
-
       if (i === viewPortSrc2.length - 1) i = -1;
+
       $('viewport').src = viewPortSrc2[i + 1];
     } else {
       $('viewport').src = viewPortSrc2[0];
@@ -3682,10 +3682,11 @@ function button4() {
     haptic();
 
     if ($('widget').classList.contains('hidden')) {
+
       if (widgetSrc.indexOf($('widget').src) !== -1) {
         var i = widgetSrc.indexOf($('widget').src);
-
         if (i === widgetSrc.length - 1) i = -1;
+        
         $('widget').src = widgetSrc[i + 1];
       } else {
         $('widget').src = widgetSrc[0];
@@ -3707,17 +3708,13 @@ function button5() {
 
     if ($('widget').classList.contains('hidden')) {
       var srcString = '';
-      var uniqueString = 'forecast';
 
-      if ($('widget').src.indexOf(uniqueString) === -1) {
-        // Forcast widget
-        srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';
-        $('widget').src = srcString;
+      if ($('widget').src.indexOf('forecast') === -1) {
+        srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';        
       } else {
-        // Dark Sky Map
         srcString += 'https://maps.darksky.net/@temperature,' + lat + ',' + lng + ',4?embed=true&timeControl=false&fieldControl=true&defaultField=temperature&defaultUnits=_f';
-        $('widget').src = srcString;
       }
+      $('widget').src = srcString;
       $('widget').classList.remove('hidden');
       $('widget').classList.add('visible');
       playAudio($('keypress6'));
@@ -3733,18 +3730,22 @@ function button5() {
 function button6() {
   if (power()) {
     haptic();
-
+    
     if ($('widget').classList.contains('hidden')) {      
       var srcString = '';
-      // IP Mapper
-      srcString += 'https://napesweaver.github.io/ip-mapper/';
+
+      if ($('widget').src.indexOf('napes') === -1) {
+        srcString += 'https://napesweaver.github.io/ip-mapper/';        
+      } else {
+        srcString += 'https://www.youtube.com/embed/86YLFOog4GM?autoplay=1';
+      }
       $('widget').src = srcString;
       $('widget').classList.remove('hidden');
       $('widget').classList.add('visible');
       playAudio($('keypress6'));
       playAudio($('verified'));
     } else {
-      $('widget').src = '';
+      // $('widget').src = '';
       $('widget').classList.remove('visible');
       $('widget').classList.add('hidden');
       playAudio($('keypress5'));
@@ -4652,7 +4653,7 @@ window.onload = function () {
   preloadImages();
   
   viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
+  viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');  
   viewPortSrc2.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1');
   viewPortSrc2.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');
   viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');
