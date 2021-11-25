@@ -3561,8 +3561,8 @@ function btnPasteNotes() {
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
 
-var viewPort = [];
-var viewPort2 = [];
+var viewPortSrc = [];
+var viewPortSrc2 = [];
 var widgetSrc = [];
 
 var lat = '';
@@ -3648,13 +3648,13 @@ function button2() {
   if (power()) {    
     haptic();
 
-    if (viewPort.indexOf($('viewport').src) !== -1) {
-      var i = viewPort.indexOf($('viewport').src);
+    if (viewPortSrc.indexOf($('viewport').src) !== -1) {
+      var i = viewPortSrc.indexOf($('viewport').src);
 
-      if (i === viewPort.length - 1) i = -1;
-      $('viewport').src = viewPort[i + 1];
+      if (i === viewPortSrc.length - 1) i = -1;
+      $('viewport').src = viewPortSrc[i + 1];
     } else {
-      $('viewport').src = viewPort[0];
+      $('viewport').src = viewPortSrc[0];
     }
     playAudio($('keypress2'));
   }
@@ -3664,13 +3664,13 @@ function button3() {
   if (power()) {
     haptic();
 
-    if (viewPort2.indexOf($('viewport').src) !== -1) {
-      var i = viewPort2.indexOf($('viewport').src);
+    if (viewPortSrc2.indexOf($('viewport').src) !== -1) {
+      var i = viewPortSrc2.indexOf($('viewport').src);
 
-      if (i === viewPort2.length - 1) i = -1;
-      $('viewport').src = viewPort2[i + 1];
+      if (i === viewPortSrc2.length - 1) i = -1;
+      $('viewport').src = viewPortSrc2[i + 1];
     } else {
-      $('viewport').src = viewPort2[0];
+      $('viewport').src = viewPortSrc2[0];
     }
     playAudio($('keypress1'));
     playAudio($('data-received'));
@@ -4650,12 +4650,12 @@ window.onload = function () {
 
   // Tricorder
   preloadImages();
-  viewPort.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
-  viewPort.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
-  viewPort.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
-  viewPort.push('https://www.youtube.com/embed/Zx-up8quvnI?autoplay=1');
-  viewPort.push('https://www.youtube.com/embed/sKtieXEBLcE?autoplay=1');
-  viewPort2.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1');
+  
+  viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');
+  viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
+  viewPortSrc2.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1');
+  viewPortSrc2.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');
+  viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');
 
   $('sensor1').onclick = sensor1;
   $('sensor2').onclick = sensor2;
@@ -4706,10 +4706,11 @@ window.onload = function () {
 
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
-  } else {
-    widgetSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');
+  } else {    
+    widgetSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
+    widgetSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
+    widgetSrc.push('https://www.youtube.com/embed/Zx-up8quvnI?autoplay=1');
+    widgetSrc.push('https://www.youtube.com/embed/sKtieXEBLcE?autoplay=1');    
   }
   if (document.cookie.indexOf('STACK') !== -1) {
     $('lst-stack').value = '';
