@@ -627,7 +627,7 @@ function buttonInsert(regex, char) {
   
   if (!regex.test(input.charAt(index))) {
     if (regex.test(input.charAt(index - 1))) {
-      toggleChar(input, index - 1 ,regex , char);
+      toggleChar(input, index - 1, regex, char);
     } else {
       insertAtCursor($('txt-input'), char);
     }
@@ -1895,21 +1895,16 @@ function embed(src) {
   }
 }
 
-function getLocation() {
-
-  lat = '';
-  lng = '';
+function getLocation() { 
 
   if (navigator.geolocation) {
-    //Geolocation.getCurrentPosition(); // Determines the device’s current location
     //Geolocation.watchPosition(); // Listens for changes in the location and invokes a callback on every movement
     //Geolocation.clearWatch(); // Removes a watchPosition event handler
     navigator.geolocation.getCurrentPosition(function (position) {
-      // Get the coordinates of the current position.
-      lat += position.coords.latitude;
-      lng += position.coords.longitude;
-      lat = lat.substr(0, 8);
-      lng = lng.substr(0, 8);
+      lat = position.coords.latitude;
+      lng = position.coords.longitude;
+      // lat = lat.substr(0, 8);
+      // lng = lng.substr(0, 8);
     }, geolocationError);
   } else {
     rpnAlert('Geolocation not supported.');
@@ -3566,12 +3561,12 @@ function btnPasteNotes() {
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
 
-var viewPortSrc = [];
-var viewPort2Src = [];
+var viewPort = [];
+var viewPort2 = [];
 var widgetSrc = [];
 
-var lat;
-var lng;
+var lat = '';
+var lng = '';
 
 function loadTricorder() {
   var index = 0;
@@ -3653,13 +3648,13 @@ function button2() {
   if (power()) {    
     haptic();
 
-    if (viewPortSrc.indexOf($('viewport').src) !== -1) {
-      var i = viewPortSrc.indexOf($('viewport').src);
+    if (viewPort.indexOf($('viewport').src) !== -1) {
+      var i = viewPort.indexOf($('viewport').src);
 
-      if (i === viewPortSrc.length - 1) i = -1;
-      $('viewport').src = viewPortSrc[i + 1];
+      if (i === viewPort.length - 1) i = -1;
+      $('viewport').src = viewPort[i + 1];
     } else {
-      $('viewport').src = viewPortSrc[0];
+      $('viewport').src = viewPort[0];
     }
     playAudio($('keypress2'));
   }
@@ -3669,13 +3664,13 @@ function button3() {
   if (power()) {
     haptic();
 
-    if (viewPort2Src.indexOf($('viewport').src) !== -1) {
-      var i = viewPort2Src.indexOf($('viewport').src);
+    if (viewPort2.indexOf($('viewport').src) !== -1) {
+      var i = viewPort2.indexOf($('viewport').src);
 
-      if (i === viewPort2Src.length - 1) i = -1;
-      $('viewport').src = viewPort2Src[i + 1];
+      if (i === viewPort2.length - 1) i = -1;
+      $('viewport').src = viewPort2[i + 1];
     } else {
-      $('viewport').src = viewPort2Src[0];
+      $('viewport').src = viewPort2[0];
     }
     playAudio($('keypress1'));
     playAudio($('data-received'));
@@ -3774,7 +3769,8 @@ function sensor2() {
     $('viewport').src = '';
     playAudio($('keypress7'));
     playAudio($('scanner'));
-    $('viewport').src = 'https://tunein.com/embed/player/s67176/';// BBC World Service
+    // $('viewport').src = 'http://149.56.183.178:8300/stream';// Retro Hits
+    $('viewport').src = 'http://66.206.12.2:8146/stream';// WRJQ Goodtime Radio
   }
 }
 
@@ -4301,8 +4297,6 @@ document.addEventListener('keyup', function (event) {
   }
 });
 
-//////// window.onload ///////////////////////////////////////////////////////////////
-
 window.onload = function () {
   // Internet Explorer needs this for "btn-off" ~ window.close()   
   window.open('', '_self');
@@ -4657,16 +4651,12 @@ window.onload = function () {
 
   // Tricorder
   preloadImages();
-  viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/Zx-up8quvnI?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/sKtieXEBLcE?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/VVpRv6rC8RY?autoplay=1');
-
-  viewPort2Src.push('https://www.youtube.com/embed/qb43-hn_-_c?autoplay=1');
-  viewPort2Src.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1');
-  viewPort2Src.push('https://www.youtube.com/embed/v_5fA85qGcU?autoplay=1');
+  viewPort.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');
+  viewPort.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
+  viewPort.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
+  viewPort.push('https://www.youtube.com/embed/Zx-up8quvnI?autoplay=1');
+  viewPort.push('https://www.youtube.com/embed/sKtieXEBLcE?autoplay=1');
+  viewPort2.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1');
 
   $('sensor1').onclick = sensor1;
   $('sensor2').onclick = sensor2;
@@ -4719,8 +4709,8 @@ window.onload = function () {
     loadTricorder();        
   } else {
     widgetSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/Fn44paKMX4E?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/yXQz-VU5iVc?autoplay=1');
+    widgetSrc.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');
+    widgetSrc.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');
   }
   if (document.cookie.indexOf('STACK') !== -1) {
     $('lst-stack').value = '';
