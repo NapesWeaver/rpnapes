@@ -886,7 +886,7 @@ function saveFile(fileName, pretty) {
     }
     myBlob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
     fileName += '.txt';
-    saveAs(myBlob, fileName);
+    saveAs(myBlob, fileName);// This function exist in utils/filesaver.js
   } else {
     rpnAlert('Error: There is no data to save.');
   }
@@ -3471,6 +3471,15 @@ function backupUndoNotes() {
   }
 }
 
+function backSpaceUndo() {
+  var backupLength = backupNotes[backupNotes.length - 1].replace(' ', '').length;
+  var lstNotesLength = $('lst-notes').value.replace(' ', '').length - 1;
+  if (lstNotesLength < backupLength) {
+    backupUndoNotes();
+  }
+  colorSaveNotesButton();
+}
+
 function loadNotes() {
   var index = 0;  
   index = getCookie('NOTES').indexOf('=') + 1;
@@ -4269,7 +4278,6 @@ document.addEventListener('keydown', function (event) {
 document.addEventListener('keyup', function (event) {
   
   switch (event.key) {
-  case 'Backspace':// BACKSPACE (Falls through)
   case 'Enter':// ENTER
     if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
@@ -4291,9 +4299,6 @@ document.addEventListener('keyup', function (event) {
     if ($('rpnapes').className !== 'hidden' && twig.health > 0) {      
       $('twig').src = 'images/twig/hat-on.gif';
     }
-    break;  
-  case 'Delete':// DELETE
-    if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
     break;
   }
 });
@@ -4689,7 +4694,8 @@ window.onload = function () {
       backupUndoNotes(); 
     }, 100);
   });
-  $('lst-notes').oninput = colorSaveNotesButton; 
+  // $('lst-notes').oninput = colorSaveNotesButton; 
+  $('lst-notes').oninput = backSpaceUndo; 
 
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
