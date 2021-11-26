@@ -1194,8 +1194,7 @@ function exponentialFunction() {
 }
 
 function root(x, y) {
-  if (y === undefined) y = 2;
-  return Math.pow(x, 1/y);
+  return mathsRoot(x, y);
 }
 
 function rootFunction() {
@@ -1216,7 +1215,7 @@ function rootFunction() {
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var newUnits = '';
-  var result = root(y, x);
+  var result = mathsRoot(x, y);
 
   if (radix !== 10) result = result.toString(radix);
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);
@@ -2063,7 +2062,7 @@ function help(command) {
       inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'maths':
-      inputText('acos() asin() atan() cos() sin() tan() ln() log() pow() root()');
+      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log([x],y) pow([x],y) root([x],y)');
       break;
     case 'max':
       inputText('max: Find the stack element with the maximum value that is not NaN.');
@@ -2406,7 +2405,7 @@ function parseCommand() {
       break;
     case 'maths':
       stack.pop();
-      inputText('acos() asin() atan() cos() sin() tan() ln() log() pow() root()');
+      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log([x],y) pow([x],y) root([x],y)');
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
@@ -2580,7 +2579,6 @@ function parseInline(input, symbol, prefix) {
   while (inputArr[index] !== symbol) { index++; }  
   if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {
     // ! or √n
-    // console.log('inputArr[index]:', inputArr[index]);
     inputArr[index] = '';
   } else { // n^n or n√n
     inputArr[index] = ',';
@@ -2613,7 +2611,6 @@ function parseInline(input, symbol, prefix) {
 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  // console.log('output:', input);
   return input;
 }
 
@@ -2630,8 +2627,8 @@ function mathsRoot(x, y) {
   return Math.pow(y, 1/x);
 }
 
-function mathsPow(y, x) {
-  return Math.pow(y, x);
+function mathsPow(x, y) {
+  return Math.pow(x, y);
 }
 
 // Wired to HTML
