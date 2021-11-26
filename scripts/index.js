@@ -401,7 +401,9 @@ function btnEnter() {
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
-    if (stack.length > 0 || $('txt-input').value.trim() !== '') enterInput();
+    var input = $('txt-input').value.trim();
+    
+    if (stack.length > 0 || (input !== '' && input !== 'NaN')) enterInput();
   }
   updateDisplay();
   parseCommand();
@@ -600,7 +602,9 @@ function redoFunction() {
 }
 
 function backupUndo() {
-  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(stack) || backups[backups.length - 1] !== $('txt-input').value.trim()) {      
+  var input = $('txt-input').value.trim();
+  
+  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(stack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
     backups.push(nestArrayByBrowser(stack));
     backups.push($('txt-input').value.trim());
     restores.length = 0;
