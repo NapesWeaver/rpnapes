@@ -2580,6 +2580,7 @@ function parseInline(input, symbol, prefix) {
   while (inputArr[index] !== symbol) { index++; }  
   if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {
     // ! or √n
+    // console.log('inputArr[index]:', inputArr[index]);
     inputArr[index] = '';
   } else { // n^n or n√n
     inputArr[index] = ',';
@@ -2612,16 +2613,21 @@ function parseInline(input, symbol, prefix) {
 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
+  // console.log('output:', input);
   return input;
 }
 
 // Passed to parseNested() and parseInline() as partial strings eg. 'mathsRoot('
-function mathsRoot(y, x) {
-  if (x === undefined) {
-    x = y;
-    y = 2;
+function mathsRoot(x, y) {
+  if (y === undefined) {
+    y = x;
+    x = 2;
+    if (y < 0) {
+      y = y * -1;
+      x = x * -1;
+    }
   }
-  return Math.pow(x, 1/y);
+  return Math.pow(y, 1/x);
 }
 
 function mathsPow(y, x) {
@@ -3453,21 +3459,17 @@ function colorUndoNotesButton() {
 
 function notEqualToBackupNotes() {
   var prevNote = backupNotes[backupNotes.length - 1];
-  var currentNote = $('lst-notes').value;
+  var currentNote = $('lst-notes').value.trim();
   return prevNote !== currentNote;
 }
 
-function processNoteBackup() {
-  backupNotes.push(nestArrayByBrowser(notes));
-  colorUndoNotesButton();
-}
-
-function backupUndoNotes() {
+function backupUndoNotes() {  
   if (notEqualToBackupNotes()) {
     restoreNotes.length = 0;
-    processNoteBackup();
+    backupNotes.push(nestArrayByBrowser(notes));
     notes = $('lst-notes').value.split('\n');
     if (notes[notes.length - 1] === '') notes.pop();
+    colorUndoNotesButton();
   }
 }
 
@@ -3476,8 +3478,8 @@ function backSpaceUndo() {
   var lstNotesLength = $('lst-notes').value.replace(' ', '').length - 1;
   if (lstNotesLength < backupLength) {
     backupUndoNotes();
+    colorSaveNotesButton();
   }
-  colorSaveNotesButton();
 }
 
 function loadNotes() {
@@ -3498,6 +3500,7 @@ function loadNotes() {
 function btnLoadNotes() {
   backupUndoNotes();
   loadNotes();
+  $('lst-notes').focus();
 }
 
 function btnSaveNotes() {
@@ -3507,6 +3510,7 @@ function btnSaveNotes() {
   $('btn-save-notes').style.color = 'rgb(145, 145, 145)';
   notes = encodeSpecialChar($('lst-notes').value.trim()).split('\n');
   storeCookie('NOTES', nestArrayByBrowser(notes));
+  $('lst-notes').focus();
 }
 
 function btnUndoNotes() {
@@ -3517,6 +3521,7 @@ function btnUndoNotes() {
   }
   colorUndoNotesButton();
   colorSaveNotesButton();
+  $('lst-notes').focus();
 }
 
 function btnRedoNotes() {
@@ -3527,15 +3532,18 @@ function btnRedoNotes() {
   }
   colorUndoNotesButton();
   colorSaveNotesButton();
+  $('lst-notes').focus();
 }
 
 function btnClearNotes() {
-  if ($('lst-notes').value !== '') {
-    processNoteBackup();
+  
+  if ($('lst-notes').value.trim() !== '') {
+    backupUndoNotes();
     $('lst-notes').value = '';
     notes = [];
     colorSaveNotesButton();
   }
+  $('lst-notes').focus();
 }
 
 function btnDeleteNotes() {
