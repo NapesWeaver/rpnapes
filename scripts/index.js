@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '14:36:1';
+var tStamp = '9:55:37';
 
 var stack = [];
 var backups = [];
@@ -2526,11 +2526,12 @@ function parseEvaluation(input) {
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot('); 
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathsPow(');
     // Parse in-line symbols
-    // while (/√[ⅽ℮ɢΦπ.\w(]/.test(input) || /[ⅽ℮ɢΦπ.\w)]√[-^ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
-    while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');   
+    while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');
     while (/√[ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
+    // while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
     while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathsPow(');
   }
+  // console.log('output:', input);
   return input;
 }
 
@@ -2571,6 +2572,7 @@ function parseNested(input, symbol, prefix) {
 }
 
 function parseInline(input, symbol, prefix) {
+  // console.log('parseInline:');
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
@@ -2611,6 +2613,7 @@ function parseInline(input, symbol, prefix) {
 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
+  // console.log('input:', input);
   return input;
 }
 
@@ -3497,7 +3500,7 @@ function loadNotes() {
 function btnLoadNotes() {
   backupUndoNotes();
   loadNotes();
-  $('lst-notes').focus();
+  if (!isMobile) $('lst-notes').focus();
 }
 
 function btnSaveNotes() {
@@ -3507,7 +3510,7 @@ function btnSaveNotes() {
   $('btn-save-notes').style.color = 'rgb(145, 145, 145)';
   notes = encodeSpecialChar($('lst-notes').value.trim()).split('\n');
   storeCookie('NOTES', nestArrayByBrowser(notes));
-  $('lst-notes').focus();
+  if (!isMobile) $('lst-notes').focus();
 }
 
 function btnUndoNotes() {
@@ -3518,7 +3521,7 @@ function btnUndoNotes() {
   }
   colorUndoNotesButton();
   colorSaveNotesButton();
-  $('lst-notes').focus();
+  if (!isMobile) $('lst-notes').focus();
 }
 
 function btnRedoNotes() {
@@ -3529,7 +3532,7 @@ function btnRedoNotes() {
   }
   colorUndoNotesButton();
   colorSaveNotesButton();
-  $('lst-notes').focus();
+  if (!isMobile) $('lst-notes').focus();
 }
 
 function btnClearNotes() {
@@ -3540,7 +3543,7 @@ function btnClearNotes() {
     notes = [];
     colorSaveNotesButton();
   }
-  $('lst-notes').focus();
+  if (!isMobile) $('lst-notes').focus();
 }
 
 function btnDeleteNotes() {
@@ -3553,6 +3556,7 @@ function btnDeleteNotes() {
   if (isMobile) $('lst-notes').readOnly = true;
   backupUndoNotes();
   colorSaveNotesButton();
+  if (!isMobile) $('lst-notes').focus();
 }
 
 function btnCopyNotes() {
@@ -3562,7 +3566,7 @@ function btnCopyNotes() {
   } else {
     navigator.clipboard.writeText(getSelectedText('lst-notes'));
   }
-  $('lst-notes').focus();
+  if (!isMobile) $('lst-notes').focus();
 }
 
 function btnPasteNotes() {
@@ -3572,6 +3576,7 @@ function btnPasteNotes() {
     backupUndoNotes();  
     colorSaveNotesButton();
   });
+  if (!isMobile) $('lst-notes').focus();
 }
 
 //////// Tricorder ///////////////////////////////////////////////////////////////////
