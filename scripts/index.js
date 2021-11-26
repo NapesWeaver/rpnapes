@@ -401,7 +401,7 @@ function btnEnter() {
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
-    enterInput();
+    if (stack.length > 0 || $('txt-input').value.trim() !== '') enterInput();
   }
   updateDisplay();
   parseCommand();
@@ -600,10 +600,12 @@ function redoFunction() {
 }
 
 function backupUndo() {
-  backups.push(nestArrayByBrowser(stack));
-  backups.push($('txt-input').value.trim());
-  restores.length = 0;
-  colorUndoButton();  
+  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(stack) || backups[backups.length - 1] !== $('txt-input').value.trim()) {      
+    backups.push(nestArrayByBrowser(stack));
+    backups.push($('txt-input').value.trim());
+    restores.length = 0;
+    colorUndoButton();  
+  }
 }
 
 function toggleChar(input, index, regex, char) {
@@ -2490,11 +2492,6 @@ function parseCommand() {
       $('txt-input').value = '';         
       monOn();
       break;
-    case 'twigStat':
-      stack.pop();
-      monStatus();
-      $('txt-input').value = '';
-      break;
     case 'tricorder':
       stack.pop();
       updateDisplay();
@@ -3745,7 +3742,6 @@ function button6() {
       playAudio($('keypress6'));
       playAudio($('verified'));
     } else {
-      // $('widget').src = '';
       $('widget').classList.remove('visible');
       $('widget').classList.add('hidden');
       playAudio($('keypress5'));
@@ -3785,7 +3781,7 @@ var twig = new Mathmon('twig', 135, -365, 3, 100, 5, 6);
 var tv = new Mathmon('tv', -45, -395, 30, 100, 7, 0);
 var don = new Mathmon('don', -45, -420, 3, 100, 6, 0);
 var theObjects = [3];
-var worldBorders = { };
+var worldBorders = {};
 
 function Mathmon(idName, xPos, yPos, objSize, health, speed, ammo) {
 
@@ -3890,9 +3886,11 @@ function monOn() {
 function monOff() {  
   $('twig').src = 'images/twig/pop.gif';
   twig.setHealth(0);
-  $('twig').className = 'hidden';
-  $('tv').className = 'hidden';
-  $('don').className = 'hidden';
+  setTimeout(function() {
+    $('twig').className = 'hidden';
+    $('tv').className = 'hidden';
+    $('don').className = 'hidden';
+  }, 1000);
 }
 
 function resetMathmon() {
@@ -3929,8 +3927,7 @@ function loadMathMon(tmpStack) {
 function mathMonConstructor(tmpStack) {
   var i = 0;
   while (tmpStack.length > 0) {
-
-    var tmpArray = [];
+    var tmpArray = [];    
     tmpArray = tmpStack.shift();
     tmpArray = tmpArray.split(',');
 
@@ -3952,11 +3949,11 @@ function moveObj(obj, speed, xMov, yMov) {
   obj.movXPos(speed * xMov);
   obj.movYPos(speed * yMov);
   // Find obj's index in theObjects array
-  for (var o = 0; o < theObjects.length; o++) {
-    if (obj.idName === theObjects[o].idName) { index = o; }
+  for (var i = 0; i < theObjects.length; i++) {
+    if (obj.idName === theObjects[i].idName) { index = i; }
   }    
   // Check for collision with other objects
-  for (var i = 0; i < theObjects.length; i++) {
+  for (i = 0; i < theObjects.length; i++) {
     if (obj.idName !== theObjects[i].idName) {
       // Compute space between two objects
       var spaceX = Math.abs(obj.xPos - (theObjects[i].xPos + ((i - index) * (65 + theObjects.length))));
@@ -4026,7 +4023,7 @@ function worldBordersSet() {
 }
 
 function collideWithBorders(i) {
-  // The gifs are offset from each other in the html. Each is 64px * 64px.
+  // The gifs are offset from each other in the html, each is 64px * 64px.
   var gifWidth = 64;
   if (theObjects[i].yPos < worldBorders.bTop + (theObjects[i].objSize / 2)) { theObjects[i].setYPos(worldBorders.bTop + theObjects[i].objSize); }// Top border
   if (theObjects[i].yPos > worldBorders.bBottom - (theObjects[i].objSize / 2)) { theObjects[i].setYPos(worldBorders.bBottom - theObjects[i].objSize); }// Bottom border
@@ -4306,9 +4303,9 @@ window.onload = function () {
   theObjects[1] = tv;
   theObjects[2] = don;
 
-  $('twig').onclick = monStatus;
-  $('tv').onclick = monStatus;
-  $('don').onclick = monStatus;
+  // $('twig').onclick = monStatus;
+  // $('tv').onclick = monStatus;
+  // $('don').onclick = monStatus;
 
   // Menu File 
   $('menu-load').onclick = btnLoad;
@@ -4338,6 +4335,7 @@ window.onload = function () {
             }
           }
           updateDisplay();
+          // backupUndo();
         }
       };
       fr.readAsText(this.files[0]);
