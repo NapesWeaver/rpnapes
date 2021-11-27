@@ -1383,7 +1383,7 @@ function signChange() {
       $('txt-input').selectionEnd = startPos - 1;
     }       
   }  
-  // if (radix !== 10) {}    
+  // if (radix !== 10) { }    
   $('txt-input').value = x;
   $('txt-input').focus();
 }
@@ -2578,24 +2578,20 @@ function parseInline(input, symbol, prefix) {
   var parenthesis = 0;
   // Overwrite symbol
   while (inputArr[index] !== symbol) { index++; }  
-  if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {
-    // ! or √n
-    inputArr[index] = '';
-  } else { // n^n or n√n
-    inputArr[index] = ',';
+  if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {    
+    inputArr[index] = '';// ! or √n
+  } else {    
+    inputArr[index] = ',';// n^n or n√n
   }
   endPos = index;
   // Insert prefix
-  while (index > 0 && ((!/[-+*/^√(]/.test(inputArr[index]) || /[-+a-z]/.test(inputArr[index - 1])) || parenthesis > 0)) {
+  while (index > 0 && ((!/[-+*/^√(]/.test(inputArr[index]) || /[a-z]/.test(inputArr[index - 1])) || parenthesis > 0)) {
     index--; 
     if (inputArr[index] === ')') parenthesis++;
     if (inputArr[index] === '(') parenthesis--;  
   }
-  if (parenthesis > -1 && index === 0 || (inputArr[index] === '(' && parenthesis === 0)) {    
-    
-    if (symbol === '!') {
-      while (index > 0 && (/[acinost(]/.test(inputArr[index]))) index--;
-    }
+  if (parenthesis > -1 && index === 0 || (inputArr[index] === '(' && parenthesis === 0)) {
+    if (symbol === '!' && /[√]/.test(inputArr[index])) index ++;
     inputArr.splice(index, 0, prefix);
   } else {
     inputArr.splice(index + 1, 0, prefix);
@@ -2608,11 +2604,9 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos] === ')') parenthesis--;
     if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;  
   } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos]) && !/[√]/.test(inputArr[endPos - 1])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0));    
-  if (/[√]/.test(inputArr[endPos - 1])) endPos --;
-
+  
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  // console.log('input:', input);
   return input;
 }
 
