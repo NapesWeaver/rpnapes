@@ -1335,12 +1335,11 @@ function signChange() {
     }
     if (objY.getUnits() !== 'null') x += ' ' + objY.getUnits();
     if(!x) x = decodeSpecialChar(objY.getSoul());
-    $('txt-input').value = x;
+    $('txt-input').value = x.trim();
   }  
-  var startPos = $('txt-input').selectionStart;
   x = $('txt-input').value;
-
-  if (startPos === 0 || (startPos === x.length && !/[-+eE^√ ]/.test(x.charAt(startPos - 1)))) {
+  var startPos = $('txt-input').selectionStart;
+  if (startPos === 0 || (startPos >= x.length && !/[-+eE^√ ]/.test(x.charAt(startPos - 1)))) {
     x = leadingSignChange(x);
   } else {
     if (/[-+]/.test(x.charAt(startPos - 1))) {
@@ -1360,7 +1359,7 @@ function signChange() {
       $('txt-input').selectionStart = startPos - 1;
       $('txt-input').selectionEnd = startPos - 1;
 
-    } else if (/[eE^√ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos)) && !/[-+]/.test(x.charAt(startPos - 2))) {
+    } else if (/[eE^√ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos)) && !/[-+][ ]*$/.test(x)) {
       if (/ /.test(x.charAt(startPos - 1))) {    
         x = x.insertAt(startPos, '-');
         startPos = startPos + 2;
