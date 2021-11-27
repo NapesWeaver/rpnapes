@@ -1230,7 +1230,7 @@ function btnPi() {
     backupUndo();
     btnParenthesis();
   } else {
-    buttonInsert(/[π]/ , 'π');    
+    if (!/[ⅽ℮ɢΦa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[π]/ , 'π');
   }
 }
 
@@ -1244,8 +1244,8 @@ function insertAroundSelection(txtField, txtValue) {
 
 function btnParenthesis() {
   var startPos = $('txt-input').selectionStart;
-  var leftP = $('txt-input').value.split('(').length - 1;
-  var rightP = $('txt-input').value.split(')').length - 1;
+  var leftP = $('txt-input').value.split(/[(]/).length - 1;
+  var rightP = $('txt-input').value.split(/[)]/).length - 1;
 
   if (stackFocus) {
     $('txt-input').value = getSelectedText('lst-stack');
@@ -1262,7 +1262,7 @@ function btnParenthesis() {
 
 function btnModulus() {  
   if (shifted) {
-    buttonInsert(/[√]/, '√');
+    if (!/[=]$/.test($('txt-input').value)) buttonInsert(/[√]/, '√');
   } else {
     modulus();
   }  
@@ -1298,7 +1298,7 @@ function modulus() {
 
 function btnSign() {  
   if (shifted) {
-    buttonInsert(/[\^]/, '^')  ;
+    if (!/[-+*/√%=]$/.test($('txt-input').value)) buttonInsert(/[\^]/, '^');
   } else {
     signChange();
   }
@@ -1392,7 +1392,7 @@ function signChange() {
 
 function btnDivide() {  
   if (shifted) {
-    buttonInsert(/[/]/, '/');
+    if (!/[-+*√^%=]$/.test($('txt-input').value)) buttonInsert(/[/]/, '/');
   } else {
     division();
   }  
@@ -1425,7 +1425,7 @@ function division() {
 
 function btnMultiply() {  
   if (shifted) {
-    buttonInsert(/[*]/, '*');
+    if (!/[-+/√^%=]$/.test($('txt-input').value)) buttonInsert(/[*]/, '*');
   } else {
     multiplication();
   }      
@@ -1491,7 +1491,7 @@ function subtraction() {
 
 function btnAdd() {  
   if (shifted) {
-    buttonInsert(/[+]/, '+');
+    if (!/[-*/√^%=]$/.test($('txt-input').value)) buttonInsert(/[+]/, '+');
   } else {
     addition();
   }  
@@ -1664,7 +1664,7 @@ function btnThree() {
 
 function btnSpace() {    
   if (shifted) {
-    insertAtCursor($('txt-input'), '=');
+    if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value)) insertAtCursor($('txt-input'), '=');
   } else {
     insertAtCursor($('txt-input'), ' ');
   } 
@@ -4420,27 +4420,29 @@ window.onload = function () {
   // Menu Constants
   $('menu-phi').onclick = (function() {
     return function() {
-      buttonInsert(/[Φ]/ , 'Φ');
+      if (!/[ⅽ℮ɢπa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[Φ]/ , 'Φ');
     }
   })();
   $('menu-eulers').onclick = (function() {
-    return function() { 
-      buttonInsert(/[℮]/ , '℮');      
+    return function() {  
+      if (!/[ⅽɢΦπa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[℮]/ , '℮');   
     }
   })();
   $('menu-gravitational-constant').onclick = (function() {
     return function() {
       buttonInsert(/[ɢ]/ , 'ɢ');
+      if (!/[ⅽ℮Φπa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[ɢ]/ , 'ɢ');
     }
   })();
   $('menu-light-speed').onclick = (function() {
     return function() {
       buttonInsert(/[ⅽ]/ , 'ⅽ');
+      if (!/[℮ɢΦπa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[ⅽ]/ , 'ⅽ');
     }
   })(); 
   $('menu-pi').onclick = (function() {
     return function() {
-      buttonInsert(/[π]/ , 'π');
+      if (!/[ⅽ℮ɢΦa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[π]/ , 'π');
     }
   })();
 
@@ -4532,48 +4534,48 @@ window.onload = function () {
   })();
   $('menu-equals').onclick = (function() {
     return function() { 
-      insertText('=');
-      $('txt-input').focus();
+      if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value)) insertAtCursor($('txt-input'), '=');
+      $('txt-input').focus();     
     }
   })();
   $('menu-radical').onclick = (function() {
     return function() { 
-      buttonInsert(/[√]/ , '√');
+      if (!/[!=]$/.test($('txt-input').value)) buttonInsert(/[√]/, '√');
     }
   })();
   $('menu-bang').onclick = (function() {
     return function() { 
-      buttonInsert(/[!]/ , '!');
+      if (!/[-+*/√^%]$/.test($('txt-input').value)) buttonInsert(/[!]/, '!');
     }
   })();
   $('menu-carat').onclick = (function() {
     return function() { 
-      buttonInsert(/[\^]/ , '^');
+      if (!/[-+*/√%=]$/.test($('txt-input').value)) buttonInsert(/[\^]/, '^');
     }
   })();
   $('menu-modulus-symbol').onclick = (function() {
     return function() { 
-      buttonInsert(/[%]/ , '%');
+      if (!/[-+*/√^=]$/.test($('txt-input').value)) buttonInsert(/[%]/, '%');
     }
   })();
   $('menu-solidus').onclick = (function() {
     return function() { 
-      buttonInsert(/[/]/ , '/');
+      if (!/[-+*√^%=]$/.test($('txt-input').value)) buttonInsert(/[/]/, '/');
     }
   })();
   $('menu-asterisk').onclick = (function() {
     return function() { 
-      buttonInsert(/[*]/ , '*');
+      if (!/[-+/√^%=]$/.test($('txt-input').value)) buttonInsert(/[*]/, '*');
     }
   })();
   $('menu-minus').onclick = (function() {
     return function() { 
-      buttonInsert(/[-]/ , '-');
+      buttonInsert(/[-]/, '-');
     }
   })();
   $('menu-plus').onclick = (function() {
     return function() {
-      buttonInsert(/[+]/ , '+');
+      if (!/[-*/√^%=]$/.test($('txt-input').value)) buttonInsert(/[+]/, '+');
     }
   })();
   $('menu-omega').onclick = (function() {
