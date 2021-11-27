@@ -2526,15 +2526,14 @@ function parseEvaluation(input) {
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathsPow(');
     // Parse in-line symbols
     while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');
-    while (/√[ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
-    // while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');   
+    // while (/√[ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');
+    while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');
     while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathsPow(');
   }
-  // console.log('output:', input);
   return input;
 }
 
-function parseNested(input, symbol, prefix) {
+function parseNested(input, symbol, prefix) {  
   var inputArr = input.split('');
   var index = 0;
   var startPos = 0;
@@ -2566,7 +2565,7 @@ function parseNested(input, symbol, prefix) {
   } else {// Keep parenthesis
     inputArr.splice(leftP, rightP - leftP + 1, maths);
   }
-  input = inputArr.join('');
+  input = inputArr.join('');  
   return input;
 }
 
