@@ -3436,7 +3436,9 @@ function colorSaveNotesButton() {
   var cookieValue = getCookie('NOTES').substr(index);
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
+
   if (notesValue.substring(notesValue.length -1) === '_') notesValue = notesValue.slice(0, -1);
+
   if (cookieValue === notesValue) {
     $('btn-save-notes').style.color = '#919191';
   } else {
@@ -3459,7 +3461,8 @@ function colorUndoNotesButton() {
 
 function notEqualToBackupNotes() {
   var prevNote = backupNotes[backupNotes.length - 1];
-  var currentNote = $('lst-notes').value.trim();
+  var currentNote = $('lst-notes').value;
+  
   return prevNote !== currentNote;
 }
 
