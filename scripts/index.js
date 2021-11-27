@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '23:58:18';
+var tStamp = '12:5:51';
 
 var stack = [];
 var backups = [];
@@ -3462,11 +3462,10 @@ function colorUndoNotesButton() {
 function notEqualToBackupNotes() {
   var prevNote = backupNotes[backupNotes.length - 1];
   var currentNote = $('lst-notes').value;
-  
   return prevNote !== currentNote;
 }
 
-function backupUndoNotes() {  
+function backupUndoNotes() {    
   if (notEqualToBackupNotes()) {
     restoreNotes.length = 0;
     backupNotes.push(nestArrayByBrowser(notes));
@@ -3538,13 +3537,12 @@ function btnRedoNotes() {
   if (!isMobile) $('lst-notes').focus();
 }
 
-function btnClearNotes() {
-  
+function btnClearNotes() {  
   if ($('lst-notes').value.trim() !== '') {
-    backupUndoNotes();
     $('lst-notes').value = '';
-    notes = [];
+    backupUndoNotes();
     colorSaveNotesButton();
+    notes = [];
   }
   if (!isMobile) $('lst-notes').focus();
 }
@@ -3562,7 +3560,6 @@ function btnDeleteNotes() {
 }
 
 function btnCopyNotes() {
-  //document.execCommand('copy');
   if (getSelectedText('lst-notes') === '') {
     navigator.clipboard.writeText($('lst-notes').value);
   } else {
