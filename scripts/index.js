@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '9:55:37';
+var tStamp = '23:58:18';
 
 var stack = [];
 var backups = [];
@@ -3478,8 +3478,8 @@ function backSpaceUndo() {
   var lstNotesLength = $('lst-notes').value.replace(' ', '').length - 1;
   if (lstNotesLength < backupLength) {
     backupUndoNotes();
-    colorSaveNotesButton();
   }
+  colorSaveNotesButton();
 }
 
 function loadNotes() {
@@ -3552,10 +3552,9 @@ function btnDeleteNotes() {
   var endPos = $('lst-notes').selectionEnd;  
   $('lst-notes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lst-notes').setSelectionRange(startPos, startPos);
-  $('lst-notes').focus();  
-  if (isMobile) $('lst-notes').readOnly = true;
   backupUndoNotes();
   colorSaveNotesButton();
+  if (isMobile) $('lst-notes').readOnly = true;
   if (!isMobile) $('lst-notes').focus();
 }
 
@@ -3574,8 +3573,8 @@ function btnPasteNotes() {
   copiedText.then(copiedText => {
     insertAtCursor($('lst-notes'), copiedText);
     backupUndoNotes();  
-    colorSaveNotesButton();
   });
+  colorSaveNotesButton();
   if (!isMobile) $('lst-notes').focus();
 }
 
@@ -4704,7 +4703,6 @@ window.onload = function () {
       backupUndoNotes(); 
     }, 100);
   });
-  // $('lst-notes').oninput = colorSaveNotesButton; 
   $('lst-notes').oninput = backSpaceUndo; 
 
   // Attach hapticResponse to Menu items and buttons
@@ -4717,9 +4715,7 @@ window.onload = function () {
   if (document.cookie.indexOf('NOTES') !== -1) {
     $('lst-notes').value = '';
     loadNotes();
-  } else {
-    colorSaveNotesButton();
-  }  
+  }
   backupNotes.push($('lst-notes').value);
   colorUndoNotesButton();
 
