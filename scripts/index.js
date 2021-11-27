@@ -1230,7 +1230,7 @@ function btnPi() {
     backupUndo();
     btnParenthesis();
   } else {
-    if (!/[ⅽ℮ɢΦa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[π]/ , 'π');
+    if (!/[ⅽ℮ɢΦa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');
   }
 }
 
@@ -1262,7 +1262,7 @@ function btnParenthesis() {
 
 function btnModulus() {  
   if (shifted) {
-    if (!/[=]$/.test($('txt-input').value)) buttonInsert(/[√]/, '√');
+    if (!/[=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
   } else {
     modulus();
   }  
@@ -1298,7 +1298,7 @@ function modulus() {
 
 function btnSign() {  
   if (shifted) {
-    if (!/[-+*/√%=]$/.test($('txt-input').value)) buttonInsert(/[\^]/, '^');
+    if (!/[-+*/√%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[\^]/, '^');
   } else {
     signChange();
   }
@@ -1392,7 +1392,7 @@ function signChange() {
 
 function btnDivide() {  
   if (shifted) {
-    if (!/[-+*√^%=]$/.test($('txt-input').value)) buttonInsert(/[/]/, '/');
+    if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
   } else {
     division();
   }  
@@ -1425,7 +1425,7 @@ function division() {
 
 function btnMultiply() {  
   if (shifted) {
-    if (!/[-+/√^%=]$/.test($('txt-input').value)) buttonInsert(/[*]/, '*');
+    if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
   } else {
     multiplication();
   }      
@@ -1491,7 +1491,7 @@ function subtraction() {
 
 function btnAdd() {  
   if (shifted) {
-    if (!/[-*/√^%=]$/.test($('txt-input').value)) buttonInsert(/[+]/, '+');
+    if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
   } else {
     addition();
   }  
@@ -1664,7 +1664,7 @@ function btnThree() {
 
 function btnSpace() {    
   if (shifted) {
-    if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value)) insertAtCursor($('txt-input'), '=');
+    if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value) || isTextSelected($('txt-input'))) insertAtCursor($('txt-input'), '=');
   } else {
     insertAtCursor($('txt-input'), ' ');
   } 
@@ -2572,7 +2572,6 @@ function parseNested(input, symbol, prefix) {
 }
 
 function parseInline(input, symbol, prefix) {
-  // console.log('parseInline:');
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
@@ -2786,7 +2785,7 @@ function returnSelectedText(id) {
   return selectedText;
 }
 
-function isTextSelected(input){
+function isTextSelected(input) {
   var startPos = input.selectionStart;
   var endPos = input.selectionEnd;
   var doc = document.selection;
@@ -4417,29 +4416,29 @@ window.onload = function () {
   // Menu Constants
   $('menu-phi').onclick = (function() {
     return function() {
-      if (!/[ⅽ℮ɢπa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[Φ]/ , 'Φ');
+      if (!/[ⅽ℮ɢπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[Φ]/ , 'Φ');
     }
   })();
   $('menu-eulers').onclick = (function() {
     return function() {  
-      if (!/[ⅽɢΦπa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[℮]/ , '℮');   
+      if (!/[ⅽɢΦπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[℮]/ , '℮');   
     }
   })();
   $('menu-gravitational-constant').onclick = (function() {
     return function() {
       buttonInsert(/[ɢ]/ , 'ɢ');
-      if (!/[ⅽ℮Φπa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[ɢ]/ , 'ɢ');
+      if (!/[ⅽ℮Φπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');
     }
   })();
   $('menu-light-speed').onclick = (function() {
     return function() {
       buttonInsert(/[ⅽ]/ , 'ⅽ');
-      if (!/[℮ɢΦπa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[ⅽ]/ , 'ⅽ');
+      if (!/[℮ɢΦπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');
     }
   })(); 
   $('menu-pi').onclick = (function() {
     return function() {
-      if (!/[ⅽ℮ɢΦa-zA-Z0-9]$/.test($('txt-input').value)) buttonInsert(/[π]/ , 'π');
+      if (!/[ⅽ℮ɢΦa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');
     }
   })();
 
@@ -4531,38 +4530,38 @@ window.onload = function () {
   })();
   $('menu-equals').onclick = (function() {
     return function() { 
-      if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value)) insertAtCursor($('txt-input'), '=');
+      if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value) || isTextSelected($('txt-input'))) insertAtCursor($('txt-input'), '=');
       $('txt-input').focus();     
     }
   })();
   $('menu-radical').onclick = (function() {
     return function() { 
-      if (!/[!=]$/.test($('txt-input').value)) buttonInsert(/[√]/, '√');
+      if (!/[!=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
     }
   })();
   $('menu-bang').onclick = (function() {
     return function() { 
-      if (!/[-+*/√^%]$/.test($('txt-input').value)) buttonInsert(/[!]/, '!');
+      if (!/[-+*/√^%]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[!]/, '!');
     }
   })();
   $('menu-carat').onclick = (function() {
     return function() { 
-      if (!/[-+*/√%=]$/.test($('txt-input').value)) buttonInsert(/[\^]/, '^');
+      if (!/[-+*/√%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[\^]/, '^');
     }
   })();
   $('menu-modulus-symbol').onclick = (function() {
     return function() { 
-      if (!/[-+*/√^=]$/.test($('txt-input').value)) buttonInsert(/[%]/, '%');
+      if (!/[-+*/√^=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[%]/, '%');
     }
   })();
   $('menu-solidus').onclick = (function() {
     return function() { 
-      if (!/[-+*√^%=]$/.test($('txt-input').value)) buttonInsert(/[/]/, '/');
+      if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
     }
   })();
   $('menu-asterisk').onclick = (function() {
     return function() { 
-      if (!/[-+/√^%=]$/.test($('txt-input').value)) buttonInsert(/[*]/, '*');
+      if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
     }
   })();
   $('menu-minus').onclick = (function() {
@@ -4572,7 +4571,7 @@ window.onload = function () {
   })();
   $('menu-plus').onclick = (function() {
     return function() {
-      if (!/[-*/√^%=]$/.test($('txt-input').value)) buttonInsert(/[+]/, '+');
+      if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
     }
   })();
   $('menu-omega').onclick = (function() {
