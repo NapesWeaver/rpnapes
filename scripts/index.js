@@ -333,6 +333,7 @@ function btnPaste() {
       rpnAlert('Not supported by browser.');
     }
   }
+  $('txt-input').focus();
 }
 
 function btnXy() {
@@ -3045,8 +3046,8 @@ function decodeSpecialChar(tmpString) {
 function extractReal(tmpString) {
   var tmpReal = '';
   if (radix === 10) {  
-    // We are checking that it is not a constant or a number followed by evaluation symbols && an not an imaginary number && not an IP address
-    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
+    // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
+    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
         tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
@@ -4418,13 +4419,11 @@ window.onload = function () {
   })();
   $('menu-gravitational-constant').onclick = (function() {
     return function() {
-      buttonInsert(/[ɢ]/ , 'ɢ');
       if (!/[ⅽ℮Φπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');
     }
   })();
   $('menu-light-speed').onclick = (function() {
     return function() {
-      buttonInsert(/[ⅽ]/ , 'ⅽ');
       if (!/[℮ɢΦπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');
     }
   })(); 
