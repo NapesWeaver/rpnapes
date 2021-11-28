@@ -1161,6 +1161,10 @@ function btnRoot() {
   }
 }
 
+function mathPow(y, x) {
+  return Math.pow(y, x);
+}
+
 function exponentialFunction() {
   backupUndo();
   var objY;
@@ -1179,7 +1183,7 @@ function exponentialFunction() {
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var newUnits = '';
-  var result = pow(y, x);
+  var result = mathPow(y, x);
 
   if (radix !== 10) result = result.toString(radix);
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
@@ -1187,6 +1191,25 @@ function exponentialFunction() {
   $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
+}
+
+function mathRoot(x, y) {
+  var result;
+  if (y === undefined) {
+    y = x;
+    x = 2;
+  }  
+  if (y > 0) {
+    result = Math.pow(y, 1/x);
+  } else {    
+    result = Math.pow(-y, 1/x);
+    if (x % 2 === 0) {
+      result += 'j';
+    } else {
+      result = result * -1;
+    }
+  }
+  return result;
 }
 
 function rootFunction() {
@@ -1207,7 +1230,7 @@ function rootFunction() {
   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var newUnits = '';
-  var result = mathsRoot(x, y);
+  var result = mathRoot(x, y);
 
   if (radix !== 10) result = result.toString(radix);
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);
@@ -2514,13 +2537,13 @@ function parseEvaluation(input) {
     input = input.replace(/ /g, '');
     // Parse nested symbols
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
-    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathsRoot('); 
-    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathsPow(');
+    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
     // Parse in-line symbols
     while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');
-    // while (/√[ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');
-    while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathsRoot(');
-    while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathsPow(');
+    // while (/√[ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathPow(');
   }
   return input;
 }
@@ -2568,9 +2591,9 @@ function parseInline(input, symbol, prefix) {
   var parenthesis = 0;
   // Overwrite symbol
   while (inputArr[index] !== symbol) { index++; }  
-  if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {    
+  if (prefix === 'factorial(' || (prefix === 'mathRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {    
     // inputArr[index] = '';// ! or √n
-    if (prefix === 'mathsRoot(') {
+    if (prefix === 'mathRoot(') {
       inputArr[index] = ',';
       inputArr.splice(index, 0, '2');
     } else {
@@ -2607,41 +2630,15 @@ function parseInline(input, symbol, prefix) {
   return input;
 }
 
-// Passed to parseNested() and parseInline() as partial strings eg. 'mathsRoot('
-function mathsPow(x, y) {
-  return Math.pow(x, y);
+// User functions
+function pow(y, x) {
+  if (x === undefined) x = 2;
+  return mathPow(y, x);
 }
 
-function pow(x, y) {
-  if (y === undefined) y = 2;
-  return Math.pow(x, y);
+function root(y, x) {
+  return mathRoot(x, y);
 }
-
-function mathsRoot(x, y) {
-  if (y === undefined) {
-    y = x;
-    x = 2;
-  }
-  var result;
-  var j = '';
-
-  if (y > 0) {
-    result = Math.pow(y, 1/x);
-  } else {    
-    result = Math.pow(-y, 1/x);
-    if (x % 2 === 0) {
-      j = 'j';
-    } else {
-      result = result * -1;
-    }
-  }
-  return result + j;
-}
-
-function root(x, y) {
-  return mathsRoot(x, y);
-}
-
 
 // Wired to HTML
 function lstStackFocus() {
