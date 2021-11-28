@@ -1161,11 +1161,6 @@ function btnRoot() {
   }
 }
 
-function pow(x, y) {
-  if (y === undefined) y = 2;
-  return Math.pow(x, y);
-}
-
 function exponentialFunction() {
   backupUndo();
   var objY;
@@ -1192,10 +1187,6 @@ function exponentialFunction() {
   $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
-}
-
-function root(x, y) {
-  return mathsRoot(x, y);
 }
 
 function rootFunction() {
@@ -2578,7 +2569,13 @@ function parseInline(input, symbol, prefix) {
   // Overwrite symbol
   while (inputArr[index] !== symbol) { index++; }  
   if (prefix === 'factorial(' || (prefix === 'mathsRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {    
-    inputArr[index] = '';// ! or √n
+    // inputArr[index] = '';// ! or √n
+    if (prefix === 'mathsRoot(') {
+      inputArr[index] = ',';
+      inputArr.splice(index, 0, '2');
+    } else {
+      inputArr[index] = '';
+    } 
   } else {    
     inputArr[index] = ',';// n^n or n√n
   }
@@ -2601,8 +2598,9 @@ function parseInline(input, symbol, prefix) {
     endPos++;
     if (inputArr[endPos] === '(') parenthesis++;
     if (inputArr[endPos] === ')') parenthesis--;
-    if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;  
-  } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos]) && !/[√]/.test(inputArr[endPos - 1])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0));    
+    // if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;// Returns NaN for negative roots    
+    if ((inputArr[endPos] === ',' || inputArr[endPos] === '') && inputArr[endPos + 1] === '-') endPos = endPos + 2;// Parse negative roots e.g. √-16 with (inputArr[endPos] === '') check
+  } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0)); 
   
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
@@ -2610,21 +2608,40 @@ function parseInline(input, symbol, prefix) {
 }
 
 // Passed to parseNested() and parseInline() as partial strings eg. 'mathsRoot('
+function mathsPow(x, y) {
+  return Math.pow(x, y);
+}
+
+function pow(x, y) {
+  if (y === undefined) y = 2;
+  return Math.pow(x, y);
+}
+
 function mathsRoot(x, y) {
   if (y === undefined) {
     y = x;
     x = 2;
-    if (y < 0) {
-      y = y * -1;
-      x = x * -1;
+  }
+  var result;
+  var j = '';
+
+  if (y > 0) {
+    result = Math.pow(y, 1/x);
+  } else {    
+    result = Math.pow(-y, 1/x);
+    if (x % 2 === 0) {
+      j = 'j';
+    } else {
+      result = result * -1;
     }
   }
-  return Math.pow(y, 1/x);
+  return result + j;
 }
 
-function mathsPow(x, y) {
-  return Math.pow(x, y);
+function root(x, y) {
+  return mathsRoot(x, y);
 }
+
 
 // Wired to HTML
 function lstStackFocus() {
