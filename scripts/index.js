@@ -1907,7 +1907,7 @@ function getSize() {
 }
 
 function embed(src) {
-  if (src.indexOf('http') !== -1 && src.indexOf('embed') !== -1) {
+  if (src.indexOf('http') !== -1) {
     widgetSrc.unshift(src);// https://www.youtube.com/embed/25QpDHCLOUc
   } else {
     rpnAlert('Enter web address to embed.');
@@ -2043,7 +2043,7 @@ function help(command) {
       inputText('constants: Displays the values of \'constants\'. Reassingment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
       break;
     case 'embed':
-      inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL. URL must be in format of https://www.youtube.com/embed/G2re3s0kQgM. ');
+      inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL.');
       break;
     case 'flightlogger':
       inputText('flightlogger: Opens Flight Logger in a new tab.');
