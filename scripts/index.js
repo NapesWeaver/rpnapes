@@ -3656,7 +3656,7 @@ function tricorderOff() {
 function tricorderOn() {
   muteAudio(false);  
   $('tricorderskin').src = 'images/tricorderon.png';
-  $('viewport').src = 'https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=0';  
+  $('viewport').src = 'https://www.youtube.com/embed/86YLFOog4GM?autoplay=1&mute=1';// ISS
   $('viewport').classList.remove('hidden');
   $('viewport').classList.add('visible');
   playAudio($('working'));
@@ -3703,23 +3703,22 @@ function button3() {
 }
 
 function button4() {
-  if (power()) {    
+  if (power()) {
     haptic();
+    
+    if ($('widget').classList.contains('hidden')) {      
+      var srcString = '';
 
-    if ($('widget').classList.contains('hidden')) {
-
-      if (widgetSrc.indexOf($('widget').src) !== -1) {
-        var i = widgetSrc.indexOf($('widget').src);
-        if (i === widgetSrc.length - 1) i = -1;
-        
-        $('widget').src = widgetSrc[i + 1];
-      } else {
-        $('widget').src = widgetSrc[0];
+      if ($('widget').src.indexOf('telescope') === -1) {
+        srcString += 'https://www.worldwidetelescope.org/webclient/';
+      } else {    
+        srcString += 'https://orbitalmechanics.info/';        
       }
+      $('widget').src = srcString;
       $('widget').classList.remove('hidden');
       $('widget').classList.add('visible');
-      playAudio($('scanner'));
       playAudio($('keypress6'));
+      playAudio($('verified'));
     } else {
       $('widget').classList.remove('visible');
       $('widget').classList.add('hidden');
@@ -3727,6 +3726,7 @@ function button4() {
     }
   }
 }
+
 function button5() {
   if (power()) {
     haptic();
@@ -3753,23 +3753,25 @@ function button5() {
 }
 
 function button6() {
-  if (power()) {
+  if (power()) {    
     haptic();
-    
-    if ($('widget').classList.contains('hidden')) {      
-      var srcString = '';
 
-      if ($('widget').src.indexOf('napes') === -1) {
-        srcString += 'https://napesweaver.github.io/ip-mapper/';        
+    if ($('widget').classList.contains('hidden')) {
+      if (widgetSrc.indexOf($('widget').src.slice(0, -7)) !== -1) {
+        var i = widgetSrc.indexOf($('widget').src.slice(0, -7));
+        
+        if (i === widgetSrc.length - 1) i = -1;
+        
+        $('widget').src = widgetSrc[i + 1];
       } else {
-        srcString += 'https://www.youtube.com/embed/86YLFOog4GM?autoplay=1';
+        $('widget').src = widgetSrc[0];
       }
-      $('widget').src = srcString;
       $('widget').classList.remove('hidden');
       $('widget').classList.add('visible');
+      playAudio($('scanner'));
       playAudio($('keypress6'));
-      playAudio($('verified'));
     } else {
+      $('widget').src += '&mute=1';
       $('widget').classList.remove('visible');
       $('widget').classList.add('hidden');
       playAudio($('keypress5'));
@@ -4327,10 +4329,6 @@ window.onload = function () {
   theObjects[1] = tv;
   theObjects[2] = don;
 
-  // $('twig').onclick = monStatus;
-  // $('tv').onclick = monStatus;
-  // $('don').onclick = monStatus;
-
   // Menu File 
   $('menu-load').onclick = btnLoad;
   $('open-file').addEventListener('change', function () {
@@ -4674,11 +4672,15 @@ window.onload = function () {
   // Tricorder
   preloadImages();
   
-  viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');
-  viewPortSrc.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');  
-  viewPortSrc2.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1');
-  viewPortSrc2.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');
-  viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');
+  viewPortSrc.push('https://www.youtube.com/embed/86YLFOog4GM?autoplay=1&mute=1');// ISS
+  viewPortSrc.push('https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1');// Starfleet Technical Manual
+  viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');//  LCARS Display
+  viewPortSrc.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1');// Jerobeam Fenderson - Planets
+  viewPortSrc.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1');// Star field
+
+  viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');// Tressaurian Intersection
+  viewPortSrc2.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');// Star Trek Meets Batman
+  viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');// Star Track
 
   $('sensor1').onclick = sensor1;
   $('sensor2').onclick = sensor2;
@@ -4728,10 +4730,12 @@ window.onload = function () {
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   } else {    
-    widgetSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/Zx-up8quvnI?autoplay=1');
-    widgetSrc.push('https://www.youtube.com/embed/sKtieXEBLcE?autoplay=1');    
+    widgetSrc.push('https://napesweaver.github.io/ip-mapper/');
+    widgetSrc.push('https://www.wolframalpha.com/');
+    // widgetSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag');// KITUMBA
+    // widgetSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4');// In Harm's Way
+    // widgetSrc.push('https://www.youtube.com/embed/Zx-up8quvnI');// Mind Sifter
+    // widgetSrc.push('https://www.youtube.com/embed/sKtieXEBLcE');// Launch of the Botany Bay
   }
   if (document.cookie.indexOf('STACK') !== -1) {
     $('lst-stack').value = '';
