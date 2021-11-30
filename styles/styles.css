@@ -393,6 +393,22 @@ label a {
     cursor: help;
 }
 
+.dark-mode {
+    filter: invert(100%);
+}
+
+.dark-button {
+    border-style: inset;
+}
+    .dark-button:active {
+        border-style: outset;
+    }
+
+.dark-menu {
+    background-color: black;
+    color: white;
+}
+
 /****** Menu ***********************************/
 #menu-wrap {
     margin-left: 3%;
@@ -486,23 +502,6 @@ label a {
     .strikethrough a {
         color: #0040FF;
     }
-    
-/****** Dark Mode ******************************/
-.dark-mode {
-    filter: invert(100%);
-}
-
-.dark-button {
-    border-style: inset;
-}
-    .dark-button:active {
-        border-style: outset;
-    }
-
-.dark-menu {
-    background-color: black;
-    color: white;
-}
 
 /****** Tricorder ******************************/
 .tricorder-background {
@@ -533,7 +532,6 @@ label a {
     background-color: #F1F1F1;
 }
 
-/****** CSS Responsive ******************/
 @media only screen and (min-width: 250px) {
     #menu-wrap {
         margin-left: 7%;
