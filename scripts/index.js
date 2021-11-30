@@ -2043,7 +2043,7 @@ function help(command) {
       inputText('constants: Displays the values of \'constants\'. Reassingment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
       break;
     case 'embed':
-      inputText('embed [URL]: Embed URL into Tricorder iFrame. If no argument is supplied in-line, last entry on stack is used for URL.');
+      inputText('embed [URL]: Embed URL into Tricorder iFrame (Tricorder \'button\' 6). If no argument is supplied in-line, last entry on stack is used for URL.');
       break;
     case 'flightlogger':
       inputText('flightlogger: Opens Flight Logger in a new tab.');
