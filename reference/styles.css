@@ -125,6 +125,7 @@ pre {
 }
 
 .iframe {  
+    /* height: 606px; */
     height: 51vh;
     width: 259px;
     position: relative;
@@ -196,9 +197,6 @@ footer {
         font-size: 1.3em;
         font-weight: 400;
     }
-    /* .iframe {
-        right: 15px;
-    } */
 }
 
 @media only screen and (min-width: 800px) {
@@ -212,9 +210,14 @@ footer {
 }
 
 @media only screen and (min-width: 1280px) {
+    .iframe {
+        right: 15%;
+    }   
+}
 
+@media only screen and (min-width: 1920px) {
     .iframe {
         right: 0;
-         width: 48%;
+        width: 48%;
     }   
 }
