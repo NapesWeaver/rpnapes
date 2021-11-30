@@ -2142,7 +2142,7 @@ function help(command) {
       inputText('tostring [filename]: Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'tricorder':
-      inputText('tricorder: Opens the Tricorder interface.');
+      inputText('tricorder: Opens the Tricorder interface. Alias: tri');
       break;
     case 'unembed':
       inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
@@ -2435,7 +2435,7 @@ function parseCommand() {
       inputText(minNum());
       break;
     case 'napes':
-      window.location.href = 'https://napesweaver.github.io/rpnapes/reference/index.html';
+      window.location.href = 'https://napesweaver.github.io/rpnapes/reference/html.html';
       break;
     case 'notes':
       stack.pop();
@@ -2503,17 +2503,23 @@ function parseCommand() {
       updateDisplay();
       inputText(totalStack());
       break;
-    case 'twig':
+    case 'tri':
       stack.pop();
       updateDisplay();
-      $('txt-input').value = '';         
-      monOn();
+      $('txt-input').value = '';
+      showTricorder();
       break;
     case 'tricorder':
       stack.pop();
       updateDisplay();
       $('txt-input').value = '';
       showTricorder();
+      break;
+    case 'twig':
+      stack.pop();
+      updateDisplay();
+      $('txt-input').value = '';         
+      monOn();
       break;
     case 'unembed':
       stack.pop();
@@ -4676,11 +4682,11 @@ window.onload = function () {
   viewPortSrc.push('https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1');// Starfleet Technical Manual
   viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');//  LCARS Display
   viewPortSrc.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1');// Jerobeam Fenderson - Planets
-  viewPortSrc.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1');// Star field
-
+  
   viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');// Tressaurian Intersection
   viewPortSrc2.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');// Star Trek Meets Batman
   viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');// Star Track
+  viewPortSrc2.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1');// Star field
 
   $('sensor1').onclick = sensor1;
   $('sensor2').onclick = sensor2;
@@ -4732,6 +4738,7 @@ window.onload = function () {
   } else {    
     widgetSrc.push('https://napesweaver.github.io/ip-mapper/');
     widgetSrc.push('https://www.wolframalpha.com/');
+    widgetSrc.push('https://98.js.org/');// Windows 98
     // widgetSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag');// KITUMBA
     // widgetSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4');// In Harm's Way
     // widgetSrc.push('https://www.youtube.com/embed/Zx-up8quvnI');// Mind Sifter
