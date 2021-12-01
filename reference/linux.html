@@ -55,8 +55,42 @@
         </ul>
     </nav>
 
+    <p class="linksToTop"><a href="#bottom" title="Bottom of page">To Bottom</a></p>
     <iframe class="noborder iframe" name="rpnapes" src="../index.html" width="259"></iframe>
     
+    <h2>The Terminal</h2>
+    <h3>[username@machinename ~] $</h3>
+    <ul>
+        <li>~ denotes user's home directory</li>
+        <li>$ denotes normal user</li>
+        <li># denotes superuser</li>
+        <li>[\u@\h \W]\$</li>
+        <li><br /></li>
+        <li>Ctrl+Alt+t = open terminal within the GUI</li>
+        <li>Ctrl+Alt+F1 through Ctrl+Alt+F6 = Access the virtual terminals from desktop</li>
+        <li>Atl+F1 through Alt+F7 = switch between virtual terminals Alt+F8 = return to GUI</li>
+        <li>Ctrl+c = Kill process in terminal (INT), Ctrl+z = Suspend process in terminal (TSTP)</li>
+        <li>Tab = Completion</li>
+        <li>Ctrl+l = Clear screen</li>
+        <li>Ctrl+u = Clear prompt</li>
+        <li>Start process in background: processName &</li>
+        <li>Disregard $PATH, search current directory: ./processName</li>
+        <li><br /></li>
+        <li>cAsE sEnSiTiVe...</li>
+    </ul>
+    <p>Do not use spaces in folder and file names -- Linux does not like that at the command line!</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Wildcards * ?</h3>
+    <ul>
+        <li>* any characters</li>
+        <li>? any character</li>
+        <li>[characters] Any character that is a member of the set [characters]</li>
+        <li>[!characters] Any character that is not a member of set [characters]</li>
+        <li>[[:class:]] Any chracter tht is a member of the class</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
     <h2>Bash (Bourne Again SHell) / Terminal Commands</h2>
     <nav id="nav2">
         <ul>
@@ -96,8 +130,8 @@
         <li>*Do NOT alias cl - there is a linux prog by that name</li>
     </ul>
     <p>apropos, man -k Search manual for appropriate command</p>
-    <p><a href="http://ss64.com/bash/aspell.html" target="_blank">aspell</a> Spell Checker: aspell check myfile.txt</p>
-    <p class="linksToTop"><a href="#bottom" title="Bottom of page">To Bottom</a></p>
+    <p><a href="http://ss64.com/bash/aspell.html" target="_blank">aspell</a> Spell Checker: aspell check myfile.txt</p>    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h4 id="B">B</h4>
     <p><a href="http://ss64.com/bash/bg.html" target="_blank">bg</a> Send process to background using jobspec: bg %jobspec</p>
@@ -111,7 +145,6 @@
     <p><a href="http://ss64.com/bash/cat.html" target="_blank">cat</a> Concatenate and display the content of files: cat [-Ans...] [File]...</p>
     <ul>
         <li>cat movie.mpeg* > movie.mpeg</li>
-        <li><br /></li>
         <li>cat > myFile.txt</li>
         <li>Ctrl+d to quit</li>
     </ul>
@@ -450,40 +483,7 @@
         </tr>
     </table>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
-    <h2>The Terminal</h2>
-    <h3>[username@machinename ~] $</h3>
-    <ul>
-        <li>~ denotes user's home directory</li>
-        <li>$ denotes normal user</li>
-        <li># denotes superuser</li>
-        <li>[\u@\h \W]\$</li>
-        <li><br /></li>
-        <li>Ctrl+Alt+t = open terminal within the GUI</li>
-        <li>Ctrl+Alt+F1 through Ctrl+Alt+F6 = Access the virtual terminals from desktop</li>
-        <li>Atl+F1 through Alt+F7 = switch between virtual terminals Alt+F8 = return to GUI</li>
-        <li>Ctrl+c = Kill process in terminal (INT), Ctrl+z = Suspend process in terminal (TSTP)</li>
-        <li>Tab = Completion</li>
-        <li>Ctrl+l = Clear screen</li>
-        <li>Ctrl+u = Clear prompt</li>
-        <li>Start process in background: processName &</li>
-        <li>Disregard $PATH, search current directory: ./processName</li>
-        <li><br /></li>
-        <li>cAsE sEnSiTiVe...</li>
-    </ul>
-    <p>Do not use spaces in folder and file names -- Linux does not like that at the command line!</p>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
-    <h3>Wildcards * ?</h3>
-    <ul>
-        <li>* any characters</li>
-        <li>? any character</li>
-        <li>[characters] Any character that is a member of the set [characters]</li>
-        <li>[!characters] Any character that is not a member of set [characters]</li>
-        <li>[[:class:]] Any chracter tht is a member of the class</li>
-    </ul>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
+    
     <h3>Redirecting stdin(0), stdout(1) and stderr(2)</h3>
     <ul>
         <li>&#60;, &#62; and &#62;&#62; (redirectors)</li>

@@ -13,18 +13,13 @@ noscript h3 {
 
 body {
     font-family: Arial, "Microsoft Sans Serif Regular", Verdana, sans-serif;
-    font-size: small;
-    color: black;
+    color: #000000;
     background-color: #c4c6b1;
 }
 
 nav {
     text-align: center;
     background-color: #c4c6b9;
-    border-width: 1px;
-    border-style: ridge;
-    border-radius: 4px 4px 4px 4px;
-    border-color: #2c2f17;
     padding: 5px;
 }
 
@@ -36,33 +31,42 @@ nav li {
 
 h1 {
     text-align: center;
-    font-size: 1.8em;
+    font-size: 1.6em;
     background-color: #2c2f17;
     color: #e8bc62;
 }
 
 h2 {
-    font-size: 1.6em;
+    font-size: 1.4em;
 }
 
 h3 {
-    font-size: 1.2em;
-}
-
-h4 {
     font-size: 1em;
 }
 
-h2, h3, h4 {
-    margin: .6em;
+h4 {
+    font-size: .8em;
 }
 
-p, li, table, img, textarea, dt, dd {
+h2, h3, h4 {
+    margin: .5em;
+}
+
+p {
+    margin: .6em;
+    font-size: .7em;
+}
+
+li, table, img, textarea, dt, dd {
     margin: .8em;
 }
 
+p, li {
+    margin-left: 2.6em;
+}
+
 ol, ul {
-    font-size: .8em;
+    font-size: .6em;
 }
 
 ol li {
@@ -74,21 +78,15 @@ li {
 }
 
 table {
-    font-size: 0.9em;
     text-align: center;
-    background-color: #c4c6b9;
-    border-width: 1px;
-    border-style: ridge;
-    border-radius: 4px 4px 4px 4px;
-    border-color: #2c2f17;
+    font-size: 0.9em;
+    background-color: #c4c6b9;    
     border-collapse: collapse;
 }
 
 td, th {
-    border-width: 1px;
-    border-style: solid;
-    border-color: black;
     padding: 5px;
+    border: 1px solid #000000;
 }
 
 a:link {
@@ -105,8 +103,8 @@ a:hover {
 }
 
 pre {    
-    font-size: .85em;
-    font-weight: 700;
+    font-size: .8em;
+    font-weight: 600;
 }
 
 .headings {
@@ -115,17 +113,27 @@ pre {
 }
 
 .linksToTop {
-    font-style: italic;
-    font-size: 0.8em;
     text-align: right;
+    font-style: italic;
+    font-weight: 700;
 }
 
-.noborder {
-    border: none;
+footer {
+    padding: 5px;
+    text-align: center;
 }
 
-.iframe {  
-    /* height: 606px; */
+.linksToTop, footer {
+    font-size: .6em;
+}
+
+nav, table, footer {
+    border: 1px ridge #2c2f17;
+    border-radius: 4px 4px 4px 4px;
+    background-color: #c4c6b9;
+}
+
+.iframe {
     height: 51vh;
     width: 259px;
     position: relative;
@@ -134,15 +142,8 @@ pre {
     resize: vertical;
 }
 
-footer {
-    font-size: 0.8em;
-    text-align: center;
-    border-width: 1px;
-    border-style: ridge;
-    border-radius: 4px 4px 4px 4px;
-    border-color: #2c2f17;
-    background-color: #c4c6b9;
-    padding: 5px;
+.noborder {
+    border: none;
 }
 
 .hidden {
@@ -153,16 +154,75 @@ footer {
     display: inline;
 }
 
-@media only screen and (min-width: 481px) {
+@media only screen and (min-width: 480px) {
     .iframe {
         position: fixed;
         right: 0;
     }
 }
 
-@media only screen and (min-width: 570px) {
+@media only screen and (min-width: 640px) {
+    .iframe {
+        right: 5px;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    nav li {
+        font-size: 1.4em;
+    }
+    h1 {        
+        font-size: 2.2em;        
+    }
+    h2 {
+        font-size: 1.6em;
+    }
+    h3 {
+        font-size: 1.2em;
+    }
+    h4 {
+        font-size: 1em;
+    }    
+    p {
+        font-size: 1em;
+    }
+    ol, ul {
+        font-size: .8em;
+    }
+    pre {
+        font-size: 1.1em;
+        font-weight: 400;
+    }
+    .linksToTop, footer {
+        font-size: .7em;
+    }
+    .iframe {   
+        right: 9%;
+    }    
+}
+
+@media only screen and (min-width: 1280px) {
     h1 {
-        font-size: 2em;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    h2, h3, h4 {
+        margin: 1.1em;
+    }    
+    li, table, img, textarea, dt, dd {
+        margin: 1.6em;
+    }
+    p {
+        margin: 1.3em;
+    }
+    p, li {
+        margin-left: 2.6em;
+    }
+    nav li {
+        font-size: 1.6em;
+    }
+    h1 {        
+        font-size: 2.4em;        
     }
     h2 {
         font-size: 1.8em;
@@ -171,48 +231,27 @@ footer {
         font-size: 1.4em;
     }
     h4 {
-        font-size: 1.1em;
-    }
-    .iframe {   
-        right: 5px;
-    }
-}
-
-@media only screen and (min-width: 640px) {
-    h1 {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        font-size: 2.4em;        
-    }
-    h2, h3, h4 {
-        margin: 1.2em;
+        font-size: 1.2em;
     }    
-    p, li, table, img, textarea, dt, dd {
-        margin: 1.6em;
+    p {
+        font-size: 1.2em;
     }
     ol, ul {
-        font-size: 1.2em;
+        font-size: 1em;
     }
     pre {
         font-size: 1.3em;
-        font-weight: 400;
     }
-}
-
-@media only screen and (min-width: 800px) {
-    nav li {        
-        margin-right: 20px;
-        font-size: 1.4em;
-    } 
-    .iframe {
-        right: 15px;
+    .linksToTop, footer {
+        font-size: .8em;
     }
-}
-
-@media only screen and (min-width: 1280px) {
     .iframe {
         right: 15%;
     }   
+}
+
+@media only screen and (min-width: 1366px) {
+    
 }
 
 @media only screen and (min-width: 1680px) {
