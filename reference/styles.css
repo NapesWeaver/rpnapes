@@ -251,12 +251,8 @@ nav, table, footer {
 }
 
 @media only screen and (min-width: 1366px) {
-    
-}
-
-@media only screen and (min-width: 1680px) {
     .iframe {
         right: 0;
         width: 48%;
-    } 
+    }     
 }
