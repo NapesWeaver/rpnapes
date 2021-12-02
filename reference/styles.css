@@ -63,6 +63,14 @@ li, table, img, textarea, dt, dd {
     margin: .8em;
 }
 
+img {
+    margin-left: 1.4em;
+}
+
+textarea {
+    margin-left: 1.6em
+}
+
 li {
     margin-left: 2.5em;
 }
@@ -80,9 +88,9 @@ li {
 }
 
 table {
+    margin-left: 1.6em;
     text-align: center;
-    font-size: 0.9em;
-    background-color: #c4c6b9;    
+    font-size: 0.9em; 
     border-collapse: collapse;
 }
 
@@ -144,9 +152,16 @@ nav, table, footer {
     resize: vertical;
 }
 
+.dbl-table {
+    margin-left: 0;
+    background-color: #c4c6b1;
+    border: none;
+}
+
 .noborder {
     border: none;
 }
+
 
 .hidden {
     display: none;
@@ -185,9 +200,18 @@ nav, table, footer {
     h4 {
         font-size: 1em;
     }    
+    img {
+        margin-left: 1.8em;
+    }
+    textarea {
+        margin-left: 2.1em;
+    }
     p {
         font-size: 1em;
         margin-left: 2em;
+    }
+    table {
+        margin-left: 2.2em;
     }
     ol, ul {
         font-size: .8em;
@@ -229,12 +253,18 @@ nav, table, footer {
     li, table, img, textarea, dt, dd {
         margin: 1.6em;
     }
+    img {
+        margin-left: 2.2em;
+    }
+    textarea {
+        margin-left: 2.6em;
+    }
     p {
         margin: 1.3em;
         margin-left: 2.2em;
         font-size: 1.2em;
     }
-    li {
+    li, table {
         margin-left: 2.6em;
     }
     ol, ul {
