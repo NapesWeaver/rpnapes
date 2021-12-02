@@ -93,8 +93,7 @@
                         <li><a title="Hexidecimal" onclick="convertBase(16); updateDisplay()">&nbsp;&nbsp;hex</a></li>
                         <li><a title="Decimal" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;decimal</a></li>
                       </ul>
-                    </li>                    
-                    <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode">Dark</a></li>
+                    </li>        
                     <li class="haptic-response"><a id="menu-angle" title="Toggle degree/radian mode">deg/rad</a></li>
                     <li id="fix"><label><a title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
                       <select class="haptic-response" name="fix" onchange="setFixDecimal(this.value);updateDisplay()">
@@ -120,9 +119,6 @@
                       </select>
                       </label>
                     </li>
-                    <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" title="Toggle haptic response">Haptic</a></li>
-                    <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" title="Toggle mobile keyboard">Keyboard</a></li>
-                    <li><a id="menu-notes" class="haptic-response" title="Switch to Notes">Notes</a></li>                    
                     <li id="sci"><label><a title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
                       <select class="haptic-response" name="sci" onchange="setSciDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
@@ -146,8 +142,13 @@
                         <option value="17">17</option>
                       </select>
                       </label>
-                    </li>                    
+                    </li>   
                     <li class="haptic-response"><a id="menu-shift" title="Toggle shift">Shift</a></li>
+                    <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode">Dark</a></li>
+                    <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" title="Toggle haptic response">Haptic</a></li>
+                    <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" title="Toggle mobile keyboard">Keyboard</a></li>
+                    <li><a id="menu-notes" class="haptic-response" title="Switch to Notes">Notes</a></li>   
+                    <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;Reference</a></li>     
                     <li id="menu-sound-li" class="haptic-response"><a id="menu-sound" title="Toggle sound for Tricorder">Sound</a></li>
                   </ul>
                 </li>
@@ -186,10 +187,8 @@
                         <li><a id="menu-stack-min" title="Minimum value on the stack">&nbsp;&nbsp;Min</a></li>
                         <li><a id="menu-stack-sort" title="Sort the stack ascending order">&nbsp;&nbsp;Sort A-Z</a></li>
                         <li><a id="menu-stack-total" title="Total the stack">&nbsp;&nbsp;Total</a></li>
-                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;---------</li>
                         <li><a id="menu-fizz-buzz" title="Example calcamatron script">&nbsp;&nbsp;Fizz Buzz</a></li>
-                        <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;IP Mapper</a></li>
-                        <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;Reference</a></li>
+                        <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;IP Mapper</a></li>                        
                         <li><a id="menu-stopwatch" title="Start stopwatch">&nbsp;&nbsp;Stopwatch</a></li>
                         <li><a id="menu-tricorder" title="Open Tricorder">&nbsp;&nbsp;Tricorder</a></li>
                         <li><a id="menu-twig" title="Game stub ;)">&nbsp;&nbsp;Twig</a></li>
@@ -218,7 +217,7 @@
               </ul>
             </nav>
           </div>
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Dec 1, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calcamatron, with a Stack. Type help for a list of commands. Last modified Dec 2, 2021." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
           <input type="button" id="btn-xy" class="btn-big haptic-response" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y"/>
