@@ -36,8 +36,13 @@ h1 {
     color: #e8bc62;
 }
 
+h2, h3, h4 {
+    margin: .5em;
+}
+
 h2 {
     font-size: 1.4em;
+    margin-left: .3em;
 }
 
 h3 {
@@ -48,12 +53,9 @@ h4 {
     font-size: .8em;
 }
 
-h2, h3, h4 {
-    margin: .5em;
-}
-
 p {
     margin: .6em;
+    margin-left: 2.1em;
     font-size: .7em;
 }
 
@@ -61,8 +63,8 @@ li, table, img, textarea, dt, dd {
     margin: .8em;
 }
 
-p, li {
-    margin-left: 2.6em;
+li {
+    margin-left: 2.5em;
 }
 
 ol, ul {
@@ -185,6 +187,7 @@ nav, table, footer {
     }    
     p {
         font-size: 1em;
+        margin-left: 2em;
     }
     ol, ul {
         font-size: .8em;
@@ -202,29 +205,19 @@ nav, table, footer {
 }
 
 @media only screen and (min-width: 1280px) {
-    h1 {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-    h2, h3, h4 {
-        margin: 1.1em;
-    }    
-    li, table, img, textarea, dt, dd {
-        margin: 1.6em;
-    }
-    p {
-        margin: 1.3em;
-    }
-    p, li {
-        margin-left: 2.6em;
-    }
     nav li {
         font-size: 1.6em;
     }
-    h1 {        
+    h1 {
+        padding-top: 15px;
+        padding-bottom: 15px;
         font-size: 2.4em;        
     }
+    h2, h3, h4 {
+        margin: 1.1em;
+    }        
     h2 {
+        margin-left: .8em;
         font-size: 1.8em;
     }
     h3 {
@@ -232,9 +225,16 @@ nav, table, footer {
     }
     h4 {
         font-size: 1.2em;
-    }    
+    }
+    li, table, img, textarea, dt, dd {
+        margin: 1.6em;
+    }
     p {
+        margin: 1.3em;
         font-size: 1.2em;
+    }
+    li {
+        margin-left: 2.6em;
     }
     ol, ul {
         font-size: 1em;
