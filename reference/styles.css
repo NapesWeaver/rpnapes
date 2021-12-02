@@ -231,6 +231,7 @@ nav, table, footer {
     }
     p {
         margin: 1.3em;
+        margin-left: 2.2em;
         font-size: 1.2em;
     }
     li {
