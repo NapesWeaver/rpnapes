@@ -66,14 +66,6 @@
     <p>/* <a href="https://meyerweb.com/eric/tools/css/reset/" title="CSS reset code" target="_blank">Eric Meyers Reset</a> */</p>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
-    <h3>Define these elements for older browsers</h3>
-    <pre><code>
-    article, aside, figure, footer, header, hgroup, menu, nav, section {
-        display: block;    
-    }
-    </code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
     <h3>The Cascade</h3>
     <ul>
         <li>Determines which rules apply to the element</li>
@@ -84,6 +76,25 @@
     </ul>
     <!-- <p>CSS selectors are read from right to left.</p> -->
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Define these elements for older browsers</h3>
+    <pre><code>
+    article, aside, figure, footer, header, hgroup, menu, nav, section {
+        display: block;    
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    
+    <h3>Fonts</h3>
+    <p>Web safe fonts (e.g. Arial, Helvetica, and Georgia) vs. web fonts</p>
+    <p>/* <a title="Online fonts from Google" target="_blank" href="https://fonts.google.com/">Google Fonts</a> */</p>
+    <pre><code>
+    @font-face {  
+        font-family: "Emblema One";
+        src: url("http://wickedlysmart.com/hfhtmlcss/chapter8/journal/EmblemaOne-Regular.woff"), url("http://wickedlysmart.com/hfhtmlcss/chapter8/journal/EmblemaOne-Regular.ttf");
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
 
     <h3>Box Model</h3>
     <p>Width, height, padding, border and margin.</p>
@@ -99,20 +110,35 @@
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
-    <h3>Fonts</h3>
-    <p>Web safe fonts (e.g. Arial, Helvetica, and Georgia) vs. web fonts</p>
-    <p>/* <a title="Online fonts from Google" target="_blank" href="https://fonts.google.com/">Google Fonts</a> */</p>
+    <h3>Display</h3>
+    <p>Inline element e.g. a, strong, em, span - dimensions are determined by contents.</p>
+    <p>Block level elements get displayed on a new line, takes the width of the container and may contain additional block level / inline elements.</p>
+    <p>Inline-block elements display inline like a span but can be given explicit width, height, margin, or padding.</p>    
     <pre><code>
-    @font-face {  
-        font-family: "Emblema One";
-        src: url("http://wickedlysmart.com/hfhtmlcss/chapter8/journal/EmblemaOne-Regular.woff"), url("http://wickedlysmart.com/hfhtmlcss/chapter8/journal/EmblemaOne-Regular.ttf");
+    .some-parent {
+        /* Remove whitespace between inline-block elements */
+        font-size: 0;
     }
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
+    <h3>Position</h3>
+    <ul>
+        <li>position: static; /* Normal flow */</li>
+        <li>position: fixed; /* Outside normal flow */</li>
+        <li>position: relative; /* Normal flow but with offset properties */</li>
+        <li>position: absolute; /* Outside normal flow, offset in relation to the first parent container with a non-static position */</li>
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
     <h3>Flexbox</h3>
     <img src="images/flex-properties.jpg" title="Flexbox properties" />
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>       
+    
+    <h3>Responsive Grid</h3>
+    <img src="images/grid.jpg" title="Responsive Grid" />
+    <p>e.g. Flexbox, inline-block, Twitter, Bootstrap</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>       
 
     <footer id="bottom">Return to <a href="../index.html" title="Return to the home page">home page</a></footer>
 </body>
