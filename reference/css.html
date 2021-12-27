@@ -59,7 +59,12 @@
     <iframe class="noborder iframe" name="rpnapes" src="../index.html" width="259"></iframe>
     
     <h2>CSS3</h2>
-    <p>/* <a href="http://jigsaw.w3.org/css-validator/" title="jigsaw.w3.org/css-validator/validator" target="_blank">W3C CSS Validator</a> */</p>
+    <p>/* <a href="http://jigsaw.w3.org/css-validator/" title="Validate CSS code" target="_blank">W3C CSS Validator</a> */</p>
+    <p>/* <a href="http://csslint.net/" title="Lint CSS code" target="_blank">CSS Lint</a> */</p>
+    <p>/* <a href="https://www.w3schools.com/cssref/css_selectors.asp" title="CSS Selectors Reference" target="_blank">CSS Selectors</a> */</p>
+    <p>/* <a href="https://color.adobe.com/create/color-wheel/" title="Color pallet generator" target="_blank">Adobe Color Wheel</a> */</p>
+    <p>/* <a href="https://meyerweb.com/eric/tools/css/reset/" title="CSS reset code" target="_blank">Eric Meyers Reset</a> */</p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>Define these elements for older browsers</h3>
     <pre><code>
@@ -69,16 +74,44 @@
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
-    <h3>Web font</h3>
+    <h3>The Cascade</h3>
+    <ul>
+        <li>Determines which rules apply to the element</li>
+        <li>Sort relevant rulesets according to the origin (inline over external) and !important</li>
+        <li>Sort by the selector specificity</li>
+        <li>If rulesets are conflicting, apply ruleset that was declared last</li>
+        <li>Specificity trumps the cascade </li>
+    </ul>
+    <!-- <p>CSS selectors are read from right to left.</p> -->
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Box Model</h3>
+    <p>Width, height, padding, border and margin.</p>
+    <pre><code>
+    /* To have the box model respect the widths we explicitly set */
+    html {
+        box-sizing: border-box;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+        /* This will make it easier to change the box-sizing in plugins or other components that leverage other behavior */
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Fonts</h3>
+    <p>Web safe fonts (e.g. Arial, Helvetica, and Georgia) vs. web fonts</p>
+    <p>/* <a title="Online fonts from Google" target="_blank" href="https://fonts.google.com/">Google Fonts</a> */</p>
     <pre><code>
     @font-face {  
         font-family: "Emblema One";
         src: url("http://wickedlysmart.com/hfhtmlcss/chapter8/journal/EmblemaOne-Regular.woff"), url("http://wickedlysmart.com/hfhtmlcss/chapter8/journal/EmblemaOne-Regular.ttf");
     }
-    </code></pre>    
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>Flexbox</h3>
-    <img src="images/flex-properties.jpg" title="" />
+    <img src="images/flex-properties.jpg" title="Flexbox properties" />
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <footer id="bottom">Return to <a href="../index.html" title="Return to the home page">home page</a></footer>
