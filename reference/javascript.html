@@ -79,14 +79,15 @@
         <li>var myInt = 2;</li>
         <li>var myFloat = 2.72;</li>
         <li>var myBoolean = true;</li>
-        <li>var myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
         <li>var myEmptyArr = [ ];</li>
+        <li>var myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
         <li>var myObj = { player: "Bob", points: 6 };</li>
         <li>var myEmptyObj = { };</li>
         <li>var imageLinks = categories.getElementsByTagName("h2");</li>
         <li>var myFunction = function() { console.log('Hallo'); }</li>
         <li>let myInt = 3; // ES6</li>
         <li>const myFloat = 3.14; // ES6</li>
+        <li>const myArray2 = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"]; // const is okay - points to the same object in memory when modified</li>
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
@@ -124,34 +125,6 @@
     let hallo = function() {
         console.log('Hi, there.');
     } // Error
-    </code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-    
-    <h3>// Functions</h3>
-    <pre><code>
-    // Function declaration
-    function myFunction() {
-        console.log("myFunction");
-    }
-
-    // Function expression
-    const myFunction = function(arg1, arg2) {
-        console.log("myFunction");
-    }
-
-    // Default function parameters (ES6)
-    function tenPower(power = 2) {
-        return 10 ** power;
-    }
-
-    // Arrow functions (ES6)  
-    const add = (num1, num2) => {
-        return num1 + num2;
-    };
-
-    const add = (num1, num2) => num1 + num2;
-
-    const isEven = num => num % 2 === 0
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>   
     
@@ -196,7 +169,104 @@
     Number('0x11')    // 17
     Number('-Infinity') // -Infinity
     </code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Functions</h3>
+    <pre><code>
+    // Function declaration
+    function myFunction() {
+        console.log('myFunction');
+    }
+
+    // Function expression
+    function exponential(num1, num2) {
+        return num1 ** num2;
+    }
+
+    // Default function parameters (ES6)
+    function tenPower(power = 2) {
+        return 10 ** power;
+    }
+
+    // Arrow functions (ES6)  
+    const add = (num1, num2) => {
+        return num1 + num2;
+    };
+
+    const add = (num1, num2) => num1 + num2;
+
+    const isEven = num => num % 2 === 0
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    
+    <h3>// Decision</h3>
+    <pre><code>
+    if (cookieJar < 1) {
+        greeting = "Who stole the cookie?";
+    } else if (cookieJar < 6) {
+        greeting = "The cookies are low!";
+    } else {
+        greeting = "Have a cookie.";
+    }
+
+    // Ternary operator
+    var driverLicense = (age >= 17) ? 'full license' : 'learner permit';
+
+    switch (expression) {
+    case 'condition1':
+        myProgram();
+        break;
+    case 'condition2': // Falls through
+    case 'condition3':
+        myOtherProgram();
+    break;
+    default:
+        myDefaultProgram();
+    }
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    
+    <h3>Loops</h3>
+    <pre><code>
+    // For Loop
+    for (let i = 0; i < myArray.length - 1; i++) {
+        numberOfStates++;
+    }
+
+    // For In
+    for (const prop in obj) {
+        console.log(`obj.${prop} = ${obj[prop]}`);
+    }
+
+    // For Each
+    myArray.forEach(state => console.log(`The postal code is ${state}.`));
+
+    // While Loop
+    while (condition) {
+        runAfterCheck();
+    }
+
+    // Do While Loop
+    do {
+        alwaysRunOnce();
+    }
+    while (condition);    
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Try, Catch, Finally</h3>
+    <code><pre>
+    try {
+        myFunction();
+    }
+    catch (e) {
+        console.error(e);
+    }
+    finally {
+        closeFile();
+    }
+    </pre></code>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>// Key Codes</h3>
     <table class="dbl-table">
