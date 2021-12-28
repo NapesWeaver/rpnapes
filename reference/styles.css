@@ -150,6 +150,7 @@ nav, table, footer {
     display: block;
     margin: auto;
     resize: vertical;
+    scroll-behavior: none;
 }
 
 .dbl-table {
