@@ -81,23 +81,35 @@
         <li>var myBoolean = true;</li>
         <li>var myEmptyArr = [ ];</li>
         <li>var myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
+        <li>var myNumbers = [3.14, 18, 1.61, -Infinity, 2.72, .3, -23.00,];</li>
         <li>var myObj = { player: "Bob", points: 6 };</li>
         <li>var myEmptyObj = { };</li>
         <li>var imageLinks = categories.getElementsByTagName("h2");</li>
         <li>var myFunction = function() { console.log('Hallo'); }</li>
         <li>let myInt = 3; // ES6</li>
         <li>const myFloat = 3.14; // ES6</li>
-        <li>const myArray2 = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"]; // const is okay - points to the same object in memory when modified</li>
+        <li>const myArray2 = ['CA', 'WA', 'OR', 'NV', 'NM', 'AZ', 'WY', 'MT']; // const is okay - points to the same object in memory when modified</li>
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>// Input, Output</h3>
     <ul>
-        <li>var input = prompt("Enter y or n", "y");</li>
+        <li>var input = prompt('Enter y or n', 'y');</li>
         <li>var myInt = parseInt(input);</li>    
-        <li>window.alert();</li>
+        <li>alert();</li>
+        <li>prompt();</li>
         <li>console.log();</li>
+        <li>console.dir();</li>
+        <li>console.error();</li>
         <li>document.write();</li>
+    </ul>
+
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Selectors</h3>
+    <ul>
+        <li>document.getElementsByTagName();</li>
+        <li>document.getElementById();</li>
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
@@ -148,8 +160,30 @@
             &#60;li&#62;Draw the rest of the owl&#60;/li&#62;
         &#60;/ul&#62;`
     );
+
+    // String Methods
+    .length()
+    .slice()
+    .substr()
+    .substring()
+    .replace()
+    .charAt()
+    .split()
+    .trim()
+    .toUpperCase()
+    .toLowerCase()
+    .big()
+    .bold()
+    .fontcolor()
+    .fontsize()
+    .italics()
+    .link()
+    .small()
+    .strike()
+    .sub()
+    .sup()
     </code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>     
 
     <h3>// Numbers</h3>
     <pre><code>
@@ -184,8 +218,8 @@
     }
 
     // Default function parameters (ES6)
-    function tenPower(power = 2) {
-        return 10 ** power;
+    function exponential2(num1, num2 = 2) {
+        return num1 ** num2;
     }
 
     // Arrow functions (ES6)  
@@ -198,15 +232,41 @@
     const isEven = num =&#62 num % 2 === 0
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Arrays</h3>
+    <pre><code>
+    // Array Methods
+    .toString()
+    .concat()
+    .pop() // Remove and return last element
+    .push() // Add to end and return new array length
+    .shift() // Remove and return first element
+    .unShift() // Add to beginning and return new length
+    .splice()
+    .slice(begin, end) // Return new array e.g myArray.slice(-3) returns new array containing last 3 elements
+    .sort() // Sorts array in place (ES6)
+    myNumbers.sort(function(a, b) { return a - b });
+    myNumbers.sort((a, b) => b - a);
+    .reverse() // Sorts array in place
+    .map(callback) // Returns a new array after applying a function to each element (ES6)
+    const squaredNumbers = myNumbers.map(exponential2);
+    .forEach(callback) // Applies a function to each array element (ES6)
+    .filter(callback) // Returns a new array(ES6)
+    const evenNumbs = myNumbers.filter(num => num % 2 === 0);
+    .reduce(callback) // Iterates over array while maintaining an accumulation object (ES6)
+    myNumbers.reduce((total, n) => total + n);
+    .find() // (ES6)
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
     <h3>// Decision</h3>
     <pre><code>
     if (cookieJar &#60; 1) {
-        greeting = "Who stole the cookie?";
+        greeting = 'Who stole the cookie?';
     } else if (cookieJar &#62; 3) {
-        greeting = "The cookies are low!";
+        greeting = 'The cookies are low!';
     } else {
-        greeting = "Have a cookie.";
+        greeting = 'Have a cookie.';
     }
 
     // Ternary operator
@@ -226,7 +286,7 @@
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
-    <h3>Loops</h3>
+    <h3>// Loops</h3>
     <pre><code>
     // For
     for (let i = 0; i &#60; myArray.length - 1; i++) {
@@ -259,7 +319,7 @@
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
-    <h3>Try, Catch, Finally</h3>
+    <h3>// Try, Catch, Finally</h3>
     <code><pre>
     try {
         myFunction();
