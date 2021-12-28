@@ -150,7 +150,7 @@
         'brown fox jumps over the lazy dog. The quick brown fox jumps over the ' +
         'lazy dog.&#60;/p&#62;';
     
-    // Template strings (ES6)
+    // Template Literals (ES6)
     const myStringFoo = `foo is set to ${foo}. Let's say hello: ${sayHello()}`;
 
     const templateString = (
@@ -162,26 +162,32 @@
     );
 
     // String Methods
-    .length()
-    .slice()
-    .substr()
-    .substring()
-    .replace()
-    .charAt()
-    .split()
+    .length // (property) Returns the number of characters in string
+    .substr() // Deprecated
+    .substring() Returns new string
+    .slice() // Faster than substring
+    const testString = 'The quick brown fox jumps over the lazy dog.';
+    testString.slice(4, 19) === 'quick brown fox'
+    testString.slice(-9, -5) === 'lazy'
+    .replace() // Returns a new string with some or all matches of a pattern replaced
+    console.log(testString.replace('lazy', 'playful'));
+    .split() // Returns an array of substrings divided by a pattern - if no pattern is supplied will return an array of one element
+    .charAt(index)
     .trim()
     .toUpperCase()
     .toLowerCase()
-    .big()
-    .bold()
-    .fontcolor()
-    .fontsize()
-    .italics()
-    .link()
-    .small()
-    .strike()
-    .sub()
-    .sup()
+    .bold() // Depricated
+    .fontcolor() // Depricated
+    .fontsize() // Depricated
+    .italics() // Depricated
+    .link() // Depricated
+    .small() // Depricated
+    .strike() // Depricated
+    .sub() // Depricated
+    .sup() // Depricated
+    .startsWith(searchString, startPos) // Returns a Boolean (ES6)
+    .endsWith(searchString, length) // Returns a Boolean (ES6)
+    .repeat(numCopies) // Returns a new string of numCopies copies, concatenated (ES6)    
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>     
 
@@ -236,14 +242,15 @@
     <h3>// Arrays</h3>
     <pre><code>
     // Array Methods
-    .toString()
-    .concat()
+    .length // (property) Sets or returns number of elements in array
+    .toString() // Returns a string representing the object
+    .concat() // Merge two or more arrays
     .pop() // Remove and return last element
     .push() // Add to end and return new array length
     .shift() // Remove and return first element
     .unShift() // Add to beginning and return new length
-    .splice()
     .slice(begin, end) // Return new array e.g myArray.slice(-3) returns new array containing last 3 elements
+    .splice(start, deleteCount, item1, item2, itemN)) // Changes array in place
     .sort() // Sorts array in place (ES6)
     myNumbers.sort(function(a, b) { return a - b });
     myNumbers.sort((a, b) => b - a);
@@ -256,7 +263,8 @@
     .reduce(callback) // Iterates over array while maintaining an accumulation object (ES6)
     myNumbers.reduce((total, n) => total + n);
     .find(callback) // Returns the value of the first element that satisfies the callback function (ES6)
-    const found = myNumbers.find(element => element &#60 2)
+    const found = myNumbers.find(element => element &#60 2);
+    .includes() // Returns a Boolean based on whether array includes a value among its elements (ES6)
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
