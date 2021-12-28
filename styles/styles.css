@@ -9,7 +9,9 @@
 
 body {
     touch-action: manipulation;
-    background-color: #C4C6B1;
+    background-color: #C4C6B1;    
+    /* overflow-x: hidden; */
+    overflow-Y: hidden;/* Needed for reference IFrame */
 }
 
 header {    
