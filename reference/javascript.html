@@ -162,20 +162,6 @@
     );
 
     // String Methods
-    .length // (property) Returns the number of characters in string
-    .substr() // Deprecated
-    .substring() Returns new string
-    .slice() // Faster than substring
-    const testString = 'The quick brown fox jumps over the lazy dog.';
-    testString.slice(4, 19) === 'quick brown fox'
-    testString.slice(-9, -5) === 'lazy'
-    .replace() // Returns a new string with some or all matches of a pattern replaced
-    console.log(testString.replace('lazy', 'playful'));
-    .split() // Returns an array of substrings divided by a pattern - if no pattern is supplied will return an array of one element
-    .charAt(index)
-    .trim()
-    .toUpperCase()
-    .toLowerCase()
     .bold() // Depricated
     .fontcolor() // Depricated
     .fontsize() // Depricated
@@ -185,6 +171,20 @@
     .strike() // Depricated
     .sub() // Depricated
     .sup() // Depricated
+    .substr() // Deprecated
+    .length // (property) Returns the number of characters in string
+    .substring() Returns new string
+    .slice() // Faster than substring
+    const someString = 'The quick brown fox jumps over the lazy dog.';
+    someString.slice(4, 19) === 'quick brown fox'
+    someString.slice(-9, -5) === 'lazy'
+    .replace() // Returns a new string with some or all matches of a pattern replaced
+    console.log(someString.replace('lazy', 'playful'));
+    .split() // Returns an array of substrings divided by a pattern - if no pattern is supplied will return an array of one element
+    .charAt(index)
+    .trim()
+    .toUpperCase()
+    .toLowerCase()
     .startsWith(searchString, startPos) // Returns a Boolean (ES6)
     .endsWith(searchString, length) // Returns a Boolean (ES6)
     .repeat(numCopies) // Returns a new string of numCopies copies, concatenated (ES6)    
