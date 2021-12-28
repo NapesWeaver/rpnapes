@@ -255,7 +255,8 @@
     const evenNumbs = myNumbers.filter(num => num % 2 === 0);
     .reduce(callback) // Iterates over array while maintaining an accumulation object (ES6)
     myNumbers.reduce((total, n) => total + n);
-    .find() // (ES6)
+    .find(callback) // Returns the value of the first element that satisfies the callback function (ES6)
+    const found = myNumbers.find(element => element &#60 2)
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
