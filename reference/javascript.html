@@ -62,7 +62,9 @@
     <p>JavaScript is specified by the European Association for Standardizing Information and Communication Systems (ECMA 5, 6) and the World Wide Web Consortium (W3C).</h3>
     <p>v8 is the C++ JavaScript interpreter used by Google Chrome.</p>
     <p>Data types are String, Number, Boolean, Null, Undefined, and Object (typeof function() {} yields function).</p>
-    <p>Falsy values in JavaScript are: false, null, undefined, 0, NaN, '', "", ``, document.all, 0n: BigInt, -0.</p>    
+    <p>Falsy values in JavaScript are: false, null, undefined, 0, NaN, "", document.all.</p>    
+    <p>Simple equality ( == ) attempts to convert operands that are of different types before checking equality (for objects, returns true only if both reference the same object).</p>
+    <p>Strict equality operator ( === ) always considers operands of different types to be different.</p>
     <p><a href="https://eloquentjavascript.net/" title="Free to read" target="_blank">Eloquent JavaScript</a> by Marijn Haverbeke.</p>
     <p><a href="https://caniuse.com/" title="Browser compatibility tool" target="_blank">caniuse.com</a></p>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
@@ -70,15 +72,20 @@
 
     <h3>// Declarations</h3>
     <ul>
-        <li>Variable name must begin with _, $, or a letter.</li>
+        <li>Names for variables must begin with _, $, or a letter.</li>
+        <li>var myUninitialized;</li>
         <li>var myString = "Hallo";</li>
-        <li>var myInt = 5;</li>
-        <li>var myBoolean = false;</li>
+        <li>var myInt = 2;</li>
+        <li>var myFloat = 2.72;</li>
+        <li>var myBoolean = true;</li>
         <li>var myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
-        <li>var myArray2 = [ ];</li>
-        <li>var imageNode = $("image");</li>
+        <li>var myEmptyArr = [ ];</li>
+        <li>var myObj = { player: "Bob", points: 6 };</li>
+        <li>var myEmptyObj = { };</li>
         <li>var imageLinks = categories.getElementsByTagName("h2");</li>
-        <li>var h2Node;</li>
+        <li>var myFunction = function() { console.log('Hallo'); }</li>
+        <li>let myInt = 3; // ES6</li>
+        <li>const myFloat = 3.14; // ES6</li>
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
@@ -149,18 +156,18 @@
     
     <h3>// Strings</h3>
     <pre><code>
-    const element = '&#60;p&#62;The quick brown fox jumps over the lazy dog. The \
+    var myString = '&#60;p&#62;The quick brown fox jumps over the lazy dog. The \
         quick brown fox jumps over the lazy dog. The quick brown fox jumps over \
         the lazy dog.&#60;/p&#62;';
     
-    const element2 = '&#60;p&#62;The quick brown fox jumps over the lazy dog. The quick ' +
+    const myString2 = '&#60;p&#62;The quick brown fox jumps over the lazy dog. The quick ' +
         'brown fox jumps over the lazy dog. The quick brown fox jumps over the ' +
         'lazy dog.&#60;/p&#62;';
     
     // Template strings (ES6)
-    const myString = `foo is set to ${foo}. Let's say hello: ${sayHello()}`;
+    const myStringFoo = `foo is set to ${foo}. Let's say hello: ${sayHello()}`;
 
-    const badArtTips = (
+    const templateString = (
         `&#60;p&#62;How to draw an owl:&#60;/p&#62;
         &#60;ul&#62;
             &#60;li&#62;Draw a circle&#60;/li&#62;
@@ -180,22 +187,12 @@
     const biggestInt = Number.MAX_SAFE_INTEGER // (2**53 - 1) =>  9007199254740991
     const smallestInt = Number.MIN_SAFE_INTEGER // -(2**53 - 1) => -9007199254740991
 
-    // Using Number to convert a Date object
-    let d = new Date('December 17, 1995 03:24:00');
-
     // Convert numeric strings and null to numbers
-    Number('123')     // 123
-    Number('123') === 123 // true
-    Number('12.3')    // 12.3
     Number('12.00')   // 12
     Number('123e-1')  // 12.3
     Number('')        // 0
     Number(null)      // 0
     Number('0x11')    // 17
-    Number('0b11')    // 3
-    Number('0o11')    // 9
-    Number('foo')     // NaN
-    Number('100a')    // NaN
     Number('-Infinity') // -Infinity
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
@@ -1028,171 +1025,7 @@
                 </table>
             </td>
         </tr>
-    </table>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
-    <h3>// Sum Some Numbers</h3>
-    <pre><code>    
-    &#60;!DOCTYPE html&#62;
-    &#60;html lang="en"&#62;
-    &#60;head&#62;
-        &#60;meta charset="UTF-8"&#62;
-        &#60;title&#62;Sum the Numbers&#60;/title&#62;
-        &#60;script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"&#62;&#60;/script&#62; 	
-        &#60;script&#62;
-            var sumOfNumbers = 0;
-            var topNumber = 5;
-            var error = false;
-        
-            alert("Sum the Numbers from 1 through entry");
-        
-            do{           
-                topNumber = prompt("Enter top number to sum");       
-                topNumber = parseInt(topNumber);
-        
-                if(isNaN(topNumber) || topNumber &#60; 1 || topNumber &#62; 100)
-                {
-                    alert("You must enter a number from 1 to 100");
-                    error = true;
-                }
-                else
-                {
-                    error = false;
-                }
-            }
-            while(error == true);
-        
-            for (sums = 1; sums &#60;= topNumber; sums++)
-            {
-                sumOfNumbers += sums;
-            }
-        
-            alert("Sum of the numbers from 1 through " + topNumber + " is " + sumOfNumbers);        
-        &#60;/script&#62;
-    &#60;/head&#62;
-    &#60;body&#62;
-        &#60;section&#62;
-            &#60;h1&#62;This page is displayed after the JavaScript is executed&#60;/h1&#62;
-        &#60;/section&#62;
-    &#60;/body&#62;
-    &#60;/html&#62;
-
-
-    &#60;!DOCTYPE html&#62;
-    &#60;html&#62;
-    &#60;head&#62;
-        &#60;meta charset="utf-8"&#62;
-        &#60;title&#62;Convert F degrees to C degrees&#60;/title&#62;
-        &#60;script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"&#62;&#60;/script&#62;	
-        &#60;script&#62;
-        /*
-         * Convert F degrees to C degrees
-         */
-        var entry;
-        var celsius;
-    
-        do {
-                entry = prompt("Enter degrees in Fahrenheit\n" + "Or enter 999 to end entries", 999);
-                entry = parseInt(entry);
-      
-                if(isNaN(entry))
-                {
-                }
-                else
-                {
-                    if(entry != 999)
-                    {
-                        celsius = parseInt((entry - 32) * (5/9));
-                        alert("Fahrenheit = " + entry + "\nCelsius = " + celsius);
-                    }        
-                }
-            }
-            while (entry != 999);
-        &#60;/script&#62;
-    &#60;/head&#62;
-    &#60;body&#62;
-        &#60;section&#62;
-            &#60;h1&#62;This page is displayed after the JavaScript is executed&#60;/h1&#62;
-        &#60;/section&#62;
-    &#60;/body&#62;
-    &#60;/html&#62;
-</code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
-    <h3>// More</h3>
-    <pre><code>
-    window.alert("Hallo!");
-            
-    document.write(window.location.href + ", " + window.location.hostname + ", " + window.location.pathname);
-
-    var name = prompt("What is your name");
-    document.write("Max Num = ", Number.MAX_VALUE, "&#60;br /&#62;");
-    window.alert("Random num 1 - 10: " + Math.floor((Math.random() * 10) + 1));
-    document.write("Convert String to num: ", Number("3.14"), "&#60;br /&#62;");
-
-    document.write("Int: ", parseInt("5"), "&#60;br /&#62;", "Float: ", parseFloat("3.14"), "&#60;br /&#62;");
-    var randStr = "A long string that goes on and on";
-    document.write("length ", randStr.length + "&#60;br /&#62;");
-    document.write("indexOf \"goes\" ", randStr.indexOf("goes"), "&#60;br /&#62;");
-    document.write("slice ", randStr.slice(19, 23), "&#60;br /&#62;");
-    document.write("slice ", randStr.slice(19), "&#60;br /&#62;");
-    document.write("substr ", randStr.substr(19, 4), "&#60;br /&#62;");
-    document.write("replace ", randStr.replace("and on", "forever"), "&#60;br /&#62;");
-    document.write("charAt ", randStr.charAt(3), "&#60;br /&#62;");
-    document.write("split ", randStr.split(" "), "&#60;br /&#62;");
-    document.write("trim ", randStr.trim(), "&#60;br /&#62;");
-    document.write("toUpperCase ", randStr.toUpperCase(), "&#60;br /&#62;");
-    document.write("big ", randStr.big(), "&#60;br /&#62;");
-    document.write("bold ", randStr.bold(), "&#60;br /&#62;");
-    document.write("fontcolor ", randStr.fontcolor("red"), "&#60;br /&#62;");
-    document.write("fontsize ", randStr.fontsize("8em"), "&#60;br /&#62;");
-    document.write("italics ", randStr.italics(), "&#60;br /&#62;");
-    document.write("link ", randStr.link("https://google.com"), "&#60;br /&#62;");
-    document.write("small ", randStr.small(), "&#60;br /&#62;");
-    document.write("strike ", randStr.strike(), "&#60;br /&#62;");
-    document.write("sub ", randStr.sub(), "&#60;br /&#62;");
-    document.write("sup ", randStr.sup(), "&#60;br /&#62;");
-    document.write("5" == 5, "&#60;br /&#62;");
-    document.write("5" === 5, "&#60;br /&#62;");
-
-    var age = 17;
-    var canIVote = (age &#62;= 18) ? true : false;
-
-    document.write(canIVote);
-
-    for(i = 0; i &#60;= 20; i++) {
-        if ((i % 2) === 0) continue;
-        if (i === 15) break;
-        document.write(i, "&#60;br /&#62;");
-    }
-
-    var customer = { name: "Bob Thomas", address: "123 Main", balance: 50.50 };
-    for (k in customer) {
-        document.write(customer[k], "&#60;br /&#62;");
-    }
-
-    var tomSmith = ["Tom Smith", "123 Main", 120.50];
-    document.write("1st Index ", tomSmith[0], "&#60;br /&#62;");
-    tomSmith[3] = "tSmith@aol.com";
-    tomSmith.splice(2, 1, "Pittsburgh", "PA");
-    tomSmith.splice(4, 1);
-    delete tomSmith[2];
-    tomSmith.sort();
-    document.write("valueOf : ", tomSmith.valueOf(), "&#60;br /&#62;");
-    document.write("join \", \" : ", tomSmith.join(", "), "&#60;br /&#62;");
-
-    var myNumbers = [4, 3, 9, 1, 20, 43];
-    myNumbers.sort(function (x, y) { return x - y });
-    document.write(myNumbers.toString(), "&#60;br /&#62;");
-
-    var combinedArray = myNumbers.concat(tomSmith);
-    combinedArray.shift();
-    combinedArray.unshift("Jerry");
-    combinedArray.pop();
-    combinedArray.push("444-555-1234", "US");
-    for (i = 0; i &#60; combinedArray.length; i++) {
-        document.write(combinedArray[i], "&#60;br /&#62;");
-    }</code></pre>
+    </table>   
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     <footer id="bottom">Return to <a href="../index.html" title="Return to the home page">home page</a></footer>
 </body>
