@@ -162,11 +162,11 @@
     const smallestInt = Number.MIN_SAFE_INTEGER // -(2**53 - 1) => -9007199254740991
 
     // Convert numeric strings and null to numbers
-    Number('12.00')   // 12
-    Number('123e-1')  // 12.3
-    Number('')        // 0
-    Number(null)      // 0
-    Number('0x11')    // 17
+    Number('12.00') // 12
+    Number('123e-1') // 12.3
+    Number('') // 0
+    Number(null) // 0
+    Number('0x11') // 17
     Number('-Infinity') // -Infinity
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
@@ -189,28 +189,28 @@
     }
 
     // Arrow functions (ES6)  
-    const add = (num1, num2) => {
+    const add = (num1, num2) =&#62 {
         return num1 + num2;
     };
 
-    const add = (num1, num2) => num1 + num2;
+    const add = (num1, num2) =&#62 num1 + num2;
 
-    const isEven = num => num % 2 === 0
+    const isEven = num =&#62 num % 2 === 0
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
     <h3>// Decision</h3>
     <pre><code>
-    if (cookieJar < 1) {
+    if (cookieJar &#60; 1) {
         greeting = "Who stole the cookie?";
-    } else if (cookieJar < 6) {
+    } else if (cookieJar &#62; 3) {
         greeting = "The cookies are low!";
     } else {
         greeting = "Have a cookie.";
     }
 
     // Ternary operator
-    var driverLicense = (age >= 17) ? 'full license' : 'learner permit';
+    var driverLicense = (age &#62= 17) ? 'full license' : 'learner permit';
 
     switch (expression) {
     case 'condition1':
@@ -229,7 +229,7 @@
     <h3>Loops</h3>
     <pre><code>
     // For Loop
-    for (let i = 0; i < myArray.length - 1; i++) {
+    for (let i = 0; i &#60; myArray.length - 1; i++) {
         numberOfStates++;
     }
 
@@ -239,7 +239,7 @@
     }
 
     // For Each
-    myArray.forEach(state => console.log(`The postal code is ${state}.`));
+    myArray.forEach(state =&#62; console.log(`The postal code is ${state}.`));
 
     // While Loop
     while (condition) {
