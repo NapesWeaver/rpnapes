@@ -44,4 +44,4 @@ The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-
 
 The original tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Thanks to keiske84.
 
-The tricorder doesn't do much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) There are also a few [TuneIn](https://tunein.com/radio/home/) Internet radio stations and YouTube videos embedded in iFrames.
+The tricorder doesn't do much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) There are also a few [Shoutcast](https://directory.shoutcast.com/) Internet radio stations and YouTube videos embedded in iFrames.
