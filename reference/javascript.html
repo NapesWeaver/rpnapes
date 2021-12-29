@@ -83,7 +83,7 @@
         <li>var myBoolean = true;</li>
         <li>var myEmptyArr = [ ];</li>
         <li>var myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
-        <li>var myNumbers = [3.14, 18, 1.61, -Infinity, 2.72, .3, -23.00,];</li>
+        <li>var myNumbers = [3.14, 18, 1.61, -Infinity, 2.72, .3, -23.00];</li>
         <li>var myObj = { player: "Bob", points: 6 };</li>
         <li>var myEmptyObj = { };</li>
         <li>var imageLinks = categories.getElementsByTagName("h2");</li>
@@ -91,7 +91,6 @@
         <li>let myESInt = 6; // ES6</li>
         <li>const myFloat = 3.14; // ES6</li>
         <li>const myArray2 = ['CA', 'WA', 'OR', 'NV', 'NM', 'AZ', 'WY', 'MT']; // const is okay - points to the same object in memory when modified</li>
-        <li>const [...myCopy] = myNumbers;</li>
         <li>let { name, owner } = spot;</li>
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
@@ -169,8 +168,8 @@
     const infiniteNum = Number.POSITIVE_INFINITY;
     const negInfiniteNum = Number.NEGATIVE_INFINITY;
     const notANum = Number.NaN;
-    const biggestInt = Number.MAX_SAFE_INTEGER // (2**53 - 1) =>  9007199254740991
-    const smallestInt = Number.MIN_SAFE_INTEGER // -(2**53 - 1) => -9007199254740991
+    const biggestInt = Number.MAX_SAFE_INTEGER // (2**53 - 1) =&#62;  9007199254740991
+    const smallestInt = Number.MIN_SAFE_INTEGER // -(2**53 - 1) =&#62; -9007199254740991
 
     // Convert numeric strings and null to numbers
     Number('12.00'); // 12
@@ -251,22 +250,22 @@
     .splice(start, deleteCount, item1, item2, itemN)) // Changes array in place
     .sort() // Sorts array in place (ES6)
     myNumbers.sort(function(a, b) { return a - b });
-    myNumbers.sort((a, b) => b - a);
+    myNumbers.sort((a, b) =&#62; b - a);
     .reverse() // Sorts array in place
     .map(callback) // Returns a new array after applying a function to each element (ES6)
     const squaredNumbers = myNumbers.map(exponential2);
     .forEach(callback) // Applies a function to each array element (ES6)
     .filter(callback) // Returns a new array(ES6)
-    const evenNumbs = myNumbers.filter(num => num % 2 === 0);
+    const evenNumbs = myNumbers.filter(num =&#62; num % 2 === 0);
     .reduce(callback) // Iterates over array while maintaining an accumulation object (ES6)
-    myNumbers.reduce((total, n) => total + n);
+    myNumbers.reduce((total, n) =&#62; total + n);
     .find(callback) // Returns the value of the first element that satisfies the callback function (ES6)
-    const found = myNumbers.find(element => element &#60 2);
+    const found = myNumbers.find(element =&#62; element &#60 2);
     .includes() // Returns a Boolean based on whether array includes a value among its elements (ES6)
     Array.of() // Returns an array from a variable number of arguments (ES6)
     Array.from(object, mapFunction, thisValue) // Returns array from any object with a length property (ES6)
-    const sources = Array.from(images, image => image.src);
-    const secureSources = sources.filter(link => link.startsWith('https://'))
+    const sources = Array.from(images, image =&#62; image.src);
+    const secureSources = sources.filter(link =&#62; link.startsWith('https://'))
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
@@ -347,77 +346,7 @@
         console.log('Try again?');
     }
     </code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
-    <h3>// Objects</h3>
-    <p>If an object is used as an argument to a function, a reference to the original value is passed. If the argument is mutated the object is changed.</p>
-    <!-- <pre><code>
-    // Object Literal
-    const ledZeppelin = {
-        'lead singer': 'Robert Plant',
-        guitar: 'Jimmy Page',
-        bass: 'John Paul Jones',
-        drums: 'John Bonham'
-    }
-
-    const myFamily = {
-        lastName: 'Doe',
-        mom: 'Cynthia',
-        dad: 'Paul',
-    };
-      
-    myFamily.sister = 'Lucinda';
-    myFamily['brother'] = 'Merle';
-    myFamily.sayHi = function() {
-        console.log(`Hello from the ${this.lastName}s`);
-    }
-    myFamily.sayHi()    
-    
-    // Factory Function
-    function mammal(name, numEyes) {
-        return {
-            name: name,
-            isWarmblooded: true,
-            numEyes: numEyes,
-            evolve: function() {
-                console.log("I'm not mutating, I'm evolving.");
-                this.numEyes++;
-            },
-            explainYourSelf: function() {
-                console.log(
-                    `I'm just a ${this.name} with ${this
-                    .numEyes}  eye(s). Nothing to see here.`
-                );
-            },
-        };
-    }
-
-    // Prototyping
-    Customer.prototype.isCreditable = true;
-
-    String.prototype.insertAt = function (index, input) {
-        return this.slice(0, index) + input + this.slice(index);
-    }
-    String.prototype.removeAt = function (startPos, endPos) {
-        return this.slice(0, startPos) + this.slice(endPos);
-    }
-
-    // Looping
-    users.forEach(user =>
-        console.log(`${user.name} will be ${user.age + 1} in ${user.birthMonth}`)
-    );
-
-    Object.keys(pageViewCounts).forEach(function(key) {
-        console.log(`the ${key} page has  ${pageViewCounts[key]} views.`);
-    });
-
-    // Object Methods &
-    delete foo.bar;
-    .hasOwnProperty();
-    getOwnPropertyNames()
-    Object.assign()
-    </code></pre>     -->
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>  
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>     
     
     <h3>// Elements / Attributes</h3>
     <pre><code>
@@ -468,22 +397,7 @@
     window.history.back() 
     window.history.go(-2) 
     </code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
-    
-    <!-- <h3>Symbols</h3>    
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
-
-    <h3>Maps</h3>    
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
-
-    <h3>Sets</h3>    
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
-
-    <h3>Timers</h3>    
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
-
-    <h3>Promises</h3>    
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>  -->
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>    
 
     <h3>// Key Codes</h3>
     <table class="dbl-table">
@@ -1315,6 +1229,204 @@
         </tr>
     </table>   
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Objects</h3>
+    <p>If an object is used as an argument to a function, a reference to the original value is passed. If the argument is mutated the object is changed.</p>
+    <pre><code>
+    // Object Literals are basically singletons with variables/methods that are all public - appropriate for when the object is just a container for data/state
+    const myContact = {
+        fName: 'Joe',
+        lName: 'Doe',
+        address: '1234 5th Street',
+        'home phone': '555-555-5555'
+    }
+    // Changing Object      
+    delete myContact['home phone'];
+    myContact.email = 'joedoe@gmail.com';
+    myContact['emergency contact'] = 'Merle 555-555-1234';
+    myContact.getInfo = function() {
+        Object.keys(myContact).forEach(function(key) {
+            console.log(`${key}: ${myContact[key]}`);
+        });
+    }
+
+    // Factory Function
+    function automobile(make, model) {
+        return {
+            make: make,
+            model: model,
+            tires: 4,
+            flatten: function() {
+                console.log(`${this.make} ${this.model} just got a flat tire!);
+                if (this.wheels &#62; 1) this.wheels--;
+            },
+            info: function() {
+                console.log(`${this.make} ${this.model} with ${this.tires} working wheels.`);
+            },
+        };
+    }
+
+    class Mammal {
+        constructor(name) {
+            this._name = name;
+        }
+        get name() {
+            return this._name;
+        }
+        set name(name) {
+            this._name = name;
+        }
+        static makeMammal(name) {
+            return new Mammal(name);
+        }
+        getInfo() {
+            return `${this.name} is a mammal`;
+        }
+    }
+    let monkey = new Mammal('Fred');
+    monkey.name = 'Mark';
+    let chipmunk = Mammal.makeMammal('Chipper');
+
+    // Inheritance
+    class Marsupial extends Mammal {
+        constructor(name, hasPouch) {
+            super(name);
+            this._hasPouch = hasPouch;
+        }
+        get hasPouch() {
+            return this._hasPouch;
+        }
+        set hasPouch(hasPouch) {
+            this._hasPouch = hasPouch;
+        }
+        // Overriding getInfo() method
+        getInfo() {
+            return `${this.name} is a marsupial`;
+        }
+    }
+    let kangaroo = new Marsupial('Paul', true);
+
+    // Dynamically inherit class
+    function getClass(classType) {
+        if (classType === 1) {
+            return Mammal;
+        } else {
+            return Marsupial
+        }
+    }
+    class Koala extends getClass(2) {
+        constructor(name) {
+            super(name);
+        }
+    }
+    let carl - new Koala('Carl');
+    
+    // Prototyping
+    Customer.prototype.isCreditable = true;
+
+    String.prototype.insertAt = function (index, input) {
+        return this.slice(0, index) + input + this.slice(index);
+    }
+    String.prototype.removeAt = function (startPos, endPos) {
+        return this.slice(0, startPos) + this.slice(endPos);
+    }
+
+    // Looping
+    users.forEach(user =&#62;
+        console.log(`${user.name} will be ${user.age + 1} in ${user.birthMonth}`)
+    );
+
+    // Object Methods
+    Object.keys() // Returns array of object's property names
+    Object.getOwnPropertyNames() // Returns an array of all properties
+    Object.assign(target, ...sources) // Returns target object after copying properties from sources
+    .hasOwnProperty(); // Returns Boolean indicating if the object has the property
+    delete foo.bar;
+    </code></pre>    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Symbols</h3>
+    <pre><code>
+    let capital = Symbol('State Capital');
+    let pennsylvania = {};
+    pennsylvania[capital] = 'Harrisburg';
+    console.log(`Capital of PA: ${pennsylvania[capital]}`);
+    console.log(`Symbol Capital: ${capital.toString()}`);
+
+    let employNum = Symbol.for('Employee Number');
+    let bobSmith = {};
+    bobSmith[employNum] = 10;
+    let sallyMarks = {};
+    sallyMarks[employNum] = 11;
+    console.log(`Bob: ${bobSmith[employNum]}, Sally: ${sallyMarks[employNum]}`);
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+    
+    <h3>// Sets</h3>    
+    <code><pre>
+    let mySet = new Set();
+    mySet.add(10);
+    mySet.add('Word');
+    console.log(`Has 10: ${mySet.has(10)}`);
+    console.log(`Has \'Word\': ${mySet.has('Word')}`);
+    console.log(`Set Size: ${mySet.size}`);
+    mySet.delete(10);
+    for (let m of mySet) console.log(`Set value: ${m}`);
+    </pre></code>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+
+    <h3>// Maps</h3>    
+    <code><pre>
+    let myMap = new Map();
+    myMap.set('key1', 'Hallo World');
+    myMap.set('key2', '3.14');
+    console.log(`key1: ${myMap.get('key1')}, key2: ${myMap.get('key2')}`);
+    console.log(`Map size: ${myMap.size}`);
+    myMap.forEach((value, key) =&#62; console.log(key, value));
+    </pre></code>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+
+
+    <h3>// Timers</h3>    
+    <code><pre>
+    setTimeout(function, milliseconds) // Executes a function after specified number of milliseconds
+    setInterval(function, milliseconds) // Repeats the execution of the function continuously
+    clearTimeout(timeoutVar) // Uses the variable returned from setTimeout()
+    </pre></code>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+
+    <h3>// Promises</h3>    
+    <code><pre>
+    let p1 = Promise.resolve('Resolve Me');
+    p1.then((res) =&#62; console.log(`${res}`));
+
+    let p2 = new Promise(function(resolve, reject) {
+        setTimeout(() =&#62; resolve('Resolve Me 2'), 2000);
+    });
+    p2.then((res) =&#62; console.log(`${res}`));
+
+    let myNum = 18;
+    let p3 = new Promise(function(resolve, reject) {
+        if (myNum === 18) {
+            resolve('Good number');
+        } else {
+            reject('Bad');
+        }
+    });
+    p3.then((val) =&#62; console.log(val),
+    (err) =&#62; console.log(err));
+
+    let p4 = new Promise((resolve, reject) =&#62; {
+        if (myNum &#60;= 17) { 
+            throw new Error('Can\'t vote');
+        } else {
+            resolve('Can vote')
+        }
+    });
+    p4.then((val) =&#62; console.log(val))
+    .catch((err) =&#62; console.log(err.message));
+    </pre></code>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
 
     <h3>// Hoisting</h3>
     <p>JavaScript Hoisting refers to the process whereby the interpreter appears to move the declaration of functions, variables or classes to the top of their scope, prior to execution of the code.</p>
