@@ -263,6 +263,10 @@
     .find(callback) // Returns the value of the first element that satisfies the callback function (ES6)
     const found = myNumbers.find(element => element &#60 2);
     .includes() // Returns a Boolean based on whether array includes a value among its elements (ES6)
+    Array.of() // Returns an array from a variable number of arguments (ES6)
+    Array.from(object, mapFunction, thisValue) // Returns array from any object with a length property (ES6)
+    const sources = Array.from(images, image => image.src);
+    const secureSources = sources.filter(link => link.startsWith('https://'))
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
