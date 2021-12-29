@@ -66,18 +66,20 @@
     <p>e.g. Boolean(document.all) == false; // Yields true</p>    
     <p>Simple equality ( == ) attempts to convert operands that are of different types before checking equality (for objects, returns true only if both reference the same object).</p>
     <p>Strict equality operator ( === ) always considers operands of different types to be different.</p>
+    <p>Scope is divided into Global Scope, Local Scope, Function Scope and Block Scope.</p>
     <p><a href="https://eloquentjavascript.net/" title="Free to read" target="_blank">Eloquent JavaScript</a> by Marijn Haverbeke.</p>
     <p><a href="https://caniuse.com/" title="Browser compatibility tool" target="_blank">caniuse.com</a></p>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
 
     <h3>// Declarations</h3>
     <ul>
         <li>Names for variables must begin with _, $, or a letter.</li>
         <li>var myUninitialized;</li>
         <li>var myString = "Hallo";</li>
-        <li>var myInt = 2;</li>
-        <li>var myFloat = 2.72;</li>
+        <li>var myInt = 7;</li>
+        <li>var int1 = 1, int2 = 2;</li>
+        <li>[int1, int2] = [int2, int1];</li>
+        <li>var myFloat = 3.14;</li>
         <li>var myBoolean = true;</li>
         <li>var myEmptyArr = [ ];</li>
         <li>var myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
@@ -86,59 +88,24 @@
         <li>var myEmptyObj = { };</li>
         <li>var imageLinks = categories.getElementsByTagName("h2");</li>
         <li>var myFunction = function() { console.log('Hallo'); }</li>
-        <li>let myInt = 3; // ES6</li>
+        <li>let myESInt = 6; // ES6</li>
         <li>const myFloat = 3.14; // ES6</li>
         <li>const myArray2 = ['CA', 'WA', 'OR', 'NV', 'NM', 'AZ', 'WY', 'MT']; // const is okay - points to the same object in memory when modified</li>
+        <li>const [...myCopy] = myNumbers;</li>
+        <li>let { name, owner } = spot;</li>
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
-    <h3>// Input, Output</h3>
+    <h3>// Input / Output</h3>
     <ul>
-        <li>var input = prompt('Enter y or n', 'y');</li>
-        <li>var myInt = parseInt(input);</li>    
-        <li>alert();</li>
-        <li>prompt();</li>
+        <li>var input = prompt('Enter 1 or 2', '1');</li>
+        <li>alert('Hello World');</li>
         <li>console.log();</li>
         <li>console.dir();</li>
         <li>console.error();</li>
         <li>document.write();</li>
     </ul>
-
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
-    <h3>// Selectors</h3>
-    <ul>
-        <li>document.getElementsByTagName();</li>
-        <li>document.getElementById();</li>
-    </ul>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-    
-    <h3>// Hoisting</h3>
-    <p>JavaScript Hoisting refers to the process whereby the interpreter appears to move the declaration of functions, variables or classes to the top of their scope, prior to execution of the code.</p>
-    <pre><code>
-    // var is hoisted
-    a = 1;
-    console.log(a);
-    var a; // 1
-
-    // let is not hoisted
-    b = 2;
-    console.log(b);
-    let b; // Error
-    
-    // Initializations are not hoisted
-    console.log(c);
-    var c = 3; // undefined
-    
-    console.log(d);
-    const d = 4; // Error
-
-    hallo();
-    let hallo = function() {
-        console.log('Hi, there.');
-    } // Error
-    </code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>   
     
     <h3>// Strings</h3>
     <pre><code>
@@ -181,13 +148,17 @@
     .replace() // Returns a new string with some or all matches of a pattern replaced
     console.log(someString.replace('lazy', 'playful'));
     .split() // Returns an array of substrings divided by a pattern - if no pattern is supplied will return an array of one element
+    .test() // Returns a Boolean after searching for a match of a regular expression and a string
+    /^foobar/.test(someString);
     .charAt(index)
     .trim()
     .toUpperCase()
     .toLowerCase()
     .startsWith(searchString, startPos) // Returns a Boolean (ES6)
     .endsWith(searchString, length) // Returns a Boolean (ES6)
-    .repeat(numCopies) // Returns a new string of numCopies copies, concatenated (ES6)    
+    .repeat(numCopies) // Returns a new string of numCopies copies, concatenated (ES6)
+
+    myInt.toString(2); // '111'
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>     
 
@@ -202,13 +173,41 @@
     const smallestInt = Number.MIN_SAFE_INTEGER // -(2**53 - 1) => -9007199254740991
 
     // Convert numeric strings and null to numbers
-    Number('12.00') // 12
-    Number('123e-1') // 12.3
-    Number('') // 0
-    Number(null) // 0
-    Number('0x11') // 17
-    Number('-Infinity') // -Infinity
+    Number('12.00'); // 12
+    Number('123e-1'); // 12.3
+    Number(''); // 0
+    Number(null); // 0
+    Number('0x11'); // 17
+    Number('-Infinity'); // -Infinity
+
+    parseInt(string, radix);
+    parseInt(1111, 2) // 15
+    parseInt('3.14 is close to Pi'); // 3
+    Number('3.14 is close to Pi'); // NaN
+    parseFloat(string);
+    parseFloat('3.14 is close to Pi'); // 3.14
     </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Math.</h3>
+    <ul>
+        <li>.abs() // Absolute value</li>
+        <li>.cbrt() // Cube root</li>
+        <li>.ceil() // Up to next largest integer</li>
+        <li>.floor() // Down to next smallest integer</li>
+        <li>.round() // Round (up)</li>
+        <li>.log() // Returns natural logarithm of a number</li>
+        <li>.log10() // Returns base 10 logarithm of a number</li>
+        <li>.max() // Returns the highest number passed to it, or NaN</li>
+        <li>Math.max(1, 3, 2) //3</li>
+        <li>Math.max(...myNumbers) // 18</li>
+        <li>.min() // Returns the lowest number passed, or NaN</li>
+        <li>.pow() // Returns the base to the exponent power</li>
+        <li>.pow(3, 2) // 9</li>
+        <li>.sqrt() // Returns the square root of a number</li>
+        <li>.random() // Returns a random number between 0 (inclusive),  and 1 (exclusive)</li>
+        <li>Math.floor(Math.random() * 10); // Random integer from 0 to 9</li>
+    </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>// Functions</h3>
@@ -241,7 +240,6 @@
 
     <h3>// Arrays</h3>
     <pre><code>
-    // Array Methods
     .length // (property) Sets or returns number of elements in array
     .toString() // Returns a string representing the object
     .concat() // Merge two or more arrays
@@ -304,9 +302,9 @@
 
     // For...in - loops over enumerable property names of an object
     for (const prop in obj) {
-        console.log(`obj.${prop} = ${obj[prop]}`);
-    
+        console.log(`obj.${prop} = ${obj[prop]}`);    
     }
+
     // forEach (ES6)
     myArray.forEach(state =&#62; console.log(`The postal code is ${state}.`));
 
@@ -328,19 +326,160 @@
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
-    <h3>// Try, Catch, Finally</h3>
-    <code><pre>
+    <h3>// Try / Catch / Finally</h3>
+    <pre><code>
+    function myFunction(index) {
+        if(index &#60; 0) throw new RangeError('index must be positive');
+    }
+
     try {
-        myFunction();
+        myFunction(-1);
     }
     catch (e) {
         console.error(e);
+        if (e instanceof RangeError) console.log(e.message)
     }
     finally {
-        closeFile();
+        console.log('Try again?');
     }
-    </pre></code>
+    </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Objects</h3>
+    <p>If an object is used as an argument to a function, a reference to the original value is passed. If the argument is mutated the object is changed.</p>
+    <!-- <pre><code>
+    // Object Literal
+    const ledZeppelin = {
+        'lead singer': 'Robert Plant',
+        guitar: 'Jimmy Page',
+        bass: 'John Paul Jones',
+        drums: 'John Bonham'
+    }
+
+    const myFamily = {
+        lastName: 'Doe',
+        mom: 'Cynthia',
+        dad: 'Paul',
+    };
+      
+    myFamily.sister = 'Lucinda';
+    myFamily['brother'] = 'Merle';
+    myFamily.sayHi = function() {
+        console.log(`Hello from the ${this.lastName}s`);
+    }
+    myFamily.sayHi()    
+    
+    // Factory Function
+    function mammal(name, numEyes) {
+        return {
+            name: name,
+            isWarmblooded: true,
+            numEyes: numEyes,
+            evolve: function() {
+                console.log("I'm not mutating, I'm evolving.");
+                this.numEyes++;
+            },
+            explainYourSelf: function() {
+                console.log(
+                    `I'm just a ${this.name} with ${this
+                    .numEyes}  eye(s). Nothing to see here.`
+                );
+            },
+        };
+    }
+
+    // Prototyping
+    Customer.prototype.isCreditable = true;
+
+    String.prototype.insertAt = function (index, input) {
+        return this.slice(0, index) + input + this.slice(index);
+    }
+    String.prototype.removeAt = function (startPos, endPos) {
+        return this.slice(0, startPos) + this.slice(endPos);
+    }
+
+    // Looping
+    users.forEach(user =>
+        console.log(`${user.name} will be ${user.age + 1} in ${user.birthMonth}`)
+    );
+
+    Object.keys(pageViewCounts).forEach(function(key) {
+        console.log(`the ${key} page has  ${pageViewCounts[key]} views.`);
+    });
+
+    // Object Methods &
+    delete foo.bar;
+    .hasOwnProperty();
+    getOwnPropertyNames()
+    Object.assign()
+    </code></pre>     -->
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>  
+    
+    <h3>// Elements / Attributes</h3>
+    <pre><code>
+    document.getElementsByTagName()
+    document.getElementById()
+    document.createElement(tagName [, options])
+    document.childNodes[0].nodeType
+    document.childNodes[1].childNodes[0].nodeName
+    document.childNodes[1].childNodes[1].nodeValue
+    .appendChild()
+    .insertBefore()
+    .removeChild()
+    .createTextNode()
+    .hasAttribute()
+    .getAttribute()
+    .setAttribute()
+    document.getElementsByTagName('p')[0].style.backgroundColor = 'green';
+    .backgroundImage 
+    .borderWidth 
+    .borderColor 
+    .focus() 
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+    
+    <h3>// Events</h3>
+    <pre><code>
+    document.body.onmousemove = function(e) { e = e || window.event; event.preventDefault(); console.log(e.clientX, e.clientY); }
+    document.body.scrollLeft 
+    document.body.scrollTop 
+
+    .onclick
+    .onmouseover
+    .onmouseout 
+    .ondblclick 
+    .onblur 
+    .onmousedown 
+    .onmouseup 
+    .onchange 
+    .onkeypress 
+    .onfocus 
+    .onselect 
+
+    window.location.hostname 
+    window.location.href 
+    window.location.pathName 
+    window.location.reload()
+    window.history.forward() 
+    window.history.back() 
+    window.history.go(-2) 
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+    
+    <!-- <h3>Symbols</h3>    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+
+    <h3>Maps</h3>    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+
+    <h3>Sets</h3>    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+
+    <h3>Timers</h3>    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
+
+    <h3>Promises</h3>    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>  -->
 
     <h3>// Key Codes</h3>
     <table class="dbl-table">
@@ -1172,6 +1311,33 @@
         </tr>
     </table>   
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>// Hoisting</h3>
+    <p>JavaScript Hoisting refers to the process whereby the interpreter appears to move the declaration of functions, variables or classes to the top of their scope, prior to execution of the code.</p>
+    <pre><code>
+    // var is hoisted
+    a = 1;
+    console.log(a);
+    var a; // 1
+
+    // let is not hoisted
+    b = 2;
+    console.log(b);
+    let b; // Error
+    
+    // Initializations are not hoisted
+    console.log(c);
+    var c = 3; // undefined
+    
+    console.log(d);
+    const d = 4; // Error
+
+    hallo();
+    let hallo = function() {
+        console.log('Hi, there.');
+    } // Error
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
     <footer id="bottom">Return to <a href="../index.html" title="Return to the home page">home page</a></footer>
 </body>
 </html>
