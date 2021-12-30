@@ -65,23 +65,23 @@
     <p>// <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference" title="developer.mozilla.org/en-US/docs/Web/CSS/Reference" target="_blank">CSS Reference</a></p>
     <ul>
         <li>$("#wrapper").css("width", 500);</li>
-        <li>$("#p_two").css({ "background": "url('repeatBkgrnd.png') repeat-y" });</li>
+        <li>$("#p2").css({ "background": "url('grass.png') repeat-y" });</li>
         <li>$("a").css({ "border-color": "black", "border-width": "1px", "border-style": "solid" });</li>
-        <li>$(#tableData a").css("color", "green"); // a tag inside #tableData</li>
+        <li>$(#table-data a").css("color", "green"); // a tag inside #table-data</li>
         <li>$("em + a").css("color", "orange"); // a after em</li>
-        <li>$(".myClass > em").css("color", "gray"); // em that are childeren of .myClass</li>
-        <li>$("#oListIndent li:nth-child(3)").css("color", "red"); // 3rd li in #oListIndent</li>
+        <li>$(".myClass > em").css("color", "gray"); // em that are children of .myClass</li>
+        <li>$("#o-list-indent li:nth-child(3)").css("color", "red"); // 3rd li in #o-list-indent</li>
         <li>$("li[name]").html("Yabba Dabba Dooo!"); // li tags with name attributes</li>
         <li>$("input[type='text']#fName").val("Napes"); // Change value in text input element #fName</li>
         <li>$("a[href*='google']").css("font-weight", "bolder"); // href contains 'google'</li>
         <li>$("img[alt^='NTT']").width(150).height(150); // img alt begins with 'NTT'</li>
         <li>$("a[href$='pdf']").css("color", "red"); // href ends with 'pdf'</li>
-        <li>$("#tableData tr:even").css("background-color", "#FFFDD0"); // even rows</li>
-        <li>$("#tableData tr:odd").css("background-color", "#F0F8FF"); // odd rows</li>
-        <li>$("#tableData tr:first").css("color", "white"); // First matching element</li>
-        <li>$("#tableData tr:last").css("color", "white"); // Last matching element</li>
+        <li>$("#table-data tr:even").css("background-color", "#FFFDD0"); // even rows</li>
+        <li>$("#table-data tr:odd").css("background-color", "#F0F8FF"); // odd rows</li>
+        <li>$("#table-data tr:first").css("color", "white"); // First matching element</li>
+        <li>$("#table-data tr:last").css("color", "white"); // Last matching element</li>
         <li>$("a:contains(gravida)").css("color", "blue"); // contains 'gravida'</li>
-        <li>$("oListTypes li:not(:contains(and))".css("color", "red"); // does not contain 'and'</li>
+        <li>$("o-list-types li:not(:contains(and))".css("color", "red"); // does not contain 'and'</li>
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
@@ -94,11 +94,11 @@
         <li>$("p:has(i)").prepend("I go at the begining");</li>
         <li>$("p:has(i)").before("&#60;p id='before_p'&#62;A new paragraph before&#60;/p&#62;");</li>
         <li>$("p:has(i)").after("&#60;p id='after_p'&#62;A new paragraph after&#60;/p&#62;");</li>
-        <li>$("#after_p).click(function() { $(this).remove(); });</li>
-        <li>$("#before_p).click(function() { $(this).replaceWith("&#60;p&#62;Hallo&#60;/p&#62;"); });</li>
-        <li>$"("#oListIndent li").each(function(index) { let inputListStuff = $("#listStuff").val(); $("#listStuff").val(inputListStuff + ", " + $(this).text()); });</li>
-        <li>$("#oListIndent li").addClass("Star_Trek");</li>
-        <li>$("#oListIndent li").click(function() { $(this).toggleClass("highlight"); let bgColor = $(this).css("background-color"); $("input[type=text]#fName").val(bgColor); });</li>
+        <li>$("#after-p).click(function() { $(this).remove(); });</li>
+        <li>$("#before-p).click(function() { $(this).replaceWith("&#60;p&#62;Hallo&#60;/p&#62;"); });</li>
+        <li>$"("#o-list-indent li").each(function(index) { let inputListStuff = $("#listStuff").val(); $("#listStuff").val(inputListStuff + ", " + $(this).text()); });</li>
+        <li>$("#o-list-indent li").addClass("stars");</li>
+        <li>$("#o-list-indent li").click(function() { $(this).toggleClass("highlight"); let bgColor = $(this).css("background-color"); $("input[type=text]#fName").val(bgColor); });</li>
         <li>$(#logo2").click(function() { let imgName = $(this).attr("src"); $("input[type=text]#fName").val(imgName); };</li>
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
@@ -107,10 +107,10 @@
     <ul>
         <li>.mouseover(function() { $("#logo2").attr("src", "ntt-logo-horz.png"); });</li>
         <li>.mouseout()</li>
-        <li>.hover(function() { $("h2").css("color": "gree"); }, function() { $("h2").css("color": "black"); });</li>
+        <li>.hover(function() { $("h2").css("color": "green"); }, function() { $("h2").css("color": "black"); });</li>
         <li>.dblclick()</li>
-        <li>$(document).click(function(e) { $("#mouseXPos").val(e.pageX); $("#mouseYPos").val(e.pageY); })</li>
-        <li>$(document).mousemove(function(e) { $("#mouseMovX").val(e.screenX); $("#mouseMovY").val(e.screenY); })</li>
+        <li>$(document).click(function(e) { $("#mouse-x-pos").val(e.pageX); $("#mouse-y-pos").val(e.pageY); })</li>
+        <li>$(document).mousemove(function(e) { $("#mouse-mov-x").val(e.screenX); $("#mouse-mov-y").val(e.screenY); })</li>
         <li>$(document).keepress(function(e) { let pressed = String.fromCharCode(e.which); $("#pressed").val(keyPressed); })</li>
         <li>.blurr()</li>
         <li>.change()</li>
@@ -126,8 +126,8 @@
     <h3>// Animation</h3>
     <p>// <a href="https://api.jquery.com/category/effects/" title="api.jquery.com/category/effects" target="_blank">Effects</a></p>
     <ul>
-        <li>$("#p_one").click(function() { $(this).hide() });</li>
-        <li>$("#p_two").click(function() { $(this).fadeOut(2000) });</li>
+        <li>$("#p-one").click(function() { $(this).hide() });</li>
+        <li>$("#p-two").click(function() { $(this).fadeOut(2000) });</li>
         <li>.fadeToggle(2000)</li>
         <li>.fadeTo('slow', .5)</li>
         <li>.slideUp()</li>
@@ -140,9 +140,9 @@
     <h3>// jQuery AJAX</h3>
     <pre><code>
     $("document").ready(function() {
-        $("#oneButton").on("click", getInfoFromServer);
-        $("#twoButton").on("click", getDblFromServer);
-        $("#threeButton").on("click", getXmlFromServer);
+        $("#one-button").on("click", getInfoFromServer);
+        $("#two-button").on("click", getDblFromServer);
+        $("#three-button").on("click", getXmlFromServer);
     });
     function getInfoFromServer() {
         $.ajax({
@@ -156,7 +156,7 @@
     }
     function getDblFromServer() {
         $("span").load("getDouble.php",
-            $("#theForm").serializeArray());
+            $("#the-form").serializeArray());
     }
     function getXmlFromServer() {
         $.ajax({
@@ -189,7 +189,7 @@
     <h4>// Menu</h4>
     <pre><code>
     $(document).ready(function() {
-        $("#shMenu").menu({
+        $("#sh-menu").menu({
             position: {
                 my: "center top",
                 at: "center bottom"
@@ -211,7 +211,7 @@
 
     <h4>// Tabs</h4>
     <pre><code>
-    $("#shTabs").tabs({
+    $("#sh-tabs").tabs({
         event: "click",
         show: "fadeIn",
         hide: "fadeOut",
@@ -223,12 +223,12 @@
 
     <h4>// Dialog</h4>
     <pre><code>
-    $("#customDialog").dialog({
+    $("#custom-dialog").dialog({
         draggable: true,
-        resizeable: false,
+        resizable: false,
         height: 300,
         width: 300,
-        postion: {
+        position: {
             my: 'center top',
             at: 'center bottom',
             of: "#openDialog"
@@ -260,12 +260,12 @@
 
     <h4>// Buttons</h4>
     <pre><code>
-    $("#randButton").button();</code></pre>
+    $("#btn-3").button();</code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h4>// Radio Buttons</h4>
     <pre><code>
-    $("#radioPresnets").buttonset();</code></pre>
+    $("#radio-2").buttonset();</code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h4>// Date Picker</h4>
@@ -278,40 +278,7 @@
         maxDate: 365,
         minDate: -3650
     });</code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
-    <h4>// Draggable / Droppable</h4>
-    <pre><code>
-    $("#toy1").draggable();
-    $("#cartDiv").droppable({
-        activeClass: "highlight",
-        hoverClass: "hverDroppable",
-        drop: function(event, ui) {
-            ui.helper.hide("fade");
-            let itemAlt = $(ui.draggable).attr("alt");
-            alert("Item added: " + itemAlt);
-        },
-        accetp: ".toy",
-        disabled: false,
-        activate: function(event, ui) {
-            $("#cartMsg").remove();
-            $(this).append("&#60;span id='cartMsg'&#62;Drop Toy Here&#60;/span&#62;")
-        },
-        deactivate: function(event, ui) {
-            $("#cartMsg").remove();
-            $(this).append("&#60;span id='cartMsg'&#62;You want it!&#60;/span&#62;")
-        },
-        over: function(event, ui) {
-            $("#cartMsg").remove();
-            $(this).append("&#60;span id='cartMsg'&#62;Drop It&#60;/span&#62;")
-        },
-        out: function(event, ui) {
-            $("#cartMsg").remove();
-            $(this).append("&#60;span id='cartMsg'&#62;NOOOOOOOOOOOOOO!&#60;/span&#62;")
-        }
-    });</code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-    
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>    
     <footer id="bottom">Return to <a href="../index.html" title="Return to the home page">home page</a></footer>
 </body>
 </html>

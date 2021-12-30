@@ -1331,17 +1331,29 @@
         return this.slice(0, startPos) + this.slice(endPos);
     }
 
-    // Looping
-    users.forEach(user =&#62;
-        console.log(`${user.name} will be ${user.age + 1} in ${user.birthMonth}`)
-    );
-
     // Object Methods
-    Object.keys() // Returns array of object's property names
-    Object.getOwnPropertyNames() // Returns an array of all properties
-    Object.assign(target, ...sources) // Returns target object after copying properties from sources
-    .hasOwnProperty(); // Returns Boolean indicating if the object has the property
+    Object.create() // Create object with an existing object as prototype
+    Object.assign(target, ...sources) // Returns target object after copying properties from sources (shallow copy)
     delete foo.bar;
+    Object.defineProperty(object, property, descriptor) // Adding or changing an object property
+    Object.defineProperties(object, descriptors) // Adding or changing object properties
+    
+    Object.getOwnPropertyDescriptor(object, property) // Accessing Properties
+    Object.getOwnPropertyNames(object) // Returns an array of all properties
+    Object.keys(object) // Returns array of object's property names
+    Object.values()
+    Object.entries() // Returns array of object's key, value pairs (same as for...in)
+    .hasOwnProperty(); // Returns Boolean indicating if the object has the property
+
+    Object.preventExtensions(object) // Prevents adding properties to an object
+    Object.isExtensible(object) // Returns true if properties can be added to an object
+    Object.seal(object) // Prevents changes of object properties 
+    Object.isSealed(object)
+    Object.freeze() // Prevents any changes to an object
+    Object.isFrozen(object)
+
+    JSON.parse() // (deep copy)
+    JSON.stringify()
     </code></pre>    
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
@@ -1384,8 +1396,7 @@
     console.log(`Map size: ${myMap.size}`);
     myMap.forEach((value, key) =&#62; console.log(key, value));
     </pre></code>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p> 
-
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>// Timers</h3>    
     <code><pre>
@@ -1449,7 +1460,7 @@
     const d = 4; // Error
 
     hallo();
-    let hallo = function() {
+    var hallo = function() {
         console.log('Hi, there.');
     } // Error
     </code></pre>
