@@ -192,15 +192,14 @@
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h4>// Menu</h4>
-    <pre><code>
-    $(document).ready(function() {
-        $("#sh-menu").menu({
-            position: {
-                my: "center top",
-                at: "center bottom"
-            }
-        });
-    });</code></pre>
+    <pre><code>    
+    $("#menu").menu({
+        position: {
+            my: "center top",
+            at: "center bottom"
+        }
+    });
+    </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h4>// Accordion</h4>
@@ -216,7 +215,7 @@
 
     <h4>// Tabs</h4>
     <pre><code>
-    $("#sh-tabs").tabs({
+    $("#tabs").tabs({
         event: "click",
         show: "fadeIn",
         hide: "fadeOut",
@@ -228,7 +227,7 @@
 
     <h4>// Dialog</h4>
     <pre><code>
-    $("#custom-dialog").dialog({
+    $("#dialog").dialog({
         draggable: true,
         resizable: false,
         height: 300,

@@ -85,16 +85,17 @@
         <li>const myFloat = 3.14; // ES6</li>
         <li>const myEmptyArr = [ ]; // const is okay - points to the same object in memory when modified</li>
         <li>const myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
-        <li>// let a = myArray[0], b = myArray[1]</li>
-        <li>let [a, b] = myArray; // ES6</li>
+        <li>const myNumbers = [3.14, 18, 1.61, -Infinity, 2.72, .3, -23.00];</li>
+        <li>let [a, b] = myArray; // var a = myArray[0], b = myArray[1]</li>
         <li>let [a,, c] = myArray // var a = myArray[0], c = myArray[2]</li>
         <li>let [a,, c, ...rest] = myArray // var a = myArray[0], c = myArray[2]; var rest = myArray.slice(3);</li>
-        <li>const myNumbers = [3.14, 18, 1.61, -Infinity, 2.72, .3, -23.00];</li>
+        <li>const myNewArray = [...myArray, ...myNumbers]; // ES6</li>
         <li>const myObj = { player: "Bob", points: 6 };</li>
         <li>const myEmptyObj = { };</li>
-        <li>let { name, owner } = spot;</li>
+        <li>const { name: firstName, owner, licensed = 'yes', address: { street } } = spot;</li>
+        <li>const obj3 = { ...obj1, ...obj2 };</li>
         <li>let imageLinks = categories.getElementsByTagName("h2");</li>
-        <li>const myFunction = function() { console.log('Hallo'); }</li>        
+        <li>const myFunction = function() { console.log('Hallo'); }</li>         
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
@@ -220,13 +221,20 @@
     }
 
     // Function expression
-    function exponential(num1, num2) {
+    function someMaths(a, b) {
+        return [a + b, a * b];
+    }
+
+    // Default function default parameters (ES6)
+    function exponential2(num1, num2 = 2) {
         return num1 ** num2;
     }
 
-    // Default function parameters (ES6)
-    function exponential2(num1, num2 = 2) {
-        return num1 ** num2;
+    // Destructuring (ES6)
+    const [sum, multiple] = someMaths(3, 6);
+
+    function printVisit({name, owner, reason = 'a check-up'}) {
+        console.log(`${owner}\'s pet ${name} is here for ${reason}.`)
     }
 
     // Arrow functions (ES6)  
