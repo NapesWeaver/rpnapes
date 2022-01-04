@@ -3,8 +3,8 @@
 <!-- Napes Weaver -->
 <head>
     <title>jQuery</title>
-    <meta charset="utf-8" />
-    <!-- For iPhone, Andriod smartphone -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -60,8 +60,10 @@
 
     <h2>jQuery</h2>
     <p>// <a href="https://code.jquery.com/" target="_blank" title="code.jquery.com">jQuery CDN</a></p>
+    <p>Use $(callback) for document ready events, ready() method is deprecated.</p>
 
-    <h3>// Targeting</h3>
+    <!-- <h3>DOM Traversal and Manipulation</h3> -->
+    <h3>// Targeting (Traversal)</h3>
     <p>// <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference" title="developer.mozilla.org/en-US/docs/Web/CSS/Reference" target="_blank">CSS Reference</a></p>
     <ul>
         <li>$("#wrapper").css("width", 500);</li>
@@ -91,7 +93,7 @@
         <li>alert($("p:has(i)").html());</li>
         <li>$("p:has(i)").html(&#60;i&#62;normal text&#60;/i&#62;).show();</li>
         <li>$("p:has(i)").append("I go at the end");</li>
-        <li>$("p:has(i)").prepend("I go at the begining");</li>
+        <li>$("p:has(i)").prepend("I go at the beginning");</li>
         <li>$("p:has(i)").before("&#60;p id='before_p'&#62;A new paragraph before&#60;/p&#62;");</li>
         <li>$("p:has(i)").after("&#60;p id='after_p'&#62;A new paragraph after&#60;/p&#62;");</li>
         <li>$("#after-p).click(function() { $(this).remove(); });</li>
@@ -104,6 +106,8 @@
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>// Events</h3>
+    <p>// <a href="https://learn.jquery.com/events/event-basics/" target="_blank" title="Setting Up Event Responses on DOM Elements">jQuery Event Basics</a></p>
+    <p>jQuery event.which returns which keyboard key or mouse button was pressed for the event</p>    
     <ul>
         <li>.mouseover(function() { $("#logo2").attr("src", "ntt-logo-horz.png"); });</li>
         <li>.mouseout()</li>
@@ -121,21 +125,7 @@
         <li>.resize()</li>
         <li>.scroll()</li>
     </ul>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-
-    <h3>// Animation</h3>
-    <p>// <a href="https://api.jquery.com/category/effects/" title="api.jquery.com/category/effects" target="_blank">Effects</a></p>
-    <ul>
-        <li>$("#p-one").click(function() { $(this).hide() });</li>
-        <li>$("#p-two").click(function() { $(this).fadeOut(2000) });</li>
-        <li>.fadeToggle(2000)</li>
-        <li>.fadeTo('slow', .5)</li>
-        <li>.slideUp()</li>
-        <li>.slideDown()</li>
-        <li>.animate({ left: 300, opacity: .5, "font-size": "22px" }, 2000, "easeInQuad", function() { alert('Done!') }); // Position set to relative in CSS</li>
-
-    </ul>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>    
 
     <h3>// jQuery AJAX</h3>
     <pre><code>
@@ -186,6 +176,21 @@
 
     <h3>// jQuery UI</h3>
     <p>// <a href="https://jqueryui.com/themeroller/" title="jqueryui.com/themeroller" target="blank">UI Themes</a></p>
+
+    <h4>// Animation</h4>
+    <p>// <a href="https://api.jquery.com/category/effects/" title="api.jquery.com/category/effects" target="_blank">Effects</a></p>
+    <ul>
+        <li>$("#p-one").click(function() { $(this).hide() });</li>
+        <li>$("#p-two").click(function() { $(this).fadeOut(2000) });</li>
+        <li>.fadeToggle(2000)</li>
+        <li>.fadeTo('slow', .5)</li>
+        <li>.slideUp()</li>
+        <li>.slideDown()</li>
+        <li>.animate({ left: 300, opacity: .5, "font-size": "22px" }, 2000, "easeInQuad", function() { alert('Done!') }); // Position set to relative in CSS</li>
+
+    </ul>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
     <h4>// Menu</h4>
     <pre><code>
     $(document).ready(function() {
@@ -200,7 +205,7 @@
 
     <h4>// Accordion</h4>
     <pre><code>
-    $(#accordion").accordion({
+    $("#accordion").accordion({
         animate: 1500,
         active: 1,
         collapsible: true,

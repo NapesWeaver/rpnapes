@@ -3,8 +3,8 @@
 <!-- Napes Weaver -->
 <head>
     <title>JavaScript</title>
-    <meta charset="utf-8" />
-    <!-- For iPhone, Andriod smartphone -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
@@ -78,20 +78,23 @@
         <li>var myString = "Hallo";</li>
         <li>var myInt = 7;</li>
         <li>var int1 = 1, int2 = 2;</li>
-        <li>[int1, int2] = [int2, int1];</li>
+        <li>[int1, int2] = [int2, int1]; // ES6</li>
         <li>var myFloat = 3.14;</li>
         <li>var myBoolean = true;</li>
-        <li>var myEmptyArr = [ ];</li>
-        <li>var myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
-        <li>var myNumbers = [3.14, 18, 1.61, -Infinity, 2.72, .3, -23.00];</li>
-        <li>var myObj = { player: "Bob", points: 6 };</li>
-        <li>var myEmptyObj = { };</li>
-        <li>var imageLinks = categories.getElementsByTagName("h2");</li>
-        <li>var myFunction = function() { console.log('Hallo'); }</li>
         <li>let myESInt = 6; // ES6</li>
         <li>const myFloat = 3.14; // ES6</li>
-        <li>const myArray2 = ['CA', 'WA', 'OR', 'NV', 'NM', 'AZ', 'WY', 'MT']; // const is okay - points to the same object in memory when modified</li>
+        <li>const myEmptyArr = [ ]; // const is okay - points to the same object in memory when modified</li>
+        <li>const myArray = ["CA", "WA", "OR", "NV", "NM", "AZ", "WY", "MT"];</li>
+        <li>// let a = myArray[0], b = myArray[1]</li>
+        <li>let [a, b] = myArray; // ES6</li>
+        <li>let [a,, c] = myArray // var a = myArray[0], c = myArray[2]</li>
+        <li>let [a,, c, ...rest] = myArray // var a = myArray[0], c = myArray[2]; var rest = myArray.slice(3);</li>
+        <li>const myNumbers = [3.14, 18, 1.61, -Infinity, 2.72, .3, -23.00];</li>
+        <li>const myObj = { player: "Bob", points: 6 };</li>
+        <li>const myEmptyObj = { };</li>
         <li>let { name, owner } = spot;</li>
+        <li>let imageLinks = categories.getElementsByTagName("h2");</li>
+        <li>const myFunction = function() { console.log('Hallo'); }</li>        
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
@@ -350,9 +353,10 @@
     
     <h3>// Elements / Attributes</h3>
     <pre><code>
-    document.getElementsByTagName()
-    document.getElementById()
     document.createElement(tagName [, options])
+    document.querySelector()
+    document.getElementById()
+    document.getElementsByTagName()
     document.childNodes[0].nodeType
     document.childNodes[1].childNodes[0].nodeName
     document.childNodes[1].childNodes[1].nodeValue
@@ -373,6 +377,13 @@
     
     <h3>// Events</h3>
     <pre><code>
+    // Event Properties and Methods
+    event.which // Returns key or mouse button pressed
+    event.currentTarget // Returns element whose event listeners triggered the event
+    event.target // Returns the element that triggered the event
+    event.preventDefault() // Cancels event if cancelable
+    event.stopPropagation() // Prevents further propagation of an event during event flow
+
     document.body.onmousemove = function(e) { e = e || window.event; event.preventDefault(); console.log(e.clientX, e.clientY); }
     document.body.scrollLeft 
     document.body.scrollTop 
@@ -1231,9 +1242,10 @@
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>// Objects</h3>
-    <p>If an object is used as an argument to a function, a reference to the original value is passed. If the argument is mutated the object is changed.</p>
+    <p>If an object is used as an argument to a function, a reference to the original value is passed. If that argument is mutated the object is also changed.</p>
     <pre><code>
-    // Object Literals are basically singletons with variables/methods that are all public - appropriate for when the object is just a container for data/state
+    // Object Literals are basically singletons with variables / methods that are public
+    // Appropriate for when the object is just a container for data/state
     const myContact = {
         fName: 'Joe',
         lName: 'Doe',
@@ -1352,8 +1364,8 @@
     Object.freeze() // Prevents any changes to an object
     Object.isFrozen(object)
 
-    JSON.parse() // (deep copy)
-    JSON.stringify()
+    JSON.parse() // Parses JSON into JS object
+    JSON.stringify() // Converts object into JSON string
     </code></pre>    
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
