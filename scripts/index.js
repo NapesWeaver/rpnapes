@@ -8,7 +8,7 @@ var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 var isMobile = false;
 
 if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|ipad|iris|kindle|Android|Silk|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i.test(navigator.userAgent) 
-|| /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.substr(0,4))) { 
+|| /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(navigator.userAgent.slice(0, 4))) { 
   isMobile = true;
 }
 var isPhone = false;
@@ -372,7 +372,7 @@ function xyFunction() {
         if (parseFloat(objX.getImaginary()) > 0) {
           $('txt-input').value += ' + ' + formatNumber(objX.getImaginary().toString()) + 'j';
         } else {
-          $('txt-input').value += ' - ' + formatNumber(objX.getImaginary().toString().substring(1)) + 'j';
+          $('txt-input').value += ' - ' + formatNumber(objX.getImaginary().toString().slice(1)) + 'j';
         }
       }
       if (objX.getUnits() !== 'null') {
@@ -525,7 +525,7 @@ function deleteText(txtField, forward) {
   if (txtField.selectionStart === txtField.selectionEnd && forward) endPos++;
   if (txtField.selectionStart === txtField.selectionEnd && !forward ) startPos--;
 
-  txtField.value = txtField.value.substring(0, startPos) + txtField.value.substring(endPos, txtField.value.length);
+  txtField.value = txtField.value.slice(0, startPos) + txtField.value.slice(endPos, txtField.value.length);
 
   txtField.selectionStart = startPos;
   txtField.selectionEnd = startPos;
@@ -899,15 +899,15 @@ function btnLoad() {
   try { 
     $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
-    if (getCookie('STACK').substr(index) !== '') {
-      loadStack(getCookie('STACK').substr(index));
+    if (getCookie('STACK').slice(index) !== '') {
+      loadStack(getCookie('STACK').slice(index));
     } else {
       backupUndo();
     } 
   } catch (err) { rpnAlert('load Stack error.'); }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
-    loadMathMon(getCookie('MATHMON').substr(index));
+    loadMathMon(getCookie('MATHMON').slice(index));
   } catch(err) { rpnAlert('load MathMon error'); }
   updateDisplay();
 }
@@ -919,7 +919,7 @@ function loadStack(tmpStack) {
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     // Remove underscore from begining of string
-    tmpStack = tmpStack.substr(1);
+    tmpStack = tmpStack.slice(1);
   }
   tmpStack = splitArrayByBrowser(tmpStack);
     
@@ -1252,7 +1252,7 @@ function btnPi() {
 function insertAroundSelection(txtField, txtValue) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
-  txtField.value = txtField.value.substring(0, startPos) + txtValue + txtField.value.substring(endPos, txtField.value.length);
+  txtField.value = txtField.value.slice(0, startPos) + txtValue + txtField.value.slice(endPos, txtField.value.length);
   txtField.selectionEnd = endPos + 1;  
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
@@ -1322,9 +1322,9 @@ function btnSign() {
 function leadingSignChange(x) {
 
   if (x.charAt(0) === '-') {
-    x =  '+' + x.substring(1);
+    x =  '+' + x.slice(1);
   } else {
-    if (x.charAt(0) === '+') x = x.substring(1);
+    if (x.charAt(0) === '+') x = x.slice(1);
     x =  '-' + x;
   }
   return x.trim();
@@ -1342,7 +1342,7 @@ function signChange() {
     if (isANumber(objY.getImaginary())) {
       if (objY.getImaginary().charAt(0) === '-') {
         if (x) x += '- '
-        x += (objY.getImaginary().toString()).substring(1) + 'j';
+        x += (objY.getImaginary().toString()).slice(1) + 'j';
       } else {
         if (x) x += '+ ';
         x += objY.getImaginary() + 'j';
@@ -1922,8 +1922,6 @@ function getLocation() {
     navigator.geolocation.getCurrentPosition(function (position) {
       lat = position.coords.latitude;
       lng = position.coords.longitude;
-      // lat = lat.substr(0, 8);
-      // lng = lng.substr(0, 8);
     }, geolocationError);
   } else {
     rpnAlert('Geolocation not supported.');
@@ -2686,8 +2684,8 @@ function convertBase(r) {
 function onClickSelection(textarea){ 
   // https://stackoverflow.com/questions/13650534/how-to-select-line-of-text-in-textarea
   if (typeof textarea.selectionStart ==='undefined') return false;
-  var startPos = (textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.substring(0,textarea.selectionStart).lastIndexOf('\n') : 0;
-  var endPos = (textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.substring(textarea.selectionEnd,textarea.value.length).indexOf('\n') : textarea.value.length;
+  var startPos = (textarea.value.slice(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.slice(0,textarea.selectionStart).lastIndexOf('\n') : 0;
+  var endPos = (textarea.value.slice(textarea.selectionEnd,textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.slice(textarea.selectionEnd,textarea.value.length).indexOf('\n') : textarea.value.length;
   textarea.selectionStart = startPos + 1;
   textarea.selectionEnd = endPos;
   return true;  
@@ -2758,7 +2756,7 @@ function getStackEntry() {
 
 function getIndex(name) {
   var t = document.getElementsByName(name)[0];
-  return (t.value.substr(0, t.selectionStart).split('\n').length);
+  return (t.value.slice(0, t.selectionStart).split('\n').length);
 }
 
 function getSelectedText(id) {
@@ -2775,7 +2773,7 @@ function getSelectedText(id) {
     // Mozilla version
     var startPos = textComponent.selectionStart;
     var endPos = textComponent.selectionEnd;
-    selectedText = textComponent.value.substring(startPos, endPos);
+    selectedText = textComponent.value.slice(startPos, endPos);
   }
   return selectedText.trim();  
 }
@@ -2793,7 +2791,7 @@ function returnSelectedText(id) {
     // Firefox
     var startPos = textComponent.selectionStart;
     var endPos = textComponent.selectionEnd;
-    selectedText = textComponent.value.substring(startPos, endPos);
+    selectedText = textComponent.value.slice(startPos, endPos);
   }
   return selectedText;
 }
@@ -2805,7 +2803,7 @@ function isTextSelected(input) {
 
   if(doc && doc.createRange().text.length !== 0){
     return true;
-  } else if (!doc && input.value.substring(startPos,endPos).length != 0){
+  } else if (!doc && input.value.slice(startPos,endPos).length != 0){
     return true;
   }
   return false;
@@ -2815,7 +2813,7 @@ function insertAtCursor(txtField, txtValue) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
 
-  txtField.value = txtField.value.substring(0, startPos) + txtValue + txtField.value.substring(endPos, txtField.value.length);
+  txtField.value = txtField.value.slice(0, startPos) + txtValue + txtField.value.slice(endPos, txtField.value.length);
   txtField.selectionEnd = startPos + txtValue.length;
   // Deselect text for IE
   txtField.selectionStart = txtField.selectionEnd;
@@ -2897,7 +2895,7 @@ function prettyPrint(i, content) {
       if (isANumber(stack[i].getImaginary())) {// There is an imanginary component        
         if (stack[i].getImaginary().charAt(0) === '-') {
           // Append negative imaginary number
-          content += ' - ' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
+          content += ' - ' + formatNumber(stack[i].getImaginary().toString()).slice(1) + 'j';
         } else {
           // Append positive imaginary number
           content += ' + ' + formatNumber(stack[i].getImaginary().toString()) + 'j';
@@ -2906,7 +2904,7 @@ function prettyPrint(i, content) {
     } else {// There is no real component
       if (stack[i].getImaginary().charAt(0) === '-') {
         // Append negative imaginary number
-        content += '-' + formatNumber(stack[i].getImaginary().toString()).substring(1) + 'j';
+        content += '-' + formatNumber(stack[i].getImaginary().toString()).slice(1) + 'j';
       } else {
         // Append positive imaginary number
         content += formatNumber(stack[i].getImaginary().toString()) + 'j';
@@ -2921,7 +2919,7 @@ function colorSaveButton() {
   var index = 0;
   try {
     index = getCookie('STACK').indexOf('=') + 1;
-    if (getCookie('STACK').substr(index).trim() !== nestArrayByBrowser(stack).trim()) {
+    if (getCookie('STACK').slice(index) !== nestArrayByBrowser(stack).trim()) {
       $('btn-save').style.color = '#000000';
     } else {
       $('btn-save').style.color = '#D4D0C8';
@@ -2946,10 +2944,10 @@ function getCookie(cname) {
     var cookieItem = ca[i];
 
     while (cookieItem.charAt(0) === ' ') {
-      cookieItem = cookieItem.substring(1);
+      cookieItem = cookieItem.slice(1);
     }
     if (cookieItem.indexOf(name) === 0) {
-      return cookieItem.substring(name.length, cookieItem.length);
+      return cookieItem.slice(name.length, cookieItem.length);
     }
   }
   return '';
@@ -3076,7 +3074,7 @@ function extractReal(tmpString) {
       }      
     }
     tmpReal = tmpReal.replace(/ /g, '');
-    if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.substring(1);
+    if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
   }
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
@@ -3107,9 +3105,9 @@ function extractImaginary(tmpString) {
   if (radix === 10) { 
     tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
     tmpImaginary = tmpImaginary.replace(/ /g, '');
-    if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.substring(1);
+    if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
     // Remove 'j'
-    tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);     
+    tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);     
   } else {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
     if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
@@ -3117,7 +3115,7 @@ function extractImaginary(tmpString) {
     if (tmpImaginary.charAt(1) === ' ') {
       tmpImaginary = tmpImaginary.replace(/ /g, '');
     }
-    tmpImaginary = tmpImaginary.substring(0, tmpImaginary.length - 1);
+    tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;  
@@ -3445,11 +3443,11 @@ function updateDisplayNotes() {
 
 function colorSaveNotesButton() {
   var index = getCookie('NOTES').indexOf('=') + 1;
-  var cookieValue = getCookie('NOTES').substr(index);
+  var cookieValue = getCookie('NOTES').slice(index);
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
 
-  if (notesValue.substring(notesValue.length -1) === '_') notesValue = notesValue.slice(0, -1);
+  if (notesValue.slice(notesValue.length -1) === '_') notesValue = notesValue.slice(0, -1);
 
   if (cookieValue === notesValue) {
     $('btn-save-notes').style.color = '#919191';
@@ -3501,7 +3499,7 @@ function loadNotes() {
   index = getCookie('NOTES').indexOf('=') + 1;
   try {
     notes = [];
-    notes = notes.concat(splitArrayByBrowser(getCookie('NOTES').substr(index)));
+    notes = notes.concat(splitArrayByBrowser(getCookie('NOTES').slice(index)));
     if (notes[0] === '' && notes[1] === '') notes.pop();
   } catch (err) {
     notes.push('Load error.');
@@ -3603,7 +3601,7 @@ function loadTricorder() {
   var index = 0;
 
   index = getCookie('TRICORDER').indexOf('=') + 1;
-  widgetSrc = splitArrayByBrowser(getCookie('TRICORDER').substr(index));
+  widgetSrc = splitArrayByBrowser(getCookie('TRICORDER').slice(index));
 
   for (var i in widgetSrc) {
     widgetSrc[i] = decodeSpecialChar(widgetSrc[i]);
@@ -3954,7 +3952,7 @@ function resetMathmon() {
 function loadMathMon(tmpStack) {
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     // Remove underscore from begining of string
-    tmpStack = tmpStack.substr(1);
+    tmpStack = tmpStack.slice(1);
   }
   tmpStack = splitArrayByBrowser(tmpStack);  
   mathMonConstructor(tmpStack);
