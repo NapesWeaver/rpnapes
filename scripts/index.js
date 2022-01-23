@@ -3445,10 +3445,8 @@ function colorSaveNotesButton() {
   var index = getCookie('NOTES').indexOf('=') + 1;
   var cookieValue = getCookie('NOTES').slice(index);
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
-  var notesValue = nestArrayByBrowser(tmpNotes.split('\n'));
-
+  var notesValue = nestArrayByBrowser(tmpNotes.split('\n')).trim();
   if (notesValue.slice(notesValue.length -1) === '_') notesValue = notesValue.slice(0, -1);
-
   if (cookieValue === notesValue) {
     $('btn-save-notes').style.color = '#919191';
   } else {
