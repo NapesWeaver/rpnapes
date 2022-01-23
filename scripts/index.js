@@ -3583,8 +3583,8 @@ function btnPasteNotes() {
   copiedText.then(copiedText => {
     insertAtCursor($('lst-notes'), copiedText);
     backupUndoNotes();  
+    colorSaveNotesButton();
   });
-  colorSaveNotesButton();
   if (!isMobile) $('lst-notes').focus();
 }
 
@@ -4730,6 +4730,7 @@ window.onload = function () {
   }
   backupNotes.push($('lst-notes').value);
   colorUndoNotesButton();
+  colorSaveNotesButton();
 
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
