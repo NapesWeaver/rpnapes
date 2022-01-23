@@ -2932,7 +2932,8 @@ function storeCookie(aName, tmpArray) {
   // years * days * hours * min * sec * mili second
   d.setTime(d.getTime() + (1 * 365 * 24 * 60 * 60 * 1000));
   var expires = '; expires=' + d.toUTCString();
-  document.cookie = aName + '=' + tmpArray + expires + 'SameSite=Lax;'+';path=/';
+  // document.cookie = aName + '=' + tmpArray + expires + 'SameSite=Lax;' + ';path=/';
+  document.cookie = aName + '=' + tmpArray + expires + ';path=/';
 }
 
 function getCookie(cname) {
@@ -3467,20 +3468,12 @@ function colorUndoNotesButton() {
   }  
 }
 
-function notEqualToBackupNotes() {
-  var prevNote = backupNotes[backupNotes.length - 1];
-  var currentNote = $('lst-notes').value;
-  return prevNote !== currentNote;
-}
-
 function backupUndoNotes() {    
-  if (notEqualToBackupNotes()) {
-    restoreNotes.length = 0;
-    backupNotes.push(nestArrayByBrowser(notes));
-    notes = $('lst-notes').value.split('\n');
-    if (notes[notes.length - 1] === '') notes.pop();
-    colorUndoNotesButton();
-  }
+  restoreNotes.length = 0;
+  backupNotes.push(nestArrayByBrowser(notes));
+  notes = $('lst-notes').value.split('\n');
+  if (notes[notes.length - 1] === '') notes.pop();
+  colorUndoNotesButton(); 
 }
 
 function backSpaceUndo() {
@@ -3514,9 +3507,6 @@ function btnLoadNotes() {
 }
 
 function btnSaveNotes() {
-  if ($('btn-save-notes').style.color !== 'rgb(145, 145, 145)') {
-    backupUndoNotes();
-  }
   $('btn-save-notes').style.color = 'rgb(145, 145, 145)';
   notes = encodeSpecialChar($('lst-notes').value.trim()).split('\n');
   storeCookie('NOTES', nestArrayByBrowser(notes));
@@ -4726,8 +4716,7 @@ window.onload = function () {
     $('lst-notes').value = '';
     loadNotes();
   }
-  backupNotes.push($('lst-notes').value);
-  colorUndoNotesButton();
+  backupUndoNotes();
   colorSaveNotesButton();
 
   if (document.cookie.indexOf('TRICORDER') !== -1) {
