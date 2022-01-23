@@ -2082,9 +2082,9 @@ function help(command) {
     case 'min':
       inputText('min: Find the stack element with the minimum value that is not NaN.');
       break;
-    case 'napes':
-      inputText('napes: Switch to Referances interface.');
-      break;
+    // case 'napes':
+    //   inputText('napes: Switch to Referances interface.');
+    //   break;
     case 'notes':
       inputText('notes: Switch to Notes interface.');
       break;

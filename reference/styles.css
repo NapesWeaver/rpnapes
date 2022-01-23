@@ -144,6 +144,7 @@ nav, table, footer {
 }
 
 .iframe {
+    min-height: 21px;
     height: 51vh;
     width: 259px;
     position: relative;
