@@ -9,7 +9,7 @@
 
 My first and favorite JS project - much of the code still needs refactoring.
 
-The calcamatron uses Reverse Polish Notation and also works algebraically. The UI includes a visible and interactive stack. Programmable. Units are supported but no complex maths yet.
+This calcamatron uses Reverse Polish Notation and also works algebraically. The UI includes a visible and interactive stack. Programmable. Units are supported but no complex maths yet.
 
 This project does not use any JQuery and Works offline. Some effort has been made to keep it compatible for backwardly browsers.
 
