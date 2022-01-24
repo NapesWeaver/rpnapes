@@ -30,7 +30,7 @@ A separate interface for note taking is also implemented.
 ![Notes](images/screenshots/notes.jpg)
 ![Notes](images/screenshots/notes2.jpg)
 
-The stack and the notes can each be saved independently, locally, to a cookies. 
+The stack and the notes can each be saved independently, locally, to cookies. 
 
 Opening and saving text files is supported thanks to Eli Grey's [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
 
