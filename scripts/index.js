@@ -1606,7 +1606,6 @@ function sin(x) {
   if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return -1;
   if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return 0;
   if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return 1;
-
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.sin(x);
 }
@@ -1624,29 +1623,32 @@ function cos(x) {
 function tan(x) {
   x = calculate(x);
   if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
-  if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return NaN;
-  if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return NaN;
-  if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return 1;
+  if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return -Infinity;
+  if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return 0;
+  if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return Infinity;
   if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
   return Math.tan(x);
 }
 
 function asin(x) {
   x = calculate(x);
+  x = Math.asin(x);
   if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
-  return Math.asin(x);
+  return x;
 }
 
 function acos(x) {
   x = calculate(x);
-  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
-  return Math.acos(x);
+  x = Math.acos(x);
+  if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
+  return x;
 }
 
 function atan(x) {
   x = calculate(x);
-  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
-  return Math.atan(x);
+  x = Math.atan(x);
+  if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
+  return x;
 }
 
 //////// Input Buttons ///////////////////////////////////////////////////////////////
