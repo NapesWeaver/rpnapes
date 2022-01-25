@@ -1984,17 +1984,28 @@ function timeToString(time) {
   return formattedMM + ':' + formattedSS + ':' + formattedMS;
 }
 
-function stopwatchStart() {  
+function stopwatchStart(seconds) {  
   stack.pop();
-  inputText('Press DEL key to reset stopwatch');
+  seconds ? inputText('Press DEL key to reset timer') : inputText('Press DEL key to reset stopwatch');
   enterInput();
   updateDisplay();
 
+  var milliseconds = seconds ? seconds * 1000 : 10;
+  elapsedTime = 0;
   startTime = Date.now() - elapsedTime;
+
   timerInterval = setInterval(function printTime() {
     elapsedTime = Date.now() - startTime;
-    $('txt-input').value = timeToString(elapsedTime);
-  }, 10);
+
+    if (seconds) {
+      playAudio($('dual-red-alert'));
+      // playAudio($('computerscanner'));
+      rpnAlert('Timer completed: ' + parseInt(elapsedTime / 1000) + ' s');
+      clearInterval(timerInterval);
+    } else {
+      $('txt-input').value = timeToString(elapsedTime);
+    }
+  }, milliseconds);
 }
 
 function stopwatchPause() {
@@ -2006,17 +2017,6 @@ function stopwatchReset() {
   elapsedTime = 0;
   $('txt-input').value = '00:00:00';
   $('txt-input').select();
-}
-
-function timerStart(x) {
-  $('txt-input').value = 'Press DEL to reset timer';
-  startTime = Date.now() - elapsedTime;
-  timerInterval = setInterval(function printTime() {
-    // playAudio($('computerscanner'));
-    playAudio($('dual-red-alert'));
-    rpnAlert('Completed.');
-    clearInterval(timerInterval);
-  }, x * 1000);  
 }
 
 function menuHelp() {
@@ -2210,9 +2210,9 @@ function parseCommand() {
       if (commandArray[1] === undefined) {
         if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
         stack.pop();
-        timerStart(parseInt(stack[stack.length - 1].getRealPart()));
+        stopwatchStart(parseInt(stack[stack.length - 1].getRealPart()));
       } else {
-        timerStart(parseInt(commandArray[1]));
+        stopwatchStart(parseInt(commandArray[1]));
       }
       stack.pop();
       updateDisplay();    
