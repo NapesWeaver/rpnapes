@@ -2011,6 +2011,13 @@ function stopwatchReset() {
   $('txt-input').select();
 }
 
+function timerStart() {
+  setTimeout(function() {
+    muteAudio(false);
+    playAudio($('dual-red-alert'));
+  }, 3000);
+}
+
 function menuHelp() {
   backupUndo();
   help('help');
