@@ -1105,7 +1105,7 @@ function log(x, y) {
   var result;
   if (y === undefined) y = 10;
   result = Math.log(x) / Math.log(y);
-  if (/[.][9]+[0-9]*[0-9]$/.test(result)) result = Math.round(result);
+  if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result);
   return result;
 }
 
