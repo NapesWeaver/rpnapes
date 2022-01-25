@@ -19,7 +19,7 @@ if (isPhone) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate ||
 
 new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
-if (!isPhone) window.onresize = resizeTextareas;
+if (!isPhone) window.onresize = resizeTextAreas;
 
 var Φ = 1.618033988749895;
 var ℮ = Math.exp(1);
@@ -48,38 +48,38 @@ function NumberObject(soul, realPart, imaginary, units) {
   this.imaginary = imaginary;
   this.units = units;
 }
-NumberObject.prototype.setSoul = function (s) {
+NumberObject.prototype.setSoul = function(s) {
   this.soul = s;
 };
-NumberObject.prototype.getSoul = function () {
+NumberObject.prototype.getSoul = function() {
   return this.soul;
 };
-NumberObject.prototype.setRealPart = function (r) {
+NumberObject.prototype.setRealPart = function(r) {
   this.realPart = r;
 };
-NumberObject.prototype.getRealPart = function () {
+NumberObject.prototype.getRealPart = function() {
   return this.realPart;
 };
-NumberObject.prototype.setImaginary = function (i) {
+NumberObject.prototype.setImaginary = function(i) {
   this.imaginary = i;
 };
-NumberObject.prototype.getImaginary = function () {
+NumberObject.prototype.getImaginary = function() {
   return this.imaginary;
 };
-NumberObject.prototype.setUnits = function (u) {
+NumberObject.prototype.setUnits = function(u) {
   this.units = u;
 };
-NumberObject.prototype.getUnits = function () {
+NumberObject.prototype.getUnits = function() {
   return this.units;
 };
-NumberObject.prototype.toString = function () {
+NumberObject.prototype.toString = function() {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
 };
 
-String.prototype.insertAt = function (index, input) {
+String.prototype.insertAt = function(index, input) {
   return this.slice(0, index) + input + this.slice(index);
 }
-String.prototype.removeAt = function (startPos, endPos) {
+String.prototype.removeAt = function(startPos, endPos) {
   return this.slice(0, startPos) + this.slice(endPos);
 }
 /**
@@ -113,7 +113,7 @@ if (!Array.prototype.indexOf)
     }
   })(Object, Math.max, Math.min);
 
-function resizeTextareas() {
+function resizeTextAreas() {
   resizeTextarea($('lst-stack'));
   resizeTextarea($('lst-notes'));
   if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
@@ -402,8 +402,7 @@ function btnEnter() {
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
-    var input = $('txt-input').value.trim();
-    
+    var input = $('txt-input').value.trim();    
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) enterInput();
   }
   updateDisplay();
@@ -3820,60 +3819,60 @@ function Mathmon(idName, xPos, yPos, objSize, health, speed, ammo) {
   this.speed = speed;
   this.ammo = ammo;
 }
-Mathmon.prototype.setIdName = function (name) {
+Mathmon.prototype.setIdName = function(name) {
   this.idName = name;
 };
-Mathmon.prototype.getIdName = function () {
+Mathmon.prototype.getIdName = function() {
   return this.idName;
 };
-Mathmon.prototype.setXPos = function (x) {
+Mathmon.prototype.setXPos = function(x) {
   this.xPos = x;
 };
-Mathmon.prototype.setYPos = function (y) {
+Mathmon.prototype.setYPos = function(y) {
   this.yPos = y;
 };
-Mathmon.prototype.movXPos = function (x) {
+Mathmon.prototype.movXPos = function(x) {
   this.xPos += x;
 };
-Mathmon.prototype.movYPos = function (y) {
+Mathmon.prototype.movYPos = function(y) {
   this.yPos += y;
 };
-Mathmon.prototype.getXPos = function () {
+Mathmon.prototype.getXPos = function() {
   return this.xPos;
 };
-Mathmon.prototype.getYPos = function () {
+Mathmon.prototype.getYPos = function() {
   return this.yPos;
 };
-Mathmon.prototype.setObjSize = function (objSize) {
+Mathmon.prototype.setObjSize = function(objSize) {
   return this.objSize = objSize;
 };
-Mathmon.prototype.getObjSize = function () {
+Mathmon.prototype.getObjSize = function() {
   return this.objSize;
 };
-Mathmon.prototype.setHealth = function (health) {
+Mathmon.prototype.setHealth = function(health) {
   return this.health = health;
 };
-Mathmon.prototype.movHealth = function (health) {
+Mathmon.prototype.movHealth = function(health) {
   return this.health += health;
 };
-Mathmon.prototype.getHealth = function (health) {
+Mathmon.prototype.getHealth = function(health) {
   return this.health = health;
 };
-Mathmon.prototype.setSpeed = function (velocity) {
+Mathmon.prototype.setSpeed = function(velocity) {
   this.speed = velocity;
   if (this.speed <= 0) this.speed = 1;
 };
-Mathmon.prototype.getSpeed = function () {
+Mathmon.prototype.getSpeed = function() {
   return this.speed;
 };
-Mathmon.prototype.setAmmo = function (ammo) {
+Mathmon.prototype.setAmmo = function(ammo) {
   this.ammo = ammo;
   if (ammo < 0) ammo = 0;
 };
-Mathmon.prototype.getAmmo = function () {
+Mathmon.prototype.getAmmo = function() {
   return this.ammo;
 };
-Mathmon.prototype.toString = function () {
+Mathmon.prototype.toString = function() {
   return this.idName + ',' + this.xPos + ',' + this.yPos + ',' + this.objSize + ',' + this.health + ',' + this.speed + ',' + this.ammo;
 };
 
