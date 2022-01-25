@@ -226,8 +226,10 @@ function mobileKeyboardAllow() {
 function toggleSound() {
   if ($('menu-sound-li').classList.contains('strikethrough')) {
     $('menu-sound-li').classList.remove('strikethrough');
+    muteAudio(false);
   } else {
     $('menu-sound-li').classList.add('strikethrough');
+    muteAudio(true);
   }
 }
 
@@ -255,6 +257,7 @@ function rpnapesOn() {
   $('tricorder').classList.remove('visible');
   $('tricorder').classList.add('hidden');
   if (power()) playAudio($('keypress3'));
+  if (!$('menu-sound-li').classList.contains('strikethrough')) muteAudio(false);
   $('rpnapes').classList.remove('hidden');
   $('rpnapes').classList.add('visible');
   if ($('lst-stack').classList.contains('resizable')) {
@@ -495,7 +498,7 @@ function btnDelete() {
   } else {
     deleteText($('txt-input'), true);
   }
-  if (elapsedTime > 0) stopwatchReset();
+  stopwatchReset();
 }
 
 function deleteFromStack() {
@@ -1981,23 +1984,17 @@ function timeToString(time) {
   return formattedMM + ':' + formattedSS + ':' + formattedMS;
 }
 
-function stopwatchPrint(txt) {
-  $('txt-input').value = txt;
-}
-
 function stopwatchStart() {  
-  if (elapsedTime === 0) {
-    stack.pop();
-    inputText('Press DEL key to reset stopwatch');
-    enterInput();
-    updateDisplay();
-  
-    startTime = Date.now() - elapsedTime;
-    timerInterval = setInterval(function printTime() {
-      elapsedTime = Date.now() - startTime;
-      stopwatchPrint(timeToString(elapsedTime));
-    }, 10);
-  }
+  stack.pop();
+  inputText('Press DEL key to reset stopwatch');
+  enterInput();
+  updateDisplay();
+
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(function printTime() {
+    elapsedTime = Date.now() - startTime;
+    $('txt-input').value = timeToString(elapsedTime);
+  }, 10);
 }
 
 function stopwatchPause() {
@@ -2011,11 +2008,15 @@ function stopwatchReset() {
   $('txt-input').select();
 }
 
-function timerStart() {
-  setTimeout(function() {
-    muteAudio(false);
+function timerStart(x) {
+  $('txt-input').value = 'Press DEL to reset timer';
+  startTime = Date.now() - elapsedTime;
+  timerInterval = setInterval(function printTime() {
+    // playAudio($('computerscanner'));
     playAudio($('dual-red-alert'));
-  }, 3000);
+    rpnAlert('Completed.');
+    clearInterval(timerInterval);
+  }, x * 1000);  
 }
 
 function menuHelp() {
@@ -2093,9 +2094,9 @@ function help(command) {
     case 'min':
       inputText('min: Find the stack element with the minimum value that is not NaN.');
       break;
-    // case 'napes':
-    //   inputText('napes: Switch to Referances interface.');
-    //   break;
+    case 'napes':
+      inputText('napes: Switch to Referances interface.');
+      break;
     case 'notes':
       inputText('notes: Switch to Notes interface.');
       break;
@@ -2144,6 +2145,9 @@ function help(command) {
     case 'time':
       inputText('time: Returns the current time.');
       break;
+    case 'timer':
+      inputText('timer [n]: Set a timer, in seconds. If no argument is supplied in-line, last entry on stack is used.');
+      break;
     case 'total':
       inputText('total: Totals the stack elements that are not NaN and returns the result.');
       break;
@@ -2167,7 +2171,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, napes, notes, open, opennotes, off, paste, print, run, save, saveas, shortcuts, sort, sound, stopwatch, time, total, tostring, unembed, wiki, youtube');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, shortcuts, sort, sound, stopwatch, time, timer, total, tostring, unembed, wiki, youtube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2198,6 +2202,19 @@ function parseCommand() {
       }
       stack.pop();
       $('txt-input').value = '';
+      updateDisplay();    
+    }
+    // NOT timer with number and no space, NOT timer with word, NOT timer with number and word, NOT timer with number and alphanumeric word 
+    if (command.match(/(?!timer[0-9]+)(?!timer ?[A-Za-z])(?!timer [0-9 ]+[A-Za-z]+)(?!timer [0-9]+ +[0-9A-Za-z]+)^timer$|(^timer [0-9]{1,3}$)/)) {    
+      
+      if (commandArray[1] === undefined) {
+        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
+        stack.pop();
+        timerStart(parseInt(stack[stack.length - 1].getRealPart()));
+      } else {
+        timerStart(parseInt(commandArray[1]));
+      }
+      stack.pop();
       updateDisplay();    
     }
     // NOT saveas with word and no space, NOT saveas with number, NOT saveas with word and alphanumeric word
@@ -3633,6 +3650,7 @@ function muteAudio(mute) {
 
 function playAudio(obj) {
   if (!$('menu-sound-li').classList.contains('strikethrough')) obj.play();
+  // obj.play();
 }
 
 // Power On/Off.
