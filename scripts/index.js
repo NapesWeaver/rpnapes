@@ -748,7 +748,6 @@ function btnShift() {
     $('btn-enter').value = 'ENTER';
     $('btn-delete').innerHTML = 'DEL';
     $('btn-inverse').value = '1 / x';
-    // $('btn-log').innerHTML = 'log<sub>e</sub>';
     $('btn-log').innerHTML = 'log<sub>x</sub>y';
     $('btn-root').innerHTML = 'y&nbsp;<sup>x</sup>';
     $('btn-undo').value = 'UND';
@@ -792,7 +791,6 @@ function btnShift() {
     $('btn-enter').value = '=';
     $('btn-delete').innerHTML = '<span class="btn-backspace">⌫</span>';
     $('btn-inverse').value = 'x !';
-    // $('btn-log').innerHTML = 'log<sub>x</sub>y';
     $('btn-log').innerHTML = 'log<sub>e</sub>';    
     $('btn-root').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
     $('btn-undo').value = 'REDO';
