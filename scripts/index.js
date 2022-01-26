@@ -2052,10 +2052,10 @@ function stopwatchStart(seconds) {
       $('timer').innerHTML = '';
       if (!$('menu-haptic-li').classList.contains('strikethrough')) {
         // navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);// Morse code - 'SOS'
-        navigator.vibrate(200);// Morse code - 'SOS'
+        navigator.vibrate(200);
       }
-      // playAudio($('computerscanner'));
       playAudio($('dual-red-alert'));
+      // playAudio($('computerscanner'));
     }, milliseconds);
   }
 
@@ -2069,10 +2069,6 @@ function stopwatchStart(seconds) {
       $('txt-input').value = timeToString(elapsedTime);
     }
   }, 10);
-}
-
-function stopwatchPause() {
-  clearInterval(timerInterval);
 }
 
 function stopwatchReset() {
