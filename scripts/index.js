@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '21:28:21';
+var tStamp = '22:44:2';
 
 var stack = [];
 var backups = [];
@@ -2052,10 +2052,17 @@ function stopwatchStart(seconds) {
       $('timer').innerHTML = '';
       if (!$('menu-haptic-li').classList.contains('strikethrough')) {
         // navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);// Morse code - 'SOS'
-        navigator.vibrate(200);
+        navigator.vibrate(300);
       }
       playAudio($('dual-red-alert'));
       // playAudio($('computerscanner'));
+      var flashInterval = setInterval(function() {
+        toggleDarkMode();
+      }, 1000);
+      setTimeout(function() {
+        clearInterval(flashInterval);
+        $('dual-red-alert').pause();
+      }, 12000);
     }, milliseconds);
   }
 
@@ -2073,10 +2080,10 @@ function stopwatchStart(seconds) {
 
 function stopwatchReset() {
   $('txt-input').value = timeToString(elapsedTime);
+  // $('txt-input').value = '00:00:00';
   elapsedTime = 0;
   clearInterval(timerInterval);
   $('timer').innerHTML = '';
-  // $('txt-input').value = '00:00:00';
   $('txt-input').select();
 }
 
@@ -3703,7 +3710,6 @@ function power() {
 }
 
 function muteAudio(mute) {
-
   if (mute) {
     for (var i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
       $('tricorder').getElementsByTagName('audio')[i].muted = true;
