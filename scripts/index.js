@@ -2033,49 +2033,53 @@ function timeToString(time) {
   return formattedMM + ':' + formattedSS + ':' + formattedMS;
 }
 
-function stopwatchStart(seconds) {  
-  stack.pop();
-  inputText('Click timer display to cancel');
-  enterInput();
-  updateDisplay();
+function stopwatchStart(seconds) { 
+  
+  if ($('timer').innerHTML == '') {
 
-  var milliseconds = seconds ? seconds * 1000 : 10;
+    stack.pop();
+    inputText('Click timer display to cancel');
+    enterInput();
+    updateDisplay();
 
-  elapsedTime = 0;
-  startTime = Date.now() - elapsedTime;
+    var milliseconds = seconds ? seconds * 1000 : 10;
 
-  if (seconds) {
-    setTimeout(function() {
-      rpnAlert('Timer completed: ' + (1 + parseInt(elapsedTime / 1000)) + ' s');
-      elapsedTime = 0;
-      clearInterval(timerInterval);
-      $('timer').innerHTML = '';
-      if (!$('menu-haptic-li').classList.contains('strikethrough')) {
-        // navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);// Morse code - 'SOS'
-        navigator.vibrate(300);
-      }
-      playAudio($('dual-red-alert'));
-      // playAudio($('computerscanner'));
-      var flashInterval = setInterval(function() {
-        toggleDarkMode();
-      }, 1000);
-      setTimeout(function() {
-        clearInterval(flashInterval);
-        $('dual-red-alert').pause();
-      }, 12000);
-    }, milliseconds);
-  }
-
-  timerInterval = setInterval(function printTime() {
-    elapsedTime = Date.now() - startTime;
+    elapsedTime = 0;
+    startTime = Date.now() - elapsedTime;
 
     if (seconds) {
-      $('timer').innerHTML = timeToString(elapsedTime);         
-    } else {
-      $('timer').innerHTML = timeToString(elapsedTime);
-      $('txt-input').value = timeToString(elapsedTime);
-    }
-  }, 10);
+      setTimeout(function() {
+        rpnAlert('Timer completed: ' + (1 + parseInt(elapsedTime / 1000)) + ' s');
+        elapsedTime = 0;
+        clearInterval(timerInterval);
+        $('timer').innerHTML = '';
+        if (!$('menu-haptic-li').classList.contains('strikethrough')) {
+          // navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);// Morse code - 'SOS'
+          navigator.vibrate(300);
+        }
+        playAudio($('dual-red-alert'));
+        // playAudio($('computerscanner'));
+        var flashInterval = setInterval(function() {
+          toggleDarkMode();
+        }, 1000);
+        setTimeout(function() {
+          clearInterval(flashInterval);
+          $('dual-red-alert').pause();
+        }, 12000);
+      }, milliseconds);
+    }  
+
+    timerInterval = setInterval(function printTime() {
+      elapsedTime = Date.now() - startTime;
+
+      if (seconds) {
+        $('timer').innerHTML = timeToString(elapsedTime);         
+      } else {
+        $('timer').innerHTML = timeToString(elapsedTime);
+        $('txt-input').value = timeToString(elapsedTime);
+      }
+    }, 10);
+  }
 }
 
 function stopwatchReset() {
@@ -2273,7 +2277,7 @@ function parseCommand() {
       updateDisplay();    
     }
     // NOT timer with number and no space, NOT timer with word, NOT timer with number and word, NOT timer with number and alphanumeric word 
-    if (command.match(/(?!timer[0-9]+)(?!timer ?[A-Za-z])(?!timer [0-9 ]+[A-Za-z]+)(?!timer [0-9]+ +[0-9A-Za-z]+)^timer$|(^timer [0-9]{1,3}$)/)) {    
+    if (command.match(/(?!timer[0-9]+)(?!timer ?[A-Za-z])(?!timer [0-9 ]+[A-Za-z]+)(?!timer [0-9]+ +[0-9A-Za-z]+)^timer$|(^timer [0-9]{1,5}$)/)) {    
       
       if (commandArray[1] === undefined) {
         if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
