@@ -2000,6 +2000,9 @@ function stopwatchStart(seconds) {
       elapsedTime = 0;
       clearInterval(timerInterval);
       $('timer').innerHTML = '';
+      if (!$('menu-haptic-li').classList.contains('strikethrough')) {
+        navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);// Morse code - 'SOS'
+      }
       // playAudio($('computerscanner'));
       playAudio($('dual-red-alert'));
     }, milliseconds);
