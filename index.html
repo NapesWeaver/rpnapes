@@ -26,7 +26,7 @@
   <body>
     <div id="wrap">
       <header>
-        <input type="button" id="btn-xoff" class='btn-other btn-xoff haptic-response' name="btn-xoff" title="Toggle interface" value="&nbsp;"/>
+        <input type="button" id="btn-xoff" class='btn-other btn-xoff haptic-response' name="btn-xoff" title="Toggle interface" value="&nbsp;"/>        
       </header>      
       <main id="main">
         <!-- RPNapes -->
@@ -218,6 +218,7 @@
               </ul>
             </nav>
           </div>
+          <span id='timer' title="Click to reset"></span>
           <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified Jan 25, 2022." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>

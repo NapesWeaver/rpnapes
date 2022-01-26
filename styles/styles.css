@@ -27,6 +27,14 @@ header {
     margin-left: 92%;
 }
 
+#timer {
+    position: absolute;
+    margin-top: .3em;
+    margin-left: 11em;
+    background-color: transparent;
+    color: #00007C;
+}
+
 #open {
     background-color: #FFFFFF;
     padding: 0 12px 3px 12px;
@@ -374,6 +382,7 @@ li a,
 select,
 button,
 .btn-mapped,
+#timer,
 input[type="button"] {
     cursor: pointer;
 }
@@ -551,6 +560,10 @@ label a {
 
     .menu > ul > li > a {
         padding-right: 1.3em;
+    }
+
+    #timer {
+        font-size: 1.4em;
     }
 
     header,

@@ -498,7 +498,6 @@ function btnDelete() {
   } else {
     deleteText($('txt-input'), true);
   }
-  stopwatchReset();
 }
 
 function deleteFromStack() {
@@ -1986,26 +1985,37 @@ function timeToString(time) {
 
 function stopwatchStart(seconds) {  
   stack.pop();
-  seconds ? inputText('Press DEL key to reset timer') : inputText('Press DEL key to reset stopwatch');
+  inputText('Click timer display to cancel');
   enterInput();
   updateDisplay();
 
   var milliseconds = seconds ? seconds * 1000 : 10;
+
   elapsedTime = 0;
   startTime = Date.now() - elapsedTime;
+
+  if (seconds) {
+    seconds = undefined; 
+    setTimeout(function() {
+      rpnAlert('Timer completed: ' + (1 + parseInt(elapsedTime / 1000)) + ' s');
+      elapsedTime = 0;
+      clearInterval(timerInterval);
+      $('timer').innerHTML = '';
+      // playAudio($('computerscanner'));
+      playAudio($('dual-red-alert'));
+    }, milliseconds);
+  }
 
   timerInterval = setInterval(function printTime() {
     elapsedTime = Date.now() - startTime;
 
     if (seconds) {
-      playAudio($('dual-red-alert'));
-      // playAudio($('computerscanner'));
-      rpnAlert('Timer completed: ' + parseInt(elapsedTime / 1000) + ' s');
-      clearInterval(timerInterval);
+      $('timer').innerHTML = timeToString(elapsedTime);         
     } else {
+      $('timer').innerHTML = timeToString(elapsedTime);
       $('txt-input').value = timeToString(elapsedTime);
     }
-  }, milliseconds);
+  }, 10);
 }
 
 function stopwatchPause() {
@@ -2013,9 +2023,11 @@ function stopwatchPause() {
 }
 
 function stopwatchReset() {
-  clearInterval(timerInterval);
+  $('txt-input').value = timeToString(elapsedTime);
   elapsedTime = 0;
-  $('txt-input').value = '00:00:00';
+  clearInterval(timerInterval);
+  $('timer').innerHTML = '';
+  // $('txt-input').value = '00:00:00';
   $('txt-input').select();
 }
 
@@ -2140,13 +2152,13 @@ function help(command) {
       inputText('sound: Toggle sound on/off for Tricorder buttons.');
       break;
     case 'stopwatch':
-      inputText('stopwatch: Starts the stopwatch. Press DEL key to reset.');
+      inputText('stopwatch: Starts the stopwatch. Press ENTER for lap times. Click the timer in the display area to quit.');
       break;
     case 'time':
       inputText('time: Returns the current time.');
       break;
     case 'timer':
-      inputText('timer [n]: Set a timer, in seconds. If no argument is supplied in-line, last entry on stack is used.');
+      inputText('timer [n]: Set a timer, in seconds. If no argument is supplied in-line, last entry on stack is used. Click timer display to cancel. Turn sound on for alarm.');
       break;
     case 'total':
       inputText('total: Totals the stack elements that are not NaN and returns the result.');
@@ -4621,6 +4633,8 @@ window.onload = function () {
     $('menu-keyboard').style = 'display:none';
     $('menu-haptic').style = 'display:none';
   }
+
+  $('timer').onclick = stopwatchReset;
 
   // Text Area
   $('lst-stack').style.color = '#000000';// noscript warning was red ;)
