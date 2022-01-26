@@ -230,6 +230,7 @@ function toggleSound() {
   } else {
     $('menu-sound-li').classList.add('strikethrough');
     muteAudio(true);
+    // $('dual-red-alert').pause();
   }
 }
 
@@ -1995,7 +1996,6 @@ function stopwatchStart(seconds) {
   startTime = Date.now() - elapsedTime;
 
   if (seconds) {
-    seconds = undefined; 
     setTimeout(function() {
       rpnAlert('Timer completed: ' + (1 + parseInt(elapsedTime / 1000)) + ' s');
       elapsedTime = 0;
@@ -3652,6 +3652,7 @@ function muteAudio(mute) {
   if (mute) {
     for (var i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
       $('tricorder').getElementsByTagName('audio')[i].muted = true;
+      $('tricorder').getElementsByTagName('audio')[i].pause();
     }
   } else {
     for (i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
@@ -3662,7 +3663,6 @@ function muteAudio(mute) {
 
 function playAudio(obj) {
   if (!$('menu-sound-li').classList.contains('strikethrough')) obj.play();
-  // obj.play();
 }
 
 // Power On/Off.
