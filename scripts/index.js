@@ -231,6 +231,7 @@ function toggleSound() {
     $('menu-sound-li').classList.add('strikethrough');
     muteAudio(true);
   }
+  clearInterval(flashInterval);
 }
 
 //////// Buttons /////////////////////////////////////////////////////////////////////
@@ -2011,10 +2012,12 @@ function autoDark() {
 
 /**
  * https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
- */
+**/
 var startTime;
 var elapsedTime = 0;
 var timerInterval;
+var flashInterval;
+var alertTimer;
 
 function timeToString(time) {
   var diffInHrs = time / 3600000;
@@ -2033,6 +2036,10 @@ function timeToString(time) {
   return formattedMM + ':' + formattedSS + ':' + formattedMS;
 }
 
+function menuStopwatch() {
+  stopwatchStart();
+}
+
 function stopwatchStart(seconds) { 
   
   if ($('timer').innerHTML == '') {
@@ -2048,7 +2055,7 @@ function stopwatchStart(seconds) {
     startTime = Date.now() - elapsedTime;
 
     if (seconds) {
-      setTimeout(function() {
+      alertTimer = setTimeout(function() {
         rpnAlert('Timer completed: ' + (1 + parseInt(elapsedTime / 1000)) + ' s');
         elapsedTime = 0;
         clearInterval(timerInterval);
@@ -2059,7 +2066,7 @@ function stopwatchStart(seconds) {
         }
         playAudio($('dual-red-alert'));
         // playAudio($('computerscanner'));
-        var flashInterval = setInterval(function() {
+        flashInterval = setInterval(function() {
           toggleDarkMode();
         }, 1000);
         setTimeout(function() {
@@ -2067,9 +2074,8 @@ function stopwatchStart(seconds) {
           $('dual-red-alert').pause();
         }, 12000);
       }, milliseconds);
-    }  
-
-    timerInterval = setInterval(function printTime() {
+    }
+    timerInterval = setInterval(function() {      
       elapsedTime = Date.now() - startTime;
 
       if (seconds) {
@@ -2087,6 +2093,7 @@ function stopwatchReset() {
   // $('txt-input').value = '00:00:00';
   elapsedTime = 0;
   clearInterval(timerInterval);
+  clearTimeout(alertTimer);
   $('timer').innerHTML = '';
   $('txt-input').select();
 }
@@ -4618,7 +4625,7 @@ window.onload = function () {
       inputText(minNum());
     }
   })();
-  $('menu-stopwatch').onclick = stopwatchStart;
+  $('menu-stopwatch').onclick = menuStopwatch;
   $('menu-fizz-buzz').onclick = fizzBuzz;
   $('menu-tricorder').onclick = showTricorder;
   $('menu-twig').onclick = monOn;
