@@ -230,7 +230,6 @@ function toggleSound() {
   } else {
     $('menu-sound-li').classList.add('strikethrough');
     muteAudio(true);
-    // $('dual-red-alert').pause();
   }
 }
 
