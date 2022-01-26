@@ -1516,10 +1516,36 @@ function btnAdd() {
   }  
 }
 
+// function addition() {
+//   backupUndo();
+//   var newUnits = '';
+//   var objY;
+//   if (stackFocus) {
+//     var stackIndex = getIndex('lst-stack') - stackSize;
+//     objY = stack[stackIndex];
+//   } else {
+//     objY = stack.pop();
+//   }
+//   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
+
+//   var objX = getX();
+//   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+//   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+//   var result = y + x;
+  
+//   if (radix !== 10) result = result.toString(radix);  
+//   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
+//   result += decodeSpecialChar(newUnits);
+//   $('txt-input').value = result; 
+//   updateDisplay();
+//   $('txt-input').focus();
+// }
+
 function addition() {
   backupUndo();
   var newUnits = '';
   var objY;
+
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
@@ -1533,7 +1559,8 @@ function addition() {
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = y + x;
   
-  if (radix !== 10) result = result.toString(radix);  
+  if (radix !== 10) result = result.toString(radix);
+  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result; 
