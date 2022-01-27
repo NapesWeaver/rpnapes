@@ -1173,6 +1173,10 @@ function mathPow(y, x) {
 function exponentialFunction() {
   backupUndo();
   var objY;
+  var x;
+  var y;
+  var result;
+  var newUnits = '';
   
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1185,17 +1189,14 @@ function exponentialFunction() {
     objY = stack.pop();
   }  
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var newUnits = '';
-  var result = mathPow(y, x);
 
-  if (radix !== 10) result = result.toString(radix);
+  y = buildComplexNumber(objY); 
+  x = buildComplexNumber(objX);
+  result = math.pow(y, x).toString().replace(/i$/, 'j');
+  
+  if (radix !== 10) result = result.toString(radix);  
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
-  result += decodeSpecialChar(newUnits);
-  $('txt-input').value = result;
-  updateDisplay();
-  $('txt-input').select();
+  displayResult(result, newUnits);
 }
 
 function mathRoot(x, y) {
@@ -1220,6 +1221,9 @@ function mathRoot(x, y) {
 function rootFunction() {
   backupUndo();  
   var objY;
+  var x;
+  var y;
+  var newUnits = '';
   
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1232,17 +1236,14 @@ function rootFunction() {
     objY = stack.pop();
   }
   var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var newUnits = '';
-  var result = mathRoot(x, y);
 
-  if (radix !== 10) result = result.toString(radix);
-  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);
-  result += decodeSpecialChar(newUnits);
-  $('txt-input').value = result;
-  updateDisplay();
-  $('txt-input').select();
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  y = buildComplexNumber(objY);
+  result = math.nthRoots(y, x).toString().replace(/i$/, 'j');
+  
+  if (radix !== 10) result = result.toString(radix);  
+  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x); 
+  displayResult(result, newUnits);
 }
 
 function btnPi() {
@@ -1436,7 +1437,7 @@ function division() {
   
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
-  result = math.divide(y, x).toString().replace(/i/g, 'j');
+  result = math.divide(y, x).toString().replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
@@ -1470,7 +1471,7 @@ function multiplication() {
   
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
-  result = math.multiply(y, x).toString().replace(/i/g, 'j');
+  result = math.multiply(y, x).toString().replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
@@ -1504,7 +1505,7 @@ function subtraction() {
   
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
-  result = math.subtract(y, x).toString().replace(/i/g, 'j');
+  result = math.subtract(y, x).toString().replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
@@ -1538,7 +1539,7 @@ function addition() {
   
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
-  result = math.add(y, x).toString().replace(/i/g, 'j');
+  result = math.add(y, x).toString().replace(/i$/, 'j');
   
   if (radix !== 10) result = result.toString(radix);  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
