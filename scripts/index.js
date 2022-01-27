@@ -1559,7 +1559,7 @@ function buildComplexNumber(obj) {
 }
 
 function displayResult(result, newUnits) {  
-  result += decodeSpecialChar(newUnits);
+  if (result !== '0') result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
   $('txt-input').focus();
