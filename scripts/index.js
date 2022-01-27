@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '22:44:2';
+var tStamp = '22:37:38';
 
 var stack = [];
 var backups = [];
@@ -1424,6 +1424,7 @@ function division() {
   var x;
   var y;
   var result;
+  var newUnits = '';
 
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1436,7 +1437,10 @@ function division() {
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
   result = math.divide(y, x).toString().replace(/i/g, 'j');
-  displayResult(result, objX, objY);
+
+  if (radix !== 10) result = result.toString(radix);  
+  newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
+  displayResult(result, newUnits);
 }
 
 function btnMultiply() {  
@@ -1454,6 +1458,7 @@ function multiplication() {
   var x;
   var y;
   var result;
+  var newUnits = '';
 
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1466,7 +1471,10 @@ function multiplication() {
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
   result = math.multiply(y, x).toString().replace(/i/g, 'j');
-  displayResult(result, objX, objY);
+
+  if (radix !== 10) result = result.toString(radix);  
+  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
+  displayResult(result, newUnits);
 }
 
 function btnSubtract() {  
@@ -1484,6 +1492,7 @@ function subtraction() {
   var x;
   var y;
   var result;
+  var newUnits = '';
 
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1496,7 +1505,10 @@ function subtraction() {
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
   result = math.subtract(y, x).toString().replace(/i/g, 'j');
-  displayResult(result, objX, objY);
+
+  if (radix !== 10) result = result.toString(radix);  
+  newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
+  displayResult(result, newUnits);
 }
 
 function btnAdd() {  
@@ -1514,6 +1526,7 @@ function addition() {
   var x;
   var y;
   var result;
+  var newUnits = '';
 
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1526,7 +1539,10 @@ function addition() {
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
   result = math.add(y, x).toString().replace(/i/g, 'j');
-  displayResult(result, objX, objY);
+  
+  if (radix !== 10) result = result.toString(radix);  
+  newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
+  displayResult(result, newUnits);
 }
 
 function buildComplexNumber(obj) {
@@ -1542,10 +1558,7 @@ function buildComplexNumber(obj) {
   return math.complex(a, b);
 }
 
-function displayResult(result, objX, objY) {
-  var newUnits = '';
-  if (radix !== 10) result = result.toString(radix);  
-  newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
+function displayResult(result, newUnits) {  
   result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -3261,11 +3274,10 @@ function extractUnits(tmpString) {
 
 function addUnits(unitsX, unitsY) {
   var units = '';
-  console.log('unitsX:', unitsX, 'unitsY:', unitsY);
-  if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = ' ' + unitsY;
-  if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = ' ' + unitsX;
+  if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = unitsY;
+  if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = unitsX;
   if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
-  console.log('units:', '\'' + units + '\'');
+  if (units) units = ' ' + units;
   return units;
 }
 
@@ -3489,7 +3501,7 @@ function rewriteNegUnitExp(tmpUnits) {
 
     if (denominator !== '') newUnits += '/' + denominator;
   } else {
-    newUnits = tmpUnits;
+    newUnits = ' ' + tmpUnits;
   }
   return newUnits;
 }
