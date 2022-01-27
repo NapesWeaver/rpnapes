@@ -373,10 +373,10 @@ function xyFunction() {
       $('txt-input').value += formatNumber(objX.getRealPart().toString());
 
       if (isANumber(objX.getImaginary())) {
-        if (parseFloat(objX.getImaginary()) > 0) {
-          $('txt-input').value += ' + ' + formatNumber(objX.getImaginary().toString()) + 'j';
-        } else {
+        if (objX.getImaginary().charAt(0) === '-') {
           $('txt-input').value += ' - ' + formatNumber(objX.getImaginary().toString().slice(1)) + 'j';
+        } else {
+          $('txt-input').value += ' + ' + formatNumber(objX.getImaginary().toString()) + 'j';
         }
       }
       if (objX.getUnits() !== 'null') {
