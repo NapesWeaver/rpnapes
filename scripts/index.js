@@ -1223,6 +1223,7 @@ function rootFunction() {
   var objY;
   var x;
   var y;
+  var result;
   var newUnits = '';
   
   if (stackFocus) {
