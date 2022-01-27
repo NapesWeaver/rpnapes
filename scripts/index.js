@@ -1419,27 +1419,24 @@ function btnDivide() {
 
 function division() {
   backupUndo();
-  var newUnits = '';
+  var objX = getX();
   var objY;
+  var x;
+  var y;
+  var result;
+
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
     objY = stack.pop();
   }
-  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
-
-  var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var result = y / x;
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  if (radix !== 10) result = result.toString(radix);
-  newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
-  result += decodeSpecialChar(newUnits);
-  $('txt-input').value = result;
-  updateDisplay();
-  $('txt-input').focus();
+  y = buildComplexNumber(objY); 
+  x = buildComplexNumber(objX);
+  result = math.divide(y, x).toString().replace(/i/g, 'j');
+  displayResult(result, objX, objY);
 }
 
 function btnMultiply() {  
@@ -1452,27 +1449,24 @@ function btnMultiply() {
 
 function multiplication() {
   backupUndo();
-  var newUnits = '';
+  var objX = getX();
   var objY;
+  var x;
+  var y;
+  var result;
+
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
     objY = stack.pop();
   }
-  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
-
-  var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart()); 
-  var result = y * x;
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  if (radix !== 10) result = result.toString(radix);
-  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
-  result += decodeSpecialChar(newUnits);
-  $('txt-input').value = result;
-  updateDisplay();
-  $('txt-input').focus();
+  y = buildComplexNumber(objY); 
+  x = buildComplexNumber(objX);
+  result = math.multiply(y, x).toString().replace(/i/g, 'j');
+  displayResult(result, objX, objY);
 }
 
 function btnSubtract() {  
@@ -1485,27 +1479,24 @@ function btnSubtract() {
 
 function subtraction() {
   backupUndo();
-  var newUnits = '';
+  var objX = getX();
   var objY;
+  var x;
+  var y;
+  var result;
+
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
     objY = stack[stackIndex];
   } else {
     objY = stack.pop();
   }
-  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
-
-  var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
-  var result = y - x;
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  if (radix !== 10) result = result.toString(radix);
-  newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-  result += decodeSpecialChar(newUnits);
-  $('txt-input').value = result;
-  updateDisplay();
-  $('txt-input').focus();
+  y = buildComplexNumber(objY); 
+  x = buildComplexNumber(objX);
+  result = math.subtract(y, x).toString().replace(/i/g, 'j');
+  displayResult(result, objX, objY);
 }
 
 function btnAdd() {  
@@ -1516,35 +1507,13 @@ function btnAdd() {
   }  
 }
 
-// function addition() {
-//   backupUndo();
-//   var newUnits = '';
-//   var objY;
-//   if (stackFocus) {
-//     var stackIndex = getIndex('lst-stack') - stackSize;
-//     objY = stack[stackIndex];
-//   } else {
-//     objY = stack.pop();
-//   }
-//   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
-
-//   var objX = getX();
-//   var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-//   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-//   var result = y + x;
-  
-//   if (radix !== 10) result = result.toString(radix);  
-//   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-//   result += decodeSpecialChar(newUnits);
-//   $('txt-input').value = result; 
-//   updateDisplay();
-//   $('txt-input').focus();
-// }
-
 function addition() {
   backupUndo();
-  var newUnits = '';
+  var objX = getX();
   var objY;
+  var x;
+  var y;
+  var result;
 
   if (stackFocus) {
     var stackIndex = getIndex('lst-stack') - stackSize;
@@ -1552,18 +1521,33 @@ function addition() {
   } else {
     objY = stack.pop();
   }
-  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
+  
+  y = buildComplexNumber(objY); 
+  x = buildComplexNumber(objX);
+  result = math.add(y, x).toString().replace(/i/g, 'j');
+  displayResult(result, objX, objY);
+}
 
-  var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var result = y + x;
+function buildComplexNumber(obj) {
+  var a = 0;
+  var b = 0;
   
-  if (radix !== 10) result = result.toString(radix);
-  
+  if (isNaN(obj.getRealPart()) && isNaN(obj.getImaginary())) {
+    a = calculate(obj.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+  } else {
+    if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
+    if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
+  }
+  return math.complex(a, b);
+}
+
+function displayResult(result, objX, objY) {
+  var newUnits = '';
+  if (radix !== 10) result = result.toString(radix);  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   result += decodeSpecialChar(newUnits);
-  $('txt-input').value = result; 
+  $('txt-input').value = result;
   updateDisplay();
   $('txt-input').focus();
 }
@@ -3277,10 +3261,11 @@ function extractUnits(tmpString) {
 
 function addUnits(unitsX, unitsY) {
   var units = '';
-
+  console.log('unitsX:', unitsX, 'unitsY:', unitsY);
   if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = ' ' + unitsY;
   if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = ' ' + unitsX;
   if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
+  console.log('units:', '\'' + units + '\'');
   return units;
 }
 
@@ -3841,10 +3826,10 @@ function button4() {
     if ($('widget').classList.contains('hidden')) {      
       var srcString = '';
 
-      if ($('widget').src.indexOf('telescope') === -1) {
-        srcString += 'https://www.worldwidetelescope.org/webclient/';
+      if ($('widget').src.indexOf('napesweaver') === -1) {
+        srcString += 'https://napesweaver.github.io/ip-mapper/';        
       } else {    
-        srcString += 'https://orbitalmechanics.info/';        
+        srcString += 'https://www.worldwidetelescope.org/webclient/';              
       }
       $('widget').src = srcString;
       $('widget').classList.remove('hidden');
@@ -4864,9 +4849,10 @@ window.onload = function () {
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   } else {    
-    widgetSrc.push('https://napesweaver.github.io/ip-mapper/');
+    widgetSrc.push('https://mathnotepad.com/');
     widgetSrc.push('https://www.wolframalpha.com/');
     widgetSrc.push('https://98.js.org/');// Windows 98
+    widgetSrc.push('https://orbitalmechanics.info/');
     // widgetSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag');// KITUMBA
     // widgetSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4');// In Harm's Way
     // widgetSrc.push('https://www.youtube.com/embed/Zx-up8quvnI');// Mind Sifter
