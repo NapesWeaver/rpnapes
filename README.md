@@ -9,11 +9,12 @@
 
 My first and favorite JS project - much of the code still needs refactoring.
 
-This calcamatron uses Reverse Polish Notation and also works algebraically. The UI includes a visible and interactive stack. Programmable. Units are supported but no complex maths yet.
+This calcamatron uses Reverse Polish Notation and works algebraically. Also, it is programmable. The UI includes a visible, interactive, stack that can be saved to a cookie. Complex numbers and units are supported as well as opening and saving files.
 
-This project does not use any JQuery and Works offline. Some effort has been made to keep it compatible for backwardly browsers.
+The project does not use any JQuery and Works offline. Some effort has been made to keep it compatible for backwardly browsers.
 
 ![Calcamatron](images/screenshots/rpnapes.jpg)
+
 ![Shifted calcamatron](images/screenshots/rpnapes-2.jpg)
 
 Features include the ability to open, save, load and run simple code snippets:
@@ -28,15 +29,16 @@ Features include the ability to open, save, load and run simple code snippets:
 A separate interface for note taking is also implemented.
 
 ![Notes](images/screenshots/notes.jpg)
+
 ![Notes](images/screenshots/notes2.jpg)
 
-The stack and the notes can each be saved independently, locally, to cookies. 
+Thanks to [Mathjs.org](https://mathjs.org/) for the math.js library - made implementing complex numbers easy :)
 
 Opening and saving text files is supported thanks to Eli Grey's [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
 
 Darryl Snow's [moveCursorToEnd](https://gist.github.com/darryl-snow/3990793) function saved the day in my attempts to wrangle with mobile keypads.
 
-The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/) tutorial on tinloof.com made including that feature too tempting. Thanks to Omar Benseddik.
+The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/) tutorial by Omar Benseddik made including that feature (and timer) too tempting.
 
 ## Tricorder
 
@@ -44,4 +46,4 @@ The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-
 
 The original tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Thanks to keiske84.
 
-The tricorder doesn't do much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) There are also a few [Shoutcast](https://directory.shoutcast.com/) Internet radio stations and YouTube videos embedded in iFrames.
+The tricorder doesn't do much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) There are also a few [Shoutcast](https://directory.shoutcast.com/) Internet radio stations and YouTube videos embedded in iFrames. Maybe some other useful links.
