@@ -40,6 +40,7 @@ var altHeld = false;
 var ctrlHeld = false;
 var fixDecimal = -1;
 var sciDecimal = -1;
+var engDecimal = -1;
 var radix = 10;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1561,6 +1562,7 @@ function buildComplexNumber(obj) {
 }
 
 function displayResult(result, newUnits) {  
+  result = formatNumber(result);
   if (result !== '0') result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -2160,11 +2162,14 @@ function help(command) {
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame (Tricorder \'button\' 6). If no argument is supplied in-line, last entry on stack is used for URL.');
       break;
+    case 'eng':
+      inputText('eng [n]: Engineering notation. Precision 1 to 17. If no argument is supplied in-line, last entry on stack is used. Turn engineering notation off with -1.');
+      break;
     case 'flightlogger':
       inputText('flightlogger: Opens Flight Logger in a new tab.');
       break;
     case 'fix':
-      inputText('fix [n]: Fix number of decimals shown on the stack (0 to 17). If no argument is supplied in-line, last entry on stack is used. Turn Fixed Decimals off with -1.');
+      inputText('fix [n]: Fix number of decimals shown on the stack (0 to 17). If no argument is supplied in-line, last entry on stack is used. Turn fixed decimals off with -1.');
       break;
     case 'google':
       inputText('google [query]: Search Google / open link or IP address. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
@@ -2235,6 +2240,9 @@ function help(command) {
     case 'saveas':
       inputText('saveas [filename]: Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
+    case 'sci':
+      inputText('sci [n]: Scientific notation. Precision 0 to 17. If no argument is supplied in-line, last entry on stack is used. Turn scientific notation off with -1.');
+      break;
     case 'shortcuts':
       inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       break;
@@ -2276,7 +2284,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, shortcuts, sort, sound, stopwatch, time, timer, total, tostring, unembed, wiki, youtube');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, time, timer, total, tostring, unembed, wiki, youtube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2304,6 +2312,34 @@ function parseCommand() {
         setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
       } else {
         setFixDecimal(parseInt(commandArray[1]));
+      }
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();    
+    }
+    // NOT sci with number and no space, NOT sci with word, NOT sci with number and word, NOT sci with number and alphanumeric word
+    if (command.match(/(?!sci[0-9]+)(?!sci ?[A-Za-z])(?!sci [0-9 ]+[A-Za-z]+)(?!sci [0-9]+ +[0-9A-Za-z]+)^sci$|(^sci (-?[1]|[0-9]|1[0-7])$)/)) {    
+      
+      if (commandArray[1] === undefined) {
+        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
+        stack.pop();
+        setSciDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+      } else {
+        setSciDecimal(parseInt(commandArray[1]));
+      }
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();    
+    }
+    // NOT eng with number and no space, NOT eng with word, NOT eng with number and word, NOT eng with number and alphanumeric word
+    if (command.match(/(?!eng[0-9]+)(?!eng ?[A-Za-z])(?!eng [0-9 ]+[A-Za-z]+)(?!eng [0-9]+ +[0-9A-Za-z]+)^eng$|(^eng (-?[1]|[1-9]|1[0-7])$)/)) {    
+      
+      if (commandArray[1] === undefined) {
+        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
+        stack.pop();
+        setEngDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+      } else {
+        setEngDecimal(parseInt(commandArray[1]));
       }
       stack.pop();
       $('txt-input').value = '';
@@ -3508,18 +3544,52 @@ function rewriteNegUnitExp(tmpUnits) {
   return newUnits;
 }
 
+// https://thisinterestsme.com/change-select-option-javascript/
+// Custom function that changes a select element's option.
+function resetSelect(selectId, optionValToSelect){
+  // Get the select element by it's unique ID.
+  var selectElement = document.getElementById(selectId);
+  // Get the options.
+  var selectOptions = selectElement.options;
+  // Loop through these options using a for loop.
+  for (var opt, j = 0; opt = selectOptions[j]; j++) {
+      // If the option of value is equal to the option we want to select.
+      if (opt.value == optionValToSelect) {
+          // Select the option and break out of the for loop.
+          selectElement.selectedIndex = j;
+          break;
+      }
+  }
+}
+
 function setFixDecimal(value) {
+  sciDecimal = -1;
+  engDecimal = -1;
+
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
-    throw 'Enter an integer from -1 to 17 first.';
+    throw 'Enter an integer from -1 to 17.';
   }
   fixDecimal = parseInt(value);
 }
 
 function setSciDecimal(value) {
+  fixDecimal = -1;
+  engDecimal = -1;
+
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
-    throw 'Enter an integer from -1 to 17 first.';
+    throw 'Enter an integer from -1 to 17.';
   }
   sciDecimal = parseInt(value);
+}
+
+function setEngDecimal(value) {  
+  fixDecimal = -1;
+  sciDecimal = -1;
+
+  if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
+    throw 'Enter an integer -1 or 1 to 17.';
+  }
+  engDecimal = parseInt(value);
 }
 
 function toFixed(value, p) {
@@ -3537,13 +3607,20 @@ function toFixed(value, p) {
   return result;
 }
 
+function removePositiveNotation(formatted) {
+  if (/e[+]0$/g.test(formatted)) formatted = formatted.replace('e+0', '');
+  if (/[+]/g.test(formatted)) formatted = formatted.replace('+', '');  
+  return formatted;
+}
+
 function toEngineering(value, precision) {
-  // var scientific = parseFloat(value).toExponential(precision);
-  var engineering = math.format(parseFloat(value), {notation: 'engineering', precision: precision});
-  // var engineering = math.format(parseFloat(value), {notation: 'engineering'});
-  if (/e[+]0$/g.test(engineering)) engineering = engineering.replace('e+0', '');
-  if (/[+]/g.test(engineering)) engineering = engineering.replace('+', '');  
-  return engineering;
+  var formatted = math.format(parseFloat(value), {notation: 'engineering', precision: precision});    
+  return removePositiveNotation(formatted);
+}
+
+function toScientific(value, precision) {
+  var formatted = parseFloat(value).toExponential(precision);
+  return removePositiveNotation(formatted);
 }
 
 function formatNumber(possibleNumber) {
@@ -3555,7 +3632,10 @@ function formatNumber(possibleNumber) {
           possibleNumber = toFixed(possibleNumber, fixDecimal);
         }
         if (sciDecimal !== -1) {
-          possibleNumber = toEngineering(possibleNumber, sciDecimal);          
+          possibleNumber = toScientific(possibleNumber, sciDecimal);          
+        }
+        if (engDecimal !== -1) {
+          possibleNumber = toEngineering(possibleNumber, engDecimal);          
         }
       }
     } else {  
