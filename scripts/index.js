@@ -237,6 +237,7 @@ function toggleSound() {
 
 function menuNotes() {
   if (shifted) {
+    backupUndo();
     calculate($('lst-notes').value);
   } else {
     btnXoff();
