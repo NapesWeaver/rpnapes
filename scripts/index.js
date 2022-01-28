@@ -1160,9 +1160,9 @@ function naturalLog() {
 
 function btnRoot() {
   if (shifted) {
-    rootFunction();
+    radical();
   } else {
-    exponentialFunction();
+    exponential();
   }
 }
 
@@ -1170,7 +1170,7 @@ function mathPow(y, x) {
   return Math.pow(y, x);
 }
 
-function exponentialFunction() {
+function exponential() {
   backupUndo();
   var objY;
   var x;
@@ -1218,7 +1218,7 @@ function mathRoot(x, y) {
   return result;
 }
 
-function rootFunction() {
+function radical() {
   backupUndo();  
   var objY;
   var x;
@@ -1551,7 +1551,8 @@ function buildComplexNumber(obj) {
   var a = 0;
   var b = 0;
   
-  if (isNaN(obj.getRealPart()) && isNaN(obj.getImaginary())) {
+  if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
+    console.log('y');
     a = calculate(obj.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
   } else {
     if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
@@ -4524,8 +4525,8 @@ window.onload = function () {
   $('menu-xy').onclick = xyFunction;
 
   // Menu Maths
-  $('menu-root').onclick = rootFunction;
-  $('menuExponential').onclick = exponentialFunction;
+  $('menu-root').onclick = radical;
+  $('menuExponential').onclick = exponential;
   $('menu-log').onclick = baseLog;
   $('menu-ln').onclick = naturalLog;
   $('menu-inverse').onclick = inverse;
