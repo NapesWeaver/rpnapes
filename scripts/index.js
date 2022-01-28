@@ -3522,27 +3522,6 @@ function setSciDecimal(value) {
   sciDecimal = parseInt(value);
 }
 
-function formatNumber(possibleNumber) {
-
-  if (!/[ⅽ℮ɢΦπ]/.test(possibleNumber)) {
-    if (radix === 10) {      
-      if (!isNaN(possibleNumber)) {
-        if (fixDecimal !== -1) {
-          possibleNumber = toFixed(possibleNumber, fixDecimal);
-        }
-        if (sciDecimal !== -1) {
-          possibleNumber = parseFloat(possibleNumber).toExponential(sciDecimal);
-        }
-      }
-    } else {  
-      if (!isNaN(possibleNumber)) {
-        possibleNumber = parseInt(possibleNumber).toString(radix);
-      }
-    }
-  }
-  return possibleNumber;
-}
-
 function toFixed(value, p) {
 
   var precision = p || 0,
@@ -3556,6 +3535,36 @@ function toFixed(value, p) {
     result += '.' + padding + fraction;
   }
   return result;
+}
+
+function toEngineering(value, precision) {
+  // var scientific = parseFloat(value).toExponential(precision);
+  var engineering = math.format(parseFloat(value), {notation: 'engineering', precision: precision});
+  // var engineering = math.format(parseFloat(value), {notation: 'engineering'});
+  if (/e[+]0$/g.test(engineering)) engineering = engineering.replace('e+0', '');
+  if (/[+]/g.test(engineering)) engineering = engineering.replace('+', '');  
+  return engineering;
+}
+
+function formatNumber(possibleNumber) {
+
+  if (!/[ⅽ℮ɢΦπ]/.test(possibleNumber)) {
+    if (radix === 10) {      
+      if (!isNaN(possibleNumber)) {
+        if (fixDecimal !== -1) {
+          possibleNumber = toFixed(possibleNumber, fixDecimal);
+        }
+        if (sciDecimal !== -1) {
+          possibleNumber = toEngineering(possibleNumber, sciDecimal);          
+        }
+      }
+    } else {  
+      if (!isNaN(possibleNumber)) {
+        possibleNumber = parseInt(possibleNumber).toString(radix);
+      }
+    }
+  }
+  return possibleNumber;
 }
 
 //////// Notes ///////////////////////////////////////////////////////////////////////

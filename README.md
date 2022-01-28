@@ -32,7 +32,7 @@ A separate interface for note taking is also implemented.
 
 ![Notes](images/screenshots/notes2.jpg)
 
-Thanks to [Mathjs.org](https://mathjs.org/) for the math.js library - made implementing complex numbers easy :)
+Thanks to [Mathjs.org](https://mathjs.org/) for the math.js library. Made implementing complex numbers and formatting with engineering notation easy!
 
 Opening and saving text files is supported thanks to Eli Grey's [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
 
