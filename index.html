@@ -96,7 +96,7 @@
                       </ul>
                     </li>        
                     <li class="haptic-response"><a id="menu-angle" title="Toggle degree/radian mode">deg/rad</a></li>
-                    <li id="fix"><label><a title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
+                    <li id="fix"><label id="label-fix"><a title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
                       <select class="haptic-response" name="fix" onchange="setFixDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
@@ -120,7 +120,7 @@
                       </select>
                       </label>
                     </li>
-                    <li id="sci"><label><a title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
+                    <li id="sci"><label id="label-sci"><a title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
                       <select class="haptic-response" name="sci" onchange="setSciDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
@@ -144,7 +144,7 @@
                       </select>
                       </label>
                     </li>   
-                    <li id="eng"><label><a title="Engineering notation" onmouseover="$('base').className='hidden'">Eng</a>
+                    <li id="eng"><label id="label-eng"><a title="Engineering notation" onmouseover="$('base').className='hidden'">Eng</a>
                       <select class="haptic-response" name="eng" onchange="setEngDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option> 
                         <option value="1">1</option>

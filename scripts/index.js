@@ -3562,32 +3562,53 @@ function resetSelect(selectId, optionValToSelect){
   }
 }
 
-function setFixDecimal(value) {
-  sciDecimal = -1;
-  engDecimal = -1;
+function setFixDecimal(value) {  
 
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17.';
+  }
+  if (value !== '-1') {
+    sciDecimal = -1;
+    engDecimal = -1;
+    $('label-sci').classList.add('hidden');
+    $('label-eng').classList.add('hidden');
+  } else {
+    $('label-sci').classList.remove('hidden');
+    $('label-eng').classList.remove('hidden');
   }
   fixDecimal = parseInt(value);
 }
 
 function setSciDecimal(value) {
-  fixDecimal = -1;
-  engDecimal = -1;
 
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17.';
   }
+  if (value !== '-1') {
+    fixDecimal = -1;
+    engDecimal = -1;
+    $('label-fix').classList.add('hidden');
+    $('label-eng').classList.add('hidden');
+  } else {
+    $('label-fix').classList.remove('hidden');
+    $('label-eng').classList.remove('hidden');
+  }
   sciDecimal = parseInt(value);
 }
 
-function setEngDecimal(value) {  
-  fixDecimal = -1;
-  sciDecimal = -1;
+function setEngDecimal(value) {
 
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer -1 or 1 to 17.';
+  }
+  if (value !== '-1') {
+    fixDecimal = -1;
+    sciDecimal = -1;
+    $('label-fix').classList.add('hidden');
+    $('label-sci').classList.add('hidden');
+  } else {
+    $('label-fix').classList.remove('hidden');
+    $('label-sci').classList.remove('hidden');
   }
   engDecimal = parseInt(value);
 }
