@@ -17,7 +17,7 @@ The project does not use any JQuery and Works offline. Some effort has been made
 
 ![Shifted calcamatron](images/screenshots/rpnapes-2.jpg)
 
-Features include the ability to open, save, load and run simple code snippets:
+Example JavaScript snippet:
 
 `maxCount = prompt('Enter a number number','25');`
 
