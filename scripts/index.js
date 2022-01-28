@@ -235,6 +235,14 @@ function toggleSound() {
   clearInterval(flashInterval);
 }
 
+function menuNotes() {
+  if (shifted) {
+    calculate($('lst-notes').value);
+  } else {
+    btnXoff();
+  }
+}
+
 //////// Buttons /////////////////////////////////////////////////////////////////////
 
 function btnXoff() {
@@ -744,6 +752,8 @@ function btnShift() {
     $('menu-sine').innerHTML = 'sin';
     $('menu-cosine').innerHTML = 'cos';
     $('menu-tangent').innerHTML = 'tan'
+    $('menu-notes').innerHTML = 'Notes'
+    $('menu-notes').setAttribute('title', 'Switch to Notes');
     $('btn-copy').value = 'COPY';
     $('btn-copy').style.color = '#000000';
     $('btn-xy').value = 'x < > y';
@@ -787,6 +797,8 @@ function btnShift() {
     $('menu-sine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>';
     $('menu-cosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('menu-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';
+    $('menu-notes').innerHTML = 'Run Notes'
+    $('menu-notes').setAttribute('title', 'Run Notes');
     $('btn-copy').value = 'PASTE';
     if (isFirefox) $('btn-copy').style.color = '#808080';
     $('btn-xy').value = 'a < > b';
@@ -4656,7 +4668,7 @@ window.onload = function () {
   $('menu-darkmode').onclick = toggleDarkMode;
   $('menu-keyboard').onclick = toggleKeyboard;
   $('menu-sound').onclick = toggleSound;
-  $('menu-notes').onclick = btnXoff;
+  $('menu-notes').onclick = menuNotes;
   $('menu-shift').onclick = btnShift;
 
   // Menu Constants

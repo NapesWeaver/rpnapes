@@ -89,13 +89,36 @@
                     <li class="menu haptic-response">
                       <a title="Change base" onclick="$('base').className='visible'">Base</a>
                       <ul id="base" onclick="$('base').className='hidden'">
-                        <li><a title="Binary" onclick="convertBase(2); updateDisplay()">&nbsp;&nbsp;binary</a></li>
-                        <li><a title="Octal" onclick="convertBase(8); updateDisplay()">&nbsp;&nbsp;octal</a></li>
-                        <li><a title="Hexidecimal" onclick="convertBase(16); updateDisplay()">&nbsp;&nbsp;hex</a></li>
-                        <li><a title="Decimal" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;decimal</a></li>
+                        <li><a title="Binary" onclick="convertBase(2); updateDisplay()">&nbsp;&nbsp;Binary</a></li>
+                        <li><a title="Octal" onclick="convertBase(8); updateDisplay()">&nbsp;&nbsp;Octal</a></li>
+                        <li><a title="Hexidecimal" onclick="convertBase(16); updateDisplay()">&nbsp;&nbsp;Hex</a></li>
+                        <li><a title="Decimal" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;Decimal</a></li>
                       </ul>
-                    </li>        
-                    <li class="haptic-response"><a id="menu-angle" title="Toggle degree/radian mode">deg/rad</a></li>
+                    </li>
+                    <li class="haptic-response"><a id="menu-angle" title="Toggle degree/radian mode">Deg/Rad</a></li>
+                    <li id="eng"><label id="label-eng"><a title="Engineering notation" onmouseover="$('base').className='hidden'">Eng</a>
+                      <select class="haptic-response" name="eng" onchange="setEngDecimal(this.value);updateDisplay()">
+                        <option value="-1">Off</option> 
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                      </select>
+                      </label>
+                    </li>                    
                     <li id="fix"><label id="label-fix"><a title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
                       <select class="haptic-response" name="fix" onchange="setFixDecimal(this.value);updateDisplay()">
                         <option value="-1">Off</option>
@@ -143,37 +166,14 @@
                         <option value="17">17</option>
                       </select>
                       </label>
-                    </li>   
-                    <li id="eng"><label id="label-eng"><a title="Engineering notation" onmouseover="$('base').className='hidden'">Eng</a>
-                      <select class="haptic-response" name="eng" onchange="setEngDecimal(this.value);updateDisplay()">
-                        <option value="-1">Off</option> 
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                        <option value="13">13</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                      </select>
-                      </label>
-                    </li>   
+                    </li>                    
                     <li class="haptic-response"><a id="menu-shift" title="Toggle shift">Shift</a></li>
+                    <li id="menu-sound-li" class="haptic-response"><a id="menu-sound" title="Toggle sound for Tricorder">Sound</a></li>
                     <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode">Dark</a></li>
                     <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" title="Toggle haptic response">Haptic</a></li>
                     <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" title="Toggle mobile keyboard">Keyboard</a></li>
                     <li><a id="menu-notes" class="haptic-response" title="Switch to Notes">Notes</a></li>   
-                    <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;Reference</a></li>     
-                    <li id="menu-sound-li" class="haptic-response"><a id="menu-sound" title="Toggle sound for Tricorder">Sound</a></li>
+                    <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;Reference</a></li>                         
                   </ul>
                 </li>
                 <li class="haptic-response">
