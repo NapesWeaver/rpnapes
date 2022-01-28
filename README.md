@@ -32,7 +32,7 @@ A separate interface for note taking is also implemented.
 
 ![Notes](images/screenshots/notes2.jpg)
 
-Thanks to [Mathjs.org](https://mathjs.org/) for the math.js library. Made implementing complex numbers and formatting with engineering notation easy!
+Thanks to [Mathjs.org](https://mathjs.org/) for the math.js library. Made implementing complex maths and formatting with engineering notation easy!
 
 Opening and saving text files is supported thanks to Eli Grey's [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
 
@@ -44,6 +44,6 @@ The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-
 
 ![Tricorder](images/screenshots/tricorder.jpg)
 
-The original tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Thanks to keiske84.
-
 The tricorder doesn't do much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) There are also a few [Shoutcast](https://directory.shoutcast.com/) Internet radio stations and YouTube videos embedded in iFrames. Maybe some other useful links.
+
+The original tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Thanks to keiske84.
