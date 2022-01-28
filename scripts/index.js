@@ -1254,7 +1254,8 @@ function radical() {
 
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   y = buildComplexNumber(objY);
-  result = math.nthRoots(y, x).toString().replace(/i$/, 'j');
+  result = math.nthRoots(y, x).toString().replace(/i/g, 'j');
+  // result = root(y, x);
   
   if (radix !== 10) result = result.toString(radix);  
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x); 
@@ -2257,7 +2258,7 @@ function help(command) {
       inputText('sci [n]: Scientific notation. Precision 0 to 17. If no argument is supplied in-line, last entry on stack is used. Turn scientific notation off with -1.');
       break;
     case 'shortcuts':
-      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
+      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Ctrl + s = Save, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       break;
     case 'sort':
       inputText('sort [unit|asc|desc] [asc|desc]: Sort stack. Ascending order by default. Sorting by units is also supported. Example usage: \'sort unit desc\'.');
@@ -2665,7 +2666,7 @@ function parseCommand() {
       break;
     case 'shortcuts':
       stack.pop();
-      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
+      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Ctrl + s = Save, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
@@ -3643,7 +3644,7 @@ function toFixed(value, p) {
 
 function removePositiveNotation(formatted) {
   if (/e[+]0$/g.test(formatted)) formatted = formatted.replace('e+0', '');
-  if (/[+]/g.test(formatted)) formatted = formatted.replace('+', '');  
+  if (/e[+]/g.test(formatted)) formatted = formatted.replace('+', '');  
   return formatted;
 }
 
