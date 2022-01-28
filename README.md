@@ -9,7 +9,7 @@
 
 My first and favorite JS project - much of the code still needs refactoring.
 
-This calcamatron operates using Reverse Polish Notation and / or algebraically. Also, it is programmable. The UI includes a visible, interactive, stack that can be saved to a cookie. Complex numbers and units are supported as well as opening and saving files.
+Operates in Reverse Polish Notation and / or algebraically. Programmable with a CLI. The UI includes a visible, interactive, stack that can be saved to a cookie. Complex numbers and units are supported as well as opening and saving files.
 
 The project does not use any jQuery and Works offline. Some effort has been made to keep it compatible for backwardly browsers.
 
