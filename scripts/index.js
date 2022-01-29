@@ -1000,8 +1000,8 @@ function btnInverse() {
 
 function inverse() {
   backupUndo();
+  var objX;
 
-  var objX;  
   if (stackFocus) {
     objX = stack[getIndex('lst-stack') - stackSize];
     $('txt-input').value = decodeSpecialChar(objX.getSoul());
@@ -1023,7 +1023,8 @@ function inverse() {
         $('txt-input').value += 'j';
       }
       if (isNumber && isImaginary) {
-        // Write code here please ;)
+        var x = buildComplexNumber(objX);
+        $('txt-input').value = math.inv(x).toString().replace(/i$/, 'j');
       }
       $('txt-input').value += newUnits;
     } else {
