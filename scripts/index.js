@@ -118,7 +118,7 @@ function resizeTextAreas() {
   resizeTextarea($('lst-stack'));
   resizeTextarea($('lst-notes'));
   if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
-  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');
+  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');  
 }
 
 function resizeTextarea(textarea) {
@@ -147,6 +147,8 @@ function unFloat() {
     $('rpnapes').classList.contains('hidden') ? $('lst-notes').style.width = winSize[0] - margin + 'px' : $('lst-stack').style.width = winSize[0] - margin + 'px';
   }
   if ($('notes').classList.contains('hidden')) worldBordersSet();
+
+  $('txt-input').style.width = $('lst-stack').offsetWidth - 18 + 'px';
 }
 
 function toggleDarkMode() {  

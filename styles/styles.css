@@ -104,7 +104,6 @@ select::-ms-expand {
 .lst-notes {
     min-width: 97%;
     overflow-y: scroll;
-
 }
 
 .lst-stack,
@@ -118,10 +117,9 @@ select::-ms-expand {
 }
 
 #txt-input {
-    display: block;
     min-width: 97%;
-    margin-left: auto;
-    margin-right: auto;
+    /* margin-left: auto;
+    margin-right: auto; */
     margin-bottom: .6em;
     background-color: #FFFFFF;
 }
@@ -593,6 +591,10 @@ label a {
 
     .lst-stack {
         margin-bottom: .2em;
+    }
+
+    #txt-input {
+        height: 18px;
     }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
