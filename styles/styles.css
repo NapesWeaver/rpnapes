@@ -118,8 +118,6 @@ select::-ms-expand {
 
 #txt-input {
     min-width: 97%;
-    /* margin-left: auto;
-    margin-right: auto; */
     margin-bottom: .6em;
     background-color: #FFFFFF;
 }
@@ -591,10 +589,6 @@ label a {
 
     .lst-stack {
         margin-bottom: .2em;
-    }
-
-    #txt-input {
-        height: 18px;
     }
    
     .btn-big, .btn-med, .btn-small, .btn-other {
