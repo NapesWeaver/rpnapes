@@ -9,7 +9,7 @@
 
 My first and favorite JS project - much of the code still needs refactoring.
 
-Operates in Reverse Polish Notation and / or algebraically. Programmable with a CLI. The UI includes a visible, interactive, stack that can be saved to a cookie. Complex numbers and units are supported as well as opening and saving files.
+Operates in Reverse Polish Notation and / or algebraically. Programmable with a command line interface. The UI includes a visible, interactive, stack that can be saved to a cookie. Complex numbers and units are supported as well as opening and saving files.
 
 The project does not use any jQuery and Works offline. Some effort has been made to keep it compatible for backwardly browsers.
 
@@ -44,6 +44,6 @@ The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-
 
 ![Tricorder](images/screenshots/tricorder.jpg)
 
-The tricorder doesn't do much. It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) There are also a few [Shoutcast](https://directory.shoutcast.com/) Internet radio stations and YouTube videos embedded in iFrames. Maybe some other useful links.
+The tricorder doesn't do much. It only exists because I wanted to map some buttons to an image and, also, I wanted to see a tricorder on my phone ;) It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) There are also a few [Shoutcast](https://directory.shoutcast.com/) Internet radio stations and YouTube videos embedded in iFrames. Maybe some other useful links too.
 
 The original tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Thanks to keiske84.

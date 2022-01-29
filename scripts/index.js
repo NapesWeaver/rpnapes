@@ -500,7 +500,7 @@ function btnDelete() {
   $('txt-input').value = $('txt-input').value.trim();
 
   if (stackFocus) {
-    deleteFromStack();
+    stack.splice(getIndex('lst-stack') - stackSize, 1);
     updateDisplay();
   } else if ($('txt-input').value !== '' && $('txt-input').value.length === $('txt-input').selectionEnd) {
     $('txt-input').value = '';
@@ -513,16 +513,11 @@ function btnDelete() {
   }
 }
 
-function deleteFromStack() {
-  var stackIndex = getIndex('lst-stack') - stackSize;
-  stack.splice(stackIndex, 1);
-}
-
 function btnBackspace() {
   if (stack.toString() !== '') backupUndo();
 
   if (stackFocus) {
-    deleteFromStack();
+    stack.splice(getIndex('lst-stack') - stackSize, 1);
     updateDisplay();
   } else if ($('txt-input').value === '') {
     stack.pop();
@@ -1058,8 +1053,7 @@ function btnFactorial() {
   var objX;
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objX = stack[stackIndex];
+    objX = stack[getIndex('lst-stack') - stackSize];
   } else {
     objX = getX();
   }
@@ -1084,8 +1078,8 @@ function intFactorial(num) {
   }
 }
 
-function gamma(n) {  // accurate to about 15 decimal places
-  //some magic constants
+function gamma(n) {  // Accurate to about 15 decimal places
+  // Some magic constants
   var g = 7, // g represents the precision desired, p is the values of p[i] to plug into Lanczos' formula
     p = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
   if(n < 0.5) {
@@ -1133,8 +1127,7 @@ function baseLog() {
   var objY;
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objY = stack[stackIndex];
+    objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
@@ -1162,8 +1155,7 @@ function naturalLog() {
   var objX;
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objX = stack[stackIndex];
+    objX = stack[getIndex('lst-stack') - stackSize];
   } else {
     objX = getX();
   }
@@ -1197,8 +1189,7 @@ function exponential() {
   var newUnits = '';
   
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objY = stack[stackIndex];
+    objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
@@ -1247,8 +1238,7 @@ function radical() {
   var newUnits = '';
   
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objY = stack[stackIndex];
+    objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
@@ -1321,8 +1311,7 @@ function modulus() {
   var objY;
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objY = stack[stackIndex];
+    objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
       enterInput();
@@ -1362,6 +1351,78 @@ function leadingSignChange(x) {
   }
   return x.trim();
 }
+
+// function signChange() {
+//   backupUndo();
+//   var x = '';
+  
+//   if (stackFocus) {// Rebild x from stack
+//     var objY = stack[getIndex('lst-stack') - stackSize];
+
+//     if (isANumber(objY.getRealPart())) x += objY.getRealPart();
+//     if (x) x += ' ';
+//     if (isANumber(objY.getImaginary())) {
+//       if (objY.getImaginary().charAt(0) === '-') {
+//         if (x) x += '- '
+//         x += (objY.getImaginary().toString()).slice(1) + 'j';
+//       } else {
+//         if (x) x += '+ ';
+//         x += objY.getImaginary() + 'j';
+//       }
+//     }
+//     if (objY.getUnits() !== 'null') x += ' ' + objY.getUnits();
+//     if(!x) x = decodeSpecialChar(objY.getSoul());
+//     $('txt-input').value = x.trim();
+//   }  
+//   x = $('txt-input').value;
+//   var startPos = $('txt-input').selectionStart;
+//   if (startPos === 0 || (startPos >= x.length && !/[-+eE^√ ]/.test(x.charAt(startPos - 1)))) {
+//     x = leadingSignChange(x);
+//   } else {
+//     if (/[-+]/.test(x.charAt(startPos - 1))) {
+//       if (/-/.test(x.charAt(startPos - 1))) {
+//         x = x.removeAt(startPos - 1, startPos);
+//         if (/ /.test(x.charAt(startPos - 2))) {// If there is a space to the left, explicit '+' inserted           
+//           x = x.insertAt(startPos - 1, '+');
+//           startPos ++;
+//         }
+//       }
+//       if (/[+]/.test(x.charAt(startPos - 1))) {          
+//         x = x.removeAt(startPos - 1, startPos);
+//         x = x.insertAt(startPos - 1, '-');
+//         startPos ++;
+//       }
+//       $('txt-input').value = x;
+//       $('txt-input').selectionStart = startPos - 1;
+//       $('txt-input').selectionEnd = startPos - 1;
+
+//     } else if (/[eE^√ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos)) && !/[-+][ ]*$/.test(x)) {
+//       if (/ /.test(x.charAt(startPos - 1))) {    
+//         x = x.insertAt(startPos, '-');
+//         startPos = startPos + 2;
+//       }
+//       if (/[eE^√]/.test(x.charAt(startPos - 1))) {
+//         if (/[-]/.test(x.charAt(startPos))) {
+//           x = x.removeAt(startPos, startPos + 1);
+//           startPos ++;            
+//         } else if (/[+]/.test(x.charAt(startPos))) {                  
+//           x = x.removeAt(startPos, startPos + 1);
+//           x = x.insertAt(startPos, '-');
+//           startPos = startPos + 2;
+//         } else if (!/[-]/.test(x.charAt(startPos))) {
+//           x = x.insertAt(startPos, '-')
+//           startPos = startPos + 2;
+//         }
+//       }
+//       $('txt-input').value = x;
+//       $('txt-input').selectionStart = startPos - 1;
+//       $('txt-input').selectionEnd = startPos - 1;
+//     }       
+//   }  
+//   // if (radix !== 10) { }    
+//   $('txt-input').value = x;
+//   $('txt-input').focus();
+// }
 
 function signChange() {
   backupUndo();
@@ -1455,8 +1516,7 @@ function division() {
   var newUnits = '';
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objY = stack[stackIndex];
+    objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     objY = stack.pop();
   }
@@ -1489,8 +1549,7 @@ function multiplication() {
   var newUnits = '';
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objY = stack[stackIndex];
+    objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     objY = stack.pop();
   }
@@ -1523,8 +1582,7 @@ function subtraction() {
   var newUnits = '';
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objY = stack[stackIndex];
+    objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     objY = stack.pop();
   }
@@ -1557,8 +1615,7 @@ function addition() {
   var newUnits = '';
 
   if (stackFocus) {
-    var stackIndex = getIndex('lst-stack') - stackSize;
-    objY = stack[stackIndex];
+    objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     objY = stack.pop();
   }
@@ -4943,14 +5000,14 @@ window.onload = function () {
   preloadImages();
   
   viewPortSrc.push('https://www.youtube.com/embed/86YLFOog4GM?autoplay=1&mute=1');// ISS
+  viewPortSrc.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1');// Star field
   viewPortSrc.push('https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1');// Starfleet Technical Manual
   viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');//  LCARS Display
-  viewPortSrc.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1');// Jerobeam Fenderson - Planets
   
+  viewPortSrc2.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1');// Jerobeam Fenderson - Planets
   viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');// Tressaurian Intersection
   viewPortSrc2.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');// Star Trek Meets Batman
   viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');// Star Track
-  viewPortSrc2.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1');// Star field
 
   $('sensor1').onclick = sensor1;
   $('sensor2').onclick = sensor2;
