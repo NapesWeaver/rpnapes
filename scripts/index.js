@@ -1188,6 +1188,7 @@ function mathPow(y, x) {
 
 function exponential() {
   backupUndo();
+  var objX;
   var objY;
   var x;
   var y;
@@ -1204,7 +1205,7 @@ function exponential() {
     }
     objY = stack.pop();
   }  
-  var objX = getX();
+  objX = getX();
 
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
@@ -1236,10 +1237,12 @@ function mathRoot(x, y) {
 
 function radical() {
   backupUndo();  
+  var objX;
   var objY;
   var x;
   var y;
   var result;
+  var resultArr;
   var newUnits = '';
   
   if (stackFocus) {
@@ -1252,16 +1255,20 @@ function radical() {
     }
     objY = stack.pop();
   }
-  var objX = getX();
+  objX = getX();
 
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   y = buildComplexNumber(objY);
   result = math.nthRoots(y, x).toString().replace(/i/g, 'j');
-  // result = root(y, x);
   
-  if (radix !== 10) result = result.toString(radix);  
+  resultArr = result.split(',');
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x); 
-  displayResult(result, newUnits);
+  
+  for (var i = 0; i < resultArr.length; i++) {
+    if (radix !== 10) resultArr[i] = resultArr[i].toString(radix);  
+    displayResult(resultArr[i], newUnits);
+    if (i < resultArr.length - 1) enterInput();
+  }
 }
 
 function btnPi() {
@@ -3294,12 +3301,14 @@ function extractReal(tmpString) {
 function extractImaginary(tmpString) {
   var tmpImaginary = '';  
 
-  if (radix === 10) { 
-    tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
-    tmpImaginary = tmpImaginary.replace(/ /g, '');
-    if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
-    // Remove 'j'
-    tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);     
+  if (radix === 10) {     
+    // if (!/[,]/g.test(tmpString)) {
+      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
+      tmpImaginary = tmpImaginary.replace(/ /g, '');
+      if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
+      // Remove 'j'
+      tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
+    // }
   } else {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
     if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
