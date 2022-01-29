@@ -1259,12 +1259,13 @@ function radical() {
 
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   y = buildComplexNumber(objY);
-  result = math.nthRoots(y, x).toString().replace(/i/g, 'j');
   
+  result = math.nthRoots(y, x).toString().replace(/i/, 'j');
   resultArr = result.split(',');
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x); 
   
   for (var i = 0; i < resultArr.length; i++) {
+    resultArr[i] = resultArr[i].replace(/i$/, 'j');
     if (radix !== 10) resultArr[i] = resultArr[i].toString(radix);  
     displayResult(resultArr[i], newUnits);
     if (i < resultArr.length - 1) enterInput();
