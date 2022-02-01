@@ -1293,7 +1293,7 @@ function btnParenthesis() {
 function btnModulus() {  
   if (shifted) {
     if (!/[=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
-  } else {
+  } else {    
     modulus();
   }  
 }
@@ -1311,8 +1311,13 @@ function modulus() {
     }
     objY = stack.pop();
   }
-  var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());  
+  var objX = getX();   
+  var y;  
+  if (isNaN(objY.getRealPart()) && isNaN(objY.getImaginary())) {
+    calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
+  } else {
+    y = isNaN(parseFloat(objY.getRealPart())) ? parseFloat(objY.getImaginary()) : parseFloat(objY.getRealPart()); 
+  }
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
   var newUnits = '';
   var result = y % x;
@@ -1689,7 +1694,8 @@ function btnTangent() {
 }
 
 function sin(input) {
-  var objX = getX(input);
+  console.log('y');
+  var objX = getN(input);
   var x = buildComplexNumber(objX);
   if ($('btn-angle').value === 'deg') {    
     x.re = (x.im === 0 && (x.re === 0 || x.re % 360 === 0)) ? 0 : x.re * Math.PI / 180;
@@ -2193,7 +2199,6 @@ function enterLapTime() {
 }
 
 function stopwatchStart(seconds) { 
-  console.log('elapsedTime', elapsedTime);
   if ($('timer').innerHTML == '') {
 
     var milliseconds = seconds ? seconds * 1000 : 10;
@@ -3401,13 +3406,14 @@ function extractImaginary(tmpString) {
   var tmpImaginary = '';  
 
   if (radix === 10) {     
-    // if (!/[,]/g.test(tmpString)) {
+    // if (!/[,()]/g.test(tmpString)) {
+    if (!/[()]/g.test(tmpString)) {
       tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
       tmpImaginary = tmpImaginary.replace(/ /g, '');
       if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
       // Remove 'j'
       tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
-    // }
+    }
   } else {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
     if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
