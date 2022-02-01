@@ -1694,8 +1694,7 @@ function btnTangent() {
 }
 
 function sin(input) {
-  console.log('y');
-  var objX = getN(input);
+  var objX = getX(input);
   var x = buildComplexNumber(objX);
   if ($('btn-angle').value === 'deg') {    
     x.re = (x.im === 0 && (x.re === 0 || x.re % 360 === 0)) ? 0 : x.re * Math.PI / 180;
