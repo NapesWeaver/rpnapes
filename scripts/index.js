@@ -1167,8 +1167,20 @@ function btnRoot() {
   }
 }
 
-function mathPow(y, x) {
-  return Math.pow(y, x);
+function mathPow(num, pow) {
+  var objX = getX(pow);
+  var objY = getX(num);
+
+  x = buildComplexNumber(objX);
+  y = buildComplexNumber(objY); 
+
+  var result = math.pow(y, x);
+
+  if (result.im === 0) {
+    return result.re;
+  } else {
+    return result.toString().replace(/i$/, 'j');
+  }  
 }
 
 function exponential() {
@@ -1183,7 +1195,7 @@ function exponential() {
   if (stackFocus) {
     objY = stack[getIndex('lst-stack') - stackSize];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
       enterInput();
       $('txt-input').value = '2';
     }
@@ -1191,9 +1203,9 @@ function exponential() {
   }  
   objX = getX();
 
-  y = buildComplexNumber(objY); 
-  x = buildComplexNumber(objX);
-  result = math.pow(y, x).toString().replace(/i$/, 'j');
+  y = objY.getSoul();
+  x = objX.getSoul();
+  result = mathPow(y, x);
   
   if (radix !== 10) result = result.toString(radix);  
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
@@ -1696,6 +1708,7 @@ function btnTangent() {
 function sin(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
+
   if ($('btn-angle').value === 'deg') {    
     x.re = (x.im === 0 && (x.re === 0 || x.re % 360 === 0)) ? 0 : x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
@@ -1711,6 +1724,7 @@ function sin(input) {
 function cos(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
+
   if ($('btn-angle').value === 'deg') {  
     
     if (x.im === 0 && (x.re === 270 || (x.re - 270) % 360 === 0 || x.re === 90 || (x.re - 90) % 360 === 0)) {
@@ -1733,6 +1747,7 @@ function cos(input) {
 function tan(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
+
   if ($('btn-angle').value === 'deg') {    
 
     if (x.im === 0 && (x.re === 0 || x.re % 360 === 0 || x.re === 180 || (x.re - 180) % 360 === 0)) {
@@ -1759,6 +1774,7 @@ function tan(input) {
 function asin(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
+
   x = math.asin(x);
 
   if ($('btn-angle').value === 'deg') {
@@ -1775,6 +1791,7 @@ function asin(input) {
 function acos(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
+
   x = math.acos(x);
 
   if ($('btn-angle').value === 'deg') {
@@ -1791,6 +1808,7 @@ function acos(input) {
 function atan(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
+
   x = math.atan(x);
 
   if ($('btn-angle').value === 'deg') {
@@ -2313,7 +2331,7 @@ function help(command) {
       inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'maths':
-      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log([x],y) pow([x],y) root([x],y)');
+      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log([x],y) pow([x],y) root([x],y). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
       break;
     case 'max':
       inputText('max: Find the stack element with the maximum value that is not NaN.');
@@ -2838,7 +2856,7 @@ function parseCommand() {
 
 function parseEvaluation(input) {
   // If input does not contain quotes or regex (input is not part of another program) AND it contains [!^√]  
-  if (!/(['"]|\/[ig]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
+  if (!/(['"]|\/[gij]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
     input = input.replace(/ /g, '');
     // Parse nested symbols
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
