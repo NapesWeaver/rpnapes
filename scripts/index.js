@@ -1672,98 +1672,114 @@ function btnAngle() {
 
 function btnSine() {
   backupUndo();
+  var objX;
 
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
+  if (stackFocus) {
+    objX = stack[getIndex('lst-stack') - stackSize];
+  } else {
+    objX = getX();
+  }
+  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
+  x = buildComplexNumber(objX);
 
   if (shifted) {
-    $('txt-input').value = asin($('txt-input').value);
+    $('txt-input').value = asin(x);
   } else {
-    $('txt-input').value = sin($('txt-input').value);
+    $('txt-input').value = sin(x);
   }
-  updateDisplay();
-  $('txt-input').select();  
+  $('txt-input').select();
 }
 
 function btnCosine() {
   backupUndo();
+  var objX;
 
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
+  if (stackFocus) {
+    objX = stack[getIndex('lst-stack') - stackSize];
+  } else {
+    objX = getX();
+  }
+  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
+  x = buildComplexNumber(objX);
 
   if (shifted) {
-    $('txt-input').value = acos($('txt-input').value);
+    $('txt-input').value = acos(x);
   } else {
-    $('txt-input').value = cos($('txt-input').value);
+    $('txt-input').value = cos(x);
   }
-  updateDisplay();
-  $('txt-input').select();
+  $('txt-input').select()
 }
 
 function btnTangent() {
   backupUndo();
+  var objX;
 
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  $('txt-input').value = $('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '');
+  if (stackFocus) {
+    objX = stack[getIndex('lst-stack') - stackSize];
+  } else {
+    objX = getX();
+  }
+  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
+  x = buildComplexNumber(objX);
 
   if (shifted) {
-    $('txt-input').value = atan($('txt-input').value);
+    $('txt-input').value = atan(x);
   } else {
-    $('txt-input').value = tan($('txt-input').value);
+    $('txt-input').value = tan(x);
   }
-  updateDisplay();
-  $('txt-input').select();
+  $('txt-input').select()
 }
 
 function sin(x) {
-  x = calculate(x);
-  if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
-  if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return -1;
-  if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return 0;
-  if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return 1;
-  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
-  return Math.sin(x);
+  if ($('btn-angle').value === 'deg') {
+    x.re = x.re * Math.PI / 180;
+    x.im = x.im * Math.PI / 180;
+  }
+  return math.sin(x).toString().replace(/i$/, 'j');
 }
 
 function cos(x) {
-  x = calculate(x);
-  if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 1;
-  if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return 0;
-  if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return -1;
-  if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return 0;
-  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
-  return Math.cos(x);
+  if ($('btn-angle').value === 'deg') {
+    x.re = x.re * Math.PI / 180;
+    x.im = x.im * Math.PI / 180;
+  }
+  return math.cos(x).toString().replace(/i$/, 'j');
 }
 
 function tan(x) {
-  x = calculate(x);
-  if ($('btn-angle').value === 'deg' && (x === 0 || x % 360 === 0)) return 0;
-  if ($('btn-angle').value === 'deg' && (x === 270 || (x - 270) % 360 === 0)) return -Infinity;
-  if ($('btn-angle').value === 'deg' && (x === 180 || (x - 180) % 360 === 0)) return 0;
-  if ($('btn-angle').value === 'deg' && (x === 90 || (x - 90) % 360 === 0)) return Infinity;
-  if ($('btn-angle').value === 'deg') x = x * Math.PI / 180;
-  return Math.tan(x);
+  if ($('btn-angle').value === 'deg') {
+    x.re = x.re * Math.PI / 180;
+    x.im = x.im * Math.PI / 180;
+  }
+  return math.tan(x).toString().replace(/i$/, 'j');
 }
 
+
 function asin(x) {
-  x = calculate(x);
-  x = Math.asin(x);
-  if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
-  return x;
+  x = math.asin(x);
+  if ($('btn-angle').value === 'deg') {
+    x.re = x.re * 180 / Math.PI;
+    x.im = x.im * 180 / Math.PI;
+  }
+  return x.toString().replace(/i$/, 'j');
 }
 
 function acos(x) {
-  x = calculate(x);
-  x = Math.acos(x);
-  if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
-  return x;
+  x = math.acos(x);
+  if ($('btn-angle').value === 'deg') {
+    x.re = x.re * 180 / Math.PI;
+    x.im = x.im * 180 / Math.PI;
+  }
+  return x.toString().replace(/i$/, 'j');
 }
 
 function atan(x) {
-  x = calculate(x);
-  x = Math.atan(x);
-  if ($('btn-angle').value === 'deg') x = (x * 180) / Math.PI;
-  return x;
+  x = math.atan(x);
+  if ($('btn-angle').value === 'deg') {
+    x.re = x.re * 180 / Math.PI;
+    x.im = x.im * 180 / Math.PI;
+  }
+  return x.toString().replace(/i$/, 'j');
 }
 
 //////// Input Buttons ///////////////////////////////////////////////////////////////
@@ -2063,7 +2079,7 @@ function geolocationError(error) {
 }
 
 /**
- * Get the user IP throught the webkitRTCPeerConnection
+ * Get the user IP through the webkitRTCPeerConnection
  * @param onNewIP {Function} listener function to expose the IP locally
  * @return undefined
  */
@@ -2147,22 +2163,29 @@ function timeToString(time) {
 }
 
 function menuStopwatch() {
-  stopwatchStart();
+  if (elapsedTime === 0) {
+    stopwatchStart();
+  } else {
+    stopwatchReset();
+  }
+}
+
+function enterLapTime() {
+  $('txt-input').value = timeToString(elapsedTime);
+  btnEnter();
 }
 
 function stopwatchStart(seconds) { 
-  
+  console.log('elapsedTime', elapsedTime);
   if ($('timer').innerHTML == '') {
 
-    stack.pop();
-    inputText('Click timer display to cancel');
-    enterInput();
-    updateDisplay();
-
     var milliseconds = seconds ? seconds * 1000 : 10;
-
     elapsedTime = 0;
     startTime = Date.now() - elapsedTime;
+
+    if (stack[stack.length - 1].getSoul() === 'stopwatch') stack.pop();
+    inputText('Quit the stopwatch/timer with the \'stop\' command or by clicking Stopwatch menu item.');
+    updateDisplay();
 
     if (seconds) {
       alertTimer = setTimeout(function() {
@@ -2170,10 +2193,8 @@ function stopwatchStart(seconds) {
         elapsedTime = 0;
         clearInterval(timerInterval);
         $('timer').innerHTML = '';
-        if (!$('menu-haptic-li').classList.contains('strikethrough')) {
-          // navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);// Morse code - 'SOS'
-          navigator.vibrate(300);
-        }
+        if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate(300);
+        //if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);// Morse code - 'SOS'
         playAudio($('dual-red-alert'));
         // playAudio($('computerscanner'));
         flashInterval = setInterval(function() {
@@ -2187,20 +2208,13 @@ function stopwatchStart(seconds) {
     }
     timerInterval = setInterval(function() {      
       elapsedTime = Date.now() - startTime;
-
-      if (seconds) {
-        $('timer').innerHTML = timeToString(elapsedTime);         
-      } else {
-        $('timer').innerHTML = timeToString(elapsedTime);
-        $('txt-input').value = timeToString(elapsedTime);
-      }
+      $('timer').innerHTML = timeToString(elapsedTime);         
     }, 10);
   }
 }
 
 function stopwatchReset() {
   $('txt-input').value = timeToString(elapsedTime);
-  // $('txt-input').value = '00:00:00';
   elapsedTime = 0;
   clearInterval(timerInterval);
   clearTimeout(alertTimer);
@@ -2332,16 +2346,19 @@ function help(command) {
       inputText('sort [unit|asc|desc] [asc|desc]: Sort stack. Ascending order by default. Sorting by units is also supported. Example usage: \'sort unit desc\'.');
       break;
     case 'sound':
-      inputText('sound: Toggle sound on/off for Tricorder buttons.');
+      inputText('sound: Toggle sound.');
       break;
     case 'stopwatch':
-      inputText('stopwatch: Starts the stopwatch. Press ENTER for lap times. Click the timer in the display area to quit.');
+      inputText('stopwatch: Starts the stopwatch.  Clicking timer enters lap times. Stop the stopwatch with the \'stop\' command. Alternatively, clicking the Stopwatch menu item (Tools -> Programs -> Stopwatch) will start and stop the stopwatch.');
+      break;
+    case 'stop':
+      inputText('stop: Stop/cancel the stopwatch/timer. Alternatively, click stopwatch menu item.');
       break;
     case 'time':
       inputText('time: Returns the current time.');
       break;
     case 'timer':
-      inputText('timer [n]: Set a timer, in seconds. If no argument is supplied in-line, last entry on stack is used. Click timer display to cancel. Turn sound on for alarm.');
+      inputText('timer [n]: Set a timer, in seconds. If no argument is supplied in-line, the last entry on the stack is used. Turn sound on from the menu (Veiw -> Sound) for alarm. Cancel timer with the \'stop\' command or by clicking the Stopwatch menu item (Tools -> Programs -> Stopwatch).');
       break;
     case 'total':
       inputText('total: Totals the stack elements that are not NaN and returns the result.');
@@ -2366,7 +2383,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, time, timer, total, tostring, unembed, wiki, youtube');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube');
   }
   enterInput();
   $('txt-input').value = '';
@@ -2725,6 +2742,12 @@ function parseCommand() {
       updateDisplay();
       $('txt-input').value = '';
       btnSave();
+      break;
+    case 'stop':
+      stack.pop();
+      updateDisplay();
+      $('txt-input').value = '';
+      stopwatchReset();
       break;
     case 'run':
       stack.pop();
@@ -4926,7 +4949,8 @@ window.onload = function () {
     $('menu-haptic').style = 'display:none';
   }
 
-  $('timer').onclick = stopwatchReset;
+  // $('timer').onclick = stopwatchReset;
+  $('timer').onclick = enterLapTime;
 
   // Text Area
   $('lst-stack').style.color = '#000000';// noscript warning was red ;)
