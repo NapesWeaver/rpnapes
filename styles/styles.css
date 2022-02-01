@@ -31,6 +31,7 @@ header {
     position: absolute;
     margin-top: .3em;
     margin-left: 11em;
+    font-weight: 700;
     background-color: transparent;
     color: #00007C;
 }

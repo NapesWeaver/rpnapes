@@ -1052,8 +1052,7 @@ function inverse() {
 function btnFactorial() {
   backupUndo();
   var objX;
-
-  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = stack.pop();
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = factorial(x);
   
@@ -1151,7 +1150,7 @@ function naturalLog() {
   backupUndo();
   var objX;
 
-  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = stack.pop();
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = ln(x);
 
@@ -1692,8 +1691,8 @@ function btnTangent() {
 function sin(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
-  if ($('btn-angle').value === 'deg') {
-    x.re = x.re * Math.PI / 180;
+  if ($('btn-angle').value === 'deg') {    
+    x.re = (x.im === 0 && (x.re === 0 || x.re % 360 === 0)) ? 0 : x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
   }
   x = math.sin(x);
@@ -1707,11 +1706,18 @@ function sin(input) {
 function cos(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
-  if ($('btn-angle').value === 'deg') {
-    x.re = x.re * Math.PI / 180;
-    x.im = x.im * Math.PI / 180;
+  if ($('btn-angle').value === 'deg') {  
+    
+    if (x.im === 0 && (x.re === 270 || (x.re - 270) % 360 === 0 || x.re === 90 || (x.re - 90) % 360 === 0)) {
+      x.re = 0;      
+    } else {
+      x.re = x.re * Math.PI / 180;
+      x.im = x.im * Math.PI / 180;
+      x = math.cos(x);
+    }
+  } else {
+    x = math.cos(x);
   }
-  x = math.cos(x);
   if (x.im === 0) {
     return x.re;
   } else {
@@ -1722,18 +1728,28 @@ function cos(input) {
 function tan(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
-  if ($('btn-angle').value === 'deg') {
-    x.re = x.re * Math.PI / 180;
-    x.im = x.im * Math.PI / 180;
+  if ($('btn-angle').value === 'deg') {    
+
+    if (x.im === 0 && (x.re === 0 || x.re % 360 === 0 || x.re === 180 || (x.re - 180) % 360 === 0)) {
+      x.re = 0;
+    } else if (x === 270 || (x - 270) % 360 === 0) {
+      x.re = -Infinity;
+    } else if (x === 90 || (x - 90) % 360 === 0) {
+      x.re = Infinity;
+    } else {
+      x.re = x.re * Math.PI / 180;
+      x.im = x.im * Math.PI / 180;
+      x = math.tan(x);
+    }
+  } else {
+    x = math.tan(x);
   }
-  x = math.tan(x);
   if (x.im === 0) {
     return x.re;
   } else {
     return x.toString().replace(/i$/, 'j');
   }  
 }
-
 
 function asin(input) {
   var objX = getX(input);
