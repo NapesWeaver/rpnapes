@@ -1603,8 +1603,8 @@ function btnAdd() {
 }
 
 function addComplex(y, x) {
-  if (x.re === Infinity && y.re === Infinity) return Infinity
-  if (x.re === -Infinity && y.re === -Infinity) return -Infinity
+  if (x.re === Infinity && y.re === Infinity && x.im === 0 && y.im === 0) return Infinity
+  if (x.re === -Infinity && y.re === -Infinity && x.im === 0 && y.im === 0) return -Infinity
   return math.add(y, x);
 }
 
