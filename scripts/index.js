@@ -442,8 +442,9 @@ function btnEval() {
   $('txt-input').select();  
 }
 
-function getX() {
-  var soulX = $('txt-input').value.trim();
+function getX(input) {
+  var x = input === undefined ? $('txt-input').value.trim() : input.toString();
+  var soulX = x;
   var realPartX = extractReal(soulX);
   var imaginaryX = extractImaginary(soulX);
   var unitsX;
@@ -1052,11 +1053,7 @@ function btnFactorial() {
   backupUndo();
   var objX;
 
-  if (stackFocus) {
-    objX = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objX = getX();
-  }
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = stack.pop();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = factorial(x);
   
@@ -1154,11 +1151,7 @@ function naturalLog() {
   backupUndo();
   var objX;
 
-  if (stackFocus) {
-    objX = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objX = getX();
-  }
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = stack.pop();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
   var result = ln(x);
 
@@ -1515,11 +1508,7 @@ function division() {
   var result;
   var newUnits = '';
 
-  if (stackFocus) {
-    objY = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objY = stack.pop();
-  }
+  stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
   y = buildComplexNumber(objY); 
@@ -1548,11 +1537,7 @@ function multiplication() {
   var result;
   var newUnits = '';
 
-  if (stackFocus) {
-    objY = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objY = stack.pop();
-  }
+  stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
   y = buildComplexNumber(objY); 
@@ -1581,11 +1566,7 @@ function subtraction() {
   var result;
   var newUnits = '';
 
-  if (stackFocus) {
-    objY = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objY = stack.pop();
-  }
+  stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
   y = buildComplexNumber(objY); 
@@ -1614,11 +1595,7 @@ function addition() {
   var result;
   var newUnits = '';
 
-  if (stackFocus) {
-    objY = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objY = stack.pop();
-  }
+  stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
   y = buildComplexNumber(objY); 
@@ -1672,114 +1649,138 @@ function btnAngle() {
 
 function btnSine() {
   backupUndo();
-  var objX;
 
-  if (stackFocus) {
-    objX = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objX = getX();
-  }
-  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
-  x = buildComplexNumber(objX);
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  var input = $('txt-input').value;
 
   if (shifted) {
-    $('txt-input').value = asin(x);
+    $('txt-input').value = asin(input);
   } else {
-    $('txt-input').value = sin(x);
+    $('txt-input').value = sin(input);
   }
   $('txt-input').select();
 }
 
 function btnCosine() {
   backupUndo();
-  var objX;
 
-  if (stackFocus) {
-    objX = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objX = getX();
-  }
-  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
-  x = buildComplexNumber(objX);
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  var input = $('txt-input').value;
 
   if (shifted) {
-    $('txt-input').value = acos(x);
+    $('txt-input').value = acos(input);
   } else {
-    $('txt-input').value = cos(x);
+    $('txt-input').value = cos(input);
   }
   $('txt-input').select()
 }
 
 function btnTangent() {
   backupUndo();
-  var objX;
 
-  if (stackFocus) {
-    objX = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    objX = getX();
-  }
-  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
-  x = buildComplexNumber(objX);
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  var input = $('txt-input').value;
 
   if (shifted) {
-    $('txt-input').value = atan(x);
+    $('txt-input').value = atan(input);
   } else {
-    $('txt-input').value = tan(x);
+    $('txt-input').value = tan(input);
   }
   $('txt-input').select()
 }
 
-function sin(x) {
+function sin(input) {
+  var objX = getX(input);
+  var x = buildComplexNumber(objX);
   if ($('btn-angle').value === 'deg') {
     x.re = x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
   }
-  return math.sin(x).toString().replace(/i$/, 'j');
+  x = math.sin(x);
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x.toString().replace(/i$/, 'j');
+  }  
 }
 
-function cos(x) {
+function cos(input) {
+  var objX = getX(input);
+  var x = buildComplexNumber(objX);
   if ($('btn-angle').value === 'deg') {
     x.re = x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
   }
-  return math.cos(x).toString().replace(/i$/, 'j');
+  x = math.cos(x);
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x.toString().replace(/i$/, 'j');
+  }  
 }
 
-function tan(x) {
+function tan(input) {
+  var objX = getX(input);
+  var x = buildComplexNumber(objX);
   if ($('btn-angle').value === 'deg') {
     x.re = x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
   }
-  return math.tan(x).toString().replace(/i$/, 'j');
+  x = math.tan(x);
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x.toString().replace(/i$/, 'j');
+  }  
 }
 
 
-function asin(x) {
+function asin(input) {
+  var objX = getX(input);
+  var x = buildComplexNumber(objX);
   x = math.asin(x);
+
   if ($('btn-angle').value === 'deg') {
-    x.re = x.re * 180 / Math.PI;
-    x.im = x.im * 180 / Math.PI;
+    x.re = (x.re * 180) / Math.PI;
+    x.im = (x.im * 180) / Math.PI;
   }
-  return x.toString().replace(/i$/, 'j');
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x.toString().replace(/i$/, 'j');
+  }  
 }
 
-function acos(x) {
+function acos(input) {
+  var objX = getX(input);
+  var x = buildComplexNumber(objX);
   x = math.acos(x);
+
   if ($('btn-angle').value === 'deg') {
-    x.re = x.re * 180 / Math.PI;
-    x.im = x.im * 180 / Math.PI;
+    x.re = (x.re * 180) / Math.PI;
+    x.im = (x.im * 180) / Math.PI;
   }
-  return x.toString().replace(/i$/, 'j');
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x.toString().replace(/i$/, 'j');
+  }  
 }
 
-function atan(x) {
+function atan(input) {
+  var objX = getX(input);
+  var x = buildComplexNumber(objX);
   x = math.atan(x);
+
   if ($('btn-angle').value === 'deg') {
-    x.re = x.re * 180 / Math.PI;
-    x.im = x.im * 180 / Math.PI;
+    x.re = (x.re * 180) / Math.PI;
+    x.im = (x.im * 180) / Math.PI;
   }
-  return x.toString().replace(/i$/, 'j');
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x.toString().replace(/i$/, 'j');
+  }  
 }
 
 //////// Input Buttons ///////////////////////////////////////////////////////////////
