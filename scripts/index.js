@@ -1602,6 +1602,12 @@ function btnAdd() {
   }  
 }
 
+function addComplex(y, x) {
+  if (x.re === Infinity && y.re === Infinity) return Infinity
+  if (x.re === -Infinity && y.re === -Infinity) return -Infinity
+  return math.add(y, x);
+}
+
 function addition() {
   backupUndo();
   var objX = getX();
@@ -1616,7 +1622,7 @@ function addition() {
   
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
-  result = math.add(y, x).toString().replace(/i$/, 'j');
+  result = addComplex(y, x).toString().replace(/i$/, 'j');
   
   if (radix !== 10) result = result.toString(radix);  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
