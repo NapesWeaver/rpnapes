@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '10:23:56';
+var tStamp = '10:41:57';
 
 var stack = [];
 var backups = [];
@@ -198,10 +198,10 @@ function toggleHaptic() {
 }
 
 function hapticResponse() {
-  if (isMobile) {
+  // if (isMobile) {
     haptic();
     $('txt-input').readOnly = true;
-  }
+  // }
 }
 
 function haptic() {
@@ -536,10 +536,8 @@ function deleteText(txtField, forward) {
   if (txtField.selectionStart === txtField.selectionEnd && !forward) startPos--;
 
   txtField.value = txtField.value.slice(0, startPos) + txtField.value.slice(endPos, txtField.value.length);
-  
-  // if (startPos <= 0 && !forward) startPos = $('txt-input').value.length;
-  if (startPos <= 0 && !forward) startPos = txtField.selectionEnd;
-  // console.log('test', txtField.selectionEnd);
+    
+  if (startPos <= 0 && !forward) startPos = txtField.selectionEnd;  
   txtField.selectionStart = startPos;
   txtField.selectionEnd = startPos;
   $('txt-input').focus();
