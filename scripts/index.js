@@ -533,10 +533,11 @@ function deleteText(txtField, forward) {
   var endPos = txtField.selectionEnd;
   
   if (txtField.selectionStart === txtField.selectionEnd && forward) endPos++;
-  if (txtField.selectionStart === txtField.selectionEnd && !forward ) startPos--;
+  if (txtField.selectionStart === txtField.selectionEnd && !forward) startPos--;
 
   txtField.value = txtField.value.slice(0, startPos) + txtField.value.slice(endPos, txtField.value.length);
-
+  console.log('txtField.value.length', startPos);
+  if (startPos === 0 && !forward) startPos = $('txt-input').value.trim().length;
   txtField.selectionStart = startPos;
   txtField.selectionEnd = startPos;
   $('txt-input').focus();
