@@ -9,8 +9,7 @@
 
 body {
     touch-action: manipulation;
-    background-color: #C4C6B1;    
-    /* overflow-x: hidden; */
+    background-color: #C4C6B1;
     overflow-Y: hidden;/* Needed for reference IFrame */
 }
 
@@ -21,6 +20,19 @@ header {
     background-color: #6D8EBF;
 }
 
+#txt-input,
+#menu-wrap,
+#timer,
+.lst-stack,
+.lst-notes,
+.btn-big,
+.btn-med,
+.btn-small,
+.btn-other {
+    /* font-family: "Microsoft Sans Serif", "Sans Serif"; */
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .btn-xoff {
     height: 18px;
     width: 18px;
@@ -29,13 +41,11 @@ header {
 
 #timer {
     position: absolute;
-    margin-top: .3em;
-    margin-left: 11em;
+    top: 3px;
+    margin-left: 4.8em;    
     font-weight: 700;
-    /* background-color: transparent; */
-    background-color: #FFFFFF;
-    color: #B92020;
-    z-index: 2;
+    background-color: transparent;
+    color: #F0EF68;
 }
 
 #open {
@@ -112,7 +122,6 @@ select::-ms-expand {
 .lst-stack,
 .lst-notes,
 #txt-input {
-    font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .7em;
     font-weight: bold;
     outline: none;
@@ -151,8 +160,7 @@ select::-ms-expand {
     margin-right: 1.9%;
     margin-bottom: 5px;
     font-size: .7em;
-    font-weight: bold;        
-    font-family: "Microsoft Sans Serif", "Sans Serif";
+    font-weight: bold;
     border-radius: 9%;
     background-color: ButtonFace;/* Needed for linux compatibility */
     background-color: #D4D0C8;
@@ -346,7 +354,7 @@ select::-ms-expand {
     border-radius: 2px;
 }
     #menu-off:hover {            
-            background-color: #B85252;/** YouTube red **/
+            background-color: #B85252;/* YouTube red */
             color: #000000;
         }
 
@@ -355,7 +363,7 @@ select::-ms-expand {
     text-decoration: underline;
 }
     .btn-off:hover {
-            background-color: #B92020;/** YouTube red **/
+            background-color: #B92020;/* YouTube red */
             color: #FFFFFF;
         }
 
@@ -423,7 +431,6 @@ label a {
 #menu-wrap {
     margin-left: 3%;
     padding-bottom: 17px;
-    font-family: "Microsoft Sans Serif", "Sans Serif";
     font-size: .8em;
 }
 
@@ -550,6 +557,10 @@ label a {
     .menu > ul > li > a {
         padding-right: 1.5em;
     }
+
+    #timer {
+        margin-left: 6.6em;
+    }
 }
 
 @media only screen and (min-width: 360px) {
@@ -562,6 +573,8 @@ label a {
     }
 
     #timer {
+        top: 1px;
+        margin-left: 7em;
         font-size: 1.4em;
     }
 

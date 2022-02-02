@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '14:3:35';
+var tStamp = '14:5:35';
 
 var stack = [];
 var backups = [];
@@ -2457,6 +2457,8 @@ function help(command) {
     }
   } else {
     inputText('about, average, clear, constants, darkmode, date, duckgo, embed, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube');
+    enterInput();
+    inputText('For command-specific help, type help followed by command e.g. help youtube.');
   }
   enterInput();
   $('txt-input').value = '';
