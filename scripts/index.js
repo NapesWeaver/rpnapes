@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '10:41:57';
+var tStamp = '10:58:57';
 
 var stack = [];
 var backups = [];
