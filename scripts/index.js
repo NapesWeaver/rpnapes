@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '10:13:56';
+var tStamp = '10:23:56';
 
 var stack = [];
 var backups = [];
@@ -4590,7 +4590,7 @@ document.addEventListener('keydown', function (event) {
     if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      if (!mobile) btnBackspace();
+      if (!isMobile || !isChrome) btnBackspace();
     }
     break;
   case 16:// SHIFT
