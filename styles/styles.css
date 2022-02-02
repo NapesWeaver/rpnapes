@@ -32,8 +32,10 @@ header {
     margin-top: .3em;
     margin-left: 11em;
     font-weight: 700;
-    background-color: transparent;
-    color: #00007C;
+    /* background-color: transparent; */
+    background-color: #FFFFFF;
+    color: #B92020;
+    z-index: 2;
 }
 
 #open {

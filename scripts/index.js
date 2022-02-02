@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '11:38:00';
+var tStamp = '14:3:35';
 
 var stack = [];
 var backups = [];
@@ -2255,8 +2255,8 @@ function stopwatchStart(seconds) {
     var milliseconds = seconds ? seconds * 1000 : 10;
     elapsedTime = 0;
     startTime = Date.now() - elapsedTime;
-
-    if (stack[stack.length - 1].getSoul() === 'stopwatch') stack.pop();
+    
+    if (stack[stack.length - 1] !== undefined && stack[stack.length - 1].getSoul() === 'stopwatch') stack.pop();
     inputText('Quit the stopwatch/timer with the \'stop\' command or by clicking Stopwatch menu item.');
     updateDisplay();
 

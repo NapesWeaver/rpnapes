@@ -176,7 +176,7 @@
                     <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;Reference</a></li>                         
                   </ul>
                 </li>
-                <li id='tools-li' class="haptic-response">
+                <li class="haptic-response">
                   <a onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Tools</a>
                   <ul class="sub-menu">
                     <li class="menu">
@@ -213,7 +213,7 @@
                         <li><a id="menu-stack-total" title="Total the stack">&nbsp;&nbsp;Total</a></li>
                         <li><a id="menu-fizz-buzz" title="Example calcamatron script">&nbsp;&nbsp;Fizz Buzz</a></li>
                         <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;IP Mapper</a></li>                        
-                        <li><a id="menu-stopwatch" title="Start stopwatch" onclick="$('tools-li').style.overflow='hidden'">&nbsp;&nbsp;Stopwatch</a></li>
+                        <li><a id="menu-stopwatch" title="Start stopwatch">&nbsp;&nbsp;Stopwatch</a></li>
                         <li><a id="menu-tricorder" title="Open Tricorder">&nbsp;&nbsp;Tricorder</a></li>
                         <li><a id="menu-twig" title="Game stub ;)">&nbsp;&nbsp;Twig</a></li>
                       </ul>
@@ -242,7 +242,7 @@
             </nav>
           </div>
 
-          <span id='timer' class="haptic-response" title="Click to reset"></span>
+          <span id='timer' class="haptic-response" title="Click for lap time"></span>
           <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified Feb 2, 2022." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
