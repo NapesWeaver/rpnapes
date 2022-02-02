@@ -176,9 +176,9 @@
                     <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;Reference</a></li>                         
                   </ul>
                 </li>
-                <li class="haptic-response">
+                <li id='tools-li' class="haptic-response">
                   <a onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Tools</a>
-                  <ul id='tools-ul' class="sub-menu">
+                  <ul class="sub-menu">
                     <li class="menu">
                       <a onclick="$('constants').className='visible';resetConstants()" onmouseover="$('formulas').className='hidden'">Constants</a>
                       <ul id="constants" onclick="$('constants').className='hidden'">
@@ -213,7 +213,7 @@
                         <li><a id="menu-stack-total" title="Total the stack">&nbsp;&nbsp;Total</a></li>
                         <li><a id="menu-fizz-buzz" title="Example calcamatron script">&nbsp;&nbsp;Fizz Buzz</a></li>
                         <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;IP Mapper</a></li>                        
-                        <li><a id="menu-stopwatch" title="Start stopwatch" onclick="$('tools-ul').style.overflow=hidden">&nbsp;&nbsp;Stopwatch</a></li>
+                        <li><a id="menu-stopwatch" title="Start stopwatch" onclick="$('tools-li').style.overflow='hidden'">&nbsp;&nbsp;Stopwatch</a></li>
                         <li><a id="menu-tricorder" title="Open Tricorder">&nbsp;&nbsp;Tricorder</a></li>
                         <li><a id="menu-twig" title="Game stub ;)">&nbsp;&nbsp;Twig</a></li>
                       </ul>
