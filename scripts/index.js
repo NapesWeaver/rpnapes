@@ -1170,13 +1170,17 @@ function btnRoot() {
 function mathPow(num, pow) {
   var objX = getX(pow);
   var objY = getX(num);
+  var result = {};
 
   x = buildComplexNumber(objX);
   y = buildComplexNumber(objY); 
 
-  var result = math.pow(y, x);
-
-  if (result.im === 0) {
+  if (x.im === 0 && y.im === 0) {
+    result.re = Math.pow(y.re, x.re);
+  } else {
+    result = math.pow(y, x);
+  }
+  if (result.im === undefined || result.im === 0) {
     return result.re;
   } else {
     return result.toString().replace(/i$/, 'j');
@@ -1212,23 +1216,43 @@ function exponential() {
   displayResult(result, newUnits);
 }
 
-function mathRoot(x, y) {
+function mathRoot(root, num) {
+  var objX = getX(root);
+  var objY = getX(num);
   var result;
-  if (y === undefined) {
-    y = x;
-    x = 2;
-  }  
-  if (y > 0) {
-    result = Math.pow(y, 1/x);
-  } else {    
-    result = Math.pow(-y, 1/x);
-    if (x % 2 === 0) {
-      result += 'j';
-    } else {
-      result = result * -1;
-    }
+
+  x = buildComplexNumber(objX);
+  y = buildComplexNumber(objY);
+  
+  var sign = Math.sign(y.re);
+  var results = math.nthRoots(y, x.re);
+
+  result = results[0];
+  for (var i = 1; i < results.length; i++) {
+    if (sign > 0 && results[i].re > result.re) result = results[i];
+    if (sign < 0 && results[i].re < result.re) result = results[i];
   }
-  return result;
+  if (result.im === 0) {
+    return result.re;
+  } else {
+    return result.toString().replace(/i$/, 'j');
+  } 
+}
+
+function mathRoots(root, num) {
+  var objX = getX(root);
+  var objY = getX(num);
+
+  x = buildComplexNumber(objX);
+  y = buildComplexNumber(objY);
+
+  var results = math.nthRoots(y, x.re);
+  var resultsArr = results.toString().split(',');
+
+  for (var i = 0; i < resultsArr.length; i++) {
+    resultsArr[i] = resultsArr[i].replace(/i$/, 'j');
+  };
+  return resultsArr;  
 }
 
 function radical() {
@@ -1237,14 +1261,13 @@ function radical() {
   var objY;
   var x;
   var y;
-  var result;
-  var resultArr;
+  var results;
   var newUnits = '';
   
   if (stackFocus) {
     objY = stack[getIndex('lst-stack') - stackSize];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
       enterInput();
       $('txt-input').value = '2';
     }
@@ -1252,18 +1275,15 @@ function radical() {
   }
   objX = getX();
 
-  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  y = buildComplexNumber(objY);
-  
-  result = math.nthRoots(y, x).toString().replace(/i/, 'j');
-  resultArr = result.split(',');
+  y = objY.getSoul();
+  x = objX.getSoul();  
+  results = mathRoots(x, y);
+
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x); 
   
-  for (var i = 0; i < resultArr.length; i++) {
-    resultArr[i] = resultArr[i].replace(/i$/, 'j');
-    if (radix !== 10) resultArr[i] = resultArr[i].toString(radix);  
-    displayResult(resultArr[i], newUnits);
-    if (i < resultArr.length - 1) enterInput();
+  for (var i = 0; i < results.length; i++) {
+    displayResult(results[i], newUnits);
+    if (i < results.length - 1) enterInput();
   }
 }
 
@@ -2337,7 +2357,7 @@ function help(command) {
       inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'maths':
-      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log([x],y) pow([x],y) root([x],y). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
+      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
       break;
     case 'max':
       inputText('max: Find the stack element with the maximum value that is not NaN.');
@@ -2736,7 +2756,7 @@ function parseCommand() {
       break;
     case 'maths':
       stack.pop();
-      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log([x],y) pow([x],y) root([x],y)');
+      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
@@ -2966,7 +2986,13 @@ function pow(y, x) {
 }
 
 function root(y, x) {
+  if (x === undefined) x = 2;
   return mathRoot(x, y);
+}
+
+function roots(y, x) {
+  if (x === undefined) x = 2;
+  return mathRoots(x, y);
 }
 
 // Wired to HTML
