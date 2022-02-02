@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '22:37:38';
+var tStamp = '9:40:38';
 
 var stack = [];
 var backups = [];
@@ -537,7 +537,8 @@ function deleteText(txtField, forward) {
 
   txtField.value = txtField.value.slice(0, startPos) + txtField.value.slice(endPos, txtField.value.length);
   console.log('txtField.value.length', startPos);
-  if (startPos === 0 && !forward) startPos = $('txt-input').value.trim().length;
+  // if (startPos === 0 && !forward) startPos = $('txt-input').value.trim().length;
+  if (startPos === 0 && !forward && !isMobile) startPos = $('txt-input').value.trim().length;
   txtField.selectionStart = startPos;
   txtField.selectionEnd = startPos;
   $('txt-input').focus();
