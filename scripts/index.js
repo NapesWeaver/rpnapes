@@ -1219,20 +1219,27 @@ function exponential() {
 function mathRoot(root, num) {
   var objX = getX(root);
   var objY = getX(num);
-  var result;
+  var result = {};
+  var results = [{}];
 
   x = buildComplexNumber(objX);
   y = buildComplexNumber(objY);
   
-  var sign = Math.sign(y.re);
-  var results = math.nthRoots(y, x.re);
+  var signRoot = Math.sign(x.re);
+  var signNum = Math.sign(y.re);
 
-  result = results[0];
-  for (var i = 1; i < results.length; i++) {
-    if (sign > 0 && results[i].re > result.re) result = results[i];
-    if (sign < 0 && results[i].re < result.re) result = results[i];
+  if (signRoot > 0) {
+    results = math.nthRoots(y, x.re);
+  } else {
+    results[0].re = Math.pow(y.re, 1/x.re);
   }
-  if (result.im === 0) {
+  result = results[0];
+
+  for (var i = 1; i < results.length; i++) {
+    
+    if (signNum < 0 && results[i].re < result.re) result = results[i];
+  }
+  if (result.im === undefined || result.im === 0) {
     return result.re;
   } else {
     return result.toString().replace(/i$/, 'j');
