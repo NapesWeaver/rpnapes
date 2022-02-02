@@ -198,10 +198,10 @@ function toggleHaptic() {
 }
 
 function hapticResponse() {
-  // if (isMobile) {
+  if (isMobile) {
     haptic();
     $('txt-input').readOnly = true;
-  // }
+  }
 }
 
 function haptic() {
