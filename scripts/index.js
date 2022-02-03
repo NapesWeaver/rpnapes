@@ -1388,95 +1388,108 @@ function modulus() {
   $('txt-input').select();
 }
 
+function leadingSignChange(textInput) {
+
+  if (textInput.charAt(0) === '-') {
+    textInput = '+' + textInput.slice(1);
+  } else {
+    if (textInput.charAt(0) === '+') textInput = textInput.slice(1);
+    textInput = '-' + textInput;
+  }
+  return textInput.trim();
+}
+
+function signChange() {
+  backupUndo();
+  
+  var objX;
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
+
+  var result = {};
+  var text = objX.getSoul();  
+  result.re = text;  
+  var txtInput = $('txt-input');  
+  var startPos = txtInput.selectionStart;
+  var endPos = txtInput.selectionEnd;
+
+  if (((startPos === 0 && startPos === endPos) || (startPos === 0 && endPos === text.length)) || (startPos >= text.length && !/[-+eE^√ ]/.test(text.charAt(startPos - 1)))) {
+    // console.log('Sign Change:');    
+    if (isANumber(objX.getImaginary())) {     
+      result = math.unaryMinus(buildComplexNumber(objX));
+    } else if (isANumber(objX.getRealPart())) {      
+      result.re = objX.getRealPart() * -1;
+    } else {      
+      result.re = leadingSignChange(text);
+    }
+  } else {
+    // console.log('Insert:')
+    // console.log('text', text);
+    if (/[-+]/.test(text.charAt(startPos - 1))) {
+      // console.log('[-+]');
+      if (/-/.test(text.charAt(startPos - 1))) {
+        text = text.removeAt(startPos - 1, startPos);
+        if (/ /.test(text.charAt(startPos - 2))) {
+          // If there is a space to the left, explicit '+' inserted
+          text = text.insertAt(startPos - 1, '+');
+          startPos ++;
+        }
+      }
+      if (/[+]/.test(text.charAt(startPos - 1))) {   
+
+        text = text.removeAt(startPos - 1, startPos);
+        text = text.insertAt(startPos - 1, '-');
+        startPos ++;
+      }
+      result.re = text;
+      txtInput.selectionStart = startPos - 1;
+      txtInput.selectionEnd = startPos - 1;
+
+    } else if (/[eE^√ ]/.test(text.charAt(startPos - 1)) && !/[-+]/.test(text.charAt(startPos)) && !/[-+][ ]*$/.test(text)) {      
+      // console.log('[eE^√ ]');
+      if (/ /.test(text.charAt(startPos - 1))) {
+
+        text = text.insertAt(startPos, '-');
+        startPos = startPos + 2;
+      }
+      if (/[eE^√]/.test(text.charAt(startPos - 1))) {
+
+        if (/[-]/.test(text.charAt(startPos))) {
+
+          text = text.removeAt(startPos, startPos + 1);
+          startPos ++;
+        } else if (/[+]/.test(text.charAt(startPos))) {    
+
+          text = text.removeAt(startPos, startPos + 1);
+          text = text.insertAt(startPos, '-');
+          startPos = startPos + 2;
+        } else if (!/[-]/.test(text.charAt(startPos))) {
+          
+          text = text.insertAt(startPos, '-')
+          startPos = startPos + 2;
+        }
+      }
+      // console.log('result', result);
+      result.re = text;
+      txtInput.selectionStart = startPos - 1;
+      txtInput.selectionEnd = startPos - 1;
+    }       
+  }
+  // console.log('result', result);
+  // if (radix !== 10) { }    
+  if (result.im === undefined || result.im === 0) {
+    txtInput.value = result.re;
+  } else {
+    txtInput.value = result.toString().replace(/i$/, 'j');
+  }
+  // txtInput.select();
+}
+
 function btnSign() {  
   if (shifted) {
     if (!/[-+*/√%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[\^]/, '^');
   } else {
     signChange();
   }
-}
-
-function leadingSignChange(x) {
-
-  if (x.charAt(0) === '-') {
-    x =  '+' + x.slice(1);
-  } else {
-    if (x.charAt(0) === '+') x = x.slice(1);
-    x =  '-' + x;
-  }
-  return x.trim();
-}
-
-function signChange() {
-  backupUndo();
-  var x = '';
-  
-  if (stackFocus) {// Rebild x from stack
-    var objY = stack[getIndex('lst-stack') - stackSize];
-
-    if (isANumber(objY.getRealPart())) x += objY.getRealPart();
-    if (x) x += ' ';
-    if (isANumber(objY.getImaginary())) {
-      if (objY.getImaginary().charAt(0) === '-') {
-        if (x) x += '- '
-        x += (objY.getImaginary().toString()).slice(1) + 'j';
-      } else {
-        if (x) x += '+ ';
-        x += objY.getImaginary() + 'j';
-      }
-    }
-    if (objY.getUnits() !== 'null') x += ' ' + objY.getUnits();
-    if(!x) x = decodeSpecialChar(objY.getSoul());
-    $('txt-input').value = x.trim();
-  }  
-  x = $('txt-input').value;
-  var startPos = $('txt-input').selectionStart;
-  if (startPos === 0 || (startPos >= x.length && !/[-+eE^√ ]/.test(x.charAt(startPos - 1)))) {
-    x = leadingSignChange(x);
-  } else {
-    if (/[-+]/.test(x.charAt(startPos - 1))) {
-      if (/-/.test(x.charAt(startPos - 1))) {
-        x = x.removeAt(startPos - 1, startPos);
-        if (/ /.test(x.charAt(startPos - 2))) {// If there is a space to the left, explicit '+' inserted           
-          x = x.insertAt(startPos - 1, '+');
-          startPos ++;
-        }
-      }
-      if (/[+]/.test(x.charAt(startPos - 1))) {          
-        x = x.removeAt(startPos - 1, startPos);
-        x = x.insertAt(startPos - 1, '-');
-        startPos ++;
-      }
-      $('txt-input').value = x;
-      $('txt-input').selectionStart = startPos - 1;
-      $('txt-input').selectionEnd = startPos - 1;
-
-    } else if (/[eE^√ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos)) && !/[-+][ ]*$/.test(x)) {
-      if (/ /.test(x.charAt(startPos - 1))) {    
-        x = x.insertAt(startPos, '-');
-        startPos = startPos + 2;
-      }
-      if (/[eE^√]/.test(x.charAt(startPos - 1))) {
-        if (/[-]/.test(x.charAt(startPos))) {
-          x = x.removeAt(startPos, startPos + 1);
-          startPos ++;            
-        } else if (/[+]/.test(x.charAt(startPos))) {                  
-          x = x.removeAt(startPos, startPos + 1);
-          x = x.insertAt(startPos, '-');
-          startPos = startPos + 2;
-        } else if (!/[-]/.test(x.charAt(startPos))) {
-          x = x.insertAt(startPos, '-')
-          startPos = startPos + 2;
-        }
-      }
-      $('txt-input').value = x;
-      $('txt-input').selectionStart = startPos - 1;
-      $('txt-input').selectionEnd = startPos - 1;
-    }       
-  }  
-  // if (radix !== 10) { }    
-  $('txt-input').value = x;
-  $('txt-input').focus();
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
@@ -1537,6 +1550,7 @@ function multiplication() {
 
 function btnSubtract() {  
   if (shifted) {
+    // if (!/[+*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[-]/, '-');
     buttonInsert(/[-]/, '-');
   } else {
     subtraction();
