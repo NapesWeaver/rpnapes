@@ -1107,7 +1107,6 @@ function mathLn(num) {
   var objX = getX(num);
   var result = {};
   var x = buildComplexNumber(objX);
-
   result = math.log(x);
 
   if (result.im === undefined || result.im === 0) {
@@ -1121,11 +1120,8 @@ function naturalLog() {
   backupUndo();
   var objX;
   var result = {};
-
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-
   var x = objX.getSoul();
-
   result = mathLn(x);
 
   if (radix !== 10) result = result.toString(radix);
@@ -1142,6 +1138,7 @@ function mathLog(base, num) {
   result = math.log(y, x);
   
   if (result.im === undefined || result.im === 0) {
+    if (/[.][9]{11,}[0-9]*[0-9]$/.test(result.re)) result.re = Math.round(result.re);
     return result.re;
   } else {
     return result.toString().replace(/i$/, 'j');
