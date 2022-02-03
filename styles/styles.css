@@ -42,7 +42,8 @@ header {
 #timer {
     position: absolute;
     top: 2px;
-    margin-left: .3em;
+    margin-left: .6em;
+    font-size: 1.2em;
     font-weight: 700;
     background-color: transparent;
     color: #F0EF68;
@@ -569,8 +570,7 @@ label a {
     }
 
     #timer {
-        top: 1px;
-        font-size: 1.4em;
+        font-size: 1.6em;
     }
 
     header,
