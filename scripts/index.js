@@ -1112,7 +1112,8 @@ function mathLn(num) {
   if (result.im === undefined || result.im === 0) {
     return result.re;
   } else {
-    return result.toString().replace(/i$/, 'j');
+    result = result.toString().replace(/i$/g, 'j');
+    return result;
   }
 }
 
@@ -2945,7 +2946,7 @@ function roots(y, x) {
 }
 
 function ln(x) {
-  return math.log(x);
+  return mathLn(x);
 }
 
 function log(y, x) {
