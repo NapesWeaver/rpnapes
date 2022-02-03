@@ -1103,6 +1103,78 @@ function factorial(num) {
   return result;
 }
 
+function mathLn(num) {
+  var objX = getX(num);
+  var result = {};
+  var x = buildComplexNumber(objX);
+
+  result = math.log(x);
+
+  if (result.im === undefined || result.im === 0) {
+    return result.re;
+  } else {
+    return result.toString().replace(/i$/, 'j');
+  }
+}
+
+function naturalLog() {
+  backupUndo();
+  var objX;
+  var result = {};
+
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
+
+  var x = objX.getSoul();
+
+  result = mathLn(x);
+
+  if (radix !== 10) result = result.toString(radix);
+  displayResult(result, '');
+}
+
+function mathLog(base, num) {
+  var objX = getX(base);
+  var objY = getX(num);
+  var result = {};
+  var x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY); 
+
+  result = math.log(y, x);
+  
+  if (result.im === undefined || result.im === 0) {
+    return result.re;
+  } else {
+    return result.toString().replace(/i$/, 'j');
+  } 
+}
+
+function baseLog() {
+  backupUndo();
+  var objX;
+  var objY;
+  var x;
+  var y;
+  var result;
+
+  if (stackFocus) {
+    objY = stack[getIndex('lst-stack') - stackSize];
+  } else {
+    if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
+      enterInput();
+      $('txt-input').value = Number(10).toString(radix);
+    }
+    objY = stack.pop();
+  }  
+  objX = getX();
+
+  y = objY.getSoul();
+  x = objX.getSoul();
+  result = mathLog(x, y);  
+
+  if (radix !== 10) result = result.toString(radix);
+  displayResult(result, '');
+}
+
 function btnLog() {
   if (shifted) {
     naturalLog();
@@ -1111,70 +1183,12 @@ function btnLog() {
   }
 }
 
-function log(x, y) {
-  var result;
-  if (y === undefined) y = 10;
-  result = Math.log(x) / Math.log(y);
-  if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result);
-  return result;
-}
-
-function baseLog() {
-  backupUndo();
-  var objY;
-
-  if (stackFocus) {
-    objY = stack[getIndex('lst-stack') - stackSize];
-  } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
-      enterInput();
-      $('txt-input').value = Number(10).toString(radix);
-    }
-    objY = stack.pop();
-  }  
-  var objX = getX();
-  var y = isNaN(objY.getRealPart()) && isNaN(objY.getImaginary()) ? calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objY.getRealPart());
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var result = log(y, x);  
-
-  if (radix !== 10) result = result.toString(radix);
-  $('txt-input').value = result;
-  updateDisplay();
-  $('txt-input').select();
-}
-
-function ln(x) {
-  return Math.log(x);
-}
-
-function naturalLog() {
-  backupUndo();
-  var objX;
-
-  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var result = ln(x);
-
-  if (radix !== 10) result = result.toString(radix);
-  $('txt-input').value = result;
-  $('txt-input').select();
-}
-
-function btnRoot() {
-  if (shifted) {
-    radical();
-  } else {
-    exponential();
-  }
-}
-
 function mathPow(num, pow) {
   var objX = getX(pow);
   var objY = getX(num);
   var result = {};
-
-  x = buildComplexNumber(objX);
-  y = buildComplexNumber(objY); 
+  var x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY); 
 
   if (x.im === 0 && y.im === 0) {
     result.re = Math.pow(y.re, x.re);
@@ -1222,10 +1236,8 @@ function mathRoot(root, num) {
   var objY = getX(num);
   var result = {};
   var results = [{}];
-
-  x = buildComplexNumber(objX);
-  y = buildComplexNumber(objY);
-  
+  var x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY);  
   var signRoot = Math.sign(x.re);
   var signNum = Math.sign(y.re);
 
@@ -1250,10 +1262,8 @@ function mathRoot(root, num) {
 function mathRoots(root, num) {
   var objX = getX(root);
   var objY = getX(num);
-
-  x = buildComplexNumber(objX);
-  y = buildComplexNumber(objY);
-
+  var x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY);
   var results = math.nthRoots(y, x.re);
   var resultsArr = results.toString().split(',');
 
@@ -1292,6 +1302,14 @@ function radical() {
   for (var i = 0; i < results.length; i++) {
     displayResult(results[i], newUnits);
     if (i < results.length - 1) enterInput();
+  }
+}
+
+function btnRoot() {
+  if (shifted) {
+    radical();
+  } else {
+    exponential();
   }
 }
 
@@ -1389,78 +1407,6 @@ function leadingSignChange(x) {
   return x.trim();
 }
 
-// function signChange() {
-//   backupUndo();
-//   var x = '';
-  
-//   if (stackFocus) {// Rebild x from stack
-//     var objY = stack[getIndex('lst-stack') - stackSize];
-
-//     if (isANumber(objY.getRealPart())) x += objY.getRealPart();
-//     if (x) x += ' ';
-//     if (isANumber(objY.getImaginary())) {
-//       if (objY.getImaginary().charAt(0) === '-') {
-//         if (x) x += '- '
-//         x += (objY.getImaginary().toString()).slice(1) + 'j';
-//       } else {
-//         if (x) x += '+ ';
-//         x += objY.getImaginary() + 'j';
-//       }
-//     }
-//     if (objY.getUnits() !== 'null') x += ' ' + objY.getUnits();
-//     if(!x) x = decodeSpecialChar(objY.getSoul());
-//     $('txt-input').value = x.trim();
-//   }  
-//   x = $('txt-input').value;
-//   var startPos = $('txt-input').selectionStart;
-//   if (startPos === 0 || (startPos >= x.length && !/[-+eE^√ ]/.test(x.charAt(startPos - 1)))) {
-//     x = leadingSignChange(x);
-//   } else {
-//     if (/[-+]/.test(x.charAt(startPos - 1))) {
-//       if (/-/.test(x.charAt(startPos - 1))) {
-//         x = x.removeAt(startPos - 1, startPos);
-//         if (/ /.test(x.charAt(startPos - 2))) {// If there is a space to the left, explicit '+' inserted           
-//           x = x.insertAt(startPos - 1, '+');
-//           startPos ++;
-//         }
-//       }
-//       if (/[+]/.test(x.charAt(startPos - 1))) {          
-//         x = x.removeAt(startPos - 1, startPos);
-//         x = x.insertAt(startPos - 1, '-');
-//         startPos ++;
-//       }
-//       $('txt-input').value = x;
-//       $('txt-input').selectionStart = startPos - 1;
-//       $('txt-input').selectionEnd = startPos - 1;
-
-//     } else if (/[eE^√ ]/.test(x.charAt(startPos - 1)) && !/[-+]/.test(x.charAt(startPos)) && !/[-+][ ]*$/.test(x)) {
-//       if (/ /.test(x.charAt(startPos - 1))) {    
-//         x = x.insertAt(startPos, '-');
-//         startPos = startPos + 2;
-//       }
-//       if (/[eE^√]/.test(x.charAt(startPos - 1))) {
-//         if (/[-]/.test(x.charAt(startPos))) {
-//           x = x.removeAt(startPos, startPos + 1);
-//           startPos ++;            
-//         } else if (/[+]/.test(x.charAt(startPos))) {                  
-//           x = x.removeAt(startPos, startPos + 1);
-//           x = x.insertAt(startPos, '-');
-//           startPos = startPos + 2;
-//         } else if (!/[-]/.test(x.charAt(startPos))) {
-//           x = x.insertAt(startPos, '-')
-//           startPos = startPos + 2;
-//         }
-//       }
-//       $('txt-input').value = x;
-//       $('txt-input').selectionStart = startPos - 1;
-//       $('txt-input').selectionEnd = startPos - 1;
-//     }       
-//   }  
-//   // if (radix !== 10) { }    
-//   $('txt-input').value = x;
-//   $('txt-input').focus();
-// }
-
 function signChange() {
   backupUndo();
   var x = '';
@@ -1547,16 +1493,14 @@ function division() {
   backupUndo();
   var objX = getX();
   var objY;
-  var x;
-  var y;
   var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  y = buildComplexNumber(objY); 
-  x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY); 
+  var x = buildComplexNumber(objX);
   result = math.divide(y, x).toString().replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
@@ -1576,16 +1520,14 @@ function multiplication() {
   backupUndo();
   var objX = getX();
   var objY;
-  var x;
-  var y;
   var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  y = buildComplexNumber(objY); 
-  x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY); 
+  var x = buildComplexNumber(objX);
   result = math.multiply(y, x).toString().replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
@@ -1605,16 +1547,14 @@ function subtraction() {
   backupUndo();
   var objX = getX();
   var objY;
-  var x;
-  var y;
   var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  y = buildComplexNumber(objY); 
-  x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY); 
+  var x = buildComplexNumber(objX);
   result = math.subtract(y, x).toString().replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
@@ -1640,16 +1580,14 @@ function addition() {
   backupUndo();
   var objX = getX();
   var objY;
-  var x;
-  var y;
   var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  y = buildComplexNumber(objY); 
-  x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY); 
+  var x = buildComplexNumber(objX);
   result = addComplex(y, x).toString().replace(/i$/, 'j');
   
   if (radix !== 10) result = result.toString(radix);  
@@ -3005,6 +2943,15 @@ function root(y, x) {
 function roots(y, x) {
   if (x === undefined) x = 2;
   return mathRoots(x, y);
+}
+
+function ln(x) {
+  return math.log(x);
+}
+
+function log(y, x) {
+  // if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result);
+  return mathLog(x, y);
 }
 
 // Wired to HTML
