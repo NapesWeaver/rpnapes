@@ -2456,7 +2456,9 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube.');
+    enterInput();
+    inputText('');
     enterInput();
     inputText('For command-specific help, type help followed by command e.g. help youtube.');
   }
