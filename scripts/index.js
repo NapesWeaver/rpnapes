@@ -212,7 +212,7 @@ function toggleKeyboard() {
   if ($('menu-keyboard-li').classList.contains('strikethrough')) {
     $('menu-keyboard-li').classList.remove('strikethrough');
   } else {
-    $('menu-keyboard-li').className += ' strikethrough';
+    $('menu-keyboard-li').className += 'strikethrough';
   }
   $('txt-input').focus();
 }
@@ -2205,7 +2205,6 @@ function stopwatchStart(seconds) {
         clearInterval(timerInterval);
         $('timer').innerHTML = '';
         if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate(300);
-        //if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([100,30,100,30,100,30,200,30,200,30,200,30,100,30,100,30,100]);// Morse code - 'SOS'
         playAudio($('dual-red-alert'));
         // playAudio($('computerscanner'));
         flashInterval = setInterval(function() {
@@ -4966,9 +4965,6 @@ window.onload = function () {
       buttonInsert(/[♥]/ , '♥');
     }
   })();
-
-  // $('menu-haptic-li').classList.add('strikethrough');
-  $('menu-sound-li').classList.add('strikethrough');
   
   $('menu-help').onclick = menuHelp;
 
