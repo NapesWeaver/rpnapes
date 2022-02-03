@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '19:16:39';
+var tStamp = '2:10:39';
 
 var stack = [];
 var backups = [];
@@ -503,7 +503,7 @@ function btnDelete() {
   if (stackFocus) {
     stack.splice(getIndex('lst-stack') - stackSize, 1);
     updateDisplay();
-  } else if ($('txt-input').value !== '' && $('txt-input').value.length === $('txt-input').selectionEnd) {
+  } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
     $('txt-input').value = '';
     $('txt-input').focus();
   } else if ($('txt-input').value === '') {
