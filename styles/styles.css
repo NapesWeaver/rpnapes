@@ -42,7 +42,7 @@ header {
 #timer {
     position: absolute;
     top: 3px;
-    margin-left: 4.8em;    
+    margin-left: .3em;
     font-weight: 700;
     background-color: transparent;
     color: #F0EF68;
@@ -383,13 +383,13 @@ img {
     display: inline;
 }
 
-li a,
 #open,
+#timer,
 .btn-xoff,
+.btn-mapped,
+li a,
 select,
 button,
-.btn-mapped,
-#timer,
 input[type="button"] {
     cursor: pointer;
 }
@@ -557,10 +557,6 @@ label a {
     .menu > ul > li > a {
         padding-right: 1.5em;
     }
-
-    #timer {
-        margin-left: 6.6em;
-    }
 }
 
 @media only screen and (min-width: 360px) {
@@ -573,9 +569,12 @@ label a {
     }
 
     #timer {
-        top: 1px;
-        margin-left: 7em;
+        top: 2px;
         font-size: 1.4em;
+    }
+    
+    .timer-dark-padding {
+        top: 1px;
     }
 
     header,

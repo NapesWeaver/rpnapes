@@ -173,7 +173,7 @@ function toggleDarkMode() {
     for (e = 0; e < others.length; e++) others[e].classList.remove('dark-button');
     for (e = 0; e < options.length; e++) options[e].classList.remove('dark-menu');
   } else {
-    $('menu-darkmode').innerHTML = 'Light';        
+    $('menu-darkmode').innerHTML = 'Light';       
     $('wrap').classList.add('dark-mode');   
     $('wrap').style.borderStyle = 'inset';
     $('tricorderskin').classList.add('dark-mode');
