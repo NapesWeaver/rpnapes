@@ -1107,7 +1107,7 @@ function mathLn(num) {
   var objX = getX(num);
   var result = {};
   var x = buildComplexNumber(objX);
-  result = math.log(x);
+  result = math.log(x, ℮);
 
   if (result.im === undefined || result.im === 0) {
     return result.re;
@@ -1129,6 +1129,8 @@ function naturalLog() {
 }
 
 function mathLog(base, num) {
+  if (base === undefined) base = 10;
+  
   var objX = getX(base);
   var objY = getX(num);
   var result = {};
