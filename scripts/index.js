@@ -76,6 +76,9 @@ NumberObject.prototype.getUnits = function() {
 NumberObject.prototype.toString = function() {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
 };
+NumberObject.prototype.toString = function() {
+  return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
+};
 
 String.prototype.insertAt = function(index, input) {
   return this.slice(0, index) + input + this.slice(index);
@@ -998,6 +1001,7 @@ function btnInverse() {
 function inverse() {
   backupUndo();
   var objX;
+  var result;
 
   if (stackFocus) {
     objX = stack[getIndex('lst-stack') - stackSize];
@@ -1021,12 +1025,13 @@ function inverse() {
       }
       if (isNumber && isImaginary) {
         var x = buildComplexNumber(objX);
-        $('txt-input').value = math.inv(x).toString().replace(/i$/, 'j');
+        result = math.inv(x).toString();
+        $('txt-input').value = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');        
       }
       $('txt-input').value += newUnits;
     } else {
       // Remove units from expression and calculate
-      var result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+      result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
 
       if (!isNaN(result)) {
         $('txt-input').value = 1 / result;
@@ -1112,8 +1117,8 @@ function mathLn(num) {
   if (result.im === undefined || result.im === 0) {
     return result.re;
   } else {
-    result = result.toString().replace(/i$/g, 'j');
-    return result;
+    result = result.toString();
+    return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
   }
 }
 
@@ -1144,7 +1149,8 @@ function mathLog(base, num) {
     if (/[.][9]{11,}[0-9]*[0-9]$/.test(result.re)) result.re = Math.round(result.re);
     return result.re;
   } else {
-    return result.toString().replace(/i$/, 'j');
+    result = result.toString();
+    return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');    
   } 
 }
 
@@ -1198,7 +1204,8 @@ function mathPow(num, pow) {
   if (result.im === undefined || result.im === 0) {
     return result.re;
   } else {
-    return result.toString().replace(/i$/, 'j');
+    result = result.toString();
+    return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
   }  
 }
 
@@ -1255,7 +1262,8 @@ function mathRoot(root, num) {
   if (result.im === undefined || result.im === 0) {
     return result.re;
   } else {
-    return result.toString().replace(/i$/, 'j');
+    result = result.toString();
+    return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
   } 
 }
 
@@ -1268,7 +1276,7 @@ function mathRoots(root, num) {
   var resultsArr = results.toString().split(',');
 
   for (var i = 0; i < resultsArr.length; i++) {
-    resultsArr[i] = resultsArr[i].replace(/i$/, 'j');
+    resultsArr[i] = /(?<!\d)i$/.test(resultsArr[i]) ? resultsArr[i].replace(/i$/, '1j') : resultsArr[i].replace(/i$/, 'j');
   };
   return resultsArr;  
 }
@@ -1472,7 +1480,9 @@ function signChange() {
   if (result.im === undefined || result.im === 0) {
     displayResult(result.re, '');
   } else {
-    displayResult(result.toString().replace(/i$/, 'j'), units);
+    result = result.toString();
+    result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
+    displayResult(result, units);
   }
 }
 
@@ -1506,7 +1516,8 @@ function division() {
   
   var y = buildComplexNumber(objY); 
   var x = buildComplexNumber(objX);
-  result = math.divide(y, x).toString().replace(/i$/, 'j');
+  result = math.divide(y, x).toString();
+  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
@@ -1533,7 +1544,8 @@ function multiplication() {
   
   var y = buildComplexNumber(objY); 
   var x = buildComplexNumber(objX);
-  result = math.multiply(y, x).toString().replace(/i$/, 'j');
+  result = math.multiply(y, x).toString();
+  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
@@ -1561,7 +1573,8 @@ function subtraction() {
   
   var y = buildComplexNumber(objY); 
   var x = buildComplexNumber(objX);
-  result = math.subtract(y, x).toString().replace(/i$/, 'j');
+  result = math.subtract(y, x).toString();
+  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
 
   if (radix !== 10) result = result.toString(radix);  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
@@ -1593,9 +1606,11 @@ function addition() {
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
   var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
-  result = addComplex(y, x).toString().replace(/i$/, 'j');
-  
+  var x = buildComplexNumber(objX); 
+  result = addComplex(y, x).toString();
+  // Negative Lookbehind
+  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
+
   if (radix !== 10) result = result.toString(radix);  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(result, newUnits);
@@ -1695,7 +1710,8 @@ function sin(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    return x.toString().replace(/i$/, 'j');
+    x = x.toString();
+    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
   }  
 }
 
@@ -1718,7 +1734,8 @@ function cos(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    return x.toString().replace(/i$/, 'j');
+    x = x.toString();
+    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
   }  
 }
 
@@ -1745,7 +1762,8 @@ function tan(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    return x.toString().replace(/i$/, 'j');
+    x = x.toString();
+    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
   }  
 }
 
@@ -1762,7 +1780,8 @@ function asin(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    return x.toString().replace(/i$/, 'j');
+    x = x.toString();
+    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
   }  
 }
 
@@ -1779,7 +1798,8 @@ function acos(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    return x.toString().replace(/i$/, 'j');
+    x = x.toString();
+    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
   }  
 }
 
@@ -1796,7 +1816,8 @@ function atan(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    return x.toString().replace(/i$/, 'j');
+    x = x.toString();
+    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
   }  
 }
 
