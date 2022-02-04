@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '21:24:39';
+var tStamp = '2:10:39';
 
 var stack = [];
 var backups = [];
@@ -1402,7 +1402,7 @@ function signChange() {
   backupUndo();  
   var objX;  
   var result = {};
-  var newUnits = '';
+  var units = '';
   var txtInput = $('txt-input');
   var startPos = txtInput.selectionStart;
   var endPos = txtInput.selectionEnd;
@@ -1415,9 +1415,8 @@ function signChange() {
   }
   result.re = objX.getSoul();
   
-  if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {
-    // Unary minus
-    // console.log('Unary Minus:');    
+  if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {    
+    //console.log('Unary Minus:'); // Unary minus
     if (isANumber(objX.getImaginary())) {//console.log('Complex #'); // Complex num
       result = math.unaryMinus(buildComplexNumber(objX));
     } else if (isANumber(objX.getRealPart())) {//console.log('Real #');  // Real num 
@@ -1425,12 +1424,10 @@ function signChange() {
     } else {//console.log('Lorem-ipsum#'); // Lorem-ipsum num  
       result.re = leadingSignChange(result.re);
     }
-  } else {// Insertion / Toggle
-    // console.log('Insertion / Toggle:');
+  } else {//console.log('Insertion / Toggle:'); // Insertion / Toggle    
     if (/[-+]/.test(result.re.charAt(startPos - 1))) {
       // console.log('[-+]');
       if (/-/.test(result.re.charAt(startPos - 1))) {
-        // console.log('[-]');
         result.re = result.re.removeAt(startPos - 1, startPos);
         if (/ /.test(result.re.charAt(startPos - 2))) {// If space to left, insert explicit '+'
           result.re = result.re.insertAt(startPos - 1, '+');
@@ -1469,18 +1466,13 @@ function signChange() {
       txtInput.selectionEnd = startPos - 1;
     }// End Insert
     // Insert Selected ???
-    // console.log(isTextSelected($('txt-input')));
-    if (isTextSelected($('txt-input'))) {
-      buttonInsert(/[-]/, '-');
-      result.re = txtInput.value;
-    } 
   }
-  if (objX.getUnits() !== 'null') newUnits = ' ' + objX.getUnits();
+  if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
 
   if (result.im === undefined || result.im === 0) {
     displayResult(result.re, '');
   } else {
-    displayResult(result.toString().replace(/i$/, 'j'), newUnits);
+    displayResult(result.toString().replace(/i$/, 'j'), units);
   }
 }
 
@@ -3389,15 +3381,12 @@ function extractReal(tmpString) {
   var tmpReal = '';
   if (radix === 10) {  
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
-    // if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
+    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
-        // tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
-        tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?![ij])/);
+        tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
       } else {
-        // tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
-        tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);
+        tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
       }      
     }
     tmpReal = tmpReal.replace(/ /g, '');
@@ -3405,25 +3394,23 @@ function extractReal(tmpString) {
   }
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
-    // if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+j/g.test(tmpString)) {
-    if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
+    if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+j/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
   }
   if (radix === 8) {
     // Looking for an ocatal number but not an imaginary number
-    // if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+j/g.test(tmpString)) {
-    if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+[ij]/g.test(tmpString)) {
+    if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+j/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
   }
   if (radix === 16) {
     // Looking for a hexadecimal number but not an imaginary number
-    // if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+j/g.test(tmpString)) {
-    if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+[ij]/g.test(tmpString)) {
+    if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+j/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
-  }  
+  } 
+  
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
   return tmpReal;
 }
@@ -3434,20 +3421,16 @@ function extractImaginary(tmpString) {
   if (radix === 10) {     
     // if (!/[,()]/g.test(tmpString)) {
     if (!/[()]/g.test(tmpString)) {
-      // tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
-      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|[-+]?[ ]*Infinity[ij]/);    
+      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
       tmpImaginary = tmpImaginary.replace(/ /g, '');
       if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
       // Remove 'j'
       tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
     }
   } else {
-    // if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
-    // if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
-    // if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+j/);
-    if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
-    if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
-    if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
+    if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
+    if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
+    if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+j/);
     if (tmpImaginary.charAt(1) === ' ') {
       tmpImaginary = tmpImaginary.replace(/ /g, '');
     }
@@ -3463,11 +3446,9 @@ function extractUnits(tmpString) {
   if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
 
   if (radix !== 16) {
-    // tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
   } else {
-    // tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
   }
   return tmpUnits;
 }
