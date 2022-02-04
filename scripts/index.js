@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '2:21:39';
+var tStamp = '14:32:39';
 
 var stack = [];
 var backups = [];
@@ -375,32 +375,53 @@ function abFunction() {
   $('txt-input').focus();
 }
 
-function xyFunction() {
-  if (stack.length > 0) {
-    backupUndo();
-    var objX = stack.pop();
-    enterInput();
-    $('txt-input').value = '';
+function objToString(obj) {
+  var toString = '';
+  var isNumber = isANumber(obj.getRealPart());
+  var isImaginary = isANumber(obj.getImaginary());
 
-    if (!isANumber(objX.getRealPart())) {
-      $('txt-input').value += decodeSpecialChar(objX.getSoul());
-    } else {
-      $('txt-input').value += formatNumber(objX.getRealPart().toString());
+  if (!isNumber && !isImaginary) {
+    toString += decodeSpecialChar(obj.getSoul());
+  } else {    
+    if (isNumber) toString += formatNumber(obj.getRealPart().toString());
 
-      if (isANumber(objX.getImaginary())) {
-        if (objX.getImaginary().charAt(0) === '-') {
-          $('txt-input').value += ' - ' + formatNumber(objX.getImaginary().toString().slice(1)) + 'j';
-        } else {
-          $('txt-input').value += ' + ' + formatNumber(objX.getImaginary().toString()) + 'j';
-        }
+    if (isImaginary) {
+      var space = '';
+      var sign = '';
+
+      if (isNumber) {
+        space = ' ';
+        sign = ' + ';
       }
-      if (objX.getUnits() !== 'null') {
-        $('txt-input').value += ' ' + decodeSpecialChar(objX.getUnits());
+      if (obj.getImaginary().charAt(0) === '-') {
+        toString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
+      } else {
+        toString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
       }
     }
-    updateDisplay();
+    if (obj.getUnits() !== 'null') {
+      toString += ' ' + decodeSpecialChar(obj.getUnits());
+    }
   }
-  $('txt-input').focus();
+  return toString;
+}
+
+function xyFunction() {
+  backupUndo();
+  var objY = getX();
+  var objX;
+  
+  if (stackFocus) {
+    var index = getIndex('lst-stack') - stackSize;
+    objX = stack[index];
+    stack[index] = objY;
+  } else {
+    objX = stack.pop();
+    btnEnter();
+  }
+  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
+  $('txt-input').value = objToString(objX);  
+  updateDisplay();
 }
 
 function runProgram() {
@@ -990,14 +1011,6 @@ function btnOff() {
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
 
-function btnInverse() {
-  if (shifted) {
-    btnFactorial();    
-  } else {
-    inverse();
-  } 
-}
-
 function inverse() {
   backupUndo();
   var objX;
@@ -1055,16 +1068,12 @@ function inverse() {
   $('txt-input').select();
 }
 
-function btnFactorial() {
-  backupUndo();
-  var objX;
-  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var result = factorial(x);
-  
-  if (radix !== 10) result = result.toString(radix);
-  $('txt-input').value = result;
-  $('txt-input').select();
+function btnInverse() {
+  if (shifted) {
+    btnFactorial();    
+  } else {
+    inverse();
+  } 
 }
 
 function intFactorial(num) {  
@@ -1106,6 +1115,18 @@ function factorial(num) {
     result = gamma(num + 1);
   }
   return result;
+}
+
+function btnFactorial() {
+  backupUndo();
+  var objX;
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  var result = factorial(x);
+  
+  if (radix !== 10) result = result.toString(radix);
+  $('txt-input').value = result;
+  $('txt-input').select();
 }
 
 function mathLn(num) {
@@ -1356,14 +1377,6 @@ function btnParenthesis() {
   $('txt-input').focus();
 }
 
-function btnModulus() {  
-  if (shifted) {
-    if (!/[=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
-  } else {    
-    modulus();
-  }  
-}
-
 function modulus() {
   backupUndo();
   var objY;
@@ -1394,6 +1407,14 @@ function modulus() {
   $('txt-input').value = result;
   updateDisplay();
   $('txt-input').select();
+}
+
+function btnModulus() {  
+  if (shifted) {
+    if (!/[=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
+  } else {    
+    modulus();
+  }  
 }
 
 function leadingSignChange(textInput) {
@@ -1496,14 +1517,6 @@ function btnSign() {
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
-function btnDivide() {  
-  if (shifted) {
-    if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
-  } else {
-    division();
-  }  
-}
-
 function division() {
   backupUndo();
   var objX = getX();
@@ -1524,12 +1537,12 @@ function division() {
   displayResult(result, newUnits);
 }
 
-function btnMultiply() {  
+function btnDivide() {  
   if (shifted) {
-    if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
+    if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
   } else {
-    multiplication();
-  }      
+    division();
+  }  
 }
 
 function multiplication() {
@@ -1552,13 +1565,12 @@ function multiplication() {
   displayResult(result, newUnits);
 }
 
-function btnSubtract() {  
+function btnMultiply() {  
   if (shifted) {
-    // if (!/[+*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[-]/, '-');
-    buttonInsert(/[-]/, '-');
+    if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
   } else {
-    subtraction();
-  }  
+    multiplication();
+  }      
 }
 
 function subtraction() {
@@ -1581,11 +1593,12 @@ function subtraction() {
   displayResult(result, newUnits);
 }
 
-function btnAdd() {  
+function btnSubtract() {  
   if (shifted) {
-    if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
+    // if (!/[+*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[-]/, '-');
+    buttonInsert(/[-]/, '-');
   } else {
-    addition();
+    subtraction();
   }  
 }
 
@@ -1616,6 +1629,14 @@ function addition() {
   displayResult(result, newUnits);
 }
 
+function btnAdd() {  
+  if (shifted) {
+    if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
+  } else {
+    addition();
+  }  
+}
+
 function buildComplexNumber(obj) {
   var a = 0;
   var b = 0;
@@ -1638,65 +1659,6 @@ function displayResult(result, newUnits) {
 }
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
-
-function btnAngle() {
-  if ($('btn-angle').value === 'deg') {
-    $('btn-angle').value = 'rad';
-    $('btn-angle').className = 'btn-small btn-radian radian-border';
-    $('btn-sine').className = 'btn-small radian-border';
-    $('btn-cosine').className = 'btn-small radian-border';
-    $('btn-tangent').className = 'btn-small radian-border';
-  } else {
-    $('btn-angle').value = 'deg';
-    $('btn-angle').className = 'btn-small btn-angle degree-border';
-    $('btn-sine').className = 'btn-small degree-border';
-    $('btn-cosine').className = 'btn-small degree-border';
-    $('btn-tangent').className = 'btn-small degree-border';
-  }
-  $('txt-input').focus();
-}
-
-function btnSine() {
-  backupUndo();
-
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  var input = $('txt-input').value;
-
-  if (shifted) {
-    $('txt-input').value = asin(input);
-  } else {
-    $('txt-input').value = sin(input);
-  }
-  $('txt-input').select();
-}
-
-function btnCosine() {
-  backupUndo();
-
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  var input = $('txt-input').value;
-
-  if (shifted) {
-    $('txt-input').value = acos(input);
-  } else {
-    $('txt-input').value = cos(input);
-  }
-  $('txt-input').select()
-}
-
-function btnTangent() {
-  backupUndo();
-
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  var input = $('txt-input').value;
-
-  if (shifted) {
-    $('txt-input').value = atan(input);
-  } else {
-    $('txt-input').value = tan(input);
-  }
-  $('txt-input').select()
-}
 
 function sin(input) {
   var objX = getX(input);
@@ -1819,6 +1781,65 @@ function atan(input) {
     x = x.toString();
     return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
   }  
+}
+
+function btnAngle() {
+  if ($('btn-angle').value === 'deg') {
+    $('btn-angle').value = 'rad';
+    $('btn-angle').className = 'btn-small btn-radian radian-border';
+    $('btn-sine').className = 'btn-small radian-border';
+    $('btn-cosine').className = 'btn-small radian-border';
+    $('btn-tangent').className = 'btn-small radian-border';
+  } else {
+    $('btn-angle').value = 'deg';
+    $('btn-angle').className = 'btn-small btn-angle degree-border';
+    $('btn-sine').className = 'btn-small degree-border';
+    $('btn-cosine').className = 'btn-small degree-border';
+    $('btn-tangent').className = 'btn-small degree-border';
+  }
+  $('txt-input').focus();
+}
+
+function btnSine() {
+  backupUndo();
+
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  var input = $('txt-input').value;
+
+  if (shifted) {
+    $('txt-input').value = asin(input);
+  } else {
+    $('txt-input').value = sin(input);
+  }
+  $('txt-input').select();
+}
+
+function btnCosine() {
+  backupUndo();
+
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  var input = $('txt-input').value;
+
+  if (shifted) {
+    $('txt-input').value = acos(input);
+  } else {
+    $('txt-input').value = cos(input);
+  }
+  $('txt-input').select()
+}
+
+function btnTangent() {
+  backupUndo();
+
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  var input = $('txt-input').value;
+
+  if (shifted) {
+    $('txt-input').value = atan(input);
+  } else {
+    $('txt-input').value = tan(input);
+  }
+  $('txt-input').select()
 }
 
 //////// Input Buttons ///////////////////////////////////////////////////////////////
