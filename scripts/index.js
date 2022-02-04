@@ -3702,8 +3702,6 @@ function rewriteNegUnitExp(tmpUnits) {
     newUnits += numerator;
 
     if (denominator !== '') newUnits += '/' + denominator;
-  } else {
-    newUnits = ' ' + tmpUnits;
   }
   return newUnits;
 }
