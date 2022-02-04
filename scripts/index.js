@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '14:32:39';
+var tStamp = '15:00:00';
 
 var stack = [];
 var backups = [];
@@ -913,7 +913,7 @@ function saveFile(fileName, pretty) {
     blobContent += '===== Stack =====\n\n';
     for (var sta in stack) {
       if (pretty) {
-        blobContent = prettyPrint(sta, blobContent);
+        blobContent += objToString(stack[sta]);
       } else {
         blobContent += decodeSpecialChar(stack[sta].toString());
       }      
@@ -3218,7 +3218,7 @@ function updateDisplay() {
   // Print to stack display
   for (var sta in stack) {
     $('lst-stack').value += '\n';
-    $('lst-stack').value = prettyPrint(sta, $('lst-stack').value);
+    $('lst-stack').value += objToString(stack[sta]);
   }
   colorSaveButton();
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
@@ -3240,36 +3240,6 @@ function willCalculate(expression) {
   var calculated = false;
   if (!isNaN(calculate(expression))) calculated = true;
   return calculated;
-}
-
-function prettyPrint(i, content) {
-  // If not a number and not imaginary
-  if (!isANumber(stack[i].getRealPart()) && !isANumber(stack[i].getImaginary())) {
-    content += decodeSpecialChar(stack[i].getSoul());
-  } else {// There is a real component
-    if (isANumber(stack[i].getRealPart())) {
-      content += formatNumber(stack[i].getRealPart().toString());
-      if (isANumber(stack[i].getImaginary())) {// There is an imanginary component        
-        if (stack[i].getImaginary().charAt(0) === '-') {
-          // Append negative imaginary number
-          content += ' - ' + formatNumber(stack[i].getImaginary().toString()).slice(1) + 'j';
-        } else {
-          // Append positive imaginary number
-          content += ' + ' + formatNumber(stack[i].getImaginary().toString()) + 'j';
-        }
-      }
-    } else {// There is no real component
-      if (stack[i].getImaginary().charAt(0) === '-') {
-        // Append negative imaginary number
-        content += '-' + formatNumber(stack[i].getImaginary().toString()).slice(1) + 'j';
-      } else {
-        // Append positive imaginary number
-        content += formatNumber(stack[i].getImaginary().toString()) + 'j';
-      }
-    }// If there are units, append units
-    if (stack[i].getUnits() !== 'null') content += ' ' + decodeSpecialChar(stack[i].getUnits());          
-  }
-  return content;
 }
 
 function colorSaveButton() {
