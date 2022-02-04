@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '2:10:39';
+var tStamp = '2:21:39';
 
 var stack = [];
 var backups = [];
@@ -3700,8 +3700,9 @@ function rewriteNegUnitExp(tmpUnits) {
 
     if (numerator === '' && denominator !== '') numerator += '1';
     newUnits += numerator;
-
-    if (denominator !== '') newUnits += '/' + denominator;
+    if (denominator !== '') newUnits += '/' + denominator;  
+  } else {
+    newUnits = '' + tmpUnits;
   }
   return newUnits;
 }
