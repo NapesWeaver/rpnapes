@@ -1389,7 +1389,6 @@ function modulus() {
 }
 
 function leadingSignChange(textInput) {
-
   if (textInput.charAt(0) === '-') {
     textInput = '+' + textInput.slice(1);
   } else {
@@ -1400,88 +1399,84 @@ function leadingSignChange(textInput) {
 }
 
 function signChange() {
-  backupUndo();
-  
-  var objX;
-  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-
+  backupUndo();  
+  var objX;  
   var result = {};
-  var text = objX.getSoul();  
-  result.re = text;  
-  var txtInput = $('txt-input');  
+  var newUnits = '';
+  var txtInput = $('txt-input');
+  var text;
   var startPos = txtInput.selectionStart;
   var endPos = txtInput.selectionEnd;
 
-  if (((startPos === 0 && startPos === endPos) || (startPos === 0 && endPos === text.length)) || (startPos >= text.length && !/[-+eE^√ ]/.test(text.charAt(startPos - 1)))) {
-    // console.log('Sign Change:');    
-    if (isANumber(objX.getImaginary())) {     
-      result = math.unaryMinus(buildComplexNumber(objX));
-    } else if (isANumber(objX.getRealPart())) {      
-      result.re = objX.getRealPart() * -1;
-    } else {      
-      result.re = leadingSignChange(text);
-    }
+  if (stackFocus) {
+    objX = stack[getIndex('lst-stack') - stackSize];
+    txtInput.value = '';
   } else {
-    // console.log('Insert:')
-    // console.log('text', text);
-    if (/[-+]/.test(text.charAt(startPos - 1))) {
+    objX = getX();
+  }
+  result.re = objX.getSoul();
+  
+  if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {
+    console.log('Unary Minus:');    
+    if (isANumber(objX.getImaginary())) {//console.log('Complex'); // Complex
+      result = math.unaryMinus(buildComplexNumber(objX));
+    } else if (isANumber(objX.getRealPart())) {//console.log('Real');  // Real  
+      result.re = objX.getRealPart() * -1;
+    } else {//console.log('Lorem-ipsum'); // Lorem-ipsum   
+      result.re = leadingSignChange(result.re);
+    }
+  } else {// Insert
+    // console.log('Insert:');
+    if (/[-+]/.test(result.re.charAt(startPos - 1))) {
       // console.log('[-+]');
-      if (/-/.test(text.charAt(startPos - 1))) {
-        text = text.removeAt(startPos - 1, startPos);
-        if (/ /.test(text.charAt(startPos - 2))) {
-          // If there is a space to the left, explicit '+' inserted
-          text = text.insertAt(startPos - 1, '+');
+      if (/-/.test(result.re.charAt(startPos - 1))) {
+        result.re = result.re.removeAt(startPos - 1, startPos);
+        if (/ /.test(result.re.charAt(startPos - 2))) {// If space to left, insert explicit '+'
+          result.re = result.re.insertAt(startPos - 1, '+');
           startPos ++;
         }
       }
-      if (/[+]/.test(text.charAt(startPos - 1))) {   
-
-        text = text.removeAt(startPos - 1, startPos);
-        text = text.insertAt(startPos - 1, '-');
+      if (/[+]/.test(result.re.charAt(startPos - 1))) {   
+        result.re = result.re.removeAt(startPos - 1, startPos);
+        result.re = result.re.insertAt(startPos - 1, '-');
         startPos ++;
       }
-      result.re = text;
+      result.re = result.re;
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
 
-    } else if (/[eE^√ ]/.test(text.charAt(startPos - 1)) && !/[-+]/.test(text.charAt(startPos)) && !/[-+][ ]*$/.test(text)) {      
+    } else if (/[eE^√ ]/.test(result.re.charAt(startPos - 1)) && !/[-+]/.test(result.re.charAt(startPos)) && !/[-+][ ]*$/.test(result.re)) {      
       // console.log('[eE^√ ]');
-      if (/ /.test(text.charAt(startPos - 1))) {
-
-        text = text.insertAt(startPos, '-');
+      if (/ /.test(result.re.charAt(startPos - 1))) {
+        result.re = result.re.insertAt(startPos, '-');
         startPos = startPos + 2;
       }
-      if (/[eE^√]/.test(text.charAt(startPos - 1))) {
+      if (/[eE^√]/.test(result.re.charAt(startPos - 1))) {
 
-        if (/[-]/.test(text.charAt(startPos))) {
-
-          text = text.removeAt(startPos, startPos + 1);
+        if (/[-]/.test(result.re.charAt(startPos))) {
+          result.re = result.re.removeAt(startPos, startPos + 1);
           startPos ++;
-        } else if (/[+]/.test(text.charAt(startPos))) {    
-
-          text = text.removeAt(startPos, startPos + 1);
-          text = text.insertAt(startPos, '-');
+        } else if (/[+]/.test(result.re.charAt(startPos))) {    
+          result.re = result.re.removeAt(startPos, startPos + 1);
+          result.re = result.re.insertAt(startPos, '-');
           startPos = startPos + 2;
-        } else if (!/[-]/.test(text.charAt(startPos))) {
-          
-          text = text.insertAt(startPos, '-')
+        } else if (!/[-]/.test(result.re.charAt(startPos))) {          
+          result.re = result.re.insertAt(startPos, '-')
           startPos = startPos + 2;
         }
       }
-      // console.log('result', result);
-      result.re = text;
+      result.re = result.re;
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
-    }       
+    }// End Insert
   }
-  // console.log('result', result);
-  // if (radix !== 10) { }    
+  if (objX.getUnits() !== 'null') newUnits = ' ' + objX.getUnits();
+
   if (result.im === undefined || result.im === 0) {
-    txtInput.value = result.re;
+    displayResult(result.re, newUnits);
   } else {
-    txtInput.value = result.toString().replace(/i$/, 'j');
+    displayResult(result.toString().replace(/i$/, 'j'), newUnits);
   }
-  // txtInput.select();
 }
 
 function btnSign() {  
