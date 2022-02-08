@@ -2997,7 +2997,6 @@ function ln(x) {
 }
 
 function log(y, x) {
-  // if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result);
   return mathLog(x, y);
 }
 
@@ -3804,7 +3803,7 @@ function formatNumber(possibleNumber) {
     if (radix === 10) {      
       if (!isNaN(possibleNumber)) {
         if (fixDecimal !== -1) {
-          possibleNumber = toFixed(possibleNumber, fixDecimal);
+          possibleNumber = toFixed(possibleNumber, fixDecimal);          
         }
         if (sciDecimal !== -1) {
           possibleNumber = toScientific(possibleNumber, sciDecimal);          
@@ -3818,6 +3817,7 @@ function formatNumber(possibleNumber) {
         possibleNumber = parseInt(possibleNumber).toString(radix);
       }
     }
+    if (/[.][9]{15,}[0-9]*[0-9]$/.test(possibleNumber)) possibleNumber = Math.round(possibleNumber);    
   }
   return possibleNumber;
 }
