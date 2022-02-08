@@ -2521,14 +2521,14 @@ function parseCommand() {
     }
     // NOT saveas with word and no space, NOT saveas with number, NOT saveas with word and alphanumeric word
     if (command.match(/(?!saveas[A-Za-z]+)(?!saveas ?[0-9])(?!saveas [A-Za-z]+ +[0-9A-Za-z]+)^saveas ?[A-Za-z]*/)) {    
-      
+      console.log('y');
       if (commandArray[1] === undefined) {
         stack.pop();
         stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true);
       } else {
         saveFile(commandArray[1], true);
+        stack.pop();
       }
-      stack.pop();
       $('txt-input').value = '';
       updateDisplay();
     }
@@ -2555,8 +2555,8 @@ function parseCommand() {
         stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, false) : saveFile('', false);
       } else {
         saveFile(commandArray[1], false)
+        stack.pop();
       }
-      stack.pop();
       $('txt-input').value = '';
       updateDisplay();
     }
@@ -3817,7 +3817,7 @@ function formatNumber(possibleNumber) {
         possibleNumber = parseInt(possibleNumber).toString(radix);
       }
     }
-    if (/[.][9]{15,}[0-9]*[0-9]$/.test(possibleNumber)) possibleNumber = Math.round(possibleNumber);    
+    if (/[.][9]{15,}$/.test(possibleNumber)) possibleNumber = Math.round(possibleNumber);    
   }
   return possibleNumber;
 }
