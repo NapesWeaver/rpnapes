@@ -2877,7 +2877,7 @@ function parseCommand() {
 function insertDefaultIndex(input) {
   var inputArr = input.split('');
   for (var i = 0; i < inputArr.length; i++) {
-    if (inputArr[i] === '√' && (inputArr[i - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/.test(inputArr[i - 1]))) inputArr.splice(i, 0, '2');
+    if ((inputArr[i] === '√' && inputArr[i - 1] !== '!') && (inputArr[i - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/.test(inputArr[i - 1]))) inputArr.splice(i, 0, '2');
   }
   return inputArr.join('');
 }
@@ -2956,7 +2956,7 @@ function parseInline(input, symbol, prefix) {
     index--; 
     if (inputArr[index] === ')') parenthesis++;
     if (inputArr[index] === '(') parenthesis--;  
-  }  
+  }
   if (parenthesis > -1 && index === 0 || (inputArr[index] === '(' && parenthesis === 0)) {
     if (symbol === '!' && /[√]/.test(inputArr[index])) index ++;
     inputArr.splice(index, 0, prefix);
@@ -2968,9 +2968,8 @@ function parseInline(input, symbol, prefix) {
   do {
     endPos++;
     if (inputArr[endPos] === '(') parenthesis++;
-    if (inputArr[endPos] === ')') parenthesis--;
-    // if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;// Returns NaN for negative roots    
-    if ((inputArr[endPos] === ',' || inputArr[endPos] === '') && inputArr[endPos + 1] === '-') endPos = endPos + 2;// Parse negative roots e.g. √-16 with (inputArr[endPos] === '') check
+    if (inputArr[endPos] === ')') parenthesis--; 
+    if ((inputArr[endPos] === ',' || inputArr[endPos] === '') && inputArr[endPos + 1] === '-') endPos = endPos + 2;// NaN returned for negative roots (e.g. √-16) without inputArr[endPos] === '' check, 
   } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0)); 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
