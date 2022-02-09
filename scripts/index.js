@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '15:00:00';
+var tStamp = '0:37:12';
 
 var stack = [];
 var backups = [];
@@ -455,7 +455,7 @@ function btnEval() {
   var objX;
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  objX  = getX();
+  objX = getX();
 
   if (objX.getSoul().match(/^run$/)) {
     btnLoad();
@@ -486,10 +486,12 @@ function enterInput() {
 }
 
 function calculate(x) {
-  try {
-    x = eval(parseEvaluation(x));
-  } catch(e) {
-    return e.toString();
+  if (!/[\dⅽ℮ɢΦπ][ij]/g.test(x)) {
+    try {
+      x = eval(parseEvaluation(x));
+    } catch(e) {
+      return e.toString();
+    }
   }
   return x;
 }
@@ -1023,8 +1025,8 @@ function inverse() {
   } else { 
     objX = getX();
   }
-  var isNumber = !isNaN(objX.getRealPart());
-  var isImaginary = !isNaN(objX.getImaginary());
+  var isNumber = isANumber(objX.getRealPart());
+  var isImaginary = isANumber(objX.getImaginary());
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
   if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {    
@@ -2901,13 +2903,13 @@ function parseEvaluation(input) {
   return input;
 }
 
-function parseNested(input, symbol, prefix) {  
+function parseNested(input, symbol, prefix) {
   var inputArr = input.split('');
   var index = 0;
   var startPos = 0;
   var leftP = null;
   var rightP = null;
-  var maths = '';  
+  var maths = '';
   // Get nested parenthesis indices
   while (startPos === 0) {
     index++;
@@ -3770,7 +3772,7 @@ function toFixed(value, p) {
 
   var precision = p || 0,
     power = Math.pow(10, precision),
-    absValue = Math.abs(Math.round(value * power)),
+    // absValue = Math.abs(Math.round(value * power)),
     result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
 
   if (precision > 0) {
@@ -3816,8 +3818,7 @@ function formatNumber(possibleNumber) {
       if (!isNaN(possibleNumber)) {
         possibleNumber = parseInt(possibleNumber).toString(radix);
       }
-    }
-    if (/[.][9]{15,}$/.test(possibleNumber)) possibleNumber = Math.round(possibleNumber);    
+    }  
   }
   return possibleNumber;
 }
