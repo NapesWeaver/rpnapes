@@ -1445,17 +1445,16 @@ function signChange() {
   result.re = objX.getSoul();
   
   if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {    
-    //console.log('Unary Minus:'); // Unary minus
-    if (isANumber(objX.getImaginary())) {//console.log('Complex #'); // Complex num
+    //// Unary minus
+    if (isANumber(objX.getImaginary())) {// Complex-num
       result = math.unaryMinus(buildComplexNumber(objX));
-    } else if (isANumber(objX.getRealPart())) {//console.log('Real #');  // Real num 
+    } else if (isANumber(objX.getRealPart())) {// Real-num 
       result.re = objX.getRealPart() * -1;
-    } else {//console.log('Lorem-ipsum#'); // Lorem-ipsum num  
+    } else {// Lorem-ipsum-num  
       result.re = leadingSignChange(result.re);
     }
-  } else {//console.log('Insertion / Toggle:'); // Insertion / Toggle    
+  } else {// Insertion / Toggle    
     if (/[-+]/.test(result.re.charAt(startPos - 1))) {
-      // console.log('[-+]');
       if (/-/.test(result.re.charAt(startPos - 1))) {
         result.re = result.re.removeAt(startPos - 1, startPos);
         if (/ /.test(result.re.charAt(startPos - 2))) {// If space to left, insert explicit '+'
@@ -1472,7 +1471,6 @@ function signChange() {
       txtInput.selectionEnd = startPos - 1;
 
     } else if (/[eE^√ ]/.test(result.re.charAt(startPos - 1)) && !/[-+]/.test(result.re.charAt(startPos)) && !/[-+][ ]*$/.test(result.re)) {      
-      // console.log('[eE^√ ]');
       if (/ /.test(result.re.charAt(startPos - 1))) {
         result.re = result.re.insertAt(startPos, '-');
         startPos = startPos + 2;
@@ -1494,7 +1492,6 @@ function signChange() {
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
     }// End Insert
-    // Insert Selected ???
   }
   if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
 
@@ -2521,7 +2518,7 @@ function parseCommand() {
     }
     // NOT saveas with word and no space, NOT saveas with number, NOT saveas with word and alphanumeric word
     if (command.match(/(?!saveas[A-Za-z]+)(?!saveas ?[0-9])(?!saveas [A-Za-z]+ +[0-9A-Za-z]+)^saveas ?[A-Za-z]*/)) {    
-      console.log('y');
+
       if (commandArray[1] === undefined) {
         stack.pop();
         stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true);
@@ -2877,12 +2874,22 @@ function parseCommand() {
   }
 }
 
+function insertDefaultIndex(input) {
+  var inputArr = input.split('');
+  for (var i = 0; i < inputArr.length; i++) {
+    if (inputArr[i] === '√' && (inputArr[i - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/.test(inputArr[i - 1]))) inputArr.splice(i, 0, '2');
+  }
+  return inputArr.join('');
+}
+
 function parseEvaluation(input) {
   // If input does not contain quotes or regex (input is not part of another program) AND it contains [!^√]  
   if (!/(['"]|\/[gij]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
     input = input.replace(/ /g, '');
+    if (/√/g.test(input)) input = insertDefaultIndex(input);
     // Parse nested symbols
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    // while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
     // Parse in-line symbols
@@ -2936,17 +2943,12 @@ function parseInline(input, symbol, prefix) {
   var endPos = 0;
   var parenthesis = 0;
   // Overwrite symbol
-  while (inputArr[index] !== symbol) { index++; }  
-  if (prefix === 'factorial(' || (prefix === 'mathRoot(' && (inputArr[index - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/g.test(inputArr[index - 1])))) {    
-    // inputArr[index] = '';// ! or √n
-    if (prefix === 'mathRoot(') {
-      inputArr[index] = ',';
-      inputArr.splice(index, 0, '2');
-    } else {
-      inputArr[index] = '';
-    } 
-  } else {    
-    inputArr[index] = ',';// n^n or n√n
+  while (inputArr[index] !== symbol) { index++; }    
+  
+  if (prefix === 'factorial(') {
+    inputArr[index] = '';
+  } else {
+    inputArr[index] = ',';// n^n or n√n  
   }
   endPos = index;
   // Insert prefix
@@ -2954,7 +2956,7 @@ function parseInline(input, symbol, prefix) {
     index--; 
     if (inputArr[index] === ')') parenthesis++;
     if (inputArr[index] === '(') parenthesis--;  
-  }
+  }  
   if (parenthesis > -1 && index === 0 || (inputArr[index] === '(' && parenthesis === 0)) {
     if (symbol === '!' && /[√]/.test(inputArr[index])) index ++;
     inputArr.splice(index, 0, prefix);
@@ -2970,7 +2972,6 @@ function parseInline(input, symbol, prefix) {
     // if (inputArr[endPos] === ',' && inputArr[endPos + 1] === '-') endPos = endPos + 2;// Returns NaN for negative roots    
     if ((inputArr[endPos] === ',' || inputArr[endPos] === '') && inputArr[endPos + 1] === '-') endPos = endPos + 2;// Parse negative roots e.g. √-16 with (inputArr[endPos] === '') check
   } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0)); 
-  
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
   return input;
