@@ -2315,6 +2315,9 @@ function help(command) {
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame (Tricorder \'button\' 6). If no argument is supplied in-line, last entry on stack is used for URL.');
       break;
+    case 'email':
+      inputText('email: Open default email client.');
+      break;
     case 'eng':
       inputText('eng [n]: Engineering notation. Precision 1 to 17. If no argument is supplied in-line, last entry on stack is used. Turn engineering notation off with -1.');
       break;
@@ -2440,7 +2443,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube.');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube.');
     enterInput();
     inputText('');
     enterInput();
@@ -2671,6 +2674,13 @@ function parseCommand() {
       updateDisplay();
       insertDate();
       break;
+    case 'email':
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();
+      // window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here"
+      window.location.href = "mailto:?subject=&body="
+      break;  
     case 'fizzBuzz':
       fizzBuzz();
       break;  
@@ -4917,7 +4927,6 @@ window.onload = function () {
     }
   })();
   $('menu-stopwatch').onclick = menuStopwatch;
-  $('menu-fizz-buzz').onclick = fizzBuzz;
   $('menu-tricorder').onclick = showTricorder;
   $('menu-twig').onclick = monOn;
   
