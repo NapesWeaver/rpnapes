@@ -2137,54 +2137,17 @@ function geolocationError(error) {
   }
 }
 
-/**
- * Get the user IP through the webkitRTCPeerConnection
- * @param onNewIP {Function} listener function to expose the IP locally
- * @return undefined
- */
-function getUserIP(onNewIP) {
-  // onNewIp - your listener function for new IPs
-  // compatibility for firefox and chrome
-  var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-  var pc = new myPeerConnection({
-      iceServers: []
-    }),
-    noop = function () { },
-    localIPs = {},
-    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
-    key;
-
-  function iterateIP(ip) {
-    if (!localIPs[ip]) onNewIP(ip);
-    localIPs[ip] = true;
-  }
-  //create a bogus data channel
-  pc.createDataChannel('');
-  // create offer and set local description
-  pc.createOffer().then(function (sdp) {
-    sdp.sdp.split('\n').forEach(function (line) {
-      if (line.indexOf('candidate') < 0) return;
-      line.match(ipRegex).forEach(iterateIP);
-    });
-    pc.setLocalDescription(sdp, noop, noop);
-  }).catch(function (e) {
-    // An error occurred, so handle the failure to connect
-  });
-  //listen for candidate events
-  pc.onicecandidate = function (ice) {
-    if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-    ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-  };
-}
-
 function getIP() {
-  if (/*@cc_on!@*/false || !!document.documentMode) {// IE
-    rpnAlert('Not supported by this browser.');
-  } else {
-    getUserIP(function (ip) {
-      inputText(ip);
-    });
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://api.ipify.org?format=json', true);
+  xhr.onreadystatechange = function(){
+    if (this.readyState === 4 && this.status === 200) {
+      var address = JSON.parse(this.responseText);
+			console.log('ip', address.ip);
+      $('txt-input').value = address.ip;
+    }
   }
+  xhr.send();
 }
 
 function autoDark() {
@@ -2330,6 +2293,9 @@ function help(command) {
     case 'google':
       inputText('google [query]: Search Google / open link or IP address. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
       break;
+    case 'ip':
+      inputText('ip: Get public IP address from IPify.');
+      break;
     case 'ipmapper':
       inputText('ipmapper: Opens IP Mapper in a new tab.');
       break;
@@ -2443,7 +2409,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube.');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube.');
     enterInput();
     inputText('');
     enterInput();
@@ -2686,6 +2652,14 @@ function parseCommand() {
       btnDelete();
       btnDelete();
       break;
+    case 'haptic':
+      if (isMobile) {
+        stack.pop();
+        updateDisplay();
+        $('txt-input').value = '';      
+        toggleHaptic();
+      }
+      break;
     case 'How are ya':
     case 'How are ya doing':
     case 'How are you':
@@ -2719,15 +2693,7 @@ function parseCommand() {
         $('txt-input').value = '';      
         toggleKeyboard();
       }
-      break;
-    case 'haptic':
-      if (isMobile) {
-        stack.pop();
-        updateDisplay();
-        $('txt-input').value = '';      
-        toggleHaptic();
-      }
-      break;
+      break;    
     case 'ip':      
       stack.pop();
       updateDisplay();
@@ -3066,9 +3032,10 @@ function loadUserStack() {
     // 404: not found
     if (this.readyState === 4 && this.status === 200) {
       var users = JSON.parse(this.responseText);
-			
       for (var i in users) {
-        console.log(users[i].id, users[i].login);
+        $('txt-input').value = users[i].id + ': ' + users[i].login;
+        enterInput();
+        updateDisplay();
       }
     }
   }
