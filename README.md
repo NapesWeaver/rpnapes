@@ -36,6 +36,8 @@ Thanks to [Mathjs.org](https://mathjs.org/) for the math.js library. Made implem
 
 Opening and saving text files is supported thanks to Eli Grey's [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
 
+Public IP address are obtained thanks to the [IPify](https://www.ipify.org/) Public IP Address API.
+
 Darryl Snow's [moveCursorToEnd](https://gist.github.com/darryl-snow/3990793) function saved the day in my attempts to wrangle with mobile keypads.
 
 The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/) tutorial by Omar Benseddik made including that feature (and timer) too tempting.
