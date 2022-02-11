@@ -2456,8 +2456,7 @@ function help(command) {
 
 function parseCommand() {
   var command = $('txt-input').value.trim();
-  var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', NaN, NaN, 'null');
- 
+  var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', NaN, NaN, 'null'); 
   // Commands consist of words and numbers and URLs
   if (!/[,*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
     var commandArray = command.split(' ');       
@@ -2465,8 +2464,7 @@ function parseCommand() {
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
       stack.pop();      
       help(command);
-    }
-    // NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
+    }// NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
     if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix$|(^fix (-?[1]|[0-9]|1[0-7])$)/)) {    
       
       if (commandArray[1] === undefined) {
@@ -2479,8 +2477,7 @@ function parseCommand() {
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();    
-    }
-    // NOT sci with number and no space, NOT sci with word, NOT sci with number and word, NOT sci with number and alphanumeric word
+    }// NOT sci with number and no space, NOT sci with word, NOT sci with number and word, NOT sci with number and alphanumeric word
     if (command.match(/(?!sci[0-9]+)(?!sci ?[A-Za-z])(?!sci [0-9 ]+[A-Za-z]+)(?!sci [0-9]+ +[0-9A-Za-z]+)^sci$|(^sci (-?[1]|[0-9]|1[0-7])$)/)) {    
       
       if (commandArray[1] === undefined) {
@@ -2493,8 +2490,7 @@ function parseCommand() {
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();    
-    }
-    // NOT eng with number and no space, NOT eng with word, NOT eng with number and word, NOT eng with number and alphanumeric word
+    }// NOT eng with number and no space, NOT eng with word, NOT eng with number and word, NOT eng with number and alphanumeric word
     if (command.match(/(?!eng[0-9]+)(?!eng ?[A-Za-z])(?!eng [0-9 ]+[A-Za-z]+)(?!eng [0-9]+ +[0-9A-Za-z]+)^eng$|(^eng (-?[1]|[1-9]|1[0-7])$)/)) {    
       
       if (commandArray[1] === undefined) {
@@ -2507,8 +2503,7 @@ function parseCommand() {
       stack.pop();
       $('txt-input').value = '';
       updateDisplay();    
-    }
-    // NOT timer with number and no space, NOT timer with word, NOT timer with number and word, NOT timer with number and alphanumeric word 
+    }// NOT timer with number and no space, NOT timer with word, NOT timer with number and word, NOT timer with number and alphanumeric word 
     if (command.match(/(?!timer[0-9]+)(?!timer ?[A-Za-z])(?!timer [0-9 ]+[A-Za-z]+)(?!timer [0-9]+ +[0-9A-Za-z]+)^timer$|(^timer [0-9]{1,5}$)/)) {    
       
       if (commandArray[1] === undefined) {
@@ -2520,8 +2515,7 @@ function parseCommand() {
       }
       stack.pop();
       updateDisplay();    
-    }
-    // NOT saveas with word and no space, NOT saveas with number, NOT saveas with word and alphanumeric word
+    }// NOT saveas with word and no space, NOT saveas with number, NOT saveas with word and alphanumeric word
     if (command.match(/(?!saveas[A-Za-z]+)(?!saveas ?[0-9])(?!saveas [A-Za-z]+ +[0-9A-Za-z]+)^saveas ?[A-Za-z]*/)) {    
 
       if (commandArray[1] === undefined) {
@@ -2533,8 +2527,7 @@ function parseCommand() {
       }
       $('txt-input').value = '';
       updateDisplay();
-    }
-    // NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and two more alphanumeric words
+    }// NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and two more alphanumeric words
     if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+ +[0-9A-Za-z]+)^sort ?(asc|desc|unit)? ?(asc|desc)?$/)) { 
       var com1 = commandArray[1];
       var com2 = commandArray[2];  
@@ -2548,8 +2541,7 @@ function parseCommand() {
       stack.pop();
       objectSort(sortOrder, sortByUnits);
       updateDisplay();
-    }
-    // NOT tostring with word and no space, NOT tostring with number, NOT tostring with word and alphanumeric word
+    }// NOT tostring with word and no space, NOT tostring with number, NOT tostring with word and alphanumeric word
     if (command.match(/(?!tostring[A-Za-z]+)(?!tostring ?[0-9])(?!tostring [A-Za-z]+ +[0-9A-Za-z]+)^tostring ?[A-Za-z]*/)) {    
 
       if (commandArray[1] === undefined) {
@@ -2561,8 +2553,7 @@ function parseCommand() {
       }
       $('txt-input').value = '';
       updateDisplay();
-    }
-    // If (command === embed and end of stack === URL) or command === embed with URL
+    }// If (command === embed and end of stack === URL) or command === embed with URL
     if ((command.match(/^embed$/) && stackedCommand.getSoul().match(/^http[s]:\/\/[0-9A-Za-z]/)) || command.match(/^embed http[s]:\/\/[0-9A-Za-z]/)) {    
       
       if (commandArray[1] === undefined) {
@@ -2679,7 +2670,7 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
       // window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here"
-      window.location.href = "mailto:?subject=&body="
+      window.location.href = "mailto:?subject=&body=";
       break;  
     case 'fizzBuzz':
       fizzBuzz();
@@ -2754,12 +2745,12 @@ function parseCommand() {
       updateDisplay();
       inputText('lat:' + lat + ', lon:' + lng);
       break;
-    case 'login':
-      window.location.href = '/login'; 
-      break;
-    case 'logout':
-      window.location.href = '/logout'; 
-      break;
+    // case 'login':
+    //   window.location.href = '/login'; 
+    //   break;
+    // case 'logout':
+    //   window.location.href = '/logout'; 
+    //   break;
     case 'maths':
       stack.pop();
       inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
@@ -2901,12 +2892,10 @@ function parseEvaluation(input) {
     if (/√/g.test(input)) input = insertDefaultIndex(input);
     // Parse nested symbols
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
-    // while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
     // Parse in-line symbols
     while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');
-    // while (/√[ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathRoot(');
     while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathRoot(');
     while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathPow(');
   }
@@ -3079,7 +3068,7 @@ function loadUserStack() {
       var users = JSON.parse(this.responseText);
 			
       for (var i in users) {
-        //console.log(users[i].id, users[i].login);
+        console.log(users[i].id, users[i].login);
       }
     }
   }
@@ -3088,10 +3077,10 @@ function loadUserStack() {
 
 function loadText() {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', '../test/The Passing Strange.txt', true);
+  xhr.open('GET', '../rpnapes/tests/text-long.txt', true);
   xhr.onload = function(){
     if (this.status === 200) {
-      //console.log(this.responseText);
+      console.log(this.responseText);
     }
   }
   xhr.send();
