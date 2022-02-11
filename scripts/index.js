@@ -2139,12 +2139,36 @@ function geolocationError(error) {
 
 function getIP() {
   var xhr = new XMLHttpRequest();
+  // Open: type, url/file, async
   xhr.open('GET', 'https://api.ipify.org?format=json', true);
+  // readyState Values
+  // 0: request not initialized
+  // 1: server connection established
+  // 2: request received
+  // 3: processing request
+  // 4: request finished and response is ready
   xhr.onreadystatechange = function(){
+    // HTTP 200: ok, 403: forbidden, 404: not found
     if (this.readyState === 4 && this.status === 200) {
-      var address = JSON.parse(this.responseText);
-			console.log('ip', address.ip);
+      var address = JSON.parse(this.responseText);			
       $('txt-input').value = address.ip;
+    }
+  }
+  xhr.send();
+}
+
+// Experimental
+function getText() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '../rpnapes/tests/text-long.txt', true);
+  xhr.onload = function(){
+    if (this.status === 200) {
+      var input = this.responseText.split('\n');
+      for (var i = 0; i < input.length; i++) {
+        $('txt-input').value = input[i];
+        enterInput();
+      }
+      updateDisplay();
     }
   }
   xhr.send();
@@ -3012,45 +3036,6 @@ function onClickSelection(textarea){
   textarea.selectionStart = startPos + 1;
   textarea.selectionEnd = endPos;
   return true;  
-}
-
-// Experimental
-function loadUserStack() {
-  var xhr = new XMLHttpRequest();
-  // Open - type, url/file, async
-  xhr.open('GET', 'https://api.github.com/users', true);
-  // readyState Values
-  // 0: request not initialized
-  // 1: server connection established
-  // 2: request received
-  // 3: processing request
-  // 4: request finished and response is ready
-  xhr.onreadystatechange = function(){
-    // HTTP status
-    // 200: ok
-    // 403: forbidden
-    // 404: not found
-    if (this.readyState === 4 && this.status === 200) {
-      var users = JSON.parse(this.responseText);
-      for (var i in users) {
-        $('txt-input').value = users[i].id + ': ' + users[i].login;
-        enterInput();
-        updateDisplay();
-      }
-    }
-  }
-  xhr.send();
-}
-
-function loadText() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', '../rpnapes/tests/text-long.txt', true);
-  xhr.onload = function(){
-    if (this.status === 200) {
-      console.log(this.responseText);
-    }
-  }
-  xhr.send();
 }
 
 function fizzBuzz() {
