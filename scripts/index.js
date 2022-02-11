@@ -1033,9 +1033,10 @@ function inverse() {
     $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
   } else {
     if (isNumber || isImaginary) {
-      if (isNumber && !isImaginary) $('txt-input').value = 1 / objX.getRealPart();
+      console.log('objX.getRealPart()', objX.getRealPart());
+      if (isNumber && !isImaginary) $('txt-input').value = 1 / calculate(objX.getRealPart());
       if (!isNumber && isImaginary) {
-        $('txt-input').value =  1 / objX.getImaginary();
+        $('txt-input').value =  1 / calculate(objX.getImaginary());
         $('txt-input').value += 'j';
       }
       if (isNumber && isImaginary) {
@@ -1397,7 +1398,6 @@ function modulus() {
     }
     objY = stack.pop();
   }
-
   if (isNaN(objY.getRealPart()) && isNaN(objY.getImaginary())) {
     y = calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
   } else {
