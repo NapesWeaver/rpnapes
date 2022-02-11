@@ -28,7 +28,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '0:37:12';
+var tStamp = '21:48:53';
 
 var stack = [];
 var backups = [];
@@ -1381,8 +1381,13 @@ function btnParenthesis() {
 
 function modulus() {
   backupUndo();
+  var objX = getX();
   var objY;
-
+  var result;
+  var newUnits = '';
+  var x;
+  var y;
+  
   if (stackFocus) {
     objY = stack[getIndex('lst-stack') - stackSize];
   } else {
@@ -1392,23 +1397,19 @@ function modulus() {
     }
     objY = stack.pop();
   }
-  var objX = getX();   
-  var y;  
+
   if (isNaN(objY.getRealPart()) && isNaN(objY.getImaginary())) {
-    calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
+    y = calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
   } else {
     y = isNaN(parseFloat(objY.getRealPart())) ? parseFloat(objY.getImaginary()) : parseFloat(objY.getRealPart()); 
   }
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
-  var newUnits = '';
-  var result = y % x;
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  
+  result = math.mod(y, x);
   
   if (radix !== 10) result = result.toString(radix);
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
-  result += decodeSpecialChar(newUnits);
-  $('txt-input').value = result;
-  updateDisplay();
-  $('txt-input').select();
+  displayResult(result, newUnits);
 }
 
 function btnModulus() {  
@@ -1654,7 +1655,6 @@ function displayResult(result, newUnits) {
   if (result !== '0') result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
-  $('txt-input').focus();
 }
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
