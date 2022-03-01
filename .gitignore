@@ -35,7 +35,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
-.eslintrc.json
+*.json
 
 ######################
 /docs

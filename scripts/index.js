@@ -1,4 +1,4 @@
-﻿﻿var $ = function (id) {
+﻿var $ = function (id) {
   return document.getElementById(id);
 };
 
@@ -154,6 +154,18 @@ function unFloat() {
   $('txt-input').style.width = $('lst-stack').offsetWidth - 18 + 'px';
 }
 
+function toggleForm() {
+  if($('menu-form').textContent === 'Vector') {
+
+    $('menu-form').innerHTML = 'Polar';
+    if (shifted) $('btn-ee').value = '∠';
+  } else {
+    $('menu-form').innerHTML = 'Vector';
+    if (shifted) $('btn-ee').value = 'j';
+  }
+  updateDisplay();
+}
+
 function toggleDarkMode() {  
   var body = document.getElementsByTagName('body');
   var smBtns = document.getElementsByClassName('btn-small');
@@ -215,7 +227,7 @@ function toggleKeyboard() {
   if ($('menu-keyboard-li').classList.contains('strikethrough')) {
     $('menu-keyboard-li').classList.remove('strikethrough');
   } else {
-    $('menu-keyboard-li').className += 'strikethrough';
+    $('menu-keyboard-li').classList.add('strikethrough');
   }
   $('txt-input').focus();
 }
@@ -470,7 +482,7 @@ function getX(input) {
   var x = input === undefined ? $('txt-input').value.trim() : input.toString();
   var soulX = x;
   var realPartX = extractReal(soulX);
-  var imaginaryX = extractImaginary(soulX);
+  var imaginaryX = extractImaginary(soulX, realPartX);
   var unitsX;
 
   isANumber(realPartX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
@@ -690,6 +702,11 @@ function btnEe() {
     // ((Cursor is at the end && there is no 'j') || there are units && there are no 'j's) && (cursor is next to a valid number && input doesn't contain illegal symbols) || (cursor is at || next to 'j'))
     if ((((index >= input.length - 1 && input.split('j').length - 1 === 0) || (units !== 'null' && input.split('j').length - 1 === 0)) && (/[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
       toggleChar(input, index, /[j]/, 'j');
+      // if ($('menu-form').textContent === 'Vector') {
+      //   toggleChar(input, index, /[j]/, 'j');        
+      // } else {
+      //   toggleChar(input, index, /[∠]/, '∠');
+      // }
     }
   } else {
     // (Cursor is at valid char && not an illegal char && [Ee] is not already part of the number) || (cursor is at || next to [Ee])
@@ -837,6 +854,7 @@ function btnShift() {
     $('btn-undo').value = 'REDO';
     $('btn-ee').classList.remove('btn-small-font');
     $('btn-ee').value = 'j';
+    // $('btn-ee').value = $('menu-form').textContent === 'Vector' ? 'j' : '∠';
     $('btn-pi').innerHTML = '(  )';
     $('btn-modulus').style.color = '#0000A0';
     $('btn-modulus').value = '√¯';
@@ -1033,7 +1051,6 @@ function inverse() {
     $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
   } else {
     if (isNumber || isImaginary) {
-      console.log('objX.getRealPart()', objX.getRealPart());
       if (isNumber && !isImaginary) $('txt-input').value = 1 / calculate(objX.getRealPart());
       if (!isNumber && isImaginary) {
         $('txt-input').value =  1 / calculate(objX.getImaginary());
@@ -1372,13 +1389,78 @@ function btnParenthesis() {
     $('txt-input').select();
   }
   if (startPos === $('txt-input').value.length && leftP > rightP) {
-    // Auto-complete parentesis
+    // Auto-complete parenthesis
     $('txt-input').value = $('txt-input').value.trim() + ')';
   } else {
     insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
   }
   $('txt-input').focus();
 }
+
+// function mathMod(num, mod) {
+//   var objX = getX(mod);
+//   var objY = getX(num);
+//   var result = {};
+//   var x = buildComplexNumber(objX);
+//   var y = buildComplexNumber(objY);
+  
+//   if (x.im === 0 && y.im === 0) {
+//     console.log('x.re', x.re);
+//     console.log('y.re', y.re);
+//     // result.re = math.mod(y.re, x.re);
+//     result.re = y.re % x.re;
+//   } else {
+//     console.log('x', x);
+//     console.log('y', y);
+//     // Modulus, magnitude, absolute value |z| = √(x^2 + y^2)
+//     result.re = Math.sqrt(Math.pow(y.re, 2) + Math.pow(y.im, 2));
+//   } 
+//   return result.re;
+// }
+
+// function modulus() {
+//   backupUndo();
+//   var objX;
+//   var objY;
+//   var result;
+//   var newUnits = '';
+//   var x;
+//   var y;
+  
+//   if (stackFocus) {
+//     objY = stack[getIndex('lst-stack') - stackSize];
+//   } else {    
+//     if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {    
+//       enterInput();
+//       $('txt-input').value = '2';
+//       console.log('Y');
+//     }
+//     objY = stack.pop();
+//   }
+//   objX = getX();
+//   console.log('objX', objX);
+//   console.log('objY', objY);
+  
+//   if (isNaN(objY.getRealPart()) && isNaN(objY.getImaginary())) {
+//     y = calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
+//   } else {
+//     y = isNaN(parseFloat(objY.getRealPart())) ? parseFloat(objY.getImaginary()) : parseFloat(objY.getRealPart()); 
+//   }
+//   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  
+//   if (isANumber(objY.getImaginary())) {
+//     x = isANumber(objY.getRealPart()) ? calculate(objY.getRealPart()) : 0;
+//     y = calculate(objY.getImaginary());
+//     // Modulus, magnitude, absolute value |z| = √(x^2 + y^2)
+//     result = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
+//   } else {
+//     result = math.mod(y, x);    
+//   }
+  
+//   if (radix !== 10) result = result.toString(radix);
+//   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
+//   displayResult(result, newUnits);
+// }
 
 function modulus() {
   backupUndo();
@@ -1448,7 +1530,7 @@ function signChange() {
   result.re = objX.getSoul();
   
   if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {    
-    //// Unary minus
+    // Unary minus
     if (isANumber(objX.getImaginary())) {// Complex-num
       result = math.unaryMinus(buildComplexNumber(objX));
     } else if (isANumber(objX.getRealPart())) {// Real-num 
@@ -3337,7 +3419,6 @@ function decodeSpecialChar(tmpString) {
   // tmpString = tmpString.replace(/&#610/g, 'ɢ');
   // tmpString = tmpString.replace(/&#934/g, 'Φ');
   // tmpString = tmpString.replace(/&#960/g, 'π');
-
   return tmpString;
 }
 
@@ -3373,17 +3454,53 @@ function extractReal(tmpString) {
     if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+j/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
-  } 
-  
+  }  
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
+
   return tmpReal;
 }
 
-function extractImaginary(tmpString) {
-  var tmpImaginary = '';  
+// function extractImaginary(tmpString, tmpReal) {
+//   var tmpImaginary = '';
+
+//   if (radix === 10) {     
+//     if (!/[()]/g.test(tmpString)) {
+//       tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
+//       tmpImaginary = tmpImaginary.replace(/ /g, '');
+//       if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
+//       // Remove 'j'
+//       tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
+//     }
+//   } else {
+//     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
+//     if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
+//     if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+j/);
+//     if (tmpImaginary.charAt(1) === ' ') {
+//       tmpImaginary = tmpImaginary.replace(/ /g, '');
+//     }
+//     tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
+//     tmpImaginary = parseInt(tmpImaginary, radix);
+//   }
+//   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;
+
+//   return  '' + tmpImaginary;
+// }
+
+function extractPolar(tmpString) {
+  var tmpPolar = '';
+  console.log('extractPolar', );
+  return tmpPolar;
+}
+
+// extractLateral()
+function extractImaginary(tmpString, tmpReal) {
+  var tmpImaginary = '';
+
+  console.log('tmpString', tmpString);
+  console.log('tmpReal', typeof tmpReal);
+  console.log('tmpReal', tmpReal);
 
   if (radix === 10) {     
-    // if (!/[,()]/g.test(tmpString)) {
     if (!/[()]/g.test(tmpString)) {
       tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
       tmpImaginary = tmpImaginary.replace(/ /g, '');
@@ -3401,12 +3518,14 @@ function extractImaginary(tmpString) {
     tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
-  if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;  
+  if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;
+
   return  '' + tmpImaginary;
 }
 
 function extractUnits(tmpString) {
   var tmpUnits = '';
+  
   if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
 
   if (radix !== 16) {
@@ -4764,6 +4883,7 @@ window.onload = function () {
   $('menu-sound').onclick = toggleSound;
   $('menu-notes').onclick = menuNotes;
   $('menu-shift').onclick = btnShift;
+  // $('menu-form').onclick = toggleForm;
 
   // Menu Constants
   $('menu-phi').onclick = (function() {
