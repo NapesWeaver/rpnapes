@@ -514,12 +514,12 @@ label a {
         background-color:#F0F0F0;
     }
     
-    .strikethrough {
-        text-decoration: line-through;
-    }
-    .strikethrough a {
-        color: #0040FF;
-    }
+.strikethrough {
+    text-decoration: line-through;
+}
+.strikethrough a {
+    color: #0040FF;
+}
 
 /****** Tricorder ******************************/
 .tricorder-background {

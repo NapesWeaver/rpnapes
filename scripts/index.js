@@ -4157,8 +4157,8 @@ function button4() {
     if ($('widget').classList.contains('hidden')) {      
       var srcString = '';
 
-      if ($('widget').src.indexOf('napesweaver') === -1) {
-        srcString += 'https://napesweaver.github.io/ip-mapper/';        
+      if ($('widget').src.indexOf('orbitalmechanics') === -1) {    
+        srcString += 'https://orbitalmechanics.info/';        
       } else {    
         srcString += 'https://www.worldwidetelescope.org/webclient/';              
       }
@@ -5177,11 +5177,8 @@ window.onload = function () {
 
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
-  } else {    
-    widgetSrc.push('https://mathnotepad.com/');
-    widgetSrc.push('https://www.wolframalpha.com/');
-    widgetSrc.push('https://98.js.org/');// Windows 98
-    widgetSrc.push('https://orbitalmechanics.info/');
+  } else {
+    widgetSrc.push('https://napesweaver.github.io/ip-mapper/');
     // widgetSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag');// KITUMBA
     // widgetSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4');// In Harm's Way
     // widgetSrc.push('https://www.youtube.com/embed/Zx-up8quvnI');// Mind Sifter

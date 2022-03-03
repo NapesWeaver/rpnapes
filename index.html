@@ -85,15 +85,15 @@
                   </ul>
                 </li>
                 <li>
-                  <a class="haptic-response" onmouseover="$('base').className='hidden'">View</a>
+                  <a class="haptic-response" onmouseover="$('base').className='hidden';$('links').className='hidden'">View</a>                  
                   <ul class="sub-menu">
                     <li class="menu haptic-response">
                       <a title="Change base" onclick="$('base').className='visible'">Base</a>
                       <ul id="base" onclick="$('base').className='hidden'">
-                        <li><a title="Binary" onclick="convertBase(2); updateDisplay()">&nbsp;&nbsp;Binary</a></li>
-                        <li><a title="Octal" onclick="convertBase(8); updateDisplay()">&nbsp;&nbsp;Octal</a></li>
-                        <li><a title="Hexidecimal" onclick="convertBase(16); updateDisplay()">&nbsp;&nbsp;Hex</a></li>
-                        <li><a title="Decimal" onclick="convertBase(10); updateDisplay()">&nbsp;&nbsp;Decimal</a></li>
+                        <li><a title="Binary" onclick="convertBase(2);updateDisplay()">&nbsp;&nbsp;Binary</a></li>
+                        <li><a title="Octal" onclick="convertBase(8);updateDisplay()">&nbsp;&nbsp;Octal</a></li>
+                        <li><a title="Hexadecimal" onclick="convertBase(16);updateDisplay()">&nbsp;&nbsp;Hex</a></li>
+                        <li><a title="Decimal" onclick="convertBase(10);updateDisplay()">&nbsp;&nbsp;Decimal</a></li>
                       </ul>
                     </li>
                     <li class="haptic-response"><a id="menu-angle" title="Toggle degree/radian mode">Deg/Rad</a></li>
@@ -175,8 +175,16 @@
                     <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode">Dark</a></li>
                     <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" title="Toggle haptic response">Haptic</a></li>
                     <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" title="Toggle mobile keyboard">Keyboard</a></li>
-                    <li><a id="menu-notes" class="haptic-response" title="Switch to Notes">Notes</a></li>   
-                    <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;Reference</a></li>                         
+                    <li><a id="menu-notes" class="haptic-response" title="Switch to Notes">Notes</a></li>
+                    <li class="menu haptic-response">
+                      <a title="Reference links" title="Reference Links" onclick="$('links').className='visible'">Reference</a>
+                      <ul id="links" onclick="$('links').className='hidden'">
+                        <li><a href="https://mathnotepad.com/" target="_blank" title="Mathematical editor">MathNotepad</a></li>
+                        <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;SpiderNotes</a></li>
+                        <li><a href="https://98.js.org/" target="_blank" title="Windows 98 online">&nbsp;&nbsp;Windows 98</a></li>
+                        <li><a href="https://www.wolframalpha.com/" target="_blank" title="Computational knowledge engine">Wolframalpha</a></li>
+                      </ul>
+                    </li>
                   </ul>
                 </li>
                 <li class="haptic-response">
@@ -195,7 +203,7 @@
                     <li><a id="menu-date" title="Current date">Date</a></li>
                     <li><a id="menu-time" title="Current time">Time</a></li>                    
                     <li class="menu">
-                      <a onclick="$('formulas').className='visible';resetConstants()" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Formulas</a>
+                      <a onclick="$('formulas').className='visible';" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Formulas</a>
                       <ul id="formulas" onclick="$('formulas').className='hidden'">
                         <li><a id="menu-compound-interest" title="P*&#40;1&#43;r/n&#41;&#94;&#40;n*t&#41;">&nbsp;&nbsp;Interest</a></li>
                         <li><a id="menu-circumference" title="2*&#960;*r">&nbsp;&nbsp;Circumference</a></li>
