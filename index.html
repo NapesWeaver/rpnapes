@@ -171,7 +171,7 @@
                     <!-- <li class="haptic-response strikethrough"><a id="menu-symbolic" title="Toggle symbolic">Symbolic</a></li> -->
                     <li class="haptic-response"><a id="menu-shift" title="Toggle shift">Shift</a></li>
                     <!-- <li class="haptic-response"><a id="menu-form" title="Toggle rectangular/polar">Vector</a></li> -->
-                    <li id="menu-sound-li" class="haptic-response strikethrough"><a id="menu-sound" title="Toggle sound for Tricorder">Sound</a></li>
+                    <li id="menu-sound-li" class="haptic-response strikethrough"><a id="menu-sound" title="Toggle sound">Sound</a></li>
                     <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode">Dark</a></li>
                     <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" title="Toggle haptic response">Haptic</a></li>
                     <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" title="Toggle mobile keyboard">Keyboard</a></li>
@@ -179,9 +179,11 @@
                     <li class="menu haptic-response">
                       <a title="Reference links" title="Reference Links" onclick="$('links').className='visible'">Reference</a>
                       <ul id="links" onclick="$('links').className='hidden'">
-                        <li><a href="https://mathnotepad.com/" target="_blank" title="Mathematical editor">MathNotepad</a></li>
-                        <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;SpiderNotes</a></li>
-                        <li><a href="https://98.js.org/" target="_blank" title="Windows 98 online">&nbsp;&nbsp;Windows 98</a></li>
+                        <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;&nbsp;&nbsp;IP Mapper&nbsp;&nbsp;</a></li>
+                        <li><a href="https://mathnotepad.com/" target="_blank" title="Mathematical editor">&nbsp;MathNotepad</a></li>
+                        <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;SpiderNotes&nbsp;</a></li>
+                        <li><a id="menu-tricorder" title="Tricorder Facade">&nbsp;&nbsp;&nbsp;&nbsp;Tricorder&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                        <li><a href="https://98.js.org/" target="_blank" title="Windows 98 online">&nbsp;&nbsp;Windows 98&nbsp;</a></li>
                         <li><a href="https://www.wolframalpha.com/" target="_blank" title="Computational knowledge engine">Wolframalpha</a></li>
                       </ul>
                     </li>
@@ -191,7 +193,7 @@
                   <a onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Tools</a>
                   <ul class="sub-menu">
                     <li class="menu">
-                      <a onclick="$('constants').className='visible';resetConstants()" onmouseover="$('formulas').className='hidden'">Constants</a>
+                      <a title="Symbolic constants" onclick="$('constants').className='visible';resetConstants()" onmouseover="$('formulas').className='hidden'">Constants</a>
                       <ul id="constants" onclick="$('constants').className='hidden'">
                         <li><a id="menu-phi" title="Phi ~ Golden Ratio">&nbsp;&nbsp;&#934;</a></li>
                         <li><a id="menu-eulers"  title="Euler's Number">&nbsp;&nbsp;e</a></li>
@@ -203,7 +205,7 @@
                     <li><a id="menu-date" title="Current date">Date</a></li>
                     <li><a id="menu-time" title="Current time">Time</a></li>                    
                     <li class="menu">
-                      <a onclick="$('formulas').className='visible';" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Formulas</a>
+                      <a title="Executable formulas" onclick="$('formulas').className='visible';" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Formulas</a>
                       <ul id="formulas" onclick="$('formulas').className='hidden'">
                         <li><a id="menu-compound-interest" title="P*&#40;1&#43;r/n&#41;&#94;&#40;n*t&#41;">&nbsp;&nbsp;Interest</a></li>
                         <li><a id="menu-circumference" title="2*&#960;*r">&nbsp;&nbsp;Circumference</a></li>
@@ -215,21 +217,19 @@
                       </ul>
                     </li>
                     <li class="menu">
-                      <a onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('symbols').className='hidden'">Programs</a>
+                      <a title="Stack Operations +" onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('symbols').className='hidden'">Programs</a>
                       <ul id="programs" onclick="$('programs').className='hidden'">
                         <li><a id="menu-stack-average" title="Average the stack">&nbsp;&nbsp;Average</a></li>
                         <li><a id="menu-stack-max" title="Maximum value on the stack">&nbsp;&nbsp;Max</a></li>
                         <li><a id="menu-stack-min" title="Minimum value on the stack">&nbsp;&nbsp;Min</a></li>
                         <li><a id="menu-stack-sort" title="Sort the stack ascending order">&nbsp;&nbsp;Sort A-Z</a></li>
-                        <li><a id="menu-stack-total" title="Total the stack">&nbsp;&nbsp;Total</a></li>
-                        <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;IP Mapper</a></li>                        
+                        <li><a id="menu-stack-total" title="Total the stack">&nbsp;&nbsp;Total</a></li>                        
                         <li><a id="menu-stopwatch" title="Start stopwatch">&nbsp;&nbsp;Stopwatch</a></li>
-                        <li><a id="menu-tricorder" title="Open Tricorder">&nbsp;&nbsp;Tricorder</a></li>
                         <li><a id="menu-twig" title="Game stub ;)">&nbsp;&nbsp;Twig</a></li>
                       </ul>
                     </li>
                     <li class="menu">
-                      <a onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden';$('formulas').className='hidden'">Symbols</a>
+                      <a title="Insert characters" onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden';$('formulas').className='hidden'">Symbols</a>
                       <ul id="symbols" onclick="$('symbols').className='hidden'">
                         <li><a id="menu-parenthesis" title="Parenthesis">&nbsp;&nbsp;&#40;&nbsp;&#41;</a></li>
                         <li><a id="menu-equals" title="Equals">&nbsp;&nbsp;&#61;</a></li>
