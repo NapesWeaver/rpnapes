@@ -2743,10 +2743,7 @@ function parseCommand() {
       updateDisplay();
       // window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here"
       window.location.href = "mailto:?subject=&body=";
-      break;  
-    case 'fizzBuzz':
-      fizzBuzz();
-      break;  
+      break;   
     case 'flightlogger':
       stack.pop();
       $('txt-input').value = '';
@@ -3118,21 +3115,6 @@ function onClickSelection(textarea){
   textarea.selectionStart = startPos + 1;
   textarea.selectionEnd = endPos;
   return true;  
-}
-
-function fizzBuzz() {
-  backupUndo();
-  if (!shifted) btnShift();
-  $('txt-input').value = 'maxCount = prompt("Enter a number number", "25");';
-  enterInput();
-  calculate($('txt-input').value);
-  $('txt-input').value = 'getFizzBuzz = function(w){ word = w;if (w % 3 === 0) word = "fizz"; if(w % 5 === 0) word = "buzz"; if (w % 15 === 0) word = "fizzbuzz"; return word}';
-  enterInput();
-  calculate($('txt-input').value);
-  $('txt-input').value = 'for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $("txt-input").value=""; $("txt-input").value=word; enterInput(); }';
-  enterInput();
-  calculate($('txt-input').value);
-  updateDisplay();
 }
 
 function openAFile() {
