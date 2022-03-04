@@ -19,6 +19,7 @@ if (isPhone) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate ||
 
 new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
+
 if (!isPhone) window.onresize = resizeTextAreas;
 
 var Φ = 1.618033988749895;
@@ -28,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '8:46:00';
+var tStamp = '14:38:00';
 
 var stack = [];
 var backups = [];
@@ -128,11 +129,11 @@ function resizeTextarea(textarea) {
   var winSize = getSize();  
   var textareaHeight = textarea.offsetHeight;
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
-  
   if (textareaHeight > 0) {
     textarea.style.height = (winSize[1] + textareaHeight - bodyHeight) + 'px';    
     textarea.classList.remove('resizable');
   }
+  unFloat();
 }
 
 function unFloat() {
@@ -140,7 +141,7 @@ function unFloat() {
   var winSize = getSize();  
   var lstWidth = $('rpnapes').classList.contains('hidden') ? $('lst-notes').clientWidth : $('lst-stack').clientWidth;
   var margin = 30;
-
+  
   if (lstWidth > wrapWidth) {
     $('wrap').style.marginLeft = ((winSize[0]  - lstWidth) / winSize[0]) * 50 + '%';
   } else {
@@ -3470,7 +3471,7 @@ function extractReal(tmpString) {
 
 function extractPolar(tmpString) {
   var tmpPolar = '';
-  console.log('extractPolar', );
+  // console.log('extractPolar', );
   return tmpPolar;
 }
 
@@ -3478,9 +3479,9 @@ function extractPolar(tmpString) {
 function extractImaginary(tmpString, tmpReal) {
   var tmpImaginary = '';
 
-  console.log('tmpString', tmpString);
-  console.log('tmpReal', typeof tmpReal);
-  console.log('tmpReal', tmpReal);
+  // console.log('tmpString', tmpString);
+  // console.log('tmpReal', typeof tmpReal);
+  // console.log('tmpReal', tmpReal);
 
   if (radix === 10) {     
     if (!/[()]/g.test(tmpString)) {
@@ -5046,7 +5047,6 @@ window.onload = function () {
     $('menu-haptic').style = 'display:none';
   }
 
-  // $('timer').onclick = stopwatchReset;
   $('timer').onclick = enterLapTime;
 
   // Text Area
