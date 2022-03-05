@@ -1532,9 +1532,11 @@ function signChange() {
   
   if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {    
     // Unary minus
-    if (isANumber(objX.getImaginary())) {// Complex-num
-      result = math.unaryMinus(buildComplexNumber(objX));
-    } else if (isANumber(objX.getRealPart())) {// Real-num 
+    if (isANumber(objX.getImaginary()) && (objX.getRealPart() !== 'Infinity' && objX.getImaginary() !== 'Infinity' && objX.getImaginary() !== '-Infinity')) {
+      // Complex-num
+      result = math.unaryMinus(buildComplexNumber(objX));      
+    } else if (isANumber(objX.getRealPart()) && (objX.getRealPart() !== 'Infinity' && objX.getRealPart() !== '-Infinity')) {
+      // Real-num       
       result.re = objX.getRealPart() * -1;
     } else {// Lorem-ipsum-num  
       result.re = leadingSignChange(result.re);
@@ -3471,7 +3473,7 @@ function extractReal(tmpString) {
 
 function extractPolar(tmpString) {
   var tmpPolar = '';
-  // console.log('extractPolar', );
+  // console.log('extractPolar', tmpString);
   return tmpPolar;
 }
 
