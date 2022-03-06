@@ -1831,7 +1831,7 @@ function btnAngle() {
     $('btn-cosine').className = 'btn-small degree-border';
     $('btn-tangent').className = 'btn-small degree-border';
   }
-  $('txt-input').focus();
+  updateDisplay();
 }
 
 function btnSine() {
