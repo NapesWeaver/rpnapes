@@ -36,8 +36,12 @@ h1 {
     color: #e8bc62;
 }
 
-h2, h3, h4 {
+h2, h3 {
     margin: .5em;
+}
+
+h4 {
+    margin: .7em;
 }
 
 h2 {
@@ -68,7 +72,9 @@ img {
 }
 
 textarea {
-    margin-left: 1.6em
+    margin-left: 1.6em;
+    outline: none;
+    border: none;
 }
 
 li {
