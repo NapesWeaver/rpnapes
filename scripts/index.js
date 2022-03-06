@@ -421,7 +421,7 @@ function objToString(obj) {
       } else {
         var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));  
         var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
-        theString += complex.abs() + '∠' + argument; 
+        theString += formatNumber(complex.abs()) + '∠' + formatNumber(argument); 
       }      
     }    
     if (obj.getUnits() !== 'null') {
