@@ -359,6 +359,20 @@
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>     
     
+    <h3>// Callbacks</h3>
+    <pre><code>
+    function myDisplayer(some) {
+        document.getElementById("demo").innerHTML = some;
+    }
+    
+    function myCalculator(num1, num2, myCallback) {
+        let sum = num1 + num2;
+        myCallback(sum);
+    }    
+    myCalculator(5, 5, myDisplayer);
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
     <h3>// Elements / Attributes</h3>
     <pre><code>
     document.createElement(tagName [, options])

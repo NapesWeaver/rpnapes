@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '14:38:00';
+var tStamp = '18:56:00';
 
 var stack = [];
 var backups = [];
@@ -389,34 +389,46 @@ function abFunction() {
 }
 
 function objToString(obj) {
-  var toString = '';
+  var theString = '';
   var isNumber = isANumber(obj.getRealPart());
   var isImaginary = isANumber(obj.getImaginary());
 
   if (!isNumber && !isImaginary) {
-    toString += decodeSpecialChar(obj.getSoul());
-  } else {    
-    if (isNumber) toString += formatNumber(obj.getRealPart().toString());
-
-    if (isImaginary) {
-      var space = '';
-      var sign = '';
-
-      if (isNumber) {
-        space = ' ';
-        sign = ' + ';
+    theString += decodeSpecialChar(obj.getSoul());
+  } else {      
+    
+    if ($('menu-form').textContent === 'Vector') {
+      // Rectangular
+      if (isNumber) theString += formatNumber(obj.getRealPart().toString());
+      if (isImaginary) {
+        var space = '';
+        var sign = '';
+  
+        if (isNumber) {
+          space = ' ';
+          sign = ' + ';
+        }
+        if (obj.getImaginary().charAt(0) === '-') {
+          theString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
+        } else {
+          theString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
+        }
       }
-      if (obj.getImaginary().charAt(0) === '-') {
-        toString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
+    } else {
+      // Polar
+      if (!isImaginary) {
+        theString += formatNumber(obj.getRealPart().toString());
       } else {
-        toString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
-      }
-    }
+        var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));  
+        var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
+        theString += complex.abs() + '∠' + argument; 
+      }      
+    }    
     if (obj.getUnits() !== 'null') {
-      toString += ' ' + decodeSpecialChar(obj.getUnits());
+      theString += ' ' + decodeSpecialChar(obj.getUnits());
     }
   }
-  return toString;
+  return theString;
 }
 
 function xyFunction() {
@@ -482,14 +494,18 @@ function btnEval() {
 function getX(input) {
   var x = input === undefined ? $('txt-input').value.trim() : input.toString();
   var soulX = x;
-  var realPartX = extractReal(soulX);
-  var imaginaryX = extractImaginary(soulX, realPartX);
+  var firstValueX = extractFirstValue(soulX);
+  var tmpComplex = extractLateral(soulX, firstValueX);
+  var imaginaryX = tmpComplex[1];
   var unitsX;
 
-  isANumber(realPartX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
+  firstValueX = tmpComplex[0]; 
+
+  isANumber(firstValueX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
   soulX = encodeSpecialChar(soulX);
   unitsX = encodeSpecialChar(unitsX);
-  return new NumberObject(soulX, realPartX, imaginaryX, unitsX);
+  
+  return new NumberObject(soulX, firstValueX, imaginaryX, unitsX);
 }
 
 function enterInput() {
@@ -700,14 +716,13 @@ function btnEe() {
   var units = objX.getUnits();
 
   if (shifted) {
-    // ((Cursor is at the end && there is no 'j') || there are units && there are no 'j's) && (cursor is next to a valid number && input doesn't contain illegal symbols) || (cursor is at || next to 'j'))
-    if ((((index >= input.length - 1 && input.split('j').length - 1 === 0) || (units !== 'null' && input.split('j').length - 1 === 0)) && (/[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
-      toggleChar(input, index, /[j]/, 'j');
-      // if ($('menu-form').textContent === 'Vector') {
-      //   toggleChar(input, index, /[j]/, 'j');        
-      // } else {
-      //   toggleChar(input, index, /[∠]/, '∠');
-      // }
+    if ($('menu-form').textContent === 'Vector') {
+      // ((Cursor is at the end && there is no 'j') || there are units && there are no 'j's) && (cursor is next to a valid number && input doesn't contain illegal symbols) || (cursor is at || next to 'j'))
+      if ((((index >= input.length - 1 && input.split('j').length - 1 === 0) || (units !== 'null' && input.split('j').length - 1 === 0)) && (/[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
+        toggleChar(input, index, /[j]/, 'j');        
+      }              
+    } else {
+      toggleChar(input, index, /[∠]/, '∠');
     }
   } else {
     // (Cursor is at valid char && not an illegal char && [Ee] is not already part of the number) || (cursor is at || next to [Ee])
@@ -855,7 +870,7 @@ function btnShift() {
     $('btn-undo').value = 'REDO';
     $('btn-ee').classList.remove('btn-small-font');
     $('btn-ee').value = 'j';
-    // $('btn-ee').value = $('menu-form').textContent === 'Vector' ? 'j' : '∠';
+    $('btn-ee').value = $('menu-form').textContent === 'Vector' ? 'j' : '∠';
     $('btn-pi').innerHTML = '(  )';
     $('btn-modulus').style.color = '#0000A0';
     $('btn-modulus').value = '√¯';
@@ -898,8 +913,8 @@ function btnClear() {
 
 function btnSave() {
   $('btn-save').style.color = '#D4D0C8';
-  storeCookie('STACK', nestArrayByBrowser(stack));
-  storeCookie('MATHMON', nestArrayByBrowser(theObjects));
+  saveCookie('STACK', nestArrayByBrowser(stack));
+  saveCookie('MATHMON', nestArrayByBrowser(theObjects));
   $('txt-input').focus();
 }
 
@@ -907,15 +922,15 @@ function nestArrayByBrowser(srcArray) {
   var newArray = '';
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
-    for (var chro in srcArray) {
+    for (var chrome in srcArray) {
       newArray += '_';
-      newArray += srcArray[chro];
+      newArray += srcArray[chrome];
     }
   } else {
     // Firefox
-    for (var fire in srcArray) {
+    for (var firefox in srcArray) {
       newArray += '\t';
-      newArray += srcArray[fire];
+      newArray += srcArray[firefox];
     }
   }
   return newArray;
@@ -1397,71 +1412,6 @@ function btnParenthesis() {
   }
   $('txt-input').focus();
 }
-
-// function mathMod(num, mod) {
-//   var objX = getX(mod);
-//   var objY = getX(num);
-//   var result = {};
-//   var x = buildComplexNumber(objX);
-//   var y = buildComplexNumber(objY);
-  
-//   if (x.im === 0 && y.im === 0) {
-//     console.log('x.re', x.re);
-//     console.log('y.re', y.re);
-//     // result.re = math.mod(y.re, x.re);
-//     result.re = y.re % x.re;
-//   } else {
-//     console.log('x', x);
-//     console.log('y', y);
-//     // Modulus, magnitude, absolute value |z| = √(x^2 + y^2)
-//     result.re = Math.sqrt(Math.pow(y.re, 2) + Math.pow(y.im, 2));
-//   } 
-//   return result.re;
-// }
-
-// function modulus() {
-//   backupUndo();
-//   var objX;
-//   var objY;
-//   var result;
-//   var newUnits = '';
-//   var x;
-//   var y;
-  
-//   if (stackFocus) {
-//     objY = stack[getIndex('lst-stack') - stackSize];
-//   } else {    
-//     if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {    
-//       enterInput();
-//       $('txt-input').value = '2';
-//       console.log('Y');
-//     }
-//     objY = stack.pop();
-//   }
-//   objX = getX();
-//   console.log('objX', objX);
-//   console.log('objY', objY);
-  
-//   if (isNaN(objY.getRealPart()) && isNaN(objY.getImaginary())) {
-//     y = calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
-//   } else {
-//     y = isNaN(parseFloat(objY.getRealPart())) ? parseFloat(objY.getImaginary()) : parseFloat(objY.getRealPart()); 
-//   }
-//   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
-  
-//   if (isANumber(objY.getImaginary())) {
-//     x = isANumber(objY.getRealPart()) ? calculate(objY.getRealPart()) : 0;
-//     y = calculate(objY.getImaginary());
-//     // Modulus, magnitude, absolute value |z| = √(x^2 + y^2)
-//     result = Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
-//   } else {
-//     result = math.mod(y, x);    
-//   }
-  
-//   if (radix !== 10) result = result.toString(radix);
-//   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
-//   displayResult(result, newUnits);
-// }
 
 function modulus() {
   backupUndo();
@@ -3273,7 +3223,7 @@ function colorSaveButton() {
   } catch (err) { rpnAlert('load Stack error.'); }
 }
 
-function storeCookie(aName, tmpArray) {
+function saveCookie(aName, tmpArray) {
   var d = new Date();
   // years * days * hours * min * sec * mili second
   d.setTime(d.getTime() + (1 * 365 * 24 * 60 * 60 * 1000));
@@ -3407,7 +3357,7 @@ function decodeSpecialChar(tmpString) {
   return tmpString;
 }
 
-function extractReal(tmpString) {
+function extractFirstValue(tmpString) {
   var tmpReal = '';
   if (radix === 10) {  
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
@@ -3445,53 +3395,16 @@ function extractReal(tmpString) {
   return tmpReal;
 }
 
-// function extractImaginary(tmpString, tmpReal) {
-//   var tmpImaginary = '';
-
-//   if (radix === 10) {     
-//     if (!/[()]/g.test(tmpString)) {
-//       tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
-//       tmpImaginary = tmpImaginary.replace(/ /g, '');
-//       if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
-//       // Remove 'j'
-//       tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
-//     }
-//   } else {
-//     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
-//     if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
-//     if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+j/);
-//     if (tmpImaginary.charAt(1) === ' ') {
-//       tmpImaginary = tmpImaginary.replace(/ /g, '');
-//     }
-//     tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
-//     tmpImaginary = parseInt(tmpImaginary, radix);
-//   }
-//   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;
-
-//   return  '' + tmpImaginary;
-// }
-
-function extractPolar(tmpString) {
-  var tmpPolar = '';
-  // console.log('extractPolar', tmpString);
-  return tmpPolar;
-}
-
-// extractLateral()
-function extractImaginary(tmpString, tmpReal) {
+function extractImainary(tmpString) {
   var tmpImaginary = '';
 
-  // console.log('tmpString', tmpString);
-  // console.log('tmpReal', typeof tmpReal);
-  // console.log('tmpReal', tmpReal);
-
   if (radix === 10) {     
-    if (!/[()]/g.test(tmpString)) {
-      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);    
+    if (!/[()]/g.test(tmpString)) {    
+      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*j|[-+]?[ ]*Infinityj/);   
       tmpImaginary = tmpImaginary.replace(/ /g, '');
       if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
       // Remove 'j'
-      tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
+      tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);    
     }
   } else {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
@@ -3504,8 +3417,52 @@ function extractImaginary(tmpString, tmpReal) {
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;
-
+  
   return  '' + tmpImaginary;
+}
+
+function extractAngle(tmpString, firstValue) {  
+  var tmpComplex = [];
+  var tmpAngle = '';
+
+  if (radix === 10) {
+    if (!/[()]/g.test(tmpString)) { 
+      // tmpAngle += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?∠[ ]*[0-9]*/);    
+      // tmpAngle += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?∠[ ]*[0-9]*[.]?[0-9]*[eE]?/);    
+      tmpAngle += tmpString.match(/∠[ ]*[0-9]*[.]?[0-9]*[eE]?[0-9]*/);    
+      tmpAngle = tmpAngle.replace(/ /g, '');
+      // Remove ∠
+      tmpAngle = tmpAngle.slice(1);
+      if (firstValue !== 'NaN') {
+        if ($('btn-angle').value === 'deg') tmpAngle = tmpAngle * Math.PI / 180;
+        var polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });
+        tmpComplex[0] = polar.re;
+        tmpComplex[1] = polar.im.toString();
+      }
+    }
+  } else {
+    if (radix === 2) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-1]+j/);
+    if (radix === 8) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-7]+j/);
+    if (radix === 16) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[a-f0-9]+j/);
+    if (tmpComplex[1].charAt(1) === ' ') {
+      tmpComplex[1] = tmpComplex[1].replace(/ /g, '');
+    }
+    tmpComplex[1] = tmpComplex[1].slice(0, tmpComplex[1].length - 1);
+    tmpComplex[1] = parseInt(tmpComplex[1], radix);
+  }
+  return tmpComplex;
+}
+
+function extractLateral(tmpString, firstValue) {
+  var tmpComplex = [];  
+
+  if (/∠/g.test(tmpString) && isANumber(firstValue)) {    
+    tmpComplex = extractAngle(tmpString, firstValue);    
+  } else {
+    tmpComplex[0] = firstValue;
+    tmpComplex[1] = extractImainary(tmpString);
+  }
+  return tmpComplex;
 }
 
 function extractUnits(tmpString) {
@@ -3968,7 +3925,7 @@ function btnLoadNotes() {
 function btnSaveNotes() {
   $('btn-save-notes').style.color = 'rgb(145, 145, 145)';
   notes = encodeSpecialChar($('lst-notes').value.trim()).split('\n');
-  storeCookie('NOTES', nestArrayByBrowser(notes));
+  saveCookie('NOTES', nestArrayByBrowser(notes));
   if (!isMobile) $('lst-notes').focus();
 }
 
@@ -4253,7 +4210,7 @@ function sensor2() {
 
 function saveTricorder() {
   for (var i in widgetSrc) widgetSrc[i] = encodeSpecialChar(widgetSrc[i]);  
-  storeCookie('TRICORDER', nestArrayByBrowser(widgetSrc));
+  saveCookie('TRICORDER', nestArrayByBrowser(widgetSrc));
 }
 
 ///////////// Mathmon idName, xPos, yPos, objSize, health, speed, ammo ///////////////
@@ -4868,7 +4825,7 @@ window.onload = function () {
   $('menu-sound').onclick = toggleSound;
   $('menu-notes').onclick = menuNotes;
   $('menu-shift').onclick = btnShift;
-  // $('menu-form').onclick = toggleForm;
+  $('menu-form').onclick = toggleForm;
 
   // Menu Constants
   $('menu-phi').onclick = (function() {
