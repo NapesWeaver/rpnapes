@@ -9,7 +9,7 @@
 
 My first and favorite JS project - much of the code still needs refactoring.
 
-Operates in Reverse Polish Notation and / or algebraically. Programmable with a command line interface. The UI includes a visible, interactive, stack that can be saved to a cookie. Complex numbers and units are supported as well as opening and saving files.
+Created with engineering calculators like the HP 48 in mind, this calamatron is programmable with a command line interface. It operates using Reverse Polish Notation and algebraically. RPN Complex maths have been implemented using the [math.js](https://mathjs.org/) library. The UI makes use of a visible, interactive, stack that can be saved to a cookie. Unit labeling and opening/saving files are also supported.
 
 The project does not use any jQuery and Works offline. Some effort has been made to keep it compatible for backwardly browsers.
 
