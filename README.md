@@ -1,7 +1,7 @@
 # RPNapes
 
-<!-- [Reverse Polish Notation Calcamatron](https://napesweaver.github.io/rpnapes/) -->
-<a href="https://napesweaver.github.io/rpnapes/" target="_blank">Reverse Polish Notation Calcamatron</a>
+<!-- [Reverse Polish notation calcamatron](https://napesweaver.github.io/rpnapes/) -->
+<a href="https://napesweaver.github.io/rpnapes/" target="_blank">Reverse Polish notation calcamatron</a>
 
 
 
@@ -9,7 +9,7 @@
 
 My first and favorite JS project - much of the code still needs refactoring.
 
-Created with engineering calculators like the HP 48 in mind, this calamatron is programmable with a command line interface. It operates using Reverse Polish Notation and algebraically. RPN Complex maths have been implemented using the [math.js](https://mathjs.org/) library. The UI makes use of a visible, interactive, stack that can be saved to a cookie. Unit labeling and opening/saving files are also supported.
+Created with engineering calculators like the HP 48 in mind, this calamatron is programmable with a command line interface. It operates using reverse Polish notation and algebraically. RPN complex maths have been implemented using the [math.js](https://mathjs.org/) library. The UI makes use of a visible, interactive, stack that can be saved to a cookie. Unit labeling and opening/saving files are also supported.
 
 The project does not use any jQuery and Works offline. Some effort has been made to keep it compatible for backwardly browsers.
 
