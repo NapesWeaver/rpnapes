@@ -419,8 +419,11 @@ function objToString(obj) {
       if (!isImaginary) {
         theString += formatNumber(obj.getRealPart().toString());
       } else {
+        if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
+        
         var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));  
         var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
+
         theString += formatNumber(complex.abs()) + '∠' + formatNumber(argument); 
       }      
     }    
@@ -499,8 +502,7 @@ function getX(input) {
   var imaginaryX = tmpComplex[1];
   var unitsX;
 
-  firstValueX = tmpComplex[0]; 
-
+  firstValueX = tmpComplex[0];
   isANumber(firstValueX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
   soulX = encodeSpecialChar(soulX);
   unitsX = encodeSpecialChar(unitsX);
