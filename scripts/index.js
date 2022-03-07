@@ -2741,6 +2741,26 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
       break;
+    case '-i':
+      // Falls Through
+    case '-j':
+      stack.pop();
+      $('txt-input').value = '-1j';
+      enterInput();
+      updateDisplay();
+      break;
+    case 'i':
+      // Falls Through
+    case '+i':
+      // Falls Through
+    case 'j':
+      // Falls Through
+    case '+j':
+      stack.pop();
+      $('txt-input').value = '1j';
+      enterInput();
+      updateDisplay();
+      break;
     case 'ipmapper':
       stack.pop();
       updateDisplay();
