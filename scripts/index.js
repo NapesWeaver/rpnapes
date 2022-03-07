@@ -389,8 +389,6 @@ function abFunction() {
 }
 
 function objToString(obj) {
-  console.log('obj.getRealPart()', obj.getRealPart());
-  console.log('obj.getImaginary()', obj.getImaginary());
   var theString = '';
   var isNumber = isANumber(obj.getRealPart());
   var isImaginary = isANumber(obj.getImaginary());
@@ -573,6 +571,24 @@ function btnDelete() {
   }
 }
 
+function deleteText(txtField, forward) {
+  var startPos = txtField.selectionStart;
+  var endPos = txtField.selectionEnd;
+
+  if (endPos !== $('txt-input').value.length && startPos <= 0 && !forward) {
+    endPos = $('txt-input').value.length;
+    startPos = txtField.selectionEnd;  
+  }  
+  if (txtField.selectionStart === txtField.selectionEnd && forward) endPos++;
+  if (txtField.selectionStart === txtField.selectionEnd && !forward) startPos--;
+  
+  txtField.value = txtField.value.slice(0, startPos) + txtField.value.slice(endPos, txtField.value.length);
+  
+  txtField.selectionStart = startPos;
+  txtField.selectionEnd = startPos;
+  $('txt-input').focus();
+}
+
 function btnBackspace() {
   if (stack.toString() !== '') backupUndo();
 
@@ -585,21 +601,6 @@ function btnBackspace() {
   } else {
     deleteText($('txt-input'), false);
   }
-}
-
-function deleteText(txtField, forward) {
-  var startPos = txtField.selectionStart;
-  var endPos = txtField.selectionEnd;
-  
-  if (txtField.selectionStart === txtField.selectionEnd && forward) endPos++;
-  if (txtField.selectionStart === txtField.selectionEnd && !forward) startPos--;
-
-  txtField.value = txtField.value.slice(0, startPos) + txtField.value.slice(endPos, txtField.value.length);
-    
-  if (startPos <= 0 && !forward) startPos = txtField.selectionEnd;  
-  txtField.selectionStart = startPos;
-  txtField.selectionEnd = startPos;
-  $('txt-input').focus();
 }
 
 function btnUndo() {
