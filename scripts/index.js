@@ -556,12 +556,12 @@ function deleteButton() {
 function btnDelete() {
   if (stack.toString() !== '') backupUndo();
   $('txt-input').value = $('txt-input').value.trim();
-
+    
   if (stackFocus) {
     stack.splice(getIndex('lst-stack') - stackSize, 1);
     updateDisplay();
   } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
-    $('txt-input').value = '';
+    $('txt-input').selectionStart = 0;
     $('txt-input').focus();
   } else if ($('txt-input').value === '') {
     stack.pop();
