@@ -15,6 +15,7 @@ body {
     font-family: Arial, "Microsoft Sans Serif Regular", Verdana, sans-serif;
     color: #000000;
     background-color: #c4c6b1;
+    border: 1px solid #D4D0C8;
 }
 
 nav {
@@ -32,8 +33,8 @@ nav li {
 h1 {
     text-align: center;
     font-size: 1.6em;
-    background-color: #000000;
-    color: #6D8EBF;
+    background-color: #6D8EBF;
+    color: #000000;
 }
 
 h2, h3 {
@@ -138,12 +139,11 @@ footer {
 }
 
 nav {
-    border-bottom: 1px solid #6D8EBF;
+    border-bottom: 2px solid #6D8EBF;
 }
 
 footer {
-    border-top: 1px solid #6D8EBF;
-    border-bottom: 1px solid #000000;
+    border: 2px solid #6D8EBF;
 }
 
 #nav2, table {
@@ -283,11 +283,4 @@ footer {
     .iframe {
         right: 15%;
     }   
-}
-
-@media only screen and (min-width: 1366px) {
-    .iframe {
-        /* right: 0;
-        width: 48%; */
-    }     
 }
