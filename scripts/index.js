@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '18:56:00';
+var tStamp = '13:47:00';
 
 var stack = [];
 var backups = [];
@@ -379,16 +379,18 @@ function btnXy() {
 function abFunction() {
   if (stack.length > 1) {
     backupUndo();
-    var tmp = stack.pop();
-    var tmp2 = stack.pop();
-    stack.push(tmp);
-    stack.push(tmp2);
+    var yA = stack.pop();
+    var yB = stack.pop();
+    stack.push(yA);
+    stack.push(yB);
     updateDisplay();
   }
   $('txt-input').focus();
 }
 
 function objToString(obj) {
+  console.log('obj.getRealPart()', obj.getRealPart());
+  console.log('obj.getImaginary()', obj.getImaginary());
   var theString = '';
   var isNumber = isANumber(obj.getRealPart());
   var isImaginary = isANumber(obj.getImaginary());
