@@ -33,7 +33,7 @@ h1 {
     text-align: center;
     font-size: 1.6em;
     background-color: #000000;
-    color: #E4CA01;
+    color: #6D8EBF;
 }
 
 h2, h3 {
@@ -63,18 +63,12 @@ p {
     font-size: .7em;
 }
 
-li, table, img, textarea, dt, dd {
+li, table, img, dt, dd {
     margin: .8em;
 }
 
 img {
     margin-left: 1.4em;
-}
-
-textarea {
-    margin-left: 1.6em;
-    outline: none;
-    border: none;
 }
 
 li {
@@ -110,7 +104,7 @@ a:link {
 }
 
 a:visited {
-    color: #396D9F
+    color: #396D9F;
 }
 
 a:hover {
@@ -143,8 +137,17 @@ footer {
     font-size: .6em;
 }
 
-nav, table, footer {
-    border: 1px ridge #2c2f17;
+nav {
+    border-bottom: 1px solid #6D8EBF;
+}
+
+footer {
+    border-top: 1px solid #6D8EBF;
+    border-bottom: 1px solid #000000;
+}
+
+#nav2, table {
+    border: 1px solid #6D8EBF;
     border-radius: 4px 4px 4px 4px;
     background-color: #c4c6b9;
 }
@@ -210,9 +213,6 @@ nav, table, footer {
     img {
         margin-left: 1.8em;
     }
-    textarea {
-        margin-left: 2.1em;
-    }
     p {
         font-size: 1em;
         margin-left: 2em;
@@ -257,14 +257,11 @@ nav, table, footer {
     h4 {
         font-size: 1.2em;
     }
-    li, table, img, textarea, dt, dd {
+    li, table, img, dt, dd {
         margin: 1.6em;
     }
     img {
         margin-left: 2.2em;
-    }
-    textarea {
-        margin-left: 2.6em;
     }
     p {
         margin: 1.3em;
