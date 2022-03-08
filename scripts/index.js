@@ -1002,7 +1002,7 @@ function loadStack(tmpStack) {
   stack = [];
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
-    // Remove underscore from begining of string
+    // Remove underscore from beginning of string
     tmpStack = tmpStack.slice(1);
   }
   tmpStack = splitArrayByBrowser(tmpStack);
@@ -3077,7 +3077,7 @@ function convertBase(r) {
     result += parseInt(obj.imaginary).toString(radix) + 'j';
   }
   updateDisplay();
-  displayResult(result, '');
+  displayResult(result, ' ' + obj.getUnits());
 }
 
 function onClickSelection(textarea){ 
