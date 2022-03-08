@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '24:49:00';
+var tStamp = '1:30:00';
 
 var stack = [];
 var backups = [];
@@ -164,6 +164,7 @@ function toggleForm() {
     $('menu-form').innerHTML = 'Vector';
     if (shifted) $('btn-ee').value = 'j';
   }
+  displayResult($('txt-input').value.trim(), '');
   updateDisplay();
 }
 
@@ -1666,10 +1667,13 @@ function buildComplexNumber(obj) {
 }
 
 function displayResult(result, newUnits) {
-  result = result.toString();  
+  // result = result.toString();  
   // Negative Lookbehind
-  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j'); 
-  result = formatNumber(result);
+  // result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j'); 
+  // result = formatNumber(result);
+
+  var objX = getX(result);
+  result = objToString(objX);
   
   if (result !== '0') result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
