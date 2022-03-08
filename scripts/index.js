@@ -2337,7 +2337,7 @@ function help(command) {
       inputText('clear: Clears the displays. Alias: cls');
       break;
     case 'constants':
-      inputText('constants: Displays the values of \'constants\'. Reassingment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
+      inputText('constants: Displays the values of \'constants\'. Reassignment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
       break;
     case 'embed':
       inputText('embed [URL]: Embed URL into Tricorder iFrame (Tricorder \'button\' 6). If no argument is supplied in-line, last entry on stack is used for URL.');
@@ -2414,6 +2414,9 @@ function help(command) {
     case 'paste':
       inputText('paste: Firefox only supports reading the clipboard in browser extensions using the "clipboardRead" extension permission :(');
       break;
+    case 'polar':
+      inputText('polar: Switch complex number display to polar coordinates (use \'vector\' for rectangular coordinates).');
+      break;
     case 'print':
       inputText('print: Open printer dialoge.');
       break;
@@ -2461,7 +2464,10 @@ function help(command) {
       break;
     case 'unembed':
       inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
-      break;
+      break;    
+    case 'vector':
+        inputText('vector: Switch complex number display to rectangular coordinates. (use \'polar\' for polar coordinates). Alias: rectangular');
+        break;
     case 'wiki':
       inputText('wiki [query]: Search Wikipedia. If no argument is supplied in-line, last entry on stack is used as query.');
       break;    
@@ -2473,7 +2479,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, wiki, youtube.');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
     enterInput();
     inputText('');
     enterInput();
@@ -2840,6 +2846,12 @@ function parseCommand() {
       $('txt-input').value = '';
       openAFile();
       break;
+    case 'polar':
+      stack.pop();
+      if ($('menu-form').textContent === 'Vector') toggleForm();
+      updateDisplay();
+      $('txt-input').value = '';
+      break;
     case 'print':
       stack.pop();
       updateDisplay();
@@ -2914,6 +2926,14 @@ function parseCommand() {
       $('txt-input').value = ''; 
       widgetSrc.shift();
       saveTricorder();
+      break;
+    case 'vector':
+      // Falls through
+    case 'rectangular':
+      stack.pop();
+      if ($('menu-form').textContent === 'Polar') toggleForm();
+      updateDisplay();
+      $('txt-input').value = '';
       break;
     default:
       if (twig.health > 0) {
@@ -3422,20 +3442,21 @@ function extractFirstValue(tmpString) {
 
 function extractImainary(tmpString) {
   var tmpImaginary = '';
+  if (radix === 10) {    
 
-  if (radix === 10) {     
-    if (!/[()]/g.test(tmpString)) {    
-      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|[-+]?[ ]*Infinityj/);   
+    if (!/[()]/g.test(tmpString)) {   
+
+      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|[-+]?[ ]*Infinity[ij]/);   
       tmpImaginary = tmpImaginary.replace(/ /g, '');
-      if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
-      // Remove/transpose '[-+][ij]'
-      if (/[ij]/.test(tmpImaginary)) {
-        tmpImaginary = '1';
+
+      if (/[+][ij]/.test(tmpImaginary)) {
+          tmpImaginary = '1';
       } else if (/[-][ij]/.test(tmpImaginary)) {
         tmpImaginary = '-1';
       } else {
         tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);    
       }
+      if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
     }
   } else {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
