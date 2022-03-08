@@ -3428,8 +3428,14 @@ function extractImainary(tmpString) {
       tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|[-+]?[ ]*Infinityj/);   
       tmpImaginary = tmpImaginary.replace(/ /g, '');
       if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
-      // Remove 'j'
-      tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);    
+      // Remove/transpose '[-+][ij]'
+      if (/[ij]/.test(tmpImaginary)) {
+        tmpImaginary = '1';
+      } else if (/[-][ij]/.test(tmpImaginary)) {
+        tmpImaginary = '-1';
+      } else {
+        tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);    
+      }
     }
   } else {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
