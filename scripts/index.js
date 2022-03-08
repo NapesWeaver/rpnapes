@@ -519,7 +519,8 @@ function enterInput() {
 }
 
 function calculate(x) {
-  if (!/[\dⅽ℮ɢΦπ][ij]/g.test(x)) {
+  // If input does not contain complex elements :( 
+  if (!/[\dⅽ℮ɢΦπ][ ]*[∠ij]/g.test(x)) {
     try {
       x = eval(parseEvaluation(x));
     } catch(e) {
@@ -904,7 +905,7 @@ function btnShift() {
   if (stackFocus) {
     $('lst-stack').focus();
   } else {
-    $('txt-input').focus();
+    $('txt-input').select();
   }
 }
 
@@ -1150,6 +1151,7 @@ function gamma(n) {  // Accurate to about 15 decimal places
 
 function factorial(num) {
   var result;
+  // Add logic for [ij]
   if (num % 1 === 0) {
     result = intFactorial(num);
   } else {
@@ -1672,7 +1674,7 @@ function displayResult(result, newUnits) {
   // Negative Lookbehind
   result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');  
   result = formatNumber(result);
-  console.log('result', result);
+  
   if (result !== '0') result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
