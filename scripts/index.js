@@ -1665,18 +1665,10 @@ function buildComplexNumber(obj) {
   return math.complex(a, b);
 }
 
-// function displayResult(result, newUnits) {  
-//   result = formatNumber(result);
-//   if (result !== '0') result += decodeSpecialChar(newUnits);
-//   $('txt-input').value = result;
-//   updateDisplay();
-// }
-
 function displayResult(result, newUnits) {
-  result = result.toString();
-  
+  result = result.toString();  
   // Negative Lookbehind
-  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');  
+  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j'); 
   result = formatNumber(result);
   
   if (result !== '0') result += decodeSpecialChar(newUnits);
@@ -3844,28 +3836,28 @@ function toScientific(value, precision) {
   return removePositiveNotation(formatted);
 }
 
-function formatNumber(possibleNumber) {
-
-  if (!/[ⅽ℮ɢΦπ]/.test(possibleNumber)) {
+function formatNumber(result) {
+  console.log('result', result);
+  if (!/[ⅽ℮ɢΦπ]/.test(result)) {
     if (radix === 10) {      
-      if (!isNaN(possibleNumber)) {
+      if (!isNaN(result)) {
         if (fixDecimal !== -1) {
-          possibleNumber = toFixed(possibleNumber, fixDecimal);          
+          result = toFixed(result, fixDecimal);          
         }
         if (sciDecimal !== -1) {
-          possibleNumber = toScientific(possibleNumber, sciDecimal);          
+          result = toScientific(result, sciDecimal);          
         }
         if (engDecimal !== -1) {
-          possibleNumber = toEngineering(possibleNumber, engDecimal);          
+          result = toEngineering(result, engDecimal);          
         }
       }
     } else {  
-      if (!isNaN(possibleNumber)) {
-        possibleNumber = parseInt(possibleNumber).toString(radix);
+      if (!isNaN(result)) {
+        result = parseInt(result).toString(radix);
       }
     }  
   }
-  return possibleNumber;
+  return result;
 }
 
 //////// Notes ///////////////////////////////////////////////////////////////////////
