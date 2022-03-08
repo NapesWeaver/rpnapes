@@ -424,6 +424,8 @@ function objToString(obj) {
         var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));  
         var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
 
+        if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument)
+        
         theString += formatNumber(complex.abs()) + '∠' + formatNumber(argument); 
       }      
     }    
