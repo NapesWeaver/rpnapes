@@ -164,8 +164,8 @@ function toggleForm() {
     $('menu-form').innerHTML = 'Vector';
     if (shifted) $('btn-ee').value = 'j';
   }
-  displayResult($('txt-input').value.trim(), '');
   updateDisplay();
+  displayResult($('txt-input').value.trim(), '');
 }
 
 function toggleDarkMode() {  
@@ -1667,11 +1667,8 @@ function buildComplexNumber(obj) {
 }
 
 function displayResult(result, newUnits) {
-  // result = result.toString();  
   // Negative Lookbehind
-  // result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j'); 
-  // result = formatNumber(result);
-
+  // result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
   var objX = getX(result);
   result = objToString(objX);
   
@@ -3066,20 +3063,21 @@ function convertBase(r) {
   fixDecimal = -1;
   sciDecimal = -1;
 
-  var inputTxt = getX();
-  var outputTxt = '';
+  var obj = getX();
+  var result = '';
   
-  inputTxt.setRealPart(parseInt(inputTxt.realPart, 10));
-  inputTxt.setImaginary(parseInt(inputTxt.imaginary, 10));
+  obj.setRealPart(parseInt(obj.realPart, 10));
+  obj.setImaginary(parseInt(obj.imaginary, 10));
 
   radix = r;
 
-  if (!isNaN(inputTxt.realPart)) outputTxt += parseInt(inputTxt.realPart).toString(radix);
-  if (!isNaN(inputTxt.imaginary)) {
-    if (!isNaN(inputTxt.realPart)) outputTxt += ' ';
-    outputTxt += parseInt(inputTxt.imaginary).toString(radix) + 'j';
+  if (!isNaN(obj.realPart)) result += parseInt(obj.realPart).toString(radix);
+  if (!isNaN(obj.imaginary)) {
+    if (!isNaN(obj.realPart)) result += ' ';
+    result += parseInt(obj.imaginary).toString(radix) + 'j';
   }
-  $('txt-input').value = outputTxt;
+  updateDisplay();
+  displayResult(result, '');
 }
 
 function onClickSelection(textarea){ 
@@ -3773,6 +3771,7 @@ function setFixDecimal(value) {
     $('label-eng').classList.remove('hidden');
   }
   fixDecimal = parseInt(value);
+  updateDisplay();
 }
 
 function setSciDecimal(value) {
@@ -3790,6 +3789,7 @@ function setSciDecimal(value) {
     $('label-eng').classList.remove('hidden');
   }
   sciDecimal = parseInt(value);
+  updateDisplay();
 }
 
 function setEngDecimal(value) {
@@ -3807,6 +3807,7 @@ function setEngDecimal(value) {
     $('label-sci').classList.remove('hidden');
   }
   engDecimal = parseInt(value);
+  updateDisplay();  
 }
 
 function toFixed(value, p) {
