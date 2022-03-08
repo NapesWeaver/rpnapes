@@ -3837,7 +3837,7 @@ function toScientific(value, precision) {
 }
 
 function formatNumber(result) {
-  console.log('result', result);
+  // console.log('result', result);
   if (!/[ⅽ℮ɢΦπ]/.test(result)) {
     if (radix === 10) {      
       if (!isNaN(result)) {
