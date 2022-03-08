@@ -1081,10 +1081,8 @@ function inverse() {
       }
       if (isNumber && isImaginary) {
         var x = buildComplexNumber(objX);
-        result = math.inv(x).toString();
-        $('txt-input').value = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');        
+        displayResult(math.inv(x), newUnits);       
       }
-      $('txt-input').value += newUnits;
     } else {
       // Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
@@ -1165,11 +1163,8 @@ function btnFactorial() {
   var objX;
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  var result = factorial(x);
-  
-  if (radix !== 10) result = result.toString(radix);
-  $('txt-input').value = result;
-  $('txt-input').select();
+    
+  displayResult(factorial(x));
 }
 
 function mathLn(num) {
@@ -1192,10 +1187,8 @@ function naturalLog() {
   var result = {};
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var x = objX.getSoul();
-  result = mathLn(x);
 
-  if (radix !== 10) result = result.toString(radix);
-  displayResult(result, '');
+  displayResult(mathLn(x), '');
 }
 
 function mathLog(base, num) {
@@ -1238,11 +1231,9 @@ function baseLog() {
   objX = getX();
 
   y = objY.getSoul();
-  x = objX.getSoul();
-  result = mathLog(x, y);  
+  x = objX.getSoul(); 
 
-  if (radix !== 10) result = result.toString(radix);
-  displayResult(result, '');
+  displayResult(mathLog(x, y), '');
 }
 
 function btnLog() {
@@ -1295,11 +1286,9 @@ function exponential() {
 
   y = objY.getSoul();
   x = objX.getSoul();
-  result = mathPow(y, x);
   
-  if (radix !== 10) result = result.toString(radix);  
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
-  displayResult(result, newUnits);
+  displayResult(mathPow(y, x), newUnits);
 }
 
 function mathRoot(root, num) {
@@ -1369,12 +1358,12 @@ function radical() {
   x = objX.getSoul();  
   results = mathRoots(x, y);
 
-  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x); 
-  
-  for (var i = 0; i < results.length; i++) {
-    displayResult(results[i], newUnits);
-    if (i < results.length - 1) enterInput();
-  }
+  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);   
+  // for (var i = 0; i < results.length; i++) {
+  //   displayResult(results[i], newUnits);
+  //   if (i < results.length - 1) enterInput();
+  // }
+  displayResult(results[0], newUnits);
 }
 
 function btnRoot() {
@@ -1445,11 +1434,8 @@ function modulus() {
   }
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
   
-  result = math.mod(y, x);
-  
-  if (radix !== 10) result = result.toString(radix);
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
-  displayResult(result, newUnits);
+  displayResult(math.mod(y, x), newUnits);
 }
 
 function btnModulus() {  
@@ -1543,8 +1529,6 @@ function signChange() {
   if (result.im === undefined || result.im === 0) {
     displayResult(result.re, '');
   } else {
-    result = result.toString();
-    result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
     displayResult(result, units);
   }
 }
@@ -1563,7 +1547,6 @@ function division() {
   backupUndo();
   var objX = getX();
   var objY;
-  var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
@@ -1571,12 +1554,9 @@ function division() {
   
   var y = buildComplexNumber(objY); 
   var x = buildComplexNumber(objX);
-  result = math.divide(y, x).toString();
-  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
 
-  if (radix !== 10) result = result.toString(radix);  
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
-  displayResult(result, newUnits);
+  displayResult(math.divide(y, x), newUnits);
 }
 
 function btnDivide() {  
@@ -1591,7 +1571,6 @@ function multiplication() {
   backupUndo();
   var objX = getX();
   var objY;
-  var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
@@ -1599,12 +1578,9 @@ function multiplication() {
   
   var y = buildComplexNumber(objY); 
   var x = buildComplexNumber(objX);
-  result = math.multiply(y, x).toString();
-  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
-
-  if (radix !== 10) result = result.toString(radix);  
+   
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
-  displayResult(result, newUnits);
+  displayResult(math.multiply(y, x), newUnits);
 }
 
 function btnMultiply() {  
@@ -1619,7 +1595,6 @@ function subtraction() {
   backupUndo();
   var objX = getX();
   var objY;
-  var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
@@ -1627,12 +1602,9 @@ function subtraction() {
   
   var y = buildComplexNumber(objY); 
   var x = buildComplexNumber(objX);
-  result = math.subtract(y, x).toString();
-  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
-
-  if (radix !== 10) result = result.toString(radix);  
+ 
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-  displayResult(result, newUnits);
+  displayResult(math.subtract(y, x), newUnits);
 }
 
 function btnSubtract() {  
@@ -1654,7 +1626,6 @@ function addition() {
   backupUndo();
   var objX = getX();
   var objY;
-  var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
@@ -1662,13 +1633,9 @@ function addition() {
   
   var y = buildComplexNumber(objY); 
   var x = buildComplexNumber(objX); 
-  result = addComplex(y, x).toString();
-  // Negative Lookbehind
-  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
-
-  if (radix !== 10) result = result.toString(radix);  
+  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-  displayResult(result, newUnits);
+  displayResult(addComplex(y, x), newUnits);
 }
 
 function btnAdd() {  
@@ -1692,7 +1659,18 @@ function buildComplexNumber(obj) {
   return math.complex(a, b);
 }
 
-function displayResult(result, newUnits) {  
+// function displayResult(result, newUnits) {  
+//   result = formatNumber(result);
+//   if (result !== '0') result += decodeSpecialChar(newUnits);
+//   $('txt-input').value = result;
+//   updateDisplay();
+// }
+
+function displayResult(result, newUnits) {
+  result = result.toString();
+  // Negative Lookbehind
+  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
+  
   result = formatNumber(result);
   if (result !== '0') result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
@@ -1713,8 +1691,7 @@ function sin(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    x = x.toString();
-    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
+    return x;
   }  
 }
 
@@ -1737,8 +1714,7 @@ function cos(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    x = x.toString();
-    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
+    return x;
   }  
 }
 
@@ -1765,8 +1741,7 @@ function tan(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    x = x.toString();
-    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
+    return x;
   }  
 }
 
@@ -1783,8 +1758,7 @@ function asin(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    x = x.toString();
-    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
+    return x;
   }  
 }
 
@@ -1801,8 +1775,7 @@ function acos(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    x = x.toString();
-    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
+    return x;
   }  
 }
 
@@ -1819,8 +1792,7 @@ function atan(input) {
   if (x.im === 0) {
     return x.re;
   } else {
-    x = x.toString();
-    return /(?<!\d)i$/.test(x) ? x.replace(/i$/, '1j') : x.replace(/i$/, 'j');
+    return x;
   }  
 }
 
@@ -1848,9 +1820,9 @@ function btnSine() {
   var input = $('txt-input').value;
 
   if (shifted) {
-    $('txt-input').value = asin(input);
+    displayResult(asin(input), '');
   } else {
-    $('txt-input').value = sin(input);
+    displayResult(sin(input), '');
   }
   $('txt-input').select();
 }
@@ -1862,9 +1834,9 @@ function btnCosine() {
   var input = $('txt-input').value;
 
   if (shifted) {
-    $('txt-input').value = acos(input);
+    displayResult(acos(input), '');
   } else {
-    $('txt-input').value = cos(input);
+    displayResult(acos(input), '');
   }
   $('txt-input').select()
 }
@@ -1876,9 +1848,9 @@ function btnTangent() {
   var input = $('txt-input').value;
 
   if (shifted) {
-    $('txt-input').value = atan(input);
+    displayResult(atan(input), '');
   } else {
-    $('txt-input').value = tan(input);
+    displayResult(tan(input), '');
   }
   $('txt-input').select()
 }
