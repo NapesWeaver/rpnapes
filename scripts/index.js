@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '22:05:00';
+var tStamp = '24:49:00';
 
 var stack = [];
 var backups = [];
@@ -1149,9 +1149,9 @@ function gamma(n) {  // Accurate to about 15 decimal places
   }
 }
 
-function factorial(num) {
+function factorial(num) {  
   var result;
-  // Add logic for [ij]
+  
   if (num % 1 === 0) {
     result = intFactorial(num);
   } else {
@@ -1163,10 +1163,14 @@ function factorial(num) {
 function btnFactorial() {
   backupUndo();
   var objX;
-  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-    
-  displayResult(factorial(x), '');
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();  
+  // Add logic for [ij] please!
+  if (!/[∠ij]/g.test(objX.getSoul())) {
+    var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+    displayResult(factorial(x), '');
+  } else {
+    $('txt-input').focus();
+  }
 }
 
 function mathLn(num) {
