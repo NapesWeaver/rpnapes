@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '13:47:00';
+var tStamp = '22:05:00';
 
 var stack = [];
 var backups = [];
@@ -1164,7 +1164,7 @@ function btnFactorial() {
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
     
-  displayResult(factorial(x));
+  displayResult(factorial(x), '');
 }
 
 function mathLn(num) {
@@ -1668,10 +1668,11 @@ function buildComplexNumber(obj) {
 
 function displayResult(result, newUnits) {
   result = result.toString();
-  // Negative Lookbehind
-  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
   
+  // Negative Lookbehind
+  result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');  
   result = formatNumber(result);
+  console.log('result', result);
   if (result !== '0') result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
