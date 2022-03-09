@@ -420,9 +420,12 @@ function objToString(obj) {
       if (!isImaginary) {
         theString += formatNumber(obj.getRealPart().toString());
       } else {
+        // console.log('calculate(obj.getRealPart()', calculate(obj.getRealPart()));
+        // console.log('calculate(obj.getImaginary()', calculate(obj.getImaginary()));
         if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
         
         var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));  
+        // console.log('degrees', $('btn-angle').value === 'deg');
         var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
 
         if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument)
@@ -1666,9 +1669,9 @@ function buildComplexNumber(obj) {
   return math.complex(a, b);
 }
 
-function displayResult(result, newUnits) {
-  
+function displayResult(result, newUnits) {  
   var objX = getX(result);
+  
   result = objToString(objX);
   if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
@@ -1809,6 +1812,7 @@ function btnAngle() {
     $('btn-tangent').className = 'btn-small degree-border';
   }
   updateDisplay();
+  displayResult($('txt-input').value, '');
 }
 
 function btnSine() {
@@ -3454,7 +3458,7 @@ function extractAngle(tmpString, firstValue) {
 
   if (radix === 10) {
     if (!/[()]/g.test(tmpString)) { 
-      tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[0-9]*/);    
+      tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);    
       tmpAngle = tmpAngle.replace(/ /g, '');
       // Remove ∠
       tmpAngle = tmpAngle.slice(1);
@@ -3475,6 +3479,7 @@ function extractAngle(tmpString, firstValue) {
     tmpComplex[1] = tmpComplex[1].slice(0, tmpComplex[1].length - 1);
     tmpComplex[1] = parseInt(tmpComplex[1], radix);
   }
+  
   return tmpComplex;
 }
 
