@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '10:30:00';
+var tStamp = '12:49:00';
 
 var stack = [];
 var backups = [];
@@ -906,7 +906,7 @@ function btnShift() {
   if (stackFocus) {
     $('lst-stack').focus();
   } else {
-    $('txt-input').select();
+    $('txt-input').focus();
   }
 }
 
