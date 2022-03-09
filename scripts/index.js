@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '3:40:00';
+var tStamp = '9:27:00';
 
 var stack = [];
 var backups = [];
@@ -369,26 +369,6 @@ function btnPaste() {
   $('txt-input').focus();
 }
 
-function btnXy() {
-  if (shifted) {
-    abFunction();
-  } else {
-    xyFunction();
-  }
-}
-
-function abFunction() {
-  if (stack.length > 1) {
-    backupUndo();
-    var yA = stack.pop();
-    var yB = stack.pop();
-    stack.push(yA);
-    stack.push(yB);
-    updateDisplay();
-  }
-  $('txt-input').focus();
-}
-
 function objToString(obj) {
   var theString = '';
   var isNumber = isANumber(obj.getRealPart());
@@ -435,6 +415,26 @@ function objToString(obj) {
     }
   }
   return theString;
+}
+
+function btnXy() {
+  if (shifted) {
+    abFunction();
+  } else {
+    xyFunction();
+  }
+}
+
+function abFunction() {
+  if (stack.length > 1) {
+    backupUndo();
+    var yA = stack.pop();
+    var yB = stack.pop();
+    stack.push(yA);
+    stack.push(yB);
+    updateDisplay();
+  }
+  $('txt-input').focus();
 }
 
 function xyFunction() {
@@ -1795,7 +1795,8 @@ function atan(input) {
 }
 
 function btnAngle() {
-  enterInput();
+  var objX = getX();
+  stack.push(objX);
 
   if ($('btn-angle').value === 'deg') {
     $('btn-angle').value = 'rad';
@@ -1810,10 +1811,7 @@ function btnAngle() {
     $('btn-cosine').className = 'btn-small degree-border';
     $('btn-tangent').className = 'btn-small degree-border';
   }
-  updateDisplay();
-  $('txt-input').value = '';
-  btnXy();
-  stack.pop();
+  $('txt-input').value = objToString(stack.pop());
   updateDisplay();
 }
 
