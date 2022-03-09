@@ -159,10 +159,10 @@ function toggleForm() {
   if($('menu-form').textContent === 'Vector') {
 
     $('menu-form').innerHTML = 'Polar';
-    if (shifted) $('btn-ee').value = '∠';
+    if (shifted) $('btn-ee').value = 'j';
   } else {
     $('menu-form').innerHTML = 'Vector';
-    if (shifted) $('btn-ee').value = 'j';
+    if (shifted) $('btn-ee').value = '∠';
   }
   updateDisplay();
   displayResult($('txt-input').value.trim(), '');
@@ -398,7 +398,7 @@ function objToString(obj) {
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
     
-    if ($('menu-form').textContent === 'Vector') {
+    if ($('menu-form').textContent === 'Polar') {
       // Rectangular
       if (isNumber) theString += formatNumber(obj.getRealPart().toString());
       if (isImaginary) {
@@ -725,7 +725,7 @@ function btnEe() {
   var units = objX.getUnits();
 
   if (shifted) {
-    if ($('menu-form').textContent === 'Vector') {
+    if ($('menu-form').textContent === 'Polar') {
       // ((Cursor is at the end && there is no 'j') || there are units && there are no 'j's) && (cursor is next to a valid number && input doesn't contain illegal symbols) || (cursor is at || next to 'j'))
       if ((((index >= input.length - 1 && input.split('j').length - 1 === 0) || (units !== 'null' && input.split('j').length - 1 === 0)) && (/[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
         toggleChar(input, index, /[j]/, 'j');        
@@ -879,7 +879,7 @@ function btnShift() {
     $('btn-undo').value = 'REDO';
     $('btn-ee').classList.remove('btn-small-font');
     $('btn-ee').value = 'j';
-    $('btn-ee').value = $('menu-form').textContent === 'Vector' ? 'j' : '∠';
+    $('btn-ee').value = $('menu-form').textContent === 'Vector' ?  '∠' : 'j';
     $('btn-pi').innerHTML = '(  )';
     $('btn-modulus').style.color = '#0000A0';
     $('btn-modulus').value = '√¯';
@@ -2820,7 +2820,7 @@ function parseCommand() {
       break;
     case 'polar':
       stack.pop();
-      if ($('menu-form').textContent === 'Vector') toggleForm();
+      if ($('menu-form').textContent === 'Polar') toggleForm();
       updateDisplay();
       $('txt-input').value = '';
       break;
@@ -2903,7 +2903,7 @@ function parseCommand() {
       // Falls through
     case 'rectangular':
       stack.pop();
-      if ($('menu-form').textContent === 'Polar') toggleForm();
+      if ($('menu-form').textContent === 'Vector') toggleForm();
       updateDisplay();
       $('txt-input').value = '';
       break;
