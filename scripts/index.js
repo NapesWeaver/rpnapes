@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '12:49:00';
+var tStamp = '3:40:00';
 
 var stack = [];
 var backups = [];
@@ -420,8 +420,6 @@ function objToString(obj) {
       if (!isImaginary) {
         theString += formatNumber(obj.getRealPart().toString());
       } else {
-        // console.log('calculate(obj.getRealPart()', calculate(obj.getRealPart()));
-        // console.log('calculate(obj.getImaginary()', calculate(obj.getImaginary()));
         if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
         
         var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));         
@@ -1797,7 +1795,7 @@ function atan(input) {
 }
 
 function btnAngle() {
-  // var objX = getX();
+  enterInput();
 
   if ($('btn-angle').value === 'deg') {
     $('btn-angle').value = 'rad';
@@ -1813,8 +1811,10 @@ function btnAngle() {
     $('btn-tangent').className = 'btn-small degree-border';
   }
   updateDisplay();
-  // displayResult($('txt-input').value, '');
-  // displayResult(objX.getSoul(), '');
+  $('txt-input').value = '';
+  btnXy();
+  stack.pop();
+  updateDisplay();
 }
 
 function btnSine() {
