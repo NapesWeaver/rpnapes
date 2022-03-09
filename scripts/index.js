@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '1:30:00';
+var tStamp = '10:30:00';
 
 var stack = [];
 var backups = [];
@@ -1667,12 +1667,10 @@ function buildComplexNumber(obj) {
 }
 
 function displayResult(result, newUnits) {
-  // Negative Lookbehind
-  // result = /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
+  
   var objX = getX(result);
   result = objToString(objX);
-  
-  if (result !== '0') result += decodeSpecialChar(newUnits);
+  if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
 }
@@ -3059,15 +3057,18 @@ function resetConstants() {
   ⅽ = 299792458;
 }
 
+// Wired to HTML
 function convertBase(r) {
   fixDecimal = -1;
   sciDecimal = -1;
 
   var obj = getX();
   var result = '';
+  var units = '';
   
   obj.setRealPart(parseInt(obj.realPart, 10));
   obj.setImaginary(parseInt(obj.imaginary, 10));
+  if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
 
   radix = r;
 
@@ -3077,7 +3078,7 @@ function convertBase(r) {
     result += parseInt(obj.imaginary).toString(radix) + 'j';
   }
   updateDisplay();
-  displayResult(result, ' ' + obj.getUnits());
+  displayResult(result, +  units);
 }
 
 function onClickSelection(textarea){ 
@@ -3322,7 +3323,6 @@ function encodeSpecialChar(tmpString) {
   // tmpString = tmpString.replace(/Φ/g, '&#934');// Phi 
   return tmpString;
 }
-
 function decodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/&#37/g, '%');
   tmpString = tmpString.replace(/&#44/g, ',');
@@ -3810,24 +3810,24 @@ function setEngDecimal(value) {
   updateDisplay();  
 }
 
+function removePositiveNotation(formatted) {
+  if (/e[+]0$/g.test(formatted)) formatted = formatted.replace('e+0', '');
+  if (/e[+]/g.test(formatted)) formatted = formatted.replace('+', '');  
+  return formatted;
+}
+
 function toFixed(value, p) {
 
   var precision = p || 0,
     power = Math.pow(10, precision),
-    // absValue = Math.abs(Math.round(value * power)),
-    result = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
+    absValue = Math.abs(Math.round(value * power)),
+    formatted = (value < 0 ? '-' : '') + String(Math.floor(absValue / power));
 
   if (precision > 0) {
     var fraction = String(absValue % power),
       padding = new Array(Math.max(precision - fraction.length, 0) + 1).join('0');
-    result += '.' + padding + fraction;
+    formatted += '.' + padding + fraction;
   }
-  return result;
-}
-
-function removePositiveNotation(formatted) {
-  if (/e[+]0$/g.test(formatted)) formatted = formatted.replace('e+0', '');
-  if (/e[+]/g.test(formatted)) formatted = formatted.replace('+', '');  
   return formatted;
 }
 
@@ -3842,7 +3842,7 @@ function toScientific(value, precision) {
 }
 
 function formatNumber(result) {
-  // console.log('result', result);
+  
   if (!/[ⅽ℮ɢΦπ]/.test(result)) {
     if (radix === 10) {      
       if (!isNaN(result)) {
