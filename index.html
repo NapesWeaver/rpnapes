@@ -121,7 +121,6 @@
                       </label>
                     </li>                    
                     <li id="fix"><label id="label-fix"><a title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
-                      <!-- <select class="haptic-response" name="fix" onchange="setFixDecimal(this.value)"> -->
                       <select class="haptic-response" name="fix" onchange="setFixDecimal(this.value);displayResult($('txt-input').value, '')">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
@@ -169,7 +168,6 @@
                       </select>
                       </label>
                     </li>                    
-                    <!-- <li class="haptic-response strikethrough"><a id="menu-symbolic" title="Toggle symbolic">Symbolic</a></li> -->
                     <li class="haptic-response"><a id="menu-shift" title="Toggle shift">Shift</a></li>
                     <li class="haptic-response"><a id="menu-form" title="Toggle rectangular/polar">Vector</a></li>
                     <li id="menu-sound-li" class="haptic-response strikethrough"><a id="menu-sound" title="Toggle sound">Sound</a></li>

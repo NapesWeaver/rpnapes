@@ -5182,3 +5182,24 @@ window.onload = function () {
   autoDark();
   $('txt-input').readOnly = false;
 };
+/**
+ * Debug for polar input & all other toggle insertions.
+ * Testing complex trig functions.
+ * 
+ * Constants/formulas menu bug for mobile?
+ * Refactor btnModulus()?
+ * Factorial for complex numbers.
+ * Negative & inverse binaries?
+ * Toggle array answering for roots?
+ * 
+ * Remote debug superfluous copy/paste menu.
+ * Remote debug for Firefox mobile keypad.
+ * File-reopening bug.
+ * Rectangular w/o space eg. π+9j
+ * 
+ * Extend timer for hours/days?
+ * Iframe for desktop RPN links?
+ * Symbolic results?
+ * Unit conversions?
+ * Login, persistent storage/messaging/sharing?
+ */
