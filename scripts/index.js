@@ -424,8 +424,7 @@ function objToString(obj) {
         // console.log('calculate(obj.getImaginary()', calculate(obj.getImaginary()));
         if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
         
-        var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));  
-        // console.log('degrees', $('btn-angle').value === 'deg');
+        var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));         
         var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
 
         if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument)
@@ -1798,6 +1797,8 @@ function atan(input) {
 }
 
 function btnAngle() {
+  // var objX = getX();
+
   if ($('btn-angle').value === 'deg') {
     $('btn-angle').value = 'rad';
     $('btn-angle').className = 'btn-small btn-radian radian-border';
@@ -1812,7 +1813,8 @@ function btnAngle() {
     $('btn-tangent').className = 'btn-small degree-border';
   }
   updateDisplay();
-  displayResult($('txt-input').value, '');
+  // displayResult($('txt-input').value, '');
+  // displayResult(objX.getSoul(), '');
 }
 
 function btnSine() {
