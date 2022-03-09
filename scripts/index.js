@@ -3454,14 +3454,10 @@ function extractAngle(tmpString, firstValue) {
 
   if (radix === 10) {
     if (!/[()]/g.test(tmpString)) { 
-      // tmpAngle += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?∠[ ]*[0-9]*/);    
-      // tmpAngle += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?∠[ ]*[0-9]*[.]?[0-9]*[eE]?/);    
       tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[0-9]*/);    
       tmpAngle = tmpAngle.replace(/ /g, '');
       // Remove ∠
-      console.log('tmpAngle', tmpAngle);
       tmpAngle = tmpAngle.slice(1);
-      console.log('tmpAngle2', tmpAngle);
       if (firstValue !== 'NaN') {
         if ($('btn-angle').value === 'deg') tmpAngle = tmpAngle * Math.PI / 180;
         var polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });
