@@ -378,7 +378,7 @@ function objToString(obj) {
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
     
-    if ($('menu-form').textContent === 'Polar') {
+    if ($('menu-form').textContent === 'Polar') {      
       // Rectangular
       if (isNumber) theString += formatNumber(obj.getRealPart().toString());
       if (isImaginary) {
@@ -397,7 +397,7 @@ function objToString(obj) {
       }
     } else {
       // Polar
-      if (!isImaginary) {
+      if (!isImaginary) {        
         theString += formatNumber(obj.getRealPart().toString());
       } else {
         if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
@@ -507,6 +507,7 @@ function getX(input) {
 
   firstValueX = tmpComplex[0];
   isANumber(firstValueX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
+  // unitsX = extractUnits(soulX);
   soulX = encodeSpecialChar(soulX);
   unitsX = encodeSpecialChar(unitsX);
   
@@ -1072,16 +1073,16 @@ function inverse() {
   var isImaginary = isANumber(objX.getImaginary());
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
-  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {    
-    $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
-  } else {
+  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {  
+    displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
+  } else {    
     if (isNumber || isImaginary) {
       var x = buildComplexNumber(objX);
       displayResult(math.inv(x), newUnits);
     } else {
       // Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-
+      // console.log('newUnits', newUnits);
       if (!isNaN(result)) {
         $('txt-input').value = 1 / result;
         $('txt-input').value += newUnits; 
@@ -1661,8 +1662,8 @@ function buildComplexNumber(obj) {
 
 function displayResult(result, newUnits) {  
   var objX = getX(result);
-  result = objToString(objX);  
-  console.log('result', result);
+  result = objToString(objX);
+  
   if (result !== 'Infinity') result = result.replace(/i/g, '1j');
 
   if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
@@ -3492,7 +3493,7 @@ function extractLateral(tmpString, firstValue) {
 
 function extractUnits(tmpString) {
   var tmpUnits = '';
-  
+  console.log('extractUnits', tmpString);
   if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
 
   if (radix !== 16) {
