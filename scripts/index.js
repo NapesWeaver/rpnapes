@@ -401,12 +401,10 @@ function objToString(obj) {
         theString += formatNumber(obj.getRealPart().toString());
       } else {
         if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
-        
-        var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));         
-        var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
+        var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary())); 
+        var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();        
 
-        if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument)
-        
+        if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument);        
         theString += formatNumber(complex.abs()) + '∠' + formatNumber(argument); 
       }      
     }    
@@ -477,6 +475,7 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) enterInput();
   }
   updateDisplay();
+  displayResult(input, '');
   parseCommand();
   cashed = '';
 }
@@ -1082,7 +1081,7 @@ function inverse() {
     } else {
       // Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-      // console.log('newUnits', newUnits);
+      
       if (!isNaN(result)) {
         $('txt-input').value = 1 / result;
         $('txt-input').value += newUnits; 
@@ -1662,9 +1661,10 @@ function buildComplexNumber(obj) {
 
 function displayResult(result, newUnits) {  
   var objX = getX(result);
+  console.log('objX', objX);
   result = objToString(objX);
-  
-  if (result !== 'Infinity') result = result.replace(/i/g, '1j');
+  // console.log('result', result);
+  // if (result !== 'Infinity') result = result.replace(/i/g, '1j');
 
   if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
@@ -3493,7 +3493,7 @@ function extractLateral(tmpString, firstValue) {
 
 function extractUnits(tmpString) {
   var tmpUnits = '';
-  console.log('extractUnits', tmpString);
+
   if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
 
   if (radix !== 16) {
