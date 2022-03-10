@@ -59,12 +59,16 @@
     <iframe class="noborder iframe" name="rpnapes" src="../index.html" width="259"></iframe>
 
     <h2>jQuery</h2>
+    <p>// Use $(callback) for document ready events, the ready() method is deprecated.</p>
     <p>// <a href="https://code.jquery.com/" target="_blank" title="code.jquery.com">jQuery CDN</a></p>
-    <p>Use $(callback) for document ready events, ready() method is deprecated.</p>
-
+    <p>// <a href="https://learn.jquery.com/events/event-basics/" target="_blank" title="Setting Up Event Responses on DOM Elements">jQuery Event Basics</a></p>
+    <p>// <a href="https://api.jquery.com/category/effects/" title="Effects category" target="_blank">Effects</a></p>    
+    <p>// <a href="https://jqueryui.com/themeroller/" title="Accordion-style UI" target="blank">Themeroller</a></p>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+    
     <!-- <h3>DOM Traversal and Manipulation</h3> -->
     <h3>// Targeting (Traversal)</h3>
-    <p>// <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Reference" title="developer.mozilla.org/en-US/docs/Web/CSS/Reference" target="_blank">CSS Reference</a></p>
+    <p>// <a href="https://www.w3schools.com/cssref/css_selectors.asp" title="W3Schools CSS selectors reference" target="_blank">CSS Selectors</a></p>
     <ul>
         <li>$("#wrapper").css("width", 500);</li>
         <li>$("#p2").css({ "background": "url('grass.png') repeat-y" });</li>
@@ -105,8 +109,7 @@
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
-    <h3>// Events</h3>
-    <p>// <a href="https://learn.jquery.com/events/event-basics/" target="_blank" title="Setting Up Event Responses on DOM Elements">jQuery Event Basics</a></p>
+    <h3>// Events</h3>    
     <p>jQuery event.which returns which keyboard key or mouse button was pressed for the event</p>    
     <ul>
         <li>.mouseover(function() { $("#logo2").attr("src", "ntt-logo-horz.png"); });</li>
@@ -174,11 +177,7 @@
     }</code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
-    <h3>// jQuery UI</h3>
-    <p>// <a href="https://jqueryui.com/themeroller/" title="jqueryui.com/themeroller" target="blank">UI Themes</a></p>
-
-    <h4>// Animation</h4>
-    <p>// <a href="https://api.jquery.com/category/effects/" title="api.jquery.com/category/effects" target="_blank">Effects</a></p>
+    <h3>// Animation</h3>
     <ul>
         <li>$("#p-one").click(function() { $(this).hide() });</li>
         <li>$("#p-two").click(function() { $(this).fadeOut(2000) });</li>
@@ -187,7 +186,6 @@
         <li>.slideUp()</li>
         <li>.slideDown()</li>
         <li>.animate({ left: 300, opacity: .5, "font-size": "22px" }, 2000, "easeInQuad", function() { alert('Done!') }); // Position set to relative in CSS</li>
-
     </ul>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
