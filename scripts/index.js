@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '9:27:00';
+var tStamp = '19:13:00';
 
 var stack = [];
 var backups = [];
@@ -1669,7 +1669,9 @@ function buildComplexNumber(obj) {
 function displayResult(result, newUnits) {  
   var objX = getX(result);
   
-  result = objToString(objX);
+  result = objToString(objX);  
+  result = result.replace(/i/g, '1j');
+
   if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
