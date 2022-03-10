@@ -29,7 +29,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '19:13:00';
+var tStamp = '16:13:00';
 
 var stack = [];
 var backups = [];
@@ -1661,11 +1661,8 @@ function buildComplexNumber(obj) {
 
 function displayResult(result, newUnits) {  
   var objX = getX(result);
-  console.log('objX', objX);
-  result = objToString(objX);
-  // console.log('result', result);
-  // if (result !== 'Infinity') result = result.replace(/i/g, '1j');
 
+  result = objToString(objX);
   if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -2719,26 +2716,6 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
       break;
-    case '-i':
-      // Falls Through
-    case '-j':
-      stack.pop();
-      $('txt-input').value = '-1j';
-      enterInput();
-      updateDisplay();
-      break;
-    case 'i':
-      // Falls Through
-    case '+i':
-      // Falls Through
-    case 'j':
-      // Falls Through
-    case '+j':
-      stack.pop();
-      $('txt-input').value = '1j';
-      enterInput();
-      updateDisplay();
-      break;
     case 'ipmapper':
       stack.pop();
       updateDisplay();
@@ -3419,15 +3396,14 @@ function extractImainary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {    
 
-    if (!/[()]/g.test(tmpString)) {   
-
-      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|[-+]?[ ]*Infinity[ij]/);   
+    if (!/[()]/g.test(tmpString)) {    
+      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![ij])[ij](?![ij])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);   
       tmpImaginary = tmpImaginary.replace(/ /g, '');
 
-      if (/[+][ij]/.test(tmpImaginary)) {
-          tmpImaginary = '1';
-      } else if (/[-][ij]/.test(tmpImaginary)) {
+      if (/^[-][ij]\b/.test(tmpImaginary)) {
         tmpImaginary = '-1';
+      } else if (/^[+]?[ij]\b/.test(tmpImaginary)) {
+        tmpImaginary = '1';
       } else {
         tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);    
       }
