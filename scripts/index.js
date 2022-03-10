@@ -1076,15 +1076,8 @@ function inverse() {
     $('txt-input').value = decodeSpecialChar(backups[backups.length - 3]);
   } else {
     if (isNumber || isImaginary) {
-      if (isNumber && !isImaginary) $('txt-input').value = 1 / calculate(objX.getRealPart());
-      if (!isNumber && isImaginary) {
-        $('txt-input').value =  1 / calculate(objX.getImaginary());
-        $('txt-input').value += 'j';
-      }
-      if (isNumber && isImaginary) {
-        var x = buildComplexNumber(objX);
-        displayResult(math.inv(x), newUnits);       
-      }
+      var x = buildComplexNumber(objX);
+      displayResult(math.inv(x), newUnits);
     } else {
       // Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
@@ -1668,9 +1661,9 @@ function buildComplexNumber(obj) {
 
 function displayResult(result, newUnits) {  
   var objX = getX(result);
-  
   result = objToString(objX);  
-  result = result.replace(/i/g, '1j');
+  console.log('result', result);
+  if (result !== 'Infinity') result = result.replace(/i/g, '1j');
 
   if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
