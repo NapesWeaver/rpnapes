@@ -22,6 +22,8 @@ new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
 
+var i = '√-1';
+var j = '√-1';
 var Φ = 1.618033988749895;
 var ℮ = Math.exp(1);
 var π = Math.PI;
@@ -402,9 +404,9 @@ function objToString(obj) {
       } else {
         if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
         var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary())); 
-        var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();        
-
-        if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument);        
+        var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
+          
+        if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument);  
         theString += formatNumber(complex.abs()) + '∠' + formatNumber(argument); 
       }      
     }    
@@ -1203,7 +1205,7 @@ function mathLog(base, num) {
   result = math.log(y, x);
   
   if (result.im === undefined || result.im === 0) {
-    if (/[.][9]{11,}[0-9]*[0-9]$/.test(result.re)) result.re = Math.round(result.re);
+    if (/[.][9]{11,}[0-9]*[0-9]$/.test(result.re)) result.re = Math.round(result.re);    
     return result.re;
   } else {
     result = result.toString();
