@@ -267,17 +267,6 @@ function menuNotes() {
 
 //////// Buttons /////////////////////////////////////////////////////////////////////
 
-function btnXoff() {
-
-  if ($('rpnapes').classList.contains('hidden')) {
-    // Notes is visible - turn on RPNapes
-    rpnapesOn();
-  } else if ($('notes').classList.contains('hidden') && $('tricorder').classList.contains('hidden')) {
-    // RPNapes is visible - turn on Notes
-    notesOn();
-  }
-}
-
 function rpnapesOn() {
   $('notes').classList.remove('visible');
   $('notes').classList.add('hidden');
@@ -334,12 +323,15 @@ function showTricorder() {
   $('viewport').classList.add('visible');
 }
 
-function btnCopy() {
-  if (shifted) {
-    btnPaste();
-  } else {
-    copy();
-  }  
+function btnXoff() {
+
+  if ($('rpnapes').classList.contains('hidden')) {
+    // Notes is visible - turn on RPNapes
+    rpnapesOn();
+  } else if ($('notes').classList.contains('hidden') && $('tricorder').classList.contains('hidden')) {
+    // RPNapes is visible - turn on Notes
+    notesOn();
+  }
 }
 
 function copy() {
@@ -371,11 +363,35 @@ function btnPaste() {
   $('txt-input').focus();
 }
 
+function btnCopy() {
+  if (shifted) {
+    btnPaste();
+  } else {
+    copy();
+  }  
+}
+
+function getX(input) {
+  var x = input === undefined ? $('txt-input').value.trim() : input.toString();
+  var soulX = x;
+  var firstValueX = extractFirstValue(soulX);
+  var tmpComplex = extractLateral(soulX, firstValueX);
+  var imaginaryX = tmpComplex[1];
+  var unitsX;
+
+  firstValueX = tmpComplex[0];
+  isANumber(firstValueX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
+  soulX = encodeSpecialChar(soulX);
+  unitsX = encodeSpecialChar(unitsX);
+  
+  return new NumberObject(soulX, firstValueX, imaginaryX, unitsX);
+}
+
 function objToString(obj) {
   var theString = '';
   var isNumber = isANumber(obj.getRealPart());
   var isImaginary = isANumber(obj.getImaginary());
-
+  
   if (!isNumber && !isImaginary) {
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
@@ -395,7 +411,7 @@ function objToString(obj) {
           theString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
         } else {
           theString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
-        }
+        }        
       }
     } else {
       // Polar
@@ -485,6 +501,7 @@ function btnEnter() {
 function btnEval() {
   backupUndo();
   var objX;
+  var units = '';
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   objX = getX();
@@ -493,26 +510,9 @@ function btnEval() {
     btnLoad();
     return;
   }
-  $('txt-input').value = calculate($('txt-input').value.replace(/[ ]*$/, ''));
-  if (objX.getUnits() !== 'null') $('txt-input').value += ' ' + decodeSpecialChar(objX.getUnits());
+  displayResult(calculate($('txt-input').value.replace(/[ ]*$/, '')), units);
+
   $('txt-input').select();  
-}
-
-function getX(input) {
-  var x = input === undefined ? $('txt-input').value.trim() : input.toString();
-  var soulX = x;
-  var firstValueX = extractFirstValue(soulX);
-  var tmpComplex = extractLateral(soulX, firstValueX);
-  var imaginaryX = tmpComplex[1];
-  var unitsX;
-
-  firstValueX = tmpComplex[0];
-  isANumber(firstValueX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
-  // unitsX = extractUnits(soulX);
-  soulX = encodeSpecialChar(soulX);
-  unitsX = encodeSpecialChar(unitsX);
-  
-  return new NumberObject(soulX, firstValueX, imaginaryX, unitsX);
 }
 
 function enterInput() {
@@ -522,13 +522,10 @@ function enterInput() {
 }
 
 function calculate(x) {
-  // If input does not contain complex elements
-  if (!/[\dⅽ℮ɢΦπ][ ]*[-+]?[ ]*[∠ij]/g.test(x)) {
     try {
       x = eval(parseEvaluation(x));
     } catch(e) {
       return e.toString();
-    }
   }
   return x;
 }
@@ -3360,12 +3357,15 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
   if (radix === 10) {  
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
-    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinityj/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-      
+    // if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
+    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
+      // console.log('tmpString', tmpString);
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
         tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
       } else {
+        // tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
         tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
+        // console.log('tmpReal', tmpReal);
       }      
     }
     tmpReal = tmpReal.replace(/ /g, '');
@@ -5165,12 +5165,12 @@ window.onload = function () {
  * Debug for polar input & all other toggle insertions.
  * Testing complex trig functions.
  * 
- * Constants/formulas menu bug for mobile?
  * Refactor btnModulus()?
- * Factorial for complex numbers.
+ * Factorial for complex numbers?
  * Negative & inverse binaries?
  * Toggle array answering for roots?
  * 
+ * Constants/formulas menu bug for mobile.
  * Remote debug superfluous copy/paste menu.
  * Remote debug for Firefox mobile keypad.
  * File-reopening bug.
