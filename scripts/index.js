@@ -522,8 +522,8 @@ function enterInput() {
 }
 
 function calculate(x) {
-  // If input does not contain complex elements :( 
-  if (!/[\dⅽ℮ɢΦπ][ ]*[∠ij]/g.test(x)) {
+  // If input does not contain complex elements
+  if (!/[\dⅽ℮ɢΦπ][ ]*[-+]?[ ]*[∠ij]/g.test(x)) {
     try {
       x = eval(parseEvaluation(x));
     } catch(e) {
@@ -3394,11 +3394,11 @@ function extractFirstValue(tmpString) {
   return tmpReal;
 }
 
-function extractImainary(tmpString) {
+function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {    
 
-    if (!/[()]/g.test(tmpString)) {    
+    if (!/[()]/g.test(tmpString)) {      
       tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![ij])[ij](?![ij])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);   
       tmpImaginary = tmpImaginary.replace(/ /g, '');
 
@@ -3464,7 +3464,7 @@ function extractLateral(tmpString, firstValue) {
     tmpComplex = extractAngle(tmpString, firstValue);    
   } else {
     tmpComplex[0] = firstValue;
-    tmpComplex[1] = extractImainary(tmpString);
+    tmpComplex[1] = extractImaginary(tmpString);
   }
   return tmpComplex;
 }
