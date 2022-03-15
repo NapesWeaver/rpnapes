@@ -417,13 +417,17 @@ function objToString(obj) {
       // Polar
       if (!isImaginary) {        
         theString += formatNumber(obj.getRealPart().toString());
-      } else {
+      } else {        
         if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
-        var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary())); 
+
+        var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));
+        var radius = complex.abs();
         var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
-          
+        
+        if (isNaN(radius) && (argument % 45 === 0 || (Math.abs(argument) === 0.7853981633974483 || Math.abs(argument) === 2.356194490192345) || argument === 0)) radius = 'Infinity';
         if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument);  
-        theString += formatNumber(complex.abs()) + '∠' + formatNumber(argument); 
+
+        theString += formatNumber(radius) + '∠' + formatNumber(argument); 
       }      
     }    
     if (obj.getUnits() !== 'null') {
@@ -3357,15 +3361,13 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
   if (radix === 10) {  
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
-    // if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-      // console.log('tmpString', tmpString);
+      
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
-        tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?!j)/);
+        tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?![ij])/);
+        if (/∠-/g.test(tmpString)) tmpReal = '-' + tmpReal;
       } else {
-        // tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
-        tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?!j)/);
-        // console.log('tmpReal', tmpReal);
+        tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);        
       }      
     }
     tmpReal = tmpReal.replace(/ /g, '');
@@ -3399,7 +3401,8 @@ function extractImaginary(tmpString) {
   if (radix === 10) {    
 
     if (!/[()]/g.test(tmpString)) {      
-      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![ij])[ij](?![ij])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);   
+      // tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![ij])[ij](?![ij])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);   
+      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z])[ij](?![a-zA-Z])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);   
       tmpImaginary = tmpImaginary.replace(/ /g, '');
 
       if (/^[-][ij]\b/.test(tmpImaginary)) {
@@ -3429,19 +3432,88 @@ function extractImaginary(tmpString) {
 function extractAngle(tmpString, firstValue) {  
   var tmpComplex = [];
   var tmpAngle = '';
-
+  
   if (radix === 10) {
     if (!/[()]/g.test(tmpString)) { 
       tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);    
       tmpAngle = tmpAngle.replace(/ /g, '');
       // Remove ∠
       tmpAngle = tmpAngle.slice(1);
+      
       if (firstValue !== 'NaN') {
-        if ($('btn-angle').value === 'deg') tmpAngle = tmpAngle * Math.PI / 180;
+
+        if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
+
         var polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });
+
         tmpComplex[0] = polar.re;
         tmpComplex[1] = polar.im.toString();
+
+        if (/[-+]?Infinity/.test(firstValue)) {
+          
+          polar = math.complex({ abs: 1, arg: calculate(tmpAngle)});    
+
+          switch (tmpAngle.toString()) {   
+            case '0':
+              // Falls through
+            case '360':
+              // Falls through
+            case '-360':
+              // console.log('360');
+              tmpComplex[0] = firstValue === '-Infinity' ? -Infinity : Infinity;
+              tmpComplex[1] = '0';
+              break;
+            case'45':
+              // Falls through
+            case '0.7853981633974483':
+              // console.log('45');
+              tmpComplex[0] = Infinity;
+              tmpComplex[1] = 'Infinity';
+              break;
+            case '135':
+              // Falls through
+            case '2.356194490192345':
+              // console.log('135');
+              tmpComplex[0] = -Infinity;
+              tmpComplex[1] = 'Infinity';
+              break
+            case '180':
+              // Falls through'
+            case '3.141592653589793':
+              // Falls through
+            case '-180':
+              // Falls through
+            case '-3.141592653589793':
+              // console.log('[-+]180')
+              tmpComplex[0] = -Infinity;
+              tmpComplex[1] = '0';
+              break;
+            case '-135':
+              // Falls through
+            case'225':
+              // Falls through
+            case '-2.356194490192345':
+              // console.log('-135, 225');
+              tmpComplex[0] = -Infinity;
+              tmpComplex[1] = '-Infinity';
+              break;
+            case '-45':
+              // Falls through
+            case '315':
+              // Falls through
+            case '-0.7853981633974483':
+              // console.log('-45, 315');
+              tmpComplex[0] = Infinity;
+              tmpComplex[1] = '-Infinity';
+            break;
+            }            
+        }        
       }
+      // console.log('typeof tmpComplex[1])', typeof parseFloat(tmpComplex[1]));
+      // console.log('tmpComplex[1])', tmpComplex[1]);
+      // console.log('true/false', Math.abs(parseFloat(tmpComplex[1])) < 1.2246467991473533e-16);
+
+      // if (Math.abs(parseFloat(tmpComplex[1])) < 1.2246467991473533e-16) tmpComplex[1] = '0';
     }
   } else {
     if (radix === 2) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-1]+j/);
