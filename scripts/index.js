@@ -1069,47 +1069,46 @@ function inverse() {
   backupUndo();
   var objX;
   var result;
+  var txtInput = $('txt-input').value;
 
   if (stackFocus) {
     objX = stack[getIndex('lst-stack') - stackSize];
-    $('txt-input').value = decodeSpecialChar(objX.getSoul());
+    txtInput = decodeSpecialChar(objX.getSoul());
     backupUndo();// <--Needed for UI consistency in this case
   } else { 
     objX = getX();
   }
-  var isNumber = isANumber(objX.getRealPart());
-  var isImaginary = isANumber(objX.getImaginary());
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
-  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {  
+  if (txtInput === cashed && txtInput !== decodeSpecialChar(backups[backups.length - 3])) {  
     displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
   } else {    
-    if (isNumber || isImaginary) {
+    if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       var x = buildComplexNumber(objX);
       displayResult(math.inv(x), newUnits);
     } else {
       // Remove units from expression and calculate
-      result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+      result = calculate(txtInput.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
       
       if (!isNaN(result)) {
-        $('txt-input').value = 1 / result;
-        $('txt-input').value += newUnits; 
+        txtInput = 1 / result;
+        txtInput += newUnits; 
       } else {
-        if(/^1\//.test($('txt-input').value)) {
-          $('txt-input').value = $('txt-input').value.slice(2);          
+        if(/^1\//.test(txtInput)) {
+          txtInput = txtInput.slice(2);          
         } else {
-          if ($('txt-input').value.trim() === '') {
-            $('txt-input').value = '0';
+          if (txtInput.trim() === '') {
+            txtInput = '0';
             backupUndo();
-            $('txt-input').value = 1 / 0;
+            txtInput = 1 / 0;
           } else {
-            $('txt-input').value = '1/' + $('txt-input').value.toString();
+            txtInput = '1/' + txtInput.toString();
           }
         }
       }      
     }
   }  
-  if (!/Infinity/g.test(objX.getSoul())) cashed = $('txt-input').value;
+  if (!/Infinity/g.test(objX.getSoul())) cashed = txtInput;
   $('txt-input').select();
 }
 
@@ -1469,9 +1468,7 @@ function signChange() {
   backupUndo();  
 
   var objX;
-  var real;
-  var imaginary;
-  var result = '';
+  var result;
   var units = '';
   var txtInput = $('txt-input');
   var startPos = txtInput.selectionStart;
@@ -1482,12 +1479,12 @@ function signChange() {
   } else {
     objX = getX();
   }
-  real = isANumber(objX.getRealPart());
-  imaginary = isANumber(objX.getImaginary());
+  var isNumber = isANumber(objX.getRealPart());
+  var isImaginary = isANumber(objX.getImaginary());
   
-  if ((startPos === 0 && (endPos === txtInput.value.length || endPos === startPos)) || (startPos === txtInput.value.length && !/[-+^eE\s]/.test(txtInput.value.charAt(startPos - 1)))) {
+  if (stackFocus || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos)) || (startPos === txtInput.value.length && !/[-+^eE\s]/.test(txtInput.value.charAt(startPos - 1)))) {
 
-    if (real || imaginary) {
+    if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       result = math.unaryMinus(buildComplexNumber(objX));    
     } else {
       result = leadingSignChange(objX.getSoul());
