@@ -424,8 +424,9 @@ function objToString(obj) {
         
         argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
  
+        if (/[.][9]{13,}[0-9]*[0-9]$/.test(radius) || /[.][0]{13,}[0]*[1]$/.test(radius)) radius = Math.round(radius);  
         if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument) || /[.][0]{13,}[0]*[1]$/.test(argument)) argument = Math.round(argument);  
-        
+                
         theString += formatNumber(radius) + '∠' + formatNumber(argument); 
       }      
     }    
@@ -487,16 +488,23 @@ function enterButton() {
   }
 }
 
+function inputResult(objX) {  
+  stack.push(objX);
+  result = objToString(objX);
+  $('txt-input').value = result;
+  updateDisplay();
+}
+
 function btnEnter() {
   backupUndo();
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
-    var input = $('txt-input').value.trim();    
-    if (stack.length > 0 || (input !== '' && input !== 'NaN')) enterInput();
+    var input = $('txt-input').value.trim();
+    var objX = getX(input); 
+    if (stack.length > 0 || (input !== '' && input !== 'NaN')) inputResult(objX);
   }
   updateDisplay();
-  displayResult(input, '');
   parseCommand();
   cashed = '';
 }
@@ -1742,6 +1750,7 @@ function displayResult(result, newUnits) {
   var objX = getX(result);
 
   result = objToString(objX);
+
   if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
   $('txt-input').value = result;
   updateDisplay();
@@ -3435,7 +3444,7 @@ function decodeSpecialChar(tmpString) {
 
 function extractFirstValue(tmpString) {
   var tmpReal = '';
-  if (radix === 10) {  
+  if (radix === 10) {
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
@@ -3506,6 +3515,7 @@ function extractImaginary(tmpString) {
 }
 
 function extractAngle(tmpString, firstValue) {  
+  
   var tmpComplex = [];
   var tmpAngle = '';
   var polar;
