@@ -417,16 +417,13 @@ function objToString(obj) {
       // Polar
       if (!isImaginary) {        
         theString += formatNumber(obj.getRealPart().toString());
-      } else {        
-        if (isNaN(obj.getRealPart()) || obj.getRealPart() === 'NaN') obj.setRealPart(0);
-
+      } else {
         var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));
-        var radius = complex.abs();
+        var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
         var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
         
-        if (isNaN(radius) && (argument % 45 === 0 || (Math.abs(argument) === 0.7853981633974483 || Math.abs(argument) === 2.356194490192345) || argument === 0)) radius = 'Infinity';
         if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument);  
-
+        
         theString += formatNumber(radius) + '∠' + formatNumber(argument); 
       }      
     }    
@@ -3432,6 +3429,7 @@ function extractImaginary(tmpString) {
 function extractAngle(tmpString, firstValue) {  
   var tmpComplex = [];
   var tmpAngle = '';
+  var polar;
   
   if (radix === 10) {
     if (!/[()]/g.test(tmpString)) { 
@@ -3439,81 +3437,81 @@ function extractAngle(tmpString, firstValue) {
       tmpAngle = tmpAngle.replace(/ /g, '');
       // Remove ∠
       tmpAngle = tmpAngle.slice(1);
-      
-      if (firstValue !== 'NaN') {
 
+      if (/[-+]?Infinity/.test(firstValue)) {           
+        // polar = math.complex({ abs: 1, arg: calculate(tmpAngle)});    
+        switch (tmpAngle.toString()) {   
+          case '0':
+            // Falls through
+          case '-0':
+            // Falls through
+          case '360':
+            // Falls through
+          case '-360':
+            tmpComplex[0] = Infinity;
+            tmpComplex[1] = '0';
+            break;
+          case'45':
+            // Falls through
+          case'-315':
+            // Falls through
+          case '0.7853981633974483':
+            tmpComplex[0] = Infinity;
+            tmpComplex[1] = 'Infinity';
+            break;
+          case '90':
+            // Falls through
+          case '-270':
+            tmpComplex[0] = 0;
+            tmpComplex[1] = 'Infinity';
+            break;
+          case '135':
+            // Falls through
+          case '-225':
+            // Falls through
+          case '2.356194490192345':
+            tmpComplex[0] = -Infinity;
+            tmpComplex[1] = 'Infinity';
+            break
+          case '180':
+            // Falls through'
+          case '3.141592653589793':
+            // Falls through
+          case '-180':
+            // Falls through
+          case '-3.141592653589793':
+            tmpComplex[0] = -Infinity;
+            tmpComplex[1] = '0';
+            break;
+          case '-135':
+            // Falls through
+          case'225':
+            // Falls through
+          case '-2.356194490192345':
+            tmpComplex[0] = -Infinity;
+            tmpComplex[1] = '-Infinity';
+            break;
+          case '270':
+            // Falls through
+          case '-90':
+            tmpComplex[0] = 0;
+            tmpComplex[1] = '-Infinity';
+            break;
+          case '-45':
+            // Falls through
+          case '315':
+            // Falls through
+          case '-0.7853981633974483':
+            tmpComplex[0] = Infinity;
+            tmpComplex[1] = '-Infinity';
+          break;
+          }                 
+      } else {
         if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
-
-        var polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });
-
+        polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });
         tmpComplex[0] = polar.re;
         tmpComplex[1] = polar.im.toString();
-
-        if (/[-+]?Infinity/.test(firstValue)) {
-          
-          polar = math.complex({ abs: 1, arg: calculate(tmpAngle)});    
-
-          switch (tmpAngle.toString()) {   
-            case '0':
-              // Falls through
-            case '360':
-              // Falls through
-            case '-360':
-              // console.log('360');
-              tmpComplex[0] = firstValue === '-Infinity' ? -Infinity : Infinity;
-              tmpComplex[1] = '0';
-              break;
-            case'45':
-              // Falls through
-            case '0.7853981633974483':
-              // console.log('45');
-              tmpComplex[0] = Infinity;
-              tmpComplex[1] = 'Infinity';
-              break;
-            case '135':
-              // Falls through
-            case '2.356194490192345':
-              // console.log('135');
-              tmpComplex[0] = -Infinity;
-              tmpComplex[1] = 'Infinity';
-              break
-            case '180':
-              // Falls through'
-            case '3.141592653589793':
-              // Falls through
-            case '-180':
-              // Falls through
-            case '-3.141592653589793':
-              // console.log('[-+]180')
-              tmpComplex[0] = -Infinity;
-              tmpComplex[1] = '0';
-              break;
-            case '-135':
-              // Falls through
-            case'225':
-              // Falls through
-            case '-2.356194490192345':
-              // console.log('-135, 225');
-              tmpComplex[0] = -Infinity;
-              tmpComplex[1] = '-Infinity';
-              break;
-            case '-45':
-              // Falls through
-            case '315':
-              // Falls through
-            case '-0.7853981633974483':
-              // console.log('-45, 315');
-              tmpComplex[0] = Infinity;
-              tmpComplex[1] = '-Infinity';
-            break;
-            }            
-        }        
       }
-      // console.log('typeof tmpComplex[1])', typeof parseFloat(tmpComplex[1]));
-      // console.log('tmpComplex[1])', tmpComplex[1]);
-      // console.log('true/false', Math.abs(parseFloat(tmpComplex[1])) < 1.2246467991473533e-16);
-
-      // if (Math.abs(parseFloat(tmpComplex[1])) < 1.2246467991473533e-16) tmpComplex[1] = '0';
     }
   } else {
     if (radix === 2) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-1]+j/);
@@ -3524,8 +3522,7 @@ function extractAngle(tmpString, firstValue) {
     }
     tmpComplex[1] = tmpComplex[1].slice(0, tmpComplex[1].length - 1);
     tmpComplex[1] = parseInt(tmpComplex[1], radix);
-  }
-  
+  }  
   return tmpComplex;
 }
 
