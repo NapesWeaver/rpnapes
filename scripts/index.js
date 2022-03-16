@@ -1476,7 +1476,7 @@ function signChange() {
   result.re = objX.getSoul();
   
   if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {    
-    // Unary minus
+    
     if (isANumber(objX.getImaginary()) && (objX.getRealPart() !== 'Infinity' && objX.getImaginary() !== 'Infinity' && objX.getImaginary() !== '-Infinity')) {
       // Complex-num
       result = math.unaryMinus(buildComplexNumber(objX));      
@@ -3933,7 +3933,7 @@ function formatNumber(result) {
         }
         if (engDecimal !== -1) {
           result = toEngineering(result, engDecimal);          
-        }
+        }        
       }
     } else {  
       if (!isNaN(result)) {
@@ -3941,7 +3941,7 @@ function formatNumber(result) {
       }
     }  
   }
-  return result;
+  return result.replace('+', '');;
 }
 
 //////// Notes ///////////////////////////////////////////////////////////////////////
@@ -5264,10 +5264,10 @@ window.onload = function () {
   $('txt-input').readOnly = false;
 };
 /**
- * Debug for polar input & all other toggle insertions.
  * Testing complex trig functions.
  * 
- * Refactor btnModulus()?
+ * Error catching.
+ * Refactor signChange(), inverse(), btnModulus().
  * Factorial for complex numbers?
  * Negative & inverse binaries?
  * Toggle array answering for roots?
