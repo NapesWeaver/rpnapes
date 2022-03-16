@@ -418,9 +418,11 @@ function objToString(obj) {
       if (!isImaginary) {        
         theString += formatNumber(obj.getRealPart().toString());
       } else {
-        var complex = math.complex(calculate(obj.getRealPart()), calculate(obj.getImaginary()));
+        var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
+        var complex = math.complex(argument, calculate(obj.getImaginary()));
         var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
-        var argument  = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
+        
+        argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
         
         if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument);  
         
@@ -3439,7 +3441,7 @@ function extractAngle(tmpString, firstValue) {
       tmpAngle = tmpAngle.slice(1);
 
       if (/[-+]?Infinity/.test(firstValue)) {           
-        // polar = math.complex({ abs: 1, arg: calculate(tmpAngle)});    
+        // polar = math.complex({ abs: 1, arg: calculate(tmpAngle)});   
         switch (tmpAngle.toString()) {   
           case '0':
             // Falls through
@@ -3505,12 +3507,43 @@ function extractAngle(tmpString, firstValue) {
             tmpComplex[0] = Infinity;
             tmpComplex[1] = '-Infinity';
           break;
-          }                 
+          }              
       } else {
         if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
+
         polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });
-        tmpComplex[0] = polar.re;
-        tmpComplex[1] = polar.im.toString();
+       
+        tmpAngle = tmpAngle * 180 / Math.PI;
+        switch (tmpAngle.toString()) {
+          case '360':
+            // Falls through
+          case '-360':
+            // Falls through
+          case '0':
+            // Falls through
+          case '-0':
+            // Falls through
+          case '180':
+            // Falls through
+          case '-180':
+            tmpComplex[0] = polar.re;
+            tmpComplex[1] = '0';
+          break;
+          case '90':
+            // Falls through
+          case '-90':
+            // Falls through
+          case '270':
+            // Falls through
+          case '-270':
+            tmpComplex[0] = 0;
+            tmpComplex[1] = polar.im.toString();
+          break;
+          default:
+            tmpComplex[0] = polar.re;
+            tmpComplex[1] = polar.im.toString();
+          break;
+        }
       }
     }
   } else {
