@@ -1465,94 +1465,17 @@ function leadingSignChange(textInput) {
   return textInput.trim();
 }
 
-// function signChange() {
-//   backupUndo();  
-//   var objX;  
-//   var result = {};
-//   var units = '';
-//   var txtInput = $('txt-input');
-//   var startPos = txtInput.selectionStart;
-//   var endPos = txtInput.selectionEnd;
-
-//   if (stackFocus) {
-//     objX = stack[getIndex('lst-stack') - stackSize];
-//     txtInput.value = '';
-//   } else {
-//     objX = getX();
-//   }
-//   result.re = objX.getSoul();
-  
-//   if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {    
-    
-//     if (isANumber(objX.getImaginary()) && (objX.getRealPart() !== 'Infinity' && objX.getImaginary() !== 'Infinity' && objX.getImaginary() !== '-Infinity')) {
-//       // Complex-num
-//       result = math.unaryMinus(buildComplexNumber(objX));      
-//     } else if (isANumber(objX.getRealPart()) && (objX.getRealPart() !== 'Infinity' && objX.getRealPart() !== '-Infinity')) {
-//       // Real-num       
-//       result.re = objX.getRealPart() * -1;
-//     } else {// Lorem-ipsum-num  
-//       result.re = leadingSignChange(result.re);
-//     }
-//   } else {// Insertion / Toggle    
-//     if (/[-+]/.test(result.re.charAt(startPos - 1))) {
-//       if (/-/.test(result.re.charAt(startPos - 1))) {
-//         result.re = result.re.removeAt(startPos - 1, startPos);
-//         if (/ /.test(result.re.charAt(startPos - 2))) {// If space to left, insert explicit '+'
-//           result.re = result.re.insertAt(startPos - 1, '+');
-//           startPos ++;
-//         }
-//       }
-//       if (/[+]/.test(result.re.charAt(startPos - 1))) {   
-//         result.re = result.re.removeAt(startPos - 1, startPos);
-//         result.re = result.re.insertAt(startPos - 1, '-');
-//         startPos ++;
-//       }
-//       txtInput.selectionStart = startPos - 1;
-//       txtInput.selectionEnd = startPos - 1;
-
-//     } else if (/[eE^√ ]/.test(result.re.charAt(startPos - 1)) && !/[-+]/.test(result.re.charAt(startPos)) && !/[-+][ ]*$/.test(result.re)) {      
-//       if (/ /.test(result.re.charAt(startPos - 1))) {
-//         result.re = result.re.insertAt(startPos, '-');
-//         startPos = startPos + 2;
-//       }
-//       if (/[eE^√]/.test(result.re.charAt(startPos - 1))) {
-
-//         if (/[-]/.test(result.re.charAt(startPos))) {
-//           result.re = result.re.removeAt(startPos, startPos + 1);
-//           startPos ++;
-//         } else if (/[+]/.test(result.re.charAt(startPos))) {    
-//           result.re = result.re.removeAt(startPos, startPos + 1);
-//           result.re = result.re.insertAt(startPos, '-');
-//           startPos = startPos + 2;
-//         } else if (!/[-]/.test(result.re.charAt(startPos))) {          
-//           result.re = result.re.insertAt(startPos, '-')
-//           startPos = startPos + 2;
-//         }
-//       }
-//       txtInput.selectionStart = startPos - 1;
-//       txtInput.selectionEnd = startPos - 1;
-//     }// End Insert
-//   }
-//   if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
-
-//   if (result.im === undefined || result.im === 0) {
-//     displayResult(result.re, '');
-//   } else {
-//     displayResult(result, units);
-//   }
-// }
-
 function signChange() {
   backupUndo();  
-  
+
   var objX;
   var real;
   var imaginary;
   var result = '';
   var units = '';
-  var startPos = $('txt-input').selectionStart;
-  var endPos = $('txt-input').selectionEnd;
-
+  var txtInput = $('txt-input');
+  var startPos = txtInput.selectionStart;
+  var endPos = txtInput.selectionEnd;
   
   if (stackFocus) {
     objX = stack[getIndex('lst-stack') - stackSize];    
@@ -1562,21 +1485,56 @@ function signChange() {
   real = isANumber(objX.getRealPart());
   imaginary = isANumber(objX.getImaginary());
   
-  // console.log('length', $('txt-input').value.length);
-  // console.log('startPos', startPos);
-  // console.log('endPos', endPos);
+  if ((startPos === 0 && (endPos === txtInput.value.length || endPos === startPos)) || (startPos === txtInput.value.length && !/[-+^eE\s]/.test(txtInput.value.charAt(startPos - 1)))) {
 
+    if (real || imaginary) {
+      result = math.unaryMinus(buildComplexNumber(objX));    
+    } else {
+      result = leadingSignChange(objX.getSoul());
+    }  
+    if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
+    displayResult(result, units);
 
-  if (real || imaginary) {
-    result = math.unaryMinus(buildComplexNumber(objX));    
   } else {
-    result = leadingSignChange(objX.getSoul());
-  }  
+    if (/[-+]/.test(txtInput.value.charAt(startPos - 1))) {
+      if (/-/.test(txtInput.value.charAt(startPos - 1))) {
+        txtInput.value = txtInput.value.removeAt(startPos - 1, startPos);
+        if (/ /.test(txtInput.value.charAt(startPos - 2))) {// If space to left, insert explicit '+'
+          txtInput.value = txtInput.value.insertAt(startPos - 1, '+');
+          startPos ++;
+        }
+      }
+      if (/[+]/.test(txtInput.value.charAt(startPos - 1))) {   
+        txtInput.value = txtInput.value.removeAt(startPos - 1, startPos);
+        txtInput.value = txtInput.value.insertAt(startPos - 1, '-');
+        startPos ++;
+      }
+      txtInput.selectionStart = startPos - 1;
+      txtInput.selectionEnd = startPos - 1;
 
-
-
-  if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
-  displayResult(result, units);
+    } else if (/[eE^√ ]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+]/.test(txtInput.value.charAt(startPos)) && !/[-+][ ]*$/.test(txtInput.value)) {
+      if (/ /.test(txtInput.value.charAt(startPos - 1))) {
+        txtInput.value = txtInput.value.insertAt(startPos, '-');
+        startPos = startPos + 2;
+      }
+      if (/[eE^√]/.test(txtInput.value.charAt(startPos - 1))) {
+        if (/[-]/.test(txtInput.value.charAt(startPos))) {
+          txtInput.value = txtInput.value.removeAt(startPos, startPos + 1);
+          startPos ++;
+        } else if (/[+]/.test(txtInput.value.charAt(startPos))) {    
+          txtInput.value = txtInput.value.removeAt(startPos, startPos + 1);
+          txtInput.value = txtInput.value.insertAt(startPos, '-');
+          startPos = startPos + 2;
+        } else if (!/[-]/.test(txtInput.value.charAt(startPos))) {          
+          txtInput.value = txtInput.value.insertAt(startPos, '-')
+          startPos = startPos + 2;
+        }
+      }
+      txtInput.selectionStart = startPos - 1;
+      txtInput.selectionEnd = startPos - 1;
+    }
+    txtInput.focus();
+  }
 }
 
 function btnSign() {  
