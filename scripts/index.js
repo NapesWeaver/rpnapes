@@ -3400,9 +3400,8 @@ function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {    
 
-    if (!/[()]/g.test(tmpString)) {      
-      // tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![ij])[ij](?![ij])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);   
-      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z])[ij](?![a-zA-Z])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);   
+    if (!/[()]/g.test(tmpString)) {     
+      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);     
       tmpImaginary = tmpImaginary.replace(/ /g, '');
 
       if (/^[-][ij]\b/.test(tmpImaginary)) {
