@@ -159,7 +159,6 @@ function unFloat() {
 
 function toggleForm() {
   if($('menu-form').textContent === 'Vector') {
-
     $('menu-form').innerHTML = 'Polar';
     if (shifted) $('btn-ee').value = 'j';
   } else {
@@ -1545,79 +1544,39 @@ function leadingSignChange(textInput) {
 
 function signChange() {
   backupUndo();  
-  var objX;  
-  var result = {};
+  
+  var objX;
+  var real;
+  var imaginary;
+  var result = '';
   var units = '';
-  var txtInput = $('txt-input');
-  var startPos = txtInput.selectionStart;
-  var endPos = txtInput.selectionEnd;
+  var startPos = $('txt-input').selectionStart;
+  var endPos = $('txt-input').selectionEnd;
 
+  
   if (stackFocus) {
-    objX = stack[getIndex('lst-stack') - stackSize];
-    txtInput.value = '';
+    objX = stack[getIndex('lst-stack') - stackSize];    
   } else {
     objX = getX();
   }
-  result.re = objX.getSoul();
+  real = isANumber(objX.getRealPart());
+  imaginary = isANumber(objX.getImaginary());
   
-  if ((startPos === 0 && endPos === result.re.length) || (stackFocus || startPos === endPos && (startPos === 0 || (startPos === result.re.length && !/[-+eE^√ ]/.test(result.re.charAt(startPos - 1)))))) {    
-    
-    if (isANumber(objX.getImaginary()) && (objX.getRealPart() !== 'Infinity' && objX.getImaginary() !== 'Infinity' && objX.getImaginary() !== '-Infinity')) {
-      // Complex-num
-      result = math.unaryMinus(buildComplexNumber(objX));      
-    } else if (isANumber(objX.getRealPart()) && (objX.getRealPart() !== 'Infinity' && objX.getRealPart() !== '-Infinity')) {
-      // Real-num       
-      result.re = objX.getRealPart() * -1;
-    } else {// Lorem-ipsum-num  
-      result.re = leadingSignChange(result.re);
-    }
-  } else {// Insertion / Toggle    
-    if (/[-+]/.test(result.re.charAt(startPos - 1))) {
-      if (/-/.test(result.re.charAt(startPos - 1))) {
-        result.re = result.re.removeAt(startPos - 1, startPos);
-        if (/ /.test(result.re.charAt(startPos - 2))) {// If space to left, insert explicit '+'
-          result.re = result.re.insertAt(startPos - 1, '+');
-          startPos ++;
-        }
-      }
-      if (/[+]/.test(result.re.charAt(startPos - 1))) {   
-        result.re = result.re.removeAt(startPos - 1, startPos);
-        result.re = result.re.insertAt(startPos - 1, '-');
-        startPos ++;
-      }
-      txtInput.selectionStart = startPos - 1;
-      txtInput.selectionEnd = startPos - 1;
+  // console.log('length', $('txt-input').value.length);
+  // console.log('startPos', startPos);
+  // console.log('endPos', endPos);
 
-    } else if (/[eE^√ ]/.test(result.re.charAt(startPos - 1)) && !/[-+]/.test(result.re.charAt(startPos)) && !/[-+][ ]*$/.test(result.re)) {      
-      if (/ /.test(result.re.charAt(startPos - 1))) {
-        result.re = result.re.insertAt(startPos, '-');
-        startPos = startPos + 2;
-      }
-      if (/[eE^√]/.test(result.re.charAt(startPos - 1))) {
 
-        if (/[-]/.test(result.re.charAt(startPos))) {
-          result.re = result.re.removeAt(startPos, startPos + 1);
-          startPos ++;
-        } else if (/[+]/.test(result.re.charAt(startPos))) {    
-          result.re = result.re.removeAt(startPos, startPos + 1);
-          result.re = result.re.insertAt(startPos, '-');
-          startPos = startPos + 2;
-        } else if (!/[-]/.test(result.re.charAt(startPos))) {          
-          result.re = result.re.insertAt(startPos, '-')
-          startPos = startPos + 2;
-        }
-      }
-      txtInput.selectionStart = startPos - 1;
-      txtInput.selectionEnd = startPos - 1;
-    }// End Insert
-  }
-  if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
-
-  if (result.im === undefined || result.im === 0) {
-    displayResult(result.re, '');
+  if (real || imaginary) {
+    result = math.unaryMinus(buildComplexNumber(objX));    
   } else {
-    displayResult(result, units);
-  }
+    result = leadingSignChange(objX.getSoul());
+  }  
+
+
+
+  if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
+  displayResult(result, units);
 }
 
 function btnSign() {  
@@ -3444,6 +3403,7 @@ function decodeSpecialChar(tmpString) {
 
 function extractFirstValue(tmpString) {
   var tmpReal = '';
+  
   if (radix === 10) {
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
