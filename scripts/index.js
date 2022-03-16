@@ -423,8 +423,8 @@ function objToString(obj) {
         var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
         
         argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
-        
-        if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument)) argument = Math.round(argument);  
+ 
+        if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument) || /[.][0]{13,}[0]*[1]$/.test(argument)) argument = Math.round(argument);  
         
         theString += formatNumber(radius) + '∠' + formatNumber(argument); 
       }      
