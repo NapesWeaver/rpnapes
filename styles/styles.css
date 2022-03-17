@@ -87,7 +87,7 @@ header {
 }
 
 #indicate-polar {
-    top: 0;
+    top: 2px;
     margin-left: 10.5em;
 }
 
@@ -666,8 +666,7 @@ label a {
         padding-right: 1.3em;
     }
 
-    #timer,
-    #indicate-polar {
+    #timer {
         font-size: 1.6em;
     }   
     
@@ -679,6 +678,10 @@ label a {
     #indicate-shift,
     #indicate-radians {
         top: 5px;
+    }
+
+    #indicate-polar {
+        top: 4px;
     }
 
     #indicate-execution {
@@ -694,7 +697,7 @@ label a {
     }
 
     #indicate-polar {
-        margin-left: 14.4em;
+        margin-left: 19em;
     }
 
     header,
@@ -789,6 +792,6 @@ label a {
     }
 
     #indicate-polar {
-        margin-left: 16.5em;
+        margin-left: 22.2em;
     }
 }
