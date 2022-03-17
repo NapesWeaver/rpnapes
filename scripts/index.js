@@ -824,6 +824,7 @@ function btnShift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
+    $('indicate-shift').classList.add('hidden');
     $('menu-open').innerHTML = 'Open';
     $('open').setAttribute('title', 'Open a file');
     $('menu-load').innerHTML = 'Load';
@@ -869,6 +870,7 @@ function btnShift() {
   else {
     // Shifting to true...
     shifted = true;
+    $('indicate-shift').classList.remove('hidden');
     $('menu-open').innerHTML = 'RunFile';
     $('open').setAttribute('title', 'Run JS file');
     $('menu-load').innerHTML = 'Run';
@@ -998,7 +1000,7 @@ function btnLoad() {
       loadStack(getCookie('STACK').slice(index));
     } else {
       backupUndo();
-    } 
+    }     
   } catch (err) { rpnAlert('load Stack error.'); }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
@@ -1796,12 +1798,14 @@ function btnAngle() {
 
   if ($('btn-angle').value === 'deg') {
     $('btn-angle').value = 'rad';
+    $('indicate-radians').classList.remove('hidden');
     $('btn-angle').className = 'btn-small btn-radian radian-border';
     $('btn-sine').className = 'btn-small radian-border';
     $('btn-cosine').className = 'btn-small radian-border';
     $('btn-tangent').className = 'btn-small radian-border';
   } else {
     $('btn-angle').value = 'deg';
+    $('indicate-radians').classList.add('hidden');
     $('btn-angle').className = 'btn-small btn-angle degree-border';
     $('btn-sine').className = 'btn-small degree-border';
     $('btn-cosine').className = 'btn-small degree-border';
