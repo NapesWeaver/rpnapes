@@ -1085,10 +1085,8 @@ function inverse() {
   } else {    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       var x = buildComplexNumber(objX);
-      
-      displayResult(math.inv(x), newUnits);
-    } else {
-      // Remove units from expression and calculate
+      displayResult(math.inv(x), newUnits);      
+    } else {// Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
       
       if (!isNaN(result)) {
@@ -1108,8 +1106,8 @@ function inverse() {
         }
       }      
     }
-  }  
-  if (!/Infinity/g.test(objX.getSoul())) cashed = $('txt-input').value;
+  }
+  cashed = $('txt-input').value;
   $('txt-input').select();
 }
 
