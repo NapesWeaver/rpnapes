@@ -160,9 +160,11 @@ function unFloat() {
 function toggleForm() {
   if($('menu-form').textContent === 'Vector') {
     $('menu-form').innerHTML = 'Polar';
+    $('indicate-polar').classList.add('hidden');
     if (shifted) $('btn-ee').value = 'j';
   } else {
     $('menu-form').innerHTML = 'Vector';
+    $('indicate-polar').classList.remove('hidden');
     if (shifted) $('btn-ee').value = '∠';
   }
   updateDisplay();

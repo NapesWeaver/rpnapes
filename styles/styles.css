@@ -13,6 +13,16 @@ body {
     overflow-Y: hidden;/* Needed for reference IFrame */
 }
 
+::-moz-selection { /* Code for Firefox */
+    color: #F2F100;
+    background: #6D8EBF;
+  }
+  
+  ::selection {
+    color: #F2F100;
+    background: #6D8EBF;
+  }
+
 header {    
     height: 18px;
     font-size: .81em;
@@ -40,12 +50,19 @@ header {
 }
 
 #timer {
-    position: absolute;
     top: 2px;
     margin-left: .6em;
+}
+
+#indicate-polar {
+    top: 0;
+    margin-left: 10.5em;
+}
+
+#timer, #indicate-polar {
+    position: absolute;
     font-size: 1.2em;
     font-weight: 700;
-    background-color: transparent;
     color: #F2F100;
 }
 
@@ -279,11 +296,11 @@ select::-ms-expand {
     }
 
 .color-blue {
-    color: #4285F4;
+    color: #477FF5;
 }
 
 .color-red {
-    color: #EA4335;
+    color: #DF2F35;
 }
 
 .menu-you-tube {
@@ -393,6 +410,10 @@ select,
 button,
 input[type="button"] {
     cursor: pointer;
+}
+
+#indicate-polar {
+    cursor: default;
 }
 
 #lst-stack {
@@ -558,6 +579,10 @@ label a {
     .menu > ul > li > a {
         padding-right: 1.5em;
     }
+
+    #indicate-polar {
+        margin-left: 13.2em;
+    }
 }
 
 @media only screen and (min-width: 360px) {
@@ -569,8 +594,13 @@ label a {
         padding-right: 1.3em;
     }
 
-    #timer {
+    #timer, #indicate-polar {
         font-size: 1.6em;
+    }
+
+    #indicate-polar {
+        top: 1px;
+        margin-left: 15em;
     }
 
     header,
@@ -641,5 +671,12 @@ label a {
 
     #widget {
         top: 473px;
+    }
+}
+
+@media only screen and (min-width: 360px) {
+
+    #indicate-polar {
+        margin-left: 17em;
     }
 }
