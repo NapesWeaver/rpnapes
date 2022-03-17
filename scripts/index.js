@@ -1000,12 +1000,12 @@ function btnLoad() {
       loadStack(getCookie('STACK').slice(index));
     } else {
       backupUndo();
-    }     
-  } catch (err) { rpnAlert('load Stack error.'); }
+    } 
+  } catch (err) { rpnAlert('Load STACK error.'); }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
     loadMathMon(getCookie('MATHMON').slice(index));
-  } catch(err) { rpnAlert('load MathMon error'); }
+  } catch(err) { rpnAlert('Load MATHMON error.'); }
   updateDisplay();
 }
 
@@ -4024,7 +4024,7 @@ function loadNotes() {
     notes = notes.concat(splitArrayByBrowser(getCookie('NOTES').slice(index)));
     if (notes[0] === '' && notes[1] === '') notes.pop();
   } catch (err) {
-    notes.push('Load error.');
+    notes.push('Load NOTES error.');
   }
   updateDisplayNotes();
   $('btn-save-notes').style.color = '#919191';
