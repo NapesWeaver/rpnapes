@@ -1073,42 +1073,43 @@ function inverse() {
 
   if (stackFocus) {
     objX = stack[getIndex('lst-stack') - stackSize];
-    txtInput = decodeSpecialChar(objX.getSoul());
+    $('txt-input').value = decodeSpecialChar(objX.getSoul());
     backupUndo();// <--Needed for UI consistency in this case
   } else { 
     objX = getX();
   }
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
-  if (txtInput === cashed && txtInput !== decodeSpecialChar(backups[backups.length - 3])) {  
+  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) { 
     displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
   } else {    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       var x = buildComplexNumber(objX);
+      
       displayResult(math.inv(x), newUnits);
     } else {
       // Remove units from expression and calculate
-      result = calculate(txtInput.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+      result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
       
       if (!isNaN(result)) {
-        txtInput = 1 / result;
-        txtInput += newUnits; 
+        $('txt-input').value = 1 / result;
+        $('txt-input').value += newUnits; 
       } else {
-        if(/^1\//.test(txtInput)) {
-          txtInput = txtInput.slice(2);          
+        if(/^1\//.test($('txt-input').value)) {
+          $('txt-input').value = $('txt-input').value.slice(2);          
         } else {
-          if (txtInput.trim() === '') {
-            txtInput = '0';
+          if ($('txt-input').value.trim() === '') {
+            $('txt-input').value = '0';
             backupUndo();
-            txtInput = 1 / 0;
+            $('txt-input').value = 1 / 0;
           } else {
-            txtInput = '1/' + txtInput.toString();
+            $('txt-input').value = '1/' + $('txt-input').value.toString();
           }
         }
       }      
     }
   }  
-  if (!/Infinity/g.test(objX.getSoul())) cashed = txtInput;
+  if (!/Infinity/g.test(objX.getSoul())) cashed = $('txt-input').value;
   $('txt-input').select();
 }
 
@@ -5268,7 +5269,8 @@ window.onload = function () {
  * Testing complex trig functions.
  * 
  * Error catching.
- * Refactor signChange(), inverse(), btnModulus().
+ * Refactor signChange(), inverse() for Infinities.
+ * Refactor btnModulus() for complex numbers?
  * Factorial for complex numbers?
  * Negative & inverse binaries?
  * Toggle array answering for roots?
