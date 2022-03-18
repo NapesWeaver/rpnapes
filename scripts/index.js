@@ -258,11 +258,16 @@ function toggleSound() {
 }
 
 function runNotes() {
-  $('indicate-execution').classList.remove('hidden');
-    setTimeout(function() {
-      calculate($('lst-notes').value);
-      if (shifted) $('indicate-execution').classList.add('hidden');
-    }, 20);
+
+  try {
+    $('indicate-execution').classList.remove('hidden');
+      setTimeout(function() {
+        calculate($('lst-notes').value);
+        if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+      }, 20);
+  } catch {
+    if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+  }
 }
 
 function menuNotes() {
@@ -1020,7 +1025,10 @@ function btnLoad() {
     } else {
       backupUndo();
     } 
-  } catch (err) { rpnAlert('Load STACK error.'); }
+  } catch (err) { 
+    rpnAlert('Load STACK error.');
+    if (shifted) $('indicate-execution').classList.add('hidden');
+   }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
     loadMathMon(getCookie('MATHMON').slice(index));
@@ -2438,6 +2446,9 @@ function help(command) {
     case 'run':
       inputText('run: Run the contents of the stack as a script.');
       break;
+    case 'runnotes':
+      inputText('runnotes: Run the contents of notes.');
+      break;
     case 'save':
       inputText('save: Saves the stack to a browser cookie.');
       break;
@@ -2494,7 +2505,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, runnotes, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
     enterInput();
     inputText('');
     enterInput();
@@ -2870,6 +2881,12 @@ function parseCommand() {
       updateDisplay();
       $('txt-input').value = '';
       runProgram();
+      break;
+    case 'runnotes':
+      stack.pop();
+      updateDisplay();
+      $('txt-input').value = '';
+      runNotes();
       break;
     case 'shortcuts':
       stack.pop();
@@ -4057,7 +4074,7 @@ function backSpaceUndo() {
 
 function loadNotes() {
   var index = 0;  
-  
+
   index = getCookie('NOTES').indexOf('=') + 1;
   try {
     notes = [];
@@ -4933,6 +4950,7 @@ window.onload = function () {
       fr.readAsText(this.files[0]);
     } catch (err) {
       rpnAlert(err.toString());
+      if (shifted) $('indicate-execution').classList.add('hidden');
     }    
   });
 
