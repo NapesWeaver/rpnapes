@@ -91,6 +91,18 @@ header {
     margin-left: 11em;
 }
 
+.firefox-ind-polar {
+    position: absolute;
+    top: -0.45em;
+    font-size: 1.5em;
+}
+
+.firefox-ind-exe {
+    position: absolute;
+    top: -0.2em;
+    font-size: 1em;
+}
+
 .btn-xoff {
     height: 18px;
     width: 18px;

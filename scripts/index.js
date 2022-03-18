@@ -5188,6 +5188,12 @@ window.onload = function () {
 
   $('timer').onclick = enterLapTime;
 
+  // Indicators
+  if (isFirefox || isMobile) {
+    $('indicate-polar').innerHTML = '<p class=\"firefox-ind-polar\">&#8736;</p>';
+    $('indicate-execution').innerHTML = '<p class=\"firefox-ind-exe\">&#10711</p></span>';
+  }
+
   // Text Area
   $('lst-stack').style.color = '#000000';// noscript warning was red ;)
   $('lst-stack').value = '';
