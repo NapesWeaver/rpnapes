@@ -260,7 +260,12 @@ function toggleSound() {
 function menuNotes() {
   if (shifted) {
     backupUndo();
-    calculate($('lst-notes').value);
+    
+    $('indicate-execution').classList.remove('hidden');
+    setTimeout(function() {
+      calculate($('lst-notes').value);
+      if (shifted) $('indicate-execution').classList.add('hidden');
+    }, 20);
   } else {
     btnXoff();
   }
@@ -997,7 +1002,15 @@ function btnLoad() {
     $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
     if (getCookie('STACK').slice(index) !== '') {
-      loadStack(getCookie('STACK').slice(index));
+      
+      if (shifted) {
+        $('indicate-execution').classList.remove('hidden');
+        setTimeout(function() {
+          loadProgram(getCookie('STACK').slice(index));
+        }, 20);        
+      } else {
+        loadStack(getCookie('STACK').slice(index));
+      }
     } else {
       backupUndo();
     } 
@@ -1007,6 +1020,26 @@ function btnLoad() {
     loadMathMon(getCookie('MATHMON').slice(index));
   } catch(err) { rpnAlert('Load MATHMON error.'); }
   updateDisplay();
+}
+
+function loadProgram(tmpStack) {
+  var prevStack = nestArrayByBrowser(stack);
+  if (prevStack !== tmpStack || shifted) backupUndo();
+  stack = [];
+
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
+    // Remove underscore from beginning of string
+    tmpStack = tmpStack.slice(1);
+  }
+  tmpStack = splitArrayByBrowser(tmpStack);
+    
+  while (tmpStack.length > 0) {
+    var tmpArray = [];
+    tmpArray = tmpStack.shift();
+    pushObjectToStack(tmpArray);    
+    if (shifted) evaluateExpression(decodeSpecialChar(stack[stack.length - 1].soul));
+  }
+  $('indicate-execution').classList.add('hidden');  
 }
 
 function loadStack(tmpStack) {
@@ -1025,7 +1058,7 @@ function loadStack(tmpStack) {
     tmpArray = tmpStack.shift();
     pushObjectToStack(tmpArray);    
     if (shifted) evaluateExpression(decodeSpecialChar(stack[stack.length - 1].soul));
-  }    
+  }
 }
 
 function splitArrayByBrowser(tmpArray) {
