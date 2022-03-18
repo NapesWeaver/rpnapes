@@ -28,6 +28,7 @@
       <header>
         <span id="timer" class="haptic-response" title="Click for lap time"></span>
         <span id="indicate-polar" class="hidden">&#8736;</span>
+        <!-- <span id="indicate-polar" class="hidden"><sup>&#8736;</sup></span> -->
         <span id="indicate-radians" class="hidden">rad</span>
         <span id="indicate-shift" class="hidden">eval</span>
         <!-- <span id="indicate-execution" class="hidden">&#10710;</span> -->
@@ -256,7 +257,7 @@
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified March 17, 2022." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified March 18, 2022." onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <input type="text" id="txt-input" class="txt-input" name="txt-input" spellcheck="false" autocomplete="off" tabindex="1" onfocus="txtInputFocus()" onmousedown="haptic()"/>
 
           <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
