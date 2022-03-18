@@ -257,15 +257,18 @@ function toggleSound() {
   clearInterval(flashInterval);
 }
 
-function menuNotes() {
-  if (shifted) {
-    backupUndo();
-    
-    $('indicate-execution').classList.remove('hidden');
+function runNotes() {
+  $('indicate-execution').classList.remove('hidden');
     setTimeout(function() {
       calculate($('lst-notes').value);
       if (shifted) $('indicate-execution').classList.add('hidden');
     }, 20);
+}
+
+function menuNotes() {
+  if (shifted) {
+    backupUndo();    
+    runNotes();
   } else {
     btnXoff();
   }
@@ -871,6 +874,7 @@ function btnShift() {
     $('btn-space').value = '';
     $('btn-add').style.color = '#000000';
     $('btn-tangent').innerHTML = 'tan';
+    $('btn-load-notes').value = 'LOAD';
   }
   else {
     // Shifting to true...
@@ -917,7 +921,9 @@ function btnShift() {
     $('btn-load').value = 'RUN';
     $('btn-space').value = '=';
     $('btn-add').style.color = '#0000A0';
-    $('btn-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';    
+    $('btn-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';   
+    $('btn-load-notes').value = 'RUN';
+ 
   }
   colorUndoButton();
   
@@ -4051,6 +4057,7 @@ function backSpaceUndo() {
 
 function loadNotes() {
   var index = 0;  
+  
   index = getCookie('NOTES').indexOf('=') + 1;
   try {
     notes = [];
@@ -4065,9 +4072,14 @@ function loadNotes() {
 }
 
 function btnLoadNotes() {
-  backupUndoNotes();
-  loadNotes();
-  if (!isMobile) $('lst-notes').focus();
+
+  if (shifted) {
+    runNotes();
+  } else {
+    backupUndoNotes();
+    loadNotes();
+    if (!isMobile) $('lst-notes').focus();
+  }
 }
 
 function btnSaveNotes() {
