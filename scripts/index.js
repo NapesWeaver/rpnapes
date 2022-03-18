@@ -1002,7 +1002,7 @@ function btnLoad() {
     $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
     if (getCookie('STACK').slice(index) !== '') {
-      
+
       if (shifted) {
         $('indicate-execution').classList.remove('hidden');
         setTimeout(function() {
@@ -4888,6 +4888,8 @@ window.onload = function () {
   // Menu File 
   $('menu-load').onclick = btnLoad;
   $('open-file').addEventListener('change', function () {
+    if (shifted) $('indicate-execution').classList.remove('hidden');
+
     try {
       var fr = new FileReader();
 
@@ -4913,13 +4915,13 @@ window.onload = function () {
             }
           }
           updateDisplay();
-          // backupUndo();
+          if (shifted) $('indicate-execution').classList.add('hidden');
         }
       };
       fr.readAsText(this.files[0]);
     } catch (err) {
       rpnAlert(err.toString());
-    }
+    }    
   });
 
   $('menu-google').onclick = searchGoogle;
