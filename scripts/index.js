@@ -3112,6 +3112,21 @@ function convertBase(r) {
 
   radix = r;
 
+  switch(radix) {
+    case 2:
+      $('indicate-base').innerHTML = 'bin';
+      break;
+      case 8:
+      $('indicate-base').innerHTML = 'oct';      
+      break;
+      case 10:
+      $('indicate-base').innerHTML = '';      
+      break;
+      case 16:
+      $('indicate-base').innerHTML = 'hex';
+      break;
+  }
+
   if (!isNaN(obj.realPart)) result += parseInt(obj.realPart).toString(radix);
   if (!isNaN(obj.imaginary)) {
     if (!isNaN(obj.realPart)) result += ' ';

@@ -42,6 +42,8 @@ header {
 #txt-input,
 #menu-wrap,
 #timer,
+#indicate-base,
+#indicate-notation,
 #indicate-execution,
 #indicate-shift,
 #indicate-radians,
@@ -56,6 +58,8 @@ header {
 }
 
 #timer,
+#indicate-base,
+#indicate-notation,
 #indicate-execution,
 #indicate-shift,
 #indicate-radians,
@@ -69,6 +73,16 @@ header {
 #timer {
     top: 2px;
     margin-left: .6em;
+}
+
+#indicate-base {
+    top: 2px;
+    margin-left: 1.8em;
+}
+
+#indicate-notation {
+    top: 2px;
+    margin-left: 3.8em;
 }
 
 #indicate-polar {
@@ -455,6 +469,8 @@ input[type="button"] {
     cursor: pointer;
 }
 
+#indicate-base,
+#indicate-notation,
 #indicate-execution,
 #indicate-shift,
 #indicate-radians,
@@ -625,6 +641,14 @@ label a {
     .menu > ul > li > a {
         padding-right: 1.5em;
     }
+
+    #indicate-base {
+        margin-left: 3.3em;
+    }
+    
+    #indicate-notation {
+        margin-left: 5.4em;
+    }
     
     #indicate-polar {
         margin-left: 7.1em;
@@ -650,6 +674,14 @@ label a {
 
     .menu > ul > li > a {
         padding-right: 1.5em;
+    }
+
+    #indicate-base {
+        margin-left: 5.6em;
+    }
+    
+    #indicate-notation {
+        margin-left: 7.9em;
     }
 
     #indicate-polar {
@@ -686,17 +718,24 @@ label a {
         top: 1px;
     }
 
+    #indicate-base,
+    #indicate-notation,
     #indicate-execution,
     #indicate-shift,
     #indicate-radians {
         top: 5px;
     }
 
+    #indicate-base {
+        margin-left: 9.2em;
+    }
+    
+    #indicate-notation {
+        margin-left: 11.5em;
+    }
+    
     #indicate-polar {
         top: 4px;
-    }
-
-    #indicate-polar {
         margin-left: 13.3em;
     }
 
@@ -790,6 +829,14 @@ label a {
 }
 
 @media only screen and (min-width: 420px) {
+
+    #indicate-base {
+        margin-left: 11.3em;
+    }
+    
+    #indicate-notation {
+        margin-left: 13.8em;
+    }
 
     #indicate-polar {
         margin-left: 15.7em;
