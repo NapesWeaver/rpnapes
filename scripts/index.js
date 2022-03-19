@@ -3920,11 +3920,13 @@ function setFixDecimal(value) {
   if (value !== '-1') {
     sciDecimal = -1;
     engDecimal = -1;
+    $('indicate-notation').innerHTML = 'f' + value;
     $('label-sci').classList.add('hidden');
     $('label-eng').classList.add('hidden');
   } else {
     $('label-sci').classList.remove('hidden');
     $('label-eng').classList.remove('hidden');
+    $('indicate-notation').innerHTML = '';
   }
   fixDecimal = parseInt(value);
   updateDisplay();
@@ -3938,11 +3940,13 @@ function setSciDecimal(value) {
   if (value !== '-1') {
     fixDecimal = -1;
     engDecimal = -1;
+    $('indicate-notation').innerHTML = 's' + value;
     $('label-fix').classList.add('hidden');
     $('label-eng').classList.add('hidden');
   } else {
     $('label-fix').classList.remove('hidden');
     $('label-eng').classList.remove('hidden');
+    $('indicate-notation').innerHTML = '';
   }
   sciDecimal = parseInt(value);
   updateDisplay();
@@ -3956,11 +3960,13 @@ function setEngDecimal(value) {
   if (value !== '-1') {
     fixDecimal = -1;
     sciDecimal = -1;
+    $('indicate-notation').innerHTML = 'e' + value;
     $('label-fix').classList.add('hidden');
     $('label-sci').classList.add('hidden');
   } else {
     $('label-fix').classList.remove('hidden');
     $('label-sci').classList.remove('hidden');
+    $('indicate-notation').innerHTML = '';
   }
   engDecimal = parseInt(value);
   updateDisplay();  
