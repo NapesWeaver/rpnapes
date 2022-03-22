@@ -26,12 +26,12 @@ body {
 ::-moz-selection { /* Code for Firefox */
     color: #F2F100;
     background: #6D8EBF;
-  }
-  
-  ::selection {
+}
+
+::selection {
     color: #F2F100;
     background: #6D8EBF;
-  }
+}
 
 header {    
     height: 18px;
@@ -127,10 +127,11 @@ header {
     background-color: #FFFFFF;
     padding: 0 12px 3px 12px;
 }
-    #open:hover {
-        background-color:#F0F0F0;
-        color: #0040FF;
-    }
+
+#open:hover {
+    background-color:#F0F0F0;
+    color: #0040FF;
+}
 
 #fix label a:hover,
 #sci label a:hover {
@@ -163,7 +164,8 @@ select {
     -moz-appearance: none; 
     /* for Safari, Chrome, Opera */ 
     -webkit-appearance: none; 
- }     
+ }
+
 /* for IE10 */ 
 select::-ms-expand { 
     display: none; 
@@ -224,14 +226,26 @@ select::-ms-expand {
     justify-content: space-between;
 }
 
-#btn-delete, #btn-undo, #btn-clear, #btn-save, #btn-load {
+#btn-delete,
+#btn-undo,
+#btn-clear,
+#btn-save,
+#btn-load {
     background-color: #808080;
 }
-    #btn-delete:hover, #btn-undo:hover, #btn-clear:hover, #btn-save:hover, #btn-load:hover {
-        background-color: #6D8EBF;
-    }
 
-.btn-big, .btn-med, .btn-small, .btn-other {
+#btn-delete:hover,
+#btn-undo:hover,
+#btn-clear:hover,
+#btn-save:hover,
+#btn-load:hover {
+    background-color: #6D8EBF;
+}
+
+.btn-big,
+.btn-med,
+.btn-small,
+.btn-other {
     margin-right: 1.9%;
     margin-bottom: 5px;
     font-size: .7em;
@@ -243,9 +257,11 @@ select::-ms-expand {
     outline: none;
     vertical-align: middle;/* Needed for horizontal alignment with input type=button */
 }
-    input:hover, button:hover {
-	    background-color: #DEEEFC;
-    }
+
+input:hover,
+button:hover {
+    background-color: #DEEEFC;
+}
 
 .btn-big,
 .btn-med,
@@ -348,9 +364,10 @@ select::-ms-expand {
 .google {
     background-color: #F1F1F1;
 }
-    .google:hover {
-        filter: invert(1);
-    }
+
+.google:hover {
+    filter: invert(1);
+}
 
 .color-blue {
     color: #477FF5;
@@ -366,27 +383,30 @@ select::-ms-expand {
     color: #FFFFFF;
     border-radius:  3px;
 }
-    .menu-you-tube:hover {
-        background-color: #B92020;
-        filter: invert(1);
-    }
+
+.menu-you-tube:hover {
+    background-color: #B92020;
+    filter: invert(1);
+}
 
 .you-tube {
     background-color: #B92020;
     color: #FFFFFF;
 }
-    .you-tube:hover {
-        background-color: #B92020;
-        filter: invert(1);
-    }
+
+.you-tube:hover {
+    background-color: #B92020;
+    filter: invert(1);
+}
 
 .btn-shift {
     background-color: #808080;
     border-style: outset;
 }
-    .btn-shift:hover {
-        background-color: #6D8EBF;
-    }
+
+.btn-shift:hover {
+    background-color: #6D8EBF;
+}
 
 .btn-shifted {
     background-color: #D4D0C8;
@@ -417,10 +437,11 @@ select::-ms-expand {
 .radian-border {
     border-style: outset;
 }
-    .degree-border:active,
-    .radian-border:active {
-        border-style: inset;
-    }
+
+.degree-border:active,
+.radian-border:active {
+    border-style: inset;
+}
 
 #menu-off {
     padding-top: .01em;
@@ -428,19 +449,21 @@ select::-ms-expand {
     text-decoration: underline;
     border-radius: 2px;
 }
-    #menu-off:hover {            
-            background-color: #B85252;/* YouTube red */
-            color: #000000;
-        }
+
+#menu-off:hover {            
+        background-color: #B85252;/* YouTube red */
+        color: #000000;
+}
 
 .btn-off {
     background-color: #B85252;
     text-decoration: underline;
 }
-    .btn-off:hover {
-            background-color: #B92020;/* YouTube red */
-            color: #FFFFFF;
-        }
+
+.btn-off:hover {
+        background-color: #B92020;/* YouTube red */
+        color: #FFFFFF;
+}
 
 img {
     position: relative;
@@ -502,9 +525,9 @@ label a {
 .dark-button {
     border-style: inset;
 }
-    .dark-button:active {
-        border-style: outset;
-    }
+.dark-button:active {
+    border-style: outset;
+}
 
 .dark-menu {
     background-color: black;
@@ -521,51 +544,58 @@ label a {
 .menu {
     margin: 0 auto;
 }
-    .menu li {
-        margin: 0;
-        list-style: none;
-    }
-    .menu a {
-        transition: all linear .15s;
-        color: #000000;
-    }
-    .menu li:hover > a, .menu .current-item > a {
-        text-decoration: none;
-    }
-    .menu .arrow {
-        font-size: .65em;
-        line-height: 0;
-    }
+
+.menu li {
+    margin: 0;
+    list-style: none;
+}
+
+.menu a {
+    transition: all linear .15s;
+    color: #000000;
+}
+
+.menu li:hover > a, .menu .current-item > a {
+    text-decoration: none;
+}
+
+.menu .arrow {
+    font-size: .65em;
+    line-height: 0;
+}
     
-    /***** Top Level ******************/
-    .menu > ul > li {
-        float: left;
-        display: inline-block;
-        position: relative;
-        overflow: hidden;
-        font-size: .85em;
-    }
-    .menu > ul > li:hover {
-        overflow: visible;
-    }
-    .menu > ul > li > a {
-        padding-top: 3px;
-        padding-left: 3px;
-        padding-right: 1em;
-        display: inline-block;
-        text-decoration: none;
-    }
-    /***** Bottom Level ***************/
-    /* Side Strip Color */
-    .menu li:hover .sub-menu {
-        z-index: 1;
-        opacity: 1;
-        background: #D4D0C8; /* For browsers that do not support gradients */
-        background: -webkit-linear-gradient(#D4D0C8, #F1F1F1); /* For Safari 5.1 to 6.0 */
-        background: -o-linear-gradient(#D4D0C8, #F1F1F1); /* For Opera 11.1 to 12.0 */
-        background: -moz-linear-gradient(#D4D0C8, #F1F1F1); /* For Firefox 3.6 to 15 */
-        background: linear-gradient(#D4D0C8, #F1F1F1); /* Standard syntax */        
-    }
+/***** Top Level ******************/
+.menu > ul > li {
+    float: left;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    font-size: .85em;
+}
+
+.menu > ul > li:hover {
+    overflow: visible;
+}
+
+.menu > ul > li > a {
+    padding-top: 3px;
+    padding-left: 3px;
+    padding-right: 1em;
+    display: inline-block;
+    text-decoration: none;
+}
+
+/***** Bottom Level ***************/
+/* Side Strip Color */
+.menu li:hover .sub-menu {
+    z-index: 1;
+    opacity: 1;
+    background: #D4D0C8; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(#D4D0C8, #F1F1F1); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(#D4D0C8, #F1F1F1); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(#D4D0C8, #F1F1F1); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#D4D0C8, #F1F1F1); /* Standard syntax */        
+}
 
 /***** Sub menu *****************/
 .sub-menu {
@@ -578,28 +608,32 @@ label a {
     transition: opacity linear .15s;
     box-shadow: 0 2px 3px rgba(0,0,0,.2);
 }
-    .sub-menu li {
-        display: block;
-        background-color: #FFFFFF;
-    }
-        .sub-menu li a {
-            padding-top: 3px;
-            padding-bottom: 3px;
-            padding-left:3px;
-            padding-right:3px;
-            display: block;
-            text-decoration: none;
-            background-color: #FFFFFF;
-        }
-    /* Menu Items Hover Styles */
-    .sub-menu li a:hover, .sub-menu .current-item a {
-        color:#0040FF;
-        background-color:#F0F0F0;
-    }
+
+.sub-menu li {
+    display: block;
+    background-color: #FFFFFF;
+}
+
+.sub-menu li a {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left:3px;
+    padding-right:3px;
+    display: block;
+    text-decoration: none;
+    background-color: #FFFFFF;
+}
+
+/* Menu Items Hover Styles */
+.sub-menu li a:hover, .sub-menu .current-item a {
+    color:#0040FF;
+    background-color:#F0F0F0;
+}
     
 .strikethrough {
     text-decoration: line-through;
 }
+
 .strikethrough a {
     color: #0040FF;
 }
