@@ -27,8 +27,7 @@
     <div id="wrap">
       <header>
         <span id="timer" class="haptic-response" title="Click for lap time"></span>
-        <span id="indicate-base"></span>
-        <span id="indicate-notation"></span>
+        <span id="indicate-format"></span>
         <span id="indicate-polar" class="hidden"><p>&#8736;</p></span>
         <span id="indicate-radians" class="hidden">rad</span>
         <span id="indicate-shift" class="hidden">eval</span>
@@ -104,7 +103,7 @@
                     </li>
                     <li class="haptic-response"><a id="menu-angle" title="Toggle degree/radian mode">Deg/Rad</a></li>
                     <li id="eng"><label id="label-eng"><a title="Engineering notation" onmouseover="$('base').className='hidden'">Eng</a>
-                      <select class="haptic-response" name="eng" onchange="setEngDecimal(this.value);displayResult($('txt-input').value, '')">
+                      <select id="eng-select" class="haptic-response" name="eng" onchange="setEngDecimal(this.value);displayResult($('txt-input').value, '')">
                         <option value="-1">Off</option> 
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -127,7 +126,7 @@
                       </label>
                     </li>                    
                     <li id="fix"><label id="label-fix"><a title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
-                      <select class="haptic-response" name="fix" onchange="setFixDecimal(this.value);displayResult($('txt-input').value, '')">
+                      <select id="fix-select" class="haptic-response" name="fix" onchange="setFixDecimal(this.value);displayResult($('txt-input').value, '')">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -151,7 +150,7 @@
                       </label>
                     </li>
                     <li id="sci"><label id="label-sci"><a title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
-                      <select class="haptic-response" name="sci" onchange="setSciDecimal(this.value);displayResult($('txt-input').value, '')">
+                      <select id="sci-select" class="haptic-response" name="sci" onchange="setSciDecimal(this.value);displayResult($('txt-input').value, '')">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
                         <option value="1">1</option>

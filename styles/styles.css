@@ -42,8 +42,7 @@ header {
 #txt-input,
 #menu-wrap,
 #timer,
-#indicate-base,
-#indicate-notation,
+#indicate-format,
 #indicate-execution,
 #indicate-shift,
 #indicate-radians,
@@ -58,8 +57,7 @@ header {
 }
 
 #timer,
-#indicate-base,
-#indicate-notation,
+#indicate-format,
 #indicate-execution,
 #indicate-shift,
 #indicate-radians,
@@ -75,12 +73,7 @@ header {
     margin-left: .6em;
 }
 
-#indicate-base {
-    top: 2px;
-    margin-left: 1.8em;
-}
-
-#indicate-notation {
+#indicate-format {
     top: 2px;
     margin-left: 3.8em;
 }
@@ -492,8 +485,7 @@ input[type="button"] {
     cursor: pointer;
 }
 
-#indicate-base,
-#indicate-notation,
+#indicate-format,
 #indicate-execution,
 #indicate-shift,
 #indicate-radians,
@@ -675,12 +667,8 @@ label a {
     .menu > ul > li > a {
         padding-right: 1.5em;
     }
-
-    #indicate-base {
-        margin-left: 3.3em;
-    }
     
-    #indicate-notation {
+    #indicate-format {
         margin-left: 5.4em;
     }
     
@@ -709,12 +697,8 @@ label a {
     .menu > ul > li > a {
         padding-right: 1.5em;
     }
-
-    #indicate-base {
-        margin-left: 5.6em;
-    }
     
-    #indicate-notation {
+    #indicate-format {
         margin-left: 7.9em;
     }
 
@@ -752,19 +736,14 @@ label a {
         top: 1px;
     }
 
-    #indicate-base,
-    #indicate-notation,
+    #indicate-format,
     #indicate-execution,
     #indicate-shift,
     #indicate-radians {
         top: 5px;
     }
-
-    #indicate-base {
-        margin-left: 9.2em;
-    }
     
-    #indicate-notation {
+    #indicate-format {
         margin-left: 11.5em;
     }
     
@@ -862,13 +841,8 @@ label a {
     }
 }
 
-@media only screen and (min-width: 420px) {
-
-    #indicate-base {
-        margin-left: 11.3em;
-    }
-    
-    #indicate-notation {
+@media only screen and (min-width: 420px) {    
+    #indicate-format {
         margin-left: 13.8em;
     }
 

@@ -3099,8 +3099,16 @@ function resetConstants() {
 
 // Wired to HTML
 function convertBase(r) {
+
   fixDecimal = -1;
   sciDecimal = -1;
+  engDecimal = -1;
+  selectElement('eng-select', -1);
+  selectElement('fix-select', -1);
+  selectElement('sci-select', -1);
+  $('label-eng').classList.remove('hidden');
+  $('label-fix').classList.remove('hidden');
+  $('label-sci').classList.remove('hidden');
 
   var obj = getX();
   var result = '';
@@ -3114,16 +3122,16 @@ function convertBase(r) {
 
   switch(radix) {
     case 2:
-      $('indicate-base').innerHTML = 'bin';
+      $('indicate-format').innerHTML = 'bin';
       break;
       case 8:
-      $('indicate-base').innerHTML = 'oct';      
+      $('indicate-format').innerHTML = 'oct';      
       break;
       case 10:
-      $('indicate-base').innerHTML = '';      
+      $('indicate-format').innerHTML = '';      
       break;
       case 16:
-      $('indicate-base').innerHTML = 'hex';
+      $('indicate-format').innerHTML = 'hex';
       break;
   }
 
@@ -3894,25 +3902,14 @@ function rewriteNegUnitExp(tmpUnits) {
   return newUnits;
 }
 
-// https://thisinterestsme.com/change-select-option-javascript/
-// Custom function that changes a select element's option.
-function resetSelect(selectId, optionValToSelect){
-  // Get the select element by it's unique ID.
-  var selectElement = document.getElementById(selectId);
-  // Get the options.
-  var selectOptions = selectElement.options;
-  // Loop through these options using a for loop.
-  for (var opt, j = 0; opt = selectOptions[j]; j++) {
-      // If the option of value is equal to the option we want to select.
-      if (opt.value == optionValToSelect) {
-          // Select the option and break out of the for loop.
-          selectElement.selectedIndex = j;
-          break;
-      }
-  }
+function selectElement(id, valueToSelect) {    
+  let element = document.getElementById(id);
+  element.value = valueToSelect;
 }
 
 function setFixDecimal(value) {  
+
+  if (radix !== 10) radix = 10;
 
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17.';
@@ -3920,13 +3917,13 @@ function setFixDecimal(value) {
   if (value !== '-1') {
     sciDecimal = -1;
     engDecimal = -1;
-    $('indicate-notation').innerHTML = 'f' + value;
+    $('indicate-format').innerHTML = 'f:' + value;
     $('label-sci').classList.add('hidden');
     $('label-eng').classList.add('hidden');
   } else {
     $('label-sci').classList.remove('hidden');
     $('label-eng').classList.remove('hidden');
-    $('indicate-notation').innerHTML = '';
+    $('indicate-format').innerHTML = '';
   }
   fixDecimal = parseInt(value);
   updateDisplay();
@@ -3934,19 +3931,21 @@ function setFixDecimal(value) {
 
 function setSciDecimal(value) {
 
+  if (radix !== 10) radix = 10; 
+  
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17.';
   }
   if (value !== '-1') {
     fixDecimal = -1;
     engDecimal = -1;
-    $('indicate-notation').innerHTML = 's' + value;
+    $('indicate-format').innerHTML = 'sc:' + value;
     $('label-fix').classList.add('hidden');
     $('label-eng').classList.add('hidden');
   } else {
     $('label-fix').classList.remove('hidden');
     $('label-eng').classList.remove('hidden');
-    $('indicate-notation').innerHTML = '';
+    $('indicate-format').innerHTML = '';
   }
   sciDecimal = parseInt(value);
   updateDisplay();
@@ -3954,19 +3953,21 @@ function setSciDecimal(value) {
 
 function setEngDecimal(value) {
 
+  if (radix !== 10) radix = 10;
+
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer -1 or 1 to 17.';
   }
   if (value !== '-1') {
     fixDecimal = -1;
     sciDecimal = -1;
-    $('indicate-notation').innerHTML = 'e' + value;
+    $('indicate-format').innerHTML = 'e:' + value;
     $('label-fix').classList.add('hidden');
     $('label-sci').classList.add('hidden');
   } else {
     $('label-fix').classList.remove('hidden');
     $('label-sci').classList.remove('hidden');
-    $('indicate-notation').innerHTML = '';
+    $('indicate-format').innerHTML = '';
   }
   engDecimal = parseInt(value);
   updateDisplay();  
