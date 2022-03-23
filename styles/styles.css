@@ -95,7 +95,7 @@ header {
 
 #indicate-execution {
     top: 2px;    
-    margin-left: 11em;
+    margin-left: 10.8em;
 }
 
 .firefox-ind-polar {
@@ -699,23 +699,23 @@ label a {
     }
     
     #indicate-format {
-        margin-left: 7.7em;
+        margin-left: 7.5em;
     }
 
     #indicate-polar {
-        margin-left: 9.7em;
+        margin-left: 9.6em;
     }
 
     #indicate-radians {
-        margin-left: 11.1em;
+        margin-left: 10.8em;
     }
 
     #indicate-shift {
-        margin-left: 13.4em;
+        margin-left: 13em;
     }
 
     #indicate-execution {
-        margin-left: 15.9em;
+        margin-left: 15.5em;
     }
 }
 
@@ -744,24 +744,24 @@ label a {
     }
     
     #indicate-format {
-        margin-left: 11.1em;
+        margin-left: 11em;
     }
     
     #indicate-polar {
         top: 4px;
-        margin-left: 13.3em;
+        margin-left: 13.2em;
     }
 
     #indicate-radians {
-        margin-left: 14.9em;
+        margin-left: 14.7em;
     }
 
     #indicate-shift {
-        margin-left: 17.3em;
+        margin-left: 17.1em;
     }
 
     #indicate-execution {
-        margin-left: 20em;
+        margin-left: 19.8em;
     }
 
     header,
