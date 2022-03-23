@@ -75,7 +75,7 @@ header {
 
 #indicate-format {
     top: 2px;
-    margin-left: 3.8em;
+    margin-left: 3.4em;
 }
 
 #indicate-polar {
@@ -85,7 +85,7 @@ header {
 
 #indicate-radians {
     top: 2px;
-    margin-left: 6.4em;
+    margin-left: 6.5em;
 }
 
 #indicate-shift {
@@ -669,7 +669,7 @@ label a {
     }
     
     #indicate-format {
-        margin-left: 5.4em;
+        margin-left: 5em;
     }
     
     #indicate-polar {
@@ -699,7 +699,7 @@ label a {
     }
     
     #indicate-format {
-        margin-left: 7.9em;
+        margin-left: 7.7em;
     }
 
     #indicate-polar {
@@ -744,7 +744,7 @@ label a {
     }
     
     #indicate-format {
-        margin-left: 11.5em;
+        margin-left: 11.1em;
     }
     
     #indicate-polar {
@@ -843,7 +843,7 @@ label a {
 
 @media only screen and (min-width: 420px) {    
     #indicate-format {
-        margin-left: 13.8em;
+        margin-left: 13.3em;
     }
 
     #indicate-polar {
