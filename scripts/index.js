@@ -3939,7 +3939,7 @@ function setSciDecimal(value) {
   if (value !== '-1') {
     fixDecimal = -1;
     engDecimal = -1;
-    $('indicate-format').innerHTML = 'sc:' + value;
+    $('indicate-format').innerHTML = 's:' + value;
     $('label-fix').classList.add('hidden');
     $('label-eng').classList.add('hidden');
   } else {
@@ -5365,6 +5365,7 @@ window.onload = function () {
 /**
  * Testing complex trig functions.
  * 
+ * Better color pallet.
  * Error catching.
  * Refactor signChange(), inverse() for Infinities.
  * Refactor btnModulus() for complex numbers?
@@ -5375,6 +5376,7 @@ window.onload = function () {
  * Constants/formulas menu bug for mobile.
  * Remote debug superfluous copy/paste menu.
  * Remote debug for Firefox mobile keypad.
+ * Haptic response for Firefox mobile.
  * File-reopening bug.
  * Rectangular w/o space eg. π+9j
  * 
