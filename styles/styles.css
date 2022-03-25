@@ -142,10 +142,6 @@ select {
     outline: none;
 }
 
-select:hover {
-    color: #0040FF; 
-}
-
 select,
 option {    
     margin-right: 0;
@@ -156,8 +152,8 @@ select {
     /* for Firefox */ 
     -moz-appearance: none; 
     /* for Safari, Chrome, Opera */ 
-    -webkit-appearance: none; 
- }
+    -webkit-appearance: none;
+}
 
 /* for IE10 */ 
 select::-ms-expand { 
