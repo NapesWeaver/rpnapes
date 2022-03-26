@@ -1221,7 +1221,7 @@ function btnFactorial() {
     var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
     displayResult(factorial(x), '');
   } else {
-    $('txt-input').focus();
+    $('txt-input').value = NaN;
   }
 }
 
@@ -1698,16 +1698,21 @@ function btnAdd() {
 }
 
 function buildComplexNumber(obj) {
-  var a = 0;
-  var b = 0;
   
-  if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
-    a = calculate(obj.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-  } else {
-    if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
-    if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
+  try {
+    var a = 0;
+    var b = 0;
+    
+    if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
+      a = calculate(obj.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+    } else {
+      if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
+      if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
+    }
+    return math.complex(a, b);    
+  } catch {
+    return NaN;
   }
-  return math.complex(a, b);
 }
 
 function displayResult(result, newUnits) {  
@@ -5366,7 +5371,6 @@ window.onload = function () {
  * Testing complex trig functions.
  * 
  * Better color pallet.
- * Error catching.
  * Refactor signChange(), inverse() for Infinities.
  * Refactor btnModulus() for complex numbers?
  * Factorial for complex numbers?
