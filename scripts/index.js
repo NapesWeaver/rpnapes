@@ -405,7 +405,6 @@ function objToString(obj) {
   var theString = '';
   var isNumber = isANumber(obj.getRealPart());
   var isImaginary = isANumber(obj.getImaginary());
-  
   if (!isNumber && !isImaginary) {
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
@@ -502,13 +501,6 @@ function enterButton() {
   }
 }
 
-function inputResult(objX) {  
-  stack.push(objX);
-  result = objToString(objX);
-  $('txt-input').value = result;
-  updateDisplay();
-}
-
 function btnEnter() {
   backupUndo();
   cashed = '';
@@ -517,8 +509,7 @@ function btnEnter() {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
     var input = $('txt-input').value.trim();
-    var objX = getX(input); 
-    if (stack.length > 0 || (input !== '' && input !== 'NaN')) inputResult(objX);
+    if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
   updateDisplay();
   parseCommand();  
@@ -1742,12 +1733,11 @@ function buildComplexNumber(obj) {
 }
 
 function displayResult(result, newUnits) {  
-  var objX = getX(result);
+  var objX = getX(result);  
 
   result = objToString(objX);
-
   if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
-  $('txt-input').value = result;
+  if (result !== '') $('txt-input').value = result;  
   updateDisplay();
 }
 
@@ -3490,19 +3480,19 @@ function extractFirstValue(tmpString) {
   }
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
-    if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+j/g.test(tmpString)) {
+    if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
   }
   if (radix === 8) {
     // Looking for an ocatal number but not an imaginary number
-    if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+j/g.test(tmpString)) {
+    if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+[ij]/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
   }
   if (radix === 16) {
     // Looking for a hexadecimal number but not an imaginary number
-    if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+j/g.test(tmpString)) {
+    if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+[ij]/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
   }  
@@ -3529,9 +3519,9 @@ function extractImaginary(tmpString) {
       if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
     }
   } else {
-    if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+j/);
-    if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+j/);
-    if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+j/);
+    if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
+    if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
+    if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
     if (tmpImaginary.charAt(1) === ' ') {
       tmpImaginary = tmpImaginary.replace(/ /g, '');
     }
@@ -3663,9 +3653,9 @@ function extractAngle(tmpString, firstValue) {
       }
     }
   } else {
-    if (radix === 2) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-1]+j/);
-    if (radix === 8) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-7]+j/);
-    if (radix === 16) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[a-f0-9]+j/);
+    if (radix === 2) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
+    if (radix === 8) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
+    if (radix === 16) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
     if (tmpComplex[1].charAt(1) === ' ') {
       tmpComplex[1] = tmpComplex[1].replace(/ /g, '');
     }
@@ -3695,7 +3685,7 @@ function extractUnits(tmpString) {
   if (radix !== 16) {
     tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
   } else {
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+j*\b)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
   }
   return tmpUnits;
 }
@@ -4036,7 +4026,7 @@ function toScientific(value, precision) {
 }
 
 function formatNumber(result) {
-  
+
   if (!/[ⅽ℮ɢΦπ]/.test(result)) {
     if (radix === 10) {      
       if (!isNaN(result)) {
