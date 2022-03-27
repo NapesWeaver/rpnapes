@@ -1471,7 +1471,6 @@ function modulus() {
   backupUndo();
   var objX = getX();
   var objY;
-  var result;
   var newUnits = '';
   var x;
   var y;
@@ -1493,7 +1492,12 @@ function modulus() {
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
   
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
-  displayResult(math.mod(y, x), newUnits);
+
+  try {
+    displayResult(math.mod(y, x), newUnits);
+  } catch {
+    $('txt-input').value = NaN;
+  }
 }
 
 function btnModulus() {  
@@ -1528,10 +1532,7 @@ function signChange() {
     objX = stack[getIndex('lst-stack') - stackSize];    
   } else {
     objX = getX();
-  }
-  var isNumber = isANumber(objX.getRealPart());
-  var isImaginary = isANumber(objX.getImaginary());
-  
+  }  
   if (stackFocus || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos)) || (startPos === txtInput.value.length && !/[-+^eE\s]/.test(txtInput.value.charAt(startPos - 1)))) {
 
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
@@ -1540,8 +1541,9 @@ function signChange() {
       result = leadingSignChange(objX.getSoul());
     }  
     if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
-    displayResult(result, units);
 
+    displayResult(result, units);
+    
   } else {
     if (/[-+]/.test(txtInput.value.charAt(startPos - 1))) {
       if (/-/.test(txtInput.value.charAt(startPos - 1))) {
