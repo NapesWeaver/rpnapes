@@ -511,6 +511,8 @@ function inputResult(objX) {
 
 function btnEnter() {
   backupUndo();
+  cashed = '';
+
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
@@ -519,14 +521,14 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) inputResult(objX);
   }
   updateDisplay();
-  parseCommand();
-  cashed = '';
+  parseCommand();  
 }
 
 function btnEval() {
   backupUndo();
   var objX;
   var units = '';
+  cashed = '';
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   objX = getX();
@@ -535,8 +537,7 @@ function btnEval() {
     btnLoad();
     return;
   }
-  displayResult(calculate($('txt-input').value.replace(/[ ]*$/, '')), units);
-
+  displayResult(calculate($('txt-input').value.replace(/[ ]*$/, '')), units);  
   $('txt-input').select();  
 }
 
@@ -581,8 +582,10 @@ function deleteButton() {
   }
 }
 
-function btnDelete() {
+function btnDelete() {  
   if (stack.toString() !== '') backupUndo();
+  cashed = '';
+
   $('txt-input').value = $('txt-input').value.trim();
     
   if (stackFocus) {
@@ -619,6 +622,7 @@ function deleteText(txtField, forward) {
 
 function btnBackspace() {
   if (stack.toString() !== '') backupUndo();
+  cashed = '';
 
   if (stackFocus) {
     stack.splice(getIndex('lst-stack') - stackSize, 1);
@@ -1120,39 +1124,59 @@ function inverse() {
   backupUndo();
   var objX;
   var result;
-  var txtInput = $('txt-input').value;
 
   if (stackFocus) {
     objX = stack[getIndex('lst-stack') - stackSize];
     $('txt-input').value = decodeSpecialChar(objX.getSoul());
     backupUndo();// <--Needed for UI consistency in this case
-  } else { 
+  } else {
+    // trim?
     objX = getX();
   }
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
   if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) { 
+  // if (false) { 
     displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
   } else {    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       var x = buildComplexNumber(objX);
       displayResult(math.inv(x), newUnits);      
     } else {// Remove units from expression and calculate
-      result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-      
+      result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));      
       if (!isNaN(result)) {
         $('txt-input').value = 1 / result;
         $('txt-input').value += newUnits; 
-      } else {
-        if(/^1\//.test($('txt-input').value)) {
-          $('txt-input').value = $('txt-input').value.slice(2);          
+      } else {// We are arsing text        
+        if(/^[-+]?1\//.test($('txt-input').value)) {
+
+          if ($('txt-input').value.charAt(0) === '-') {
+            $('txt-input').value = $('txt-input').value.slice(3);
+            if ($('txt-input').value.charAt(0) === '-') {
+              $('txt-input').value = $('txt-input').value.slice(1);
+            } else {
+              if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
+              $('txt-input').value = '-' + $('txt-input').value;
+            }
+          } else {
+            if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
+            $('txt-input').value = $('txt-input').value.slice(2);
+            if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
+          }
         } else {
+
           if ($('txt-input').value.trim() === '') {
             $('txt-input').value = '0';
             backupUndo();
             $('txt-input').value = 1 / 0;
           } else {
-            $('txt-input').value = '1/' + $('txt-input').value.toString();
+            if ($('txt-input').value.charAt(0) === '-') {
+              $('txt-input').value = $('txt-input').value.slice(1);
+              $('txt-input').value = '-1/' + $('txt-input').value.toString();
+            } else {
+              if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
+              $('txt-input').value = '1/' + $('txt-input').value.toString();
+            }
           }
         }
       }      
