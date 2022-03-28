@@ -3138,48 +3138,51 @@ function resetConstants() {
 // Wired to HTML
 function convertBase(r) {
 
-  fixDecimal = -1;
-  sciDecimal = -1;
-  engDecimal = -1;
-  selectElement('eng-select', -1);
-  selectElement('fix-select', -1);
-  selectElement('sci-select', -1);
-  $('label-eng').classList.remove('hidden');
-  $('label-fix').classList.remove('hidden');
-  $('label-sci').classList.remove('hidden');
+  if (r !== radix) {
 
-  var obj = getX();
-  var result = '';
-  var units = '';
+    fixDecimal = -1;
+    sciDecimal = -1;
+    engDecimal = -1;
+    selectElement('eng-select', -1);
+    selectElement('fix-select', -1);
+    selectElement('sci-select', -1);
+    $('label-eng').classList.remove('hidden');
+    $('label-fix').classList.remove('hidden');
+    $('label-sci').classList.remove('hidden');
   
-  obj.setRealPart(parseInt(obj.realPart, 10));
-  obj.setImaginary(parseInt(obj.imaginary, 10));
-  if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
-
-  radix = r;
-
-  switch(radix) {
-    case 2:
-      $('indicate-format').innerHTML = 'bin';
-      break;
-      case 8:
-      $('indicate-format').innerHTML = 'oct';      
-      break;
-      case 10:
-      $('indicate-format').innerHTML = '';      
-      break;
-      case 16:
-      $('indicate-format').innerHTML = 'hex';
-      break;
+    var obj = getX();
+    var result = '';
+    var units = '';
+    
+    obj.setRealPart(parseInt(obj.realPart, 10));
+    obj.setImaginary(parseInt(obj.imaginary, 10));
+    if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
+  
+    radix = r;
+  
+    switch(radix) {
+      case 2:
+        $('indicate-format').innerHTML = 'bin';
+        break;
+        case 8:
+        $('indicate-format').innerHTML = 'oct';      
+        break;
+        case 10:
+        $('indicate-format').innerHTML = '';      
+        break;
+        case 16:
+        $('indicate-format').innerHTML = 'hex';
+        break;
+    }
+  
+    if (!isNaN(obj.realPart)) result += parseInt(obj.realPart).toString(radix);
+    if (!isNaN(obj.imaginary)) {
+      if (!isNaN(obj.realPart)) result += ' ';
+      result += parseInt(obj.imaginary).toString(radix) + 'j';
+    }
+    updateDisplay();
+    displayResult(result, +  units);
   }
-
-  if (!isNaN(obj.realPart)) result += parseInt(obj.realPart).toString(radix);
-  if (!isNaN(obj.imaginary)) {
-    if (!isNaN(obj.realPart)) result += ' ';
-    result += parseInt(obj.imaginary).toString(radix) + 'j';
-  }
-  updateDisplay();
-  displayResult(result, +  units);
 }
 
 function onClickSelection(textarea){ 
