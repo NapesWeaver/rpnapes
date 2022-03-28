@@ -405,18 +405,20 @@ function objToString(obj) {
   var theString = '';
   var isNumber = isANumber(obj.getRealPart());
   var isImaginary = isANumber(obj.getImaginary());
+
   if (!isNumber && !isImaginary) {
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
     
     if ($('menu-form').textContent === 'Polar') {      
       // Rectangular
-      if (isNumber) theString += formatNumber(obj.getRealPart().toString());
-      if (isImaginary) {
+      if (isNumber && obj.getRealPart() !== 0) theString += formatNumber(obj.getRealPart().toString());
+
+      if (isImaginary && obj.getImaginary() !== '0') {
         var space = '';
         var sign = '';
   
-        if (isNumber) {
+        if (isNumber && obj.getRealPart() !== 0) {
           space = ' ';
           sign = ' + ';
         }
@@ -442,10 +444,9 @@ function objToString(obj) {
                 
         theString += formatNumber(radius) + '∠' + formatNumber(argument); 
       }      
-    }    
-    if (obj.getUnits() !== 'null') {
-      theString += ' ' + decodeSpecialChar(obj.getUnits());
     }
+    if (theString === '') theString = 0;
+    if (obj.getUnits() !== 'null') theString += ' ' + decodeSpecialChar(obj.getUnits());
   }
   return theString;
 }
@@ -1732,12 +1733,28 @@ function buildComplexNumber(obj) {
   }
 }
 
-function displayResult(result, newUnits) {  
-  var objX = getX(result);  
+function getComplex(complexObj) {
 
+  var soulX = complexObj.toString();
+  var firstValueX = complexObj.re;
+  var imaginaryX = complexObj.im.toString();
+  
+  return new NumberObject(soulX, firstValueX, imaginaryX, 'null');
+}
+
+function displayResult(result, newUnits) { 
+  var objX;
+  
+  if (typeof result === 'string' || result instanceof String || isNaN(result)) {
+    objX = getX(result);
+  } else {
+    objX = getComplex(result);
+  }
   result = objToString(objX);
-  if (result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
-  if (result !== '') $('txt-input').value = result;  
+
+  if (result !== 0 && newUnits !== 0) result += decodeSpecialChar(newUnits);
+
+  $('txt-input').value = result;  
   updateDisplay();
 }
 
@@ -3464,7 +3481,8 @@ function decodeSpecialChar(tmpString) {
 function extractFirstValue(tmpString) {
   var tmpReal = '';
   
-  if (radix === 10) {
+  // if (radix === 10) {
+  if (true) {
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
@@ -3514,6 +3532,7 @@ function extractImaginary(tmpString) {
       } else if (/^[+]?[ij]\b/.test(tmpImaginary)) {
         tmpImaginary = '1';
       } else {
+        // remove [ij]
         tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);    
       }
       if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
@@ -3522,9 +3541,8 @@ function extractImaginary(tmpString) {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
     if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
     if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
-    if (tmpImaginary.charAt(1) === ' ') {
-      tmpImaginary = tmpImaginary.replace(/ /g, '');
-    }
+    if (tmpImaginary.charAt(1) === ' ') tmpImaginary = tmpImaginary.replace(/ /g, '');
+
     tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
@@ -3534,7 +3552,6 @@ function extractImaginary(tmpString) {
 }
 
 function extractAngle(tmpString, firstValue) {  
-  
   var tmpComplex = [];
   var tmpAngle = '';
   var polar;
@@ -3546,7 +3563,8 @@ function extractAngle(tmpString, firstValue) {
       // Remove ∠
       tmpAngle = tmpAngle.slice(1);
 
-      if (/[-+]?Infinity/.test(firstValue)) {           
+      if (/[-+]?Infinity/.test(firstValue)) {
+        // Infinities       
         // polar = math.complex({ abs: 1, arg: calculate(tmpAngle)});   
         switch (tmpAngle.toString()) {   
           case '0':
@@ -3616,10 +3634,10 @@ function extractAngle(tmpString, firstValue) {
           }              
       } else {
         if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
-
-        polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });
-       
+        
+        polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
         tmpAngle = tmpAngle * 180 / Math.PI;
+
         switch (tmpAngle.toString()) {
           case '360':
             // Falls through
@@ -3653,14 +3671,20 @@ function extractAngle(tmpString, firstValue) {
       }
     }
   } else {
-    if (radix === 2) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
-    if (radix === 8) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
-    if (radix === 16) tmpComplex[1] += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
-    if (tmpComplex[1].charAt(1) === ' ') {
-      tmpComplex[1] = tmpComplex[1].replace(/ /g, '');
-    }
-    tmpComplex[1] = tmpComplex[1].slice(0, tmpComplex[1].length - 1);
-    tmpComplex[1] = parseInt(tmpComplex[1], radix);
+    if (radix === 2) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-1]+/);
+    if (radix === 8) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-7]+/);
+    if (radix === 16) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[a-f0-9]+/);   
+
+    tmpAngle = tmpAngle.replace(/ /g, '');
+    // Remove ∠
+    tmpAngle = tmpAngle.slice(1);
+    tmpAngle = parseInt(tmpAngle, radix);
+
+    if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
+    polar = math.complex({ abs: firstValue, arg: tmpAngle });
+    
+    tmpComplex[0] = polar.re;
+    tmpComplex[1] = polar.im.toString();
   }  
   return tmpComplex;
 }
