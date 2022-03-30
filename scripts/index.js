@@ -3157,6 +3157,9 @@ function convertBase(r) {
     obj.setRealPart(parseInt(obj.realPart, 10));
     obj.setImaginary(parseInt(obj.imaginary, 10));
     if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
+
+    // console.log('real', obj.getRealPart());
+    // console.log('imaginary', obj.getImaginary());
   
     radix = r;
   
@@ -3174,12 +3177,12 @@ function convertBase(r) {
         $('indicate-format').innerHTML = 'hex';
         break;
     }
-  
-    if (!isNaN(obj.realPart)) result += parseInt(obj.realPart).toString(radix);
-    if (!isNaN(obj.imaginary)) {
-      if (!isNaN(obj.realPart)) result += ' ';
-      result += parseInt(obj.imaginary).toString(radix) + 'j';
+    if (!isNaN(obj.getRealPart())) result += parseInt(obj.getRealPart()).toString(radix);
+    if (!isNaN(obj.getImaginary())) {
+      if (!isNaN(obj.getRealPart())) result += ' ';
+      result += parseInt(obj.getImaginary()).toString(radix) + 'j';
     }
+    // console.log('result', result);
     displayResult(result, +  units);
   }
 }
@@ -3483,8 +3486,8 @@ function decodeSpecialChar(tmpString) {
 function extractFirstValue(tmpString) {
   var tmpReal = '';
   
-  // if (radix === 10) {
-  if (true) {
+  if (radix === 10) {
+  // if (true) {
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
@@ -3501,7 +3504,7 @@ function extractFirstValue(tmpString) {
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
     if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
-      tmpReal = parseInt(tmpString, radix);
+      tmpReal = parseInt(tmpString, radix);      
     }
   }
   if (radix === 8) {
@@ -3517,7 +3520,7 @@ function extractFirstValue(tmpString) {
     }
   }  
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
-
+  // console.log('tmpReal', tmpReal);
   return tmpReal;
 }
 
