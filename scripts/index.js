@@ -1746,10 +1746,10 @@ function displayResult(result, newUnits) {
   var objX;
 
   if (typeof result === 'string') {
-    console.log('getX()', result);
+    // console.log('getX()', result);
     objX = getX(result);
   } else {
-    console.log('getComplex', result);
+    // console.log('getComplex', result);
     if (result.re) objX = getComplex(result);
   }
   if (objX) result = objToString(objX);
