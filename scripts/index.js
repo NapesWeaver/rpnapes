@@ -167,7 +167,6 @@ function toggleForm() {
     $('indicate-polar').classList.remove('hidden');
     if (shifted) $('btn-ee').value = '∠';
   }
-  updateDisplay();
   displayResult($('txt-input').value.trim(), '');
 }
 
