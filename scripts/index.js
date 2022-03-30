@@ -1744,14 +1744,15 @@ function getComplex(complexObj) {
 
 function displayResult(result, newUnits) { 
   var objX;
-  
-  if (typeof result === 'string' || result instanceof String || isNaN(result)) {
+
+  if (typeof result === 'string') {
+    console.log('getX()', result);
     objX = getX(result);
   } else {
-    objX = getComplex(result);
+    console.log('getComplex', result);
+    if (result.re) objX = getComplex(result);
   }
-  result = objToString(objX);
-
+  if (objX) result = objToString(objX);
   if (result !== 0 && newUnits !== 0) result += decodeSpecialChar(newUnits);
 
   $('txt-input').value = result;  
@@ -3180,7 +3181,6 @@ function convertBase(r) {
       if (!isNaN(obj.realPart)) result += ' ';
       result += parseInt(obj.imaginary).toString(radix) + 'j';
     }
-    updateDisplay();
     displayResult(result, +  units);
   }
 }
