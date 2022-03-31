@@ -1745,11 +1745,12 @@ function displayResult(result, newUnits) {
   var objX;
 
   if (typeof result === 'string') {
-    // console.log('getX()', result);
     objX = getX(result);
+    // console.log('getX()', objX);
   } else {
-    // console.log('getComplex', result);
-    if (result.re) objX = getComplex(result);
+    // console.log('result.re', result.re);
+    if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
+    // console.log('getComplex', objX);
   }
   if (objX) result = objToString(objX);
   if (result !== 0 && newUnits !== 0) result += decodeSpecialChar(newUnits);
@@ -3154,8 +3155,6 @@ function convertBase(r) {
     var result = '';
     var units = '';
     
-    obj.setRealPart(parseInt(obj.realPart, 10));
-    obj.setImaginary(parseInt(obj.imaginary, 10));
     if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
 
     // console.log('real', obj.getRealPart());
