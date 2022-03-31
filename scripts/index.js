@@ -1746,11 +1746,8 @@ function displayResult(result, newUnits) {
 
   if (typeof result === 'string') {
     objX = getX(result);
-    // console.log('getX()', objX);
-  } else {
-    // console.log('result.re', result.re);
-    if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
-    // console.log('getComplex', objX);
+  } else {    
+    if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);    
   }
   if (objX) result = objToString(objX);
   if (result !== 0 && newUnits !== 0) result += decodeSpecialChar(newUnits);
@@ -3154,12 +3151,9 @@ function convertBase(r) {
     var obj = getX();
     var result = '';
     var units = '';
-    
-    if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
 
-    // console.log('real', obj.getRealPart());
-    // console.log('imaginary', obj.getImaginary());
-  
+    if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
+   
     radix = r;
   
     switch(radix) {
@@ -3181,8 +3175,7 @@ function convertBase(r) {
       if (!isNaN(obj.getRealPart())) result += ' ';
       result += parseInt(obj.getImaginary()).toString(radix) + 'j';
     }
-    // console.log('result', result);
-    displayResult(result, +  units);
+    displayResult(result, units);
   }
 }
 
@@ -3519,7 +3512,7 @@ function extractFirstValue(tmpString) {
     }
   }  
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
-  // console.log('tmpReal', tmpReal);
+  
   return tmpReal;
 }
 
