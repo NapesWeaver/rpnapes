@@ -3134,6 +3134,52 @@ function resetConstants() {
 }
 
 // Wired to HTML
+// function convertBase(r) {
+
+//   if (r !== radix) {
+
+//     fixDecimal = -1;
+//     sciDecimal = -1;
+//     engDecimal = -1;
+//     selectElement('eng-select', -1);
+//     selectElement('fix-select', -1);
+//     selectElement('sci-select', -1);
+//     $('label-eng').classList.remove('hidden');
+//     $('label-fix').classList.remove('hidden');
+//     $('label-sci').classList.remove('hidden');
+  
+//     var obj = getX();
+//     var result = '';
+//     var units = '';
+
+//     if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
+   
+//     radix = r;
+  
+//     switch(radix) {
+//       case 2:
+//         $('indicate-format').innerHTML = 'bin';
+//         break;
+//         case 8:
+//         $('indicate-format').innerHTML = 'oct';      
+//         break;
+//         case 10:
+//         $('indicate-format').innerHTML = '';      
+//         break;
+//         case 16:
+//         $('indicate-format').innerHTML = 'hex';
+//         break;
+//     }
+//     if (!isNaN(obj.getRealPart())) result += parseInt(obj.getRealPart()).toString(radix);
+//     if (!isNaN(obj.getImaginary())) {
+//       if (!isNaN(obj.getRealPart())) result += ' ';
+//       result += parseInt(obj.getImaginary()).toString(radix) + 'j';
+//     }
+//     displayResult(result, units);
+//   }
+// }
+
+// Wired to HTML
 function convertBase(r) {
 
   if (r !== radix) {
@@ -3149,6 +3195,7 @@ function convertBase(r) {
     $('label-sci').classList.remove('hidden');
   
     var obj = getX();
+    // console.log('obj', obj);
     var result = '';
     var units = '';
 
@@ -3174,7 +3221,7 @@ function convertBase(r) {
     if (!isNaN(obj.getImaginary())) {
       if (!isNaN(obj.getRealPart())) result += ' ';
       result += parseInt(obj.getImaginary()).toString(radix) + 'j';
-    }
+    }    
     displayResult(result, units);
   }
 }
@@ -3478,8 +3525,8 @@ function decodeSpecialChar(tmpString) {
 function extractFirstValue(tmpString) {
   var tmpReal = '';
   
-  if (radix === 10) {
-  // if (true) {
+  // if (radix === 10) {
+  if (true) {
     // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
@@ -3512,7 +3559,7 @@ function extractFirstValue(tmpString) {
     }
   }  
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
-  
+  // console.log('tmpReal', tmpReal);
   return tmpReal;
 }
 
@@ -3631,7 +3678,8 @@ function extractAngle(tmpString, firstValue) {
           }              
       } else {
         if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
-        
+        // console.log('firstValue', firstValue);
+        // console.log('tmpangle', tmpAngle);
         polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
         tmpAngle = tmpAngle * 180 / Math.PI;
 
@@ -3663,6 +3711,7 @@ function extractAngle(tmpString, firstValue) {
           default:
             tmpComplex[0] = polar.re;
             tmpComplex[1] = polar.im.toString();
+            // console.log('tmpComplex', tmpComplex);
           break;
         }
       }
@@ -3678,10 +3727,43 @@ function extractAngle(tmpString, firstValue) {
     tmpAngle = parseInt(tmpAngle, radix);
 
     if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
-    polar = math.complex({ abs: firstValue, arg: tmpAngle });
-    
-    tmpComplex[0] = polar.re;
-    tmpComplex[1] = polar.im.toString();
+    // console.log('else firstValue', firstValue);
+    // console.log('else tmpAngle', tmpAngle);
+    polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) }); 
+    tmpAngle = tmpAngle * 180 / Math.PI;
+
+    switch (tmpAngle.toString()) {
+      case '360':
+        // Falls through
+      case '-360':
+        // Falls through
+      case '0':
+        // Falls through
+      case '-0':
+        // Falls through
+      case '180':
+        // Falls through
+      case '-180':
+        tmpComplex[0] = polar.re;
+        tmpComplex[1] = '0';
+      break;
+      case '90':
+        // Falls through
+      case '-90':
+        // Falls through
+      case '270':
+        // Falls through
+      case '-270':
+        tmpComplex[0] = 0;
+        tmpComplex[1] = polar.im.toString();
+      break;
+      default:
+        tmpComplex[0] = polar.re;
+        tmpComplex[1] = polar.im.toString();
+        // console.log('tmpComplex', tmpComplex);
+      break;
+    };
+    // console.log('else tmpComplex', tmpComplex);
   }  
   return tmpComplex;
 }
