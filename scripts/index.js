@@ -178,8 +178,8 @@ function toggleDarkMode() {
   var others = document.getElementsByClassName('btn-other');
   var options = document.getElementsByTagName('option');
   
-  if ($('menu-darkmode').textContent === 'Light') {
-    $('menu-darkmode').innerHTML = 'Dark';
+  if ($('menu-darkmode').textContent === 'Dark') {
+    $('menu-darkmode').innerHTML = 'Light';
     $('wrap').classList.remove('dark-mode');
     $('wrap').style.borderStyle = 'outset';
     $('tricorderskin').classList.remove('dark-mode');
@@ -192,7 +192,7 @@ function toggleDarkMode() {
     for (e = 0; e < others.length; e++) others[e].classList.remove('dark-button');
     for (e = 0; e < options.length; e++) options[e].classList.remove('dark-menu');
   } else {
-    $('menu-darkmode').innerHTML = 'Light';       
+    $('menu-darkmode').innerHTML = 'Dark';       
     $('wrap').classList.add('dark-mode');   
     $('wrap').style.borderStyle = 'inset';
     $('tricorderskin').classList.add('dark-mode');
@@ -1874,11 +1874,12 @@ function atan(input) {
   }  
 }
 
-function btnAngleMode() {
+function toggleAngleMode() {
   var objX = getX();
   stack.push(objX);
 
   if ($('btn-angle').value === 'deg') {
+    $('menu-angle-mode').innerHTML = 'Rad';
     $('btn-angle').value = 'rad';
     $('indicate-radians').classList.remove('hidden');
     $('btn-angle').className = 'btn-small btn-radian radian-border';
@@ -1886,6 +1887,7 @@ function btnAngleMode() {
     $('btn-cosine').className = 'btn-small radian-border';
     $('btn-tangent').className = 'btn-small radian-border';
   } else {
+    $('menu-angle-mode').innerHTML = 'Deg';
     $('btn-angle').value = 'deg';
     $('indicate-radians').classList.add('hidden');
     $('btn-angle').className = 'btn-small btn-angle degree-border';
@@ -2275,7 +2277,7 @@ function getText() {
 function autoDark() {
   var hour = new Date().getHours();
   if (hour <= 6 || hour >= 18) {
-    $('menu-darkmode').innerHTML = 'Dark';
+    $('menu-darkmode').innerHTML = 'Light';
     toggleDarkMode();
   }
 }
@@ -3570,7 +3572,7 @@ function parseAngle(tmpAngle, firstValue) {
 function extractAngle(tmpString, firstValue) {  
   var tmpComplex = [];
   var tmpAngle = '';
-  var polar;
+  // var polar;
   
   if (radix === 10) {
     if (!/[()]/g.test(tmpString)) { 
@@ -5041,7 +5043,7 @@ window.onload = function () {
   $('menu-tangent').onclick = btnTangent;
 
   // Menu View
-  $('menu-angle-mode').onclick = btnAngleMode;
+  $('menu-angle-mode').onclick = toggleAngleMode;
   $('menu-haptic').onclick = toggleHaptic;
   $('menu-darkmode').onclick = toggleDarkMode;
   $('menu-keyboard').onclick = toggleKeyboard;
@@ -5286,7 +5288,7 @@ window.onload = function () {
   $('btn-eight').onclick = btnEight;
   $('btn-nine').onclick = btnNine;
   $('btn-divide').onclick = btnDivide;
-  $('btn-angle').onclick = btnAngleMode;
+  $('btn-angle').onclick = toggleAngleMode;
   $('btn-clear').onclick = btnClear;
 
   $('btn-four').onclick = btnFour;
