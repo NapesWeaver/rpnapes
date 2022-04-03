@@ -3547,6 +3547,47 @@ function extractImaginary(tmpString) {
   return  '' + tmpImaginary;
 }
 
+function parseAngle(tmpAngle, firstValue) {
+  var tmpComplex = [];
+
+  if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
+      
+    polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
+    tmpAngle = tmpAngle * 180 / Math.PI;
+
+    switch (tmpAngle.toString()) {
+      case '360':
+        // Falls through
+      case '-360':
+        // Falls through
+      case '0':
+        // Falls through
+      case '-0':
+        // Falls through
+      case '180':
+        // Falls through
+      case '-180':
+        tmpComplex[0] = polar.re;
+        tmpComplex[1] = '0';
+      break;
+      case '90':
+        // Falls through
+      case '-90':
+        // Falls through
+      case '270':
+        // Falls through
+      case '-270':
+        tmpComplex[0] = 0;
+        tmpComplex[1] = polar.im.toString();
+      break;
+      default:
+        tmpComplex[0] = polar.re;
+        tmpComplex[1] = polar.im.toString();
+      break;
+    }
+  return tmpComplex;
+}
+
 function extractAngle(tmpString, firstValue) {  
   var tmpComplex = [];
   var tmpAngle = '';
@@ -3629,41 +3670,7 @@ function extractAngle(tmpString, firstValue) {
           break;
           }              
       } else {
-        if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
-       
-        polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
-        tmpAngle = tmpAngle * 180 / Math.PI;
-
-        switch (tmpAngle.toString()) {
-          case '360':
-            // Falls through
-          case '-360':
-            // Falls through
-          case '0':
-            // Falls through
-          case '-0':
-            // Falls through
-          case '180':
-            // Falls through
-          case '-180':
-            tmpComplex[0] = polar.re;
-            tmpComplex[1] = '0';
-          break;
-          case '90':
-            // Falls through
-          case '-90':
-            // Falls through
-          case '270':
-            // Falls through
-          case '-270':
-            tmpComplex[0] = 0;
-            tmpComplex[1] = polar.im.toString();
-          break;
-          default:
-            tmpComplex[0] = polar.re;
-            tmpComplex[1] = polar.im.toString();
-          break;
-        }
+        tmpComplex =  parseAngle(tmpAngle, firstValue);
       }
     }
   } else {
@@ -3672,45 +3679,9 @@ function extractAngle(tmpString, firstValue) {
     if (radix === 16) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[a-f0-9]+/);   
 
     tmpAngle = tmpAngle.replace(/ /g, '');
-    // Remove ∠
     tmpAngle = tmpAngle.slice(1);
     tmpAngle = parseInt(tmpAngle, radix);
-
-    if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
-    
-    polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) }); 
-    tmpAngle = tmpAngle * 180 / Math.PI;
-
-    switch (tmpAngle.toString()) {
-      case '360':
-        // Falls through
-      case '-360':
-        // Falls through
-      case '0':
-        // Falls through
-      case '-0':
-        // Falls through
-      case '180':
-        // Falls through
-      case '-180':
-        tmpComplex[0] = polar.re;
-        tmpComplex[1] = '0';
-      break;
-      case '90':
-        // Falls through
-      case '-90':
-        // Falls through
-      case '270':
-        // Falls through
-      case '-270':
-        tmpComplex[0] = 0;
-        tmpComplex[1] = polar.im.toString();
-      break;
-      default:
-        tmpComplex[0] = polar.re;
-        tmpComplex[1] = polar.im.toString();
-      break;
-    };
+    tmpComplex = parseAngle(tmpAngle, firstValue);
   }  
   return tmpComplex;
 }
