@@ -408,16 +408,15 @@ function objToString(obj) {
   if (!isNumber && !isImaginary) {
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
-    
     if ($('menu-form').textContent === 'Vector') {      
       // Rectangular
-      if (isNumber && obj.getRealPart() !== 0) theString += formatNumber(obj.getRealPart().toString());
+      if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') theString += formatNumber(obj.getRealPart().toString());
 
       if (isImaginary && obj.getImaginary() !== '0') {
         var space = '';
         var sign = '';
   
-        if (isNumber && obj.getRealPart() !== 0) {
+        if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') {
           space = ' ';
           sign = ' + ';
         }
@@ -1548,7 +1547,7 @@ function signChange() {
   } else {
     objX = getX();
   }  
-  if (stackFocus || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos)) || (startPos === txtInput.value.length && !/[-+^eE\s]/.test(txtInput.value.charAt(startPos - 1)))) {
+  if (stackFocus || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos)) || (startPos === txtInput.value.length && !/[-+^eE∠ ]/.test(txtInput.value.charAt(startPos - 1)))) {
 
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       result = math.unaryMinus(buildComplexNumber(objX));    
@@ -1576,12 +1575,12 @@ function signChange() {
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
 
-    } else if (/[eE^√ ]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+]/.test(txtInput.value.charAt(startPos)) && !/[-+][ ]*$/.test(txtInput.value)) {
+    } else if (/[eE^√∠ ]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+]/.test(txtInput.value.charAt(startPos)) && !/[-+][ ]*$/.test(txtInput.value)) {
       if (/ /.test(txtInput.value.charAt(startPos - 1))) {
         txtInput.value = txtInput.value.insertAt(startPos, '-');
         startPos = startPos + 2;
       }
-      if (/[eE^√]/.test(txtInput.value.charAt(startPos - 1))) {
+      if (/[eE^√∠]/.test(txtInput.value.charAt(startPos - 1))) {
         if (/[-]/.test(txtInput.value.charAt(startPos))) {
           txtInput.value = txtInput.value.removeAt(startPos, startPos + 1);
           startPos ++;
@@ -1763,7 +1762,7 @@ function sin(input) {
   var x = buildComplexNumber(objX);
 
   if ($('btn-angle').value === 'deg') {    
-    x.re = (x.im === 0 && (x.re === 0 || x.re % 360 === 0)) ? 0 : x.re * Math.PI / 180;
+    x.re = x.im === 0 && (x.re === 0 || x.re % 360 === 0) ? 0 : x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
   }
   x = math.sin(x);
@@ -1875,7 +1874,7 @@ function atan(input) {
   }  
 }
 
-function btnAngle() {
+function btnAngleMode() {
   var objX = getX();
   stack.push(objX);
 
@@ -3554,37 +3553,17 @@ function parseAngle(tmpAngle, firstValue) {
       
     polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
     tmpAngle = tmpAngle * 180 / Math.PI;
-
-    switch (tmpAngle.toString()) {
-      case '360':
-        // Falls through
-      case '-360':
-        // Falls through
-      case '0':
-        // Falls through
-      case '-0':
-        // Falls through
-      case '180':
-        // Falls through
-      case '-180':
-        tmpComplex[0] = polar.re;
-        tmpComplex[1] = '0';
-      break;
-      case '90':
-        // Falls through
-      case '-90':
-        // Falls through
-      case '270':
-        // Falls through
-      case '-270':
-        tmpComplex[0] = 0;
-        tmpComplex[1] = polar.im.toString();
-      break;
-      default:
-        tmpComplex[0] = polar.re;
-        tmpComplex[1] = polar.im.toString();
-      break;
-    }
+    
+    if (tmpAngle === 0 || tmpAngle % 360 === 0 || tmpAngle === 180 || (tmpAngle - 180) % 360 === 0) {
+      tmpComplex[0] = polar.re;
+      tmpComplex[1] = '0';
+    } else if ((tmpAngle === 270 || (tmpAngle - 270) % 360 === 0 || tmpAngle === 90 || (tmpAngle - 90) % 360 === 0)) {
+      tmpComplex[0] = 0;
+      tmpComplex[1] = polar.im.toString();
+    } else {
+      tmpComplex[0] = polar.re;
+      tmpComplex[1] = polar.im.toString();
+    }  
   return tmpComplex;
 }
 
@@ -5062,7 +5041,7 @@ window.onload = function () {
   $('menu-tangent').onclick = btnTangent;
 
   // Menu View
-  $('menu-angle').onclick = btnAngle;
+  $('menu-angle-mode').onclick = btnAngleMode;
   $('menu-haptic').onclick = toggleHaptic;
   $('menu-darkmode').onclick = toggleDarkMode;
   $('menu-keyboard').onclick = toggleKeyboard;
@@ -5224,6 +5203,11 @@ window.onload = function () {
       buttonInsert(/[-]/, '-');
     }
   })();
+  $('menu-angle').onclick = (function() {
+    return function() { 
+      buttonInsert(/[∠]/, '∠');
+    }
+  })();
   $('menu-plus').onclick = (function() {
     return function() {
       if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
@@ -5302,7 +5286,7 @@ window.onload = function () {
   $('btn-eight').onclick = btnEight;
   $('btn-nine').onclick = btnNine;
   $('btn-divide').onclick = btnDivide;
-  $('btn-angle').onclick = btnAngle;
+  $('btn-angle').onclick = btnAngleMode;
   $('btn-clear').onclick = btnClear;
 
   $('btn-four').onclick = btnFour;
@@ -5405,7 +5389,6 @@ window.onload = function () {
   $('txt-input').readOnly = false;
 };
 /**
- * Refactor extractAngle().
  * Troubleshoot for selection bug.
  * Testing complex trig functions.
  * 

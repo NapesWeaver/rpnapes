@@ -101,7 +101,7 @@
                         <li><a title="Decimal" onclick="convertBase(10);">&nbsp;&nbsp;Decimal</a></li>
                       </ul>
                     </li>
-                    <li class="haptic-response"><a id="menu-angle" title="Toggle degree/radian mode">Deg/Rad</a></li>
+                    <li class="haptic-response"><a id="menu-angle-mode" title="Toggle degree/radian mode">Deg/Rad</a></li>
                     <li id="eng"><label id="label-eng"><a title="Engineering notation" onmouseover="$('base').className='hidden'">Eng</a>
                       <select id="eng-select" class="haptic-response" name="eng" onchange="setEngDecimal(this.value);displayResult($('txt-input').value, '')">
                         <option value="-1">Off</option> 
@@ -244,6 +244,7 @@
                         <li><a id="menu-modulus-symbol" title="Modulus">&nbsp;&nbsp;&#37;</a></li>
                         <li><a id="menu-asterisk" class="symbol-big" title="Asterisk">&nbsp;&nbsp;<sub class="symbol-big">&#42;</sub></a></li>
                         <li><a id="menu-minus" class="symbol-big" title="Minus">&nbsp;&nbsp;&#8722;</a></li>
+                        <li><a id="menu-angle" title="Angle">&nbsp;&nbsp;&#8736;</a></li>
                         <li><a id="menu-plus" class="symbol-big" title="Plus">&nbsp;&nbsp;&#43;</a></li>
                         <li><a id="menu-omega" title="Omega">&nbsp;&nbsp;&#937;</a></li>
                         <li><a id="menu-heart" title="Heart"><span class="o-color">&nbsp;&nbsp;&#9829;</span></a></li>
