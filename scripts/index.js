@@ -158,12 +158,12 @@ function unFloat() {
 }
 
 function toggleForm() {
-  if($('menu-form').textContent === 'Vector') {
-    $('menu-form').innerHTML = 'Polar';
+  if($('menu-form').textContent === 'Polar') {
+    $('menu-form').innerHTML = 'Vector';
     $('indicate-polar').classList.add('hidden');
     if (shifted) $('btn-ee').value = 'j';
   } else {
-    $('menu-form').innerHTML = 'Vector';
+    $('menu-form').innerHTML = 'Polar';
     $('indicate-polar').classList.remove('hidden');
     if (shifted) $('btn-ee').value = '∠';
   }
@@ -409,7 +409,7 @@ function objToString(obj) {
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
     
-    if ($('menu-form').textContent === 'Polar') {      
+    if ($('menu-form').textContent === 'Vector') {      
       // Rectangular
       if (isNumber && obj.getRealPart() !== 0) theString += formatNumber(obj.getRealPart().toString());
 
@@ -429,7 +429,7 @@ function objToString(obj) {
       }
     } else {
       // Polar
-      if (!isImaginary) {        
+      if (!isImaginary || obj.getImaginary() === '0') {       
         theString += formatNumber(obj.getRealPart().toString());
       } else {
         var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
@@ -744,7 +744,7 @@ function btnEe() {
   var units = objX.getUnits();
 
   if (shifted) {
-    if ($('menu-form').textContent === 'Polar') {
+    if ($('menu-form').textContent === 'Vector') {
       // ((Cursor is at the end && there is no 'j') || there are units && there are no 'j's) && (cursor is next to a valid number && input doesn't contain illegal symbols) || (cursor is at || next to 'j'))
       if ((((index >= input.length - 1 && input.split('j').length - 1 === 0) || (units !== 'null' && input.split('j').length - 1 === 0)) && (/[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
         toggleChar(input, index, /[j]/, 'j');        
@@ -901,7 +901,7 @@ function btnShift() {
     $('btn-undo').value = 'REDO';
     $('btn-ee').classList.remove('btn-small-font');
     $('btn-ee').value = 'j';
-    $('btn-ee').value = $('menu-form').textContent === 'Vector' ?  '∠' : 'j';
+    $('btn-ee').value = $('menu-form').textContent === 'Polar' ?  '∠' : 'j';
     $('btn-pi').innerHTML = '(  )';
     $('btn-modulus').style.color = '#0000A0';
     $('btn-modulus').value = '√¯';
@@ -2890,7 +2890,7 @@ function parseCommand() {
       break;
     case 'polar':
       stack.pop();
-      if ($('menu-form').textContent === 'Polar') toggleForm();
+      if ($('menu-form').textContent === 'Vector') toggleForm();
       updateDisplay();
       $('txt-input').value = '';
       break;
@@ -2979,7 +2979,7 @@ function parseCommand() {
       // Falls through
     case 'rectangular':
       stack.pop();
-      if ($('menu-form').textContent === 'Vector') toggleForm();
+      if ($('menu-form').textContent === 'Polar') toggleForm();
       updateDisplay();
       $('txt-input').value = '';
       break;
