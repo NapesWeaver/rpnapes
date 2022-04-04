@@ -5259,8 +5259,8 @@ window.onload = function () {
 
   // Indicators
   if (isFirefox || isMobile) {
-    $('indicate-polar').innerHTML = '<p class=\"firefox-ind-polar\">&#8736;</p>';
-    $('indicate-execution').innerHTML = '<p class=\"firefox-ind-exe\">&#10711</p></span>';
+    $('indicate-polar').innerHTML = '<span class=\"firefox-ind-polar\">&#8736;</span>';
+    $('indicate-execution').innerHTML = '<span class=\"firefox-ind-exe\">&#10711</span>';
   }
 
   // Text Area

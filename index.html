@@ -28,10 +28,10 @@
       <header>
         <span id="timer" class="haptic-response" title="Click for lap time"></span>
         <span id="indicate-format"></span>
-        <span id="indicate-polar" class="hidden"><p>&#8736;</p></span>
+        <span id="indicate-polar" class="hidden"><span>&#8736;</span></span>
         <span id="indicate-radians" class="hidden">rad</span>
         <span id="indicate-shift" class="hidden">eval</span>
-        <span id="indicate-execution" class="hidden"><p>&#10711;</p></span>
+        <span id="indicate-execution" class="hidden"><span>&#10711;</span></span>
         <input type="button" id="btn-xoff" class='btn-other btn-xoff haptic-response' name="btn-xoff" title="Toggle interface" value="&nbsp;"/>        
       </header>      
       <main id="main">
@@ -90,7 +90,7 @@
                   </ul>
                 </li>
                 <li>
-                  <a class="haptic-response" onmouseover="$('base').className='hidden';$('links').className='hidden'">View</a>                  
+                  <a class="haptic-response" onmouseover="$('base').className='hidden'">View</a>                  
                   <ul class="sub-menu">
                     <li class="menu haptic-response">
                       <a title="Change base" onclick="$('base').className='visible'">Base</a>
@@ -179,22 +179,11 @@
                     <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode">Light</a></li>
                     <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" title="Toggle haptic response">Haptic</a></li>
                     <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" title="Toggle mobile keyboard">Keyboard</a></li>
-                    <li><a id="menu-notes" class="haptic-response" title="Switch to Notes">Notes</a></li>
-                    <li class="menu haptic-response">
-                      <a title="Reference links" title="Reference Links" onclick="$('links').className='visible'">Reference</a>
-                      <ul id="links" onclick="$('links').className='hidden'">
-                        <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;&nbsp;&nbsp;IP Mapper&nbsp;&nbsp;</a></li>
-                        <li><a href="https://mathnotepad.com/" target="_blank" title="Mathematical editor">&nbsp;MathNotepad</a></li>
-                        <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;SpiderNotes&nbsp;</a></li>
-                        <li><a id="menu-tricorder" title="Tricorder Facade">&nbsp;&nbsp;&nbsp;&nbsp;Tricorder&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
-                        <li><a href="https://98.js.org/" target="_blank" title="Windows 98 online">&nbsp;&nbsp;Windows 98&nbsp;</a></li>
-                        <li><a href="https://www.wolframalpha.com/" target="_blank" title="Computational knowledge engine">Wolframalpha</a></li>
-                      </ul>
-                    </li>
+                    <li><a id="menu-notes" class="haptic-response" title="Switch to Notes">Notes</a></li>                    
                   </ul>
                 </li>
                 <li class="haptic-response">
-                  <a onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Tools</a>
+                  <a onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden';$('reference').className='hidden'">Tools</a>
                   <ul class="sub-menu">
                     <li class="menu">
                       <a title="Symbolic constants" onclick="$('constants').className='visible';resetConstants()" onmouseover="$('formulas').className='hidden'">Constants</a>
@@ -233,7 +222,7 @@
                       </ul>
                     </li>
                     <li class="menu">
-                      <a title="Insert characters" onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden';$('formulas').className='hidden'">Symbols</a>
+                      <a title="Insert characters" onclick="$('symbols').className='visible'" onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('reference').className='hidden'">Symbols</a>
                       <ul id="symbols" onclick="$('symbols').className='hidden'">
                         <li><a id="menu-parenthesis" title="Parenthesis">&nbsp;&nbsp;&#40;&nbsp;&#41;</a></li>
                         <li><a id="menu-equals" title="Equals">&nbsp;&nbsp;&#61;</a></li>
@@ -248,6 +237,17 @@
                         <li><a id="menu-plus" class="symbol-big" title="Plus">&nbsp;&nbsp;&#43;</a></li>
                         <li><a id="menu-omega" title="Omega">&nbsp;&nbsp;&#937;</a></li>
                         <li><a id="menu-heart" title="Heart"><span class="o-color">&nbsp;&nbsp;&#9829;</span></a></li>
+                      </ul>
+                    </li>
+                    <li class="menu haptic-response">
+                      <a title="Reference Links" onclick="$('reference').className='visible'">Reference</a>
+                      <ul id="reference" onclick="$('reference').className='hidden'">
+                        <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;&nbsp;&nbsp;&nbsp;IP Mapper&nbsp;&nbsp;</a></li>
+                        <li><a href="https://mathnotepad.com/" target="_blank" title="Mathematical editor">&nbsp;MathNotepad</a></li>
+                        <li><a href="reference/html.html" title="Coding notes">&nbsp;&nbsp;SpiderNotes&nbsp;</a></li>
+                        <li><a id="menu-tricorder" title="Tricorder Facade">&nbsp;&nbsp;&nbsp;&nbsp;Tricorder&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+                        <li><a href="https://98.js.org/" target="_blank" title="Windows 98 online">&nbsp;&nbsp;Windows 98&nbsp;</a></li>
+                        <li><a href="https://www.wolframalpha.com/" target="_blank" title="Computational knowledge engine">Wolframalpha</a></li>
                       </ul>
                     </li>
                     <li><a id="menu-help" title="Show a list of commands">&nbsp;Help&nbsp;</a></li>
