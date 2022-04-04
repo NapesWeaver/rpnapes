@@ -3135,11 +3135,9 @@ function resetConstants() {
 }
 
 function convertBase(r) {
-
   
   if (r !== radix) {
-    
-    try {      
+             
       var prevRadix = radix;
   
       fixDecimal = -1;
@@ -3175,7 +3173,8 @@ function convertBase(r) {
           break;
       }
       updateDisplay();
-  
+
+      try {  
       if ($('menu-form').textContent === 'Vector') {
         result = objToString(obj);
       } else {
@@ -3193,14 +3192,8 @@ function convertBase(r) {
         }
       }
       $('txt-input').value = result + units;   
-    } catch {
-      
-      if (!isNaN(obj.getRealPart())) result += parseInt(obj.getRealPart()).toString(radix);
-      if (!isNaN(obj.getImaginary())) {
-        if (!isNaN(obj.getRealPart())) result += ' ';
-        result += parseInt(obj.getImaginary()).toString(radix) + 'j';
-      }    
-      displayResult(result, units);
+    } catch {      
+      displayResult(objToString(obj), '');
     }
   }
 }
