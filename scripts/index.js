@@ -596,12 +596,12 @@ function deleteText(txtField, forward) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
 
-  if (endPos !== $('txt-input').value.length && startPos <= 0 && !forward) {
+  if (endPos === 0) {
     endPos = $('txt-input').value.length;
-    startPos = txtField.selectionEnd;  
-  }  
-  if (txtField.selectionStart === txtField.selectionEnd && forward) endPos++;
-  if (txtField.selectionStart === txtField.selectionEnd && !forward) startPos--;
+    startPos = endPos;
+  }
+  if (forward && txtField.selectionStart === txtField.selectionEnd) endPos++;
+  if (!forward && txtField.selectionStart === txtField.selectionEnd) startPos--;
   
   txtField.value = txtField.value.slice(0, startPos) + txtField.value.slice(endPos, txtField.value.length);
   
@@ -5410,7 +5410,6 @@ window.onload = function () {
   $('txt-input').readOnly = false;
 };
 /**
- * Troubleshoot for selection bug.
  * Testing complex trig functions.
  * 
  * Better color pallet.
