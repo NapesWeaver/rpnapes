@@ -3194,6 +3194,7 @@ function convertBase(r) {
       }
       $('txt-input').value = result + units;   
     } catch {
+      
       if (!isNaN(obj.getRealPart())) result += parseInt(obj.getRealPart()).toString(radix);
       if (!isNaN(obj.getImaginary())) {
         if (!isNaN(obj.getRealPart())) result += ' ';
