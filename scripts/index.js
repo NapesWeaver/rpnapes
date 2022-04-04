@@ -1879,7 +1879,7 @@ function toggleAngleMode() {
   stack.push(objX);
 
   if ($('btn-angle').value === 'deg') {
-    $('menu-angle-mode').innerHTML = 'Rad';
+    $('menu-angle-mode').innerHTML = 'Radian';
     $('btn-angle').value = 'rad';
     $('indicate-radians').classList.remove('hidden');
     $('btn-angle').className = 'btn-small btn-radian radian-border';
@@ -1887,7 +1887,7 @@ function toggleAngleMode() {
     $('btn-cosine').className = 'btn-small radian-border';
     $('btn-tangent').className = 'btn-small radian-border';
   } else {
-    $('menu-angle-mode').innerHTML = 'Deg';
+    $('menu-angle-mode').innerHTML = 'Degree';
     $('btn-angle').value = 'deg';
     $('indicate-radians').classList.add('hidden');
     $('btn-angle').className = 'btn-small btn-angle degree-border';
