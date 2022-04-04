@@ -3136,6 +3136,8 @@ function resetConstants() {
 
 function convertBase(r) {
 
+  var prevRadix = radix;
+
   if (r !== radix) {
 
     fixDecimal = -1;
@@ -3147,7 +3149,7 @@ function convertBase(r) {
     $('label-eng').classList.remove('hidden');
     $('label-fix').classList.remove('hidden');
     $('label-sci').classList.remove('hidden');
-  
+ 
     var obj = getX();
     var result = '';
     var units = '';
@@ -3170,12 +3172,25 @@ function convertBase(r) {
         $('indicate-format').innerHTML = 'hex';
         break;
     }
-    if (!isNaN(obj.getRealPart())) result += parseInt(obj.getRealPart()).toString(radix);
-    if (!isNaN(obj.getImaginary())) {
-      if (!isNaN(obj.getRealPart())) result += ' ';
-      result += parseInt(obj.getImaginary()).toString(radix) + 'j';
-    }    
-    displayResult(result, units);
+    updateDisplay();
+
+    if ($('menu-form').textContent === 'Vector') {
+      result = objToString(obj);
+    } else {
+      // Polar
+      var magnitude = $('txt-input').value.match(/^[-+]?[ ]*[a-f0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);
+
+      result += parseInt(magnitude[0], prevRadix).toString(radix);
+
+      if(!isNaN(obj.getImaginary())) {
+
+        var angle = $('txt-input').value.match(/∠[ ]*[-+]?[ ]*[a-f0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);
+
+        angle = angle.toString().slice(1);              
+        result += '∠' + parseInt(angle, prevRadix).toString(radix);        
+      }
+    }
+    $('txt-input').value = result + units;    
   }
 }
 
