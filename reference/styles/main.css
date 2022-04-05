@@ -118,6 +118,11 @@ pre {
     font-weight: 600;
 }
 
+#html-board,
+#html-canvas {
+    margin-left: 1.6em;
+}
+
 .headings {
     color: white;
     background-color: dimgray;
