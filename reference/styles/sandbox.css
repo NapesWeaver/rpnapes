@@ -5,15 +5,22 @@
     border: inset;
 }
 
-#html-input {
-    margin-left: 2em;
+#html-input {    
     background-color: #000000;
     color: #ffffff;
 }
 
 .output-wrapper {
-    margin-left: 1.6em;
     resize: both;
     overflow: auto;
     background-color: #ffffff;
+}
+
+@media only screen and (min-width: 640px) {
+    #html-input {
+        margin-left: 2em;
+    }
+    .output-wrapper {
+        margin-left: 1.6em;
+    }
 }
