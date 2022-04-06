@@ -1,0 +1,24 @@
+#html-input,
+.output-wrapper {
+    margin-left: 1.6em;
+    border: inset;
+}
+
+.output-wrapper {
+    min-height: 300px;
+    min-width: 592px;
+    min-height: 330px;
+    resize: both;
+    overflow: auto;
+    max-height: fit-content;
+    max-width: fit-content;
+  }
+
+  #html-input {
+      background-color: #000000;
+      color: #ffffff;
+  }
+
+  .output-wrapper {
+      background-color: #ffffff;
+  }

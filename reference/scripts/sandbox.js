@@ -1,11 +1,11 @@
-function editHTMLCanvas() {
-    var html = document.getElementById('html-board').value;
+function displayOutput() {
+    var html = document.getElementById('html-input').value;
 
-    document.getElementById('html-canvas').contentWindow.document.open();
-    document.getElementById('html-canvas').contentWindow.document.write(html);
-    document.getElementById('html-canvas').contentWindow.document.close();
+    document.getElementById('html-output').contentWindow.document.open();
+    document.getElementById('html-output').contentWindow.document.write(html);
+    document.getElementById('html-output').contentWindow.document.close();
 }
 
 window.onload = function() {
-    document.getElementById('html-board').onchange = editHTMLCanvas;
+    document.getElementById('html-input').onchange = displayOutput;
 }
