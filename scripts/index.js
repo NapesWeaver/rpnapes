@@ -2449,10 +2449,7 @@ function help(command) {
       break;
     case 'min':
       inputText('min: Find the stack element with the minimum value that is not NaN.');
-      break;
-    case 'napes':
-      inputText('napes: Switch to Referances interface.');
-      break;
+      break;;
     case 'notes':
       inputText('notes: Switch to Notes interface.');
       break;
@@ -2485,6 +2482,9 @@ function help(command) {
       break;
     case 'runnotes':
       inputText('runnotes: Run the contents of notes.');
+      break;
+    case 'sandbox':
+      inputText('sandbox: Open HTML/CSS/JS sandbox.');
       break;
     case 'save':
       inputText('save: Saves the stack to a browser cookie.');
@@ -2542,7 +2542,7 @@ function help(command) {
       return;
     }
   } else {
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, runnotes, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
+    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, runnotes, sandbox, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
     enterInput();
     inputText('');
     enterInput();
@@ -2863,10 +2863,7 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       inputText(minNum());
-      break;
-    case 'napes':
-      window.location.href = 'https://napesweaver.github.io/rpnapes/reference/html.html';
-      break;
+      break;    
     case 'notes':
       stack.pop();
       updateDisplay();
@@ -2901,6 +2898,9 @@ function parseCommand() {
       $('txt-input').value = '';
       printHtml();
       break;
+    case 'sandbox':
+        window.location.href = 'reference/sandbox.html';
+        break;
     case 'save':
       stack.pop();
       updateDisplay();

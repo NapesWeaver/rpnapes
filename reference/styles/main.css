@@ -31,9 +31,10 @@ nav li {
     list-style-type: none;
 }
 
-li a {      
+nav li a {      
     padding: 3px;
     text-decoration: none;
+    font-weight: 900;
 }
 
 h1 {
@@ -159,9 +160,10 @@ footer {
 }
 
 .iframe {
+    height: 72vh;
     min-height: 21px;
-    height: 51vh;
-    width: 259px;
+    width: 100%;  
+    max-width: 420px;
     position: relative;
     display: block;
     margin: auto;
@@ -189,6 +191,8 @@ footer {
 
 @media only screen and (min-width: 480px) {
     .iframe {
+        height: 51vh;
+        width: 259px;
         position: fixed;
         right: 0;
     }
