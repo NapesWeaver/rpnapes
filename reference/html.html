@@ -2161,48 +2161,6 @@
     <p>&#60;progress&#62; This element has been added in HTML5. Represents the completion progress of a task.</p>
     <p>&#60;meter&#62; This element has been added in HTML5. Represents a scalar measurement (or a fractional value), within a known range.</p>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
-    <pre><code>
-    &#60;form action="/some-endpoint" method ="post"&#62;
-    &#60;h1&#62;Tell us about yourself&#60;/h1&#62;
-    &#60;fieldset name="contact-info"&#62;
-        &#60;legend&#62;Contact info&#60;/legend&#62;
-        &#60;label for="first-name"&#62;First name&#60;/label&#62;
-        &#60;input placeholder="Dweezil" type="text" name="first-name" id="first-name" /&#62;
-    
-        &#60;label for="last-name"&#62;Last name&#60;/label&#62;
-        &#60;input type="text" name="last-name" id="last-name" placeholder="Zappa" /&#62;
-    
-        &#60;label for="email"&#62;Email&#60;/label&#62;
-        &#60;input type="email" name="email" id="email" placeholder="foo@bar.com"/&#62;
-    
-        &#60;label for="phone" required&#62;Phone #&#60;/label&#62;
-        &#60;input type="tel" pattern="^[1-9]\d{2}-\d{3}-\d{4}" name="phone" id="phone" placeholder="888-888-8888" title="A typical U.S. phone number" required/&#62;
-    &#60;/fieldset&#62;
-
-        &#60;label class="question" for="feelings"&#62;How do you feel?&#60;/label&#62;
-        &#60;select name="feelings" id="feelings" required&#62;
-        &#60;option value="0"&#62;Great.&#60;/option&#62;
-        &#60;option value="1" selected&#62;Pretty great.&#60;/option&#62;
-        &#60;option value="2"&#62;Definitely great.&#60;/option&#62;
-        &#60;/select&#62;
-        
-        &#60;fieldset&#62;
-        &#60;legend class="question"&#62;How do you really feel, though?&#60;/legend&#62;
-        &#60;input type="radio" name="feelings-2" id="ans-great-1" value="0" checked&#62;
-        &#60;label for="ans-great-1"&#62;Great.&#60;/label&#62;
-        &#60;br&#62;
-        &#60;input type="radio" name="feelings-2" id="ans-great-2" value="1"&#62;
-        &#60;label for="ans-great-2"&#62;Seriously great.&#60;/label&#62;
-        &#60;br&#62;
-        &#60;input type="radio" name="feelings-2" id="ans-great-3" value="2"&#62;
-        &#60;label for="ans-great-3"&#62;Not that great.&#60;/label&#62;
-        &#60;/fieldset&#62;
-
-        &#60;button type="submit"&#62;Submit&#60;/button&#62;
-        &#60;button type="reset"&#62;Reset&#60;/button&#62;
-    &#60;/form&#62;
-    </code></pre>
-    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
     <h3>Interactive elements</h3>
     <p>&#60;details&#62; This element has been added in HTML5. Represents a widget from which the user can obtain additional information or controls.</p>
@@ -2310,6 +2268,50 @@
         &#60;script src="index.js"&#62;&#60;script/&#62;
       &#60;/body&#62;
     &#60;/html&#62;       
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Form template</h3>
+    <pre><code>
+    &#60;form action="/some-endpoint" method ="post"&#62;
+        &#60;h1&#62;Tell us about yourself&#60;/h1&#62;
+        &#60;fieldset name="contact-info"&#62;
+            &#60;legend&#62;Contact info&#60;/legend&#62;
+            &#60;label for="first-name"&#62;First name&#60;/label&#62;
+            &#60;input placeholder="Dweezil" type="text" name="first-name" id="first-name"/&#62;
+        
+            &#60;label for="last-name"&#62;Last name&#60;/label&#62;
+            &#60;input type="text" name="last-name" id="last-name" placeholder="Zappa"/&#62;
+        
+            &#60;label for="email"&#62;Email&#60;/label&#62;
+            &#60;input type="email" name="email" id="email" placeholder="foo@bar.com"/&#62;
+        
+            &#60;label for="phone" required&#62;Phone #&#60;/label&#62;
+            &#60;input type="tel" pattern="^[1-9]\d{2}-\d{3}-\d{4}" name="phone" id="phone" placeholder="888-888-8888" title="A typical U.S. phone number" required/&#62;
+        &#60;/fieldset&#62;
+
+        &#60;label class="question" for="feelings"&#62;How do you feel?&#60;/label&#62;
+        &#60;select name="feelings" id="feelings" required&#62;
+            &#60;option value="0"&#62;Great.&#60;/option&#62;
+            &#60;option value="1" selected&#62;Pretty great.&#60;/option&#62;
+            &#60;option value="2"&#62;Definitely great.&#60;/option&#62;
+        &#60;/select&#62;
+        
+        &#60;fieldset&#62;
+            &#60;legend class="question"&#62;How do you really feel, though?&#60;/legend&#62;
+            &#60;input type="radio" name="feelings-2" id="ans-great-1" value="0" checked&#62;
+            &#60;label for="ans-great-1"&#62;Great.&#60;/label&#62;
+            &#60;br&#62;
+            &#60;input type="radio" name="feelings-2" id="ans-great-2" value="1"&#62;
+            &#60;label for="ans-great-2"&#62;Seriously great.&#60;/label&#62;
+            &#60;br&#62;
+            &#60;input type="radio" name="feelings-2" id="ans-great-3" value="2"&#62;
+            &#60;label for="ans-great-3"&#62;Not that great.&#60;/label&#62;
+        &#60;/fieldset&#62;
+
+        &#60;button type="submit"&#62;Submit&#60;/button&#62;
+        &#60;button type="reset"&#62;Reset&#60;/button&#62;
+    &#60;/form&#62;
     </code></pre>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
 
