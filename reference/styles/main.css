@@ -25,10 +25,16 @@ nav {
 }
 
 nav li {        
-    display: inline;            
+    display: inline;    
+    line-height: 1.7em;
     font-size: 1.2em;
     list-style-type: none;
-}       
+}
+
+li a {      
+    padding: 3px;
+    text-decoration: none;
+}
 
 h1 {
     text-align: center;
@@ -109,8 +115,8 @@ a:visited {
 }
 
 a:hover {
-    color: #000000;
-    background: #00802F;
+    color: #F2F100;
+    background: #6D8EBF;
 }
 
 pre {    
