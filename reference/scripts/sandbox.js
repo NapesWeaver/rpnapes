@@ -16,11 +16,10 @@ document.getElementById('html-input').addEventListener('keydown', function(e) {
       // put caret at right position again
       this.selectionStart = this.selectionEnd = start + 1;
     }
-    if (e.key === 'Enter') displayOutput();
   });
 
 window.onload = function() {
-    document.getElementById('html-input').onchange = displayOutput;
-    document.getElementById('html-input').onmouseleave = displayOutput;
-    document.getElementById('html-input').onclick = displayOutput;
+    // document.getElementById('btn-new').onclick = displayOutput;
+    // document.getElementById('btn-save').onclick = displayOutput;
+    document.getElementById('btn-refresh').onclick = displayOutput;
 }

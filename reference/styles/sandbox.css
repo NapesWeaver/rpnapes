@@ -24,6 +24,25 @@
     background-color: #ffffff;
 }
 
+fieldset {
+    margin-top: 20px;
+    margin-left: 2.8%;
+    border: none;
+}
+
+.btn {
+    height: 30px;
+    width: 21%;
+    min-width: 75px;
+    max-width: 144px;
+    margin-right: 1.9%;
+    font-weight: 900;
+    border-radius: 9%;
+    background-color: ButtonFace;/* Needed for linux compatibility */
+    background-color: #D4D0C8;
+    border-color: #E3E3E3;
+}
+
 @media only screen and (min-width: 640px) {
 
     #html-input,
