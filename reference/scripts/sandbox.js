@@ -1,3 +1,30 @@
+var template = `
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8"/>
+      <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>    
+      <title>Document</title>
+      <style>
+        
+      </style>        
+    </head>     
+    <body>
+      
+      
+      
+      <script>
+        
+      </script>
+    </body>
+  </html>`;
+
+function loadTemplate() {
+  document.getElementById('html-input').value = template;
+  displayOutput();
+}
+
 function displayOutput() {
     var html = document.getElementById('html-input').value;
 
@@ -19,7 +46,7 @@ document.getElementById('html-input').addEventListener('keydown', function(e) {
   });
 
 window.onload = function() {
-    // document.getElementById('btn-new').onclick = displayOutput;
+    document.getElementById('btn-new').onclick = loadTemplate;
     // document.getElementById('btn-save').onclick = displayOutput;
     document.getElementById('btn-refresh').onclick = displayOutput;
 }
