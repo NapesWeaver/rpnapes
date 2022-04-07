@@ -1,6 +1,8 @@
 #html-input,
 .output-wrapper {
-    width: 567px;
+    width: 100%;
+    display: block;
+    margin: auto;
     min-height: 330px;    
     border: inset;
 }
@@ -10,6 +12,12 @@
     color: #ffffff;
 }
 
+#html-output {
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
 .output-wrapper {
     resize: both;
     overflow: auto;
@@ -17,10 +25,9 @@
 }
 
 @media only screen and (min-width: 640px) {
-    #html-input {
-        margin-left: 2em;
-    }
+
+    #html-input,
     .output-wrapper {
-        margin-left: 1.6em;
+        width: 94%;
     }
 }
