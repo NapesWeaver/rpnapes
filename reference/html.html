@@ -2192,8 +2192,7 @@
         &#60;title&#62;Page Title&#60;/title&#62;
         &#60;link rel="icon" href="favicon.ico" type="image/x-icon"/&#62;
         &#60;link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/&#62;
-        &#60;link rel="stylesheet" href="myStyles.css"/&#62;
-        &#60;noscript&#62;This page requires JavaScript!&#60;/noscript&#62;
+        &#60;link rel="stylesheet" href="myStyles.css"/&#62;        
         &#60;!--[if lt IE 9]&#62;
         &#60;script&#62;
           document.createElement("article");
@@ -2211,11 +2210,12 @@
         &#60;![endif]--&#62;    
       &#60;/head&#62;  
       &#60;body&#62;
-        &#60;header role="banner"&#62;
+        &#60;noscript&#62;This page requires JavaScript!&#60;/noscript&#62;
+        &#60;header&#62;
           &#60;h1 id="top"&#62;Heading&#60;/h1&#62;
           &#60;p&#62;Some text typed here.&#60;/p&#62;
         &#60;/header&#62;	
-        &#60;nav role="navigation"&#62;
+        &#60;nav&#62;
           &#60;ul&#62;
             &#60;li&#62;&#60;a href="index.html" title="Return to the home page"&#62;Home Page&#60;/a&#62;&#60;/li&#62;
             &#60;li&#62;|&#60;/li&#62;
@@ -2225,7 +2225,7 @@
             Info&#60;/a&#62;&#60;/li&#62;
           &#60;/ul&#62;
         &#60;/nav&#62;	
-        &#60;main role="main"&#62;
+        &#60;main&#62;
           &#60;section&#62;
             &#60;h2&#62;Section Title&#60;/h2&#62;
             &#60;article&#62;
@@ -2261,11 +2261,11 @@
           &#60;h2&#62;Aside Title&#60;/h2&#62;
           &#60;p&#62;More text...(or nav)&#60;p&#62;
         &#60;/aside&#62;	
-        &#60;footer role="contentinfo"&#62;
+        &#60;footer&#62;
           &#60;p id="footer"&#62;Updated Dec 14, 2015. Contact &#60;a href="mailto:someemail@yahoo.com"
               title="someemail@yahoo.com"&#62;Somebody&#60;/a&#62; for questions and suggestions.&#60;/p&#62; 
         &#60;/footer&#62;
-        &#60;script src="index.js"&#62;&#60;script/&#62;
+        &#60;script src="scripts/index.js" defer&#62;&#60;/script&#62;
       &#60;/body&#62;
     &#60;/html&#62;       
     </code></pre>
@@ -2286,13 +2286,13 @@
             &#60;label for="email"&#62;Email&#60;/label&#62;
             &#60;input type="email" name="email" id="email" placeholder="foo@bar.com"/&#62;
         
-            &#60;label for="phone" required&#62;Phone #&#60;/label&#62;
+            &#60;label for="phone"&#62;Phone #&#60;/label&#62;
             &#60;input type="tel" pattern="^[1-9]\d{2}-\d{3}-\d{4}" name="phone" id="phone" placeholder="888-888-8888" title="A typical U.S. phone number" required/&#62;
         &#60;/fieldset&#62;
 
         &#60;label class="question" for="feelings"&#62;How do you feel?&#60;/label&#62;
-        &#60;select name="feelings" id="feelings" required&#62;
-            &#60;option value="0"&#62;Great.&#60;/option&#62;
+        &#60;select name="feelings" id="feelings" size="1" required&#62;
+            &#60;option value=""&#62;Great.&#60;/option&#62;
             &#60;option value="1" selected&#62;Pretty great.&#60;/option&#62;
             &#60;option value="2"&#62;Definitely great.&#60;/option&#62;
         &#60;/select&#62;
