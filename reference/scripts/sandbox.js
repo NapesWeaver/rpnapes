@@ -24,7 +24,35 @@ var template = `
     </body>
   </html>`;
 
-function saveCookie(cookieName, cookie) {
+function encodeSpecialChar(tmpString) {
+  
+  tmpString = tmpString.replace(/%/g, '&#37');
+  tmpString = tmpString.replace(/,/g, '&#44');
+  tmpString = tmpString.replace(/;/g, '&#59');
+  tmpString = tmpString.replace(/=/g, '&#61');
+  tmpString = tmpString.replace(/_/g, '&#95');
+  tmpString = tmpString.replace(/°/g, '&deg');
+  tmpString = tmpString.replace(/Ω/g, '&#937');
+  tmpString = tmpString.replace(/♥/g, '&#9829');
+
+  return tmpString;
+}
+
+function decodeSpecialChar(tmpString) {
+
+  tmpString = tmpString.replace(/&#37/g, '%');
+  tmpString = tmpString.replace(/&#44/g, ',');
+  tmpString = tmpString.replace(/&#59/g, ';');
+  tmpString = tmpString.replace(/&#61/g, '=');
+  tmpString = tmpString.replace(/&#95/g, '_');
+  tmpString = tmpString.replace(/&deg/g, '°');
+  tmpString = tmpString.replace(/&#937/g, 'Ω');
+  tmpString = tmpString.replace(/&#9829/g, '♥');
+
+  return tmpString;
+}
+
+function saveCookie(cookieName, cookie) {  
   var d = new Date();
   d.setTime(d.getTime() + (1 * 365 * 24 * 60 * 60 * 1000));
   var expires = '; expires=' + d.toUTCString();
@@ -43,7 +71,7 @@ function getCookie(cookieName) {
       cookieItem = cookieItem.slice(1);
     }
     if (cookieItem.indexOf(name) === 0) {
-      return cookieItem.slice(name.length, cookieItem.length);
+      return decodeSpecialChar(cookieItem.slice(name.length, cookieItem.length));
     }
   }
   return '';
@@ -56,7 +84,7 @@ function getInput() {
       displayOutput();
     }
   } catch (err) {
-    console.log('error', err);
+    console.error(err);
   }
 }
 
@@ -66,7 +94,7 @@ function loadTemplate() {
 }
 
 function saveInput() {
-  var cookie = encodeURIComponent(document.getElementById('html-input').value);
+  var cookie = encodeURIComponent(encodeSpecialChar(document.getElementById('html-input').value));
   saveCookie('SANDBOX', cookie);
 }
 
