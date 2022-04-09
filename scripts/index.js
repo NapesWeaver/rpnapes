@@ -3324,7 +3324,13 @@ function updateDisplay() {
   // Print to stack display
   for (var sta in stack) {
     $('lst-stack').value += '\n';
-    $('lst-stack').value += objToString(stack[sta]);
+    
+    if (stack[sta].getSoul() !== '') {
+      $('lst-stack').value += objToString(stack[sta]);
+      stack[sta].getSoul() === ''
+    } else {
+      $('lst-stack').value += '                                                                                                                                                                                                                                                                                                                                                                                      ';
+    }
   }
   colorSaveButton();
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
