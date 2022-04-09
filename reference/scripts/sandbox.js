@@ -123,7 +123,6 @@ function loadInput() {
   try {
     if (getCookie('SANDBOX') !== '') {
       input = splitArrayByBrowser(getCookie('SANDBOX'));
-      console.log('input',input);
       updateDisplayInput();
       displayOutput();
     }

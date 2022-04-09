@@ -71,12 +71,12 @@ p {
     font-size: .7em;
 }
 
-li, table, img, dt, dd {
+li, table, dt, dd {
     margin: .8em;
 }
 
 img {
-    margin-left: 1.4em;
+    margin: .8em 0;
 }
 
 li {
@@ -199,6 +199,10 @@ footer {
 }
 
 @media only screen and (min-width: 640px) {
+    img {
+        margin: 1.5em;
+    }
+
     .iframe {
         right: 5px;
     }

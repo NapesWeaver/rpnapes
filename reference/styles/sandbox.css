@@ -26,8 +26,7 @@
 }
 
 fieldset {
-    margin-top: 20px;
-    margin-left: 2.8%;
+    margin-top: 20px;    
     border: none;
 }
 
@@ -48,6 +47,34 @@ fieldset {
 
     #lst-input,
     .output-wrapper {
+        width: 92%;
+    }
+
+    fieldset {
+        margin-left: 3.7%;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+
+    #lst-input,
+    .output-wrapper {
+        width: 93.5%;
+    }
+
+    fieldset {
+        margin-left: 3%;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+
+    #lst-input,
+    .output-wrapper {
         width: 94%;
+    }
+
+    fieldset {
+        margin-left: 2.8%;
     }
 }
