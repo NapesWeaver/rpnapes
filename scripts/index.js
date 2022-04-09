@@ -576,12 +576,13 @@ function btnDelete() {
   if (stack.toString() !== '') backupUndo();
   cashed = '';
 
-  $('txt-input').value = $('txt-input').value.trim();
+  $('txt-input').value = $('txt-input').value;
     
   if (stackFocus) {
     stack.splice(getIndex('lst-stack') - stackSize, 1);
     updateDisplay();
   } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
+    console.log('y');
     $('txt-input').selectionStart = 0;
     $('txt-input').focus();
   } else if ($('txt-input').value === '') {
@@ -596,7 +597,7 @@ function deleteText(txtField, forward) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
 
-  if (endPos === 0) {
+  if (shifted && endPos === 0) {
     endPos = $('txt-input').value.length;
     startPos = endPos;
   }
