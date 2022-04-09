@@ -3190,7 +3190,7 @@ function convertBase(r) {
           result += '∠' + parseInt(angle, prevRadix).toString(radix);        
         }
       }
-      $('txt-input').value = result + units;   
+      if ($('txt-input').value !== '') $('txt-input').value = result + units;
     } catch {      
       displayResult(objToString(obj), '');
     }
