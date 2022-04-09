@@ -1,4 +1,4 @@
-#html-input,
+#lst-input,
 .output-wrapper {
     width: 100%;
     display: block;
@@ -7,12 +7,12 @@
     border: inset;
 }
 
-#html-input {    
+#lst-input {    
     background-color: #000000;
     color: #ffffff;
 }
 
-#html-output {
+#lst-output {
     height: 100%;
     min-height: 330px;
     width: 100%;
@@ -46,7 +46,7 @@ fieldset {
 
 @media only screen and (min-width: 640px) {
 
-    #html-input,
+    #lst-input,
     .output-wrapper {
         width: 94%;
     }

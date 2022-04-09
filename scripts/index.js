@@ -1004,8 +1004,9 @@ function btnLoad() {
   var index = 0;
 
   try { 
-    $('btn-save').style.color = '#D4D0C8';        
     index = getCookie('STACK').indexOf('=') + 1;
+    $('btn-save').style.color = '#D4D0C8';        
+
     if (getCookie('STACK').slice(index) !== '') {
 
       if (shifted) {
@@ -3350,9 +3351,10 @@ function willCalculate(expression) {
 }
 
 function colorSaveButton() {
-  var index = 0;
+
   try {
-    index = getCookie('STACK').indexOf('=') + 1;
+    var index = getCookie('STACK').indexOf('=') + 1;
+
     if (getCookie('STACK').slice(index) !== nestArrayByBrowser(stack).trim()) {
       $('btn-save').style.color = '#000000';
     } else {
@@ -4097,6 +4099,7 @@ function colorSaveNotesButton() {
   var cookieValue = getCookie('NOTES').slice(index);
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n')).trim();
+  
   if (notesValue.slice(notesValue.length -1) === '_') notesValue = notesValue.slice(0, -1);
   if (cookieValue === notesValue) {
     $('btn-save-notes').style.color = '#919191';
@@ -4136,12 +4139,12 @@ function backSpaceUndo() {
 }
 
 function loadNotes() {
-  var index = 0;  
 
-  index = getCookie('NOTES').indexOf('=') + 1;
   try {
+    var index = getCookie('NOTES').indexOf('=') + 1;
+    
     notes = [];
-    notes = notes.concat(splitArrayByBrowser(getCookie('NOTES').slice(index)));
+    notes = splitArrayByBrowser(getCookie('NOTES').slice(index));
     if (notes[0] === '' && notes[1] === '') notes.pop();
   } catch (err) {
     notes.push('Load NOTES error.');
@@ -4242,9 +4245,8 @@ var lat = '';
 var lng = '';
 
 function loadTricorder() {
-  var index = 0;
-
-  index = getCookie('TRICORDER').indexOf('=') + 1;
+  var index = getCookie('TRICORDER').indexOf('=') + 1;
+  
   widgetSrc = splitArrayByBrowser(getCookie('TRICORDER').slice(index));
 
   for (var i in widgetSrc) {

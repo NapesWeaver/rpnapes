@@ -80,7 +80,7 @@ function getCookie(cookieName) {
 function getInput() {
   try {
     if (getCookie('SANDBOX') !== '') {
-      document.getElementById('html-input').value = getCookie('SANDBOX');
+      document.getElementById('lst-input').value = getCookie('SANDBOX');
       displayOutput();
     }
   } catch (err) {
@@ -89,25 +89,25 @@ function getInput() {
 }
 
 function loadTemplate() {
-  document.getElementById('html-input').value = template;
+  document.getElementById('lst-input').value = template;
   displayOutput();
 }
 
 function saveInput() {
-  var cookie = encodeURIComponent(encodeSpecialChar(document.getElementById('html-input').value));
+  var cookie = encodeURIComponent(encodeSpecialChar(document.getElementById('lst-input').value));
   saveCookie('SANDBOX', cookie);
 }
 
 function displayOutput() {
-  var html = document.getElementById('html-input').value;
+  var html = document.getElementById('lst-input').value;
   
-  document.getElementById('html-output').contentWindow.document.open();
-  document.getElementById('html-output').contentWindow.document.write(html);
-  document.getElementById('html-output').contentWindow.document.close();
+  document.getElementById('lst-output').contentWindow.document.open();
+  document.getElementById('lst-output').contentWindow.document.write(html);
+  document.getElementById('lst-output').contentWindow.document.close();
   saveInput();
 }
 
-document.getElementById('html-input').addEventListener('keydown', function(e) {
+document.getElementById('lst-input').addEventListener('keydown', function(e) {
   
   if (e.key === 'Tab') {
     e.preventDefault();
