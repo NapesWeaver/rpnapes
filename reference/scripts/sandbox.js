@@ -24,20 +24,20 @@ var template = `
     </body>
   </html>`;
 
-function updateDisplayInput() {
-  $('lst-input').value = '';
-
-  for (var i in input) {
-    $('lst-input').value += decodeSpecialChar(input[i]);
-    $('lst-input').value += '\n';
+  function updateDisplayInput() {
+    document.getElementById('lst-input').value = '';
+  
+    for (var i in input) {
+      document.getElementById('lst-input').value += decodeSpecialChar(input[i]);
+      document.getElementById('lst-input').value += '\n';
+    }
+    document.getElementById('lst-input').value = document.getElementById('lst-input').value.trim();
+    document.getElementById('lst-input').value += '\n';
+  
+    if (input.length === 1 && input[0] === '') {
+      document.getElementById('lst-input').value = '';
+    }
   }
-  $('lst-input').value = $('lst-input').value.trim();
-  $('lst-input').value += '\n';
-
-  if (input.length === 1 && input[0] === '') {
-    $('lst-input').value = '';
-  }
-}
 
 function nestArrayByBrowser(srcArray) {
   var newArray = '';
@@ -113,7 +113,7 @@ function getCookie(cookieName) {
       cookieItem = cookieItem.slice(1);
     }
     if (cookieItem.indexOf(name) === 0) {
-      return decodeSpecialChar(cookieItem.slice(name.length, cookieItem.length));
+      return cookieItem.slice(name.length, cookieItem.length);
     }
   }
   return '';
@@ -122,7 +122,9 @@ function getCookie(cookieName) {
 function loadInput() {
   try {
     if (getCookie('SANDBOX') !== '') {
-      document.getElementById('lst-input').value = getCookie('SANDBOX');
+      input = splitArrayByBrowser(getCookie('SANDBOX'));
+      console.log('input',input);
+      updateDisplayInput();
       displayOutput();
     }
   } catch (err) {
@@ -136,8 +138,8 @@ function loadTemplate() {
 }
 
 function saveInput() {
-  input = encodeURIComponent(encodeSpecialChar(document.getElementById('lst-input').value));
-  saveCookie('SANDBOX', input);
+  input = encodeSpecialChar(document.getElementById('lst-input').value.trim()).split('\n');
+  saveCookie('SANDBOX', nestArrayByBrowser(input));
 }
 
 function displayOutput() {
