@@ -101,9 +101,9 @@
                         <li><a title="Decimal" onclick="convertBase(10);">&nbsp;&nbsp;Decimal</a></li>
                       </ul>
                     </li>
-                    <li class="haptic-response"><a id="menu-angle-mode" title="Toggle degree/radian mode">Degree</a></li>
+                    <li class="haptic-response"><a id="menu-angle-mode" title="Toggle degree/radian mode" onmouseover="$('base').className='hidden'">Degree</a></li>
                     <li id="eng"><label id="label-eng"><a title="Engineering notation" onmouseover="$('base').className='hidden'">Eng</a>
-                      <select id="eng-select" class="haptic-response" name="eng" onchange="setEngDecimal(this.value);displayResult($('txt-input').value, '')">
+                      <select id="eng-select" class="haptic-response" name="eng" onmouseover="$('base').className='hidden'" onchange="setEngDecimal(this.value);displayResult($('txt-input').value, '')">
                         <option value="-1">Off</option> 
                         <option class="option" value="1">1</option>
                         <option value="2">2</option>
@@ -126,7 +126,7 @@
                       </label>
                     </li>                    
                     <li id="fix"><label id="label-fix"><a title="Fix decimal position" onmouseover="$('base').className='hidden'">Fix</a>
-                      <select id="fix-select" class="haptic-response" name="fix" onchange="setFixDecimal(this.value);displayResult($('txt-input').value, '')">
+                      <select id="fix-select" class="haptic-response" name="fix" onmouseover="$('base').className='hidden'" onchange="setFixDecimal(this.value);displayResult($('txt-input').value, '')">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -150,7 +150,7 @@
                       </label>
                     </li>
                     <li id="sci"><label id="label-sci"><a title="Scientific notation" onmouseover="$('base').className='hidden'">Sci</a>
-                      <select id="sci-select" class="haptic-response" name="sci" onchange="setSciDecimal(this.value);displayResult($('txt-input').value, '')">
+                      <select id="sci-select" class="haptic-response" name="sci" onmouseover="$('base').className='hidden'" onchange="setSciDecimal(this.value);displayResult($('txt-input').value, '')">
                         <option value="-1">Off</option>
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -173,20 +173,20 @@
                       </select>
                       </label>
                     </li>                    
-                    <li class="haptic-response"><a id="menu-shift" title="Toggle shift">Shift</a></li>
-                    <li class="haptic-response"><a id="menu-form" title="Toggle rectangular/polar">Vector</a></li>
-                    <li id="menu-sound-li" class="haptic-response strikethrough"><a id="menu-sound" title="Toggle sound">Sound</a></li>
-                    <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode">Light</a></li>
-                    <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" title="Toggle haptic response">Haptic</a></li>
-                    <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" title="Toggle mobile keyboard">Keyboard</a></li>
-                    <li><a id="menu-notes" class="haptic-response" title="Switch to Notes">Notes</a></li>                    
+                    <li class="haptic-response"><a id="menu-shift" title="Toggle shift" onmouseover="$('base').className='hidden'">Shift</a></li>
+                    <li class="haptic-response"><a id="menu-form" title="Toggle rectangular/polar" onmouseover="$('base').className='hidden'">Vector</a></li>
+                    <li id="menu-sound-li" class="haptic-response strikethrough"><a id="menu-sound" title="Toggle sound" onmouseover="$('base').className='hidden'">Sound</a></li>
+                    <li class="haptic-response"><a id="menu-darkmode" title="Toggle dark/light mode" onmouseover="$('base').className='hidden'">Light</a></li>
+                    <li id="menu-haptic-li" class="haptic-response"><a id="menu-haptic" title="Toggle haptic response" onmouseover="$('base').className='hidden'">Haptic</a></li>
+                    <li id="menu-keyboard-li" class="haptic-response"><a id="menu-keyboard" title="Toggle mobile keyboard" onmouseover="$('base').className='hidden'">Keyboard</a></li>
+                    <li><a id="menu-notes" class="haptic-response" title="Switch to Notes" onmouseover="$('base').className='hidden'">Notes</a></li>                    
                   </ul>
                 </li>
                 <li class="haptic-response">
                   <a onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden';$('reference').className='hidden'">Tools</a>
                   <ul class="sub-menu">
                     <li class="menu">
-                      <a title="Symbolic constants" onclick="$('constants').className='visible';resetConstants()" onmouseover="$('formulas').className='hidden'">Constants</a>
+                      <a title="Symbolic constants" onclick="$('constants').className='visible';resetConstants()" onmouseover="$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden';$('reference').className='hidden'">Constants</a>
                       <ul id="constants" onclick="$('constants').className='hidden'">
                         <li><a id="menu-phi" title="Phi ~ Golden Ratio">&nbsp;&nbsp;&#934;</a></li>
                         <li><a id="menu-eulers"  title="Euler's Number">&nbsp;&nbsp;e</a></li>
@@ -198,7 +198,7 @@
                     <li><a id="menu-date" title="Current date">Date</a></li>
                     <li><a id="menu-time" title="Current time">Time</a></li>                    
                     <li class="menu">
-                      <a title="Executable formulas" onclick="$('formulas').className='visible';" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Formulas</a>
+                      <a title="Executable formulas" onclick="$('formulas').className='visible';" onmouseover="$('constants').className='hidden';$('programs').className='hidden';$('symbols').className='hidden';$('reference').className='hidden'">Formulas</a>
                       <ul id="formulas" onclick="$('formulas').className='hidden'">
                         <li><a id="menu-compound-interest" title="P*&#40;1&#43;r/n&#41;&#94;&#40;n*t&#41;">&nbsp;&nbsp;Interest&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                         <li><a id="menu-circumference" title="2*&#960;*r">&nbsp;&nbsp;Circumference</a></li>
@@ -210,7 +210,7 @@
                       </ul>
                     </li>
                     <li class="menu">
-                      <a title="Stack Operations +" onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('symbols').className='hidden'">Programs</a>
+                      <a title="Stack Operations +" onclick="$('programs').className='visible'" onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('symbols').className='hidden';$('reference').className='hidden'">Programs</a>
                       <ul id="programs" onclick="$('programs').className='hidden'">
                         <li><a id="menu-stack-average" title="Average the stack">&nbsp;&nbsp;Average&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
                         <li><a id="menu-stack-max" title="Maximum value on the stack">&nbsp;&nbsp;Max&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
@@ -240,7 +240,7 @@
                       </ul>
                     </li>
                     <li class="menu haptic-response">
-                      <a title="Reference Links" onclick="$('reference').className='visible'">Reference</a>
+                      <a title="Reference Links" onclick="$('reference').className='visible'" onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden'">Reference</a>
                       <ul id="reference" onclick="$('reference').className='hidden'">
                         <li><a href="https://www.intmath.com/complex-numbers/convert-polar-rectangular-interactive.php" target="_blank" title="Convert between complex forms">&nbsp;Convert&nbsp;Forms</a></li>
                         <li><a href="https://napesweaver.github.io/ip-mapper/" target="_blank" title="IP mapping web app">&nbsp;IP&nbsp;Mapper&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
