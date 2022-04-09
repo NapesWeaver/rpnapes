@@ -4763,7 +4763,7 @@ function donMove() {
     } else {
       $('don').src = 'images/twig/don-walk-right.gif';
     }   
-    setTimeout(donMove, 600);
+    setTimeout(donMove, 300);
     brownianMovement(don);
   } else {
     $('don').src = 'images/twig/don-jon.gif';

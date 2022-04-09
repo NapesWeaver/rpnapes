@@ -566,7 +566,6 @@ label a {
     float: left;
     display: inline-block;
     position: relative;
-    overflow: hidden;
     font-size: .85em;
 }
 
