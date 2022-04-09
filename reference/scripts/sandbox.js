@@ -1,7 +1,7 @@
 var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
 var isFirefox = /firefox/i.test(navigator.userAgent);
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
+var input = [];
 var template = `
   <!DOCTYPE html>
   <html lang="en">
@@ -23,6 +23,48 @@ var template = `
       </script>
     </body>
   </html>`;
+
+function updateDisplayInput() {
+  $('lst-input').value = '';
+
+  for (var i in input) {
+    $('lst-input').value += decodeSpecialChar(input[i]);
+    $('lst-input').value += '\n';
+  }
+  $('lst-input').value = $('lst-input').value.trim();
+  $('lst-input').value += '\n';
+
+  if (input.length === 1 && input[0] === '') {
+    $('lst-input').value = '';
+  }
+}
+
+function nestArrayByBrowser(srcArray) {
+  var newArray = '';
+
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
+    for (var chrome in srcArray) {
+      newArray += '_';
+      newArray += srcArray[chrome];
+    }
+  } else {// Firefox
+    for (var firefox in srcArray) {
+      newArray += '\t';
+      newArray += srcArray[firefox];
+    }
+  }
+  return newArray;
+}
+
+function splitArrayByBrowser(tmpArray) {
+
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
+    tmpArray = tmpArray.split('_');
+  } else {// Firefox
+    tmpArray = tmpArray.split('\t');
+  }
+  return tmpArray;
+}
 
 function encodeSpecialChar(tmpString) {
   
@@ -77,7 +119,7 @@ function getCookie(cookieName) {
   return '';
 }
 
-function getInput() {
+function loadInput() {
   try {
     if (getCookie('SANDBOX') !== '') {
       document.getElementById('lst-input').value = getCookie('SANDBOX');
@@ -94,8 +136,8 @@ function loadTemplate() {
 }
 
 function saveInput() {
-  var cookie = encodeURIComponent(encodeSpecialChar(document.getElementById('lst-input').value));
-  saveCookie('SANDBOX', cookie);
+  input = encodeURIComponent(encodeSpecialChar(document.getElementById('lst-input').value));
+  saveCookie('SANDBOX', input);
 }
 
 function displayOutput() {
@@ -124,5 +166,5 @@ document.getElementById('lst-input').addEventListener('keydown', function(e) {
 window.onload = function() {
   document.getElementById('btn-new').onclick = loadTemplate;
   document.getElementById('btn-refresh').onclick = displayOutput;
-  getInput();
+  loadInput();
 }

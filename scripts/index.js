@@ -958,8 +958,7 @@ function nestArrayByBrowser(srcArray) {
       newArray += '_';
       newArray += srcArray[chrome];
     }
-  } else {
-    // Firefox
+  } else {// Firefox
     for (var firefox in srcArray) {
       newArray += '\t';
       newArray += srcArray[firefox];
@@ -1074,8 +1073,7 @@ function splitArrayByBrowser(tmpArray) {
 
   if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
     tmpArray = tmpArray.split('_');
-  } else {
-    // Firefox
+  } else {// Firefox
     tmpArray = tmpArray.split('\t');
   }
   return tmpArray;
