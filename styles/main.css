@@ -301,6 +301,15 @@ button:hover {
     margin-bottom: 3px;
 }
 
+#btn-clear-notes,
+#btn-save-notes,
+#btn-copy-notes,
+#btn-undo-notes,
+#btn-redo-notes,
+#btn-delete-notes {
+    width: 3.1em;
+}
+
 .btn-big-font {
     font-size: 1.2em;
 }
