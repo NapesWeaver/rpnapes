@@ -4845,8 +4845,8 @@ document.addEventListener('keydown', function (event) {
     if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      // $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18;
-      $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
+      
+      window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
     
       if (!stackFocus) {
         $('lst-stack').focus();
@@ -4872,8 +4872,8 @@ document.addEventListener('keydown', function (event) {
     if ($('rpnapes').className !== 'hidden')  {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      // $('lst-stack').scrollTop = $('lst-stack').scrollTop + 18;
-      $('lst-stack').scrollTop = $('lst-stack').scrollTop + 12;
+      
+      window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop + 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop + 12;
 
       if ($('lst-stack').selectionEnd === $('lst-stack').value.length) {
         $('txt-input').focus();
