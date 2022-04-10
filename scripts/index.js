@@ -89,6 +89,7 @@ String.prototype.insertAt = function(index, input) {
 String.prototype.removeAt = function(startPos, endPos) {
   return this.slice(0, startPos) + this.slice(endPos);
 }
+
 /**
  * Array.prototype.indexOf()
  * Added to the ECMA-262 standard in the 5th edition may not work in all browsers.
@@ -2984,7 +2985,7 @@ function parseCommand() {
       $('txt-input').value = '';
       break;
     default:
-      if (twig.health > 0) {
+      if ($('twig').className !== 'hidden' && twig.health > 0) {
         $('twig').src = 'images/twig/hat-tip.gif';
       }
       break;
@@ -4833,40 +4834,57 @@ document.addEventListener('keydown', function (event) {
     }
     break;
   case 37:// LEFT ARROW
-    if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden') {
+    if (twig.health > 0 && $('twig').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      if (twig.health > 0) {
-        $('twig').src = 'images/twig/walk-left.gif';
-        moveObj(twig, twig.speed, -1, 0);
-      }
+      $('twig').src = 'images/twig/walk-left.gif';
+      moveObj(twig, twig.speed, -1, 0);
     }
     break;
   case 38:// UP ARROW
-    if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden') {
+    if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      if (twig.health > 0) {
+
+      var startPos = $('lst-stack').selectionStart;
+      $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', startPos - 2) + 1, startPos - 1);
+
+      if (twig.health > 0 && $('twig').className !== 'hidden') {
         $('twig').src = 'images/twig/walk-left.gif';
         moveObj(twig, twig.speed, 0, -1);
       }
     }
     break;
   case 39:// RIGHT ARROW
-    if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden') {
+    if (twig.health > 0 && $('twig').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      if (twig.health > 0) {
-        $('twig').src = 'images/twig/walk-right.gif';
-        moveObj(twig, twig.speed, 1, 0);
-      }
+      $('twig').src = 'images/twig/walk-right.gif';
+      moveObj(twig, twig.speed, 1, 0);      
     }
     break;
   case 40:// DOWN ARROW
-    if ($('rpnapes').className !== 'hidden' && $('twig').className !== 'hidden')  {
+    if ($('rpnapes').className !== 'hidden')  {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      if (twig.health > 0) {
+
+
+
+
+      // var startPos = $('lst-stack').selectionStart;
+      // var endPos = $('lst-stack').selectionEnd;
+
+      // console.log('startPos', startPos);
+      // console.log('endPos', endPos);
+      // console.log('lastIndexOf', $('lst-stack').value.lastIndexOf('\n', startPos - 2));
+
+
+
+
+
+
+
+      if (twig.health > 0 && $('twig').className !== 'hidden') {
         $('twig').src = 'images/twig/walk-right.gif';
         moveObj(twig, twig.speed, 0, 1);
       }
@@ -4967,7 +4985,7 @@ document.addEventListener('keyup', function (event) {
   case 'ArrowUp':// ARROW UP (Falls through)
   case 'ArrowRight':// ARROW RIGHT (Falls through)
   case 'ArrowDown':// ARROW DOWN
-    if ($('rpnapes').className !== 'hidden' && twig.health > 0) {      
+    if ($('twig').className !== 'hidden' && twig.health > 0) {      
       $('twig').src = 'images/twig/hat-on.gif';
     }
     break;
