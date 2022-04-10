@@ -3123,7 +3123,7 @@ function lstStackFocus() {
 }
 
 function txtInputFocus() {
-  stackFocus = false;  
+  stackFocus = false;
 }
 
 function resetConstants() {
@@ -4845,10 +4845,13 @@ document.addEventListener('keydown', function (event) {
     if ($('rpnapes').className !== 'hidden') {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-
-      var startPos = $('lst-stack').selectionStart;
-      $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', startPos - 2) + 1, startPos - 1);
-
+    
+      if (!stackFocus) {
+        $('lst-stack').focus();
+        $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
+      } else {
+        $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
+      }
       if (twig.health > 0 && $('twig').className !== 'hidden') {
         $('twig').src = 'images/twig/walk-left.gif';
         moveObj(twig, twig.speed, 0, -1);
@@ -4868,15 +4871,11 @@ document.addEventListener('keydown', function (event) {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
-      var endPos = $('lst-stack').selectionEnd;
-      var length = $('lst-stack').value.length;
-
-      if (endPos === length) {
+      if ($('lst-stack').selectionEnd === $('lst-stack').value.length) {
         $('txt-input').focus();
       } else {
-        $('lst-stack').setSelectionRange(endPos + 1, $('lst-stack').value.indexOf('\n', endPos + 1));        
-      }
-      
+        $('lst-stack').setSelectionRange($('lst-stack').selectionEnd + 1, $('lst-stack').value.indexOf('\n', $('lst-stack').selectionEnd + 1));        
+      }      
       if (twig.health > 0 && $('twig').className !== 'hidden') {
         $('twig').src = 'images/twig/walk-right.gif';
         moveObj(twig, twig.speed, 0, 1);
