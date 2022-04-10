@@ -4868,22 +4868,15 @@ document.addEventListener('keydown', function (event) {
       if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
+      var endPos = $('lst-stack').selectionEnd;
+      var length = $('lst-stack').value.length;
 
-
-
-      // var startPos = $('lst-stack').selectionStart;
-      // var endPos = $('lst-stack').selectionEnd;
-
-      // console.log('startPos', startPos);
-      // console.log('endPos', endPos);
-      // console.log('lastIndexOf', $('lst-stack').value.lastIndexOf('\n', startPos - 2));
-
-
-
-
-
-
-
+      if (endPos === length) {
+        $('txt-input').focus();
+      } else {
+        $('lst-stack').setSelectionRange(endPos + 1, $('lst-stack').value.indexOf('\n', endPos + 1));        
+      }
+      
       if (twig.health > 0 && $('twig').className !== 'hidden') {
         $('twig').src = 'images/twig/walk-right.gif';
         moveObj(twig, twig.speed, 0, 1);
