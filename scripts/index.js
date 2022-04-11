@@ -3673,10 +3673,6 @@ function extractAngle(tmpString, firstValue) {
             tmpComplex[0] = Infinity;
             tmpComplex[1] = '-Infinity';
           break;
-            default:
-              // tmpComplex[0] = Infinity;
-              // tmpComplex[1] = 'Infinity';
-            break;
           }              
       } else {
         tmpComplex =  parseAngle(tmpAngle, firstValue);
