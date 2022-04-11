@@ -1757,33 +1757,19 @@ function displayResult(result, newUnits) {
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
 
-// function sin(input) {
-//   var objX = getX(input);
-//   var x = buildComplexNumber(objX);
-
-//   if ($('btn-angle').value === 'deg') {    
-//     x.re = x.im === 0 && (x.re === 0 || x.re % 360 === 0) ? 0 : x.re * Math.PI / 180;
-//     x.im = x.im * Math.PI / 180;
-//   }
-//   x = math.sin(x);
-//   if (x.im === 0) {
-//     return x.re;
-//   } else {
-//     return x;
-//   }  
-// }
-
 function sin(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
+  var degrees = $('btn-angle').value === 'deg' ? x.re :  x.re * 180 / Math.PI;
 
-  console.log('x', x);
+  if (x.im === 0 && (degrees === 0 || degrees % 360 === 0)) x.re = 0;
 
   if ($('btn-angle').value === 'deg') {    
-    x.re = x.im === 0 && (x.re === 0 || x.re % 360 === 0) ? 0 : x.re * Math.PI / 180;
+    x.re = x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
-  }
+  }  
   x = math.sin(x);
+
   if (x.im === 0) {
     return x.re;
   } else {
@@ -1940,7 +1926,7 @@ function btnCosine() {
   if (shifted) {
     displayResult(acos(input), '');
   } else {
-    displayResult(acos(input), '');
+    displayResult(cos(input), '');
   }
   $('txt-input').select()
 }
