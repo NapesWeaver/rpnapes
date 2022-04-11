@@ -3594,86 +3594,80 @@ function parseAngle(tmpAngle, firstValue) {
   return tmpComplex;
 }
 
+function parseInfinitePolars(tmpAngle) {
+  var tmpComplex = [];
+  var angle = $('btn-angle').value === 'deg' ? parseFloat(tmpAngle) : 180 / π * tmpAngle;
+
+  switch (angle) {   
+  case 0:
+    // Falls through
+  case -0:
+    // Falls through
+  case 360:
+    // Falls through
+  case -360:
+    tmpComplex[0] = Infinity;
+    tmpComplex[1] = '0';
+    break;
+  case 45:
+    // Falls through
+  case -315:
+    tmpComplex[0] = Infinity;
+    tmpComplex[1] = 'Infinity';
+    break;
+  case 90:
+    // Falls through
+  case -270:
+    tmpComplex[0] = 0;
+    tmpComplex[1] = 'Infinity';
+    break;
+  case 135:
+    // Falls through
+  case -225:
+    tmpComplex[0] = -Infinity;
+    tmpComplex[1] = 'Infinity';
+    break
+  case 180:
+    // Falls through
+  case -180:
+    tmpComplex[0] = -Infinity;
+    tmpComplex[1] = '0';
+    break;
+  case -135:
+    // Falls through
+  case 225:
+    tmpComplex[0] = -Infinity;
+    tmpComplex[1] = '-Infinity';
+    break;
+  case 270:
+    // Falls through
+  case -90:
+    tmpComplex[0] = 0;
+    tmpComplex[1] = '-Infinity';
+    break;
+  case -45:
+    // Falls through
+  case 315:
+    tmpComplex[0] = Infinity;
+    tmpComplex[1] = '-Infinity';
+  break;
+  }   
+  return tmpComplex;
+}
+
 function extractAngle(tmpString, firstValue) {  
   var tmpComplex = [];
   var tmpAngle = '';
-  // var polar;
   
   if (radix === 10) {
     if (!/[()]/g.test(tmpString)) { 
       tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);    
       tmpAngle = tmpAngle.replace(/ /g, '');
       // Remove ∠
-      tmpAngle = tmpAngle.slice(1);
-
+      tmpAngle = tmpAngle.slice(1);    
+      
       if (/[-+]?Infinity/.test(firstValue)) {
-        // Infinities
-        switch (parseFloat(tmpAngle)) {   
-          case 0:
-            // Falls through
-          case -0:
-            // Falls through
-          case 360:
-            // Falls through
-          case -360:
-            tmpComplex[0] = Infinity;
-            tmpComplex[1] = '0';
-            break;
-          case 45:
-            // Falls through
-          case -315:
-            // Falls through
-          case 0.7853981633974483:
-            tmpComplex[0] = Infinity;
-            tmpComplex[1] = 'Infinity';
-            break;
-          case 90:
-            // Falls through
-          case -270:
-            tmpComplex[0] = 0;
-            tmpComplex[1] = 'Infinity';
-            break;
-          case 135:
-            // Falls through
-          case -225:
-            // Falls through
-          case 2.356194490192345:
-            tmpComplex[0] = -Infinity;
-            tmpComplex[1] = 'Infinity';
-            break
-          case 180:
-            // Falls through'
-          case 3.141592653589793:
-            // Falls through
-          case -180:
-            // Falls through
-          case -3.141592653589793:
-            tmpComplex[0] = -Infinity;
-            tmpComplex[1] = '0';
-            break;
-          case -135:
-            // Falls through
-          case 225:
-            // Falls through
-          case -2.356194490192345:
-            tmpComplex[0] = -Infinity;
-            tmpComplex[1] = '-Infinity';
-            break;
-          case 270:
-            // Falls through
-          case -90:
-            tmpComplex[0] = 0;
-            tmpComplex[1] = '-Infinity';
-            break;
-          case -45:
-            // Falls through
-          case 315:
-            // Falls through
-          case -0.7853981633974483:
-            tmpComplex[0] = Infinity;
-            tmpComplex[1] = '-Infinity';
-          break;
-          }              
+        tmpComplex = parseInfinitePolars(tmpAngle);         
       } else {
         tmpComplex =  parseAngle(tmpAngle, firstValue);
       }
