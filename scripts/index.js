@@ -4848,6 +4848,7 @@ document.addEventListener('keydown', function (event) {
             
       if (!stackFocus) {
         $('lst-stack').focus();
+        $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
         $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
       } else {
         var testString = $('lst-stack').value.slice($('lst-stack').selectionStart);
