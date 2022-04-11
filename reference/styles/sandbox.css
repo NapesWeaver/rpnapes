@@ -2,7 +2,7 @@
 .output-wrapper {
     width: 100%;
     display: block;
-    margin: auto;
+    /* margin: auto; */
     min-height: 330px;    
     border: inset;
 }
@@ -41,6 +41,7 @@ fieldset {
     background-color: ButtonFace;/* Needed for linux compatibility */
     background-color: #D4D0C8;
     border-color: #E3E3E3;
+    cursor: pointer;
 }
 
 @media only screen and (min-width: 640px) {
@@ -50,8 +51,31 @@ fieldset {
         width: 92%;
     }
 
+    #lst-input {
+        margin-left: 1.8em;
+    }
+
+    .output-wrapper {
+        margin-left: 1.5em;
+    }
+
     fieldset {
         margin-left: 3.7%;
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    #lst-input,
+    .output-wrapper {
+        width: 92.5%;
+    }
+
+    #lst-input {
+        margin-left: 2.1em;
+    }
+
+    .output-wrapper {
+        margin-left: 1.8em;
     }
 }
 
@@ -59,7 +83,7 @@ fieldset {
 
     #lst-input,
     .output-wrapper {
-        width: 93.5%;
+        width: 94.5%;
     }
 
     fieldset {
@@ -74,7 +98,22 @@ fieldset {
         width: 94%;
     }
 
+    #lst-input {
+        margin-left: 2.6em;
+    }
+
+    .output-wrapper {
+        margin-left: 2.2em;
+    }
+
     fieldset {
         margin-left: 2.8%;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    #lst-input,
+    .output-wrapper {
+        width: 96%;
     }
 }
