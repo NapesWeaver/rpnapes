@@ -295,6 +295,7 @@ footer {
         font-size: .8em;
     }
     .iframe {
+        width: 414px;
         right: 15%;
     }   
 }
