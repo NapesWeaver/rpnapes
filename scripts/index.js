@@ -1757,9 +1757,27 @@ function displayResult(result, newUnits) {
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
 
+// function sin(input) {
+//   var objX = getX(input);
+//   var x = buildComplexNumber(objX);
+
+//   if ($('btn-angle').value === 'deg') {    
+//     x.re = x.im === 0 && (x.re === 0 || x.re % 360 === 0) ? 0 : x.re * Math.PI / 180;
+//     x.im = x.im * Math.PI / 180;
+//   }
+//   x = math.sin(x);
+//   if (x.im === 0) {
+//     return x.re;
+//   } else {
+//     return x;
+//   }  
+// }
+
 function sin(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
+
+  console.log('x', x);
 
   if ($('btn-angle').value === 'deg') {    
     x.re = x.im === 0 && (x.re === 0 || x.re % 360 === 0) ? 0 : x.re * Math.PI / 180;
@@ -4812,9 +4830,7 @@ document.addEventListener('keydown', function (event) {
     }
     break;
   case 16:// SHIFT
-    if ($('rpnapes').className !== 'hidden') {
-      if (altHeld) btnShift();        
-    }
+    if (altHeld) btnShift();    
     break;
   case 17:// CTRL
     if (!event) { event = window.event; }
@@ -4822,9 +4838,7 @@ document.addEventListener('keydown', function (event) {
     ctrlHeld = true;
     break;
   case 18:// ALT
-    if ($('rpnapes').className !== 'hidden') {
-      altHeld = true;        
-    }
+    altHeld = true;
     break;
   case 37:// LEFT ARROW
     if (twig.health > 0 && $('twig').className !== 'hidden') {

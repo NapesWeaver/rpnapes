@@ -2,7 +2,6 @@
 .output-wrapper {
     width: 100%;
     display: block;
-    /* margin: auto; */
     min-height: 330px;    
     border: inset;
 }
@@ -20,6 +19,7 @@
 }
 
 .output-wrapper {
+    height: 600px;
     resize: both;
     overflow: auto;
     background-color: #ffffff;
