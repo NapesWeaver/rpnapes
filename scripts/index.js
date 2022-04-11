@@ -3607,73 +3607,76 @@ function extractAngle(tmpString, firstValue) {
       tmpAngle = tmpAngle.slice(1);
 
       if (/[-+]?Infinity/.test(firstValue)) {
-        // Infinities       
-        // polar = math.complex({ abs: 1, arg: calculate(tmpAngle)});   
-        switch (tmpAngle.toString()) {   
-          case '0':
+        // Infinities
+        switch (parseFloat(tmpAngle)) {   
+          case 0:
             // Falls through
-          case '-0':
+          case -0:
             // Falls through
-          case '360':
+          case 360:
             // Falls through
-          case '-360':
+          case -360:
             tmpComplex[0] = Infinity;
             tmpComplex[1] = '0';
             break;
-          case'45':
+          case 45:
             // Falls through
-          case'-315':
+          case -315:
             // Falls through
-          case '0.7853981633974483':
+          case 0.7853981633974483:
             tmpComplex[0] = Infinity;
             tmpComplex[1] = 'Infinity';
             break;
-          case '90':
+          case 90:
             // Falls through
-          case '-270':
+          case -270:
             tmpComplex[0] = 0;
             tmpComplex[1] = 'Infinity';
             break;
-          case '135':
+          case 135:
             // Falls through
-          case '-225':
+          case -225:
             // Falls through
-          case '2.356194490192345':
+          case 2.356194490192345:
             tmpComplex[0] = -Infinity;
             tmpComplex[1] = 'Infinity';
             break
-          case '180':
+          case 180:
             // Falls through'
-          case '3.141592653589793':
+          case 3.141592653589793:
             // Falls through
-          case '-180':
+          case -180:
             // Falls through
-          case '-3.141592653589793':
+          case -3.141592653589793:
             tmpComplex[0] = -Infinity;
             tmpComplex[1] = '0';
             break;
-          case '-135':
+          case -135:
             // Falls through
-          case'225':
+          case 225:
             // Falls through
-          case '-2.356194490192345':
+          case -2.356194490192345:
             tmpComplex[0] = -Infinity;
             tmpComplex[1] = '-Infinity';
             break;
-          case '270':
+          case 270:
             // Falls through
-          case '-90':
+          case -90:
             tmpComplex[0] = 0;
             tmpComplex[1] = '-Infinity';
             break;
-          case '-45':
+          case -45:
             // Falls through
-          case '315':
+          case 315:
             // Falls through
-          case '-0.7853981633974483':
+          case -0.7853981633974483:
             tmpComplex[0] = Infinity;
             tmpComplex[1] = '-Infinity';
           break;
+            default:
+              // tmpComplex[0] = Infinity;
+              // tmpComplex[1] = 'Infinity';
+            break;
           }              
       } else {
         tmpComplex =  parseAngle(tmpAngle, firstValue);
