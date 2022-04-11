@@ -5046,12 +5046,7 @@ window.onload = function () {
   $('menu-save').onclick = btnSave;
   $('menu-print').onclick = printHtml;
   $('menu-off').onclick = function() {
-    monOff();
-    tricorderOff();
-    window.open('','_self').close();
-    window.top.close();
-    rpnAlert('Window not opened with window.open()');
-    //throw new Error();
+    btnOff();
   };
 
   // Menu Edit
