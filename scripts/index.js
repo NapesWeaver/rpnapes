@@ -1803,12 +1803,15 @@ function tan(input) {
   var degrees = $('btn-angle').value === 'deg' ? x.re :  x.re * 180 / Math.PI;
   
   if (x.im === 0 && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) {
-
     return 0;
+  } else if (x.im === 0 && (degrees === 315 || (degrees - 315) % 360 === 0 || degrees === 135 || (degrees - 135) % 360 === 0)) {
+    return -1;
   } else if(x.im === 0 && (degrees === 270 || (degrees - 270) % 360 === 0)) {
     return -Infinity;
   } else if (x.im === 0 && (degrees === 90 || (degrees - 90) % 360 === 0)) {
     return Infinity;
+  } else if (x.im === 0 && (degrees === 225 || (degrees - 225) % 360 === 0 || degrees === 45 || (degrees - 45) % 360 === 0)) {
+    return 1;
   }
   if ($('btn-angle').value === 'deg') {    
     x.re = x.re * Math.PI / 180;
