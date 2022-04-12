@@ -1789,28 +1789,6 @@ function tan(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
   var degrees = $('btn-angle').value === 'deg' ? x.re :  x.re * 180 / Math.PI;
-
-  // if ($('btn-angle').value === 'deg') {    
-
-  //   if (x.im === 0 && (x.re === 0 || x.re % 360 === 0 || x.re === 180 || (x.re - 180) % 360 === 0)) {
-  //     x.re = 0;
-  //   } else if (x === 270 || (x - 270) % 360 === 0) {
-  //     x.re = -Infinity;
-  //   } else if (x === 90 || (x - 90) % 360 === 0) {
-  //     x.re = Infinity;
-  //   } else {
-  //     x.re = x.re * Math.PI / 180;
-  //     x.im = x.im * Math.PI / 180;
-  //     x = math.tan(x);
-  //   }
-  // } else {
-  //   return math.tan(x);
-  // }  
-  // if (x.im === 0) {
-  //   return x.re;
-  // } else {
-  //   return x;
-  // }  
   
   if (x.im === 0 && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) {
 
@@ -1827,32 +1805,6 @@ function tan(input) {
 
   return math.tan(x);
 }
-// function tan(input) {
-//   var objX = getX(input);
-//   var x = buildComplexNumber(objX);
-
-//   if ($('btn-angle').value === 'deg') {    
-
-//     if (x.im === 0 && (x.re === 0 || x.re % 360 === 0 || x.re === 180 || (x.re - 180) % 360 === 0)) {
-//       x.re = 0;
-//     } else if (x === 270 || (x - 270) % 360 === 0) {
-//       x.re = -Infinity;
-//     } else if (x === 90 || (x - 90) % 360 === 0) {
-//       x.re = Infinity;
-//     } else {
-//       x.re = x.re * Math.PI / 180;
-//       x.im = x.im * Math.PI / 180;
-//       x = math.tan(x);
-//     }
-//   } else {
-//     x = math.tan(x);
-//   }
-//   if (x.im === 0) {
-//     return x.re;
-//   } else {
-//     return x;
-//   }  
-// }
 
 function asin(input) {
   var objX = getX(input);
@@ -5448,9 +5400,7 @@ window.onload = function () {
   autoDark();
   $('txt-input').readOnly = false;
 };
-/**
- * Testing complex trig functions.
- * 
+/** 
  * Better color pallet.
  * Refactor signChange(), inverse() for Infinities.
  * Refactor btnModulus() for complex numbers?
@@ -5463,7 +5413,7 @@ window.onload = function () {
  * Remote debug for Firefox mobile keypad.
  * Haptic response for Firefox mobile.
  * File-reopening bug.
- * Rectangular w/o space eg. π+9j
+ * Rectangular w/o space eg. 'π+9j'
  * 
  * Inline parsing for complex numbers?
  * Extend timer for hours/days?
