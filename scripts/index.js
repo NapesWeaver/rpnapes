@@ -31,7 +31,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 var testing = false;
 var cashed = '';
-var tStamp = '3:37:00';
+var tStamp = '7:55:00';
 
 var stack = [];
 var backups = [];
@@ -3599,62 +3599,33 @@ function parseAngle(tmpAngle, firstValue) {
 
 function parseInfinitePolars(tmpAngle) {
   var tmpComplex = [];
-  var angle = $('btn-angle').value === 'deg' ? parseFloat(tmpAngle) : 180 / π * tmpAngle;
+  var degrees = $('btn-angle').value === 'deg' ? parseFloat(tmpAngle) : 180 / π * tmpAngle;
 
-  switch (angle) {   
-  case 0:
-    // Falls through
-  case -0:
-    // Falls through
-  case 360:
-    // Falls through
-  case -360:
+  if (degrees === 0 || degrees % 360 === 0) {
     tmpComplex[0] = Infinity;
     tmpComplex[1] = '0';
-    break;
-  case 45:
-    // Falls through
-  case -315:
+  } else if (degrees === 315 || (degrees - 315) % 360 === 0) {
     tmpComplex[0] = Infinity;
-    tmpComplex[1] = 'Infinity';
-    break;
-  case 90:
-    // Falls through
-  case -270:
+    tmpComplex[1] = '-Infinity';
+  } else if (degrees === 270 || (degrees - 270) % 360 === 0) {
     tmpComplex[0] = 0;
-    tmpComplex[1] = 'Infinity';
-    break;
-  case 135:
-    // Falls through
-  case -225:
+    tmpComplex[1] = '-Infinity';
+  } else if (degrees === 225 || (degrees - 225) % 360 === 0) {
     tmpComplex[0] = -Infinity;
-    tmpComplex[1] = 'Infinity';
-    break
-  case 180:
-    // Falls through
-  case -180:
+    tmpComplex[1] = '-Infinity';
+  } else if (degrees === 180 || (degrees - 180) % 360 === 0) {
     tmpComplex[0] = -Infinity;
     tmpComplex[1] = '0';
-    break;
-  case -135:
-    // Falls through
-  case 225:
+  } else if (degrees === 135 || (degrees - 135) % 360 === 0) {
     tmpComplex[0] = -Infinity;
-    tmpComplex[1] = '-Infinity';
-    break;
-  case 270:
-    // Falls through
-  case -90:
+    tmpComplex[1] = 'Infinity';
+  } else if (degrees === 90 || (degrees - 90) % 360 === 0) {
     tmpComplex[0] = 0;
-    tmpComplex[1] = '-Infinity';
-    break;
-  case -45:
-    // Falls through
-  case 315:
+    tmpComplex[1] = 'Infinity';
+  } else if (degrees === 45 || (degrees - 45) % 360 === 0) {
     tmpComplex[0] = Infinity;
-    tmpComplex[1] = '-Infinity';
-  break;
-  }   
+    tmpComplex[1] = 'Infinity';
+  }
   return tmpComplex;
 }
 
