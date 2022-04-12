@@ -192,7 +192,8 @@ footer {
 @media only screen and (min-width: 480px) {
     .iframe {
         height: 51vh;
-        width: 259px;
+        /* width: 259px; */
+        width: 262px;
         position: fixed;
         right: 0;
     }
