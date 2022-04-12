@@ -1762,13 +1762,19 @@ function sin(input) {
   var x = buildComplexNumber(objX);
   var degrees = $('btn-angle').value === 'deg' ? x.re :  x.re * 180 / Math.PI;
 
-  if (x.im === 0 && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) return 0;    
+  if (x.im === 0 && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) return 0;
 
   if ($('btn-angle').value === 'deg') {    
     x.re = x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
   }  
-  return math.sin(x); 
+  x = math.sin(x);
+
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x;
+  }  
 }
 
 function cos(input) {
@@ -1777,12 +1783,18 @@ function cos(input) {
   var degrees = $('btn-angle').value === 'deg' ? x.re :  x.re * 180 / Math.PI;
 
   if (x.im === 0 && (degrees === 270 || (degrees - 270) % 360 === 0 || degrees === 90 || (degrees - 90) % 360 === 0)) return 0;
-  
+
   if ($('btn-angle').value === 'deg') {    
     x.re = x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
   }
-  return math.cos(x);  
+  x = math.cos(x);
+
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x;
+  }   
 }
 
 function tan(input) {
