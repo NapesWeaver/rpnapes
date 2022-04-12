@@ -1770,9 +1770,9 @@ function sin(input) {
   }  
   x = math.sin(x);
 
-  if (x.im === 0) {
+  if (x.im === 0) {// This allows us to keep parsing in-line real numbers
     return x.re;
-  } else {
+  } else {// No in-line parsing for complex numbers yet
     return x;
   }  
 }
@@ -1814,8 +1814,13 @@ function tan(input) {
     x.re = x.re * Math.PI / 180;
     x.im = x.im * Math.PI / 180;
   }
-
-  return math.tan(x);
+  x = math.tan(x);
+  
+  if (x.im === 0) {
+    return x.re;
+  } else {
+    return x;
+  }   
 }
 
 function asin(input) {
