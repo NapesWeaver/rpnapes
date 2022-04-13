@@ -29,18 +29,21 @@ var ℮ = Math.exp(1);
 var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
-var testing = false;
-var cashed = '';
+
 var tStamp = '7:55:00';
+var testing = false;
 
 var stack = [];
 var backups = [];
 var restores = [];
+var cashed = '';
+
 var stackSize = 0;
 var stackFocus = false;
 var shifted = false;
 var altHeld = false;
 var ctrlHeld = false;
+
 var fixDecimal = -1;
 var sciDecimal = -1;
 var engDecimal = -1;
@@ -574,8 +577,8 @@ function deleteButton() {
 }
 
 function btnDelete() {  
-  if (stack.toString() !== '') backupUndo();
   cashed = '';
+  if (stack.toString() !== '') backupUndo();
 
   $('txt-input').value = $('txt-input').value;
     
@@ -612,8 +615,8 @@ function deleteText(txtField, forward) {
 }
 
 function btnBackspace() {
-  if (stack.toString() !== '') backupUndo();
   cashed = '';
+  if (stack.toString() !== '') backupUndo();
 
   if (stackFocus) {
     stack.splice(getIndex('lst-stack') - stackSize, 1);
