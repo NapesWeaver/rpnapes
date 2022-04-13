@@ -4979,6 +4979,7 @@ window.onload = function () {
           backupUndoNotes();
           $('lst-notes').value += this.result;
           backupUndoNotes();
+          $('btn-save-notes').style.color = '#000000';
         } else {
           var tmpStack = [];
           backupUndo();
