@@ -1684,8 +1684,8 @@ function btnSubtract() {
 }
 
 function addComplex(y, x) {
-  if (x.re === Infinity && y.re === Infinity && x.im === 0 && y.im === 0) return Infinity
-  if (x.re === -Infinity && y.re === -Infinity && x.im === 0 && y.im === 0) return -Infinity
+  // if (x.re === Infinity && y.re === Infinity && x.im === 0 && y.im === 0) return Infinity
+  // if (x.re === -Infinity && y.re === -Infinity && x.im === 0 && y.im === 0) return -Infinity
   return math.add(y, x);
 }
 
@@ -5390,6 +5390,7 @@ window.onload = function () {
   }
   autoDark();
   $('txt-input').readOnly = false;
+  $('txt-input').focus();
 };
 /** 
  * Better color pallet.
