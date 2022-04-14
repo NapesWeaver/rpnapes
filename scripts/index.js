@@ -4130,12 +4130,8 @@ function backupUndoNotes() {
       if (notes[notes.length - 1] === '') notes.pop();
     }
   }
-  colorUndoNotesButton();  
-}
-
-function backSpaceUndo() {
-  backupUndoNotes();
   colorSaveNotesButton();
+  colorUndoNotesButton();  
 }
 
 function loadNotes() {
@@ -4159,7 +4155,6 @@ function btnLoadNotes() {
   if (shifted) {
     runNotes();
   } else {
-    backupUndoNotes();
     loadNotes();
     if (!isMobile) $('lst-notes').focus();
   }
@@ -4197,8 +4192,6 @@ function btnRedoNotes() {
 function btnClearNotes() {  
   if ($('lst-notes').value.trim() !== '') {
     $('lst-notes').value = '';
-    backupUndoNotes();
-    colorSaveNotesButton();
     notes = [];
   }
   if (!isMobile) $('lst-notes').focus();
@@ -4210,8 +4203,7 @@ function btnDeleteNotes() {
   var endPos = $('lst-notes').selectionEnd;  
   $('lst-notes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lst-notes').setSelectionRange(startPos, startPos);
-  backupUndoNotes();
-  colorSaveNotesButton();
+  
   if (isMobile) $('lst-notes').readOnly = true;
   if (!isMobile) $('lst-notes').focus();
 }
@@ -4229,8 +4221,6 @@ function btnPasteNotes() {
   var copiedText = navigator.clipboard.readText();
   copiedText.then(copiedText => {
     insertAtCursor($('lst-notes'), copiedText);
-    backupUndoNotes();  
-    colorSaveNotesButton();
   });
   if (!isMobile) $('lst-notes').focus();
 }
@@ -4959,9 +4949,6 @@ document.addEventListener('keydown', function (event) {
 document.addEventListener('keyup', function (event) {
   
   switch (event.key) {
-  case 'Enter':// ENTER
-    if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
-    break;
   case 'Control':// CTRL
     ctrlHeld = false;
     break;
@@ -5007,7 +4994,6 @@ window.onload = function () {
           backupUndoNotes();
           $('lst-notes').value += this.result;
           backupUndoNotes();
-          // $('btn-save-notes').style.color = '#000000';
         } else {
           var tmpStack = [];
           backupUndo();
@@ -5378,13 +5364,8 @@ window.onload = function () {
 
   $('lst-notes').onclick = function() {
     $('lst-notes').readOnly = false;
-  }  
-  $('lst-notes').addEventListener('paste', function() {
-    setTimeout(function() {
-      backupUndoNotes(); 
-    }, 100);
-  });
-  $('lst-notes').oninput = backSpaceUndo; 
+  }
+  $('lst-notes').oninput = backupUndoNotes; 
 
   // Attach hapticResponse to Menu items and buttons
   var elements = document.getElementsByClassName('haptic-response');
