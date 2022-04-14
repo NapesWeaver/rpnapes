@@ -5397,7 +5397,7 @@ window.onload = function () {
     $('lst-notes').value = '';
     loadNotes();
   }
-  backupUndoNotes();
+  colorUndoNotesButton(); 
   colorSaveNotesButton();
 
   if (document.cookie.indexOf('TRICORDER') !== -1) {
