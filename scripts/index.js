@@ -4203,7 +4203,8 @@ function btnDeleteNotes() {
   var endPos = $('lst-notes').selectionEnd;  
   $('lst-notes').value = txtField.slice(0, startPos) + txtField.slice(endPos + 1, txtField.length);
   $('lst-notes').setSelectionRange(startPos, startPos);
-  
+  backupUndoNotes();
+
   if (isMobile) $('lst-notes').readOnly = true;
   if (!isMobile) $('lst-notes').focus();
 }
@@ -4221,7 +4222,9 @@ function btnPasteNotes() {
   var copiedText = navigator.clipboard.readText();
   copiedText.then(copiedText => {
     insertAtCursor($('lst-notes'), copiedText);
+    backupUndoNotes();
   });
+
   if (!isMobile) $('lst-notes').focus();
 }
 
