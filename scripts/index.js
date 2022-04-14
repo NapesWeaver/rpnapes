@@ -4069,14 +4069,30 @@ function updateDisplayNotes() {
   }
 }
 
-function colorSaveNotesButton() {
+function currentEqualsBackupNotes() {
+  var current = $('lst-notes').value.replace(/\n/g, '');
+  var backup = backupNotes.length > 1 ? splitArrayByBrowser(backupNotes[0]).toString() : '';
+  current = current.replace(/ /g, '');
+  backup = backup.replace(/ /g, '');
+
+  return current === backup ? true : false;
+}
+
+function currentEqualsSavedNotes() {
   var index = getCookie('NOTES').indexOf('=') + 1;
   var cookieValue = getCookie('NOTES').slice(index);
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n')).trim();
-  
-  if (notesValue.slice(notesValue.length -1) === '_') notesValue = notesValue.slice(0, -1);
-  if (cookieValue === notesValue) {
+
+  cookieValue = cookieValue.replace(/[_]/g, '');
+  notesValue = notesValue.replace(/[_]/g, '');
+
+  return cookieValue === notesValue ?  true : false;  
+}
+
+function colorSaveNotesButton() {
+
+  if (currentEqualsSavedNotes()) {
     $('btn-save-notes').style.color = '#919191';
   } else {
     $('btn-save-notes').style.color = '#000000';
@@ -4084,7 +4100,7 @@ function colorSaveNotesButton() {
 }
 
 function colorUndoNotesButton() {
-  if (backupNotes.length > 1) {
+  if (backupNotes.length > 0) {
     $('btn-undo-notes').style.color = '#01c401';
   } else {
     $('btn-undo-notes').style.color = '#919191';
@@ -4096,20 +4112,29 @@ function colorUndoNotesButton() {
   }  
 }
 
-function backupUndoNotes() {    
-  restoreNotes.length = 0;
-  backupNotes.push(nestArrayByBrowser(notes));
-  notes = $('lst-notes').value.split('\n');
-  if (notes[notes.length - 1] === '') notes.pop();
-  colorUndoNotesButton(); 
+function backupUndoNotes() {  
+
+  if (backupNotes.length > 0)  {    
+
+    if (!currentEqualsBackupNotes()) {
+      restoreNotes.length = 0;
+      backupNotes.push(nestArrayByBrowser(notes));
+      notes = $('lst-notes').value.split('\n');
+      if (notes[notes.length - 1] === '') notes.pop();
+    }
+  } else {
+    if (!currentEqualsSavedNotes()) {
+      restoreNotes.length = 0;
+      backupNotes.push(nestArrayByBrowser(notes));
+      notes = $('lst-notes').value.split('\n');
+      if (notes[notes.length - 1] === '') notes.pop();
+    }
+  }
+  colorUndoNotesButton();  
 }
 
 function backSpaceUndo() {
-  var backupLength = backupNotes[backupNotes.length - 1].replace(' ', '').length;
-  var lstNotesLength = $('lst-notes').value.replace(' ', '').length - 1;
-  if (lstNotesLength < backupLength) {
-    backupUndoNotes();
-  }
+  backupUndoNotes();
   colorSaveNotesButton();
 }
 
@@ -4148,7 +4173,7 @@ function btnSaveNotes() {
 }
 
 function btnUndoNotes() {
-  if (backupNotes.length > 1) {
+  if (backupNotes.length > 0) {
     restoreNotes.push(nestArrayByBrowser(notes));
     notes = splitArrayByBrowser(backupNotes.pop());
     updateDisplayNotes();
@@ -4982,7 +5007,7 @@ window.onload = function () {
           backupUndoNotes();
           $('lst-notes').value += this.result;
           backupUndoNotes();
-          $('btn-save-notes').style.color = '#000000';
+          // $('btn-save-notes').style.color = '#000000';
         } else {
           var tmpStack = [];
           backupUndo();
