@@ -162,12 +162,12 @@ function unFloat() {
 }
 
 function toggleForm() {
-  if($('menu-form').textContent === 'Polar') {
-    $('menu-form').innerHTML = 'Vector';
+  if($('menu-form').textContent === 'Vector') {
+    $('menu-form').innerHTML = 'Polar';
     $('indicate-polar').classList.add('hidden');
     if (shifted) $('btn-ee').value = 'j';
   } else {
-    $('menu-form').innerHTML = 'Polar';
+    $('menu-form').innerHTML = 'Vector';
     $('indicate-polar').classList.remove('hidden');
     if (shifted) $('btn-ee').value = '∠';
   }
@@ -182,8 +182,8 @@ function toggleDarkMode() {
   var others = document.getElementsByClassName('btn-other');
   var options = document.getElementsByTagName('option');
   
-  if ($('menu-darkmode').textContent === 'Dark') {
-    $('menu-darkmode').innerHTML = 'Light';
+  if ($('menu-darkmode').textContent === 'Light') {
+    $('menu-darkmode').innerHTML = 'Dark';
     $('wrap').classList.remove('dark-mode');
     $('wrap').style.borderStyle = 'outset';
     $('tricorderskin').classList.remove('dark-mode');
@@ -196,7 +196,7 @@ function toggleDarkMode() {
     for (e = 0; e < others.length; e++) others[e].classList.remove('dark-button');
     for (e = 0; e < options.length; e++) options[e].classList.remove('dark-menu');
   } else {
-    $('menu-darkmode').innerHTML = 'Dark';       
+    $('menu-darkmode').innerHTML = 'Light';       
     $('wrap').classList.add('dark-mode');   
     $('wrap').style.borderStyle = 'inset';
     $('tricorderskin').classList.add('dark-mode');
@@ -1881,7 +1881,7 @@ function toggleAngleMode() {
   stack.push(objX);
 
   if ($('btn-angle').value === 'deg') {
-    $('menu-angle-mode').innerHTML = 'Radian';
+    $('menu-angle-mode').innerHTML = 'Degree';
     $('btn-angle').value = 'rad';
     $('indicate-radians').classList.remove('hidden');
     $('btn-angle').className = 'btn-small btn-radian radian-border';
@@ -1889,7 +1889,7 @@ function toggleAngleMode() {
     $('btn-cosine').className = 'btn-small radian-border';
     $('btn-tangent').className = 'btn-small radian-border';
   } else {
-    $('menu-angle-mode').innerHTML = 'Degree';
+    $('menu-angle-mode').innerHTML = 'Radian';
     $('btn-angle').value = 'deg';
     $('indicate-radians').classList.add('hidden');
     $('btn-angle').className = 'btn-small btn-angle degree-border';
@@ -2890,7 +2890,7 @@ function parseCommand() {
       break;
     case 'polar':
       stack.pop();
-      if ($('menu-form').textContent === 'Vector') toggleForm();
+      if ($('menu-form').textContent === 'Polar') toggleForm();
       updateDisplay();
       $('txt-input').value = '';
       break;
@@ -2982,7 +2982,7 @@ function parseCommand() {
       // Falls through
     case 'rectangular':
       stack.pop();
-      if ($('menu-form').textContent === 'Polar') toggleForm();
+      if ($('menu-form').textContent === 'Vector') toggleForm();
       updateDisplay();
       $('txt-input').value = '';
       break;
@@ -4070,10 +4070,14 @@ function currentEqualsNotes() {
   var current = $('lst-notes').value.split('\n');
   var equals = false;
 
-  while (last[0] === '') last.shift();
-  while (current[0] === '') current.shift();
-  while (last[last.length - 1] === '') last.pop();
-  while (current[current.length -1 ] === '') current.pop();
+  if (last.length > 1 && current.length > 1) {
+
+    while (last[0] === '') last.shift();
+    while (current[0] === '') current.shift();
+    while (last[last.length - 1] === '') last.pop();
+    while (current[current.length -1 ] === '') current.pop();
+  }
+
 
   if (last.length === current.length) {
     equals = true;
@@ -4160,10 +4164,10 @@ function loadNotes() {
 }
 
 function btnLoadNotes() {
-
   if (shifted) {
     runNotes();
   } else {
+    backupUndoNotes();
     loadNotes();
     if (!isMobile) $('lst-notes').focus();
   }
