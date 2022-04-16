@@ -577,7 +577,6 @@ function deleteButton() {
 }
 
 function btnDelete() {  
-  cashed = '';
   if (stack.toString() !== '') backupUndo();
 
   $('txt-input').value = $('txt-input').value;
@@ -615,7 +614,6 @@ function deleteText(txtField, forward) {
 }
 
 function btnBackspace() {
-  cashed = '';
   if (stack.toString() !== '') backupUndo();
 
   if (stackFocus) {
@@ -1118,18 +1116,16 @@ function inverse() {
   var objX;
   var result;
 
-  if (stackFocus) {
+  if (stackFocus) {    
     objX = stack[getIndex('lst-stack') - stackSize];
     $('txt-input').value = decodeSpecialChar(objX.getSoul());
     backupUndo();// <--Needed for UI consistency in this case
   } else {
-    // trim?
     objX = getX();
   }
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
 
-  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) { 
-  // if (false) { 
+  if (cashed !== $('txt-input').value && $('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {   
     displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
   } else {    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
@@ -1175,7 +1171,7 @@ function inverse() {
       }      
     }
   }
-  cashed = $('txt-input').value;
+  // cashed = $('txt-input').value;
   $('txt-input').select();
 }
 
@@ -4069,13 +4065,28 @@ function updateDisplayNotes() {
   }
 }
 
-function currentEqualsBackupNotes() {
-  var current = $('lst-notes').value.replace(/\n/g, '');
-  var backup = backupNotes.length > 1 ? splitArrayByBrowser(backupNotes[0]).toString() : '';
-  current = current.replace(/ /g, '');
-  backup = backup.replace(/ /g, '');
+function currentEqualsNotes() {
+  var last = notes;
+  var current = $('lst-notes').value.split('\n');
+  var equals = false;
 
-  return current === backup ? true : false;
+  while (last[0] === '') last.shift();
+  while (current[0] === '') current.shift();
+  while (last[last.length - 1] === '') last.pop();
+  while (current[current.length -1 ] === '') current.pop();
+
+  if (last.length === current.length) {
+    equals = true;
+
+    for (var i = 0; i < last.length; i ++) {
+      last[i] = last[i].trim();
+      current[i] = current[i].trim();
+    }
+    for (var i = 0; i < last.length; i++) {
+      if (last[i] !== current[i]) equals = false;
+    }
+  }
+  return equals;
 }
 
 function currentEqualsSavedNotes() {
@@ -4084,9 +4095,8 @@ function currentEqualsSavedNotes() {
   var tmpNotes = encodeSpecialChar($('lst-notes').value);
   var notesValue = nestArrayByBrowser(tmpNotes.split('\n')).trim();
 
-  cookieValue = cookieValue.replace(/[_]/g, '');
-  notesValue = notesValue.replace(/[_]/g, '');
-
+  while (notesValue.charAt(notesValue.length - 1) === '_') notesValue = notesValue.slice(0, -1);
+ 
   return cookieValue === notesValue ?  true : false;  
 }
 
@@ -4113,10 +4123,10 @@ function colorUndoNotesButton() {
 }
 
 function backupUndoNotes() {  
+   
+  if (backupNotes.length > 0)  { 
 
-  if (backupNotes.length > 0)  {    
-
-    if (!currentEqualsBackupNotes()) {
+    if (!currentEqualsNotes()) {
       restoreNotes.length = 0;
       backupNotes.push(nestArrayByBrowser(notes));
       notes = $('lst-notes').value.split('\n');
@@ -4135,7 +4145,6 @@ function backupUndoNotes() {
 }
 
 function loadNotes() {
-
   try {
     var index = getCookie('NOTES').indexOf('=') + 1;
     
@@ -4192,6 +4201,7 @@ function btnRedoNotes() {
 function btnClearNotes() {  
   if ($('lst-notes').value.trim() !== '') {
     $('lst-notes').value = '';
+    backupUndoNotes();
     notes = [];
   }
   if (!isMobile) $('lst-notes').focus();
@@ -4952,6 +4962,9 @@ document.addEventListener('keydown', function (event) {
 document.addEventListener('keyup', function (event) {
   
   switch (event.key) {
+  case 'Enter':// ENTER
+    // if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
+    break;
   case 'Control':// CTRL
     ctrlHeld = false;
     break;
