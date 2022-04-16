@@ -1123,8 +1123,7 @@ function inverse() {
     objX = getX();
   }
   var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
-
-  if (cashed !== $('txt-input').value && $('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {   
+  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {  
     displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
   } else {    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
@@ -1170,7 +1169,7 @@ function inverse() {
       }      
     }
   }
-  // cashed = $('txt-input').value;
+  cashed = $('txt-input').value;
   $('txt-input').select();
 }
 
