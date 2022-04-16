@@ -901,8 +901,7 @@ function btnShift() {
     $('btn-root').innerHTML = '<sup>x</sup>&nbsp;&#8730;¯y';    
     $('btn-undo').value = 'REDO';
     $('btn-ee').classList.remove('btn-small-font');
-    $('btn-ee').value = 'j';
-    $('btn-ee').value = $('menu-form').textContent === 'Polar' ?  '∠' : 'j';
+    $('btn-ee').value = $('menu-form').textContent === 'Polar' ? 'j' : '∠';
     $('btn-pi').innerHTML = '(  )';
     $('btn-modulus').style.color = '#0000A0';
     $('btn-modulus').value = '√¯';
