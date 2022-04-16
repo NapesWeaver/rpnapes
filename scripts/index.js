@@ -2279,7 +2279,6 @@ function getText() {
 function autoDark() {
   var hour = new Date().getHours();
   if (hour <= 6 || hour >= 18) {
-    $('menu-darkmode').innerHTML = 'Light';
     toggleDarkMode();
   }
 }
