@@ -30,9 +30,6 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 
-var tStamp = '7:55:00';
-var testing = false;
-
 var stack = [];
 var backups = [];
 var restores = [];
@@ -48,6 +45,9 @@ var fixDecimal = -1;
 var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
+
+var tStamp = '10:45:00';
+var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
   this.soul = soul;
@@ -412,7 +412,7 @@ function objToString(obj) {
   if (!isNumber && !isImaginary) {
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
-    if ($('menu-form').textContent === 'Vector') {      
+    if ($('menu-form').textContent === 'Polar') {      
       // Rectangular
       if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') theString += formatNumber(obj.getRealPart().toString());
 
