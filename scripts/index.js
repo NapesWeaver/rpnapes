@@ -1860,8 +1860,11 @@ function acos(input) {
 function atan(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
-
+  
   x = math.atan(x);
+
+  if (input === 'Infinity') x.re = π / 2;
+  if (input === '-Infinity') x.re = -π / 2;
 
   if ($('btn-angle').value === 'deg') {
     x.re = (x.re * 180) / Math.PI;
@@ -5421,6 +5424,7 @@ window.onload = function () {
 };
 /** 
  * Better color pallet.
+ * Negative and Infinite factorial.
  * Refactor signChange(), inverse() for Infinities.
  * Refactor btnModulus() for complex numbers?
  * Factorial for complex numbers?
