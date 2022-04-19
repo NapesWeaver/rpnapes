@@ -1607,6 +1607,12 @@ function btnSign() {
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
+function divideComplex(y, x) {
+  if ((Math.abs(y.re) === Infinity || Math.abs(x.re) === Infinity) && y.im === 0 && x.im === 0) return y.re / x.re;
+
+  return math.divide(y, x);
+}
+
 function division() {
   backupUndo();
   var objX = getX();
@@ -1620,7 +1626,7 @@ function division() {
   var x = buildComplexNumber(objX);
 
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
-  displayResult(math.divide(y, x), newUnits);
+  displayResult(divideComplex(y, x), newUnits);
 }
 
 function btnDivide() {  
@@ -1629,6 +1635,12 @@ function btnDivide() {
   } else {
     division();
   }  
+}
+
+function multiplyComplex(y, x) {
+  if ((Math.abs(y.re) === Infinity || Math.abs(x.re) === Infinity) && y.im === 0 && x.im === 0) return y.re * x.re;
+
+  return math.multiply(y, x);
 }
 
 function multiplication() {
@@ -1644,7 +1656,7 @@ function multiplication() {
   var x = buildComplexNumber(objX);
    
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
-  displayResult(math.multiply(y, x), newUnits);
+  displayResult(multiplyComplex(y, x), newUnits);
 }
 
 function btnMultiply() {  
@@ -1653,6 +1665,12 @@ function btnMultiply() {
   } else {
     multiplication();
   }      
+}
+
+function subtractComplex(y, x) {
+  if ((Math.abs(y.re) === Infinity || Math.abs(x.re) === Infinity) && y.im === 0 && x.im === 0) return y.re - x.re; 
+
+  return math.subtract(y, x);
 }
 
 function subtraction() {
@@ -1668,7 +1686,7 @@ function subtraction() {
   var x = buildComplexNumber(objX);
  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-  displayResult(math.subtract(y, x), newUnits);
+  displayResult(subtractComplex(y, x), newUnits);
 }
 
 function btnSubtract() {  
@@ -1681,8 +1699,12 @@ function btnSubtract() {
 }
 
 function addComplex(y, x) {
-  // if (x.re === Infinity && y.re === Infinity && x.im === 0 && y.im === 0) return Infinity
-  // if (x.re === -Infinity && y.re === -Infinity && x.im === 0 && y.im === 0) return -Infinity
+  // console.log('x.re', x.re);
+  // console.log('x.im', x.im);
+  // console.log('y.re', y.re);
+  // console.log('y.im', y.im);  
+  if ((Math.abs(y.re) === Infinity || Math.abs(x.re) === Infinity) && y.im === 0 && x.im === 0) return y.re + x.re; 
+
   return math.add(y, x);
 }
 
