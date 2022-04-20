@@ -432,7 +432,7 @@ function objToString(obj) {
       }
     } else {
       // Polar
-      if (!isImaginary || obj.getImaginary() === '0') {       
+      if (!isImaginary || obj.getImaginary() === '0') {                
         theString += formatNumber(obj.getRealPart().toString());
       } else {
         var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
@@ -447,8 +447,8 @@ function objToString(obj) {
         theString += formatNumber(radius) + '∠' + formatNumber(argument); 
       }      
     }
-    if (theString === '') theString = 0;
-    if (obj.getUnits() !== 'null') theString += ' ' + decodeSpecialChar(obj.getUnits());
+    if (theString === '') theString = '0';
+    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + decodeSpecialChar(obj.getUnits());
   }
   return theString;
 }
@@ -1451,8 +1451,6 @@ function radical() {
   //   if (i < results.length - 1) enterInput();
   // }
   displayResult(results[0], newUnits);
-  // console.log('results', results);
-  // displayResult(Math.pow(y, 1 / x), newUnits);
 }
 
 function btnRoot() {
@@ -3556,7 +3554,7 @@ function extractFirstValue(tmpString) {
         tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?![ij])/);
         if (/∠-/g.test(tmpString)) tmpReal = '-' + tmpReal;
       } else {
-        tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);        
+        tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);         
       }      
     }
     tmpReal = tmpReal.replace(/ /g, '');
@@ -3580,7 +3578,8 @@ function extractFirstValue(tmpString) {
       tmpReal = parseInt(tmpString, radix);
     }
   }  
-  if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = NaN;
+  if (tmpReal === '-0') tmpReal = '0';
+  if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = 'NaN';
   
   return tmpReal;
 }
@@ -3612,9 +3611,10 @@ function extractImaginary(tmpString) {
     tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
     tmpImaginary = parseInt(tmpImaginary, radix);
   }
-  if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = NaN;
+  if (tmpImaginary === '-0') tmpImaginary = '0';
+  if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
   
-  return  '' + tmpImaginary;
+  return  tmpImaginary;
 }
 
 function parseAngle(tmpAngle, firstValue) {
