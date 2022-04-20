@@ -473,6 +473,12 @@ function abFunction() {
   $('txt-input').focus();
 }
 
+function swapX(objX) {
+  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
+  $('txt-input').value = objToString(objX);  
+  updateDisplay()
+}
+
 function xyFunction() {  
   var objY = getX();
   var objX;
@@ -483,15 +489,14 @@ function xyFunction() {
       backupUndo();
       objX = stack[index];
       stack[index] = objY;
+      swapX(objX);
     }
   } else {
     backupUndo();
     objX = stack.pop();
     btnEnter();
-  }
-  if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
-  $('txt-input').value = objToString(objX);  
-  updateDisplay();
+    swapX(objX);
+  }  
 }
 
 function runProgram() {
