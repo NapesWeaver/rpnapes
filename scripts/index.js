@@ -1333,13 +1333,18 @@ function mathPow(num, pow) {
   }  
 }
 
+function complexPow(y, x) {
+  if (y.im === 0 && x.im === 0) return Math.pow(y.re, x.re);
+
+  return mathPow(y, x);
+}
+
 function exponential() {
   backupUndo();
   var objX;
   var objY;
   var x;
   var y;
-  var result;
   var newUnits = '';
   
   if (stackFocus) {
@@ -1424,8 +1429,13 @@ function radical() {
   objX = getX();
 
   y = objY.getSoul();
-  x = objX.getSoul();  
-  results = mathRoots(x, y);
+  x = objX.getSoul();
+
+  try {
+    results = mathRoots(x, y);
+  } catch (e) {
+    results = [e];
+  }
 
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);   
   // for (var i = 0; i < results.length; i++) {
@@ -1608,7 +1618,7 @@ function btnSign() {
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
 function divideComplex(y, x) {
-  if ((Math.abs(y.re) === Infinity || Math.abs(x.re) === Infinity) && y.im === 0 && x.im === 0) return y.re / x.re;
+  if (y.im === 0 && x.im === 0) return y.re / x.re;
 
   return math.divide(y, x);
 }
@@ -1638,7 +1648,7 @@ function btnDivide() {
 }
 
 function multiplyComplex(y, x) {
-  if ((Math.abs(y.re) === Infinity || Math.abs(x.re) === Infinity) && y.im === 0 && x.im === 0) return y.re * x.re;
+  if (y.im === 0 && x.im === 0) return y.re * x.re;
 
   return math.multiply(y, x);
 }
@@ -1668,7 +1678,7 @@ function btnMultiply() {
 }
 
 function subtractComplex(y, x) {
-  if ((Math.abs(y.re) === Infinity || Math.abs(x.re) === Infinity) && y.im === 0 && x.im === 0) return y.re - x.re; 
+  if (y.im === 0 && x.im === 0) return y.re - x.re; 
 
   return math.subtract(y, x);
 }
@@ -1703,7 +1713,7 @@ function addComplex(y, x) {
   // console.log('x.im', x.im);
   // console.log('y.re', y.re);
   // console.log('y.im', y.im);  
-  if ((Math.abs(y.re) === Infinity || Math.abs(x.re) === Infinity) && y.im === 0 && x.im === 0) return y.re + x.re; 
+  if (y.im === 0 && x.im === 0) return y.re + x.re; 
 
   return math.add(y, x);
 }
