@@ -745,7 +745,7 @@ function btnEe() {
   var units = objX.getUnits();
 
   if (shifted) {
-    if ($('menu-form').textContent === 'Vector') {
+    if ($('menu-form').textContent === 'Polar') {
       // ((Cursor is at the end && there is no 'j') || there are units && there are no 'j's) && (cursor is next to a valid number && input doesn't contain illegal symbols) || (cursor is at || next to 'j'))
       if ((((index >= input.length - 1 && input.split('j').length - 1 === 0) || (units !== 'null' && input.split('j').length - 1 === 0)) && (/[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
         toggleChar(input, index, /[j]/, 'j');        
@@ -1708,11 +1708,7 @@ function btnSubtract() {
   }  
 }
 
-function addComplex(y, x) {
-  // console.log('x.re', x.re);
-  // console.log('x.im', x.im);
-  // console.log('y.re', y.re);
-  // console.log('y.im', y.im);  
+function addComplex(y, x) { 
   if (y.im === 0 && x.im === 0) return y.re + x.re; 
 
   return math.add(y, x);
