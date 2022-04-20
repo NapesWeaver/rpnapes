@@ -473,16 +473,19 @@ function abFunction() {
   $('txt-input').focus();
 }
 
-function xyFunction() {
-  backupUndo();
+function xyFunction() {  
   var objY = getX();
   var objX;
   
   if (stackFocus) {
     var index = getIndex('lst-stack') - stackSize;
-    objX = stack[index];
-    stack[index] = objY;
+    if (index > -1) {
+      backupUndo();
+      objX = stack[index];
+      stack[index] = objY;
+    }
   } else {
+    backupUndo();
     objX = stack.pop();
     btnEnter();
   }
@@ -1443,6 +1446,8 @@ function radical() {
   //   if (i < results.length - 1) enterInput();
   // }
   displayResult(results[0], newUnits);
+  // console.log('results', results);
+  // displayResult(Math.pow(y, 1 / x), newUnits);
 }
 
 function btnRoot() {
@@ -1708,7 +1713,11 @@ function btnSubtract() {
   }  
 }
 
-function addComplex(y, x) { 
+function addComplex(y, x) {
+  // console.log('x.re', x.re);
+  // console.log('x.im', x.im);
+  // console.log('y.re', y.re);
+  // console.log('y.im', y.im);  
   if (y.im === 0 && x.im === 0) return y.re + x.re; 
 
   return math.add(y, x);
