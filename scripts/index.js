@@ -494,7 +494,7 @@ function xyFunction() {
   } else {
     backupUndo();
     objX = stack.pop();
-    btnEnter();
+    enterInput();
     swapX(objX);
   }  
 }
