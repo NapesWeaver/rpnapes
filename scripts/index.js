@@ -3551,7 +3551,7 @@ function extractFirstValue(tmpString) {
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
-        tmpReal += tmpString.match(/^[-+]?[ ]*(Infinity)*(?![ij])/);
+        tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?![ij])/);
         if (/∠-/g.test(tmpString)) tmpReal = '-' + tmpReal;
       } else {
         tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);         
@@ -3575,7 +3575,7 @@ function extractFirstValue(tmpString) {
     }
   }
   tmpReal = tmpReal.replace(/ /g, '');
-  
+
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
   if (tmpReal === '-0') tmpReal = '0';
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = 'NaN';
