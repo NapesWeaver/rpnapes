@@ -3547,18 +3547,16 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
   
   if (radix === 10) {
-    // Not a constant or number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
+    // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
       if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
-        tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?![ij])/);
+        tmpReal += tmpString.match(/^[-+]?[ ]*(Infinity)*(?![ij])/);
         if (/∠-/g.test(tmpString)) tmpReal = '-' + tmpReal;
       } else {
         tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);         
       }      
     }
-    tmpReal = tmpReal.replace(/ /g, '');
-    if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
   }
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
@@ -3567,17 +3565,18 @@ function extractFirstValue(tmpString) {
     }
   }
   if (radix === 8) {
-    // Looking for an ocatal number but not an imaginary number
     if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+[ij]/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
   }
   if (radix === 16) {
-    // Looking for a hexadecimal number but not an imaginary number
     if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+[ij]/g.test(tmpString)) {
       tmpReal = parseInt(tmpString, radix);
     }
-  }  
+  }
+  tmpReal = tmpReal.replace(/ /g, '');
+  
+  if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
   if (tmpReal === '-0') tmpReal = '0';
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = 'NaN';
   
