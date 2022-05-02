@@ -1717,10 +1717,6 @@ function btnSubtract() {
 }
 
 function addComplex(y, x) {
-  // console.log('x.re', x.re);
-  // console.log('x.im', x.im);
-  // console.log('y.re', y.re);
-  // console.log('y.im', y.im);  
   if (y.im === 0 && x.im === 0) return y.re + x.re; 
 
   return math.add(y, x);
@@ -3575,7 +3571,6 @@ function extractFirstValue(tmpString) {
     }
   }
   tmpReal = tmpReal.replace(/ /g, '');
-
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
   if (tmpReal === '-0') tmpReal = '0';
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = 'NaN';
