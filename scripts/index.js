@@ -2508,9 +2508,9 @@ function help(command) {
       enterInput();
       $('txt-input').value ='Firefox users may go to about:config dom.allow_scripts_to_close_windows = true.';
       enterInput();
-      $('txt-input').value ='Try \'Open in new tab\' first though. Or set as home page ;)';
+      $('txt-input').value ='Try \'Open in new tab\' first though. Or set as home page.';
       enterInput();
-      $('txt-input').value ='Not currently working for browsers on mobile devices :(';
+      $('txt-input').value ='Not working as consistently for mobile devices.';
       break;
     case 'paste':
       inputText('paste: Firefox only supports reading the clipboard in browser extensions using the "clipboardRead" extension permission :(');
@@ -5332,7 +5332,6 @@ window.onload = function () {
   $('menu-help').onclick = menuHelp;
 
   if (isMobile) {
-    $('menu-off').style = 'display:none';
     $('menu-twig').style = 'display:none';
   } else {
     $('menu-keyboard').style = 'display:none';
