@@ -195,9 +195,14 @@ select::-ms-expand {
 }
 
 #txt-input {
-    min-width: 97%;
+    min-width: 97%;  
     margin-bottom: .6em;
     background-color: #FFFFFF;
+}
+
+#txt-input::-webkit-resizer {
+    background-color: #DCDCDC;
+    background-image: url('../images/handle.png');
 }
 
 .keypad {
@@ -798,6 +803,11 @@ label a {
 
     .lst-stack {
         margin-bottom: .2em;
+    }
+
+    #txt-input {
+        min-height: 17px;
+        height: 17px;
     }
    
     .btn-big,

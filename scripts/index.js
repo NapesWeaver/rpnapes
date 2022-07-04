@@ -552,6 +552,12 @@ function enterInput() {
 function calculate(x) {
     try {
       x = eval(parseEvaluation(x));
+
+      // Cannot parse ^, mathPow(), √, mathRoot()...
+      // x = x.replace(/j/g, 'i');
+      // x = parseEvaluation(x);
+      // console.log('x', x);
+      // x = math.evaluate(x);
     } catch(e) {
       return e.toString();
   }
@@ -3543,11 +3549,20 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
   
   if (radix === 10) {
+
+    // console.log('test1', (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)));
+    // console.log('test2', /^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/.test(tmpString));
+    // console.log('match', tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/));
+    // console.log('math.eval()', math.evaluate(tmpString));
+
     // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
+    // if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
     if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
       
-      if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
+      // if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
+      if (/^[-+]?[ ]*Infinity(?![ij])/.test(tmpString)) {
         tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?![ij])/);
+        // tmpReal += tmpString.match(/^[-+]?[ ]*(Infinity)*(?![ij])/);
         if (/∠-/g.test(tmpString)) tmpReal = '-' + tmpReal;
       } else {
         tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);         
@@ -3557,17 +3572,17 @@ function extractFirstValue(tmpString) {
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
     if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
-      tmpReal = parseInt(tmpString, radix);      
+      tmpReal = '' + parseInt(tmpString, radix);      
     }
   }
   if (radix === 8) {
     if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+[ij]/g.test(tmpString)) {
-      tmpReal = parseInt(tmpString, radix);
+      tmpReal = '' + parseInt(tmpString, radix);
     }
   }
   if (radix === 16) {
     if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+[ij]/g.test(tmpString)) {
-      tmpReal = parseInt(tmpString, radix);
+      tmpReal = '' + parseInt(tmpString, radix);
     }
   }
   tmpReal = tmpReal.replace(/ /g, '');
@@ -3603,7 +3618,7 @@ function extractImaginary(tmpString) {
     if (tmpImaginary.charAt(1) === ' ') tmpImaginary = tmpImaginary.replace(/ /g, '');
 
     tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
-    tmpImaginary = parseInt(tmpImaginary, radix);
+    tmpImaginary = '' + parseInt(tmpImaginary, radix);
   }
   if (tmpImaginary === '-0') tmpImaginary = '0';
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
@@ -3612,10 +3627,15 @@ function extractImaginary(tmpString) {
 }
 
 function parseAngle(tmpAngle, firstValue) {
+  console.log('parseAngle', tmpAngle);
+
   var tmpComplex = [];
 
-  if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
-      
+  // if (radix === 10) {
+  if (true) {
+
+    if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
+
     polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
     tmpAngle = tmpAngle * 180 / Math.PI;
     
@@ -3629,6 +3649,17 @@ function parseAngle(tmpAngle, firstValue) {
       tmpComplex[0] = polar.re;
       tmpComplex[1] = polar.im.toString();
     }  
+  } else {
+    // to do...
+    console.log('parseAngle 2, 8, 16', tmpAngle);
+    // if (radix === 2) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[0-1]+[ij]/);
+    // if (radix === 8) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[0-7]+[ij]/);
+    // if (radix === 16) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[a-f0-9]+[ij]/);
+    // if (tmpAngle.charAt(1) === ' ') tmpAngle = tmpAngle.replace(/ /g, '');
+
+    // tmpAngle = tmpAngle.slice(0, tmpAngle.length - 1);
+    // tmpAngle = '' + parseInt(tmpAngle, radix);
+  }      
   return tmpComplex;
 }
 
