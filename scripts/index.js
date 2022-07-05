@@ -18,6 +18,7 @@ if (/mobile/i.test(navigator.userAgent) && !/ipad|tablet/i.test(navigator.userAg
 if (isPhone) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
 new ResizeObserver(unFloat).observe($('lst-stack'));
+new ResizeObserver(worldBordersSet).observe($('txt-input'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
@@ -46,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '10:45:00';
+var tStamp = '11:00:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -4756,22 +4757,26 @@ function worldEngine() {
 }
 
 function worldBordersSet() {
-  var height = $('lst-stack').offsetHeight;
-  var width = $('lst-stack').offsetWidth;  
+  var stackHeight = $('lst-stack').offsetHeight;
+  var stackWidth = $('lst-stack').offsetWidth;  
+  // console.log('stackWidth', stackWidth);
+  var inputHeight = $('txt-input').offsetHeight;
 
   if (window.innerWidth > 360) {
     worldBorders = {
-      bTop: -(height + 345) + 21,
-      bBottom: -345,
+      bTop: -315 - stackHeight - inputHeight,
+      bBottom: -330 - inputHeight,
       bLeft: -129,
-      bRight: width - 129 - 24
+      bRight: - 153 + stackWidth
     }
   } else {
+    // var rect = $('lst-stack').getBoundingClientRect()
+    // console.log('rect', rect);
     worldBorders = {
-      bTop: -(height + 270) + 21,
-      bBottom: -270,
-      bLeft: -84,
-      bRight: width - 84 - 12
+      bTop: -246 - stackHeight - inputHeight,
+      bBottom: -260 - inputHeight,
+      bLeft: -50,
+      bRight: -120 + stackWidth
     }
   }
 }
@@ -4867,11 +4872,14 @@ document.addEventListener('click', function (evt) {
 });
 
 document.addEventListener('keypress', function (event) {
-  var key = event.keyCode || event.charCode;
-
-  switch (key) {
-  case 13:// ENTER
-    if ($('rpnapes').className !== 'hidden') enterButton();
+  
+  switch (event.key) {
+  case 'Enter':
+  if ($('rpnapes').className !== 'hidden') {    
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      enterButton();
+    } 
     break;
   }
 });
@@ -5033,24 +5041,24 @@ document.addEventListener('keydown', function (event) {
 document.addEventListener('keyup', function (event) {
   
   switch (event.key) {
-  case 'Enter':// ENTER
+  // case 'Enter':
     // if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
-    break;
-  case 'Control':// CTRL
+    // break;
+  case 'Control':
     ctrlHeld = false;
     break;
-  case 'Alt':// ALT
+  case 'Alt':
     altHeld = false; 
     break;
-  case 'Escape':// ESC
+  case 'Escape':
     if (!event) { event = window.event; }
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     btnXoff();
     break;
-  case 'ArrowLeft':// ARROW LEFT (Falls through)
-  case 'ArrowUp':// ARROW UP (Falls through)
-  case 'ArrowRight':// ARROW RIGHT (Falls through)
-  case 'ArrowDown':// ARROW DOWN
+  case 'ArrowLeft':// (Falls through)
+  case 'ArrowUp'://  (Falls through)
+  case 'ArrowRight'://  (Falls through)
+  case 'ArrowDown':
     if ($('twig').className !== 'hidden' && twig.health > 0) {      
       $('twig').src = 'images/twig/hat-on.gif';
     }
