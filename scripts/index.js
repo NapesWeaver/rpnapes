@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '14:19:00';
+var tStamp = '14:25:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -4872,18 +4872,33 @@ document.addEventListener('click', function (evt) {
 });
 
 document.addEventListener('keypress', function (event) {
-  
-  switch (event.key) {
-  case 'Enter':
-  if ($('rpnapes').className !== 'hidden') {    
-      // if (!event) { event = window.event; }
-      // event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      event.preventDefault();
+  var key = event.keyCode || event.charCode;
+
+  switch (key) {
+  case 13:// ENTER
+      if ($('rpnapes').className !== 'hidden') {    
+      if (!event) { event = window.event; }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      // event.preventDefault();
       enterButton();
     } 
     break;
   }
 });
+
+// document.addEventListener('keypress', function (event) {
+  
+//   switch (event.key) {
+//   case 'Enter':
+//   if ($('rpnapes').className !== 'hidden') {    
+//       // if (!event) { event = window.event; }
+//       // event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+//       event.preventDefault();
+//       enterButton();
+//     } 
+//     break;
+//   }
+// });
 
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
