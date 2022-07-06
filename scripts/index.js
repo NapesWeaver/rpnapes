@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '8:30:00';
+var tStamp = '8:50:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1115,9 +1115,9 @@ function btnOff() {
   window.open('','_self').close();
   window.open(location, '_self').close();
   window.close();
-  // window.open('', '_self', '');
-  // window.close();
-  // window.top.close();
+  window.open('', '_self', '');
+  window.close();
+  window.top.close();
   
   rpnAlert('Scripts may only close windows they opened.');
   window.location.href = 'https://www.google.com';
