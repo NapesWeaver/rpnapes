@@ -4882,9 +4882,8 @@ document.addEventListener('keypress', function (event) {
   switch (key) {
   case 13:// ENTER
   if ($('rpnapes').className !== 'hidden') {    
-    // if (!event) { event = window.event; }
-    // event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    event.preventDefault();
+    if (!event) { event = window.event; }
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     enterButton();
     return false;
     } 
