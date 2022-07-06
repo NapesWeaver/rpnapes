@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '8:50:00';
+var tStamp = '15:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1108,16 +1108,17 @@ function pushObjectToStack(tmpArray) {
 }
 
 function btnOff() {
-  // Works for Chrome and Firefox-desktop if set as a home page ;)
   monOff();
   tricorderOff();  
-
-  window.open('','_self').close();
-  window.open(location, '_self').close();
-  window.close();
-  window.open('', '_self', '');
-  window.close();
-  window.top.close();
+  // Works for Chrome and Firefox-desktop if set as a home page ;)
+  if (!(isMobile && isFirefox)) {    
+    window.open('','_self').close();
+    window.open(location, '_self').close();
+    window.close();
+    window.open('', '_self', '');
+    window.close();
+    window.top.close();
+  }
   
   rpnAlert('Scripts may only close windows they opened.');
   window.location.href = 'https://www.google.com';
@@ -4878,7 +4879,7 @@ document.addEventListener('keypress', function (event) {
   switch (key) {
   case 13:// ENTER
   if ($('rpnapes').className !== 'hidden') {    
-    if (!event) { event = window.event; }
+    if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     enterButton();
     return false;
@@ -4887,26 +4888,13 @@ document.addEventListener('keypress', function (event) {
   }
 });
 
-// document.addEventListener('keypress', function (event) {
-  
-//   switch (event.key) {
-//   case 'Enter':
-//   if ($('rpnapes').className !== 'hidden') {    
-//       if (!event) { event = window.event; }
-//       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-//       enterButton();
-//     } 
-//     break;
-//   }
-// });
-
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
 
   switch (key) {
   case 8:// BACKSPACE  
     if ($('rpnapes').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       if (!isMobile || !isChrome) btnBackspace();
     }
@@ -4915,7 +4903,7 @@ document.addEventListener('keydown', function (event) {
     if (altHeld) btnShift();    
     break;
   case 17:// CTRL
-    if (!event) { event = window.event; }
+    if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     ctrlHeld = true;
     break;
@@ -4924,7 +4912,7 @@ document.addEventListener('keydown', function (event) {
     break;
   case 37:// LEFT ARROW
     if (twig.health > 0 && $('twig').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       $('twig').src = 'images/twig/walk-left.gif';
       moveObj(twig, twig.speed, -1, 0);
@@ -4932,7 +4920,7 @@ document.addEventListener('keydown', function (event) {
     break;
   case 38:// UP ARROW
     if ($('rpnapes').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
             
       if (!stackFocus) {
@@ -4957,7 +4945,7 @@ document.addEventListener('keydown', function (event) {
     break;
   case 39:// RIGHT ARROW
     if (twig.health > 0 && $('twig').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       $('twig').src = 'images/twig/walk-right.gif';
       moveObj(twig, twig.speed, 1, 0);      
@@ -4965,7 +4953,7 @@ document.addEventListener('keydown', function (event) {
     break;
   case 40:// DOWN ARROW
     if ($('rpnapes').className !== 'hidden')  {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);      
       
       if ($('lst-stack').selectionEnd === $('lst-stack').value.length) {
@@ -4982,14 +4970,14 @@ document.addEventListener('keydown', function (event) {
     break;
   case 46:// DELETE
     if ($('rpnapes').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDelete();        
     }
     break;
   case 83:// S
     if (ctrlHeld) {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
   
       if ($('rpnapes').className !== 'hidden') {
@@ -5001,7 +4989,7 @@ document.addEventListener('keydown', function (event) {
     break;
   case 89:// Y
     if (ctrlHeld) {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
       if ($('rpnapes').className !== 'hidden') {
@@ -5013,7 +5001,7 @@ document.addEventListener('keydown', function (event) {
     break;
   case 90:// Z
     if (ctrlHeld) {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 
       if ($('rpnapes').className !== 'hidden') {
@@ -5025,28 +5013,28 @@ document.addEventListener('keydown', function (event) {
     break;        
   case 106:// NUMPAD *
     if ($('rpnapes').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnMultiply();
     }
     break;        
   case 107:// NUMPAD +
     if ($('rpnapes').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnAdd();
     }
     break;        
   case 109:// NUMPAD -
     if ($('rpnapes').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnSubtract();
     }
     break;      
   case 111:// NUMPAD /
     if ($('rpnapes').className !== 'hidden') {
-      if (!event) { event = window.event; }
+      if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDivide();
     }
@@ -5056,10 +5044,7 @@ document.addEventListener('keydown', function (event) {
 
 document.addEventListener('keyup', function (event) {
   
-  switch (event.key) {
-  // case 'Enter':
-    // if ($('notes').className !== 'hidden' && $('lst-notes') === document.activeElement) backupUndoNotes();
-    // break;
+  switch (event.key) {    
   case 'Control':
     ctrlHeld = false;
     break;
@@ -5067,7 +5052,7 @@ document.addEventListener('keyup', function (event) {
     altHeld = false; 
     break;
   case 'Escape':
-    if (!event) { event = window.event; }
+    if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     btnXoff();
     break;
