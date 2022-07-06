@@ -1115,9 +1115,9 @@ function btnOff() {
   window.open('','_self').close();
   window.open(location, '_self').close();
   window.close();
-  window.open('', '_self', '');
-  window.close();
-  window.top.close();
+  // window.open('', '_self', '');
+  // window.close();
+  // window.top.close();
   
   rpnAlert('Scripts may only close windows they opened.');
   window.location.href = 'https://www.google.com';
