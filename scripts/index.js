@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '20:40:00';
+var tStamp = '22:10:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -508,10 +508,8 @@ function runProgram() {
 function enterButton() {
   if (shifted) {
     btnEval();
-    console.log('eval');
   } else {
     btnEnter();
-    console.log('enter');
   }
 }
 
@@ -3383,7 +3381,12 @@ function updateDisplay() {
   }
   colorSaveButton();
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  // $('txt-input').select();
+
+  // $('txt-input').value = $('txt-input').value.replace(/\n/g, '');
+  // $('txt-input').focus();
   $('txt-input').select();
+  
 }
 
 function printHtml() {
@@ -4883,6 +4886,7 @@ document.addEventListener('keypress', function (event) {
     if (!event) { event = window.event; }
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       enterButton();
+      return false;
     } 
     break;
   }
