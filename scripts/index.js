@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '22:23:00';
+var tStamp = '22:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -4882,10 +4882,11 @@ document.addEventListener('keypress', function (event) {
   switch (key) {
   case 13:// ENTER
   if ($('rpnapes').className !== 'hidden') {    
-    if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      enterButton();
-      return false;
+    // if (!event) { event = window.event; }
+    // event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    event.preventDefault();
+    enterButton();
+    return false;
     } 
     break;
   }
