@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '22:30:00';
+var tStamp = '8:00:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3380,12 +3380,8 @@ function updateDisplay() {
     }
   }
   colorSaveButton();
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-
-  $('txt-input').value = $('txt-input').value.replace(/\n/g, '');
-  // $('txt-input').focus();
-  $('txt-input').select();
-  
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;  
+  $('txt-input').select();  
 }
 
 function printHtml() {
@@ -3633,7 +3629,7 @@ function extractImaginary(tmpString) {
 }
 
 function parseAngle(tmpAngle, firstValue) {
-  console.log('parseAngle', tmpAngle);
+  // console.log('parseAngle', tmpAngle);
 
   var tmpComplex = [];
 
@@ -3657,7 +3653,7 @@ function parseAngle(tmpAngle, firstValue) {
     }  
   } else {
     // to do...
-    console.log('parseAngle 2, 8, 16', tmpAngle);
+    // console.log('parseAngle 2, 8, 16', tmpAngle);
     // if (radix === 2) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[0-1]+[ij]/);
     // if (radix === 8) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[0-7]+[ij]/);
     // if (radix === 16) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[a-f0-9]+[ij]/);
