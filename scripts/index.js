@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '14:25:00';
+var tStamp = '20:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -508,8 +508,10 @@ function runProgram() {
 function enterButton() {
   if (shifted) {
     btnEval();
+    console.log('eval');
   } else {
     btnEnter();
+    console.log('enter');
   }
 }
 
@@ -3375,6 +3377,7 @@ function updateDisplay() {
       $('lst-stack').value += objToString(stack[sta]);
       stack[sta].getSoul() === ''
     } else {
+      // A VERY long string of spaces ;)
       $('lst-stack').value += '                                                                                                                                                                                                                                                                                                                                                                                      ';
     }
   }
@@ -4871,34 +4874,28 @@ document.addEventListener('click', function (evt) {
   }
 });
 
-document.addEventListener('keypress', function (event) {
-  var key = event.keyCode || event.charCode;
-
-  switch (key) {
-  case 13:// ENTER
-      if ($('rpnapes').className !== 'hidden') {    
-      if (!event) { event = window.event; }
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      // event.preventDefault();
-      enterButton();
-    } 
-    break;
-  }
-});
-
 // document.addEventListener('keypress', function (event) {
   
 //   switch (event.key) {
 //   case 'Enter':
 //   if ($('rpnapes').className !== 'hidden') {    
-//       // if (!event) { event = window.event; }
-//       // event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-//       event.preventDefault();
+//       if (!event) { event = window.event; }
+//       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 //       enterButton();
 //     } 
 //     break;
 //   }
 // });
+
+document.addEventListener('keypress', function (event) {
+  var key = event.keyCode || event.charCode;
+
+  switch (key) {
+  case 13:// ENTER
+    if ($('rpnapes').className !== 'hidden') enterButton();
+    break;
+  }
+});
 
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
