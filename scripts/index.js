@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '15:50:00';
+var tStamp = '7:10:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -342,6 +342,8 @@ function showTricorder() {
 }
 
 function btnXoff() {
+
+  if (isMobile) unFloat();
 
   if ($('rpnapes').classList.contains('hidden')) {
     // Notes is visible - turn on RPNapes
@@ -4766,8 +4768,7 @@ function worldEngine() {
 function worldBordersSet() {
   var stackHeight = $('lst-stack').offsetHeight;
   var stackWidth = $('lst-stack').offsetWidth;  
-  // console.log('stackWidth', stackWidth);
-  var inputHeight = $('txt-input').offsetHeight;
+  var inputHeight = $('txt-input').offsetHeight; 
 
   if (window.innerWidth > 360) {
     worldBorders = {
@@ -4777,12 +4778,10 @@ function worldBordersSet() {
       bRight: - 153 + stackWidth
     }
   } else {
-    // var rect = $('lst-stack').getBoundingClientRect()
-    // console.log('rect', rect);
     worldBorders = {
       bTop: -246 - stackHeight - inputHeight,
       bBottom: -260 - inputHeight,
-      bLeft: -50,
+      bLeft: -stackWidth / 3.9,
       bRight: -120 + stackWidth
     }
   }
