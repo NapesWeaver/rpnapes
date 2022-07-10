@@ -343,7 +343,7 @@ function showTricorder() {
 
 function btnXoff() {
 
-  if (isMobile) setTimeout(resizeTextAreas(), 333);
+  if (isMobile) resizeTextAreas();
 
   if ($('rpnapes').classList.contains('hidden')) {
     // Notes is visible - turn on RPNapes
