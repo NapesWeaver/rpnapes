@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '15:50:00';
+var tStamp = '15:55:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -343,8 +343,7 @@ function showTricorder() {
 
 function btnXoff() {
 
-  // if (isMobile) setTimeout(unFloat(), 100);
-  if (isMobile) resizeTextAreas();
+  if (isMobile) setTimeout(resizeTextAreas(), 100);
 
   if ($('rpnapes').classList.contains('hidden')) {
     // Notes is visible - turn on RPNapes
