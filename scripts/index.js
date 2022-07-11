@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '11:50:00';
+var tStamp = '12:00:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -351,7 +351,7 @@ function btnXoff() {
     // RPNapes is visible - turn on Notes
     notesOn();
   }
-  if (isMobile) setTimeout(resizeTextAreas(), 300);
+  if (isMobile) setTimeout(resizeTextAreas(), 900);
 }
 
 function copy() {
