@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '12:06:00';
+var tStamp = '3:40:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -554,15 +554,15 @@ function enterInput() {
 
 function calculate(x) {
     try {
-      x = eval(parseEvaluation(x));
-
-      // Cannot parse ^, mathPow(), √, mathRoot()...
+      x = eval(parseEvaluation(x));      
+      // The following cannot parse ^, mathPow(), √, mathRoot() or run code...
       // x = x.replace(/j/g, 'i');
       // x = parseEvaluation(x);
       // console.log('x', x);
       // x = math.evaluate(x);
     } catch(e) {
       return e.toString();
+      // x = eval(parseEvaluation(x));
   }
   return x;
 }
@@ -3565,7 +3565,9 @@ function extractFirstValue(tmpString) {
   if (radix === 10) {
     // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4  
     if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
-      tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);      
+      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
+      tmp = tmp.replace(/ /g, '');
+      if (isANumber(tmp)) tmpReal += tmp;
     }
   }
   if (radix === 2) {
@@ -3584,7 +3586,6 @@ function extractFirstValue(tmpString) {
       tmpReal = '' + parseInt(tmpString, radix);
     }
   }
-  tmpReal = tmpReal.replace(/ /g, '');
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
   if (tmpReal === '-0') tmpReal = '0';
   if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = 'NaN';
@@ -3594,22 +3595,23 @@ function extractFirstValue(tmpString) {
 
 function extractImaginary(tmpString) {
   var tmpImaginary = '';
-  if (radix === 10) {    
+  if (radix === 10) {
+    // No evaluation symbols
+    if (!/[;<>?:`~!@#$%√&×()]/g.test(tmpString)) {   
+      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b/);     
+      tmp = tmp.replace(/ /g, '');
 
-    if (!/[()]/g.test(tmpString)) {     
-      tmpImaginary += tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b/);     
-      tmpImaginary = tmpImaginary.replace(/ /g, '');
-
-      if (/^[-][ij]\b/.test(tmpImaginary)) {
-        tmpImaginary = '-1';
-      } else if (/^[+]?[ij]\b/.test(tmpImaginary)) {
-        tmpImaginary = '1';
-      } else {
-        // remove [ij]
-        tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);    
+      if (/^[-][ij]\b/.test(tmp)) {
+        tmp = '-1';
+      } else if (/^[+]?[ij]\b/.test(tmp)) {
+        tmp = '1';
+      } else {// remove [ij]
+        tmp = tmp.slice(0, tmp.length - 1);    
       }
-      if (tmpImaginary.charAt(0) === '+') tmpImaginary = tmpImaginary.slice(1);
+      if (tmp.charAt(0) === '+') tmp = tmp.slice(1);
     }
+    if (isANumber(tmp)) tmpImaginary += tmp;
+
   } else {
     if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
     if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
@@ -3627,9 +3629,7 @@ function extractImaginary(tmpString) {
 
 function parseAngle(tmpAngle, firstValue) {
   // console.log('parseAngle', tmpAngle);
-
   var tmpComplex = [];
-
   // if (radix === 10) {
   if (true) {
 
