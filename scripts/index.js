@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '3:40:00';
+var tStamp = '5:00:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -558,7 +558,6 @@ function calculate(x) {
       // The following cannot parse ^, mathPow(), √, mathRoot() or run code...
       // x = x.replace(/j/g, 'i');
       // x = parseEvaluation(x);
-      // console.log('x', x);
       // x = math.evaluate(x);
     } catch(e) {
       return e.toString();
@@ -3402,7 +3401,7 @@ function printHtml() {
 
 function isANumber(testString) {  
   var isNum = true;
-  if (isNaN(testString)) isNum = false;
+  if (isNaN(testString) || testString === '') isNum = false;
   if (/[ⅽ℮ɢΦπ]/g.test(testString)) isNum = true;
   return isNum;
 }
@@ -3565,7 +3564,7 @@ function extractFirstValue(tmpString) {
   if (radix === 10) {
     // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4  
     if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
-      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
+      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
       tmp = tmp.replace(/ /g, '');
       if (isANumber(tmp)) tmpReal += tmp;
     }
