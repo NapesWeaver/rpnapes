@@ -1476,7 +1476,11 @@ function btnPi() {
     backupUndo();
     btnParenthesis();
   } else {
-    if (!/[ⅽ℮ɢΦa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');
+    if (!/^[ⅽ℮ɢΦa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
+      buttonInsert(/[π]/ , 'π');
+    } else {
+      $('txt-input').focus();
+    }
   }
 }
 
@@ -3559,24 +3563,9 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
   
   if (radix === 10) {
-
-    // console.log('test1', (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)));
-    // console.log('test2', /^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/.test(tmpString));
-    // console.log('match', tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/));
-    // console.log('math.eval()', math.evaluate(tmpString));
-
     // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4
-    // if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-    if (!/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*\s*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]|^[-+]?[ ]*Infinity[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-      
-      // if (/^[-+]?[ ]*Infinity/g.test(tmpString)) {
-      if (/^[-+]?[ ]*Infinity(?![ij])/.test(tmpString)) {
-        tmpReal += tmpString.match(/^[-+]?[ ]*Infinity(?![ij])/);
-        // tmpReal += tmpString.match(/^[-+]?[ ]*(Infinity)*(?![ij])/);
-        if (/∠-/g.test(tmpString)) tmpReal = '-' + tmpReal;
-      } else {
-        tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ]?[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);         
-      }      
+    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
+      tmpReal += tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);
     }
   }
   if (radix === 2) {
@@ -5171,27 +5160,47 @@ window.onload = function () {
   // Menu Constants
   $('menu-phi').onclick = (function() {
     return function() {
-      if (!/[ⅽ℮ɢπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[Φ]/ , 'Φ');
+      if (!/^[ⅽ℮ɢπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
+        buttonInsert(/[Φ]/ , 'Φ');
+      } else {
+        $('txt-input').focus();
+      }
     }
   })();
   $('menu-eulers').onclick = (function() {
     return function() {  
-      if (!/[ⅽɢΦπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[℮]/ , '℮');   
+      if (!/^[ⅽɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
+        buttonInsert(/[℮]/ , '℮');   
+      } else {
+        $('txt-input').focus();
+      }
     }
   })();
   $('menu-gravitational-constant').onclick = (function() {
     return function() {
-      if (!/[ⅽ℮Φπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');
+      if (!/^[ⅽ℮Φπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
+        buttonInsert(/[ɢ]/ , 'ɢ');
+      } else {
+        $('txt-input').focus();
+      }
     }
   })();
   $('menu-light-speed').onclick = (function() {
     return function() {
-      if (!/[℮ɢΦπa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');
+      if (!/^[℮ɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
+        buttonInsert(/[ⅽ]/ , 'ⅽ');
+      } else {
+        $('txt-input').focus();
+      }
     }
   })(); 
   $('menu-pi').onclick = (function() {
     return function() {
-      if (!/[ⅽ℮ɢΦa-zA-Z0-9]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');
+      if (!/^[ⅽ℮ɢΦa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
+        buttonInsert(/[π]/ , 'π');
+      } else {
+        $('txt-input').focus();
+      }
     }
   })();
 
