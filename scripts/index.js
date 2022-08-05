@@ -3615,36 +3615,23 @@ function extractImaginary(tmpString) {
 }
 
 function parseAngle(tmpAngle, firstValue) {
-  var tmpComplex = [];
-  // if (radix === 10) {
-  if (true) {
+  var tmpComplex = [];  
 
-    if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
+  if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
 
-    polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
-    tmpAngle = tmpAngle * 180 / Math.PI;
-    
-    if (tmpAngle === 0 || tmpAngle % 360 === 0 || tmpAngle === 180 || (tmpAngle - 180) % 360 === 0) {
-      tmpComplex[0] = polar.re;
-      tmpComplex[1] = '0';
-    } else if ((tmpAngle === 270 || (tmpAngle - 270) % 360 === 0 || tmpAngle === 90 || (tmpAngle - 90) % 360 === 0)) {
-      tmpComplex[0] = 0;
-      tmpComplex[1] = polar.im.toString();
-    } else {
-      tmpComplex[0] = polar.re;
-      tmpComplex[1] = polar.im.toString();
-    }  
+  polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
+  tmpAngle = tmpAngle * 180 / Math.PI;
+  
+  if (tmpAngle === 0 || tmpAngle % 360 === 0 || tmpAngle === 180 || (tmpAngle - 180) % 360 === 0) {
+    tmpComplex[0] = polar.re;
+    tmpComplex[1] = '0';
+  } else if ((tmpAngle === 270 || (tmpAngle - 270) % 360 === 0 || tmpAngle === 90 || (tmpAngle - 90) % 360 === 0)) {
+    tmpComplex[0] = 0;
+    tmpComplex[1] = polar.im.toString();
   } else {
-    // to do...
-    // console.log('parseAngle 2, 8, 16', tmpAngle);
-    // if (radix === 2) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[0-1]+[ij]/);
-    // if (radix === 8) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[0-7]+[ij]/);
-    // if (radix === 16) tmpAngle += tmpAngle.match(/∠[-+]?[ ]*[a-f0-9]+[ij]/);
-    // if (tmpAngle.charAt(1) === ' ') tmpAngle = tmpAngle.replace(/ /g, '');
-
-    // tmpAngle = tmpAngle.slice(0, tmpAngle.length - 1);
-    // tmpAngle = '' + parseInt(tmpAngle, radix);
-  }      
+    tmpComplex[0] = polar.re;
+    tmpComplex[1] = polar.im.toString();
+  }       
   return tmpComplex;
 }
 
