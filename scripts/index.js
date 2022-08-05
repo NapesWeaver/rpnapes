@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '5:00:00';
+var tStamp = '7:26:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1348,12 +1348,6 @@ function mathPow(num, pow) {
     result = result.toString();
     return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
   }  
-}
-
-function complexPow(y, x) {
-  if (y.im === 0 && x.im === 0) return Math.pow(y.re, x.re);
-
-  return mathPow(y, x);
 }
 
 function exponential() {
@@ -3406,12 +3400,6 @@ function isANumber(testString) {
   return isNum;
 }
 
-function willCalculate(expression) {
-  var calculated = false;
-  if (!isNaN(calculate(expression))) calculated = true;
-  return calculated;
-}
-
 function colorSaveButton() {
 
   try {
@@ -3595,9 +3583,9 @@ function extractFirstValue(tmpString) {
 function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {
-    // No evaluation symbols
-    if (!/[;<>?:`~!@#$%√&×()]/g.test(tmpString)) {   
-      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b/);     
+    // No evaluation symbols && no more than imaginary number [ij]
+    if (!/[;<>?:`~!@#$%√&×()]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {     
+      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b/);     
       tmp = tmp.replace(/ /g, '');
 
       if (/^[-][ij]\b/.test(tmp)) {
@@ -3627,7 +3615,6 @@ function extractImaginary(tmpString) {
 }
 
 function parseAngle(tmpAngle, firstValue) {
-  // console.log('parseAngle', tmpAngle);
   var tmpComplex = [];
   // if (radix === 10) {
   if (true) {
@@ -3698,15 +3685,15 @@ function extractAngle(tmpString, firstValue) {
   var tmpAngle = '';
   
   if (radix === 10) {
-    if (!/[()]/g.test(tmpString)) { 
-      tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);    
+    if (!/[()]/g.test(tmpString)) {    
+      tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*Infinity|∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);    
       tmpAngle = tmpAngle.replace(/ /g, '');
       // Remove ∠
       tmpAngle = tmpAngle.slice(1);    
-      
       if (/[-+]?Infinity/.test(firstValue)) {
         tmpComplex = parseInfinitePolars(tmpAngle);         
       } else {
+        if (/[-+]?Infinity/.test(tmpAngle)) tmpAngle = '0';
         tmpComplex =  parseAngle(tmpAngle, firstValue);
       }
     }
