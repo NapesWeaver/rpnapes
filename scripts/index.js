@@ -3554,6 +3554,8 @@ function extractFirstValue(tmpString) {
     if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
       tmp = tmp.replace(/ /g, '');
+
+      if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);
       if (isANumber(tmp)) tmpReal += tmp;
     }
   }
@@ -3575,7 +3577,7 @@ function extractFirstValue(tmpString) {
   }
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
   if (tmpReal === '-0') tmpReal = '0';
-  if (tmpReal === '' || /^[eE]/g.test(tmpReal)) tmpReal = 'NaN';
+  if (tmpReal === '') tmpReal = 'NaN';
   
   return tmpReal;
 }
@@ -3583,7 +3585,7 @@ function extractFirstValue(tmpString) {
 function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {
-    // No evaluation symbols && no more than imaginary number [ij]
+    // No evaluation symbols && no more than one imaginary number
     if (!/[;<>?:`~!@#$%√&×()]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {     
       var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b/);     
       tmp = tmp.replace(/ /g, '');
