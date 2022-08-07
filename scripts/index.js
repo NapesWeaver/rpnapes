@@ -3585,7 +3585,7 @@ function extractFirstValue(tmpString) {
     }
   }
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
-  // if (/[-]0|[0\.]0/.test(tmpReal)) tmpReal = '0';
+  if (/[-]0|[0\.]0/.test(tmpReal)) tmpReal = '0';
   if (tmpReal === '') tmpReal = 'NaN';
   
   return tmpReal;
