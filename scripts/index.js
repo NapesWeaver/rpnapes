@@ -541,8 +541,8 @@ function btnEval() {
   if (objX.getSoul().match(/^run$/)) {
     btnLoad();
     return;
-  }
-  displayResult(calculate($('txt-input').value.replace(/[ ]*$/, '')), units);  
+  } 
+  displayResult(calculate($('txt-input').value), units);  
   $('txt-input').select();  
 }
 
@@ -580,7 +580,7 @@ function runTest() {
 }
 
 function evaluateExpression(input) {  
-  $('txt-input').value = calculate(input);  
+  $('txt-input').value = calculate(input);
   if (testing) runTest();
 }
 
@@ -675,10 +675,14 @@ function colorUndoRedoMenu() {
 
 function undoFunction() {
 
-  if (backups.length > 3) {    
-    restores.push(nestArrayByBrowser(stack));
+  if (backups.length > 3) {   
+    var shortStack = [];    
+    for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+
+    restores.push(nestArrayByBrowser(shortStack));
     restores.push($('txt-input').value);
-    $('txt-input').value = backups.pop();    
+    $('txt-input').value = backups.pop();
+
     var tmpArray = backups.pop();
     stack.length = 0;
     tmpArray = splitArrayByBrowser(tmpArray);
@@ -696,13 +700,17 @@ function undoFunction() {
 function redoFunction() {
 
   if (restores.length > 0) {
-    backups.push(nestArrayByBrowser(stack));
+    var shortStack = [];    
+    for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+
+    backups.push(nestArrayByBrowser(shortStack));
     backups.push($('txt-input').value);
     $('txt-input').value = restores.pop();
+
     var tmpArray = restores.pop();
     stack.length = 0;
     tmpArray = splitArrayByBrowser(tmpArray);
-
+    
     var i = 1;
     while (i < tmpArray.length) {
       pushObjectToStack(tmpArray[i]);
@@ -714,10 +722,12 @@ function redoFunction() {
 }
 
 function backupUndo() {
+  var shortStack = [];    
   var input = $('txt-input').value.trim();
+  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
   
-  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(stack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
-    backups.push(nestArrayByBrowser(stack));
+  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
+    backups.push(nestArrayByBrowser(shortStack));
     backups.push($('txt-input').value.trim());
     restores.length = 0;
     colorUndoButton();  
@@ -961,8 +971,11 @@ function btnClear() {
 }
 
 function btnSave() {
+  var shortStack = [];
+
   $('btn-save').style.color = '#D4D0C8';
-  saveCookie('STACK', nestArrayByBrowser(stack));
+  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+  saveCookie('STACK', nestArrayByBrowser(shortStack));
   saveCookie('MATHMON', nestArrayByBrowser(theObjects));
   $('txt-input').focus();
 }
@@ -1048,7 +1061,10 @@ function btnLoad() {
 }
 
 function loadProgram(tmpStack) {
-  var prevStack = nestArrayByBrowser(stack);
+  var shortStack = [];    
+  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+
+  var prevStack = nestArrayByBrowser(shortStack);
   if (prevStack !== tmpStack || shifted) backupUndo();
   stack = [];
 
@@ -1059,16 +1075,18 @@ function loadProgram(tmpStack) {
   tmpStack = splitArrayByBrowser(tmpStack);
     
   while (tmpStack.length > 0) {
-    var tmpArray = [];
-    tmpArray = tmpStack.shift();
-    pushObjectToStack(tmpArray);    
-    if (shifted) evaluateExpression(decodeSpecialChar(stack[stack.length - 1].soul));
+    var tmpString = tmpStack.shift();    
+    pushObjectToStack(tmpString);    
+    evaluateExpression(decodeSpecialChar(tmpString));
   }
   $('indicate-execution').classList.add('hidden');  
 }
 
 function loadStack(tmpStack) {
-  var prevStack = nestArrayByBrowser(stack);
+  var shortStack = [];
+  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+
+  var prevStack = nestArrayByBrowser(shortStack);
   if (prevStack !== tmpStack || shifted) backupUndo();
   stack = [];
 
@@ -1079,10 +1097,8 @@ function loadStack(tmpStack) {
   tmpStack = splitArrayByBrowser(tmpStack);
     
   while (tmpStack.length > 0) {
-    var tmpArray = [];
-    tmpArray = tmpStack.shift();
-    pushObjectToStack(tmpArray);    
-    if (shifted) evaluateExpression(decodeSpecialChar(stack[stack.length - 1].soul));
+    var tmpString = tmpStack.shift();
+    pushObjectToStack(tmpString);
   }
 }
 
@@ -1098,13 +1114,7 @@ function splitArrayByBrowser(tmpArray) {
 
 function pushObjectToStack(tmpArray) {
   tmpArray = tmpArray.split(',');
-
-  var soulY = tmpArray[0].trim();
-  var realPartY = tmpArray[1].trim();
-  var unitsY = tmpArray[2].trim();
-  var imaginaryY = tmpArray[3].trim();
-  var objY = new NumberObject(soulY, realPartY, unitsY, imaginaryY);  
-
+  var objY = getX(tmpArray);
   stack.push(objY);
 }
 
@@ -3550,8 +3560,8 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
   
   if (radix === 10) {
-    // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4  
-    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;/<>?:`~!@#$%^√&*×(){}[\]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
+    // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4     
+    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
       tmp = tmp.replace(/ /g, '');
 
@@ -3585,8 +3595,8 @@ function extractFirstValue(tmpString) {
 function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {
-    // No evaluation symbols && no more than one imaginary number
-    if (!/[;<>?:`~!@#$%√&×()]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {     
+    // No evaluation symbols && no more than one imaginary number    
+    if (!/[=;<>?:`~!@#$%^√&*×(){}[]\|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {     
       var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b/);     
       tmp = tmp.replace(/ /g, '');
 
@@ -3665,6 +3675,9 @@ function parseInfinitePolars(tmpAngle) {
   } else if (degrees === 45 || (degrees - 45) % 360 === 0) {
     tmpComplex[0] = Infinity;
     tmpComplex[1] = 'Infinity';
+  } else {
+    tmpComplex[0] = NaN;
+    tmpComplex[1] = 'NaN';
   }
   return tmpComplex;
 }
@@ -5484,27 +5497,26 @@ window.onload = function () {
   autoDark();
   $('txt-input').readOnly = false;
   $('txt-input').focus();
+  /** 
+   * Better color pallet.
+   * Negative and Infinite factorial.
+   * Refactor signChange(), inverse() for Infinities.
+   * Refactor btnModulus() for complex numbers?
+   * Factorial for complex numbers?
+   * Negative & inverse binaries?
+   * Toggle array answering for roots?
+   * 
+   * Constants/formulas menu bug for mobile.
+   * Remote debug superfluous copy/paste menu.
+   * Haptic response for Firefox mobile.
+   * File-reopening bug.
+   * Rectangular w/o space eg. 'π+9j'
+   * 
+   * Inline parsing for complex numbers?
+   * Extend timer for hours/days?
+   * Iframe for desktop RPN links?
+   * Symbolic results?
+   * Unit conversions?
+   * Login, persistent storage/messaging/sharing?
+   */
 };
-/** 
- * Better color pallet.
- * Negative and Infinite factorial.
- * Refactor signChange(), inverse() for Infinities.
- * Refactor btnModulus() for complex numbers?
- * Factorial for complex numbers?
- * Negative & inverse binaries?
- * Toggle array answering for roots?
- * 
- * Constants/formulas menu bug for mobile.
- * Remote debug superfluous copy/paste menu.
- * Remote debug for Firefox mobile keypad.
- * Haptic response for Firefox mobile.
- * File-reopening bug.
- * Rectangular w/o space eg. 'π+9j'
- * 
- * Inline parsing for complex numbers?
- * Extend timer for hours/days?
- * Iframe for desktop RPN links?
- * Symbolic results?
- * Unit conversions?
- * Login, persistent storage/messaging/sharing?
- */
