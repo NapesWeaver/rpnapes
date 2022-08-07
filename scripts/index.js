@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '3:15:00';
+var tStamp = '4:27:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3585,7 +3585,7 @@ function extractFirstValue(tmpString) {
     }
   }
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
-  if (/[-]0|[0\.]0/.test(tmpReal)) tmpReal = '0';
+  if (/^[-]?0*[.]0*$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
   if (tmpReal === '') tmpReal = 'NaN';
   
   return tmpReal;
