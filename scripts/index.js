@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '7:26:00';
+var tStamp = '3:15:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3411,8 +3411,10 @@ function colorSaveButton() {
 
   try {
     var index = getCookie('STACK').indexOf('=') + 1;
-
-    if (getCookie('STACK').slice(index) !== nestArrayByBrowser(stack).trim()) {
+    var shortStack = [];   
+    for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+    
+    if (getCookie('STACK').slice(index) !== nestArrayByBrowser(shortStack).trim()) {
       $('btn-save').style.color = '#000000';
     } else {
       $('btn-save').style.color = '#D4D0C8';
@@ -3583,7 +3585,7 @@ function extractFirstValue(tmpString) {
     }
   }
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
-  if (tmpReal === '-0') tmpReal = '0';
+  // if (/[-]0|[0\.]0/.test(tmpReal)) tmpReal = '0';
   if (tmpReal === '') tmpReal = 'NaN';
   
   return tmpReal;
