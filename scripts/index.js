@@ -3585,7 +3585,7 @@ function extractFirstValue(tmpString) {
     }
   }
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
-  if (/^[-]?0*[.]0*$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
+  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
   if (tmpReal === '') tmpReal = 'NaN';
   
   return tmpReal;
@@ -3596,7 +3596,8 @@ function extractImaginary(tmpString) {
   if (radix === 10) {
     // No evaluation symbols && no more than one imaginary number    
     if (!/[=;<>?:`~!@#$%^√&*×(){}[]\|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {     
-      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b/);     
+      // var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b/);     
+      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ]*)\b/);     
       tmp = tmp.replace(/ /g, '');
 
       if (/^[-][ij]\b/.test(tmp)) {
@@ -3619,7 +3620,7 @@ function extractImaginary(tmpString) {
     tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
     tmpImaginary = '' + parseInt(tmpImaginary, radix);
   }
-  if (tmpImaginary === '-0') tmpImaginary = '0';
+  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpImaginary)) tmpImaginary = '0';
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
   
   return  tmpImaginary;
