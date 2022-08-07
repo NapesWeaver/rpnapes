@@ -83,9 +83,6 @@ NumberObject.prototype.getUnits = function() {
 NumberObject.prototype.toString = function() {
   return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
 };
-NumberObject.prototype.toString = function() {
-  return this.soul + ', ' + this.realPart + ', ' + this.imaginary + ', ' + this.units;
-};
 
 String.prototype.insertAt = function(index, input) {
   return this.slice(0, index) + input + this.slice(index);
