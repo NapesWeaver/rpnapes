@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '4:27:00';
+var tStamp = '19:29:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3559,8 +3559,7 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
 
   if (radix === 10) {
-    // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4     
-    // if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+    // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4   
     if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
       tmp = tmp.replace(/ /g, '');
@@ -3595,8 +3594,7 @@ function extractFirstValue(tmpString) {
 function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {
-    // No evaluation symbols && no more than one imaginary number       
-    // if (!/[=;,<>?:`~!@#$%√&×(){}[]\|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {   
+    // No evaluation symbols && no more than one imaginary number   
     if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {   
       var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ]*)\b/);     
       tmp = tmp.replace(/ /g, '');
