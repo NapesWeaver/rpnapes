@@ -3467,7 +3467,7 @@ function encodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/Ð/g, "&#208");// ETH
   //tmpString = tmpString.replace(/Þ/g, "&#222");// THORN
   //tmpString = tmpString.replace(/Δ/g, "&#916");// Delta
-  tmpString = tmpString.replace(/Ω/g, '&#937');// Omega
+  //tmpString = tmpString.replace(/Ω/g, '&#937');// Omega
   //tmpString = tmpString.replace(/θ/g, "&#952");// Theta
   //tmpString = tmpString.replace(/ψ/g, "&#968");// Psi
   //tmpString = tmpString.replace(/†/g, "&#8224");// dagger
@@ -3493,7 +3493,7 @@ function encodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/◊/g, "&#9674");// lozenge
   //tmpString = tmpString.replace(/♠/g, "&#9824");
   //tmpString = tmpString.replace(/♣/g, "&#9827");
-  tmpString = tmpString.replace(/♥/g, '&#9829');
+  //tmpString = tmpString.replace(/♥/g, '&#9829');
   //tmpString = tmpString.replace(/♦/g, "&#9830");
   // tmpString = tmpString.replace(/ⅽ/g, '&#8573');
   // tmpString = tmpString.replace(/℮/g, '&#8494');
@@ -3519,7 +3519,7 @@ function decodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/&#208/g, "Ð");
   //tmpString = tmpString.replace(/&#222/g, "Þ");
   //tmpString = tmpString.replace(/&#916/g, "Δ");
-  tmpString = tmpString.replace(/&#937/g, 'Ω');
+  //tmpString = tmpString.replace(/&#937/g, 'Ω');
   //tmpString = tmpString.replace(/&#952/g, "θ");
   //tmpString = tmpString.replace(/&#968/g, "ψ");
   //tmpString = tmpString.replace(/&#8224/g, "†");
@@ -3545,7 +3545,7 @@ function decodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/&#9674/g, "◊");
   //tmpString = tmpString.replace(/&#9824/g, "♠");
   //tmpString = tmpString.replace(/&#9827/g, "♣");
-  tmpString = tmpString.replace(/&#9829/g, '♥');
+  //tmpString = tmpString.replace(/&#9829/g, '♥');
   //tmpString = tmpString.replace(/&#9830/g, "♦");
   // tmpString = tmpString.replace(/&#8573/g, 'ⅽ');
   // tmpString = tmpString.replace(/&#8494/g, '℮');
@@ -3557,10 +3557,11 @@ function decodeSpecialChar(tmpString) {
 
 function extractFirstValue(tmpString) {
   var tmpReal = '';
-  
+
   if (radix === 10) {
     // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4     
-    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
+    // if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[]|\\_=]+/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
       tmp = tmp.replace(/ /g, '');
 
@@ -3594,9 +3595,9 @@ function extractFirstValue(tmpString) {
 function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {
-    // No evaluation symbols && no more than one imaginary number    
-    if (!/[=;<>?:`~!@#$%^√&*×(){}[]\|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {     
-      // var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)\b/);     
+    // No evaluation symbols && no more than one imaginary number       
+    // if (!/[=;,<>?:`~!@#$%√&×(){}[]\|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {   
+    if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {   
       var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ]*)\b/);     
       tmp = tmp.replace(/ /g, '');
 
