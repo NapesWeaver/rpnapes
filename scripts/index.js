@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '19:29:00';
+var tStamp = '7:55:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -597,6 +597,7 @@ function deleteButton() {
   } else {
     btnDelete();
   }
+  updateDisplay();
 }
 
 function btnDelete() {  
@@ -614,7 +615,6 @@ function btnDelete() {
   } else {
     deleteText($('txt-input'), true);
   }
-  updateDisplay();
 }
 
 function deleteText(txtField, forward) {
@@ -639,11 +639,9 @@ function btnBackspace() {
   if (stack.toString() !== '') backupUndo();
 
   if (stackFocus) {
-    stack.splice(getIndex('lst-stack') - stackSize, 1);
-    updateDisplay();
+    stack.splice(getIndex('lst-stack') - stackSize, 1);    
   } else if ($('txt-input').value === '') {
     stack.pop();
-    updateDisplay();
   } else {
     deleteText($('txt-input'), false);
   }
