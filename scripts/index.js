@@ -140,6 +140,15 @@ function resizeTextarea(textarea) {
   unFloat();
 }
 
+function resizeInput() {
+  var winSize = getSize();  
+  var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
+  $('txt-input').style.height = '0';
+  $('txt-input').style.height = $('txt-input').scrollHeight + 'px';  
+  if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+}
+
 function unFloat() {
   var wrapWidth = $('wrap').clientWidth;
   var winSize = getSize();  
@@ -362,9 +371,9 @@ function copy() {
 }
   
 function btnPaste() {
+  backupUndo();
   // Firefox only supports reading clipboard in browser extensions
   // using the "clipboardRead" extension permission :(
-  backupUndo();    
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   } else {
@@ -377,6 +386,7 @@ function btnPaste() {
       rpnAlert('Not supported by browser.');
     }
   }
+  resizeInput();
   $('txt-input').focus();
 }
 
@@ -432,9 +442,9 @@ function objToString(obj) {
       }
     } else {
       // Polar
-      if (!isImaginary || obj.getImaginary() === '0') {                
+      if (!isImaginary || obj.getImaginary() === '0') {   
         theString += formatNumber(obj.getRealPart().toString());
-      } else {
+      } else {            
         var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
         var complex = math.complex(argument, calculate(obj.getImaginary()));
         var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
@@ -596,16 +606,15 @@ function btnDelete() {
     
   if (stackFocus) {
     stack.splice(getIndex('lst-stack') - stackSize, 1);
-    updateDisplay();
   } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
     $('txt-input').selectionStart = 0;
     $('txt-input').focus();
   } else if ($('txt-input').value === '') {
     stack.pop();
-    updateDisplay();
   } else {
     deleteText($('txt-input'), true);
   }
+  updateDisplay();
 }
 
 function deleteText(txtField, forward) {
@@ -782,6 +791,7 @@ function btnEe() {
       toggleChar(input, index, /[Ee]/, 'e');
     }
   }
+  resizeInput();
   $('txt-input').focus();
 }
 
@@ -848,7 +858,8 @@ function btnGo() {
     searchYouTube();
   } else {
     searchGoogle();
-  }  
+  }
+  resizeInput();
   $('txt-input').select();
 }
 
@@ -964,6 +975,7 @@ function btnClear() {
   $('lst-stack').value = '';
   stack.length = 0;
   colorSaveButton();
+  resizeInput();
   $('txt-input').focus();
 }
 
@@ -1202,7 +1214,8 @@ function btnInverse() {
     btnFactorial();    
   } else {
     inverse();
-  } 
+  }
+  resizeInput();
 }
 
 function intFactorial(num) {  
@@ -1335,6 +1348,7 @@ function btnLog() {
   } else {
     baseLog();
   }
+  resizeInput();
 }
 
 function mathPow(num, pow) {
@@ -1469,6 +1483,7 @@ function btnRoot() {
   } else {
     exponential();
   }
+  resizeInput();
 }
 
 function btnPi() {
@@ -1482,6 +1497,7 @@ function btnPi() {
       $('txt-input').focus();
     }
   }
+  resizeInput();
 }
 
 function insertAroundSelection(txtField, txtValue) {
@@ -1548,7 +1564,8 @@ function btnModulus() {
     if (!/[=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
   } else {    
     modulus();
-  }  
+  }
+  resizeInput(); 
 }
 
 function leadingSignChange(textInput) {
@@ -1635,6 +1652,7 @@ function btnSign() {
   } else {
     signChange();
   }
+  resizeInput();
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
@@ -1664,6 +1682,7 @@ function division() {
 function btnDivide() {  
   if (shifted) {
     if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
+    resizeInput();
   } else {
     division();
   }  
@@ -1694,6 +1713,7 @@ function multiplication() {
 function btnMultiply() {  
   if (shifted) {
     if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
+    resizeInput();
   } else {
     multiplication();
   }      
@@ -1725,6 +1745,7 @@ function btnSubtract() {
   if (shifted) {
     // if (!/[+*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[-]/, '-');
     buttonInsert(/[-]/, '-');
+    resizeInput();
   } else {
     subtraction();
   }  
@@ -1755,6 +1776,7 @@ function addition() {
 function btnAdd() {  
   if (shifted) {
     if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
+    resizeInput();
   } else {
     addition();
   }  
@@ -1963,6 +1985,7 @@ function btnSine() {
   } else {
     displayResult(sin(input), '');
   }
+  resizeInput();
   $('txt-input').select();
 }
 
@@ -1977,6 +2000,7 @@ function btnCosine() {
   } else {
     displayResult(cos(input), '');
   }
+  resizeInput();
   $('txt-input').select()
 }
 
@@ -1991,6 +2015,7 @@ function btnTangent() {
   } else {
     displayResult(tan(input), '');
   }
+  resizeInput();
   $('txt-input').select()
 }
 
@@ -1998,26 +2023,31 @@ function btnTangent() {
 
 function btnDot() {
   insertAtCursor($('txt-input'), '.');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnZero() {
   insertAtCursor($('txt-input'), '0');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnOne() {
   insertAtCursor($('txt-input'), '1');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnTwo() {
   insertAtCursor($('txt-input'), '2');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnThree() {
   insertAtCursor($('txt-input'), '3');
+  resizeInput();
   $('txt-input').focus();
 }
 
@@ -2027,36 +2057,43 @@ function btnSpace() {
   } else {
     insertAtCursor($('txt-input'), ' ');
   } 
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnFour() {
   insertAtCursor($('txt-input'), '4');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnFive() {
   insertAtCursor($('txt-input'), '5');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnSix() {
   insertAtCursor($('txt-input'), '6');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnSeven() {
   insertAtCursor($('txt-input'), '7');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnEight() {
   insertAtCursor($('txt-input'), '8');
+  resizeInput();
   $('txt-input').focus();
 }
 
 function btnNine() {
   insertAtCursor($('txt-input'), '9');
+  resizeInput();
   $('txt-input').focus();
 }
 
@@ -3368,8 +3405,6 @@ function insertText(text) {
 
 function updateDisplay() {
   $('lst-stack').value = '';  
-  // Needed for responsive textarea
-  unFloat();
   // Buffer stack display
   for (var i = 0; i < $('lst-stack').getAttribute('rows') ; i++) {
     $('lst-stack').value += ' \n';
@@ -3387,8 +3422,8 @@ function updateDisplay() {
     }
   }
   colorSaveButton();
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-
+  resizeInput();
+  
   if (!(isChrome && isMobile)) {
     $('txt-input').select();  
   } else {
@@ -3559,12 +3594,12 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
 
   if (radix === 10) {
-    // Not a constant/number followed by evaluation symbols && not imaginary number && not IP address && not number text number e.g. 2x4   
+    // Not a constant or Infinity or number followed by evaluation symbols && not imaginary number && not IP address && not number-text-number e.g. 2x4   
     if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
       tmp = tmp.replace(/ /g, '');
 
-      if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);
+      if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);      
       if (isANumber(tmp)) tmpReal += tmp;
     }
   }
@@ -3585,7 +3620,9 @@ function extractFirstValue(tmpString) {
     }
   }
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
+
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
+
   if (tmpReal === '') tmpReal = 'NaN';
   
   return tmpReal;
@@ -3595,7 +3632,9 @@ function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {
     // No evaluation symbols && no more than one imaginary number   
+    // if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {   
     if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {   
+      // var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ]*)\b/);     
       var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ]*)\b/);     
       tmp = tmp.replace(/ /g, '');
 
@@ -3619,7 +3658,9 @@ function extractImaginary(tmpString) {
     tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
     tmpImaginary = '' + parseInt(tmpImaginary, radix);
   }
+
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpImaginary)) tmpImaginary = '0';
+
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
   
   return  tmpImaginary;
@@ -4850,6 +4891,7 @@ function eventFire(el, etype) {
 document.addEventListener('click', function (evt) {
   if (evt.detail === 2 && evt.target === $('lst-stack')) {
     getStackEntry();
+    resizeInput();
   }
 });
 
@@ -5020,6 +5062,7 @@ document.addEventListener('keydown', function (event) {
     }
     break;        
   }
+  resizeInput();
 });
 
 document.addEventListener('keyup', function (event) {
