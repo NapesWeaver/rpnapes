@@ -3590,6 +3590,31 @@ function decodeSpecialChar(tmpString) {
   return tmpString;
 }
 
+function removeTrailingZeros(str) {
+
+  while (str.length > 1 && /[.0]$/.test(str)) {
+    
+    if (/[.]$/.test(str)) {
+      str = str.slice(0, -1);
+      // console.log('trail [.]', str);
+      return str;
+    }
+    str = str.slice(0, -1);
+  }
+  // console.log('trail', str);
+  return str;
+}
+
+function removeLeadingZeros(str) {
+  var neg = str.charAt(0) === '-' ? '-' : '';
+
+  while (str.length > 1 && /^[0](?![.])/.test(str)) {
+    str = str.slice(1);
+  }
+  // console.log('lead', str);
+  return neg + str;
+}
+
 function extractFirstValue(tmpString) {
   var tmpReal = '';
 
@@ -3622,6 +3647,8 @@ function extractFirstValue(tmpString) {
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
+  // if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
+  // tmpReal = removeLeadingZeros(tmpReal);
 
   if (tmpReal === '') tmpReal = 'NaN';
   
@@ -5062,7 +5089,7 @@ document.addEventListener('keydown', function (event) {
     }
     break;        
   }
-  resizeInput();
+  if (!isMobile) resizeInput();
 });
 
 document.addEventListener('keyup', function (event) {
