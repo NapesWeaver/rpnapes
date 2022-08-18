@@ -386,7 +386,7 @@ function btnPaste() {
       rpnAlert('Not supported by browser.');
     }
   }
-  resizeInput();
+  setTimeout(resizeInput, 33);
   $('txt-input').focus();
 }
 
@@ -468,8 +468,7 @@ function btnXy() {
     abFunction();
   } else {
     xyFunction();
-  }
-  resizeInput();
+  }  
 }
 
 function abFunction() {
@@ -507,7 +506,8 @@ function xyFunction() {
     objX = stack.pop();
     enterInput();
     swapX(objX);
-  }  
+  }
+  resizeInput();
 }
 
 function runProgram() {
@@ -535,7 +535,6 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
   updateDisplay();
-  if (isMobile) resizeInput();
   parseCommand();  
 }
 
@@ -599,8 +598,7 @@ function deleteButton() {
     btnBackspace();
   } else {
     btnDelete();
-  }
-  resizeInput();  
+  }    
 }
 
 function btnDelete() {  
@@ -620,6 +618,7 @@ function btnDelete() {
   } else {
     deleteText($('txt-input'), true);
   }
+  resizeInput();
 }
 
 function deleteText(txtField, forward) {
@@ -652,6 +651,7 @@ function btnBackspace() {
   } else {
     deleteText($('txt-input'), false);
   }
+  resizeInput();
 }
 
 function btnUndo() {
@@ -659,8 +659,7 @@ function btnUndo() {
     redoFunction();
   } else {
     undoFunction();
-  }
-  resizeInput();
+  }  
 }
 
 function colorUndoButton() {
@@ -705,6 +704,7 @@ function undoFunction() {
       i++;
     }
     updateDisplay();
+    resizeInput();
   }
   colorUndoButton();
 }
@@ -729,6 +729,7 @@ function redoFunction() {
       i++;
     }
     updateDisplay();
+    resizeInput();
   }
   colorUndoButton();
 }
@@ -772,6 +773,7 @@ function buttonInsert(regex, char) {
       insertAtCursor($('txt-input'), char);
     }
   }
+  resizeInput();
   $('txt-input').focus();
 }
 
@@ -1176,7 +1178,7 @@ function inverse() {
       if (!isNaN(result)) {
         $('txt-input').value = 1 / result;
         $('txt-input').value += newUnits; 
-      } else {// We are arsing text        
+      } else {// We are parsing text        
         if(/^[-+]?1\//.test($('txt-input').value)) {
 
           if ($('txt-input').value.charAt(0) === '-') {
@@ -1276,6 +1278,7 @@ function btnFactorial() {
     displayResult(factorial(x), '');
   } else {
     $('txt-input').value = NaN;
+    resizeInput();
   }
 }
 
@@ -1503,7 +1506,6 @@ function btnPi() {
       $('txt-input').focus();
     }
   }
-  resizeInput();
 }
 
 function insertAroundSelection(txtField, txtValue) {
@@ -1562,6 +1564,7 @@ function modulus() {
     displayResult(math.mod(y, x), newUnits);
   } catch {
     $('txt-input').value = NaN;
+    resizeInput();
   }
 }
 
@@ -1691,7 +1694,6 @@ function btnDivide() {
   } else {
     division();
   }  
-  resizeInput();
 }
 
 function multiplyComplex(y, x) {
@@ -1721,8 +1723,7 @@ function btnMultiply() {
     if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
   } else {
     multiplication();
-  }      
-  resizeInput();
+  }
 }
 
 function subtractComplex(y, x) {
@@ -1753,8 +1754,7 @@ function btnSubtract() {
     buttonInsert(/[-]/, '-');
   } else {
     subtraction();
-  }  
-  resizeInput();
+  }
 }
 
 function addComplex(y, x) {
@@ -1785,7 +1785,6 @@ function btnAdd() {
   } else {
     addition();
   }  
-  resizeInput();
 }
 
 function buildComplexNumber(obj) {
@@ -1828,6 +1827,7 @@ function displayResult(result, newUnits) {
 
   $('txt-input').value = result;  
   updateDisplay();
+  resizeInput();
 }
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
@@ -1978,6 +1978,7 @@ function toggleAngleMode() {
   }
   $('txt-input').value = objToString(stack.pop());
   updateDisplay();
+  resizeInput();
 }
 
 function btnSine() {
@@ -1991,7 +1992,6 @@ function btnSine() {
   } else {
     displayResult(sin(input), '');
   }
-  resizeInput();
   $('txt-input').select();
 }
 
@@ -2021,7 +2021,6 @@ function btnTangent() {
   } else {
     displayResult(tan(input), '');
   }
-  resizeInput();
   $('txt-input').select()
 }
 
@@ -2271,9 +2270,9 @@ function insertTime() {
 }
 
 function getTime() {
-  var currentdate = new Date();
-  var datetime = currentdate.getHours() + ':' + currentdate.getMinutes() + ':' + currentdate.getSeconds();
-  return datetime;
+  var currentDate = new Date();
+  var dateTime = currentDate.getHours() + ':' + currentDate.getMinutes() + ':' + currentDate.getSeconds();
+  return dateTime;
 }
 
 function insertDate() {
@@ -3086,6 +3085,7 @@ function parseCommand() {
       break;
     }
   }
+  resizeInput();
 }
 
 function insertDefaultIndex(input) {
@@ -3290,6 +3290,7 @@ function convertBase(r) {
     } catch {      
       displayResult(objToString(obj), '');
     }
+    resizeInput();
   }
 }
 
@@ -3401,11 +3402,13 @@ function rpnAlert(text) {
 
 function inputText(text) {
   $('txt-input').value = text;
+  resizeInput();
 }
 
 function insertText(text) {
   backupUndo();
   insertAtCursor($('txt-input'), text);
+  resizeInput();
   $('txt-input').focus();
 }
 
@@ -5170,7 +5173,8 @@ window.onload = function () {
     } catch (err) {
       rpnAlert(err.toString());
       if (shifted) $('indicate-execution').classList.add('hidden');
-    }    
+    }
+    resizeInput();
   });
 
   $('menu-google').onclick = searchGoogle;
@@ -5195,30 +5199,10 @@ window.onload = function () {
   $('menu-xy').onclick = xyFunction;
 
   // Menu Maths
-  $('menu-root').onclick = (function() {
-    return function() {
-      radical();
-      resizeInput();
-    }
-  })();
-  $('menu-exponential').onclick = (function() {
-    return function() {
-      exponential();
-      resizeInput();
-    }
-  })();
-  $('menu-log').onclick = (function() {
-    return function() {
-      baseLog();
-      resizeInput();
-    }
-  })();
-  $('menu-ln').onclick = (function() {
-    return function() {
-      naturalLog();
-      resizeInput();
-    }
-  })();
+  $('menu-root').onclick = radical;
+  $('menu-exponential').onclick = exponential;
+  $('menu-log').onclick = baseLog;
+  $('menu-ln').onclick = naturalLog;
   $('menu-inverse').onclick = (function() {
     return function() {
       inverse();
@@ -5233,30 +5217,10 @@ window.onload = function () {
       resizeInput();
     }
   })();
-  $('menu-divide').onclick = (function() {
-    return function() {
-      division();
-      resizeInput();
-    }
-  })();
-  $('menu-multiply').onclick = (function() {
-    return function() {
-      multiplication();
-      resizeInput();
-    }
-  })();
-  $('menu-subtract').onclick = (function() {
-    return function() {
-      subtraction();
-      resizeInput();
-    }
-  })();
-  $('menu-add').onclick = (function() {
-    return function() {
-      addition();
-      resizeInput();
-    }
-  })();
+  $('menu-divide').onclick = division;
+  $('menu-multiply').onclick = multiplication;
+  $('menu-subtract').onclick = subtraction;
+  $('menu-add').onclick = addition;
   $('menu-sine').onclick = btnSine;
   $('menu-cosine').onclick = btnCosine;
   $('menu-tangent').onclick = btnTangent;
@@ -5274,47 +5238,27 @@ window.onload = function () {
   // Menu Constants
   $('menu-phi').onclick = (function() {
     return function() {
-      if (!/^[ⅽ℮ɢπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
-        buttonInsert(/[Φ]/ , 'Φ');
-      } else {
-        $('txt-input').focus();
-      }
+      if (!/^[ⅽ℮ɢπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[Φ]/ , 'Φ');      
     }
   })();
   $('menu-eulers').onclick = (function() {
     return function() {  
-      if (!/^[ⅽɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
-        buttonInsert(/[℮]/ , '℮');   
-      } else {
-        $('txt-input').focus();
-      }
+      if (!/^[ⅽɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[℮]/ , '℮');      
     }
   })();
   $('menu-gravitational-constant').onclick = (function() {
     return function() {
-      if (!/^[ⅽ℮Φπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
-        buttonInsert(/[ɢ]/ , 'ɢ');
-      } else {
-        $('txt-input').focus();
-      }
+      if (!/^[ⅽ℮Φπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');     
     }
   })();
   $('menu-light-speed').onclick = (function() {
     return function() {
-      if (!/^[℮ɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
-        buttonInsert(/[ⅽ]/ , 'ⅽ');
-      } else {
-        $('txt-input').focus();
-      }
+      if (!/^[℮ɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');      
     }
   })(); 
   $('menu-pi').onclick = (function() {
     return function() {
-      if (!/^[ⅽ℮ɢΦa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
-        buttonInsert(/[π]/ , 'π');
-      } else {
-        $('txt-input').focus();
-      }
+      if (!/^[ⅽ℮ɢΦa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');      
     }
   })();
 
@@ -5406,6 +5350,7 @@ window.onload = function () {
   $('menu-equals').onclick = (function() {
     return function() { 
       if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value) || isTextSelected($('txt-input'))) insertAtCursor($('txt-input'), '=');
+      resizeInput();
       $('txt-input').focus();     
     }
   })();
