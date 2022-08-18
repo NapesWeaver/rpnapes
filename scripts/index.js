@@ -1687,10 +1687,10 @@ function division() {
 function btnDivide() {  
   if (shifted) {
     if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
-    resizeInput();
   } else {
     division();
   }  
+  resizeInput();
 }
 
 function multiplyComplex(y, x) {
@@ -1718,10 +1718,10 @@ function multiplication() {
 function btnMultiply() {  
   if (shifted) {
     if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
-    resizeInput();
   } else {
     multiplication();
   }      
+  resizeInput();
 }
 
 function subtractComplex(y, x) {
@@ -1750,10 +1750,10 @@ function btnSubtract() {
   if (shifted) {
     // if (!/[+*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[-]/, '-');
     buttonInsert(/[-]/, '-');
-    resizeInput();
   } else {
     subtraction();
   }  
+  resizeInput();
 }
 
 function addComplex(y, x) {
@@ -1781,10 +1781,10 @@ function addition() {
 function btnAdd() {  
   if (shifted) {
     if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
-    resizeInput();
   } else {
     addition();
   }  
+  resizeInput();
 }
 
 function buildComplexNumber(obj) {
@@ -5092,9 +5092,11 @@ document.addEventListener('keydown', function (event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDivide();
     }
-    break;        
+    break;   
+  default:
+    if (!isMobile) resizeInput();    
+    break;
   }
-  if (!isMobile) resizeInput();
 });
 
 document.addEventListener('keyup', function (event) {
