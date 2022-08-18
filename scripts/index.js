@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '1:01:00';
+var tStamp = '1:11:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1214,6 +1214,7 @@ function inverse() {
     }
   }
   cashed = $('txt-input').value;
+  resizeInput();
   $('txt-input').select();
 }
 
@@ -1223,7 +1224,6 @@ function btnInverse() {
   } else {
     inverse();
   }
-  resizeInput();
 }
 
 function intFactorial(num) {  
@@ -1651,6 +1651,7 @@ function signChange() {
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
     }
+    resizeInput();
     txtInput.focus();
   }
 }
@@ -1661,7 +1662,6 @@ function btnSign() {
   } else {
     signChange();
   }
-  resizeInput();
 }
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
@@ -5204,20 +5204,10 @@ window.onload = function () {
   $('menu-exponential').onclick = exponential;
   $('menu-log').onclick = baseLog;
   $('menu-ln').onclick = naturalLog;
-  $('menu-inverse').onclick = (function() {
-    return function() {
-      inverse();
-      resizeInput();
-    }
-  })();
+  $('menu-inverse').onclick = inverse;
   $('menu-factorial').onclick = btnFactorial;
   $('menu-modulus').onclick = modulus;
-  $('menu-sign').onclick = (function() {
-    return function() {
-      signChange();
-      resizeInput();
-    }
-  })();
+  $('menu-sign').onclick = signChange;
   $('menu-divide').onclick = division;
   $('menu-multiply').onclick = multiplication;
   $('menu-subtract').onclick = subtraction;
