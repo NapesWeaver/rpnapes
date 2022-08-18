@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '1:11:00';
+var tStamp = '1:38:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2623,8 +2623,8 @@ function help(command) {
       inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
       break;    
     case 'vector':
-        inputText('vector: Switch complex number display to rectangular coordinates. (use \'polar\' for polar coordinates). Alias: rectangular');
-        break;
+      inputText('vector: Switch complex number display to rectangular coordinates. (use \'polar\' for polar coordinates). Alias: rectangular');
+      break;
     case 'wiki':
       inputText('wiki [query]: Search Wikipedia. If no argument is supplied in-line, last entry on stack is used as query.');
       break;    
@@ -3048,25 +3048,25 @@ function parseCommand() {
     case 'tri':
       stack.pop();
       updateDisplay();
-      $('txt-input').value = '';
+      inputText('');
       showTricorder();
       break;
     case 'tricorder':
       stack.pop();
       updateDisplay();
-      $('txt-input').value = '';
+      inputText('');
       showTricorder();
       break;
     case 'twig':
       stack.pop();
       updateDisplay();
-      $('txt-input').value = '';         
+      inputText('');
       monOn();
       break;
     case 'unembed':
       stack.pop();
       updateDisplay();
-      $('txt-input').value = ''; 
+      inputText(''); 
       widgetSrc.shift();
       saveTricorder();
       break;
@@ -3076,7 +3076,7 @@ function parseCommand() {
       stack.pop();
       if ($('menu-form').textContent === 'Vector') toggleForm();
       updateDisplay();
-      $('txt-input').value = '';
+      inputText('');
       break;
     default:
       if ($('twig').className !== 'hidden' && twig.health > 0) {
@@ -3397,13 +3397,12 @@ function moveCursorToEnd(el) {
 
 function rpnAlert(text) {
   backupUndo();
-  $('txt-input').value = text;
+  inputText(text);
   $('txt-input').select();
 }
 
 function inputText(text) {
-  $('txt-input').value = text;
-  resizeInput();
+  $('txt-input').value = text;  
 }
 
 function insertText(text) {
@@ -4712,7 +4711,7 @@ function monOff() {
 }
 
 function resetMathmon() {
-  $('txt-input').value = '';
+  inputText('');
   $('twig').src = 'images/twig/piece-frog.gif';
 
   for (var i = 0; i < theObjects.length; i++) {
@@ -5301,6 +5300,7 @@ window.onload = function () {
     return function() {
       backupUndo();
       inputText(averageStack());
+      resizeInput();
     }
   })();
   $('menu-stack-sort').onclick = (function() {
@@ -5314,12 +5314,14 @@ window.onload = function () {
     return function() {
       backupUndo();
       inputText(totalStack());
+      resizeInput();
     }
   })();
   $('menu-stack-max').onclick = (function() {
     return function() {
       backupUndo();
       inputText(maxNum());
+      resizeInput();
     }
   })();
   $('menu-stack-min').onclick = (function() {
