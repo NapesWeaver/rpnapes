@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '8:36:00';
+var tStamp = '15:16:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -122,6 +122,25 @@ if (!Array.prototype.indexOf)
     }
   })(Object, Math.max, Math.min);
 
+function unFloat() {
+  var wrapWidth = $('wrap').clientWidth;
+  var winSize = getSize();  
+  var lstWidth = $('rpnapes').classList.contains('hidden') ? $('lst-notes').clientWidth : $('lst-stack').clientWidth;
+  var margin = 30;
+  
+  if (lstWidth > wrapWidth) {
+    $('wrap').style.marginLeft = ((winSize[0]  - lstWidth) / winSize[0]) * 50 + '%';
+  } else {
+    $('wrap').style.marginLeft = 'auto';
+  }
+  if (winSize[0] < lstWidth + margin) {
+    $('rpnapes').classList.contains('hidden') ? $('lst-notes').style.width = winSize[0] - margin + 'px' : $('lst-stack').style.width = winSize[0] - margin + 'px';
+  }
+  if ($('notes').classList.contains('hidden')) worldBordersSet();
+
+  $('txt-input').style.width = $('lst-stack').offsetWidth - 18 + 'px';
+}
+
 function resizeTextAreas() {
   resizeTextarea($('lst-stack'));
   resizeTextarea($('lst-notes'));
@@ -147,25 +166,6 @@ function resizeInput() {
   $('txt-input').style.height = $('txt-input').scrollHeight + 'px';  
   if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-}
-
-function unFloat() {
-  var wrapWidth = $('wrap').clientWidth;
-  var winSize = getSize();  
-  var lstWidth = $('rpnapes').classList.contains('hidden') ? $('lst-notes').clientWidth : $('lst-stack').clientWidth;
-  var margin = 30;
-  
-  if (lstWidth > wrapWidth) {
-    $('wrap').style.marginLeft = ((winSize[0]  - lstWidth) / winSize[0]) * 50 + '%';
-  } else {
-    $('wrap').style.marginLeft = 'auto';
-  }
-  if (winSize[0] < lstWidth + margin) {
-    $('rpnapes').classList.contains('hidden') ? $('lst-notes').style.width = winSize[0] - margin + 'px' : $('lst-stack').style.width = winSize[0] - margin + 'px';
-  }
-  if ($('notes').classList.contains('hidden')) worldBordersSet();
-
-  $('txt-input').style.width = $('lst-stack').offsetWidth - 18 + 'px';
 }
 
 function toggleForm() {
@@ -469,6 +469,7 @@ function btnXy() {
   } else {
     xyFunction();
   }
+  resizeInput();
 }
 
 function abFunction() {
@@ -528,6 +529,7 @@ function btnEnter() {
 
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+    resizeInput();
   } else {
     var input = $('txt-input').value.trim();
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
@@ -597,7 +599,7 @@ function deleteButton() {
   } else {
     btnDelete();
   }
-  updateDisplay();
+  resizeInput();  
 }
 
 function btnDelete() {  
@@ -607,8 +609,10 @@ function btnDelete() {
     
   if (stackFocus) {
     stack.splice(getIndex('lst-stack') - stackSize, 1);
+    updateDisplay();
   } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
     $('txt-input').selectionStart = 0;
+    updateDisplay();
     $('txt-input').focus();
   } else if ($('txt-input').value === '') {
     stack.pop();
@@ -639,9 +643,11 @@ function btnBackspace() {
   if (stack.toString() !== '') backupUndo();
 
   if (stackFocus) {
-    stack.splice(getIndex('lst-stack') - stackSize, 1);    
+    stack.splice(getIndex('lst-stack') - stackSize, 1);  
+    updateDisplay();  
   } else if ($('txt-input').value === '') {
     stack.pop();
+    updateDisplay();
   } else {
     deleteText($('txt-input'), false);
   }
@@ -653,6 +659,7 @@ function btnUndo() {
   } else {
     undoFunction();
   }
+  resizeInput();
 }
 
 function colorUndoButton() {
@@ -3419,14 +3426,9 @@ function updateDisplay() {
       $('lst-stack').value += '                                                                                                                                                                                                                                                                                                                                                                                      ';
     }
   }
-  colorSaveButton();
-
-  if (!isMobile) {
-    resizeInput();
-  } else {
-    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-  }
-  
+  colorSaveButton();  
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    
   if (!(isChrome && isMobile)) {
     $('txt-input').select();  
   } else {
