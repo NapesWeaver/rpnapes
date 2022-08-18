@@ -5195,18 +5195,68 @@ window.onload = function () {
   $('menu-xy').onclick = xyFunction;
 
   // Menu Maths
-  $('menu-root').onclick = radical;
-  $('menuExponential').onclick = exponential;
-  $('menu-log').onclick = baseLog;
-  $('menu-ln').onclick = naturalLog;
-  $('menu-inverse').onclick = inverse;
+  $('menu-root').onclick = (function() {
+    return function() {
+      radical();
+      resizeInput();
+    }
+  })();
+  $('menu-exponential').onclick = (function() {
+    return function() {
+      exponential();
+      resizeInput();
+    }
+  })();
+  $('menu-log').onclick = (function() {
+    return function() {
+      baseLog();
+      resizeInput();
+    }
+  })();
+  $('menu-ln').onclick = (function() {
+    return function() {
+      naturalLog();
+      resizeInput();
+    }
+  })();
+  $('menu-inverse').onclick = (function() {
+    return function() {
+      inverse();
+      resizeInput();
+    }
+  })();
   $('menu-factorial').onclick = btnFactorial;
   $('menu-modulus').onclick = modulus;
-  $('menu-sign').onclick = signChange;
-  $('menu-divide').onclick = division;
-  $('menu-multiply').onclick = multiplication;
-  $('menu-subtract').onclick = subtraction;
-  $('menu-add').onclick = addition;
+  $('menu-sign').onclick = (function() {
+    return function() {
+      signChange();
+      resizeInput();
+    }
+  })();
+  $('menu-divide').onclick = (function() {
+    return function() {
+      division();
+      resizeInput();
+    }
+  })();
+  $('menu-multiply').onclick = (function() {
+    return function() {
+      multiplication();
+      resizeInput();
+    }
+  })();
+  $('menu-subtract').onclick = (function() {
+    return function() {
+      subtraction();
+      resizeInput();
+    }
+  })();
+  $('menu-add').onclick = (function() {
+    return function() {
+      addition();
+      resizeInput();
+    }
+  })();
   $('menu-sine').onclick = btnSine;
   $('menu-cosine').onclick = btnCosine;
   $('menu-tangent').onclick = btnTangent;
