@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '20:00:00';
+var tStamp = '20:28:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -612,10 +612,10 @@ function btnDelete() {
     updateDisplay();
   } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
     $('txt-input').selectionStart = 0;
-    updateDisplay();
     $('txt-input').focus();
   } else if ($('txt-input').value === '') {
     stack.pop();
+    updateDisplay();
   } else {
     deleteText($('txt-input'), true);
   }
@@ -5092,11 +5092,10 @@ document.addEventListener('keydown', function (event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDivide();
     }
-    break;   
-  default:
-    break;
+    break; 
   }
-  resizeInput();    
+  // Resizing input with soft-keyboard open breaks resizing logic
+  if (!isMobile) resizeInput();    
 });
 
 document.addEventListener('keyup', function (event) {
