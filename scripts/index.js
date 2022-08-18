@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '3:03:00';
+var tStamp = '4:47:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -534,6 +534,11 @@ function btnEnter() {
     var input = $('txt-input').value.trim();
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
+  if (isMobile) {
+    // Need to close soft-keyboard
+    if (isMobile) $('lst-stack').focus();
+    resizeInput();
+  }
   updateDisplay();
   parseCommand();  
 }
@@ -550,7 +555,8 @@ function btnEval() {
   if (objX.getSoul().match(/^run$/)) {
     btnLoad();
     return;
-  } 
+  }
+  if (isMobile) $('lst-stack').focus();// Close soft-keyboard
   displayResult(calculate($('txt-input').value), units);  
   $('txt-input').select();  
 }
