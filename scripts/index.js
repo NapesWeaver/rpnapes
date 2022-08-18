@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '4:47:00';
+var tStamp = '5:28:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -534,12 +534,8 @@ function btnEnter() {
     var input = $('txt-input').value.trim();
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
-  if (isMobile) {
-    // Need to close soft-keyboard
-    if (isMobile) $('lst-stack').focus();
-    resizeInput();
-  }
   updateDisplay();
+  // if (isMobile) setTimeout(resizeInput, 100);
   parseCommand();  
 }
 
@@ -555,8 +551,7 @@ function btnEval() {
   if (objX.getSoul().match(/^run$/)) {
     btnLoad();
     return;
-  }
-  if (isMobile) $('lst-stack').focus();// Close soft-keyboard
+  } 
   displayResult(calculate($('txt-input').value), units);  
   $('txt-input').select();  
 }
@@ -5188,8 +5183,14 @@ window.onload = function () {
     resizeInput();
   });
 
-  $('menu-google').onclick = searchGoogle;
-  $('menu-youTube').onclick = searchYouTube;
+  $('menu-google').onclick = function() {
+    searchGoogle();
+    resizeInput();
+  }
+  $('menu-you-tube').onclick = function() {
+    searchYouTube();
+    resizeInput();
+  }
   $('menu-save').onclick = btnSave;
   $('menu-print').onclick = printHtml;
   $('menu-off').onclick = function() {
@@ -5237,182 +5238,126 @@ window.onload = function () {
   $('menu-form').onclick = toggleForm;
 
   // Menu Constants
-  $('menu-phi').onclick = (function() {
-    return function() {
-      if (!/^[ⅽ℮ɢπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[Φ]/ , 'Φ');      
-    }
-  })();
-  $('menu-eulers').onclick = (function() {
-    return function() {  
-      if (!/^[ⅽɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[℮]/ , '℮');      
-    }
-  })();
-  $('menu-gravitational-constant').onclick = (function() {
-    return function() {
-      if (!/^[ⅽ℮Φπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');     
-    }
-  })();
-  $('menu-light-speed').onclick = (function() {
-    return function() {
-      if (!/^[℮ɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');      
-    }
-  })(); 
-  $('menu-pi').onclick = (function() {
-    return function() {
-      if (!/^[ⅽ℮ɢΦa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');      
-    }
-  })();
-
-  // Menu Date
+  $('menu-phi').onclick = function() {    
+    if (!/^[ⅽ℮ɢπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[Φ]/ , 'Φ');      
+  }
+  $('menu-eulers').onclick = function() {      
+    if (!/^[ⅽɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[℮]/ , '℮');      
+  }
+  $('menu-gravitational-constant').onclick = function() {  
+    if (!/^[ⅽ℮Φπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');     
+  }  
+  $('menu-light-speed').onclick = function() {    
+    if (!/^[℮ɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');      
+  } 
+  $('menu-pi').onclick = function() {  
+    if (!/^[ⅽ℮ɢΦa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');      
+  }
+  
   $('menu-date').onclick = insertDate;
 
-  // Menu Time
   $('menu-time').onclick = insertTime;
 
   // Menu Formulas
-  $('menu-compound-interest').onclick = (function() {
-    return function() {
-      insertText('P*(1+r/n)^(n*t)');
-    }
-  })();
-  $('menu-circumference').onclick = (function() {
-    return function() {
-      insertText('2*π*r');
-    }
-  })();
-  $('menu-circle-area').onclick = (function() {
-    return function() {
-      insertText('π*r^2');
-    }
-  })();
-  $('menu-sphere-area').onclick = (function() {
-    return function() {
-      insertText('4*π*r^2');
-    }
-  })();
-  $('menu-sphere-volume').onclick = (function() {
-    return function() {
-      insertText('4/3*π*r^3');
-    }
-  })();
-  $('menu-cone-area').onclick = (function() {
-    return function() {
-      insertText('π*r^2 + π*r*l');
-    }
-  })();
-  $('menu-cone-volume').onclick = (function() {
-    return function() {
-      insertText('h/3*π*r^2');
-    }
-  })(); 
+  $('menu-compound-interest').onclick = function() {
+    insertText('P*(1+r/n)^(n*t)');
+  }
+  $('menu-circumference').onclick = function() {
+        insertText('2*π*r');
+  } 
+  $('menu-circle-area').onclick = function() {    
+    insertText('π*r^2');
+  }
+  $('menu-sphere-area').onclick = function() {
+    insertText('4*π*r^2');
+  }  
+  $('menu-sphere-volume').onclick = function() {
+    insertText('4/3*π*r^3');
+  } 
+  $('menu-cone-area').onclick = function() {    
+    insertText('π*r^2 + π*r*l');
+  } 
+  $('menu-cone-volume').onclick = function() {   
+    insertText('h/3*π*r^2');
+  }  
 
   // Menu Programs
-  $('menu-stack-average').onclick = (function() {
-    return function() {
-      backupUndo();
-      inputText(averageStack());
-      resizeInput();
-    }
-  })();
-  $('menu-stack-sort').onclick = (function() {
-    return function() {
-      backupUndo();
-      objectSort(true, false);
-      updateDisplay();
-    }
-  })();
-  $('menu-stack-total').onclick = (function() {
-    return function() {
-      backupUndo();
-      inputText(totalStack());
-      resizeInput();
-    }
-  })();
-  $('menu-stack-max').onclick = (function() {
-    return function() {
-      backupUndo();
-      inputText(maxNum());
-      resizeInput();
-    }
-  })();
-  $('menu-stack-min').onclick = (function() {
-    return function() {
-      backupUndo();
-      inputText(minNum());
-    }
-  })();
+  $('menu-stack-average').onclick = function() {   
+    backupUndo();
+    inputText(averageStack());
+    resizeInput();
+    $('txt-input').select();
+  }  
+  $('menu-stack-sort').onclick = function() {    
+    backupUndo();
+    objectSort(true, false);
+    updateDisplay();
+    $('txt-input').select();
+  }  
+  $('menu-stack-total').onclick = function() {    
+    backupUndo();
+    inputText(totalStack());
+    resizeInput();
+    $('txt-input').select();
+  }  
+  $('menu-stack-max').onclick = function() {    
+    backupUndo();
+    inputText(maxNum());
+    resizeInput();
+    $('txt-input').select();
+  }
+  $('menu-stack-min').onclick = function() {    
+    backupUndo();
+    inputText(minNum());
+    $('txt-input').select();
+  }
+  
   $('menu-stopwatch').onclick = menuStopwatch;
   $('menu-tricorder').onclick = showTricorder;
   $('menu-twig').onclick = monOn;
   
   // Menu Symbols
-  $('menu-parenthesis').onclick = (function() {
-    return function() { 
-      btnParenthesis();
-    }
-  })();
-  $('menu-equals').onclick = (function() {
-    return function() { 
-      if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value) || isTextSelected($('txt-input'))) insertAtCursor($('txt-input'), '=');
-      resizeInput();
-      $('txt-input').focus();     
-    }
-  })();
-  $('menu-radical').onclick = (function() {
-    return function() { 
-      if (!/[!=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
-    }
-  })();
-  $('menu-bang').onclick = (function() {
-    return function() { 
-      if (!/[-+*/√^%]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[!]/, '!');
-    }
-  })();
-  $('menu-carat').onclick = (function() {
-    return function() { 
-      if (!/[-+*/√%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[\^]/, '^');
-    }
-  })();
-  $('menu-modulus-symbol').onclick = (function() {
-    return function() { 
-      if (!/[-+*/√^=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[%]/, '%');
-    }
-  })();
-  $('menu-solidus').onclick = (function() {
-    return function() { 
-      if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
-    }
-  })();
-  $('menu-asterisk').onclick = (function() {
-    return function() { 
-      if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
-    }
-  })();
-  $('menu-minus').onclick = (function() {
-    return function() { 
-      buttonInsert(/[-]/, '-');
-    }
-  })();
-  $('menu-angle').onclick = (function() {
-    return function() { 
-      buttonInsert(/[∠]/, '∠');
-    }
-  })();
-  $('menu-plus').onclick = (function() {
-    return function() {
-      if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
-    }
-  })();
-  $('menu-omega').onclick = (function() {
-    return function() { 
-      buttonInsert(/[Ω]/ , 'Ω');
-    }
-  })();
-  $('menu-heart').onclick = (function() {
-    return function() { 
-      buttonInsert(/[♥]/ , '♥');
-    }
-  })();
+  $('menu-parenthesis').onclick = function() {    
+    btnParenthesis();
+  }  
+  $('menu-equals').onclick = function() {    
+    if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value) || isTextSelected($('txt-input'))) insertAtCursor($('txt-input'), '=');
+    resizeInput();
+    $('txt-input').focus();     
+  }
+   $('menu-radical').onclick = function() {     
+    if (!/[!=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
+  }  
+  $('menu-bang').onclick = function() {   
+    if (!/[-+*/√^%]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[!]/, '!');
+  }  
+  $('menu-carat').onclick = function() {   
+    if (!/[-+*/√%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[\^]/, '^');
+  }
+  $('menu-modulus-symbol').onclick = function() {    
+    if (!/[-+*/√^=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[%]/, '%');
+  }  
+  $('menu-solidus').onclick = function() {    
+    if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
+  } 
+  $('menu-asterisk').onclick = function() {  
+    if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
+  }  
+  $('menu-minus').onclick = function() {    
+    buttonInsert(/[-]/, '-');
+  } 
+  $('menu-angle').onclick = function() {    
+    buttonInsert(/[∠]/, '∠');
+  } 
+  $('menu-plus').onclick = function() {    
+    if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
+  }
+  $('menu-omega').onclick = function() {     
+    buttonInsert(/[Ω]/ , 'Ω');
+  }  
+  $('menu-heart').onclick = function() {    
+    buttonInsert(/[♥]/ , '♥');
+  }  
   
   $('menu-help').onclick = menuHelp;
 
@@ -5556,10 +5501,6 @@ window.onload = function () {
     loadTricorder();        
   } else {
     widgetSrc.push('https://napesweaver.github.io/ip-mapper/');
-    // widgetSrc.push('https://www.youtube.com/embed/1LEay4dm5Ag');// KITUMBA
-    // widgetSrc.push('https://www.youtube.com/embed/ZVCXw1xJFJ4');// In Harm's Way
-    // widgetSrc.push('https://www.youtube.com/embed/Zx-up8quvnI');// Mind Sifter
-    // widgetSrc.push('https://www.youtube.com/embed/sKtieXEBLcE');// Launch of the Botany Bay
   }
   if (document.cookie.indexOf('STACK') !== -1) {
     $('lst-stack').value = '';
