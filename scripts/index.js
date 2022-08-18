@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '2:31:00';
+var tStamp = '2:37:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -601,7 +601,7 @@ function deleteButton() {
   }    
 }
 
-function deletion() {
+function deleteInput() {
   if (stack.toString() !== '') backupUndo();
 
   $('txt-input').value = $('txt-input').value;
@@ -621,8 +621,8 @@ function deletion() {
 }
 
 function btnDelete() {  
-  deletion();
-  setTimeout(resizeInput, 60);
+  deleteInput();
+  setTimeout(resizeInput, 100);
 }
 
 function deleteText(txtField, forward) {
@@ -5034,7 +5034,7 @@ document.addEventListener('keydown', function (event) {
     if ($('rpnapes').className !== 'hidden') {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      deletion();
+      deleteInput();
       if (!isMobile) resizeInput();        
     }
     break;
