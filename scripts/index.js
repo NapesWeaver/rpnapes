@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '2:37:00';
+var tStamp = '2:43:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -386,7 +386,7 @@ function btnPaste() {
       rpnAlert('Not supported by browser.');
     }
   }
-  setTimeout(resizeInput, 33);
+  setTimeout(resizeInput, 100);
   $('txt-input').focus();
 }
 
@@ -507,7 +507,7 @@ function xyFunction() {
     enterInput();
     swapX(objX);
   }
-  resizeInput();
+  setTimeout(resizeInput, 100);
 }
 
 function runProgram() {
