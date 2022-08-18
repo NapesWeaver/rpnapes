@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '1:38:00';
+var tStamp = '2:04:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -601,7 +601,7 @@ function deleteButton() {
   }    
 }
 
-function btnDelete() {  
+function deletion() {
   if (stack.toString() !== '') backupUndo();
 
   $('txt-input').value = $('txt-input').value;
@@ -618,6 +618,10 @@ function btnDelete() {
   } else {
     deleteText($('txt-input'), true);
   }
+}
+
+function btnDelete() {  
+  deletion();
   resizeInput();
 }
 
@@ -5030,7 +5034,8 @@ document.addEventListener('keydown', function (event) {
     if ($('rpnapes').className !== 'hidden') {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btnDelete();        
+      deletion();
+      if (!isMobile) resizeInput();        
     }
     break;
   case 83:// S
