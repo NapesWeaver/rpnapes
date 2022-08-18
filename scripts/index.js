@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '20:33:00';
+var tStamp = '1:01:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3085,7 +3085,8 @@ function parseCommand() {
       break;
     }
   }
-  resizeInput();
+  // Resizing input with soft-keyboard open breaks resizing logic
+  if (!isMobile) resizeInput();
 }
 
 function insertDefaultIndex(input) {
