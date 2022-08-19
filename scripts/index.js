@@ -144,24 +144,25 @@ function unFloat() {
 function resizeTextAreas() {
   resizeTextarea($('lst-stack'));
   resizeTextarea($('lst-notes'));
-  if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
-  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');  
+  // if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
+  // if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');  
 }
 
 function resizeTextarea(textarea) {
-  var winSize = getSize();  
+  var winSize = getSize();     
   var textareaHeight = textarea.offsetHeight;
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
+  
   if (textareaHeight > 0) {
     textarea.style.height = (winSize[1] + textareaHeight - bodyHeight) + 'px';    
-    textarea.classList.remove('resizable');
+    // textarea.classList.remove('resizable');
   }
   unFloat();
 }
 
 function resizeInput() {
-  var winSize = getSize();  
-  var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
+  var winSize = getSize();   
+  var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;  
   $('txt-input').style.height = '0';
   $('txt-input').style.height = $('txt-input').scrollHeight + 'px';  
   if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
@@ -535,7 +536,6 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
   updateDisplay();
-  // if (isMobile) setTimeout(resizeInput, 100);
   parseCommand();  
 }
 
