@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '5:28:00';
+var tStamp = '15:51:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -144,8 +144,8 @@ function unFloat() {
 function resizeTextAreas() {
   resizeTextarea($('lst-stack'));
   resizeTextarea($('lst-notes'));
-  // if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
-  // if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');  
+  if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
+  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');  
 }
 
 function resizeTextarea(textarea) {
@@ -155,7 +155,7 @@ function resizeTextarea(textarea) {
   
   if (textareaHeight > 0) {
     textarea.style.height = (winSize[1] + textareaHeight - bodyHeight) + 'px';    
-    // textarea.classList.remove('resizable');
+    textarea.classList.remove('resizable');
   }
   unFloat();
 }
