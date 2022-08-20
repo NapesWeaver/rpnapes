@@ -153,10 +153,10 @@ function resizeTextarea(textarea) {
   var textareaHeight = textarea.offsetHeight;
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
   
-  if (textareaHeight > 0) {
+  // if (textareaHeight > 0) {
     textarea.style.height = (winSize[1] + textareaHeight - bodyHeight) + 'px';    
     textarea.classList.remove('resizable');
-  }
+  // }
   unFloat();
 }
 
@@ -4936,6 +4936,21 @@ document.addEventListener('click', function (evt) {
   }
 });
 
+// document.addEventListener('keypress', function (event) {
+//   var key = event.keyCode || event.charCode;
+
+//   switch (key) {
+//   case 13:// ENTER
+//   if ($('rpnapes').className !== 'hidden') {    
+//       if (!event) event = window.event;
+//       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+//       enterButton();
+//       return false;
+//     } 
+//     break;
+//   }
+// });
+
 document.addEventListener('keypress', function (event) {
   var key = event.keyCode || event.charCode;
 
@@ -4944,7 +4959,7 @@ document.addEventListener('keypress', function (event) {
   if ($('rpnapes').className !== 'hidden') {    
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      enterButton();
+      if (!isMobile) enterButton();
       return false;
     } 
     break;
