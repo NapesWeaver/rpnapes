@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '14:40:00';
+var tStamp = '1:05:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -519,13 +519,10 @@ function runProgram() {
 function softEnter() {
   backupUndo();
   cashed = '';
-
-  if (stackFocus) {
-    insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  } else {
-    var input = $('txt-input').value.trim();
-    if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
-  }
+  
+  var input = $('txt-input').value.trim();
+  if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
+  
   updateDisplay();
   parseCommand();
 }
@@ -2432,7 +2429,12 @@ function menuStopwatch() {
 
 function enterLapTime() {
   $('txt-input').value = timeToString(elapsedTime);
-  btnEnter();
+  if (isMobile) {
+    softEnter();
+  } else {
+    btnEnter();
+    resizeInput();
+  }
 }
 
 function stopwatchStart(seconds) { 
@@ -2443,8 +2445,11 @@ function stopwatchStart(seconds) {
     startTime = Date.now() - elapsedTime;
     
     if (stack[stack.length - 1] !== undefined && stack[stack.length - 1].getSoul() === 'stopwatch') stack.pop();
-    inputText('Quit the stopwatch/timer with the \'stop\' command or by clicking Stopwatch menu item.');
+    inputText('Click timer for lap times.\nQuit stopwatch by clicking Stopwatch menu item or use \'stop\' command.');
+    btnEnter();
+    $('txt-input').value = '';
     updateDisplay();
+    resizeInput();
 
     if (seconds) {
       alertTimer = setTimeout(function() {
