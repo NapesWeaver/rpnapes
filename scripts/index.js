@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '17:46:00';
+var tStamp = '17:53:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -153,10 +153,10 @@ function resizeTextarea(textarea) {
   var textareaHeight = textarea.offsetHeight;
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
   
-  // if (textareaHeight > 0) {
+  if (textareaHeight > 0) {
     textarea.style.height = (winSize[1] + textareaHeight - bodyHeight) + 'px';    
     textarea.classList.remove('resizable');
-  // }
+  }
   unFloat();
 }
 
