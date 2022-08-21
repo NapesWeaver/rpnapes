@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '1:14:00';
+var tStamp = '17:46:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -535,6 +535,18 @@ function enterButton() {
   }
 }
 
+// function enterButton() {
+//   if (shifted) {
+//     if (isMobile) {
+
+//     } else {
+//       btnEval();
+//     }
+//   } else {
+//     btnEnter();
+//   }
+// }
+
 function btnEnter() {
   backupUndo();
   cashed = '';
@@ -568,6 +580,23 @@ function btnEval() {
   $('txt-input').select();  
 }
 
+function softEval() {
+  backupUndo();
+  var objX;
+  var units = '';
+  cashed = '';
+
+  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  objX = getX();
+
+  if (objX.getSoul().match(/^run$/)) {
+    btnLoad();
+    return;
+  } 
+  displayResult(calculate($('txt-input').value), units);  
+  $('txt-input').select();  
+}
+
 function enterInput() {
   var objX = getX();
   stack.push(objX);
@@ -582,6 +611,7 @@ function calculate(x) {
       // x = parseEvaluation(x);
       // x = math.evaluate(x);
     } catch(e) {
+      if (isMobile) return;
       return e.toString();
       // x = eval(parseEvaluation(x));
   }
