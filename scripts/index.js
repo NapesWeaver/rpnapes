@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '1:05:00';
+var tStamp = '1:14:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2396,11 +2396,11 @@ function autoDark() {
 /**
  * https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
 **/
-var startTime;
+var startTime = 0;
 var elapsedTime = 0;
-var timerInterval;
-var flashInterval;
-var alertTimer;
+var timerInterval = 0;
+var flashInterval = 0;
+var alertTimer = 0;
 
 function timeToString(time) {
   var diffInHrs = time / 3600000;
@@ -2459,7 +2459,6 @@ function stopwatchStart(seconds) {
         $('timer').innerHTML = '';
         if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate(300);
         playAudio($('dual-red-alert'));
-        // playAudio($('computerscanner'));
         flashInterval = setInterval(function() {
           toggleDarkMode();
         }, 1000);
