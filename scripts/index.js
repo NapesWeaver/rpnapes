@@ -516,6 +516,20 @@ function runProgram() {
   btnLoad();
 }
 
+function softEnter() {
+  backupUndo();
+  cashed = '';
+
+  if (stackFocus) {
+    insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
+  } else {
+    var input = $('txt-input').value.trim();
+    if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
+  }
+  updateDisplay();
+  parseCommand();
+}
+
 function enterButton() {
   if (shifted) {
     btnEval();
@@ -4945,7 +4959,11 @@ document.addEventListener('keypress', function (event) {
   if ($('rpnapes').className !== 'hidden') {    
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      if (!isMobile) enterButton();
+      if (isMobile) {
+        softEnter();
+      } else {
+        enterButton();
+      }
       return false;
     } 
     break;
