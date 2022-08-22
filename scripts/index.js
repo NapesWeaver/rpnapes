@@ -535,18 +535,6 @@ function enterButton() {
   }
 }
 
-// function enterButton() {
-//   if (shifted) {
-//     if (isMobile) {
-
-//     } else {
-//       btnEval();
-//     }
-//   } else {
-//     btnEnter();
-//   }
-// }
-
 function btnEnter() {
   backupUndo();
   cashed = '';
@@ -559,7 +547,7 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
   updateDisplay();
-  if (isMobile) resizeInput();
+  if (isMobile) setTimeout(resizeInput, 100);
   parseCommand();  
 }
 
