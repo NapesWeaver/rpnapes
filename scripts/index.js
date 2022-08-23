@@ -387,7 +387,7 @@ function btnPaste() {
       rpnAlert('Not supported by browser.');
     }
   }
-  setTimeout(resizeInput, 100);
+  setTimeout(resizeInput, 180);
   $('txt-input').focus();
 }
 
@@ -508,7 +508,7 @@ function xyFunction() {
     enterInput();
     swapX(objX);
   }
-  setTimeout(resizeInput, 100);
+  setTimeout(resizeInput, 180);
 }
 
 function runProgram() {
@@ -547,7 +547,7 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
   updateDisplay();
-  if (isMobile) setTimeout(resizeInput, 100);
+  if (isMobile) setTimeout(resizeInput, 180);
   parseCommand();  
 }
 
@@ -653,7 +653,7 @@ function deleteInput() {
 
 function btnDelete() {  
   deleteInput();
-  setTimeout(resizeInput, 100);
+  setTimeout(resizeInput, 180);
 }
 
 function deleteText(txtField, forward) {
@@ -686,7 +686,7 @@ function btnBackspace() {
   } else {
     deleteText($('txt-input'), false);
   }
-  setTimeout(resizeInput, 100);
+  setTimeout(resizeInput, 180);
 }
 
 function btnUndo() {
