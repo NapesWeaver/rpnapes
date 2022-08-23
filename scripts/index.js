@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '18:22:00';
+var tStamp = '18:39:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -162,18 +162,9 @@ function resizeTextarea(textarea) {
 
 function resizeInput() {
   var winSize = getSize();   
-  var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
-  var inputHeight = $('txt-input').scrollHeight;
-  var entryPadHeight = $('entry-pad').offsetHeight;
-  
+  var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;  
   $('txt-input').style.height = '0';
-
-  if (inputHeight < winSize[1] - entryPadHeight - 90) {
-    $('txt-input').style.height = inputHeight + 'px';  
-  } else {
-    $('txt-input').style.height = winSize[1] - entryPadHeight - 110 + 'px';
-    resizeTextarea($('lst-stack'));
-  }
+  $('txt-input').style.height = $('txt-input').scrollHeight + 'px';  
   if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
@@ -662,7 +653,7 @@ function deleteInput() {
 
 function btnDelete() {  
   deleteInput();
-  setTimeout(resizeInput, 180);
+  setTimeout(resizeInput(), 180);
 }
 
 function deleteText(txtField, forward) {
@@ -1027,7 +1018,7 @@ function btnClear() {
   $('lst-stack').value = '';
   stack.length = 0;
   colorSaveButton();
-  resizeInput();
+  $('txt-input').style.height = '0';
   $('txt-input').focus();
 }
 
