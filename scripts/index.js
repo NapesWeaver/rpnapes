@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '1:29:00';
+var tStamp = '1:35:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3707,7 +3707,7 @@ function extractFirstValue(tmpString) {
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
-  if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
+  if (/[.]/g.test(tmpReal) && !/[Ee]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
   if (/^[-]?0*/.test(tmpReal)) tmpReal = removeLeadingZeros(tmpReal);
   if (tmpReal === '') tmpReal = 'NaN';
 
@@ -3744,7 +3744,7 @@ function extractImaginary(tmpString) {
   }
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpImaginary)) tmpImaginary = '0';
-  if (/[.]/g.test(tmpImaginary)) tmpImaginary = removeTrailingZeros(tmpImaginary);
+  if (/[.]/g.test(tmpImaginary) && !/[Ee]/g.test(tmpImaginary)) tmpImaginary = removeTrailingZeros(tmpImaginary);
   if (/^[-]?0*/.test(tmpImaginary)) tmpImaginary = removeLeadingZeros(tmpImaginary);
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
 
