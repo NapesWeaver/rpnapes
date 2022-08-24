@@ -455,7 +455,8 @@ function objToString(obj) {
       }
     } else {
       // Polar
-      if (!isImaginary || obj.getImaginary() === '0') {   
+      // console.log('obj.getImaginary()', obj.getImaginary());
+      if (isNumber && (obj.getImaginary() === 'NaN' || obj.getImaginary() === '0')) {   
         theString += formatNumber(obj.getRealPart().toString());
       } else {            
         var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
@@ -3655,16 +3656,10 @@ function decodeSpecialChar(tmpString) {
 
 function removeTrailingZeros(str) {
 
-  while (str.length > 1 && /[.0]$/.test(str)) {
-    
-    if (/[.]$/.test(str)) {
-      str = str.slice(0, -1);
-      // console.log('trail [.]', str);
-      return str;
-    }
+  while (/[.]*0$/.test(str)) {    
     str = str.slice(0, -1);
   }
-  // console.log('trail', str);
+  if (/[.]$/.test(str)) str = str.slice(0, -1);
   return str;
 }
 
@@ -3710,21 +3705,18 @@ function extractFirstValue(tmpString) {
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
-  // if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
-  // tmpReal = removeLeadingZeros(tmpReal);
-
+  if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
   if (tmpReal === '') tmpReal = 'NaN';
-  
+  // console.log('tmpReal', tmpReal);
+
   return tmpReal;
 }
 
 function extractImaginary(tmpString) {
   var tmpImaginary = '';
   if (radix === 10) {
-    // No evaluation symbols && no more than one imaginary number   
-    // if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {   
-    if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {   
-      // var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ]*)\b/);     
+    // No evaluation symbols && no more than one imaginary number 
+    if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {     
       var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ]*)\b/);     
       tmp = tmp.replace(/ /g, '');
 
@@ -3750,16 +3742,15 @@ function extractImaginary(tmpString) {
   }
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpImaginary)) tmpImaginary = '0';
-
+  if (/[.]/g.test(tmpImaginary)) tmpImaginary = removeTrailingZeros(tmpImaginary);
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
-  
+  // console.log('tmpImginary', tmpImaginary);
+
   return  tmpImaginary;
 }
 
 function parseAngle(tmpAngle, firstValue) {
   var tmpComplex = [];
-
-  // if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpAngle)) tmpAngle = '0';
 
   if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
 
