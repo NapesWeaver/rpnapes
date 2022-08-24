@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '22:39:00';
+var tStamp = '1:29:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -455,7 +455,6 @@ function objToString(obj) {
       }
     } else {
       // Polar
-      // console.log('obj.getImaginary()', obj.getImaginary());
       if (isNumber && (obj.getImaginary() === 'NaN' || obj.getImaginary() === '0')) {   
         theString += formatNumber(obj.getRealPart().toString());
       } else {            
@@ -3664,12 +3663,15 @@ function removeTrailingZeros(str) {
 }
 
 function removeLeadingZeros(str) {
-  var neg = str.charAt(0) === '-' ? '-' : '';
-
-  while (str.length > 1 && /^[0](?![.])/.test(str)) {
+  var neg = '';
+  
+  if (str.charAt(0) === '-') {
+    neg = '-';
     str = str.slice(1);
   }
-  // console.log('lead', str);
+  while (str.length > 1 && /^[0][.]*/.test(str)) {
+    str = str.slice(1);
+  }
   return neg + str;
 }
 
@@ -3706,8 +3708,8 @@ function extractFirstValue(tmpString) {
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
   if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
+  if (/^[-]?0*/.test(tmpReal)) tmpReal = removeLeadingZeros(tmpReal);
   if (tmpReal === '') tmpReal = 'NaN';
-  // console.log('tmpReal', tmpReal);
 
   return tmpReal;
 }
@@ -3743,8 +3745,8 @@ function extractImaginary(tmpString) {
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpImaginary)) tmpImaginary = '0';
   if (/[.]/g.test(tmpImaginary)) tmpImaginary = removeTrailingZeros(tmpImaginary);
+  if (/^[-]?0*/.test(tmpImaginary)) tmpImaginary = removeLeadingZeros(tmpImaginary);
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
-  // console.log('tmpImginary', tmpImaginary);
 
   return  tmpImaginary;
 }
