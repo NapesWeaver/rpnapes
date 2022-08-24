@@ -3759,7 +3759,7 @@ function extractImaginary(tmpString) {
 function parseAngle(tmpAngle, firstValue) {
   var tmpComplex = [];
 
-  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpAngle)) tmpAngle = '0';
+  // if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpAngle)) tmpAngle = '0';
 
   if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
 
