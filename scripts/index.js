@@ -161,6 +161,7 @@ function resizeTextarea(textarea) {
 }
 
 function resizeInput() {
+  $('lst-stack').focus();
   var winSize = getSize();   
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
   var inputHeight = $('txt-input').scrollHeight;
@@ -176,6 +177,7 @@ function resizeInput() {
   }
   if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  $('txt-input').focus();
 }
 
 function toggleForm() {
