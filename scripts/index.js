@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '20:46:00';
+var tStamp = '22:04:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -5016,18 +5016,18 @@ document.addEventListener('keydown', function (event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       if (!isMobile || !isChrome) btnBackspace();
     }
-    break;
+    return;
   case 16:// SHIFT
     if (altHeld) btnShift();    
-    break;
+    return;
   case 17:// CTRL
     if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     ctrlHeld = true;
-    break;
+    return;
   case 18:// ALT
     altHeld = true;
-    break;
+    return;
   case 37:// LEFT ARROW
     if (twig.health > 0 && $('twig').className !== 'hidden') {
       if (!event) event = window.event;
@@ -5093,7 +5093,7 @@ document.addEventListener('keydown', function (event) {
       deleteInput();
       if (!isMobile) resizeInput();        
     }
-    break;
+    return;
   case 83:// S
     if (ctrlHeld) {
       if (!event) event = window.event;
