@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '3:33:00';
+var tStamp = '11:47:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -559,11 +559,7 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
   updateDisplay();
-  // if (isMobile) setTimeout(resizeInput, 180);
-  $('lst-stack').focus();
-  // lstStackFocus();
-  setTimeout(resizeInput, 180);
-  $('txt-input').focus();
+  if (isMobile) setTimeout(resizeInput, 180);
   parseCommand();  
 }
 
