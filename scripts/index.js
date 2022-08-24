@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '20:40:00';
+var tStamp = '20:46:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -399,7 +399,7 @@ function btnPaste() {
   setTimeout(resizeInput, 180);
   setTimeout(function() {
     $('txt-input').scrollTop = $('txt-input').scrollHeight;
-  }, 187);
+  }, 186);
   $('txt-input').focus();
 }
 
@@ -3757,7 +3757,9 @@ function extractImaginary(tmpString) {
 }
 
 function parseAngle(tmpAngle, firstValue) {
-  var tmpComplex = [];  
+  var tmpComplex = [];
+
+  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpAngle)) tmpAngle = '0';
 
   if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
 
@@ -3773,7 +3775,7 @@ function parseAngle(tmpAngle, firstValue) {
   } else {
     tmpComplex[0] = polar.re;
     tmpComplex[1] = polar.im.toString();
-  }       
+  }
   return tmpComplex;
 }
 
@@ -5033,7 +5035,7 @@ document.addEventListener('keydown', function (event) {
       $('twig').src = 'images/twig/walk-left.gif';
       moveObj(twig, twig.speed, -1, 0);
     }
-    break;
+    return;
   case 38:// UP ARROW
     if ($('rpnapes').className !== 'hidden') {
       if (!event) event = window.event;
@@ -5058,7 +5060,7 @@ document.addEventListener('keydown', function (event) {
         moveObj(twig, twig.speed, 0, -1);
       }
     }
-    break;
+    return;
   case 39:// RIGHT ARROW
     if (twig.health > 0 && $('twig').className !== 'hidden') {
       if (!event) event = window.event;
@@ -5066,7 +5068,7 @@ document.addEventListener('keydown', function (event) {
       $('twig').src = 'images/twig/walk-right.gif';
       moveObj(twig, twig.speed, 1, 0);      
     }
-    break;
+    return;
   case 40:// DOWN ARROW
     if ($('rpnapes').className !== 'hidden')  {
       if (!event) event = window.event;
@@ -5083,7 +5085,7 @@ document.addEventListener('keydown', function (event) {
         moveObj(twig, twig.speed, 0, 1);
       }
     }
-    break;
+    return;
   case 46:// DELETE
     if ($('rpnapes').className !== 'hidden') {
       if (!event) event = window.event;
@@ -5158,7 +5160,7 @@ document.addEventListener('keydown', function (event) {
     break; 
   }
   // Resizing input with soft-keyboard open breaks resizing logic
-  if (!isMobile) resizeInput();    
+  if (!isMobile) resizeInput();
 });
 
 document.addEventListener('keyup', function (event) {
