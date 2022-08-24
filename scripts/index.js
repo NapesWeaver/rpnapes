@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '11:25:00';
+var tStamp = '11:39:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -161,7 +161,7 @@ function resizeTextarea(textarea) {
 }
 
 function resizeInput() {
-  $('lst-stack').focus();
+  
   var winSize = getSize();   
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
   var inputHeight = $('txt-input').scrollHeight;
@@ -177,6 +177,7 @@ function resizeInput() {
   }
   if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  
   $('txt-input').focus();
 }
 
@@ -561,7 +562,7 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
   updateDisplay();
-  if (isMobile) $('lst-stack').focus();
+  lstStackFocus();
   if (isMobile) setTimeout(resizeInput, 180);
   parseCommand();  
 }
@@ -668,6 +669,7 @@ function deleteInput() {
 
 function btnDelete() {  
   deleteInput();
+  lstStackFocus();
   setTimeout(resizeInput, 180);
 }
 
