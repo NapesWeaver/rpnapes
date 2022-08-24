@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '22:22:00';
+var tStamp = '22:26:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -665,7 +665,7 @@ function deleteInput() {
 
 function btnDelete() {  
   deleteInput();
-  setTimeout(resizeInput(), 900);
+  setTimeout(resizeInput(), 180);
 }
 
 function deleteText(txtField, forward) {
@@ -5093,7 +5093,7 @@ document.addEventListener('keydown', function (event) {
       deleteInput();
       if (!isMobile) resizeInput();        
     }
-    return;
+    break;
   case 83:// S
     if (ctrlHeld) {
       if (!event) event = window.event;
