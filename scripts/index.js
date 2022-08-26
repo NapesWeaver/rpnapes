@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '15:54:00';
+var tStamp = '16:08:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -562,7 +562,7 @@ function btnEnter() {
   // if (isMobile) setTimeout(resizeInput, 180);
   
   parseCommand();
-  stackFocus = true;
+  onClickSelection($('lst-stack'));
   setTimeout(function() {
     resizeInput();
     stackFocus = false;
