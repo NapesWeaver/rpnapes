@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '15:30:00';
+var tStamp = '15:43:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -264,7 +264,7 @@ function toggleKeyboard() {
 function mobileKeyboardAllow() {
   if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
     if ($('txt-input').readOnly === true) {
-      // moveCursorToEnd($('txt-input'));
+      moveCursorToEnd($('txt-input'));
       $('txt-input').readOnly = false;
     }
   }
