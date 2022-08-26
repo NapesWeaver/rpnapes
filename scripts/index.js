@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '16:49:00';
+var tStamp = '18:34:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3466,6 +3466,11 @@ function insertText(text) {
   $('txt-input').focus();
 }
 
+function mobileSelectInput() {
+    $('txt-input').selectionStart = 0;
+    $('txt-input').selectionEnd = $('txt-input').value.length;
+}
+
 function updateDisplay() {
   $('lst-stack').value = '';  
   // Buffer stack display
@@ -3487,8 +3492,18 @@ function updateDisplay() {
   colorSaveButton();  
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     
+  // if (!(isChrome && isMobile)) {
+  //   $('txt-input').select();  
+  // } else {
+  //   $('txt-input').focus();
+  // }
+
+  // $('txt-input').select();  
+  // $('txt-input').focus();
+  // onClickSelection($('txt-input'));  
+
   if (!(isChrome && isMobile)) {
-    $('txt-input').select();  
+    mobileSelectInput();  
   } else {
     $('txt-input').focus();
   }
