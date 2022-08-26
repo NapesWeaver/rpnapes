@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '10:43:00';
+var tStamp = '10:53:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -165,6 +165,8 @@ function resizeInput() {
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
   var inputHeight = $('txt-input').scrollHeight;
   var entryPadHeight = $('entry-pad').offsetHeight;
+  
+  $('txt-input').readOnly = true;
   
   $('txt-input').style.height = '0';
 
@@ -4398,8 +4400,7 @@ function btnDeleteNotes() {
   $('lst-notes').setSelectionRange(startPos, startPos);
   backupUndoNotes();
 
-  // if (isMobile) $('lst-notes').readOnly = true;
-  // if (isMobile) $('txt-input').readOnly = true;
+  // if (isMobile) $('lst-notes').readOnly = true;  
   if (!isMobile) $('lst-notes').focus();
 }
 
@@ -5441,7 +5442,7 @@ window.onload = function () {
 
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
-  $('txt-input').readOnly = true;
+  // $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
     backupUndo();
   });
@@ -5527,9 +5528,9 @@ window.onload = function () {
   $('btn-clear-notes').onclick = btnClearNotes;
   $('btn-delete-notes').onclick = btnDeleteNotes;
 
-  $('lst-notes').onclick = function() {
-    $('lst-notes').readOnly = false;
-  }
+  // $('lst-notes').onclick = function() {
+  //   $('lst-notes').readOnly = false;
+  // }
   $('lst-notes').oninput = backupUndoNotes; 
 
   // Attach hapticResponse to Menu items and buttons
