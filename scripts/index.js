@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '11:47:00';
+var tStamp = '10:43:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -4398,7 +4398,8 @@ function btnDeleteNotes() {
   $('lst-notes').setSelectionRange(startPos, startPos);
   backupUndoNotes();
 
-  if (isMobile) $('lst-notes').readOnly = true;
+  // if (isMobile) $('lst-notes').readOnly = true;
+  // if (isMobile) $('txt-input').readOnly = true;
   if (!isMobile) $('lst-notes').focus();
 }
 
@@ -5559,7 +5560,7 @@ window.onload = function () {
     $('btn-save').style.color = '#D4D0C8';
   }
   autoDark();
-  $('txt-input').readOnly = false;
+  // $('txt-input').readOnly = false;
   $('txt-input').focus();
   /** 
    * Better color pallet.
