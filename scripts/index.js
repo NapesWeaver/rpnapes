@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '11:47:00';
+var tStamp = '13:43:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -161,6 +161,7 @@ function resizeTextarea(textarea) {
 }
 
 function resizeInput() {
+  moveCursorToEnd($('txt-input'));
   var winSize = getSize();   
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
   var inputHeight = $('txt-input').scrollHeight;
@@ -5440,7 +5441,7 @@ window.onload = function () {
 
   // Text Input
   $('txt-input').onclick = mobileKeyboardAllow;
-  $('txt-input').readOnly = true;
+  // $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
     backupUndo();
   });
