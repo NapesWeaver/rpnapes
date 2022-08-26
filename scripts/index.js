@@ -161,6 +161,8 @@ function resizeTextarea(textarea) {
 }
 
 function resizeInput() {
+  $('txt-input').readOnly = true;
+  
   var winSize = getSize();   
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
   var inputHeight = $('txt-input').scrollHeight;
@@ -176,6 +178,8 @@ function resizeInput() {
   }
   if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+
+  $('txt-input').readOnly = false;
 }
 
 function toggleForm() {
@@ -260,7 +264,7 @@ function toggleKeyboard() {
 function mobileKeyboardAllow() {
   if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
     if ($('txt-input').readOnly === true) {
-      moveCursorToEnd($('txt-input'));
+      // moveCursorToEnd($('txt-input'));
       $('txt-input').readOnly = false;
     }
   }
