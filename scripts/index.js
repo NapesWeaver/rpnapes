@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '11:47:00';
+var tStamp = '15:12:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -258,6 +258,7 @@ function toggleKeyboard() {
 }
 
 function mobileKeyboardAllow() {
+  console.log('readOnly', $('txt-input').readOnly);
   if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
     if ($('txt-input').readOnly === true) {
       moveCursorToEnd($('txt-input'));
@@ -559,7 +560,12 @@ function btnEnter() {
     if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
   }
   updateDisplay();
-  if (isMobile) setTimeout(resizeInput, 180);
+  // if (isMobile) setTimeout(resizeInput, 180);
+  $('txt-input').readOnly = true;
+  setTimeout(function() {
+    resizeInput();
+    $('txt-input').readOnly = false;
+  }, 180);
   parseCommand();  
 }
 
