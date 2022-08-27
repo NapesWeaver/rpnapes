@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '20:31:00';
+var tStamp = '20:55:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -5486,8 +5486,6 @@ window.onload = function () {
   $('btn-add').onclick = btnAdd;
   $('btn-tangent').onclick = btnTangent;
   $('btn-off').onclick = btnOff;
-
-  $('footer').onclick = resizeInput;
 
   // Tricorder
   preloadImages();
