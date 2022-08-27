@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '19:06:00';
+var tStamp = '19:31:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1874,8 +1874,7 @@ function displayResult(result, newUnits) {
 
   $('txt-input').value = result;  
   updateDisplay();
-  // resizeInput();
-  isFirefox && isMobile ? setTimeout(resizeInput, 180) : resizeInput();
+  resizeInput();
 }
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
@@ -3493,7 +3492,8 @@ function updateDisplay() {
   colorSaveButton();  
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   // !(isChrome && isMobile) ? $('txt-input').select() : $('txt-input').focus();
-  isFirefox && isMobile ? mobileSelectInput() : $('txt-input').select();
+  // isFirefox && isMobile ? mobileSelectInput() : $('txt-input').select();
+  $('txt-input').select();
 }
 
 function printHtml() {
