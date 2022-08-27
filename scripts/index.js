@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '20:55:00';
+var tStamp = '21:53:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -5440,6 +5440,10 @@ window.onload = function () {
     backupUndo();
   });
 
+  if (isFirefox && isMobile) {
+    $('num-pad').style.marginTop = '0';
+    $('txt-input').style.paddingBottom = '.6em';
+  }  
   // Buttons
   $('btn-xoff').onclick = btnXoff;
   $('btn-copy').onclick = btnCopy;
