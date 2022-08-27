@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '22:14:00';
+var tStamp = '22:25:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3486,7 +3486,7 @@ function updateDisplay() {
   }
   colorSaveButton();  
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-  $('txt-input').select();
+  isFirefox && isMobile ? $('txt-input').focus() : $('txt-input').select();
 }
 
 function printHtml() {
