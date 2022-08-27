@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '22:42:00';
+var tStamp = '22:47:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -4999,10 +4999,10 @@ document.addEventListener('keydown', function (event) {
 
   switch (key) {
   case 8:// BACKSPACE  
-    if ($('rpnapes').className !== 'hidden') {
+    if ($('rpnapes').className !== 'hidden' && !isMobile) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      if (!isMobile) btnBackspace();
+      btnBackspace();
     }
     return;
   case 16:// SHIFT
