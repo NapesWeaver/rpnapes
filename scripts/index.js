@@ -3485,16 +3485,7 @@ function updateDisplay() {
     }
   }
   colorSaveButton();  
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    
-  // isFirefox && isMobile ? $('txt-input').focus() : $('txt-input').select();
-
-  // if (!(isChrome && isMobile)) {
-  //   $('txt-input').select();  
-  // } else {
-  //   $('txt-input').focus();
-  // }
-
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;   
   $('txt-input').select();
 }
 
@@ -4985,10 +4976,9 @@ document.addEventListener('click', function (evt) {
 });
 
 document.addEventListener('keypress', function (event) {
-  var key = event.keyCode || event.charCode;
-
-  switch (key) {
-  case 13:// ENTER
+  
+  switch (event.key) {
+  case 'Enter':
   if ($('rpnapes').className !== 'hidden') {    
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -4998,8 +4988,7 @@ document.addEventListener('keypress', function (event) {
         enterButton();
       }
       return false;
-    } 
-    break;
+    }
   }
 });
 
