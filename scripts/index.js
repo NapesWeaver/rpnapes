@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '15:42:00';
+var tStamp = '16:06:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -520,8 +520,7 @@ function xyFunction() {
     enterInput();
     swapX(objX);
   }
-  // setTimeout(resizeInput, 180);
-  resizeInput();
+  setTimeout(resizeInput, 180);
 }
 
 function runProgram() {
@@ -5438,9 +5437,9 @@ window.onload = function () {
     backupUndo();
   });
 
-  // if (isMobile) {
+  if (isMobile) {
   //   $('lst-stack').style.marginBottom = '.6em';
-  //   $('num-pad').style.marginTop = '0';
+    $('num-pad').style.marginTop = '0';
   //   $('entry-pad').style.marginTop = '.6em';
   //   $('btn-zero').style.marginBottom = '3px';
   //   $('btn-dot').style.marginBottom = '3px';
@@ -5448,7 +5447,9 @@ window.onload = function () {
   //   $('btn-add').style.marginBottom = '3px';
   //   $('btn-tangent').style.marginBottom = '3px';
   //   $('btn-off').style.marginBottom = '3px';
-  // }
+    $('menu-wrap').style.paddingTop = '6px';
+    $('menu-wrap').style.paddingBottom = '33px';
+  }
 
   // Buttons
   $('btn-xoff').onclick = btnXoff;
