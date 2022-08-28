@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '22:47:00';
+var tStamp = '14:36:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3486,7 +3486,14 @@ function updateDisplay() {
   }
   colorSaveButton();  
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-  isFirefox && isMobile ? $('txt-input').focus() : $('txt-input').select();
+    
+  // isFirefox && isMobile ? $('txt-input').focus() : $('txt-input').select();
+
+  if (!(isChrome && isMobile)) {
+    $('txt-input').select();  
+  } else {
+    $('txt-input').focus();
+  }
 }
 
 function printHtml() {
@@ -4999,10 +5006,12 @@ document.addEventListener('keydown', function (event) {
 
   switch (key) {
   case 8:// BACKSPACE  
-    if ($('rpnapes').className !== 'hidden' && !isMobile) {
+    // if ($('rpnapes').className !== 'hidden' && !isMobile) {
+    if ($('rpnapes').className !== 'hidden') {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btnBackspace();
+      // btnBackspace();
+      if (!isMobile || !isChrome) btnBackspace();
     }
     return;
   case 16:// SHIFT
@@ -5440,17 +5449,18 @@ window.onload = function () {
     backupUndo();
   });
 
-  if (isMobile) {
-    $('lst-stack').style.marginBottom = '.6em';
-    $('num-pad').style.marginTop = '0';
-    $('entry-pad').style.marginTop = '.6em';
-    $('btn-zero').style.marginBottom = '3px';
-    $('btn-dot').style.marginBottom = '3px';
-    $('btn-space').style.marginBottom = '3px';
-    $('btn-add').style.marginBottom = '3px';
-    $('btn-tangent').style.marginBottom = '3px';
-    $('btn-off').style.marginBottom = '3px';
-  }  
+  // if (isMobile) {
+  //   $('lst-stack').style.marginBottom = '.6em';
+  //   $('num-pad').style.marginTop = '0';
+  //   $('entry-pad').style.marginTop = '.6em';
+  //   $('btn-zero').style.marginBottom = '3px';
+  //   $('btn-dot').style.marginBottom = '3px';
+  //   $('btn-space').style.marginBottom = '3px';
+  //   $('btn-add').style.marginBottom = '3px';
+  //   $('btn-tangent').style.marginBottom = '3px';
+  //   $('btn-off').style.marginBottom = '3px';
+  // }
+
   // Buttons
   $('btn-xoff').onclick = btnXoff;
   $('btn-copy').onclick = btnCopy;
