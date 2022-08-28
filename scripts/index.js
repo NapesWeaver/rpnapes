@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '16:23:00';
+var tStamp = '18:15:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
