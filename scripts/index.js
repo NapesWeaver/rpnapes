@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '16:06:00';
+var tStamp = '16:23:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -174,6 +174,7 @@ function resizeInput() {
     $('txt-input').style.height = winSize[1] - entryPadHeight - 110 + 'px';
     resizeTextarea($('lst-stack'));
   }
+  if (isMobile) bodyHeight = winSize[1];  
   if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
