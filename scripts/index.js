@@ -5437,20 +5437,6 @@ window.onload = function () {
     backupUndo();
   });
 
-  if (isMobile) {
-  //   $('lst-stack').style.marginBottom = '.6em';
-    $('num-pad').style.marginTop = '0';
-  //   $('entry-pad').style.marginTop = '.6em';
-  //   $('btn-zero').style.marginBottom = '3px';
-  //   $('btn-dot').style.marginBottom = '3px';
-  //   $('btn-space').style.marginBottom = '3px';
-  //   $('btn-add').style.marginBottom = '3px';
-  //   $('btn-tangent').style.marginBottom = '3px';
-  //   $('btn-off').style.marginBottom = '3px';
-    $('menu-wrap').style.paddingTop = '6px';
-    $('menu-wrap').style.paddingBottom = '33px';
-  }
-
   // Buttons
   $('btn-xoff').onclick = btnXoff;
   $('btn-copy').onclick = btnCopy;
