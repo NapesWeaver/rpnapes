@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '14:41:00';
+var tStamp = '14:49:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1022,8 +1022,7 @@ function btnShift() {
   } else {
     $('txt-input').focus();
   }
-  // if (isMobile) resizeInput();
-  if (isMobile) bodyHeight = winSize[1];
+  if (isMobile) resizeInput();
 }
 
 function btnClear() {
@@ -1045,6 +1044,8 @@ function btnSave() {
   saveCookie('STACK', nestArrayByBrowser(shortStack));
   saveCookie('MATHMON', nestArrayByBrowser(theObjects));
   $('txt-input').focus();
+
+  if (isMobile) resizeInput();
 }
 
 function nestArrayByBrowser(srcArray) {
@@ -1125,6 +1126,8 @@ function btnLoad() {
     loadMathMon(getCookie('MATHMON').slice(index));
   } catch(err) { rpnAlert('Load MATHMON error.'); }
   updateDisplay();
+
+  if (isMobile) resizeInput();
 }
 
 function loadProgram(tmpStack) {
