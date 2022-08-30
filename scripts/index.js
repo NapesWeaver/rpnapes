@@ -1532,11 +1532,13 @@ function radical() {
   }
 
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);   
+  displayResult(results[0], newUnits);
+
+  // console.log('results', results);
   // for (var i = 0; i < results.length; i++) {
-  //   displayResult(results[i], newUnits);
+  //   displayResult(results[i], newUnits) + '\n';
   //   if (i < results.length - 1) enterInput();
   // }
-  displayResult(results[0], newUnits);
 }
 
 function btnRoot() {
@@ -5006,6 +5008,7 @@ document.addEventListener('keydown', function (event) {
     if ($('rpnapes').className !== 'hidden' && !isMobile) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      btnBackspace();
     }
     return;
   case 16:// SHIFT
