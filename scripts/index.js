@@ -1530,16 +1530,7 @@ function radical() {
   } catch (e) {
     results = [e];
   }
-
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);   
-  displayResult(results[0], newUnits);
-
-  // console.log('results', results);
-  // for (var i = 0; i < results.length; i++) {
-  //   displayResult(results[i], newUnits);
-  //   if (i < results.length - 1) enterInput();
-  // }
-
   displayResults(results, newUnits);
 }
 
@@ -1887,20 +1878,14 @@ function displayResult(result, newUnits) {
   resizeInput();
 }
 
-function displayResults(results, newUnits) { 
-  console.log('typeof results', typeof results);
-  
+function displayResults(results, newUnits) {   
   $('txt-input').value = '';
   
   for (var i = 0; i < results.length; i++) {
-    console.log('results[i]', results[i]);
     $('txt-input').value += results[i];
     if (results[i] !== 0 && newUnits !== 0) $('txt-input').value += decodeSpecialChar(newUnits);
-    console.log('i', i);
-    console.log('length', length);
     if (i < results.length - 1) $('txt-input').value += '\n';
   }
-  console.log('value', $('txt-input').value);
   updateDisplay();
   resizeInput();
 }
@@ -3702,8 +3687,8 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
 
   if (radix === 10) {
-    // Not a constant or Infinity or number followed by evaluation symbols && not imaginary number && not IP address && not number-text-number e.g. 2x4   
-    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+    // Not a constant or Infinity or number followed by evaluation symbols && not imaginary number && not IP address && not number-text-number e.g. 2x4
+    if (!/\n/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
       tmp = tmp.replace(/ /g, '');
 
