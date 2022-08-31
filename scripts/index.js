@@ -556,8 +556,11 @@ function btnEnter() {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
     resizeInput();
   } else {
-    var input = $('txt-input').value.trim();
-    if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
+    var input = $('txt-input').value.split('\n');
+    
+    for (var i = 0; i < input.length; i++) {
+      if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input[i].trim()));
+    }
   }
   updateDisplay();
   if (isMobile) setTimeout(resizeInput, 180);
@@ -3688,7 +3691,7 @@ function extractFirstValue(tmpString) {
 
   if (radix === 10) {
     // Not a constant or Infinity or number followed by evaluation symbols && not imaginary number && not IP address && not number-text-number e.g. 2x4
-    if (!/\n/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
       tmp = tmp.replace(/ /g, '');
 
