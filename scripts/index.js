@@ -368,7 +368,7 @@ function btnXoff() {
     // RPNapes is visible - turn on Notes
     notesOn();
   }
-  if (isMobile) resizeTextAreas();
+  if (isMobile) setTimeout(resizeInput, 180);
 }
 
 function copy() {
@@ -1536,9 +1536,11 @@ function radical() {
 
   // console.log('results', results);
   // for (var i = 0; i < results.length; i++) {
-  //   displayResult(results[i], newUnits) + '\n';
+  //   displayResult(results[i], newUnits);
   //   if (i < results.length - 1) enterInput();
   // }
+
+  // displayResults(results, newUnits);
 }
 
 function btnRoot() {
@@ -1884,6 +1886,24 @@ function displayResult(result, newUnits) {
   updateDisplay();
   resizeInput();
 }
+
+// function displayResults(results, newUnits) { 
+//   console.log('typeof results', typeof results);
+  
+//   $('txt-input').value = '';
+  
+//   for (var i = 0; i < results.length; i++) {
+//     console.log('results[i]', results[i]);
+//     $('txt-input').value += results[i];
+//     if (results[i] !== 0 && newUnits !== 0) $('txt-input').value += decodeSpecialChar(newUnits);
+//     console.log('i', i);
+//     console.log('length', length);
+//     if (i < results.length - 1) $('txt-input').value += '\n';
+//   }
+//   console.log('value', $('txt-input').value);
+//   updateDisplay();
+//   resizeInput();
+// }
 
 //////// Trigonometric Buttons ///////////////////////////////////////////////////////
 
