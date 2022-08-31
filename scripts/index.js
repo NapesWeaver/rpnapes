@@ -466,8 +466,6 @@ function objToString(obj) {
       if (/[.][9]{13,}[0-9]*[0-9]$/.test(radius) || /[.][0]{13,}[0]*[1]$/.test(radius)) radius = Math.round(radius);  
       if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument) || /[.][0]{13,}[0]*[1]$/.test(argument)) argument = Math.round(argument);  
       
-      console.log(typeof argument);
-      console.log('argument', argument);
       theString += formatNumber(radius);
       if (argument !== 0) theString += '∠' + formatNumber(argument);          
     }
