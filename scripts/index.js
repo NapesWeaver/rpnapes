@@ -455,21 +455,21 @@ function objToString(obj) {
         }        
       }
     } else {
-      // Polar
-      if (isNumber && (obj.getImaginary() === 'NaN' || obj.getImaginary() === '0')) {   
-        theString += formatNumber(obj.getRealPart().toString());
-      } else {            
-        var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
-        var complex = math.complex(argument, calculate(obj.getImaginary()));
-        var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
-        
-        argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
- 
-        if (/[.][9]{13,}[0-9]*[0-9]$/.test(radius) || /[.][0]{13,}[0]*[1]$/.test(radius)) radius = Math.round(radius);  
-        if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument) || /[.][0]{13,}[0]*[1]$/.test(argument)) argument = Math.round(argument);  
-                
-        theString += formatNumber(radius) + '∠' + formatNumber(argument); 
-      }      
+      // Polar           
+      var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
+      var imaginary = calculate(obj.getImaginary()) ? calculate(obj.getImaginary()) : 0;
+      var complex = math.complex(argument, imaginary);
+      var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
+      
+      argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
+
+      if (/[.][9]{13,}[0-9]*[0-9]$/.test(radius) || /[.][0]{13,}[0]*[1]$/.test(radius)) radius = Math.round(radius);  
+      if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument) || /[.][0]{13,}[0]*[1]$/.test(argument)) argument = Math.round(argument);  
+      
+      console.log(typeof argument);
+      console.log('argument', argument);
+      theString += formatNumber(radius);
+      if (argument !== 0) theString += '∠' + formatNumber(argument);          
     }
     if (theString === '') theString = '0';
     if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + decodeSpecialChar(obj.getUnits());
