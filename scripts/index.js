@@ -3665,11 +3665,14 @@ function decodeSpecialChar(tmpString) {
 
 function removeTrailingZeros(str) {
 
-  while (/[.]*0$/.test(str)) {    
-    str = str.slice(0, -1);
+  var arr = str.split(/[eE]/);
+
+  while (/[.]*0$/.test(arr[0])) {    
+    arr[0] = arr[0].slice(0, -1);
   }
-  if (/[.]$/.test(str)) str = str.slice(0, -1);
-  return str;
+  if (/[.]$/.test(arr[0])) arr[0] = arr[0].slice(0, -1);
+  
+  return arr[0] +  'e' + arr[1];
 }
 
 function removeLeadingZeros(str) {
@@ -3717,7 +3720,7 @@ function extractFirstValue(tmpString) {
   if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
-  if (/[.]/g.test(tmpReal) && !/[Ee]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
+  if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
   if (/^[-]?0*/.test(tmpReal)) tmpReal = removeLeadingZeros(tmpReal);
   if (tmpReal === '') tmpReal = 'NaN';
 
@@ -3754,7 +3757,7 @@ function extractImaginary(tmpString) {
   }
 
   if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpImaginary)) tmpImaginary = '0';
-  if (/[.]/g.test(tmpImaginary) && !/[Ee]/g.test(tmpImaginary)) tmpImaginary = removeTrailingZeros(tmpImaginary);
+  if (/[.]/g.test(tmpImaginary)) tmpImaginary = removeTrailingZeros(tmpImaginary);
   if (/^[-]?0*/.test(tmpImaginary)) tmpImaginary = removeLeadingZeros(tmpImaginary);
   if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
 
