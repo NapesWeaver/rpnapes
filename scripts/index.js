@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '23:07:00';
+var tStamp = '23:45:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3668,13 +3668,16 @@ function decodeSpecialChar(tmpString) {
 function removeTrailingZeros(str) {
 
   var arr = str.split(/[eE]/);
+  var engineering;
 
   while (/[.]*0$/.test(arr[0])) {    
     arr[0] = arr[0].slice(0, -1);
   }
   if (/[.]$/.test(arr[0])) arr[0] = arr[0].slice(0, -1);
-  
-  return arr[0] +  'e' + arr[1];
+
+  arr[1] ? engineering = 'e' + arr[1] : engineering = '';
+
+  return arr[0] + engineering;
 }
 
 function removeLeadingZeros(str) {
