@@ -1855,7 +1855,6 @@ function buildComplexNumber(obj) {
 }
 
 function getComplex(complexObj) {
-
   var soulX = complexObj.toString();
   var firstValueX = complexObj.re;
   var imaginaryX = complexObj.im.toString();
@@ -1866,10 +1865,12 @@ function getComplex(complexObj) {
 function displayResult(result, newUnits) { 
   var objX;
 
-  if (typeof result === 'string') {
+  if (typeof result === 'string' || typeof result === 'number') {
     objX = getX(result);
   } else {    
-    if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);    
+    if (result.re !== undefined && !isNaN(result.re)) {
+       objX = getComplex(result);
+    }
   }
   if (objX) result = objToString(objX);
   if (result !== 0 && newUnits !== 0) result += decodeSpecialChar(newUnits);
