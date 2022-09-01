@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '22:44:00';
+var tStamp = '23:07:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1226,6 +1226,7 @@ function inverse() {
   } else {    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       var x = buildComplexNumber(objX);
+      
       displayResult(math.inv(x), newUnits);      
     } else {// Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));      
@@ -1873,7 +1874,8 @@ function displayResult(result, newUnits) {
     }
   }
   if (objX) result = objToString(objX);
-  if (result !== 0 && newUnits !== 0) result += decodeSpecialChar(newUnits);
+  
+  if (result !== 0 && result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
 
   $('txt-input').value = result;  
   updateDisplay();
