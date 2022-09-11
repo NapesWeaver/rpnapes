@@ -189,7 +189,9 @@ function toggleForm() {
     $('indicate-polar').classList.remove('hidden');
     if (shifted) $('btn-ee').value = '∠';
   }
-  displayResult($('txt-input').value.trim(), '');
+  // displayResult($('txt-input').value.trim(), '');  
+  var inputArr = $('txt-input').value.trim().split('\n');
+  displayResults(inputArr, '');
 }
 
 function toggleDarkMode() {  
@@ -1869,12 +1871,9 @@ function displayResult(result, newUnits) {
   if (typeof result === 'string' || typeof result === 'number') {
     objX = getX(result);
   } else {    
-    if (result.re !== undefined && !isNaN(result.re)) {
-       objX = getComplex(result);
-    }
+    if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
   }
-  if (objX) result = objToString(objX);
-  
+  if (objX) result = objToString(objX);  
   if (result !== 0 && result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
 
   $('txt-input').value = result;  
@@ -1882,10 +1881,31 @@ function displayResult(result, newUnits) {
   resizeInput();
 }
 
-function displayResults(results, newUnits) {   
+// function displayResults(results, newUnits) {   
+//   $('txt-input').value = '';
+  
+//   for (var i = 0; i < results.length; i++) {
+//     $('txt-input').value += results[i];
+//     if (results[i] !== 0 && newUnits !== 0) $('txt-input').value += decodeSpecialChar(newUnits);
+//     if (i < results.length - 1) $('txt-input').value += '\n';
+//   }
+//   updateDisplay();
+//   resizeInput();
+// }
+
+function displayResults(results, newUnits) {
+  var objX;
+
   $('txt-input').value = '';
   
   for (var i = 0; i < results.length; i++) {
+    
+    if (typeof results[i] === 'string' || typeof results[i] === 'number') {
+      objX = getX(results[i]);
+    } else {    
+      if (results[i].re !== undefined && !isNaN(results[i].re)) objX = getComplex(results[i]);
+    }
+    if (objX) results[i] = objToString(objX);
     $('txt-input').value += results[i];
     if (results[i] !== 0 && newUnits !== 0) $('txt-input').value += decodeSpecialChar(newUnits);
     if (i < results.length - 1) $('txt-input').value += '\n';
@@ -3301,69 +3321,45 @@ function resetConstants() {
   ⅽ = 299792458;
 }
 
-function convertBase(r) {
-  
-  if (r !== radix) {
-             
-      var prevRadix = radix;
-  
-      fixDecimal = -1;
-      sciDecimal = -1;
-      engDecimal = -1;
-      selectElement('eng-select', -1);
-      selectElement('fix-select', -1);
-      selectElement('sci-select', -1);
-      $('label-eng').classList.remove('hidden');
-      $('label-fix').classList.remove('hidden');
-      $('label-sci').classList.remove('hidden');
-   
-      var obj = getX();
-      var result = '';
-      var units = '';
-  
-      if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
-     
-      radix = r;
-    
-      switch(radix) {
-        case 2:
-          $('indicate-format').innerHTML = 'bin';
-          break;
-          case 8:
-          $('indicate-format').innerHTML = 'oct';      
-          break;
-          case 10:
-          $('indicate-format').innerHTML = '';      
-          break;
-          case 16:
-          $('indicate-format').innerHTML = 'hex';
-          break;
-      }
-      updateDisplay();
+function convertBase(r) {             
 
-      try {  
-      if ($('menu-form').textContent === 'Vector') {
-        result = objToString(obj);
-      } else {
-        // Polar
-        var magnitude = $('txt-input').value.match(/^[-+]?[ ]*[a-f0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);
+  fixDecimal = -1;
+  sciDecimal = -1;
+  engDecimal = -1;
+  selectElement('eng-select', -1);
+  selectElement('fix-select', -1);
+  selectElement('sci-select', -1);
+  $('label-eng').classList.remove('hidden');
+  $('label-fix').classList.remove('hidden');
+  $('label-sci').classList.remove('hidden');
+
+  var obj = getX();
+  var result = '';
+  var units = '';
+
+  if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
   
-        result += parseInt(magnitude[0], prevRadix).toString(radix);
-  
-        if(!isNaN(obj.getImaginary())) {
-  
-          var angle = $('txt-input').value.match(/∠[ ]*[-+]?[ ]*[a-f0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);
-  
-          angle = angle.toString().slice(1);              
-          result += '∠' + parseInt(angle, prevRadix).toString(radix);        
-        }
-      }
-      if ($('txt-input').value !== '') $('txt-input').value = result + units;
-    } catch {      
-      displayResult(objToString(obj), '');
-    }
-    resizeInput();
+  radix = r;
+
+  switch(radix) {
+    case 2:
+      $('indicate-format').innerHTML = 'bin';
+      break;
+    case 8:
+      $('indicate-format').innerHTML = 'oct';      
+      break;
+    case 10:
+      $('indicate-format').innerHTML = '';      
+      break;
+    case 16:
+      $('indicate-format').innerHTML = 'hex';
+      break;
   }
+  updateDisplay();
+  result = objToString(obj);
+
+  if ($('txt-input').value !== '') $('txt-input').value = result + units;  
+  resizeInput();  
 }
 
 function onClickSelection(textarea){ 
@@ -3495,7 +3491,6 @@ function updateDisplay() {
     
     if (stack[sta].getSoul() !== '') {
       $('lst-stack').value += objToString(stack[sta]);
-      stack[sta].getSoul() === ''
     } else {
       // A VERY long string of spaces ;)
       $('lst-stack').value += '                                                                                                                                                                                                                                                                                                                                                                                      ';
