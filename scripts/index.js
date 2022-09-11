@@ -435,7 +435,7 @@ function objToString(obj) {
   var isNumber = isANumber(obj.getRealPart());
   var isImaginary = isANumber(obj.getImaginary());
 
-  if (!isNumber && !isImaginary) {
+  if (!isNumber && !isImaginary) {    
     theString += decodeSpecialChar(obj.getSoul());
   } else {      
     if ($('menu-form').textContent === 'Polar') {      
@@ -1458,9 +1458,13 @@ function exponential() {
 
   y = objY.getSoul();
   x = objX.getSoul();
+  // y = buildComplexNumber(objY); 
+  // x = buildComplexNumber(objX); 
+  // console.log('y,x', y, x);
   
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
   displayResult(mathPow(y, x), newUnits);
+  // displayResult(math.pow(y, x), newUnits);
 }
 
 function mathRoot(root, num) {
@@ -1718,12 +1722,6 @@ function btnSign() {
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
-function divideComplex(y, x) {
-  if (y.im === 0 && x.im === 0) return y.re / x.re;
-
-  return math.divide(y, x);
-}
-
 function division() {
   backupUndo();
   var objX = getX();
@@ -1737,7 +1735,7 @@ function division() {
   var x = buildComplexNumber(objX);
 
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
-  displayResult(divideComplex(y, x), newUnits);
+  displayResult(math.divide(y, x), newUnits);
 }
 
 function btnDivide() {  
@@ -1746,12 +1744,6 @@ function btnDivide() {
   } else {
     division();
   }  
-}
-
-function multiplyComplex(y, x) {
-  if (y.im === 0 && x.im === 0) return y.re * x.re;
-
-  return math.multiply(y, x);
 }
 
 function multiplication() {
@@ -1767,7 +1759,7 @@ function multiplication() {
   var x = buildComplexNumber(objX);
    
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
-  displayResult(multiplyComplex(y, x), newUnits);
+  displayResult(math.multiply(y, x), newUnits);
 }
 
 function btnMultiply() {  
@@ -1776,12 +1768,6 @@ function btnMultiply() {
   } else {
     multiplication();
   }
-}
-
-function subtractComplex(y, x) {
-  if (y.im === 0 && x.im === 0) return y.re - x.re; 
-
-  return math.subtract(y, x);
 }
 
 function subtraction() {
@@ -1797,7 +1783,7 @@ function subtraction() {
   var x = buildComplexNumber(objX);
  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-  displayResult(subtractComplex(y, x), newUnits);
+  displayResult(math.subtract(y, x), newUnits);
 }
 
 function btnSubtract() {  
@@ -1807,12 +1793,6 @@ function btnSubtract() {
   } else {
     subtraction();
   }
-}
-
-function addComplex(y, x) {
-  if (y.im === 0 && x.im === 0) return y.re + x.re; 
-
-  return math.add(y, x);
 }
 
 function addition() {
@@ -1828,7 +1808,7 @@ function addition() {
   var x = buildComplexNumber(objX); 
   
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-  displayResult(addComplex(y, x), newUnits);
+  displayResult(math.add(y, x), newUnits);
 }
 
 function btnAdd() {  
@@ -3704,7 +3684,7 @@ function extractFirstValue(tmpString) {
   if (radix === 2) {
     // Looking for a binary number but not an imaginary number
     if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
-      tmpReal = '' + parseInt(tmpString, radix);      
+      tmpReal = '' + parseInt(tmpString, radix);   
     }
   }
   if (radix === 8) {
@@ -3723,7 +3703,7 @@ function extractFirstValue(tmpString) {
   if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
   if (/^[-]?0*/.test(tmpReal)) tmpReal = removeLeadingZeros(tmpReal);
   if (tmpReal === '') tmpReal = 'NaN';
-
+  
   return tmpReal;
 }
 
@@ -4212,7 +4192,7 @@ function toScientific(value, precision) {
 
 function formatNumber(result) {
 
-  if (!/[ⅽ℮ɢΦπ]/.test(result)) {
+  if (!/[ⅽ℮ɢΦπ]|Infinity/.test(result)) {
     if (radix === 10) {      
       if (!isNaN(result)) {
         if (fixDecimal !== -1) {
