@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '23:45:00';
+var tStamp = '11:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -737,6 +737,9 @@ function colorUndoRedoMenu() {
 
 function undoFunction() {
 
+  var r = radix;
+  radix = 10;
+
   if (backups.length > 3) {   
     var shortStack = [];    
     for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
@@ -754,6 +757,7 @@ function undoFunction() {
       pushObjectToStack(tmpArray[i]);
       i++;
     }
+    radix = r;
     updateDisplay();
     resizeInput();
   }
@@ -3284,8 +3288,7 @@ function resetConstants() {
   ⅽ = 299792458;
 }
 
-function convertBase(r) {             
-
+function resetNotation() {
   fixDecimal = -1;
   sciDecimal = -1;
   engDecimal = -1;
@@ -3295,6 +3298,10 @@ function convertBase(r) {
   $('label-eng').classList.remove('hidden');
   $('label-fix').classList.remove('hidden');
   $('label-sci').classList.remove('hidden');
+}
+
+function convertBase(r) {           
+  resetNotation();
 
   var obj = getX();
   var result = '';
