@@ -1389,7 +1389,6 @@ function baseLog() {
   var objY;
   var x;
   var y;
-  var result;
 
   if (stackFocus) {
     objY = stack[getIndex('lst-stack') - stackSize];
@@ -1402,10 +1401,10 @@ function baseLog() {
   }  
   objX = getX();
 
-  y = objY.getSoul();
-  x = objX.getSoul(); 
+  y = buildComplexNumber(objY);
+  x = buildComplexNumber(objX);
 
-  displayResult(mathLog(x, y), '');
+  displayResult(math.log(y, x), '');
 }
 
 function btnLog() {
@@ -1456,15 +1455,11 @@ function exponential() {
   }  
   objX = getX();
 
-  y = objY.getSoul();
-  x = objX.getSoul();
-  // y = buildComplexNumber(objY); 
-  // x = buildComplexNumber(objX); 
-  // console.log('y,x', y, x);
+  y = buildComplexNumber(objY); 
+  x = buildComplexNumber(objX);
   
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
-  displayResult(mathPow(y, x), newUnits);
-  // displayResult(math.pow(y, x), newUnits);
+  displayResult(math.pow(y, x), newUnits);
 }
 
 function mathRoot(root, num) {
@@ -1529,12 +1524,12 @@ function radical() {
     objY = stack.pop();
   }
   objX = getX();
-
-  y = objY.getSoul();
-  x = objX.getSoul();
+  
+  y = buildComplexNumber(objY); 
+  x = buildComplexNumber(objX);
 
   try {
-    results = mathRoots(x, y);
+    results = math.nthRoots(y, x.re);
   } catch (e) {
     results = [e];
   }
@@ -1860,18 +1855,6 @@ function displayResult(result, newUnits) {
   updateDisplay();
   resizeInput();
 }
-
-// function displayResults(results, newUnits) {   
-//   $('txt-input').value = '';
-  
-//   for (var i = 0; i < results.length; i++) {
-//     $('txt-input').value += results[i];
-//     if (results[i] !== 0 && newUnits !== 0) $('txt-input').value += decodeSpecialChar(newUnits);
-//     if (i < results.length - 1) $('txt-input').value += '\n';
-//   }
-//   updateDisplay();
-//   resizeInput();
-// }
 
 function displayResults(results, newUnits) {
   var objX;
@@ -3664,6 +3647,9 @@ function removeLeadingZeros(str) {
   }
   while (str.length > 1 && /^[0][.]*/.test(str)) {
     str = str.slice(1);
+  }
+  if (str.charAt(0) === '.') {
+    str = '0' + str;
   }
   return neg + str;
 }
