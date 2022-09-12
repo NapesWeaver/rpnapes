@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '11:30:00';
+var tStamp = '13:02:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -607,19 +607,19 @@ function enterInput() {
   $('txt-input').value = $('txt-input').value.trim();  
 }
 
-function calculate(x) {
+function calculate(expression) {
     try {
-      x = eval(parseEvaluation(x));      
+      expression = eval(parseEvaluation(expression));      
       // The following cannot parse ^, mathPow(), √, mathRoot() or run code...
-      // x = x.replace(/j/g, 'i');
-      // x = parseEvaluation(x);
-      // x = math.evaluate(x);
+      // expression = expression.replace(/j/g, 'i');
+      // expression = parseEvaluation(expression);
+      // expression = math.evaluate(expression);
     } catch(e) {
       if (isMobile) return;
       return e.toString();
-      // x = eval(parseEvaluation(x));
+      // expression = eval(parseEvaluation(expression));
   }
-  return x;
+  return expression;
 }
 
 function runTest() {  
@@ -737,7 +737,7 @@ function colorUndoRedoMenu() {
 
 function undoFunction() {
 
-  var r = radix;
+  var currentRadix = radix;
   radix = 10;
 
   if (backups.length > 3) {   
@@ -757,7 +757,7 @@ function undoFunction() {
       pushObjectToStack(tmpArray[i]);
       i++;
     }
-    radix = r;
+    radix = currentRadix;
     updateDisplay();
     resizeInput();
   }
