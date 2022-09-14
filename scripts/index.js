@@ -23,8 +23,11 @@ new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
 
-var i = '√-1';
-var j = '√-1';
+// var i = '√-1';
+// var j = '√-1';
+// var i = 'j';
+// var j = 'j';
+
 var Φ = 1.618033988749895;
 var ℮ = Math.exp(1);
 var π = Math.PI;
@@ -47,7 +50,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '13:02:00';
+var tStamp = '15:21:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2529,6 +2532,7 @@ function help(command) {
   if (commandArray[1] !== undefined) {
     switch (commandArray[1]) {    
     case 'about':
+      enterInput();
       inputText($('lst-stack').getAttribute('placeholder'));
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
@@ -2694,6 +2698,8 @@ function help(command) {
       return;
     }
   } else {
+    inputText('');
+    enterInput();
     inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, runnotes, sandbox, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
     enterInput();
     inputText('');
@@ -2872,8 +2878,10 @@ function parseCommand() {
     }
 
     switch (command) {  
-    case 'about':
+      case 'about':
       stack.pop();
+      inputText('');
+      enterInput();
       inputText($('lst-stack').getAttribute('placeholder'));
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
@@ -2888,6 +2896,8 @@ function parseCommand() {
       break;
     case 'constants':
       stack.pop();
+      inputText('');
+      enterInput();
       inputText('Φ = ' + calculate(Φ));
       enterInput();
       inputText('℮ = ' + calculate(℮));
@@ -2948,6 +2958,8 @@ function parseCommand() {
     case 'How are you doing':
     case 'How ya doing':
     case 'How you doing':
+      inputText('');
+      enterInput();
       inputText('Like a rhinestone cowboy!');
       enterInput();
       $('txt-input').value = '';
@@ -2957,6 +2969,8 @@ function parseCommand() {
     case 'Hello':
     case 'Hey':
     case 'Hi':
+      inputText('');
+      enterInput();
       inputText('Hallo there!');
       enterInput();
       $('txt-input').value = '';
@@ -3001,6 +3015,8 @@ function parseCommand() {
     //   break;
     case 'maths':
       stack.pop();
+      inputText('');
+      enterInput();
       inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
       enterInput();
       updateDisplay();
@@ -3079,6 +3095,8 @@ function parseCommand() {
       break;
     case 'shortcuts':
       stack.pop();
+      inputText('');
+      enterInput();
       inputText('Ctrl + z = Undo, Ctrl + y = Redo, Ctrl + s = Save, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       enterInput();
       updateDisplay();
@@ -3104,11 +3122,7 @@ function parseCommand() {
       inputText(totalStack());
       break;
     case 'tri':
-      stack.pop();
-      updateDisplay();
-      inputText('');
-      showTricorder();
-      break;
+      // Falls through
     case 'tricorder':
       stack.pop();
       updateDisplay();
