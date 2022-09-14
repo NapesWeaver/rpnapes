@@ -2530,9 +2530,12 @@ function help(command) {
   var commandArray = command.split(' ');
   
   if (commandArray[1] !== undefined) {
+    
+    inputText('');
+    enterInput();
+
     switch (commandArray[1]) {    
     case 'about':
-      enterInput();
       inputText($('lst-stack').getAttribute('placeholder'));
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
@@ -2716,7 +2719,7 @@ function parseCommand() {
   var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', NaN, NaN, 'null'); 
   // Commands consist of words and numbers and URLs
   if (!/[,*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
-    var commandArray = command.split(' ');       
+    var commandArray = command.split(' ');
     // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
       stack.pop();      
