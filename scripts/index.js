@@ -628,10 +628,10 @@ function calculate(expression) {
 function runTest() {  
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
-      var y = decodeSpecialChar(stack[stack.length - 2].getSoul());
-      var x = stack[stack.length - 1].getSoul()
-      var color = calculate(y).toString() === x ? 'green' : 'red';      
-      console.log(`${y} %c${calculate(y).toString() === x}`, `font-weight: bold; color: ${color};`);   
+      var valueY = decodeSpecialChar(stack[stack.length - 2].getSoul());
+      var valueX = stack[stack.length - 1].getSoul()
+      var color = calculate(valueY).toString() === valueX ? 'green' : 'red';      
+      console.log(`${valueY} %c${calculate(valueY).toString() === valueX}`, `font-weight: bold; color: ${color};`);   
     }
   } catch(e) {
     console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
@@ -1129,7 +1129,9 @@ function btnLoad() {
     } 
   } catch (err) { 
     rpnAlert('Load STACK error.');
-    if (shifted) $('indicate-execution').classList.add('hidden');
+    if (shifted) { 
+      if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+    }
    }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
@@ -1159,7 +1161,7 @@ function loadProgram(tmpStack) {
     pushObjectToStack(tmpString);    
     evaluateExpression(decodeSpecialChar(tmpString));
   }
-  $('indicate-execution').classList.add('hidden');  
+  if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
 }
 
 function loadStack(tmpStack) {
@@ -2539,10 +2541,12 @@ function help(command) {
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
       break;
+    case 'ave':
+      // Falls through
     case 'average':
       inputText('');
       enterInput();
-      inputText('average: Finds the average of stack elements that are not NaN and returns the result.');
+      inputText('ave: Finds the average of stack elements that are not NaN and returns the result. Alias: average');
       break;
     case 'darkmode':
       inputText('');
@@ -2802,7 +2806,7 @@ function help(command) {
   } else {
     inputText('');
     enterInput();
-    inputText('about, average, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, runnotes, sandbox, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
+    inputText('about, ave, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, runnotes, sandbox, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
     enterInput();
     inputText('');
     enterInput();
@@ -2980,7 +2984,7 @@ function parseCommand() {
     }
 
     switch (command) {  
-      case 'about':
+    case 'about':
       stack.pop();
       inputText('');
       enterInput();
@@ -2991,6 +2995,8 @@ function parseCommand() {
       updateDisplay();
       $('txt-input').value = '';
       break;
+    case 'ave':
+      // Falls through
     case 'average':
       stack.pop();
       updateDisplay();
@@ -3782,8 +3788,8 @@ function extractFirstValue(tmpString) {
 
   if (radix === 10) {
     // Not a constant or Infinity or number followed by evaluation symbols && not imaginary number && not IP address && not number-text-number e.g. 2x4
-    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
-      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity(?![-+ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);            
+    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);            
       tmp = tmp.replace(/ /g, '');
 
       if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);      
@@ -3818,10 +3824,11 @@ function extractFirstValue(tmpString) {
 
 function extractImaginary(tmpString) {
   var tmpImaginary = '';
+
   if (radix === 10) {
     // No evaluation symbols && no more than one imaginary number 
-    if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {     
-      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])\b|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])\b|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ]*)\b/);     
+    if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
+      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)/);     
       tmp = tmp.replace(/ /g, '');
 
       if (/^[-][ij]\b/.test(tmp)) {
@@ -5292,8 +5299,8 @@ window.onload = function () {
 
   // Menu File 
   $('menu-load').onclick = btnLoad;
-  $('open-file').addEventListener('change', function () {
-    if (shifted) $('indicate-execution').classList.remove('hidden');
+  $('open-file').addEventListener('change', function () {    
+    $('indicate-execution').classList.remove('hidden');
 
     try {
       var fr = new FileReader();
@@ -5320,13 +5327,13 @@ window.onload = function () {
             }
           }
           updateDisplay();
-          if (shifted) $('indicate-execution').classList.add('hidden');
+          if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
         }
       };
       fr.readAsText(this.files[0]);
     } catch (err) {
       rpnAlert(err.toString());
-      if (shifted) $('indicate-execution').classList.add('hidden');
+      if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
     }
     resizeInput();
   });
@@ -5662,25 +5669,36 @@ window.onload = function () {
   $('txt-input').readOnly = false;
   $('txt-input').focus();
   /** 
-   * Better color pallet.
-   * Negative and Infinite factorial.
-   * Refactor signChange(), inverse() for Infinities.
-   * Refactor btnModulus() for complex numbers?
-   * Factorial for complex numbers?
-   * Negative & inverse binaries?
-   * Toggle array answering for roots?
-   * 
-   * Constants/formulas menu bug for mobile.
-   * Remote debug superfluous copy/paste menu.
-   * Haptic response for Firefox mobile.
-   * File-reopening bug.
-   * Rectangular w/o space eg. 'π+9j'
-   * 
-   * Inline parsing for complex numbers?
-   * Extend timer for hours/days?
-   * Iframe for desktop RPN links?
-   * Symbolic results?
-   * Unit conversions?
-   * Login, persistent storage/messaging/sharing?
-   */
+    1ebay
+    6^3i
+    8*2i
+    9/1i
+    ♥ ♥ ♥i
+    Ω Ω Ωi
+   
+    displayResults()
+
+    event handlers for Page Up, Page Down, Home, End.
+
+    Better color pallet.
+    Negative and Infinite factorial.
+    Refactor signChange(), inverse() for Infinities.
+    Refactor btnModulus() for complex numbers?
+    Factorial for complex numbers?
+    Negative & inverse binaries?
+    Toggle array answering for roots?
+    
+    Constants/formulas menu bug for mobile.
+    Remote debug superfluous copy/paste menu.
+    Haptic response for Firefox mobile.
+    File-reopening bug.
+    Rectangular w/o space eg. 'π+9j'
+    
+    Inline parsing for complex numbers?
+    Extend timer for hours/days?
+    Iframe for desktop RPN links?
+    Symbolic results?
+    Unit conversions?
+    Login, persistent storage/messaging/sharing?
+  */
 };
