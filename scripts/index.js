@@ -2530,95 +2530,148 @@ function help(command) {
   var commandArray = command.split(' ');
   
   if (commandArray[1] !== undefined) {
-    
-    inputText('');
-    enterInput();
 
     switch (commandArray[1]) {    
     case 'about':
+      inputText('');
+      enterInput();
       inputText($('lst-stack').getAttribute('placeholder'));
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
       break;
     case 'average':
+      inputText('');
+      enterInput();
       inputText('average: Finds the average of stack elements that are not NaN and returns the result.');
       break;
     case 'darkmode':
+      inputText('');
+      enterInput();
       inputText('darkmode: Toggle between light and dark themes.');
       break;
     case 'date':
+      inputText('');
+      enterInput();
       inputText('date: Returns the current date.');
       break;
     case 'duckgo':
+      inputText('');
+      enterInput();
       inputText('duckgo [query]: Search DuckDuckGo. If no argument is supplied in-line, last entry on stack is used as query.');
       break; 
     case 'clear':
+      inputText('');
+      enterInput();
       inputText('clear: Clears the displays. Alias: cls');
       break;
     case 'constants':
+      inputText('');
+      enterInput();
       inputText('constants: Displays the values of \'constants\'. Reassignment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
       break;
     case 'embed':
+      inputText('');
+      enterInput();
       inputText('embed [URL]: Embed URL into Tricorder iFrame (Tricorder \'button\' 6). If no argument is supplied in-line, last entry on stack is used for URL.');
       break;
     case 'email':
+      inputText('');
+      enterInput();
       inputText('email: Open default email client.');
       break;
     case 'eng':
+      inputText('');
+      enterInput();
       inputText('eng [n]: Engineering notation. Precision 1 to 17. If no argument is supplied in-line, last entry on stack is used. Turn engineering notation off with -1.');
       break;
     case 'flightlogger':
+      inputText('');
+      enterInput();
       inputText('flightlogger: Opens Flight Logger in a new tab.');
       break;
     case 'fix':
+      inputText('');
+      enterInput();
       inputText('fix [n]: Fix number of decimals shown on the stack (0 to 17). If no argument is supplied in-line, last entry on stack is used. Turn fixed decimals off with -1.');
       break;
     case 'google':
+      inputText('');
+      enterInput();
       inputText('google [query]: Search Google / open link or IP address. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
       break;
     case 'ip':
+      inputText('');
+      enterInput();
       inputText('ip: Get public IP address from IPify.');
       break;
     case 'ipmapper':
+      inputText('');
+      enterInput();
       inputText('ipmapper: Opens IP Mapper in a new tab.');
       break;
     case 'haptic':
+      inputText('');
+      enterInput();
       inputText('haptic: For mobile devices only. Toggles haptic response for the keypad.');
       break;
     case 'keyboard':
+      inputText('');
+      enterInput();
       inputText('keyboard: For mobile devices only. Toggles the mobile keyboard.');
       break;
     case 'load':
+      inputText('');
+      enterInput();
       inputText('load: Loads the Stack to the display. Alias: ls');
       break;
     // case 'login':
+    //   inputText('');
+    //   enterInput();
     //   inputText('Log into the database.');
     //   break;
     // case 'logout':
+    //   inputText('');
+    //   enterInput();
     //   inputText('Logs out of the database.');
     //   break;
     case 'locus':
+      inputText('');
+      enterInput();
       inputText('locus: Returns geo-coordinates of device (very roughly). Tricorder must have been opend first.');
       break;
     case 'maths':
+      inputText('');
+      enterInput();
       inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
       break;
     case 'max':
+      inputText('');
+      enterInput();
       inputText('max: Find the stack element with the maximum value that is not NaN.');
       break;
     case 'min':
+      inputText('');
+      enterInput();
       inputText('min: Find the stack element with the minimum value that is not NaN.');
       break;;
     case 'notes':
+      inputText('');
+      enterInput();
       inputText('notes: Switch to Notes interface.');
       break;
     case 'open':
+      inputText('');
+      enterInput();
       inputText('open: Open a text file onto the Stack. A bug prohibits loading the same file successively ;(');
       break;
     case 'opennotes':
+      inputText('');
+      enterInput();
       inputText('opennotes: Open a text file into Notes.');
       break;
     case 'off':
+      inputText('');
+      enterInput();
       $('txt-input').value = 'off: Close browser tab or redirect to google.com.';
       enterInput();
       $('txt-input').value ='Firefox users may go to about:config dom.allow_scripts_to_close_windows = true.';
@@ -2628,72 +2681,118 @@ function help(command) {
       $('txt-input').value ='Not working as consistently for mobile devices.';
       break;
     case 'paste':
+      inputText('');
+      enterInput();
       inputText('paste: Firefox only supports reading the clipboard in browser extensions using the "clipboardRead" extension permission :(');
       break;
     case 'polar':
+      inputText('');
+      enterInput();
       inputText('polar: Switch complex number display to polar coordinates (use \'vector\' for rectangular coordinates).');
       break;
     case 'print':
+      inputText('');
+      enterInput();
       inputText('print: Open printer dialoge.');
       break;
     case 'run':
+      inputText('');
+      enterInput();
       inputText('run: Run the contents of the stack as a script.');
       break;
     case 'runnotes':
-      inputText('runnotes: Run the contents of notes.');
+      inputText('');
+      enterInput();
+      inputText('runnotes: Run the contents of notes interface.');
       break;
     case 'sandbox':
+      inputText('');
+      enterInput();
       inputText('sandbox: Open HTML/CSS/JS sandbox.');
       break;
     case 'save':
+      inputText('');
+      enterInput();
       inputText('save: Saves the stack to a browser cookie.');
       break;
     case 'saveas':
+      inputText('');
+      enterInput();
       inputText('saveas [filename]: Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'sci':
+      inputText('');
+      enterInput();
       inputText('sci [n]: Scientific notation. Precision 0 to 17. If no argument is supplied in-line, last entry on stack is used. Turn scientific notation off with -1.');
       break;
     case 'shortcuts':
+      inputText('');
+      enterInput();
       inputText('Ctrl + z = Undo, Ctrl + y = Redo, Ctrl + s = Save, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
       break;
     case 'sort':
+      inputText('');
+      enterInput();
       inputText('sort [unit|asc|desc] [asc|desc]: Sort stack. Ascending order by default. Sorting by units is also supported. Example usage: \'sort unit desc\'.');
       break;
     case 'sound':
+      inputText('');
+      enterInput();
       inputText('sound: Toggle sound.');
       break;
     case 'stopwatch':
+      inputText('');
+      enterInput();
       inputText('stopwatch: Starts the stopwatch.  Clicking timer enters lap times. Stop the stopwatch with the \'stop\' command. Alternatively, clicking the Stopwatch menu item (Tools -> Programs -> Stopwatch) will start and stop the stopwatch.');
       break;
     case 'stop':
+      inputText('');
+      enterInput();
       inputText('stop: Stop/cancel the stopwatch/timer. Alternatively, click stopwatch menu item.');
       break;
     case 'time':
+      inputText('');
+      enterInput();
       inputText('time: Returns the current time.');
       break;
     case 'timer':
+      inputText('');
+      enterInput();
       inputText('timer [n]: Set a timer, in seconds. If no argument is supplied in-line, the last entry on the stack is used. Turn sound on from the menu (Veiw -> Sound) for alarm. Cancel timer with the \'stop\' command or by clicking the Stopwatch menu item (Tools -> Programs -> Stopwatch).');
       break;
     case 'total':
+      inputText('');
+      enterInput();
       inputText('total: Totals the stack elements that are not NaN and returns the result.');
       break;
     case 'tostring':
+      inputText('');
+      enterInput();
       inputText('tostring [filename]: Saves the Stack to a text file showing all fields for each Stack entry. If no argument is supplied in-line, last entry on stack is used as the filename.');
       break;
     case 'tricorder':
+      inputText('');
+      enterInput();
       inputText('tricorder: Opens the Tricorder interface. Alias: tri');
       break;
     case 'unembed':
+      inputText('');
+      enterInput();
       inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
       break;    
     case 'vector':
+      inputText('');
+      enterInput();
       inputText('vector: Switch complex number display to rectangular coordinates. (use \'polar\' for polar coordinates). Alias: rectangular');
       break;
     case 'wiki':
+      inputText('');
+      enterInput();
       inputText('wiki [query]: Search Wikipedia. If no argument is supplied in-line, last entry on stack is used as query.');
       break;    
     case 'youtube':
+      inputText('');
+      enterInput();
       inputText('youtube [query]: Search youtube. If no argument is supplied in-line, last entry on stack is used as query. Alias: you');
       break;    
     default:// case NOT a help argument
