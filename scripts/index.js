@@ -740,11 +740,11 @@ function colorUndoRedoMenu() {
 
 function undoFunction() {
 
-  var currentRadix = radix;
-  radix = 10;
-
   if (backups.length > 3) {   
     var shortStack = [];    
+    var currentRadix = radix;
+    radix = 10;
+    
     for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
     restores.push(nestArrayByBrowser(shortStack));
@@ -771,6 +771,9 @@ function redoFunction() {
 
   if (restores.length > 0) {
     var shortStack = [];    
+    var currentRadix = radix;
+    radix = 10;
+
     for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
     backups.push(nestArrayByBrowser(shortStack));
@@ -786,6 +789,7 @@ function redoFunction() {
       pushObjectToStack(tmpArray[i]);
       i++;
     }
+    radix = currentRadix;
     updateDisplay();
     resizeInput();
   }
@@ -799,7 +803,7 @@ function backupUndo() {
   
   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
     backups.push(nestArrayByBrowser(shortStack));
-    backups.push($('txt-input').value.trim());
+    backups.push(input);
     restores.length = 0;
     colorUndoButton();  
   }
