@@ -3793,7 +3793,7 @@ function extractFirstValue(tmpString) {
   if (radix === 10) {
     // Not a constant or Infinity or number followed by evaluation symbols && not imaginary number && not IP address && not number-text-number e.g. 2x4
     if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
-      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);            
+      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?(?![a-zA-Z])[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);
       tmp = tmp.replace(/ /g, '');
 
       if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);      
