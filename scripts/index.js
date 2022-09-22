@@ -5112,7 +5112,6 @@ document.addEventListener('keypress', function (event) {
 
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
-  
   switch (key) {
   case 8:// BACKSPACE  
     if ($('rpnapes').className !== 'hidden' && !isMobile) {
@@ -5135,24 +5134,32 @@ document.addEventListener('keydown', function (event) {
   case 35:// END
     if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    $('lst-stack').focus();
-    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
+    if ($('rpnapes').className === 'hidden') {
+      $('lst-notes').focus();
+      $('lst-notes').scrollTop = $('lst-notes').scrollHeight;
+    } else {
+      $('lst-stack').focus();
+      $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+      $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
+    }
     return;
   case 36:// HOME
     if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-
-    var rows =  $('lst-stack').value.split('\n');
-    var emptyRows = 0;
-    var i = 0;
-
-    while (rows[i] === ' ') {
-      emptyRows++;
-      i++;
+    if ($('rpnapes').className === 'hidden') {
+      $('lst-notes').focus();
+      $('lst-notes').scrollTop = 0;
+    } else {
+      var rows =  $('lst-stack').value.split('\n');
+      var emptyRows = 0;
+      var i = 0;
+  
+      while (rows[i] === ' ') {
+        emptyRows++;
+        i++;
+      }
+      window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;      
     }
-    window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;
-
     return;
   case 37:// LEFT ARROW
     if (twig.health > 0 && $('twig').className !== 'hidden') {
