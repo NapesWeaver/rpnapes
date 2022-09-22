@@ -5112,7 +5112,7 @@ document.addEventListener('keypress', function (event) {
 
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
-  // console.log('key', key);
+  
   switch (key) {
   case 8:// BACKSPACE  
     if ($('rpnapes').className !== 'hidden' && !isMobile) {
@@ -5148,12 +5148,11 @@ document.addEventListener('keydown', function (event) {
     var i = 0;
 
     while (rows[i] === ' ') {
-      console.log('rows[i]', rows[i]);
       emptyRows++;
       i++;
     }
     window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;
-    
+
     return;
   case 37:// LEFT ARROW
     if (twig.health > 0 && $('twig').className !== 'hidden') {
