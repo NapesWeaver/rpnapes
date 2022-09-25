@@ -5110,6 +5110,16 @@ document.addEventListener('keypress', function (event) {
   }
 });
 
+function getEmptyRows() {
+  var rows =  $('lst-stack').value.split('\n');
+  var emptyRows = 0;
+
+  while (rows[emptyRows] === ' ') {
+    emptyRows++;
+  }
+  return emptyRows;
+}
+
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
   
@@ -5161,12 +5171,8 @@ document.addEventListener('keydown', function (event) {
       $('lst-notes').focus();
       $('lst-notes').scrollTop = 0;
     } else {
-      var rows =  $('lst-stack').value.split('\n');
-      var emptyRows = 0;
-  
-      while (rows[emptyRows] === ' ') {
-        emptyRows++;
-      }
+      var emptyRows = getEmptyRows();
+
       $('lst-stack').focus();
       window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;      
       $('lst-stack').setSelectionRange((emptyRows * 2) + 1, $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1));
@@ -5192,12 +5198,15 @@ document.addEventListener('keydown', function (event) {
       } else {
         var testString = $('lst-stack').value.slice($('lst-stack').selectionStart);
         var newLines = (testString.match(/\n/g) || []).length;
+        var emptyRows = getEmptyRows();
+        
+        if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1)) {
 
-        if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {
-
-          window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
+          if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {          
+             window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
+          }
+          if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2))) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
         }
-        $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
       }
       if (twig.health > 0 && $('twig').className !== 'hidden') {
         $('twig').src = 'images/twig/walk-left.gif';
@@ -5216,7 +5225,7 @@ document.addEventListener('keydown', function (event) {
   case 40:// DOWN ARROW
     if ($('rpnapes').className !== 'hidden')  {
       if (!event) event = window.event;
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);      
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       
       if ($('lst-stack').selectionEnd === $('lst-stack').value.length) {
         $('txt-input').focus();
@@ -5713,29 +5722,26 @@ window.onload = function () {
   $('txt-input').readOnly = false;
   $('txt-input').focus();
   /** 
+    Better color pallet.
+    
     6^3i
     8*2i
     9/1i
     ♥ ♥ ♥i
     Ω Ω Ωi
-   
-    event handlers for Page Up, Page Down.
+    Rectangular w/o space eg. 'π+9j'?
+    Inline parsing for complex numbers?
 
-    Better color pallet.
     Negative and Infinite factorial.
-    Refactor signChange(), inverse() for Infinities.
-    Refactor btnModulus() for complex numbers?
+    Refactor signChange(), inverse() for complex Infinities.
+    Modulus for complex numbers?
     Factorial for complex numbers?
     Negative & inverse binaries?
-    Toggle array answering for roots?
     
     Constants/formulas menu bug for mobile.
-    Remote debug superfluous copy/paste menu.
     Haptic response for Firefox mobile.
     File-reopening bug.
-    Rectangular w/o space eg. 'π+9j'
     
-    Inline parsing for complex numbers?
     Extend timer for hours/days?
     Iframe for desktop RPN links?
     Symbolic results?
