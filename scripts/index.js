@@ -5143,14 +5143,18 @@ document.addEventListener('keydown', function (event) {
     altHeld = true;
     return;
   case 33:// PAGE UP
-    if (!event) event = window.event;
-    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    $('lst-stack').scrollTop = $('lst-stack').scrollTop - $('lst-stack').offsetHeight;
+    if ($('notes').className === 'hidden') {
+      if (!event) event = window.event;
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      $('lst-stack').scrollTop = $('lst-stack').scrollTop - $('lst-stack').offsetHeight;
+    }
     return;
   case 34:// PAGE DOWN
-    if (!event) event = window.event;
-    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    $('lst-stack').scrollTop = $('lst-stack').scrollTop + $('lst-stack').offsetHeight;
+    if ($('notes').className === 'hidden') {
+      if (!event) event = window.event;
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      $('lst-stack').scrollTop = $('lst-stack').scrollTop + $('lst-stack').offsetHeight;
+    }
     return;
   case 35:// END
     if (!event) event = window.event;
