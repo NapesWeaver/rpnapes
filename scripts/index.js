@@ -5158,10 +5158,8 @@ document.addEventListener('keydown', function (event) {
         emptyRows++;
       }
       $('lst-stack').focus();
-      window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;
-      $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
-
-      for (var i = 0; i < stack.length - 1; i++) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
+      window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;      
+      $('lst-stack').setSelectionRange((emptyRows * 2) + 1, $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1));
     }
     return;
   case 37:// LEFT ARROW
