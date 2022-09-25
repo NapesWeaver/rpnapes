@@ -5112,6 +5112,7 @@ document.addEventListener('keypress', function (event) {
 
 document.addEventListener('keydown', function (event) {
   var key = event.keyCode || event.charCode;
+  
   switch (key) {
   case 8:// BACKSPACE  
     if ($('rpnapes').className !== 'hidden' && !isMobile) {
@@ -5152,13 +5153,15 @@ document.addEventListener('keydown', function (event) {
     } else {
       var rows =  $('lst-stack').value.split('\n');
       var emptyRows = 0;
-      var i = 0;
   
-      while (rows[i] === ' ') {
+      while (rows[emptyRows] === ' ') {
         emptyRows++;
-        i++;
       }
-      window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;      
+      $('lst-stack').focus();
+      window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;
+      $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
+
+      for (var i = 0; i < stack.length - 1; i++) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
     }
     return;
   case 37:// LEFT ARROW
