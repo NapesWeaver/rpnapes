@@ -5132,6 +5132,14 @@ document.addEventListener('keydown', function (event) {
   case 18:// ALT
     altHeld = true;
     return;
+  case 33:// PAGE UP
+    if (!event) event = window.event;
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    return;
+  case 34:// PAGE DOWN
+    if (!event) event = window.event;
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    return;
   case 35:// END
     if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -5709,7 +5717,7 @@ window.onload = function () {
     ♥ ♥ ♥i
     Ω Ω Ωi
    
-    event handlers for Page Up, Page Down, Home, End.
+    event handlers for Page Up, Page Down.
 
     Better color pallet.
     Negative and Infinite factorial.
