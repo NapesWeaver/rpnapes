@@ -5146,9 +5146,14 @@ document.addEventListener('keydown', function (event) {
   if ($('notes').className === 'hidden') {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);      
-
+      
       var emptyRows = window.innerWidth > 359 ? getEmptyRows() * 18 :  getEmptyRows() * 12;
-      if (emptyRows < $('lst-stack').scrollTop) $('lst-stack').scrollTop = $('lst-stack').scrollTop - $('lst-stack').offsetHeight;           
+              
+      if (emptyRows < $('lst-stack').scrollTop - $('lst-stack').offsetHeight) {
+        $('lst-stack').scrollTop = $('lst-stack').scrollTop - $('lst-stack').offsetHeight;
+      } else {
+        $('lst-stack').scrollTop = emptyRows;
+      }
     }
     return;
   case 34:// PAGE DOWN
