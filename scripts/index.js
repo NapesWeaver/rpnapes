@@ -5142,11 +5142,13 @@ document.addEventListener('keydown', function (event) {
   case 18:// ALT
     altHeld = true;
     return;
-  case 33:// PAGE UP
-    if ($('notes').className === 'hidden') {
+  case 33:// PAGE UP  
+  if ($('notes').className === 'hidden') {
       if (!event) event = window.event;
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      $('lst-stack').scrollTop = $('lst-stack').scrollTop - $('lst-stack').offsetHeight;
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);      
+
+      var emptyRows = window.innerWidth > 359 ? getEmptyRows() * 18 :  getEmptyRows() * 12;
+      if (emptyRows < $('lst-stack').scrollTop) $('lst-stack').scrollTop = $('lst-stack').scrollTop - $('lst-stack').offsetHeight;           
     }
     return;
   case 34:// PAGE DOWN
@@ -5725,7 +5727,9 @@ window.onload = function () {
   autoDark();
   $('txt-input').readOnly = false;
   $('txt-input').focus();
-  /** 
+  /**
+    Wrap-around Up Arrow bug
+
     Better color pallet.
     
     6^3i
