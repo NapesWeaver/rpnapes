@@ -5209,12 +5209,13 @@ document.addEventListener('keydown', function (event) {
       } else {
         var testString = $('lst-stack').value.slice($('lst-stack').selectionStart);
         var newLines = (testString.match(/\n/g) || []).length;
-        var emptyRows = getEmptyRows();
-        
-        if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1)) {
+        var emptyRows = getEmptyRows();        
+        var emptyRowHeight = window.innerWidth > 359 ? getEmptyRows() * 18 : getEmptyRows() * 12;
 
-          if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {          
-             window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
+        if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1)) {
+              
+          if (($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) && emptyRowHeight < $('lst-stack').scrollTop) {          
+            window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
           }
           if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2))) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
         }
@@ -5735,6 +5736,8 @@ window.onload = function () {
   /**
     Wrap-around Up Arrow bug
 
+    Iframe for desktop RPN links via iframe command.
+
     Better color pallet.
     
     6^3i
@@ -5755,8 +5758,7 @@ window.onload = function () {
     Haptic response for Firefox mobile.
     File-reopening bug.
     
-    Extend timer for hours/days?
-    Iframe for desktop RPN links?
+    Extend timer for hours/days?    
     Symbolic results?
     Unit conversions?
     Login, persistent storage/messaging/sharing?
