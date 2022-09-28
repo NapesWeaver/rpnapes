@@ -3543,8 +3543,8 @@ function insertAtCursor(txtField, txtValue) {
   var textarea = $('lst-stack');
   var linePos = (textarea.value.slice(0, textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.slice(0, textarea.selectionStart).lastIndexOf('\n') : 0;
   var emptyRows = getEmptyRows();
-
-  if (linePos > (emptyRows * 2) - 1) {
+ 
+  if (!stackFocus || linePos > (emptyRows * 2) - 1) {
     txtField.value = txtField.value.slice(0, startPos) + txtValue + txtField.value.slice(endPos, txtField.value.length);
     txtField.selectionEnd = startPos + txtValue.length;
     // Deselect text for IE
@@ -5214,7 +5214,7 @@ document.addEventListener('keydown', function(event) {
         
         if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1)) {
     
-          if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {
+            if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {
             window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
           }
           if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2))) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
