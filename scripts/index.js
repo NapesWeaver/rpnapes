@@ -5217,7 +5217,7 @@ document.addEventListener('keydown', function(event) {
         var emptyRowHeight = window.innerWidth > 359 ? getEmptyRows() * 18 : getEmptyRows() * 12;
 
         if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1)) {
-              
+
           if (($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) && emptyRowHeight < $('lst-stack').scrollTop) {          
             window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
           }
@@ -5612,11 +5612,7 @@ window.onload = function () {
   }
   $('lst-stack').onscroll = function() {    
     var emptyRows = window.innerWidth > 359 ? getEmptyRows() * 18 : getEmptyRows() * 12;
-
-    if ($('lst-stack').scrollTop < emptyRows) {
-      console.log('scrollTop', $('lst-stack').scrollTop);
-      $('lst-stack').scrollTop = emptyRows;
-    }
+    if ($('lst-stack').scrollTop < emptyRows) $('lst-stack').scrollTop = emptyRows;
   }
   resizeTextarea($('lst-stack'));
   $('lst-stack').setAttribute('rows', parseInt(screen.height / 18));
