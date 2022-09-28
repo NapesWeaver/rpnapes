@@ -5217,7 +5217,7 @@ document.addEventListener('keydown', function(event) {
             if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {
             window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
           }
-          if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2))) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
+          if ($('lst-stack').selectionStart - 1 > $('lst-stack').value.indexOf('\n', (emptyRows * 2))) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
         }
       }
       if (twig.health > 0 && $('twig').className !== 'hidden') {
