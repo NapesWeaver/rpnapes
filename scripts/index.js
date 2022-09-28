@@ -3463,8 +3463,12 @@ function onClickSelection(textarea){
   if (typeof textarea.selectionStart ==='undefined') return false;
   var startPos = (textarea.value.slice(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.slice(0,textarea.selectionStart).lastIndexOf('\n') : 0;
   var endPos = (textarea.value.slice(textarea.selectionEnd,textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.slice(textarea.selectionEnd,textarea.value.length).indexOf('\n') : textarea.value.length;
-  textarea.selectionStart = startPos + 1;
-  textarea.selectionEnd = endPos;
+  var emptyRows = getEmptyRows();
+
+  if (startPos > (emptyRows * 2) - 1) {
+    textarea.selectionStart = startPos + 1;
+    textarea.selectionEnd = endPos;
+  }
   return true;  
 }
 
@@ -5093,7 +5097,7 @@ document.addEventListener('click', function (evt) {
   }
 });
 
-document.addEventListener('keypress', function (event) {
+document.addEventListener('keypress', function(event) {
   
   switch (event.key) {
   case 'Enter':
@@ -5120,7 +5124,7 @@ function getEmptyRows() {
   return emptyRows;
 }
 
-document.addEventListener('keydown', function (event) {
+document.addEventListener('keydown', function(event) {
   var key = event.keyCode || event.charCode;
   
   switch (key) {
@@ -5328,7 +5332,7 @@ document.addEventListener('keydown', function (event) {
   if (!isMobile) resizeInput();
 });
 
-document.addEventListener('keyup', function (event) {
+document.addEventListener('keyup', function(event) {
   
   switch (event.key) {    
   case 'Control':
@@ -5605,6 +5609,14 @@ window.onload = function () {
     event.stopPropagation();
     event.stopImmediatePropagation();
     return false;
+  }
+  $('lst-stack').onscroll = function() {    
+    var emptyRows = window.innerWidth > 359 ? getEmptyRows() * 18 : getEmptyRows() * 12;
+
+    if ($('lst-stack').scrollTop < emptyRows) {
+      console.log('scrollTop', $('lst-stack').scrollTop);
+      $('lst-stack').scrollTop = emptyRows;
+    }
   }
   resizeTextarea($('lst-stack'));
   $('lst-stack').setAttribute('rows', parseInt(screen.height / 18));
