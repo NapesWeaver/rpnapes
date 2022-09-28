@@ -3461,8 +3461,8 @@ function convertBase(r) {
 function onClickSelection(textarea){ 
   // https://stackoverflow.com/questions/13650534/how-to-select-line-of-text-in-textarea
   if (typeof textarea.selectionStart ==='undefined') return false;
-  var startPos = (textarea.value.slice(0,textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.slice(0,textarea.selectionStart).lastIndexOf('\n') : 0;
-  var endPos = (textarea.value.slice(textarea.selectionEnd,textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.slice(textarea.selectionEnd,textarea.value.length).indexOf('\n') : textarea.value.length;
+  var startPos = (textarea.value.slice(0, textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.slice(0, textarea.selectionStart).lastIndexOf('\n') : 0;
+  var endPos = (textarea.value.slice(textarea.selectionEnd, textarea.value.length).indexOf('\n') >= 0) ? textarea.selectionEnd+textarea.value.slice(textarea.selectionEnd, textarea.value.length).indexOf('\n') : textarea.value.length;
   var emptyRows = getEmptyRows();
 
   if (startPos > (emptyRows * 2) - 1) {
@@ -3540,11 +3540,16 @@ function isTextSelected(input) {
 function insertAtCursor(txtField, txtValue) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
+  var textarea = $('lst-stack');
+  var linePos = (textarea.value.slice(0, textarea.selectionStart).lastIndexOf('\n') >= 0) ? textarea.value.slice(0, textarea.selectionStart).lastIndexOf('\n') : 0;
+  var emptyRows = getEmptyRows();
 
-  txtField.value = txtField.value.slice(0, startPos) + txtValue + txtField.value.slice(endPos, txtField.value.length);
-  txtField.selectionEnd = startPos + txtValue.length;
-  // Deselect text for IE
-  txtField.selectionStart = txtField.selectionEnd;
+  if (linePos > (emptyRows * 2) - 1) {
+    txtField.value = txtField.value.slice(0, startPos) + txtValue + txtField.value.slice(endPos, txtField.value.length);
+    txtField.selectionEnd = startPos + txtValue.length;
+    // Deselect text for IE
+    txtField.selectionStart = txtField.selectionEnd;
+  }
 }
 
 function moveCursorToEnd(el) {
@@ -5090,8 +5095,8 @@ function eventFire(el, etype) {
 }//eventFire(document.getElementById('test'), 'click');
 
 // Custom 'double click' for Stack
-document.addEventListener('click', function (evt) {
-  if (evt.detail === 2 && evt.target === $('lst-stack')) {
+document.addEventListener('click', function(event) {
+  if (event.detail === 2 && event.target === $('lst-stack')) {
     getStackEntry();
     resizeInput();
   }
@@ -5149,15 +5154,8 @@ document.addEventListener('keydown', function(event) {
   case 33:// PAGE UP  
   if ($('notes').className === 'hidden') {
       if (!event) event = window.event;
-      event.preventDefault ? event.preventDefault() : (event.returnValue = false);      
-      
-      var emptyRows = window.innerWidth > 359 ? getEmptyRows() * 18 :  getEmptyRows() * 12;
-              
-      if (emptyRows < $('lst-stack').scrollTop - $('lst-stack').offsetHeight) {
-        $('lst-stack').scrollTop = $('lst-stack').scrollTop - $('lst-stack').offsetHeight;
-      } else {
-        $('lst-stack').scrollTop = emptyRows;
-      }
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      $('lst-stack').scrollTop = $('lst-stack').scrollTop - $('lst-stack').offsetHeight;     
     }
     return;
   case 34:// PAGE DOWN
@@ -5187,7 +5185,6 @@ document.addEventListener('keydown', function(event) {
       $('lst-notes').scrollTop = 0;
     } else {
       var emptyRows = getEmptyRows();
-
       $('lst-stack').focus();
       window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;      
       $('lst-stack').setSelectionRange((emptyRows * 2) + 1, $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1));
@@ -5213,12 +5210,11 @@ document.addEventListener('keydown', function(event) {
       } else {
         var testString = $('lst-stack').value.slice($('lst-stack').selectionStart);
         var newLines = (testString.match(/\n/g) || []).length;
-        var emptyRows = getEmptyRows();        
-        var emptyRowHeight = window.innerWidth > 359 ? getEmptyRows() * 18 : getEmptyRows() * 12;
-
+        var emptyRows = getEmptyRows();
+        
         if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1)) {
-
-          if (($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) && emptyRowHeight < $('lst-stack').scrollTop) {          
+    
+          if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {
             window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
           }
           if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2))) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
@@ -5742,8 +5738,6 @@ window.onload = function () {
   $('txt-input').readOnly = false;
   $('txt-input').focus();
   /**
-    Wrap-around Up Arrow bug
-
     Iframe for desktop RPN links via iframe command.
 
     Better color pallet.
