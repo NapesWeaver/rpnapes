@@ -5204,7 +5204,7 @@ document.addEventListener('keydown', function(event) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
             
-      if (!stackFocus) {
+      if (!stackFocus && stack.length > 0) {
         $('lst-stack').focus();
         $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
         $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
