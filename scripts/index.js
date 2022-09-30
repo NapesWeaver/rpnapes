@@ -1,4 +1,4 @@
-﻿var $ = function (id) {
+﻿var $ = function(id) {
   return document.getElementById(id);
 };
 
@@ -22,11 +22,6 @@ new ResizeObserver(worldBordersSet).observe($('txt-input'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
-
-// var i = '√-1';
-// var j = '√-1';
-// var i = 'j';
-// var j = 'j';
 
 var Φ = 1.618033988749895;
 var ℮ = Math.exp(1);
