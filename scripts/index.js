@@ -5680,7 +5680,7 @@ window.onload = function () {
   
   viewPortSrc2.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1');// Jerobeam Fenderson - Planets
   viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');// Tressaurian Intersection
-  viewPortSrc2.push('https://www.youtube.com/embed/1uJxTghyaO0?autoplay=1');// Star Trek Meets Batman
+  viewPortSrc2.push('https://www.youtube.com/embed/1LsRygSoU80?autoplay=1');// Star Trek Meets Batman
   viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');// Star Track
 
   $('sensor1').onclick = sensor1;
