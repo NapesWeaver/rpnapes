@@ -1222,6 +1222,7 @@ function inverse() {
   backupUndo();
   var objX;
   var result;
+  var newUnits;
 
   if (stackFocus) {    
     objX = stack[getIndex('lst-stack') - stackSize];
@@ -1230,14 +1231,19 @@ function inverse() {
   } else {
     objX = getX();
   }
-  var newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
+  newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
+
   if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {  
     displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
   } else {    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
-      var x = buildComplexNumber(objX);
-      
-      displayResult(math.inv(x), newUnits);      
+
+      if (objX.getImaginary() === '0') {
+        if (objX.getRealPart() === 'NaN') objX.setRealPart('0');
+        objX.setImaginary('NaN');
+      }
+      var x = isANumber(objX.getImaginary()) ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
+      displayResult(math.inv(x), newUnits);
     } else {// Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));      
       if (!isNaN(result)) {
@@ -1732,11 +1738,11 @@ function division() {
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
-  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
+  if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
   
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
-
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getRealPart(objY)); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
+  
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.divide(y, x), newUnits);
 }
@@ -1758,8 +1764,8 @@ function multiplication() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getRealPart(objY)); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
    
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.multiply(y, x), newUnits);
@@ -1782,8 +1788,8 @@ function subtraction() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getRealPart(objY)); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.subtract(y, x), newUnits);
@@ -1807,8 +1813,8 @@ function addition() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX); 
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getRealPart(objY)); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
   
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.add(y, x), newUnits);
@@ -2431,9 +2437,7 @@ function autoDark() {
   }
 }
 
-/**
- * https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
-**/
+// https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/
 var startTime = 0;
 var elapsedTime = 0;
 var timerInterval = 0;
@@ -5160,29 +5164,21 @@ document.addEventListener('keydown', function(event) {
       $('lst-stack').scrollTop = $('lst-stack').scrollTop + $('lst-stack').offsetHeight;
     }
     return;
-  case 35:// END
-    if (!event) event = window.event;
-    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    if ($('rpnapes').className === 'hidden') {
-      $('lst-notes').focus();
-      $('lst-notes').scrollTop = $('lst-notes').scrollHeight;
-    } else {
-      $('lst-stack').focus();
+  case 35:// END    
+    if ($('notes').className === 'hidden' && stackFocus) {
+      if (!event) event = window.event;
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-      $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
+      $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);      
     }
     return;
   case 36:// HOME
-    if (!event) event = window.event;
-    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    if ($('rpnapes').className === 'hidden') {
-      $('lst-notes').focus();
-      $('lst-notes').scrollTop = 0;
-    } else {
+    if ($('notes').className === 'hidden' && stackFocus) {      
+      if (!event) event = window.event;
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       var emptyRows = getEmptyRows();
-      $('lst-stack').focus();
       window.innerWidth > 359 ? $('lst-stack').scrollTop = emptyRows * 18 : $('lst-stack').scrollTop = emptyRows * 12;      
-      $('lst-stack').setSelectionRange((emptyRows * 2) + 1, $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1));
+      $('lst-stack').setSelectionRange((emptyRows * 2) + 1, $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1));      
     }
     return;
   case 37:// LEFT ARROW
