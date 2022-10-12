@@ -5252,7 +5252,15 @@ document.addEventListener('keydown', function(event) {
       if (!isMobile) resizeInput();        
     }
     return;
-  case 83:// S
+  case 65:// a
+    if ($('rpnapes').className !== 'hidden' && stackFocus && ctrlHeld) {
+      if (!event) event = window.event;
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      var emptyRows = getEmptyRows();
+      $('lst-stack').setSelectionRange((emptyRows * 2) + 1, $('lst-stack').value.length);
+    }
+    return;
+  case 83:// s
     if (ctrlHeld) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -5264,7 +5272,7 @@ document.addEventListener('keydown', function(event) {
       }
     }        
     break;
-  case 89:// Y
+  case 89:// y
     if (ctrlHeld) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
@@ -5276,7 +5284,7 @@ document.addEventListener('keydown', function(event) {
       }
     }        
     break;
-  case 90:// Z
+  case 90:// z
     if (ctrlHeld) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
