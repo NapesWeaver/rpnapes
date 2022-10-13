@@ -143,7 +143,7 @@ function resizeTextAreas() {
   resizeTextarea($('lst-stack'));
   resizeTextarea($('lst-notes'));
   if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
-  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');  
+  if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');
 }
 
 function resizeTextarea(textarea) {
@@ -368,7 +368,10 @@ function btnXoff() {
     // RPNapes is visible - turn on Notes
     notesOn();
   }
-  if (isMobile) resizeTextAreas();
+  if (isMobile) {
+    resizeTextAreas();
+    if (isFirefox) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  }
 }
 
 function copy() {
@@ -1740,11 +1743,8 @@ function division() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
-  
-  // var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getRealPart(objY)); 
-  // var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul(objY)); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul(objX));
   
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.divide(y, x), newUnits);
@@ -1767,11 +1767,8 @@ function multiplication() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
-  
-  // var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getRealPart(objY)); 
-  // var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul(objY)); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul(objX));
    
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.multiply(y, x), newUnits);
@@ -1794,11 +1791,8 @@ function subtraction() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
-  
-  // var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getRealPart(objY)); 
-  // var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul(objY)); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul(objX));
  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.subtract(y, x), newUnits);
@@ -1822,11 +1816,8 @@ function addition() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
   
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
-
-  // var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getRealPart(objY)); 
-  // var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul(objY)); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul(objX));
   
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.add(y, x), newUnits);
