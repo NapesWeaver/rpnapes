@@ -1743,14 +1743,14 @@ function division() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
-  
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.divide(y, x), newUnits);
 }
 
-function btnDivide() {  
+function btnDivide() {
   if (shifted) {
     if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
   } else {
@@ -1767,8 +1767,8 @@ function multiplication() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
    
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.multiply(y, x), newUnits);
@@ -1791,8 +1791,8 @@ function subtraction() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.subtract(y, x), newUnits);
@@ -1816,8 +1816,8 @@ function addition() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = buildComplexNumber(objY); 
-  var x = buildComplexNumber(objX);
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
   
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.add(y, x), newUnits);
