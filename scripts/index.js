@@ -1734,6 +1734,16 @@ function btnSign() {
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
+function buildCalculatedNum(calculated) {
+  var result = '' + calculated;
+
+  if (result.indexOf('j') !== -1) {
+    var tmp = result.replace('j', '');
+    result = math.complex(0, tmp);
+  }
+  return result;
+}
+
 function division() {
   backupUndo();
   var objX = getX();
@@ -1743,8 +1753,8 @@ function division() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
-  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : buildCalculatedNum(calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''))); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : buildCalculatedNum(calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')));
 
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.divide(y, x), newUnits);
@@ -1767,8 +1777,8 @@ function multiplication() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
-  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : buildCalculatedNum(calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''))); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : buildCalculatedNum(calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')));
    
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.multiply(y, x), newUnits);
@@ -1791,8 +1801,8 @@ function subtraction() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
-  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : buildCalculatedNum(calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''))); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : buildCalculatedNum(calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')));
  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.subtract(y, x), newUnits);
@@ -1816,8 +1826,8 @@ function addition() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
-  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : buildCalculatedNum(calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''))); 
+  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : buildCalculatedNum(calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')));
   
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.add(y, x), newUnits);
@@ -5139,7 +5149,10 @@ document.addEventListener('keydown', function(event) {
     if ($('rpnapes').className !== 'hidden' && !isMobile) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      var isShifted = shifted;
+      shifted = true;
       btnBackspace();
+      shifted = isShifted;
     }
     return;
   case 16:// SHIFT
