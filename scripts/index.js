@@ -1734,16 +1734,6 @@ function btnSign() {
 
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
-function buildCalculatedNum(calculated) {
-  var result = '' + calculated;
-
-  if (result.indexOf('j') !== -1) {
-    var tmp = result.replace('j', '');
-    result = math.complex(0, tmp);
-  }
-  return result;
-}
-
 function division() {
   backupUndo();
   var objX = getX();
@@ -1753,8 +1743,8 @@ function division() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : buildCalculatedNum(calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''))); 
-  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : buildCalculatedNum(calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')));
+  var y = buildComplexNumber(objY);
+  var x = buildComplexNumber(objX);
 
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.divide(y, x), newUnits);
@@ -1777,8 +1767,8 @@ function multiplication() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : buildCalculatedNum(calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''))); 
-  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : buildCalculatedNum(calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')));
+  var y = buildComplexNumber(objY);
+  var x = buildComplexNumber(objX);
    
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
   displayResult(math.multiply(y, x), newUnits);
@@ -1801,8 +1791,8 @@ function subtraction() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : buildCalculatedNum(calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''))); 
-  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : buildCalculatedNum(calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')));
+  var y = buildComplexNumber(objY);
+  var x = buildComplexNumber(objX);
  
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.subtract(y, x), newUnits);
@@ -1826,8 +1816,8 @@ function addition() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = isANumber(objY.getImaginary()) && objY.getImaginary() !== '0' ? buildComplexNumber(objY) : buildCalculatedNum(calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''))); 
-  var x = isANumber(objX.getImaginary()) && objX.getImaginary() !== '0' ? buildComplexNumber(objX) : buildCalculatedNum(calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')));
+  var y = buildComplexNumber(objY);
+  var x = buildComplexNumber(objX);
   
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
   displayResult(math.add(y, x), newUnits);
@@ -1842,7 +1832,7 @@ function btnAdd() {
 }
 
 function buildComplexNumber(obj) {
-  
+  console.log('obj', obj);
   try {
     var a = 0;
     var b = 0;
@@ -3813,7 +3803,8 @@ function extractFirstValue(tmpString) {
 
   if (radix === 10) {
     // Not a constant or Infinity or number followed by evaluation symbols && not imaginary number && not IP address && not number-text-number e.g. 2x4
-    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+    // if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[-+ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?(?![a-zA-Z])[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);
       tmp = tmp.replace(/ /g, '');
 
