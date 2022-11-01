@@ -609,13 +609,13 @@ function enterInput() {
 }
 
 function calculate(expression) {
-    try {
-      expression = eval(parseEvaluation(expression));      
-      // The following cannot parse ^, mathPow(), √, mathRoot() or run code...
-      // expression = expression.replace(/j/g, 'i');
-      // expression = parseEvaluation(expression);
-      // expression = math.evaluate(expression);
-    } catch(e) {
+  try {
+    expression = eval(parseEvaluation(expression));      
+    // The following cannot parse ^, mathPow(), √, mathRoot() or run code...
+    // expression = expression.replace(/j/g, 'i');
+    // expression = parseEvaluation(expression);
+    // expression = math.evaluate(expression);
+  } catch(e) {
       if (isMobile) return;
       return e.toString();
       // expression = eval(parseEvaluation(expression));
@@ -1362,18 +1362,12 @@ function mathLn(num) {
   var x = buildComplexNumber(objX);
   result = math.log(x, ℮);
 
-  if (result.im === undefined || result.im === 0) {
-    return result.re;
-  } else {
-    result = result.toString();
-    return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
-  }
+  return math.log(x, ℮);
 }
 
 function naturalLog() {
   backupUndo();
   var objX;
-  var result = {};
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var x = objX.getSoul();
 
@@ -1390,14 +1384,9 @@ function mathLog(base, num) {
   var y = buildComplexNumber(objY); 
 
   result = math.log(y, x);
-  
-  if (result.im === undefined || result.im === 0) {
-    if (/[.][9]{11,}[0-9]*[0-9]$/.test(result.re)) result.re = Math.round(result.re);    
-    return result.re;
-  } else {
-    result = result.toString();
-    return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');    
-  } 
+
+  if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result); 
+  return result;
 }
 
 function baseLog() {
@@ -1406,6 +1395,7 @@ function baseLog() {
   var objY;
   var x;
   var y;
+  var result;
 
   if (stackFocus) {
     objY = stack[getIndex('lst-stack') - stackSize];
@@ -1419,9 +1409,11 @@ function baseLog() {
   objX = getX();
 
   y = buildComplexNumber(objY);
-  x = buildComplexNumber(objX);
+  x = buildComplexNumber(objX);  
+  result = math.log(y, x);
 
-  displayResult(math.log(y, x), '');
+  if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result);
+  displayResult(result, '');
 }
 
 function btnLog() {
@@ -1436,21 +1428,11 @@ function btnLog() {
 function mathPow(num, pow) {
   var objX = getX(pow);
   var objY = getX(num);
-  var result = {};
+  
   var x = buildComplexNumber(objX);
-  var y = buildComplexNumber(objY); 
+  var y = buildComplexNumber(objY);
 
-  if (x.im === 0 && y.im === 0) {
-    result.re = Math.pow(y.re, x.re);
-  } else {
-    result = math.pow(y, x);
-  }
-  if (result.im === undefined || result.im === 0) {
-    return result.re;
-  } else {
-    result = result.toString();
-    return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
-  }  
+  return math.pow(y, x);
 }
 
 function exponential() {
@@ -1479,47 +1461,51 @@ function exponential() {
   displayResult(math.pow(y, x), newUnits);
 }
 
-function mathRoot(root, num) {
-  var objX = getX(root);
-  var objY = getX(num);
-  var result = {};
-  var results = [{}];
-  var x = buildComplexNumber(objX);
-  var y = buildComplexNumber(objY);  
-  var signRoot = Math.sign(x.re);
-  var signNum = Math.sign(y.re);
-
-  if (signRoot > 0) {
-    results = math.nthRoots(y, x.re);
-  } else {
-    results[0].re = Math.pow(y.re, 1/x.re);
-  }
-  result = results[0];
-
-  for (var i = 1; i < results.length; i++) {
-    
-    if (signNum < 0 && results[i].re < result.re) result = results[i];
-  }
-  if (result.im === undefined || result.im === 0) {
-    return result.re;
-  } else {
-    result = result.toString();
-    return /(?<!\d)i$/.test(result) ? result.replace(/i$/, '1j') : result.replace(/i$/, 'j');
-  } 
-}
-
 function mathRoots(root, num) {
   var objX = getX(root);
   var objY = getX(num);
   var x = buildComplexNumber(objX);
   var y = buildComplexNumber(objY);
-  var results = math.nthRoots(y, x.re);
+  var results = math.nthRoots(y, x);
   var resultsArr = results.toString().split(',');
 
-  for (var i = 0; i < resultsArr.length; i++) {
-    resultsArr[i] = /(?<!\d)i$/.test(resultsArr[i]) ? resultsArr[i].replace(/i$/, '1j') : resultsArr[i].replace(/i$/, 'j');
+  resultsArr[0] = /(?<!\d)i$/.test(resultsArr[i]) ? resultsArr[0].replace(/i$/, '1j') : resultsArr[0].replace(/i$/, 'j');
+  for (var i = 1; i < resultsArr.length; i++) {
+    resultsArr[i] = /(?<!\d)i$/.test(resultsArr[i]) ? ' ' + resultsArr[i].replace(/i$/, '1j') : ' ' + resultsArr[i].replace(/i$/, 'j');
   };
-  return resultsArr;  
+  return resultsArr;
+}
+
+function mathRoot(root, num) {
+  var objX = getX(root);
+  var objY = getX(num);
+  var x = buildComplexNumber(objX);
+  var y = buildComplexNumber(objY);
+  var signRoot = Math.sign(x);
+  var signNum = Math.sign(y);
+  var result = {};
+  var results = [{}];
+
+  if (signRoot === 1) {
+    results = math.nthRoots(y, x);
+  } else {
+    if (signNum === 1) {
+      results[0] = math.pow(y, 1/x);
+     } else {
+       results[0] = -1 * math.pow(-y, 1/x);
+     } 
+  }  
+  result = results[0];
+  
+  for (var i = 1; i < results.length; i++) {
+
+    if (signNum === -1 && results[i].im === 0) result = results[i];    
+  }
+  if (result.im === 0) {
+    return result.re;
+  } else {
+    return result;
+  }
 }
 
 function radical() {
@@ -1528,7 +1514,7 @@ function radical() {
   var objY;
   var x;
   var y;
-  var results;
+  var results = [];
   var newUnits = '';
   
   if (stackFocus) {
@@ -1546,7 +1532,18 @@ function radical() {
   x = buildComplexNumber(objX);
 
   try {
-    results = math.nthRoots(y, x.re);
+    var signRoot = Math.sign(x);
+    var signNum = Math.sign(y)
+
+    if (signRoot === 1) {
+      results = math.nthRoots(y, x);
+    } else {
+      if (signNum === 1) {
+        results.push(math.pow(y, 1/x));
+       } else {
+         results.push(-1 * math.pow(-y, 1/x));
+       } 
+    }
   } catch (e) {
     results = [e];
   }
@@ -1832,7 +1829,7 @@ function btnAdd() {
 }
 
 function buildComplexNumber(obj) {
-  console.log('obj', obj);
+
   try {
     var a = 0;
     var b = 0;
@@ -1843,6 +1840,7 @@ function buildComplexNumber(obj) {
       if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
       if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
     }
+    if (b === 0) return a;
     return math.complex(a, b);    
   } catch {
     return NaN;
@@ -1899,70 +1897,80 @@ function displayResults(results, newUnits) {
 function sin(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
-  var degrees = $('btn-angle').value === 'deg' ? x.re :  x.re * 180 / Math.PI;
+  var degrees;
 
-  if (x.im === 0 && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) return 0;
+  if (x.im === undefined) {
+    degrees = $('btn-angle').value === 'deg' ? x : x * 180 / Math.PI;
+  } else {
+    degrees = $('btn-angle').value === 'deg' ? x.re : x.re * 180 / Math.PI;
+  }
+  if ((x.im === undefined || x.im === 0) && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) return 0;  
 
-  if ($('btn-angle').value === 'deg') {    
-    x.re = x.re * Math.PI / 180;
-    x.im = x.im * Math.PI / 180;
-  }  
-  x = math.sin(x);
-
-  if (x.im === 0) {// This allows us to keep parsing in-line real numbers
-    return x.re;
-  } else {// No in-line parsing for complex numbers yet
-    return x;
-  }  
+  if ($('btn-angle').value === 'deg') {
+    if (x.im === undefined) {
+      x = x * Math.PI / 180;
+    } else {
+      x.re = x.re * Math.PI / 180;
+      x.im = x.im * Math.PI / 180;
+    }
+  }
+  return math.sin(x); 
 }
 
 function cos(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
-  var degrees = $('btn-angle').value === 'deg' ? x.re :  x.re * 180 / Math.PI;
+  var degrees;
 
-  if (x.im === 0 && (degrees === 270 || (degrees - 270) % 360 === 0 || degrees === 90 || (degrees - 90) % 360 === 0)) return 0;
-
-  if ($('btn-angle').value === 'deg') {    
-    x.re = x.re * Math.PI / 180;
-    x.im = x.im * Math.PI / 180;
-  }
-  x = math.cos(x);
-
-  if (x.im === 0) {
-    return x.re;
+  if (x.im === undefined) {
+    degrees = $('btn-angle').value === 'deg' ? x : x * 180 / Math.PI;
   } else {
-    return x;
-  }   
+    degrees = $('btn-angle').value === 'deg' ? x.re : x.re * 180 / Math.PI;
+  }
+  if ((x.im === undefined || x.im === 0) && (degrees === 270 || (degrees - 270) % 360 === 0 || degrees === 90 || (degrees - 90) % 360 === 0)) return 0;
+
+  if ($('btn-angle').value === 'deg') {
+    if (x.im === undefined) {
+      x = x * Math.PI / 180;
+    } else {
+      x.re = x.re * Math.PI / 180;
+      x.im = x.im * Math.PI / 180;
+    }
+  }
+  return math.cos(x);
 }
 
 function tan(input) {
   var objX = getX(input);
   var x = buildComplexNumber(objX);
-  var degrees = $('btn-angle').value === 'deg' ? x.re :  x.re * 180 / Math.PI;
+  var degrees;
+
+  if (x.im === undefined) {
+    degrees = $('btn-angle').value === 'deg' ? x : x * 180 / Math.PI;
+  } else {
+    degrees = $('btn-angle').value === 'deg' ? x.re : x.re * 180 / Math.PI;
+  }
   
-  if (x.im === 0 && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) {
+  if ((x.im === undefined || x.im === 0) && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) {
     return 0;
-  } else if (x.im === 0 && (degrees === 315 || (degrees - 315) % 360 === 0 || degrees === 135 || (degrees - 135) % 360 === 0)) {
+  } else if ((x.im === undefined || x.im === 0) && (degrees === 315 || (degrees - 315) % 360 === 0 || degrees === 135 || (degrees - 135) % 360 === 0)) {
     return -1;
-  } else if(x.im === 0 && (degrees === 270 || (degrees - 270) % 360 === 0)) {
+  } else if((x.im === undefined || x.im === 0) && (degrees === 270 || (degrees - 270) % 360 === 0)) {
     return -Infinity;
-  } else if (x.im === 0 && (degrees === 90 || (degrees - 90) % 360 === 0)) {
+  } else if ((x.im === undefined || x.im === 0) && (degrees === 90 || (degrees - 90) % 360 === 0)) {
     return Infinity;
-  } else if (x.im === 0 && (degrees === 225 || (degrees - 225) % 360 === 0 || degrees === 45 || (degrees - 45) % 360 === 0)) {
+  } else if ((x.im === undefined || x.im === 0) && (degrees === 225 || (degrees - 225) % 360 === 0 || degrees === 45 || (degrees - 45) % 360 === 0)) {
     return 1;
   }
-  if ($('btn-angle').value === 'deg') {    
-    x.re = x.re * Math.PI / 180;
-    x.im = x.im * Math.PI / 180;
+  if ($('btn-angle').value === 'deg') {
+    if (x.im === undefined) {
+      x = x * Math.PI / 180;
+    } else {
+      x.re = x.re * Math.PI / 180;
+      x.im = x.im * Math.PI / 180;
+    }
   }
-  x = math.tan(x);
-  
-  if (x.im === 0) {
-    return x.re;
-  } else {
-    return x;
-  }   
+  return math.tan(x);    
 }
 
 function asin(input) {
@@ -1972,14 +1980,14 @@ function asin(input) {
   x = math.asin(x);
 
   if ($('btn-angle').value === 'deg') {
-    x.re = (x.re * 180) / Math.PI;
-    x.im = (x.im * 180) / Math.PI;
+    if (x.im === undefined) {
+      x = (x * 180) / Math.PI;
+    } else {
+      x.re = (x.re * 180) / Math.PI;
+      x.im = (x.im * 180) / Math.PI;
+    }
   }
-  if (x.im === 0) {
-    return x.re;
-  } else {
-    return x;
-  }  
+  return x; 
 }
 
 function acos(input) {
@@ -1989,14 +1997,14 @@ function acos(input) {
   x = math.acos(x);
 
   if ($('btn-angle').value === 'deg') {
-    x.re = (x.re * 180) / Math.PI;
-    x.im = (x.im * 180) / Math.PI;
+    if (x.im === undefined) {
+      x = (x * 180) / Math.PI;
+    } else {
+      x.re = (x.re * 180) / Math.PI;
+      x.im = (x.im * 180) / Math.PI;
+    }
   }
-  if (x.im === 0) {
-    return x.re;
-  } else {
-    return x;
-  }  
+  return x;
 }
 
 function atan(input) {
@@ -2005,18 +2013,18 @@ function atan(input) {
   
   x = math.atan(x);
 
-  if (input === 'Infinity') x.re = π / 2;
-  if (input === '-Infinity') x.re = -π / 2;
+  if (input === 'Infinity') x = π / 2;
+  if (input === '-Infinity') x = -π / 2;
 
   if ($('btn-angle').value === 'deg') {
-    x.re = (x.re * 180) / Math.PI;
-    x.im = (x.im * 180) / Math.PI;
+    if (x.im === undefined) {
+      x = (x * 180) / Math.PI;
+    } else {
+      x.re = (x.re * 180) / Math.PI;
+      x.im = (x.im * 180) / Math.PI;
+    }
   }
-  if (x.im === 0) {
-    return x.re;
-  } else {
-    return x;
-  }  
+  return x; 
 }
 
 function toggleAngleMode() {
