@@ -1336,10 +1336,17 @@ function gamma(n) {  // Accurate to about 15 decimal places
 function factorial(num) {  
   var result;
   
-  if (num % 1 === 0) {
-    result = intFactorial(num);
-  } else {
-    result = gamma(num + 1);
+  try {
+    if (num === Infinity) num = 999;
+    if (num === -Infinity) num = -999;
+
+    if (num % 1 === 0) {
+      result = intFactorial(num);
+    } else {
+      result = gamma(num + 1);
+    }
+  } catch {
+    result = NaN;
   }
   return result;
 }
@@ -1348,14 +1355,8 @@ function btnFactorial() {
   backupUndo();
   var objX;
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();  
-  // Add logic for [ij] please!
-  if (!/[∠ij]/g.test(objX.getSoul())) {
-    var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-    displayResult(factorial(x), '');
-  } else {
-    $('txt-input').value = NaN;
-    resizeInput();
-  }
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  displayResult(factorial(x), '');  
 }
 
 function mathLn(num) {
@@ -1642,19 +1643,18 @@ function modulus() {
   }
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
   
-  newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
-
   try {
-    displayResult(math.mod(y, x), newUnits);
+    result = math.mod(y, x);
   } catch {
-    $('txt-input').value = NaN;
-    resizeInput();
+    result = NaN;
   }
+  newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
+  displayResult(result, newUnits);
 }
 
 function btnModulus() {  
   if (shifted) {
-    if (!/[=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[√]/, '√');
+    buttonInsert(/[√]/, '√');
   } else {    
     modulus();
   }
