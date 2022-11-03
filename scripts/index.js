@@ -1370,8 +1370,14 @@ function naturalLog() {
   var objX;
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var x = objX.getSoul();
+  var result;
 
-  displayResult(mathLn(x), '');
+  try {
+    result = mathLn(x);
+  } catch {
+    result = NaN;
+  }
+  displayResult(result, '');
 }
 
 function mathLog(base, num) {
@@ -1381,7 +1387,7 @@ function mathLog(base, num) {
   var objY = getX(num);
   var result = {};
   var x = buildComplexNumber(objX);
-  var y = buildComplexNumber(objY); 
+  var y = buildComplexNumber(objY);
 
   result = math.log(y, x);
 
@@ -1409,8 +1415,13 @@ function baseLog() {
   objX = getX();
 
   y = buildComplexNumber(objY);
-  x = buildComplexNumber(objX);  
-  result = math.log(y, x);
+  x = buildComplexNumber(objX);
+
+  try {
+    result = math.log(y, x);    
+  } catch {
+    result = NaN;
+  }
 
   if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result);
   displayResult(result, '');
@@ -1441,6 +1452,7 @@ function exponential() {
   var objY;
   var x;
   var y;
+  var result;
   var newUnits = '';
   
   if (stackFocus) {
@@ -1456,9 +1468,14 @@ function exponential() {
 
   y = buildComplexNumber(objY); 
   x = buildComplexNumber(objX);
-  
+
+  try {
+    result = math.pow(y, x);
+  } catch {
+    result = NaN;
+  }  
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
-  displayResult(math.pow(y, x), newUnits);
+  displayResult(result, newUnits);
 }
 
 function mathRoots(root, num) {
@@ -1544,8 +1561,8 @@ function radical() {
          results.push(-1 * math.pow(-y, 1/x));
        } 
     }
-  } catch (e) {
-    results = [e];
+  } catch {
+    results = [NaN];
   }
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);   
   displayResults(results, newUnits);
@@ -1735,6 +1752,7 @@ function division() {
   backupUndo();
   var objX = getX();
   var objY;
+  var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
@@ -1743,8 +1761,13 @@ function division() {
   var y = buildComplexNumber(objY);
   var x = buildComplexNumber(objX);
 
+  try {
+    result = math.divide(y, x);
+  } catch {
+    result = NaN;
+  }
   newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
-  displayResult(math.divide(y, x), newUnits);
+  displayResult(result, newUnits);
 }
 
 function btnDivide() {
@@ -1759,6 +1782,7 @@ function multiplication() {
   backupUndo();
   var objX = getX();
   var objY;
+  var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
@@ -1767,8 +1791,13 @@ function multiplication() {
   var y = buildComplexNumber(objY);
   var x = buildComplexNumber(objX);
    
+  try {
+    result = math.multiply(y, x);
+  } catch {
+    result = NaN;
+  }
   newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
-  displayResult(math.multiply(y, x), newUnits);
+  displayResult(result, newUnits);
 }
 
 function btnMultiply() {  
@@ -1783,6 +1812,7 @@ function subtraction() {
   backupUndo();
   var objX = getX();
   var objY;
+  var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
@@ -1791,8 +1821,13 @@ function subtraction() {
   var y = buildComplexNumber(objY);
   var x = buildComplexNumber(objX);
  
+  try {
+    result = math.subtract(y, x);
+  } catch {
+    result = NaN;
+  }
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-  displayResult(math.subtract(y, x), newUnits);
+  displayResult(result, newUnits);
 }
 
 function btnSubtract() {  
@@ -1808,6 +1843,7 @@ function addition() {
   backupUndo();
   var objX = getX();
   var objY;
+  var result;
   var newUnits = '';
 
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
@@ -1816,8 +1852,13 @@ function addition() {
   var y = buildComplexNumber(objY);
   var x = buildComplexNumber(objX);
   
+  try {
+    result = math.add(y, x);
+  } catch {
+    result = NaN;
+  }
   newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
-  displayResult(math.add(y, x), newUnits);
+  displayResult(result, newUnits);
 }
 
 function btnAdd() {  
@@ -2834,8 +2875,8 @@ function help(command) {
 function parseCommand() {
   var command = $('txt-input').value.trim();
   var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', NaN, NaN, 'null'); 
-  // Commands consist of words and numbers and URLs
-  if (!/[,*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
+  // Commands consist of words and numbers and URLs   
+  if (!/[*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
     var commandArray = command.split(' ');
     // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
@@ -3812,7 +3853,8 @@ function extractFirstValue(tmpString) {
   if (radix === 10) {
     // Not a constant or Infinity or number followed by evaluation symbols && not imaginary number && not IP address && not number-text-number e.g. 2x4
     // if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
-    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[-+ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+    // if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[-+ ]*[;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
+    if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[-+ ]*[,;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?(?![a-zA-Z])[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);
       tmp = tmp.replace(/ /g, '');
 
