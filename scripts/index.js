@@ -749,7 +749,6 @@ function undoFunction() {
   
     restores.push(nestArrayByBrowser(shortStack));
     restores.push($('txt-input').value.trim());
-
     $('txt-input').value = backups.pop();
     
     var backupArray = backups.pop();
@@ -779,8 +778,7 @@ function redoFunction() {
 
     backups.push(nestArrayByBrowser(shortStack));
     backups.push($('txt-input').value.trim());
-
-    $('txt-input').value = restores.pop();
+    $('txt-input').value = restores.pop();    
 
     var restoredArray = restores.pop();
     stack.length = 0;
