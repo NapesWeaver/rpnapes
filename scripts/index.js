@@ -743,21 +743,22 @@ function undoFunction() {
   if (backups.length > 3) {   
     var shortStack = [];    
     var currentRadix = radix;
-    radix = 10;
-    
-    for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+    radix = 10;    
 
+    for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));      
+  
     restores.push(nestArrayByBrowser(shortStack));
-    restores.push($('txt-input').value);
+    restores.push($('txt-input').value.trim());
+
     $('txt-input').value = backups.pop();
-
-    var tmpArray = backups.pop();
+    
+    var backupArray = backups.pop();
     stack.length = 0;
-    tmpArray = splitArrayByBrowser(tmpArray);
-
+    backupArray = splitArrayByBrowser(backupArray);
+    
     var i = 1;
-    while (i < tmpArray.length) {
-      pushObjectToStack(tmpArray[i]);
+    while (i < backupArray.length) {
+      pushObjectToStack(backupArray[i]);
       i++;
     }
     radix = currentRadix;
@@ -770,23 +771,24 @@ function undoFunction() {
 function redoFunction() {
 
   if (restores.length > 0) {
-    var shortStack = [];    
+    var shortStack = [];
     var currentRadix = radix;
     radix = 10;
 
-    for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+    for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));
 
     backups.push(nestArrayByBrowser(shortStack));
-    backups.push($('txt-input').value);
+    backups.push($('txt-input').value.trim());
+
     $('txt-input').value = restores.pop();
 
-    var tmpArray = restores.pop();
+    var restoredArray = restores.pop();
     stack.length = 0;
-    tmpArray = splitArrayByBrowser(tmpArray);
+    restoredArray = splitArrayByBrowser(restoredArray);
     
     var i = 1;
-    while (i < tmpArray.length) {
-      pushObjectToStack(tmpArray[i]);
+    while (i < restoredArray.length) {
+      pushObjectToStack(restoredArray[i]);
       i++;
     }
     radix = currentRadix;
@@ -797,9 +799,12 @@ function redoFunction() {
 }
 
 function backupUndo() {
-  var shortStack = [];    
+  var shortStack = [];
   var input = $('txt-input').value.trim();
-  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+  var currentRadix = radix;
+  radix = 10;
+
+  for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));  
   
   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
     backups.push(nestArrayByBrowser(shortStack));
@@ -807,6 +812,7 @@ function backupUndo() {
     restores.length = 0;
     colorUndoButton();  
   }
+  radix = currentRadix;
 }
 
 function toggleChar(input, index, regex, char) {
@@ -1883,7 +1889,7 @@ function buildComplexNumber(obj) {
       if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
       if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
     }
-    if (b === 0) return a;
+    if (b === 0 && radix === 10) return a;
     return math.complex(a, b);    
   } catch {
     return NaN;
@@ -2614,8 +2620,7 @@ function menuHelp() {
 
 function help(command) {
   var commandArray = command.split(' ');
-  
-  if (commandArray[1] !== undefined) {
+  if (commandArray[1] !== undefined && radix !== 16) {
 
     switch (commandArray[1]) {    
     case 'about':
@@ -2632,21 +2637,13 @@ function help(command) {
       enterInput();
       inputText('ave: Finds the average of stack elements that are not NaN and returns the result. Alias: average');
       break;
-    case 'darkmode':
+    case 'bin':
+      // Falls through
+    case 'binary':
       inputText('');
       enterInput();
-      inputText('darkmode: Toggle between light and dark themes.');
+      inputText('binary: Base2/Binary mode. Alias: bin');
       break;
-    case 'date':
-      inputText('');
-      enterInput();
-      inputText('date: Returns the current date.');
-      break;
-    case 'duckgo':
-      inputText('');
-      enterInput();
-      inputText('duckgo [query]: Search DuckDuckGo. If no argument is supplied in-line, last entry on stack is used as query.');
-      break; 
     case 'clear':
       inputText('');
       enterInput();
@@ -2657,6 +2654,28 @@ function help(command) {
       enterInput();
       inputText('constants: Displays the values of \'constants\'. Reassignment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
       break;
+    case 'darkmode':
+      inputText('');
+      enterInput();
+      inputText('darkmode: Toggle between light and dark themes.');
+      break;
+    case 'date':
+      inputText('');
+      enterInput();
+      inputText('date: Returns the current date.');
+      break;
+    case 'dec':
+      // Falls through
+    case 'decimal':
+      inputText('');
+      enterInput();
+      inputText('decimal: Base10/Decimal mode. Alias: dec');
+      break;
+    case 'duckgo':
+      inputText('');
+      enterInput();
+      inputText('duckgo [query]: Search DuckDuckGo. If no argument is supplied in-line, last entry on stack is used as query.');
+      break;    
     case 'embed':
       inputText('');
       enterInput();
@@ -2686,6 +2705,13 @@ function help(command) {
       inputText('');
       enterInput();
       inputText('google [query]: Search Google / open link or IP address. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
+      break;
+    case 'hex':
+      // Falls through
+    case 'hexadecimal':
+      inputText('');
+      enterInput();
+      inputText('hexadecimal: Base16/Hexadecimal mode. Alias: hex');
       break;
     case 'ip':
       inputText('');
@@ -2746,6 +2772,13 @@ function help(command) {
       inputText('');
       enterInput();
       inputText('notes: Switch to Notes interface.');
+      break;
+    case 'oct':
+      // Falls through
+    case 'octal':
+      inputText('');
+      enterInput();
+      inputText('octal: Base8/Octal mode. Alias: oct');
       break;
     case 'open':
       inputText('');
@@ -2887,10 +2920,10 @@ function help(command) {
       enterInput();
       return;
     }
-  } else {
+  } else if (radix !== 16) {
     inputText('');
     enterInput();
-    inputText('about, ave, clear, constants, darkmode, date, duckgo, embed, email, eng, fix, flightlogger, google, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, open, opennotes, off, paste, polar, print, run, runnotes, sandbox, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
+    inputText('about, ave, binary, clear, constants, darkmode, date, decimal, duckgo, embed, email, eng, fix, flightlogger, google, hexadecimal, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, octal, open, opennotes, off, paste, polar, print, run, runnotes, sandbox, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
     enterInput();
     inputText('');
     enterInput();
@@ -3086,6 +3119,13 @@ function parseCommand() {
       updateDisplay();
       inputText(averageStack());
       break;
+    case 'bin':
+      // Falls through
+    case 'binary':
+      stack.pop();
+      convertBase(2);
+      $('txt-input').value = '';
+      break;
     case 'constants':
       stack.pop();
       inputText('');
@@ -3118,6 +3158,13 @@ function parseCommand() {
       updateDisplay();
       insertDate();
       break;
+    case 'dec':
+      // Falls through
+    case 'decimal':
+      stack.pop();
+      convertBase(10);
+      $('txt-input').value = '';
+      break;
     case 'email':
       stack.pop();
       $('txt-input').value = '';
@@ -3143,6 +3190,13 @@ function parseCommand() {
         $('txt-input').value = '';      
         toggleHaptic();
       }
+      break;
+    case 'hex':
+      // Falls through
+    case 'hexadecimal':
+      stack.pop();
+      convertBase(16);
+      $('txt-input').value = '';
       break;
     case 'How are ya':
     case 'How are ya doing':
@@ -3228,6 +3282,13 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       btnXoff();
+      break;
+    case 'oct':
+      // Falls through
+    case 'octal':
+      stack.pop();
+      convertBase(8);
+      $('txt-input').value = '';
       break;
     case 'off':
       stack.pop();
@@ -3913,7 +3974,6 @@ function extractFirstValue(tmpString) {
   if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
   if (/^[-]?0*/.test(tmpReal)) tmpReal = removeLeadingZeros(tmpReal);
   if (tmpReal === '') tmpReal = 'NaN';
-  
   return tmpReal;
 }
 
