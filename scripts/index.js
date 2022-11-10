@@ -1077,13 +1077,24 @@ function btnClear() {
 }
 
 function btnSave() {
-  var shortStack = [];  
-  $('btn-save').style.color = '#D4D0C8';
-  for (var i = 0; i < stack.length; i++) radix === 10 ? shortStack.push(stack[i].getSoul()) : shortStack.push(objToString(stack[i]));
-
+  var shortStack = []; 
+  var currentRadix = radix;
+  radix = 10;
+  updateDisplay();  
+  
+  for (var i = 0; i < stack.length; i++) {
+    if (isANumber(stack[i].getRealPart()) || isANumber(stack[i].getImaginary())) {
+      shortStack.push(objToString(stack[i]));
+    } else {
+      shortStack.push(stack[i].getSoul());
+    }
+  }
   saveCookie('STACK', nestArrayByBrowser(shortStack));
   saveCookie('MATHMON', nestArrayByBrowser(theObjects));
 
+  radix = currentRadix;
+  updateDisplay();
+  $('btn-save').style.color = '#D4D0C8';
   $('txt-input').focus();
   if (isMobile) resizeInput();
 }
@@ -1195,6 +1206,9 @@ function loadProgram(tmpStack) {
 }
 
 function loadStack(tmpStack) {
+  var currentRadix = radix;
+  radix = 10;
+
   var shortStack = [];
   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
@@ -1212,6 +1226,7 @@ function loadStack(tmpStack) {
     var tmpString = tmpStack.shift();
     pushObjectToStack(tmpString);
   }
+  radix = currentRadix;
 }
 
 function splitArrayByBrowser(tmpArray) {
