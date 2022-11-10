@@ -96,9 +96,9 @@
                       <a title="Change base" onclick="$('base').className='visible'">Base</a>
                       <ul id="base" onclick="$('base').className='hidden'">
                         <li><a title="Binary" onclick="convertBase(2);">&nbsp;&nbsp;Binary</a></li>
-                        <li><a title="Octal" onclick="convertBase(8);">&nbsp;&nbsp;Octal</a></li>
-                        <li><a title="Hexadecimal" onclick="convertBase(16);">&nbsp;&nbsp;Hex</a></li>
                         <li><a title="Decimal" onclick="convertBase(10);">&nbsp;&nbsp;Decimal</a></li>
+                        <li><a title="Hexadecimal" onclick="convertBase(16);">&nbsp;&nbsp;Hex</a></li>
+                        <li><a title="Octal" onclick="convertBase(8);">&nbsp;&nbsp;Octal</a></li>
                       </ul>
                     </li>
                     <li class="haptic-response"><a id="menu-angle-mode" title="Toggle degree/radian mode" onmouseover="$('base').className='hidden'">Radian</a></li>
@@ -259,7 +259,7 @@
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified Nov 9, 2022." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified Nov 10, 2022." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <textarea id="txt-input" class="txt-input" name="txt-input" tabindex="1" rows="1" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" onfocus="txtInputFocus()" onmousedown="haptic()"></textarea>
           <div id="entry-pad">
             <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>

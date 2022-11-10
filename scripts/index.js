@@ -5906,8 +5906,6 @@ window.onload = function () {
   $('txt-input').readOnly = false;
   $('txt-input').focus();
   /**
-    Iframe for desktop RPN links via iframe command.
-
     Better color pallet.
     
     6^3i
@@ -5915,19 +5913,18 @@ window.onload = function () {
     9/1i
     ♥ ♥ ♥i
     Ω Ω Ωi
+
+    Haptic response for Firefox mobile.
+    File-reopening bug.
+
     Rectangular w/o space eg. 'π+9j'?
     Inline parsing for complex numbers?
 
-    Negative and Infinite factorial.
-    Refactor signChange(), inverse() for complex Infinities.
+    Negative and Infinite factorial?
     Modulus for complex numbers?
-    Factorial for complex numbers?
-    Negative & inverse binaries?
+    Factorial for complex numbers?    
     
-    Constants/formulas menu bug for mobile.
-    Haptic response for Firefox mobile.
-    File-reopening bug.
-    
+    Iframe for desktop RPN links via iframe command?
     Extend timer for hours/days?    
     Symbolic results?
     Unit conversions?
