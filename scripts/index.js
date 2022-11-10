@@ -738,18 +738,38 @@ function colorUndoRedoMenu() {
   }
 }
 
+function undoBase(input, aRadix) {
+  var objX = getX(input);
+  radix = 10;
+
+  var output = objToString(objX);  
+  radix = aRadix;
+  return output;
+}
+
+function redoBase(input, aRadix) {
+  var objX = getX(input);
+  radix = aRadix;
+  
+  var output = objToString(objX);  
+  radix = 10;
+  return output;
+}
+
 function undoFunction() {
 
   if (backups.length > 3) {   
     var shortStack = [];    
     var currentRadix = radix;
+    var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
     radix = 10;    
 
     for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));      
   
     restores.push(nestArrayByBrowser(shortStack));
-    restores.push($('txt-input').value.trim());
-    $('txt-input').value = backups.pop();
+    restores.push(input);
+
+    currentRadix === 10 ? $('txt-input').value = backups.pop() : $('txt-input').value = redoBase(backups.pop(), currentRadix);
     
     var backupArray = backups.pop();
     stack.length = 0;
@@ -772,13 +792,15 @@ function redoFunction() {
   if (restores.length > 0) {
     var shortStack = [];
     var currentRadix = radix;
+    var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
     radix = 10;
 
     for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));
 
     backups.push(nestArrayByBrowser(shortStack));
-    backups.push($('txt-input').value.trim());
-    $('txt-input').value = restores.pop();    
+    backups.push(input);
+
+    currentRadix === 10 ? $('txt-input').value = restores.pop() : $('txt-input').value = redoBase(restores.pop(), currentRadix);
 
     var restoredArray = restores.pop();
     stack.length = 0;
@@ -798,8 +820,8 @@ function redoFunction() {
 
 function backupUndo() {
   var shortStack = [];
-  var input = $('txt-input').value.trim();
   var currentRadix = radix;
+  var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
   radix = 10;
 
   for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));  
@@ -3196,12 +3218,17 @@ function parseCommand() {
       convertBase(16);
       $('txt-input').value = '';
       break;
-    case 'How are ya':
-    case 'How are ya doing':
-    case 'How are you':
+    case 'How are ya?':
+      // Falls through
+    case 'How are ya doing?':
+      // Falls through
+    case 'How are you?':
+      // Falls through
     case 'How are you doing':
-    case 'How ya doing':
-    case 'How you doing':
+      // Falls through
+    case 'How ya doing?':
+      // Falls through
+    case 'How you doing?':
       inputText('');
       enterInput();
       inputText('Like a rhinestone cowboy!');
@@ -3210,8 +3237,11 @@ function parseCommand() {
       updateDisplay();
       break;
     case 'Hallo':
+      // Falls through
     case 'Hello':
+      // Falls through
     case 'Hey':
+      // Falls through
     case 'Hi':
       inputText('');
       enterInput();
@@ -3565,16 +3595,14 @@ function resetNotation() {
   $('label-sci').classList.remove('hidden');
 }
 
-function convertBase(r) {           
+function convertBase(newRadix) {           
   resetNotation();
 
   var obj = getX();
-  var result = '';
   var units = '';
+  radix = newRadix;
 
-  if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();
-  
-  radix = r;
+  if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();  
 
   switch(radix) {
     case 2:
@@ -3591,9 +3619,7 @@ function convertBase(r) {
       break;
   }
   updateDisplay();
-  result = objToString(obj);
-
-  if ($('txt-input').value !== '') $('txt-input').value = result + units;  
+  displayResult(objToString(obj), '');
   resizeInput();  
 }
 
