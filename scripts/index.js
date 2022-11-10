@@ -24,7 +24,7 @@ new ResizeObserver(unFloat).observe($('lst-notes'));
 if (!isPhone) window.onresize = resizeTextAreas;
 
 var j = '√-1';
-var i = j;
+var i = '√-1';
 var Φ = 1.618033988749895;
 var ℮ = Math.exp(1);
 var π = Math.PI;
@@ -1077,14 +1077,14 @@ function btnClear() {
 }
 
 function btnSave() {
-  var shortStack = [];
-
+  var shortStack = [];  
   $('btn-save').style.color = '#D4D0C8';
-  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+  for (var i = 0; i < stack.length; i++) radix === 10 ? shortStack.push(stack[i].getSoul()) : shortStack.push(objToString(stack[i]));
+
   saveCookie('STACK', nestArrayByBrowser(shortStack));
   saveCookie('MATHMON', nestArrayByBrowser(theObjects));
-  $('txt-input').focus();
 
+  $('txt-input').focus();
   if (isMobile) resizeInput();
 }
 
@@ -5917,17 +5917,17 @@ window.onload = function () {
     Haptic response for Firefox mobile.
     File-reopening bug.
 
-    Rectangular w/o space eg. 'π+9j'?
-    Inline parsing for complex numbers?
-
     Negative and Infinite factorial?
     Modulus for complex numbers?
     Factorial for complex numbers?    
     
-    Iframe for desktop RPN links via iframe command?
     Extend timer for hours/days?    
+    Iframe for desktop RPN links via iframe command?
     Symbolic results?
     Unit conversions?
     Login, persistent storage/messaging/sharing?
+    
+    Rectangular w/o space eg. 'π+9j'?
+    Inline parsing for complex numbers?
   */
 };
