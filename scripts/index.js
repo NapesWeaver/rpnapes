@@ -628,10 +628,14 @@ function calculate(expression) {
 function runTest() {  
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
-      var valueY = decodeSpecialChar(stack[stack.length - 2].getSoul());
-      var valueX = stack[stack.length - 1].getSoul()
-      var color = calculate(valueY).toString() === valueX ? 'green' : 'red';      
-      console.log(`${valueY} %c${calculate(valueY).toString() === valueX}`, `font-weight: bold; color: ${color};`);   
+      var expression = decodeSpecialChar(stack[stack.length - 2].getSoul());
+      var valueY = calculate(expression).toString();
+      var valueX = stack[stack.length - 1].getSoul();
+      if (valueY === 'i') valueY = '1j';
+      valueY = valueY.replace(/i$/g, 'j');
+      valueY = valueY.replace(/e\+/g, 'e');
+      var color = valueY === valueX ? 'green' : 'red';   
+      console.log(`${valueY} %c${valueY === valueX}`, `font-weight: bold; color: ${color};`);
     }
   } catch(e) {
     console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
@@ -1941,18 +1945,20 @@ function getComplex(complexObj) {
 
 function displayResult(result, newUnits) { 
   var objX;
+  if (result !== undefined) {
 
-  if (typeof result === 'string' || typeof result === 'number') {
-    objX = getX(result);
-  } else {    
-    if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
+    if (typeof result === 'string' || typeof result === 'number') {
+      objX = getX(result);
+    } else {    
+      if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
+    }
+    if (objX) result = objToString(objX);  
+    if (result !== 0 && result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
+  
+    $('txt-input').value = result;  
+    updateDisplay();
+    resizeInput();
   }
-  if (objX) result = objToString(objX);  
-  if (result !== 0 && result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
-
-  $('txt-input').value = result;  
-  updateDisplay();
-  resizeInput();
 }
 
 function displayResults(results, newUnits) {
@@ -5921,17 +5927,11 @@ window.onload = function () {
   $('txt-input').readOnly = false;
   $('txt-input').focus();
   /**
-    Better color pallet.
+    Better color pallet.    
     
-    6^3i
-    8*2i
-    9/1i
-    ♥ ♥ ♥i
-    Ω Ω Ωi
-
     Haptic response for Firefox mobile.
     File-reopening bug.
-
+    
     Negative and Infinite factorial?
     Modulus for complex numbers?
     Factorial for complex numbers?    
@@ -5944,5 +5944,6 @@ window.onload = function () {
     
     Rectangular w/o space eg. 'π+9j'?
     Inline parsing for complex numbers?
+    Parse outliers...   
   */
 };
