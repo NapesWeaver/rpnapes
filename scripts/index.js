@@ -4170,54 +4170,24 @@ function extractUnits(tmpString) {
   return tmpUnits;
 }
 
-function addUnits(unitsX, unitsY) {
-  var units = '';
-  if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = unitsY;
-  if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = unitsX;
-  if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
-  if (units) units = ' ' + units;
-  return units;
-}
+function appendUnits(unitString, tmpUnits, exponent) {
 
-function multiplyUnits(unitsX, unitsY, multiplier) {
-  var units = '';
+  if (tmpUnits !== 'null') {
+    if (exponent === 1) {
 
-  if ((unitsY !== 'null' || unitsX !== 'null')) {
-    units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
-    if (units === ' ') units = '';
-  }
-  return units;
-}
+      if (unitString.length > 0) unitString += '*';
+      unitString += tmpUnits;
+    } else if (exponent !== 0) {
 
-function divideUnits(unitsX, unitsY, multiplier) {
-  var units = '';
-
-  if ((unitsY !== 'null' || unitsX !== 'null')) {
-    units = ' ' + processUnits(unitsY, unitsX, multiplier, false);
-    if (units === ' ') units = '';
-  }
-  return units;
-}
-
-function inverseUnits(units) {
-  var tmpArray = [];
-  var invertedUnits = '';
-
-  if (units !== 'null') {
-    units = rewriteNegUnitExp(units);
-    if (units.indexOf('/') !== -1) {
-      tmpArray = units.split('/');
-      
-      if (tmpArray[0].indexOf('1') === -1) {
-        invertedUnits += ' ' + tmpArray[1] + '/' + tmpArray[0];
+      if (unitString.length > 0) unitString += '*';
+      if (exponent.toString().indexOf('.') < 0) {
+        unitString += tmpUnits + '^' + exponent;
       } else {
-        invertedUnits += ' ' + tmpArray[1];
+        unitString += tmpUnits + '^' + toFixed(exponent, 2);
       }
-    } else {
-      invertedUnits += ' 1/' + units;
     }
   }
-  return invertedUnits;
+  return unitString;
 }
 
 function splitUnits(tmpUnits) {
@@ -4237,42 +4207,21 @@ function splitUnits(tmpUnits) {
   return [unitsA, unitsB];
 }
 
-function processUnits(unitsY, unitsX, multiplier, multiply) {
+function removeNegativeExponentSign(factorsArray) {
+  var tmpArray = [];
+  var i = 0;
 
-  var unitsSplit = [];
-  var numeratorY = '';
-  var denominatorY = '';
-  var numeratorX = '';
-  var denominatorX = '';
-  var unitsCombined = '';
-
-  unitsSplit = splitUnits(unitsY);
-  numeratorY = unitsSplit[0];
-  denominatorY = unitsSplit[1];
-  unitsSplit = splitUnits(unitsX);
-  numeratorX = unitsSplit[0];
-  denominatorX = unitsSplit[1];
-
-  if (multiply) {
-    // Multiplication
-    numeratorX = unitAddition(numeratorY, numeratorX, multiplier, true);
-    denominatorX = unitAddition(denominatorY, denominatorX, multiplier, true);
-  } else {
-    // Division
-    numeratorY = unitAddition(numeratorY, denominatorX, multiplier, true);
-
-    if (denominatorY !== '') {
-      denominatorY = unitAddition(denominatorY, numeratorX, multiplier, true);
-    } else {
-      denominatorY = numeratorX.join('*');
+  while (i < factorsArray.length) {
+    if (factorsArray[i].indexOf('-') !== -1) {
+      var tmpString = '';
+      tmpString += factorsArray.splice(i, 1).toString();
+      tmpString = tmpString.replace(/-/g, '');
+      tmpArray.push(tmpString);
+      i--;
     }
-    numeratorX = numeratorY;
-    denominatorX = denominatorY;
+    i++;
   }
-  unitsCombined = unitAddition(numeratorX.split('*'), denominatorX.split('*'), 1, false);
-
-  if (unitsCombined.indexOf('-') !== -1) unitsCombined = rewriteNegUnitExp(unitsCombined);
-  return unitsCombined;
+  return tmpArray;
 }
 
 function unitAddition(unitsA, unitsB, multiplier, add) {
@@ -4332,43 +4281,6 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
   return unitsCombined;
 }
 
-function appendUnits(unitString, tmpUnits, exponent) {
-
-  if (tmpUnits !== 'null') {
-    if (exponent === 1) {
-
-      if (unitString.length > 0) unitString += '*';
-      unitString += tmpUnits;
-    } else if (exponent !== 0) {
-
-      if (unitString.length > 0) unitString += '*';
-      if (exponent.toString().indexOf('.') < 0) {
-        unitString += tmpUnits + '^' + exponent;
-      } else {
-        unitString += tmpUnits + '^' + toFixed(exponent, 2);
-      }
-    }
-  }
-  return unitString;
-}
-
-function removeNegativeExponentSign(factorsArray) {
-  var tmpArray = [];
-  var i = 0;
-
-  while (i < factorsArray.length) {
-    if (factorsArray[i].indexOf('-') !== -1) {
-      var tmpString = '';
-      tmpString += factorsArray.splice(i, 1).toString();
-      tmpString = tmpString.replace(/-/g, '');
-      tmpArray.push(tmpString);
-      i--;
-    }
-    i++;
-  }
-  return tmpArray;
-}
-
 function rewriteNegUnitExp(tmpUnits) {
   var newUnits = '';
 
@@ -4401,6 +4313,94 @@ function rewriteNegUnitExp(tmpUnits) {
     newUnits = '' + tmpUnits;
   }
   return newUnits;
+}
+
+function addUnits(unitsX, unitsY) {
+  var units = '';
+  if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = unitsY;
+  if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = unitsX;
+  if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
+  if (units) units = ' ' + units;
+  return units;
+}
+
+function processUnits(unitsY, unitsX, multiplier, multiply) {
+
+  var unitsSplit = [];
+  var numeratorY = '';
+  var denominatorY = '';
+  var numeratorX = '';
+  var denominatorX = '';
+  var unitsCombined = '';
+
+  unitsSplit = splitUnits(unitsY);
+  numeratorY = unitsSplit[0];
+  denominatorY = unitsSplit[1];
+  unitsSplit = splitUnits(unitsX);
+  numeratorX = unitsSplit[0];
+  denominatorX = unitsSplit[1];
+
+  if (multiply) {
+    // Multiplication
+    numeratorX = unitAddition(numeratorY, numeratorX, multiplier, true);
+    denominatorX = unitAddition(denominatorY, denominatorX, multiplier, true);
+  } else {
+    // Division
+    numeratorY = unitAddition(numeratorY, denominatorX, multiplier, true);
+
+    if (denominatorY !== '') {
+      denominatorY = unitAddition(denominatorY, numeratorX, multiplier, true);
+    } else {
+      denominatorY = numeratorX.join('*');
+    }
+    numeratorX = numeratorY;
+    denominatorX = denominatorY;
+  }
+  unitsCombined = unitAddition(numeratorX.split('*'), denominatorX.split('*'), 1, false);
+
+  if (unitsCombined.indexOf('-') !== -1) unitsCombined = rewriteNegUnitExp(unitsCombined);
+  return unitsCombined;
+}
+
+function multiplyUnits(unitsX, unitsY, multiplier) {
+  var units = '';
+
+  if ((unitsY !== 'null' || unitsX !== 'null')) {
+    units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
+    if (units === ' ') units = '';
+  }
+  return units;
+}
+
+function divideUnits(unitsX, unitsY, multiplier) {
+  var units = '';
+
+  if ((unitsY !== 'null' || unitsX !== 'null')) {
+    units = ' ' + processUnits(unitsY, unitsX, multiplier, false);
+    if (units === ' ') units = '';
+  }
+  return units;
+}
+
+function inverseUnits(units) {
+  var tmpArray = [];
+  var invertedUnits = '';
+
+  if (units !== 'null') {
+    units = rewriteNegUnitExp(units);
+    if (units.indexOf('/') !== -1) {
+      tmpArray = units.split('/');
+      
+      if (tmpArray[0].indexOf('1') === -1) {
+        invertedUnits += ' ' + tmpArray[1] + '/' + tmpArray[0];
+      } else {
+        invertedUnits += ' ' + tmpArray[1];
+      }
+    } else {
+      invertedUnits += ' 1/' + units;
+    }
+  }
+  return invertedUnits;
 }
 
 function selectElement(id, valueToSelect) {    
