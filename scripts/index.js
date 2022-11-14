@@ -475,7 +475,7 @@ function objToString(obj) {
       if (argument !== 0) theString += '∠' + formatNumber(argument);          
     }
     if (theString === '') theString = '0';
-    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + decodeSpecialChar(obj.getUnits());
+    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
   }
   return theString;
 }
@@ -1281,7 +1281,7 @@ function inverse() {
   } else {
     objX = getX();
   }
-  newUnits = inverseUnits(decodeSpecialChar(objX.getUnits()));
+  newUnits = inverseUnits(objX.getUnits());
 
   if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {  
     displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
@@ -1522,7 +1522,7 @@ function exponential() {
   } catch {
     result = NaN;
   }  
-  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), x); 
+  newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), x); 
   displayResult(result, newUnits);
 }
 
@@ -1612,7 +1612,7 @@ function radical() {
   } catch {
     results = [NaN];
   }
-  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1/x);   
+  newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), 1/x);   
   displayResults(results, newUnits);
 }
 
@@ -1693,7 +1693,7 @@ function modulus() {
   } catch {
     result = NaN;
   }
-  newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1); 
+  newUnits = divideUnits(objX.getUnits(), objY.getUnits(), 1); 
   displayResult(result, newUnits);
 }
 
@@ -1813,7 +1813,7 @@ function division() {
   } catch {
     result = NaN;
   }
-  newUnits = divideUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
+  newUnits = divideUnits(objX.getUnits(), objY.getUnits(), 1);
   displayResult(result, newUnits);
 }
 
@@ -1843,7 +1843,7 @@ function multiplication() {
   } catch {
     result = NaN;
   }
-  newUnits = multiplyUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()), 1);
+  newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), 1);
   displayResult(result, newUnits);
 }
 
@@ -1873,7 +1873,7 @@ function subtraction() {
   } catch {
     result = NaN;
   }
-  newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
+  newUnits = addUnits(objX.getUnits(), objY.getUnits());
   displayResult(result, newUnits);
 }
 
@@ -1904,7 +1904,7 @@ function addition() {
   } catch {
     result = NaN;
   }
-  newUnits = addUnits(decodeSpecialChar(objX.getUnits()), decodeSpecialChar(objY.getUnits()));
+  newUnits = addUnits(objX.getUnits(), objY.getUnits());
   displayResult(result, newUnits);
 }
 
@@ -1953,7 +1953,7 @@ function displayResult(result, newUnits) {
       if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
     }
     if (objX) result = objToString(objX);  
-    if (result !== 0 && result !== '0' && newUnits !== 0) result += decodeSpecialChar(newUnits);
+    if (result !== 0 && result !== '0' && newUnits !== 0) result += newUnits;
   
     $('txt-input').value = result;  
     updateDisplay();
@@ -1975,7 +1975,7 @@ function displayResults(results, newUnits) {
     }
     if (objX) results[i] = objToString(objX);
     $('txt-input').value += results[i];
-    if (results[i] !== 0 && newUnits !== 0) $('txt-input').value += decodeSpecialChar(newUnits);
+    if (results[i] !== 0 && newUnits !== 0) $('txt-input').value += newUnits;
     if (i < results.length - 1) $('txt-input').value += '\n';
   }
   updateDisplay();
@@ -2412,46 +2412,6 @@ function objectSort(sortOrder, sortByUnits) {
   if (!sortByUnits) sortOrder ? stack = strings.concat(numbers) : stack = numbers.concat(strings);
   if (sortByUnits) sortOrder ? stack = strings.concat(noUnitNums) : stack = noUnitNums.concat(strings);
   if (sortByUnits) sortOrder ? stack = stack.concat(unitNums) : stack = unitNums.concat(stack);
-}
-
-// Extract any substring that follows a number
-function extractSubString(tmpArray) {
-  var subString = '';
-  var subIndex = -1;
-  var noExponent = true;
-
-  tmpArray = decodeSpecialChar(tmpArray);
-
-  // If tmpArray contains a number
-  if (!isNaN(parseFloat(tmpArray))) {
-    // If the number is followed by more text find the index of the substring
-    if (isNaN(tmpArray)) {
-      var tmpSubString = tmpArray.split('');
-      // Not bothering to check index 0, it is either a number or "-" or "+"
-      for (var i = 1; i < tmpSubString.length ; i++) {
-        // Check if character is not part of a normal decimal number
-        if (subIndex < 0 && isNaN(tmpSubString[i]) && tmpSubString[i] !== '.') {
-          // Check if character is part of scientific notation
-          if (noExponent && (tmpSubString[i].toLowerCase() === 'e' && (!isNaN(tmpSubString[i + 1]) || ((tmpSubString[i + 1] === '-' || tmpSubString[i + 1] === '+') && !isNaN(tmpSubString[i + 2]))))) {
-            noExponent = false;
-            // If there is a leading minus or plus increment index
-            if ((tmpSubString[i + 1] === '-' || tmpSubString[i + 1] === '+') && !isNaN(tmpSubString[i + 2])) {
-              i++;
-            }
-          } else {
-            // Found substring
-            subIndex = i;
-          }
-        }
-      }
-      // Capture substring
-      while (subIndex < tmpSubString.length) {
-        subString += tmpSubString[subIndex];
-        subIndex++;
-      }
-    }
-  }
-  return subString;
 }
 
 function insertTime() {
@@ -3891,10 +3851,10 @@ function encodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/♣/g, "&#9827");
   //tmpString = tmpString.replace(/♥/g, '&#9829');
   //tmpString = tmpString.replace(/♦/g, "&#9830");
-  // tmpString = tmpString.replace(/ⅽ/g, '&#8573');
-  // tmpString = tmpString.replace(/℮/g, '&#8494');
-  // tmpString = tmpString.replace(/ɢ/g, '&#610');
-  // tmpString = tmpString.replace(/Φ/g, '&#934');// Phi 
+  //tmpString = tmpString.replace(/ⅽ/g, '&#8573');
+  //tmpString = tmpString.replace(/℮/g, '&#8494');
+  //tmpString = tmpString.replace(/ɢ/g, '&#610');
+  //tmpString = tmpString.replace(/Φ/g, '&#934');// Phi 
   return tmpString;
 }
 function decodeSpecialChar(tmpString) {
@@ -3943,11 +3903,11 @@ function decodeSpecialChar(tmpString) {
   //tmpString = tmpString.replace(/&#9827/g, "♣");
   //tmpString = tmpString.replace(/&#9829/g, '♥');
   //tmpString = tmpString.replace(/&#9830/g, "♦");
-  // tmpString = tmpString.replace(/&#8573/g, 'ⅽ');
-  // tmpString = tmpString.replace(/&#8494/g, '℮');
-  // tmpString = tmpString.replace(/&#610/g, 'ɢ');
-  // tmpString = tmpString.replace(/&#934/g, 'Φ');
-  // tmpString = tmpString.replace(/&#960/g, 'π');
+  //tmpString = tmpString.replace(/&#8573/g, 'ⅽ');
+  //tmpString = tmpString.replace(/&#8494/g, '℮');
+  //tmpString = tmpString.replace(/&#610/g, 'ɢ');
+  //tmpString = tmpString.replace(/&#934/g, 'Φ');
+  //tmpString = tmpString.replace(/&#960/g, 'π');
   return tmpString;
 }
 
