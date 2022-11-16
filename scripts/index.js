@@ -2176,7 +2176,6 @@ function btnCosine() {
   } else {
     displayResult(cos(input), '');
   }
-  resizeInput();
   $('txt-input').select()
 }
 
@@ -3300,7 +3299,6 @@ function parseCommand() {
     case 'polar':
       stack.pop();
       if ($('menu-form').textContent === 'Polar') toggleForm();
-      updateDisplay();
       $('txt-input').value = '';
       break;
     case 'print':
@@ -3390,7 +3388,6 @@ function parseCommand() {
     case 'rectangular':
       stack.pop();
       if ($('menu-form').textContent === 'Vector') toggleForm();
-      updateDisplay();
       inputText('');
       break;
     default:
@@ -3532,7 +3529,7 @@ function log(y, x) {
 function lstStackFocus() {
   stackFocus = true;  
 }
-
+convertBase
 function txtInputFocus() {
   stackFocus = false;
 }
@@ -3564,7 +3561,6 @@ function convertBase(newRadix) {
 
   for (var i = 0; i < inputArr.length; i++) {
     inputArr[i] = getX(inputArr[i]);
-    console.log('inputArr[i]', inputArr[i]);
   }
   radix = newRadix;
 
@@ -3584,11 +3580,8 @@ function convertBase(newRadix) {
   }
   for (var i = 0; i < inputArr.length; i++) {
     inputArr[i] = objToString(inputArr[i]);
-    console.log('inputArr[i] b', inputArr[i]);
   }
-  updateDisplay();
   displayResults(inputArr, '');
-  resizeInput();  
 }
 
 function onClickSelection(textarea){ 
@@ -4355,7 +4348,8 @@ function selectElement(id, valueToSelect) {
   element.value = valueToSelect;
 }
 
-function setFixDecimal(value) {  
+function setFixDecimal(value) {
+  var inputArr = $('txt-input').value.trim().split('\n');
 
   if (radix !== 10) radix = 10;
 
@@ -4374,10 +4368,15 @@ function setFixDecimal(value) {
     $('indicate-format').innerHTML = '';
   }
   fixDecimal = parseInt(value);
-  updateDisplay();
+  
+  for (var i = 0; i < inputArr.length; i++) {
+    inputArr[i] = objToString(getX(inputArr[i]));
+  }
+  displayResults(inputArr, '');
 }
 
 function setSciDecimal(value) {
+  var inputArr = $('txt-input').value.trim().split('\n');
 
   if (radix !== 10) radix = 10; 
   
@@ -4396,10 +4395,15 @@ function setSciDecimal(value) {
     $('indicate-format').innerHTML = '';
   }
   sciDecimal = parseInt(value);
-  updateDisplay();
+  
+  for (var i = 0; i < inputArr.length; i++) {
+    inputArr[i] = objToString(getX(inputArr[i]));
+  }
+  displayResults(inputArr, '');
 }
 
 function setEngDecimal(value) {
+  var inputArr = $('txt-input').value.trim().split('\n');
 
   if (radix !== 10) radix = 10;
 
@@ -4418,7 +4422,11 @@ function setEngDecimal(value) {
     $('indicate-format').innerHTML = '';
   }
   engDecimal = parseInt(value);
-  updateDisplay();  
+  
+  for (var i = 0; i < inputArr.length; i++) {
+    inputArr[i] = objToString(getX(inputArr[i]));
+  }
+  displayResults(inputArr, '');
 }
 
 function removePositiveNotation(formatted) {
