@@ -3560,11 +3560,13 @@ function resetNotation() {
 function convertBase(newRadix) {           
   resetNotation();
 
-  var obj = getX();
-  var units = '';
-  radix = newRadix;
+  var inputArr = $('txt-input').value.trim().split('\n');
 
-  if (obj.getUnits() !== 'null') units = ' ' + obj.getUnits();  
+  for (var i = 0; i < inputArr.length; i++) {
+    inputArr[i] = getX(inputArr[i]);
+    console.log('inputArr[i]', inputArr[i]);
+  }
+  radix = newRadix;
 
   switch(radix) {
     case 2:
@@ -3580,8 +3582,12 @@ function convertBase(newRadix) {
       $('indicate-format').innerHTML = 'hex';
       break;
   }
+  for (var i = 0; i < inputArr.length; i++) {
+    inputArr[i] = objToString(inputArr[i]);
+    console.log('inputArr[i] b', inputArr[i]);
+  }
   updateDisplay();
-  displayResult(objToString(obj), '');
+  displayResults(inputArr, '');
   resizeInput();  
 }
 
