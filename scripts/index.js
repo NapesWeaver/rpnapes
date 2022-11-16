@@ -573,34 +573,16 @@ function btnEnter() {
 function btnEval() {
   backupUndo();
   var objX;
-  var units = '';
   cashed = '';
 
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   objX = getX();
-
+  
   if (objX.getSoul().match(/^run$/)) {
     btnLoad();
     return;
   } 
-  displayResult(calculate($('txt-input').value), units);  
-  $('txt-input').select();  
-}
-
-function softEval() {
-  backupUndo();
-  var objX;
-  var units = '';
-  cashed = '';
-
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  objX = getX();
-
-  if (objX.getSoul().match(/^run$/)) {
-    btnLoad();
-    return;
-  } 
-  displayResult(calculate($('txt-input').value), units);  
+  displayResult(calculate($('txt-input').value), '');  
   $('txt-input').select();  
 }
 
@@ -611,28 +593,23 @@ function enterInput() {
 }
 
 function calculate(expression) {
+  var result;
   try {
-    expression = eval(parseEvaluation(expression));      
-    // The following cannot parse ^, mathPow(), √, mathRoot() or run code...
-    // expression = expression.replace(/j/g, 'i');
-    // expression = parseEvaluation(expression);
-    // expression = math.evaluate(expression);
+    result = eval(parseEvaluation(expression));
   } catch(e) {
       if (isMobile) return;
       return e.toString();
-      // expression = eval(parseEvaluation(expression));
   }
-  return expression;
+  return result;
 }
 
 function runTest() {  
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
       var expression = decodeSpecialChar(stack[stack.length - 2].getSoul());
-      var valueY = calculate(expression).toString();
+      var result = calculate(expression);
+      var valueY = typeof result === 'number' || typeof result === 'string' ? result.toString() : objToString(getComplex(calculate(expression)));
       var valueX = stack[stack.length - 1].getSoul();
-      if (valueY === 'i') valueY = '1j';
-      valueY = valueY.replace(/i$/g, 'j');
       valueY = valueY.replace(/e\+/g, 'e');
       var color = valueY === valueX ? 'green' : 'red';   
       console.log(`${valueY} %c${valueY === valueX}`, `font-weight: bold; color: ${color};`);
@@ -642,7 +619,7 @@ function runTest() {
   }  
 }
 
-function evaluateExpression(input) {  
+function evaluateExpression(input) {
   $('txt-input').value = calculate(input);
   if (testing) runTest();
 }
@@ -1947,7 +1924,7 @@ function displayResult(result, newUnits) {
   var objX;
   if (result !== undefined) {
 
-    if (typeof result === 'string' || typeof result === 'number') {
+    if (typeof result === 'number' || typeof result === 'string') {
       objX = getX(result);
     } else {    
       if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
@@ -1968,7 +1945,7 @@ function displayResults(results, newUnits) {
   
   for (var i = 0; i < results.length; i++) {
     
-    if (typeof results[i] === 'string' || typeof results[i] === 'number') {
+    if (typeof result === 'number' || typeof result === 'string') {
       objX = getX(results[i]);
     } else {    
       if (results[i].re !== undefined && !isNaN(results[i].re)) objX = getComplex(results[i]);
