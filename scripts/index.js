@@ -180,6 +180,7 @@ function resizeInput() {
 }
 
 function toggleForm() {
+  
   if($('menu-form').textContent === 'Vector') {
     $('menu-form').innerHTML = 'Polar';
     $('indicate-polar').classList.add('hidden');
@@ -189,8 +190,11 @@ function toggleForm() {
     $('indicate-polar').classList.remove('hidden');
     if (shifted) $('btn-ee').value = '∠';
   }
-  // displayResult($('txt-input').value.trim(), '');  
   var inputArr = $('txt-input').value.trim().split('\n');
+  
+  for (var i = 0; i < inputArr.length; i++) {
+    inputArr[i] = objToString(getX(inputArr[i]));
+  }
   displayResults(inputArr, '');
 }
 
