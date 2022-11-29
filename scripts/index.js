@@ -23,8 +23,8 @@ new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
 
-var j = '√-1';
 var i = '√-1';
+var j = '√-1';
 var Φ = 1.618033988749895;
 var ℮ = Math.exp(1);
 var π = Math.PI;
@@ -295,6 +295,8 @@ function runNotes() {
   } catch {
     if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
   }
+  i = '√-1';
+  j = '√-1';
 }
 
 function menuNotes() {
@@ -478,6 +480,37 @@ function objToString(obj) {
       theString += formatNumber(radius);
       if (argument !== 0) theString += '∠' + formatNumber(argument);          
     }
+    if (theString === '') theString = '0';
+    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
+  }
+  return theString;
+}
+
+function objToVector(obj) {
+  var theString = '';
+  var isNumber = isANumber(obj.getRealPart());
+  var isImaginary = isANumber(obj.getImaginary());
+
+  if (!isNumber && !isImaginary) {    
+    theString += decodeSpecialChar(obj.getSoul());
+  } else {         
+    
+    if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') theString += formatNumber(obj.getRealPart().toString());
+
+    if (isImaginary && obj.getImaginary() !== '0') {
+      var space = '';
+      var sign = '';
+
+      if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') {
+        space = ' ';
+        sign = ' + ';
+      }
+      if (obj.getImaginary().charAt(0) === '-') {
+        theString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
+      } else {
+        theString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
+      }        
+    }    
     if (theString === '') theString = '0';
     if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
   }
@@ -724,37 +757,60 @@ function colorUndoRedoMenu() {
 }
 
 function undoBase(input, aRadix) {
-  var objX = getX(input);
-  radix = 10;
+  var inputArr = input.split('\n');
+  var outputArr = [];
 
-  var output = objToString(objX);  
+  for (var i = 0; i < inputArr.length; i++) {
+    inputArr[i] = getX(inputArr[i]);
+  }
+  radix = 10;
+  
+  for (var i = 0; i < inputArr.length; i++) {
+    outputArr[i] = objToString(inputArr[i]);
+  }  
   radix = aRadix;
-  return output;
+  return outputArr.toString().replace(',', '\n');
 }
 
 function redoBase(input, aRadix) {
-  var objX = getX(input);
+  var inputArr = input.split('\n');
+  var outputArr = [];
+
+  for (var i = 0; i < inputArr.length; i++) {
+    inputArr[i] = getX(inputArr[i]);
+  }
   radix = aRadix;
   
-  var output = objToString(objX);  
+  for (var i = 0; i < inputArr.length; i++) {
+    outputArr[i] = objToString(inputArr[i]);
+  }    
   radix = 10;
-  return output;
+  return outputArr.toString().replace(',', '\n');
+}
+
+function formatInputArr(input) {
+  var outputArr = input.split('\n');
+  for (var i = 0; i < outputArr.length; i++) {
+    outputArr[i] = objToString(getX(outputArr[i]));
+  }
+  return outputArr.toString().replace(',', '\n');
 }
 
 function undoFunction() {
 
   if (backups.length > 3) {   
-    var shortStack = [];    
+    var shortStack = []; 
     var currentRadix = radix;
     var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
-    radix = 10;    
 
-    for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));      
+    radix = 10;    
+    
+    for (var i = 0; i < stack.length; i++) shortStack.push(objToVector(stack[i]));      
   
     restores.push(nestArrayByBrowser(shortStack));
     restores.push(input);
 
-    currentRadix === 10 ? $('txt-input').value = backups.pop() : $('txt-input').value = redoBase(backups.pop(), currentRadix);
+    currentRadix === 10 ? $('txt-input').value = formatInputArr(backups.pop()) : $('txt-input').value = redoBase(backups.pop(), currentRadix);
     
     var backupArray = backups.pop();
     stack.length = 0;
@@ -778,14 +834,15 @@ function redoFunction() {
     var shortStack = [];
     var currentRadix = radix;
     var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
+
     radix = 10;
 
-    for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));
+    for (var i = 0; i < stack.length; i++) shortStack.push(objToVector(stack[i]));
 
     backups.push(nestArrayByBrowser(shortStack));
     backups.push(input);
 
-    currentRadix === 10 ? $('txt-input').value = restores.pop() : $('txt-input').value = redoBase(restores.pop(), currentRadix);
+    currentRadix === 10 ? $('txt-input').value = formatInputArr(restores.pop()) : $('txt-input').value = redoBase(restores.pop(), currentRadix);
 
     var restoredArray = restores.pop();
     stack.length = 0;
@@ -807,9 +864,10 @@ function backupUndo() {
   var shortStack = [];
   var currentRadix = radix;
   var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
-  radix = 10;
 
-  for (var i = 0; i < stack.length; i++) shortStack.push(objToString(stack[i]));  
+  radix = 10;
+  
+  for (var i = 0; i < stack.length; i++) shortStack.push(objToVector(stack[i]));  
   
   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
     backups.push(nestArrayByBrowser(shortStack));
@@ -851,7 +909,6 @@ function buttonInsert(regex, char) {
 }
 
 function btnEe() {
-  backupUndo();
   var input = $('txt-input').value;
   var index = $('txt-input').selectionStart;
   var objX = getX();
@@ -1062,14 +1119,15 @@ function btnClear() {
 }
 
 function btnSave() {
-  var shortStack = []; 
+  var shortStack = [];
   var currentRadix = radix;
+
   radix = 10;
   updateDisplay();  
   
   for (var i = 0; i < stack.length; i++) {
-    if (isANumber(stack[i].getRealPart()) || isANumber(stack[i].getImaginary())) {
-      shortStack.push(objToString(stack[i]));
+    if (currentRadix !== 10 && (isANumber(stack[i].getRealPart()) || isANumber(stack[i].getImaginary()))) {
+      shortStack.push(objToVector(stack[i]));
     } else {
       shortStack.push(stack[i].getSoul());
     }
@@ -1164,7 +1222,8 @@ function btnLoad() {
     loadMathMon(getCookie('MATHMON').slice(index));
   } catch(err) { rpnAlert('Load MATHMON error.'); }
   updateDisplay();
-
+  i = '√-1';
+  j = '√-1';
   if (isMobile) resizeInput();
 }
 
@@ -1188,6 +1247,8 @@ function loadProgram(tmpStack) {
     evaluateExpression(decodeSpecialChar(tmpString));
   }
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+  i = '√-1';
+  j = '√-1';
 }
 
 function loadStack(tmpStack) {
@@ -1574,8 +1635,8 @@ function radical() {
   }
   objX = getX();
   
-  y = buildComplexNumber(objY); 
-  x = buildComplexNumber(objX);
+  y = buildComplexNumber(objY).toString(); 
+  x = buildComplexNumber(objX).toString();
 
   try {
     var signRoot = Math.sign(x);
@@ -1934,7 +1995,7 @@ function displayResult(result, newUnits) {
       if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
     }
     if (objX) result = objToString(objX);  
-    if (result !== 0 && result !== '0' && newUnits !== 0) result += newUnits;
+    if (result !== '0' && !isNaN(result)) result += newUnits;
   
     $('txt-input').value = result;  
     updateDisplay();
@@ -1949,14 +2010,14 @@ function displayResults(results, newUnits) {
   
   for (var i = 0; i < results.length; i++) {
     
-    if (typeof result === 'number' || typeof result === 'string') {
+    if (typeof results[i] === 'number' || typeof results[i] === 'string') {
       objX = getX(results[i]);
     } else {    
       if (results[i].re !== undefined && !isNaN(results[i].re)) objX = getComplex(results[i]);
     }
     if (objX) results[i] = objToString(objX);
     $('txt-input').value += results[i];
-    if (results[i] !== 0 && newUnits !== 0) $('txt-input').value += newUnits;
+    if (results[i] !== '0' && !isNaN(results[i])) $('txt-input').value += newUnits;
     if (i < results.length - 1) $('txt-input').value += '\n';
   }
   updateDisplay();
@@ -4349,9 +4410,13 @@ function selectElement(id, valueToSelect) {
 }
 
 function setFixDecimal(value) {
-  var inputArr = $('txt-input').value.trim().split('\n');
+  var inputArr = $('txt-input').value.trim();
 
-  if (radix !== 10) radix = 10;
+  if (radix !== 10) {
+    inputArr = undoBase(inputArr, radix);
+    radix = 10;
+  }
+  inputArr = inputArr.split('\n');
 
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17.';
@@ -4376,9 +4441,13 @@ function setFixDecimal(value) {
 }
 
 function setSciDecimal(value) {
-  var inputArr = $('txt-input').value.trim().split('\n');
+  var inputArr = $('txt-input').value.trim();
 
-  if (radix !== 10) radix = 10; 
+  if (radix !== 10) {
+    inputArr = undoBase(inputArr, radix);
+    radix = 10;
+  }
+  inputArr = inputArr.split('\n');
   
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer from -1 to 17.';
@@ -4403,9 +4472,13 @@ function setSciDecimal(value) {
 }
 
 function setEngDecimal(value) {
-  var inputArr = $('txt-input').value.trim().split('\n');
+  var inputArr = $('txt-input').value.trim();
 
-  if (radix !== 10) radix = 10;
+  if (radix !== 10) {
+    inputArr = undoBase(inputArr, radix);
+    radix = 10;
+  }
+  inputArr = inputArr.split('\n');
 
   if (value === '' || isNaN(value) || parseInt(value) < -1 || parseInt(value) > 17) {
     throw 'Enter an integer -1 or 1 to 17.';
@@ -5543,6 +5616,8 @@ window.onload = function () {
       rpnAlert(err.toString());
       if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
     }
+    i = '√-1';
+    j = '√-1';
     resizeInput();
   });
 
