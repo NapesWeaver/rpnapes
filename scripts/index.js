@@ -1959,12 +1959,13 @@ function btnAdd() {
 }
 
 function buildComplexNumber(obj) {
+  if (obj.getSoul().trim() === '') obj.setSoul('0');
 
   try {
     var a = 0;
     var b = 0;
     
-    if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary()) && obj.getSoul().trim() !== '') {
+    if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
       a = calculate(obj.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
     } else {
       if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
