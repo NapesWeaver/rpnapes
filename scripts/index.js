@@ -2710,12 +2710,10 @@ function help(command) {
       enterInput();
       inputText('date: Returns the current date.');
       break;
-    case 'dec':
-      // Falls through
     case 'decimal':
       inputText('');
       enterInput();
-      inputText('decimal: Base10/Decimal mode. Alias: dec');
+      inputText('decimal: Base10/Decimal mode.');
       break;
     case 'duckgo':
       inputText('');
@@ -3204,8 +3202,6 @@ function parseCommand() {
       updateDisplay();
       insertDate();
       break;
-    case 'dec':
-      // Falls through
     case 'decimal':
       stack.pop();
       convertBase(10);
