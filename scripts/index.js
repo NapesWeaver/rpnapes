@@ -1996,7 +1996,8 @@ function displayResult(result, newUnits) {
       if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
     }
     if (objX) result = objToString(objX);
-    result += newUnits;
+    
+    if (result !== '0') result += newUnits;
   
     $('txt-input').value = result;  
     updateDisplay();
@@ -2018,7 +2019,8 @@ function displayResults(results, newUnits) {
     }
     if (objX) results[i] = objToString(objX);
     $('txt-input').value += results[i];
-    $('txt-input').value += newUnits;
+
+    if (results[i] !== '0') $('txt-input').value += newUnits;
 
     if (i < results.length - 1) $('txt-input').value += '\n';
   }
