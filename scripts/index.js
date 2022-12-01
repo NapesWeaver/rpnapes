@@ -5897,9 +5897,9 @@ window.onload = function () {
   viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1&mute=1&loop=1&playlist=jlJgi3SxDaI');//  LCARS Display
   viewPortSrc.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1&loop=1&playlist=4oY3v0jAWr4');// Star field
   
-  viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');// Tressaurian Intersection
   viewPortSrc2.push('https://www.youtube.com/embed/1LsRygSoU80?autoplay=1');// Star Trek Meets Batman
   viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');// Star Track
+  viewPortSrc2.push('https://www.youtube.com/embed/MMGKNGCb8g8?autoplay=1');// Sepia Track
 
   $('sensor1').onclick = sensor1;
   $('sensor2').onclick = sensor2;
