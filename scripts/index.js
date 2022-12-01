@@ -4828,7 +4828,8 @@ function tricorderOff() {
 function tricorderOn() {
   muteAudio(false);  
   $('tricorderskin').src = 'images/tricorderon.png';
-  $('viewport').src = 'https://www.youtube.com/embed/86YLFOog4GM?autoplay=1&mute=1';// ISS
+  $('viewport').src = 'https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1';// Jerobeam Fenderson - Planets
+  
   $('viewport').classList.remove('hidden');
   $('viewport').classList.add('visible');
   playAudio($('working'));
@@ -5889,15 +5890,14 @@ window.onload = function () {
   // Tricorder
   preloadImages();
   
-  viewPortSrc.push('https://www.youtube.com/embed/86YLFOog4GM?autoplay=1&mute=1');// ISS
+  viewPortSrc.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1');// Jerobeam Fenderson - Planets
+  viewPortSrc.push('https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1&mute=1');// Starfleet Technical Manual
+  viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1&mute=1');//  LCARS Display
   viewPortSrc.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1');// Star field
-  viewPortSrc.push('https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1');// Starfleet Technical Manual
-  viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1');//  LCARS Display
   
-  viewPortSrc2.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1');// Jerobeam Fenderson - Planets
-  viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');// Tressaurian Intersection
-  viewPortSrc2.push('https://www.youtube.com/embed/1LsRygSoU80?autoplay=1');// Star Trek Meets Batman
-  viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');// Star Track
+  viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?');// Tressaurian Intersection
+  viewPortSrc2.push('https://www.youtube.com/embed/1LsRygSoU80?');// Star Trek Meets Batman
+  viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?');// Star Track
 
   $('sensor1').onclick = sensor1;
   $('sensor2').onclick = sensor2;
