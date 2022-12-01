@@ -4828,7 +4828,7 @@ function tricorderOff() {
 function tricorderOn() {
   muteAudio(false);  
   $('tricorderskin').src = 'images/tricorderon.png';
-  $('viewport').src = 'https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1';// Jerobeam Fenderson - Planets
+  $('viewport').src = 'https://www.youtube.com/embed/563Fp4fv1Vk?autoplay=1&mute=1&loop=1&playlist=563Fp4fv1Vk';// Jerobeam Fenderson - Lines
   
   $('viewport').classList.remove('hidden');
   $('viewport').classList.add('visible');
@@ -5890,14 +5890,16 @@ window.onload = function () {
   // Tricorder
   preloadImages();
   
-  viewPortSrc.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1');// Jerobeam Fenderson - Planets
-  viewPortSrc.push('https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1&mute=1');// Starfleet Technical Manual
-  viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1&mute=1');//  LCARS Display
-  viewPortSrc.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1');// Star field
+  viewPortSrc.push('https://www.youtube.com/embed/563Fp4fv1Vk?autoplay=1&mute=1&loop=1&playlist=563Fp4fv1Vk');// Jerobeam Fenderson - Lines
+  viewPortSrc.push('https://www.youtube.com/embed/XziuEdpVUe0?autoplay=1&mute=1&loop=1&playlist=XziuEdpVUe0');// Jerobeam Fenderson - Planets
+  viewPortSrc.push('https://www.youtube.com/embed/8ybTURnxywo?autoplay=1&mute=1&loop=1&playlist=8ybTURnxywo');// Oscilloscope Experiments Live
+  viewPortSrc.push('https://www.youtube.com/embed/RGDEKqU0T2k?autoplay=1&mute=1&loop=1&playlist=RGDEKqU0T2k');// Starfleet Technical Manual
+  viewPortSrc.push('https://www.youtube.com/embed/jlJgi3SxDaI?autoplay=1&mute=1&loop=1&playlist=jlJgi3SxDaI');//  LCARS Display
+  viewPortSrc.push('https://www.youtube.com/embed/4oY3v0jAWr4?autoplay=1&mute=1&loop=1&playlist=4oY3v0jAWr4');// Star field
   
-  viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?');// Tressaurian Intersection
-  viewPortSrc2.push('https://www.youtube.com/embed/1LsRygSoU80?');// Star Trek Meets Batman
-  viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?');// Star Track
+  viewPortSrc2.push('https://www.youtube.com/embed/jkuJG1_2MnU?autoplay=1');// Tressaurian Intersection
+  viewPortSrc2.push('https://www.youtube.com/embed/1LsRygSoU80?autoplay=1');// Star Trek Meets Batman
+  viewPortSrc2.push('https://www.youtube.com/embed/OL7g0mdzGic?autoplay=1');// Star Track
 
   $('sensor1').onclick = sensor1;
   $('sensor2').onclick = sensor2;
