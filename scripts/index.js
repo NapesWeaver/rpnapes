@@ -644,7 +644,12 @@ function calculate(expression) {
     result = eval(parseEvaluation(expression));
   } catch(e) {
     try {
+      expression = expression.replace(/ⅽ/g, '299792458');
+      expression = expression.replace(/℮/g, '2.718281828459045');
+      expression = expression.replace(/ɢ/g, '6.674e-11');
       expression = expression.replace(/j/g, 'i');
+      expression = expression.replace(/Φ/g, '1.618033988749895');
+      expression = expression.replace(/π/g, '3.141592653589793');
       result = math.evaluate(expression);
     } catch (e) {
       if (isMobile) return;
@@ -4021,8 +4026,8 @@ function extractImaginary(tmpString) {
   var tmpImaginary = '';
 
   if (radix === 10) {
-    // No evaluation symbols && no more than one imaginary number 
-    if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
+    // No evaluation symbols && no more than one imaginary number
+    if (!/[=;,<>?:`~!@#$%√^&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
       var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)/);     
       tmp = tmp.replace(/ /g, '');
 
