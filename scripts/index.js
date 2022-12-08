@@ -662,12 +662,14 @@ function runTest() {
       var valueY = typeof result === 'number' || typeof result === 'string' ? result.toString() : objToString(getComplex(calculate(expression)));
       var valueX = stack[stack.length - 1].getSoul();
       valueY = valueY.replace(/e\+/g, 'e');
+      valueX = valueX.replace(/i$/g, 'j');
+
       var color = valueY === valueX ? 'green' : 'red';   
       console.log(`${valueY} %c${valueY === valueX}`, `font-weight: bold; color: ${color};`);
     }
   } catch(e) {
     console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
-  }  
+  }
 }
 
 function deleteButton() {
