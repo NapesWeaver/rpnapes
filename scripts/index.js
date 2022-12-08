@@ -919,8 +919,6 @@ function buttonInsert(regex, char) {
 function btnEe() {
   var input = $('txt-input').value;
   var index = $('txt-input').selectionStart;
-  var objX = getX();
-  var units = objX.getUnits();
 
   if (shifted) {
     if ($('menu-form').textContent === 'Polar') {
