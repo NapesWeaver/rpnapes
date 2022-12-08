@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '15:21:00';
+var tStamp = '15:48:3';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -386,9 +386,11 @@ function copy() {
   if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
 
   if (!stackFocus) {
-    navigator.clipboard.writeText(getSelectedText('txt-input'));    
+    navigator.clipboard.writeText(getSelectedText('txt-input'));
+    $('txt-input').focus();
   } else {
     navigator.clipboard.writeText(getSelectedText('lst-stack'));
+    $('lst-stack').focus();
   }
 }
   
@@ -4027,8 +4029,9 @@ function extractImaginary(tmpString) {
 
   if (radix === 10) {
     // No evaluation symbols && no more than one imaginary number
-    if (!/[=;,<>?:`~!@#$%√^&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
-      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)/);     
+    if (!/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
+      // var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![a-zA-Z][ ])|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![a-zA-Z][ ]*)/);     
+      var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![.]*[-+*/]?[.]*[ⅽ℮ɢΦπa-zA-Z]+[ ]*)|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![.]*[-+*/]?[.]*[ⅽ℮ɢΦπa-zA-Z0-9]+[ ]*)/);
       tmp = tmp.replace(/ /g, '');
 
       if (/^[-][ij]\b/.test(tmp)) {
