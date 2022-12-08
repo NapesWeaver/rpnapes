@@ -900,14 +900,17 @@ function toggleChar(input, index, regex, char) {
 
 function buttonInsert(regex, char) {
   var input = $('txt-input').value;
-  var index = $('txt-input').selectionStart;
-  
+  var index = $('txt-input').selectionStart;  
+
   if (!regex.test(input.charAt(index))) {
+    
     if (regex.test(input.charAt(index - 1))) {
       toggleChar(input, index - 1, regex, char);
     } else {
       insertAtCursor($('txt-input'), char);
-    }
+    }    
+  } else if (isTextSelected($('txt-input'))) {
+    insertAtCursor($('txt-input'), char);
   }
   resizeInput();
   $('txt-input').focus();
@@ -1666,7 +1669,7 @@ function btnPi() {
     backupUndo();
     btnParenthesis();
   } else {
-    if (!/^[ⅽ℮ɢΦa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
+    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
       buttonInsert(/[π]/ , 'π');
     } else {
       $('txt-input').focus();
@@ -5671,19 +5674,19 @@ window.onload = function () {
 
   // Menu Constants
   $('menu-phi').onclick = function() {    
-    if (!/^[ⅽ℮ɢπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[Φ]/ , 'Φ');      
+    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[Φ]/ , 'Φ');      
   }
   $('menu-eulers').onclick = function() {      
-    if (!/^[ⅽɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[℮]/ , '℮');      
+    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[℮]/ , '℮');      
   }
   $('menu-gravitational-constant').onclick = function() {  
-    if (!/^[ⅽ℮Φπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');     
+    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');     
   }  
   $('menu-light-speed').onclick = function() {    
-    if (!/^[℮ɢΦπa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');      
+    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');      
   } 
   $('menu-pi').onclick = function() {  
-    if (!/^[ⅽ℮ɢΦa-zA-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');      
+    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');      
   }
   
   $('menu-date').onclick = insertDate;
