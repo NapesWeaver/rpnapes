@@ -433,7 +433,15 @@ function getX(input) {
 
   firstValueX = tmpComplex[0];
   isANumber(firstValueX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
-  soulX = encodeSpecialChar(soulX);
+
+  if (radix === 10 || (!isANumber(firstValueX) && !isANumber(imaginaryX))) {
+    soulX = encodeSpecialChar(soulX);
+  } else {
+    var sign = imaginaryX > 0 ?  '+' : '';
+    var real = isNaN(firstValueX) ? '' : firstValueX + ' ';
+    var imaginary = isNaN(imaginaryX) ? '' : imaginaryX + 'j';
+    soulX = real + sign + imaginary;
+  }
   unitsX = encodeSpecialChar(unitsX);
   
   return new NumberObject(soulX, firstValueX, imaginaryX, unitsX);
@@ -631,11 +639,17 @@ function enterInput() {
 
 function calculate(expression) {
   var result;
+  
   try {
     result = eval(parseEvaluation(expression));
   } catch(e) {
+    try {
+      expression = expression.replace(/j/g, 'i');
+      result = math.evaluate(expression);
+    } catch (e) {
       if (isMobile) return;
       return e.toString();
+    }
   }
   return result;
 }
@@ -654,11 +668,6 @@ function runTest() {
   } catch(e) {
     console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
   }  
-}
-
-function evaluateExpression(input) {
-  $('txt-input').value = calculate(input);
-  if (testing) runTest();
 }
 
 function deleteButton() {
@@ -796,29 +805,31 @@ function formatInputArr(input) {
   return outputArr.toString().replace(',', '\n');
 }
 
+function stringToStackObj(tmpArray) {
+  var objY = getX(tmpArray);
+  stack.push(objY);
+}
+
 function undoFunction() {
 
   if (backups.length > 3) {   
-    var shortStack = []; 
+    var shortStack = [];    
     var currentRadix = radix;
-    var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
-
-    radix = 10;    
+    radix = 10;
     
-    for (var i = 0; i < stack.length; i++) shortStack.push(objToVector(stack[i]));      
-  
+    for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+
     restores.push(nestArrayByBrowser(shortStack));
-    restores.push(input);
+    restores.push($('txt-input').value);
+    $('txt-input').value = backups.pop();
 
-    currentRadix === 10 ? $('txt-input').value = formatInputArr(backups.pop()) : $('txt-input').value = redoBase(backups.pop(), currentRadix);
-    
-    var backupArray = backups.pop();
+    var tmpArray = backups.pop();
     stack.length = 0;
-    backupArray = splitArrayByBrowser(backupArray);
-    
+    tmpArray = splitArrayByBrowser(tmpArray);
+
     var i = 1;
-    while (i < backupArray.length) {
-      pushObjectToStack(backupArray[i]);
+    while (i < tmpArray.length) {
+      stringToStackObj(tmpArray[i]);
       i++;
     }
     radix = currentRadix;
@@ -831,26 +842,23 @@ function undoFunction() {
 function redoFunction() {
 
   if (restores.length > 0) {
-    var shortStack = [];
+    var shortStack = [];    
     var currentRadix = radix;
-    var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
-
     radix = 10;
 
-    for (var i = 0; i < stack.length; i++) shortStack.push(objToVector(stack[i]));
+    for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
     backups.push(nestArrayByBrowser(shortStack));
-    backups.push(input);
+    backups.push($('txt-input').value);
+    $('txt-input').value = restores.pop();
 
-    currentRadix === 10 ? $('txt-input').value = formatInputArr(restores.pop()) : $('txt-input').value = redoBase(restores.pop(), currentRadix);
-
-    var restoredArray = restores.pop();
+    var tmpArray = restores.pop();
     stack.length = 0;
-    restoredArray = splitArrayByBrowser(restoredArray);
+    tmpArray = splitArrayByBrowser(tmpArray);
     
     var i = 1;
-    while (i < restoredArray.length) {
-      pushObjectToStack(restoredArray[i]);
+    while (i < tmpArray.length) {
+      stringToStackObj(tmpArray[i]);
       i++;
     }
     radix = currentRadix;
@@ -861,13 +869,9 @@ function redoFunction() {
 }
 
 function backupUndo() {
-  var shortStack = [];
-  var currentRadix = radix;
-  var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
-
-  radix = 10;
-  
-  for (var i = 0; i < stack.length; i++) shortStack.push(objToVector(stack[i]));  
+  var shortStack = [];    
+  var input = $('txt-input').value.trim();
+  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
   
   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
     backups.push(nestArrayByBrowser(shortStack));
@@ -875,7 +879,6 @@ function backupUndo() {
     restores.length = 0;
     colorUndoButton();  
   }
-  radix = currentRadix;
 }
 
 function toggleChar(input, index, regex, char) {
@@ -1120,25 +1123,18 @@ function btnClear() {
 
 function btnSave() {
   var shortStack = [];
-  var currentRadix = radix;
 
-  radix = 10;
   updateDisplay();  
   
-  for (var i = 0; i < stack.length; i++) {
-    if (currentRadix !== 10 && (isANumber(stack[i].getRealPart()) || isANumber(stack[i].getImaginary()))) {
-      shortStack.push(objToVector(stack[i]));
-    } else {
-      shortStack.push(stack[i].getSoul());
-    }
-  }
+  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+
   saveCookie('STACK', nestArrayByBrowser(shortStack));
   saveCookie('MATHMON', nestArrayByBrowser(theObjects));
 
-  radix = currentRadix;
   updateDisplay();
   $('btn-save').style.color = '#D4D0C8';
   $('txt-input').focus();
+
   if (isMobile) resizeInput();
 }
 
@@ -1242,9 +1238,11 @@ function loadProgram(tmpStack) {
   tmpStack = splitArrayByBrowser(tmpStack);
     
   while (tmpStack.length > 0) {
-    var tmpString = tmpStack.shift();    
-    pushObjectToStack(tmpString);    
-    evaluateExpression(decodeSpecialChar(tmpString));
+    var tmpString = tmpStack.shift();
+
+    stringToStackObj(tmpString);  
+    $('txt-input').value = calculate(decodeSpecialChar(tmpString));
+    if (testing) runTest();
   }
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
   i = '√-1';
@@ -1270,7 +1268,7 @@ function loadStack(tmpStack) {
     
   while (tmpStack.length > 0) {
     var tmpString = tmpStack.shift();
-    pushObjectToStack(tmpString);
+    stringToStackObj(tmpString);
   }
   radix = currentRadix;
 }
@@ -1283,12 +1281,6 @@ function splitArrayByBrowser(tmpArray) {
     tmpArray = tmpArray.split('\t');
   }
   return tmpArray;
-}
-
-function pushObjectToStack(tmpArray) {
-  tmpArray = tmpArray.split(',');
-  var objY = getX(tmpArray);
-  stack.push(objY);
 }
 
 function btnOff() {
@@ -5597,16 +5589,15 @@ window.onload = function () {
           var tmpStack = [];
           backupUndo();
           tmpStack = this.result.split('\n');
-
           for (var i in tmpStack) {
             $('txt-input').value = tmpStack[i];
-
+            
             if (shifted) {
-              evaluateExpression($('txt-input').value);
-              enterInput();
-            } else {
-              enterInput();              
+              calculate($('txt-input').value);
+              if (testing) runTest();
             }
+            var objX = getX();
+            stack.push(objX);
           }
           updateDisplay();
           if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
