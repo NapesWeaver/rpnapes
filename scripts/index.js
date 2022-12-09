@@ -47,7 +47,7 @@ var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
 
-var tStamp = '16:00:00';
+var tStamp = '19:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -645,17 +645,23 @@ function calculate(expression) {
   try {
     result = eval(parseEvaluation(expression));
   } catch(e) {
-    try {
-      expression = expression.replace(/ⅽ/g, '299792458');
-      expression = expression.replace(/℮/g, '2.718281828459045');
-      expression = expression.replace(/ɢ/g, '6.674e-11');
-      expression = expression.replace(/j/g, 'i');
-      expression = expression.replace(/Φ/g, '1.618033988749895');
-      expression = expression.replace(/π/g, '3.141592653589793');
-      result = math.evaluate(expression);
-    } catch (e) {
-      if (isMobile) return;
-      return e.toString();
+
+    if (!/[√^]/g.test(expression)) {
+
+      try {
+        expression = expression.replace(/ⅽ/g, '299792458');
+        expression = expression.replace(/℮/g, '2.718281828459045');
+        expression = expression.replace(/ɢ/g, '6.674e-11');
+        expression = expression.replace(/j/g, 'i');
+        expression = expression.replace(/Φ/g, '1.618033988749895');
+        expression = expression.replace(/π/g, '3.141592653589793');
+        result = math.evaluate(expression);
+      } catch (e) {
+        if (isMobile) return;
+        return e.toString();
+      }
+    } else {
+      return 'SyntaxError: Invalid or unexpected token';
     }
   }
   return result;
