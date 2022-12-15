@@ -436,16 +436,17 @@ function getX(input) {
   firstValueX = tmpComplex[0];
   isANumber(firstValueX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
 
+  unitsX = encodeSpecialChar(unitsX);
+
   if (radix === 10 || (!isANumber(firstValueX) && !isANumber(imaginaryX))) {
     soulX = encodeSpecialChar(soulX);
   } else {
     var sign = imaginaryX > 0 ?  '+' : '';
     var real = isNaN(firstValueX) ? '' : firstValueX + ' ';
     var imaginary = isNaN(imaginaryX) ? '' : imaginaryX + 'j';
-    soulX = real + sign + imaginary;
+    soulX = real + sign + imaginary + ' ' + unitsX;
   }
-  unitsX = encodeSpecialChar(unitsX);
-  
+    
   return new NumberObject(soulX, firstValueX, imaginaryX, unitsX);
 }
 
@@ -799,7 +800,7 @@ function undoBase(input, aRadix) {
 function redoBase(input, aRadix) {
   var inputArr = input.split('\n');
   var outputArr = [];
-
+  
   for (var i = 0; i < inputArr.length; i++) {
     inputArr[i] = getX(inputArr[i]);
   }
@@ -830,21 +831,23 @@ function undoFunction() {
   if (backups.length > 3) {   
     var shortStack = [];    
     var currentRadix = radix;
+    var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
+
     radix = 10;
     
     for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
     restores.push(nestArrayByBrowser(shortStack));
-    restores.push($('txt-input').value);
-    $('txt-input').value = backups.pop();
+    restores.push(input);
+    currentRadix === 10 ? $('txt-input').value = formatInputArr(backups.pop()) : $('txt-input').value = redoBase(backups.pop(), currentRadix);
 
-    var tmpArray = backups.pop();
+    var backupArray = backups.pop();
     stack.length = 0;
-    tmpArray = splitArrayByBrowser(tmpArray);
+    backupArray = splitArrayByBrowser(backupArray);
 
     var i = 1;
-    while (i < tmpArray.length) {
-      stringToStackObj(tmpArray[i]);
+    while (i < backupArray.length) {
+      stringToStackObj(backupArray[i]);
       i++;
     }
     radix = currentRadix;
@@ -859,21 +862,23 @@ function redoFunction() {
   if (restores.length > 0) {
     var shortStack = [];    
     var currentRadix = radix;
+    var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
+
     radix = 10;
 
     for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
     backups.push(nestArrayByBrowser(shortStack));
-    backups.push($('txt-input').value);
-    $('txt-input').value = restores.pop();
+    backups.push(input);
+    currentRadix === 10 ? $('txt-input').value = formatInputArr(restores.pop()) : $('txt-input').value = redoBase(restores.pop(), currentRadix);
 
-    var tmpArray = restores.pop();
+    var restoredArray = restores.pop();
     stack.length = 0;
-    tmpArray = splitArrayByBrowser(tmpArray);
+    restoredArray = splitArrayByBrowser(restoredArray);
     
     var i = 1;
-    while (i < tmpArray.length) {
-      stringToStackObj(tmpArray[i]);
+    while (i < restoredArray.length) {
+      stringToStackObj(restoredArray[i]);
       i++;
     }
     radix = currentRadix;
@@ -884,8 +889,12 @@ function redoFunction() {
 }
 
 function backupUndo() {
-  var shortStack = [];    
-  var input = $('txt-input').value.trim();
+  var shortStack = [];
+  var currentRadix = radix;
+  var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
+
+  radix = 10;
+
   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
   
   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
@@ -894,6 +903,7 @@ function backupUndo() {
     restores.length = 0;
     colorUndoButton();  
   }
+  radix = currentRadix;
 }
 
 function toggleChar(input, index, regex, char) {
@@ -1333,12 +1343,20 @@ function inverse() {
   }
   newUnits = inverseUnits(objX.getUnits());
 
-  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {  
-    displayResult(decodeSpecialChar(backups[backups.length - 3]), '');
-  } else {    
+  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {
+    var currentRadix = radix;
+    radix = 10;
+
+    var result = redoBase(decodeSpecialChar(backups[backups.length - 3]), currentRadix);
+    radix = currentRadix;
+
+    displayResult(result, '');
+  } else {
+    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
 
       if (objX.getImaginary() === '0') {
+        
         if (objX.getRealPart() === 'NaN') objX.setRealPart('0');
         objX.setImaginary('NaN');
       }
@@ -1346,22 +1364,28 @@ function inverse() {
       displayResult(math.inv(x), newUnits);
     } else {// Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));      
+      
       if (!isNaN(result)) {
         $('txt-input').value = 1 / result;
         $('txt-input').value += newUnits; 
-      } else {// We are parsing text        
+      } else {
+        // We are parsing text        
         if(/^[-+]?1\//.test($('txt-input').value)) {
 
           if ($('txt-input').value.charAt(0) === '-') {
             $('txt-input').value = $('txt-input').value.slice(3);
+
             if ($('txt-input').value.charAt(0) === '-') {
               $('txt-input').value = $('txt-input').value.slice(1);
             } else {
+
               if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
               $('txt-input').value = '-' + $('txt-input').value;
             }
           } else {
+
             if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
+
             $('txt-input').value = $('txt-input').value.slice(2);
             if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
           }
@@ -1372,10 +1396,12 @@ function inverse() {
             backupUndo();
             $('txt-input').value = 1 / 0;
           } else {
+
             if ($('txt-input').value.charAt(0) === '-') {
               $('txt-input').value = $('txt-input').value.slice(1);
               $('txt-input').value = '-1/' + $('txt-input').value.toString();
             } else {
+
               if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
               $('txt-input').value = '1/' + $('txt-input').value.toString();
             }
