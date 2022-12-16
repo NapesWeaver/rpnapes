@@ -944,17 +944,20 @@ function btnEe() {
   var index = $('txt-input').selectionStart;
 
   if (shifted) {
-    if ($('menu-form').textContent === 'Polar') {
-      // Cursor is at the end && there is no 'j' && (cursor is next to a valid number && input doesn't contain illegal symbols) || (cursor is at || next to 'j')
-      if ((index >= input.length - 1 && (/[ⅽ℮ɢΦπ0-9jy]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input))) || (input.charAt(index) === 'j' || input.charAt(index - 1) === 'j')) {
+    if ($('menu-form').textContent === 'Polar') {      
+      // (Cursor is next to valid char && input doesn't contain illegal char) || cursor is at 'j' || cursor is next to 'j'
+      if ((/[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
         toggleChar(input, index, /[j]/, 'j');        
       }              
-    } else {
+    } else {      
+      // (There is no '∠' && cursor is next to valid char && input doesn't contain illegal char) || cursor is at '∠' || cursor is next to '∠'
+      if ((input.split('∠').length - 1 === 0 && /[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input)) || input.charAt(index) === '∠' || input.charAt(index - 1) === '∠') {
       toggleChar(input, index, /[∠]/, '∠');
+      }
     }
   } else {
-    // (Cursor is at valid char && not an illegal char && [Ee] is not already part of the number) || (cursor is at || next to [Ee])
-    if ((/[0-9Ee](?![.])/.test(input.charAt(index - 1)) && !/[.]/.test(input.charAt(index)) && !/[;<>?:`~@#$%&×{}|\\_]+/g.test(input) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input)) || (/[Ee]/.test(input.charAt(index)) || /[Ee]/.test(input.charAt(index - 1)))) {      
+    // (Cursor is next to valid char && not at [.] && input doesn't contain illegal char && [Ee] is not already part of the number) || cursor is at [Ee] || cursor is next to [Ee]
+    if ((/[0-9Ee](?![.])/.test(input.charAt(index - 1)) && !/[.]/.test(input.charAt(index)) && !/[;<>?:`~@#$%&×{}|\\_]+/g.test(input) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input)) || /[Ee]/.test(input.charAt(index)) || /[Ee]/.test(input.charAt(index - 1))) {      
       toggleChar(input, index, /[Ee]/, 'e');
     }
   }
@@ -5992,8 +5995,6 @@ window.onload = function () {
   $('txt-input').readOnly = false;
   $('txt-input').focus();
   /**
-    Better color pallet.    
-    
     Haptic response for Firefox mobile.
     File-reopening bug.
     
@@ -6007,8 +6008,7 @@ window.onload = function () {
     Unit conversions?
     Login, persistent storage/messaging/sharing?
     
-    Rectangular w/o space eg. 'π+9j'?
-    Inline parsing for complex numbers?
-    Parse outliers...   
+    Inline parsing for complex containing [∠^]
+    Parse outliers...
   */
 };
