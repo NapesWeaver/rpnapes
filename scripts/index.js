@@ -647,6 +647,8 @@ function calculate(expression) {
     result = eval(parseEvaluation(expression));
   } catch(e) {
 
+    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
+
     if (!/[√^]/g.test(expression)) {
       try {
         expression = expression.replace(/ⅽ/g, '299792458');
