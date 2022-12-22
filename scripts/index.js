@@ -647,8 +647,6 @@ function calculate(expression) {
     result = eval(parseEvaluation(expression));
   } catch(e) {
 
-    // if (/^ReferenceError/.test(e.toString())) return e.toString();
-
     if (!/[√^]/g.test(expression)) {
       try {
         expression = expression.replace(/ⅽ/g, '299792458');
@@ -4022,30 +4020,8 @@ function removeLeadingZeros(str) {
 function extractFirstValue(tmpString) {
   var tmpReal = '';
 
-  if (radix === 10) {
-    // Not number followed by evaluation symbols && Not imaginary number && Not IP address && Not number[-+]number && Not number-text-number e.g. 2x4  
-    // if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[-+ ]*[,;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[-+ ]*[ⅽ℮ɢΦπ0-9]+[-+]+[ⅽ℮ɢΦπa-df-zA-DF-Z]*/.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
-      
-    // Not number followed by evaluation symbols && Not imaginary number && Not IP address && Not number-text-number e.g. 2x4  
-    // if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[-+ ]*[,;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {    
-      
-    // Not number followed by evaluation symbol && Not imaginary number && Not IP address
-    // if (!/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[-+ ]*[,;\/<>?:`~!@#$%^√&*×(){}[\]|\\_=]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {    
-      
-    // Not number followed by [*/^] && No other evaluation symbols && Not imaginary number && Not IP address
-    // if (!/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/g.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString)) {
-      
-    // Not number followed by [*/^] && No other evaluation symbols && Not imaginary number && Not IP address && not number-text-number e.g. 2x4 
-    // if (!/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/g.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/g.test(tmpString) && !/^\d+[.]\d*[.]\d*/g.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-    
-    // Not number followed by [*/^] && No other evaluation symbols && Not imaginary number && Not IP address && not number-text-number e.g. 2x4 
-    // if (!/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/.test(tmpString) && !/^\d+[.]\d*[.]\d*/.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-    
-    // Not number followed by [*/^] && No other evaluation symbols && Not imaginary number && Not imgainary followed by [-+*/^] && Not IP address && not number-text-number e.g. 2x4 
-    // if (!/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/.test(tmpString) && !/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*(?<!j+)[-+*/^]+.*)$/.test(tmpString) && !/^\d+[.]\d*[.]\d*/.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-      
+  if (radix === 10) {      
     // Not number [-+/*^] number && Not number followed by [*/^] && No other evaluation symbols && Not imaginary number && Not imgainary followed by [-+*/^] && Not IP address && not number-text-number e.g. 2x4 
-    // if (!/^[ ]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?)([ ]*[-+/*^]+[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?))+$/.test(tmpString) && !/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/.test(tmpString) && !/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*(?<!j+)[-+*/^]+.*)$/.test(tmpString) && !/^\d+[.]\d*[.]\d*/.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
     if (!/^[ ]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?)([ ]*[-+/*^]+[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?))+$/.test(tmpString) && !/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]*[-+]?[ⅽ℮ɢΦπ]*|(Infinity)*[-+]?(Infinity)*|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/.test(tmpString) && !/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*(?<!j+)[-+*/^]+.*)$/.test(tmpString) && !/^\d+[.]\d*[.]\d*/.test(tmpString) && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
 
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?(?![a-zA-Z])[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);
@@ -4084,17 +4060,7 @@ function extractImaginary(tmpString) {
   var tmpImaginary = '';
 
   if (radix === 10) {    
-    // Not preceeded by [*/^] && No evaluation symbols && No more than one imaginary number
-    // if (!/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij][.]*$/g.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
-    
-    // Not followed by [-+*/^] && Not preceeded by [*/^] && No evaluation symbols
-    // if (!/[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*(?<!j+)[-+*/^]+[ ]*.*)$/g.test(tmpString) && !/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij][.]*$/g.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)) {
-    
     // Not imgainary followed by [-+*/^] && Not imaginary preceeded by [*/^] && No other evaluation symbols && No more than one imaginary number
-    // if (!/[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*(?<!j+)[-+*/^]+[ ]*.*)$/g.test(tmpString) && !/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij][.]*$/g.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
-    // if (!/[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*(?<!j+)[-+*/^]+.*)$/g.test(tmpString) && !/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij][.]*$/g.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
-    // if (!/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*(?<!j+)[-+*/^]+.*)$/g.test(tmpString) && !/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij][.]*$/g.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
-    // if (!/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ij]([ ]*(?<!j+)[-+*/^]+.*)$/.test(tmpString) && !/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*([eE][-+]?[0-9]+)?)[ij][.]*$/.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {
     if (!/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*(?<!j+)[-+*/^]+.*)$/.test(tmpString) && !/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij][.]*$/.test(tmpString) && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {  
       
     var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![.]*[-+*/]?[.]*[ⅽ℮ɢΦπa-zA-Z0-9]+[ ]*)|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![.]*[-+*/]?[.]*[ⅽ℮ɢΦπa-zA-Z0-9]+[ ]*)/);
