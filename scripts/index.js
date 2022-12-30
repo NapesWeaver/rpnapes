@@ -4027,7 +4027,7 @@ function extractFirstValue(tmpString) {
     && !/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/.test(tmpString)
     && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)
     && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]*[-+]?[ⅽ℮ɢΦπ]*|(Infinity)*[-+]?(Infinity)*|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/.test(tmpString)
-    && !/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*[-+*/^]+[ⅽ℮ɢΦπI0-9]*)/.test(tmpString)
+    && !/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)(?<![a-zA-Z])[ij][ ]*[-+*/^]+/.test(tmpString)
     && !/^\d+[.]\d*[.]\d*/.test(tmpString)
     && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
 
@@ -4068,7 +4068,7 @@ function extractImaginary(tmpString) {
 
   if (radix === 10) {    
     // Not imgainary followed by [-+*/^] && Not imaginary preceeded by [*/^] && No other evaluation symbols && Not a number followed by imaginary number with no space && No more than one imaginary number
-    if (!/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij]([ ]*[-+*/^]+[ⅽ℮ɢΦπI0-9]*)/.test(tmpString)
+    if (!/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)(?<![a-zA-Z])[ij][ ]*[-+*/^]+/.test(tmpString)
     && !/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij][.]*$/.test(tmpString)
     && !/([ⅽ℮ɢΦπ0-9]|Infinity)[-+]+([ⅽ℮ɢΦπ]|Infinity)[ij]/g.test(tmpString)
     && !/[=;,<>?:`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)
