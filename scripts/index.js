@@ -640,12 +640,10 @@ function enterInput() {
 }
 
 function calculate(expression) {
-  var result;
-  
-  try {
-    result = eval(parseEvaluation(expression));
-  } catch(e) {
 
+  try {
+    return eval(parseEvaluation(expression));
+  } catch(e) {
     if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
 
     if (!/[√^]/g.test(expression)) {
@@ -656,7 +654,7 @@ function calculate(expression) {
         expression = expression.replace(/j/g, 'i');
         expression = expression.replace(/Φ/g, '1.618033988749895');
         expression = expression.replace(/π/g, '3.141592653589793');
-        result = math.evaluate(expression);
+        return math.evaluate(expression);
       } catch (e) {
         if (isMobile) return;
         return e.toString();
@@ -665,7 +663,6 @@ function calculate(expression) {
       return 'SyntaxError: Invalid or unexpected token';
     }
   }
-  return result;
 }
 
 function runTest() {  
@@ -3509,6 +3506,9 @@ function parseEvaluation(input) {
   // If input does not contain quotes or regex (input is not part of another program) AND it contains [!^√]  
   if (!/(['"]|\/[gij]?\.|\/\))/.test(input) && /[!^√]/.test(input)) {
     input = input.replace(/ /g, '');
+    input = input.replace(/(?<![-+*/^√!]|\B|[a-zA-Z])[ ]*\(/g, '*(');
+    input = input.replace(/\)[ ]*(?!\B|[-+*/^√!]|[a-zA-Z])/g, ')*');
+
     if (/√/g.test(input)) input = insertDefaultIndex(input);
     // Parse nested symbols
     while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
