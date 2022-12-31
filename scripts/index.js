@@ -6000,21 +6000,4 @@ window.onload = function () {
   autoDark();
   $('txt-input').readOnly = false;
   $('txt-input').focus();
-  /**
-    Haptic response for Firefox mobile.
-    
-    Negative and Infinite factorial?
-    Modulus for complex numbers?
-    Factorial for complex numbers?    
-    
-    Extend timer for hours/days?    
-    Iframe for desktop RPN links via iframe command?
-    Symbolic results?
-    Unit conversions?
-    Graphing?
-    Inline parsing for complex containing [∠^]
-    Parse outliers...
-
-    Login, persistent storage/messaging/sharing?    
-  */
 };
