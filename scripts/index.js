@@ -3885,6 +3885,7 @@ function encodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/=/g, '&#61');
   tmpString = tmpString.replace(/_/g, '&#95');
   tmpString = tmpString.replace(/°/g, '&deg');// degree
+  tmpString = tmpString.replace(/−/g, '-');
   //tmpString = tmpString.replace(/±/g, "&#177");
   //tmpString = tmpString.replace(/²/g, "&#178");
   //tmpString = tmpString.replace(/³/g, "&#179");
