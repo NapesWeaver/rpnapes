@@ -812,6 +812,7 @@ function redoBase(input, aRadix) {
 
 function formatInputStr(input) {
   var outputArr = input.split('\n');
+  
   for (var i = 0; i < outputArr.length; i++) {
     outputArr[i] = objToString(getX(outputArr[i]));
   }
@@ -963,9 +964,7 @@ function btnEe() {
 }
 
 function searchDuckDuckGo() {
-  if (stackFocus) $('txt-input').value = getSelectedText('lst-stack');
-
-  var query = $('txt-input').value.trim().replace('&', '%26');
+  var query = stackFocus ? getSelectedText('lst-stack') : $('txt-input').value.trim().replace('&', '%26');
   var domainString = 'https://duckduckgo.com/?q=';
 
   if (query) {    
@@ -977,9 +976,7 @@ function searchDuckDuckGo() {
 }
 
 function searchGoogle() {
-  if (stackFocus) $('txt-input').value = getSelectedText('lst-stack');
-
-  var query = $('txt-input').value.trim().replace('&', '%26');
+  var query = stackFocus ? getSelectedText('lst-stack') : $('txt-input').value.trim().replace('&', '%26');
   var domainString = 'https://www.google.com/search?q=';
   
   if (/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/.test(query) || /^(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))$/.test(query)) query = 'https://' + query;
@@ -997,9 +994,7 @@ function searchGoogle() {
 }
 
 function searchWikipedia() {
-  if (stackFocus) $('txt-input').value = getSelectedText('lst-stack');
-
-  var query = $('txt-input').value.trim().replace('&', '%26');
+  var query = stackFocus ? getSelectedText('lst-stack') : $('txt-input').value.trim().replace('&', '%26');
   var domainString = 'https://en.wikipedia.org/w/index.php?search=';
 
   if (query) {    
@@ -1011,9 +1006,7 @@ function searchWikipedia() {
 }
 
 function searchYouTube() {
-  if (stackFocus) $('txt-input').value = getSelectedText('lst-stack');
-  
-  var query = $('txt-input').value.trim().replace('&', '%26');
+  var query = stackFocus ? getSelectedText('lst-stack') : $('txt-input').value.trim().replace('&', '%26');
   var domainString = 'https://www.youtube.com/results?search_query=';
 
   if (query) {    
