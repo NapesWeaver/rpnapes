@@ -810,12 +810,12 @@ function redoBase(input, aRadix) {
   return outputArr.toString().replace(',', '\n');
 }
 
-function formatInputArr(input) {
+function formatInputStr(input) {
   var outputArr = input.split('\n');
   for (var i = 0; i < outputArr.length; i++) {
     outputArr[i] = objToString(getX(outputArr[i]));
   }
-  return outputArr.toString().replace(',', '\n');
+  return outputArr.join('\n');
 }
 
 function stringToStackObj(tmpArray) {
@@ -836,7 +836,7 @@ function undoFunction() {
 
     restores.push(nestArrayByBrowser(shortStack));
     restores.push(input);
-    currentRadix === 10 ? $('txt-input').value = formatInputArr(backups.pop()) : $('txt-input').value = redoBase(backups.pop(), currentRadix);
+    currentRadix === 10 ? $('txt-input').value = formatInputStr(backups.pop()) : $('txt-input').value = redoBase(backups.pop(), currentRadix);
 
     var backupArray = backups.pop();
     stack.length = 0;
@@ -867,7 +867,7 @@ function redoFunction() {
 
     backups.push(nestArrayByBrowser(shortStack));
     backups.push(input);
-    currentRadix === 10 ? $('txt-input').value = formatInputArr(restores.pop()) : $('txt-input').value = redoBase(restores.pop(), currentRadix);
+    currentRadix === 10 ? $('txt-input').value = formatInputStr(restores.pop()) : $('txt-input').value = redoBase(restores.pop(), currentRadix);
 
     var restoredArray = restores.pop();
     stack.length = 0;
@@ -6018,9 +6018,10 @@ window.onload = function () {
     Iframe for desktop RPN links via iframe command?
     Symbolic results?
     Unit conversions?
-    Login, persistent storage/messaging/sharing?
-    
+    Graphing?
     Inline parsing for complex containing [∠^]
     Parse outliers...
+
+    Login, persistent storage/messaging/sharing?    
   */
 };
