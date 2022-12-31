@@ -5662,6 +5662,7 @@ window.onload = function () {
         }
       };
       fr.readAsText(this.files[0]);
+      this.value = '';
     } catch (err) {
       rpnAlert(err.toString());
       if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
@@ -6008,7 +6009,6 @@ window.onload = function () {
   $('txt-input').focus();
   /**
     Haptic response for Firefox mobile.
-    File-reopening bug.
     
     Negative and Infinite factorial?
     Modulus for complex numbers?
