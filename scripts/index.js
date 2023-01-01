@@ -122,6 +122,40 @@ if (!Array.prototype.indexOf)
     }
   })(Object, Math.max, Math.min);
 
+math.import({
+  mathRoot: function (root, num) {
+    var objX = getX(root);
+    var objY = getX(num);
+    var x = buildComplexNumber(objX);
+    var y = buildComplexNumber(objY);
+    var signRoot = Math.sign(x);
+    var signNum = Math.sign(y);
+    var result = {};
+    var results = [{}];
+
+    if (signRoot === 1) {
+      results = math.nthRoots(y, x);
+    } else {
+      if (signNum === 1) {
+        results[0] = math.pow(y, 1/x);
+      } else {
+        results[0] = -1 * math.pow(-y, 1/x);
+      } 
+    }  
+    result = results[0];
+    
+    for (var i = 1; i < results.length; i++) {
+
+      if (signNum === -1 && results[i].im === 0) result = results[i];    
+    }
+    if (result.im === 0) {
+      return result.re;
+    } else {
+      return result;
+    }
+  }
+}, {silent: true});
+
 function unFloat() {
   var wrapWidth = $('wrap').clientWidth;
   var winSize = getSize();  
@@ -650,41 +684,7 @@ function calculate(expression) {
   } catch(e) {
 
     if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();    
-    try {
-      math.import({
-        mathRoot: function (root, num) {
-          var objX = getX(root);
-          var objY = getX(num);
-          var x = buildComplexNumber(objX);
-          var y = buildComplexNumber(objY);
-          var signRoot = Math.sign(x);
-          var signNum = Math.sign(y);
-          var result = {};
-          var results = [{}];
-  
-          if (signRoot === 1) {
-            results = math.nthRoots(y, x);
-          } else {
-            if (signNum === 1) {
-              results[0] = math.pow(y, 1/x);
-            } else {
-              results[0] = -1 * math.pow(-y, 1/x);
-            } 
-          }  
-          result = results[0];
-          
-          for (var i = 1; i < results.length; i++) {
-  
-            if (signNum === -1 && results[i].im === 0) result = results[i];    
-          }
-          if (result.im === 0) {
-            return result.re;
-          } else {
-            return result;
-          }
-        }
-      }, {silent: true});
-      
+    try {      
       parsed = parsed.replace(/mathP/g, 'p');
       parsed = parsed.replace(/ⅽ/g, '299792458');
       parsed = parsed.replace(/℮/g, '2.718281828459045');
