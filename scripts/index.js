@@ -640,28 +640,64 @@ function enterInput() {
 }
 
 function calculate(expression) {
+  var parsed = parseEvaluation(expression);
 
   try {
-    return eval(parseEvaluation(expression));
-  } catch(e) {
-    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
+    var result = eval(parsed);
 
-    if (!/[√^]/g.test(expression)) {
-      try {
-        expression = expression.replace(/ⅽ/g, '299792458');
-        expression = expression.replace(/℮/g, '2.718281828459045');
-        expression = expression.replace(/ɢ/g, '6.674e-11');
-        expression = expression.replace(/j/g, 'i');
-        expression = expression.replace(/Φ/g, '1.618033988749895');
-        expression = expression.replace(/π/g, '3.141592653589793');
-        return math.evaluate(expression);
-      } catch (e) {
-        if (isMobile) return;
-        return e.toString();
-      }
-    } else {
-      return 'SyntaxError: Invalid or unexpected token';
-    }
+    if (isNaN(result)) throw new Error;
+    return result;
+  } catch(e) {
+
+    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();    
+    try {
+      math.import({
+        mathRoot: function (root, num) {
+          var objX = getX(root);
+          var objY = getX(num);
+          var x = buildComplexNumber(objX);
+          var y = buildComplexNumber(objY);
+          var signRoot = Math.sign(x);
+          var signNum = Math.sign(y);
+          var result = {};
+          var results = [{}];
+  
+          if (signRoot === 1) {
+            results = math.nthRoots(y, x);
+          } else {
+            if (signNum === 1) {
+              results[0] = math.pow(y, 1/x);
+            } else {
+              results[0] = -1 * math.pow(-y, 1/x);
+            } 
+          }  
+          result = results[0];
+          
+          for (var i = 1; i < results.length; i++) {
+  
+            if (signNum === -1 && results[i].im === 0) result = results[i];    
+          }
+          if (result.im === 0) {
+            return result.re;
+          } else {
+            return result;
+          }
+        }
+      }, {silent: true});
+      
+      parsed = parsed.replace(/mathP/g, 'p');
+      parsed = parsed.replace(/ⅽ/g, '299792458');
+      parsed = parsed.replace(/℮/g, '2.718281828459045');
+      parsed = parsed.replace(/ɢ/g, '6.674e-11');
+      parsed = parsed.replace(/j/g, 'i');
+      parsed = parsed.replace(/Φ/g, '1.618033988749895');
+      parsed = parsed.replace(/π/g, '3.141592653589793');
+      return math.evaluate(parsed);
+    } catch (e) {
+
+      if (isMobile) return;
+      return e.toString();
+    }    
   }
 }
 
