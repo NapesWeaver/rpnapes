@@ -980,18 +980,18 @@ function btnEe() {
   if (shifted) {
     if ($('menu-form').textContent === 'Polar') {      
       // (Cursor is next to valid char && input doesn't contain illegal char) || cursor is at 'j' || cursor is next to 'j'
-      if ((/[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
+      if ((/[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(index - 1)) && !/[;,<>?:'"`~!@#$%&×{}[\]|\\_]/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
         toggleChar(input, index, /[j]/, 'j');        
       }              
     } else {      
       // (There is no '∠' && cursor is next to valid char && input doesn't contain illegal char) || cursor is at '∠' || cursor is next to '∠'
-      if ((input.split('∠').length - 1 === 0 && /[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(index - 1)) && !/[;<>?:`~!@#$%√&×(){}|\\_=]+/g.test(input)) || input.charAt(index) === '∠' || input.charAt(index - 1) === '∠') {
+      if ((input.split('∠').length - 1 === 0 && /[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(index - 1)) && !/[;,<>?:'"`~!@#$%√^&×(){}[\]|\\_]/g.test(input)) || input.charAt(index) === '∠' || input.charAt(index - 1) === '∠') {
       toggleChar(input, index, /[∠]/, '∠');
       }
     }
   } else {
     // (Cursor is next to valid char && not at [.] && input doesn't contain illegal char && [Ee] is not already part of the number) || cursor is at [Ee] || cursor is next to [Ee]
-    if ((/[0-9Ee](?![.])/.test(input.charAt(index - 1)) && !/[.]/.test(input.charAt(index)) && !/[;<>?:`~@#$%&×{}|\\_]+/g.test(input) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input)) || /[Ee]/.test(input.charAt(index)) || /[Ee]/.test(input.charAt(index - 1))) {      
+    if ((/[0-9Ee](?![.])/.test(input.charAt(index - 1)) && !/[.]/.test(input.charAt(index)) && !/[;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input)) || /[Ee]/.test(input.charAt(index)) || /[Ee]/.test(input.charAt(index - 1))) {      
       toggleChar(input, index, /[Ee]/, 'e');
     }
   }
