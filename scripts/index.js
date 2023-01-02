@@ -154,7 +154,7 @@ math.import({
       return result;
     }
   }
-}, {silent: true});
+});
 
 function unFloat() {
   var wrapWidth = $('wrap').clientWidth;
@@ -685,6 +685,7 @@ function calculate(expression) {
 
     if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();    
     try {      
+      parsed = parsed.replace(/ln/g, 'log');
       parsed = parsed.replace(/mathP/g, 'p');
       parsed = parsed.replace(/ⅽ/g, '299792458');
       parsed = parsed.replace(/℮/g, '2.718281828459045');
