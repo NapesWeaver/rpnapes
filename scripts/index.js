@@ -844,7 +844,6 @@ function calculate(expression) {
     if (isNaN(result)) throw new Error;
     return result;
   } catch(e) {
-    // console.log('caught');
     if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();    
     try {      
       parsed = parsed.replace(/sin/g, 'mathSin');
@@ -2036,7 +2035,8 @@ function signChange() {
       txtInput.selectionEnd = startPos - 1;
 
     } else if (/[eE^√∠ ]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+]/.test(txtInput.value.charAt(startPos)) && !/[-+][ ]*$/.test(txtInput.value)) {
-      if (/ /.test(txtInput.value.charAt(startPos - 1))) {
+      // Space to left && no [-+] before space
+      if (/ /.test(txtInput.value.charAt(startPos - 1)) && /(?<![-+])[ ]+$/.test(txtInput.value)) {
         txtInput.value = txtInput.value.insertAt(startPos, '-');
         startPos = startPos + 2;
       }
@@ -2055,6 +2055,14 @@ function signChange() {
       }
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
+    } else {
+      // [0-9a-zA-Z] to left && No evaluation symbol to right
+      if (/[0-9a-zA-Z]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+=;,<>?:'"`~!@#$%^&×(){}[\]|\\_ij]/.test(txtInput.value.charAt(startPos))) {
+        txtInput.value = txtInput.value.insertAt(startPos, '+');
+        startPos ++;
+        txtInput.selectionStart = startPos;
+        txtInput.selectionEnd = startPos;
+      }
     }
     resizeInput();
     txtInput.focus();
