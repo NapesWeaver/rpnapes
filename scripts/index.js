@@ -1538,12 +1538,12 @@ function inverse() {
   if (stackFocus) {    
     objX = stack[getIndex('lst-stack') - stackSize];
     $('txt-input').value = decodeSpecialChar(objX.getSoul());
-    backupUndo();// <--Needed for UI consistency in this case
+    backupUndo();// <--Needed for UI consistency
   } else {
     objX = getX();
   }
   newUnits = inverseUnits(objX.getUnits());
-
+  //  If cashed
   if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {
     var currentRadix = radix;
     radix = 10;
@@ -1553,7 +1553,7 @@ function inverse() {
 
     displayResult(result, '');
   } else {
-    
+    // Is a number
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
 
       if (objX.getImaginary() === '0') {
@@ -1562,8 +1562,10 @@ function inverse() {
         objX.setImaginary('NaN');
       }
       var x = isANumber(objX.getImaginary()) ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
+
       displayResult(math.inv(x), newUnits);
-    } else {// Remove units from expression and calculate
+    } else {
+      // Remove units from expression and calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));      
       
       if (!isNaN(result)) {
@@ -1586,8 +1588,8 @@ function inverse() {
           } else {
 
             if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
-
             $('txt-input').value = $('txt-input').value.slice(2);
+            
             if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
           }
         } else {
@@ -2006,8 +2008,10 @@ function signChange() {
   } else {
     objX = getX();
   }  
-  if (stackFocus || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos)) || (startPos === txtInput.value.length && !/[-+^eE∠ ]/.test(txtInput.value.charAt(startPos - 1)))) {
-
+  if (stackFocus
+    || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos))
+    || (startPos === txtInput.value.length && !/[-+^eE∠ ]/.test(txtInput.value.charAt(startPos - 1)))) {
+    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       result = math.unaryMinus(buildComplexNumber(objX));    
     } else {
@@ -2015,10 +2019,11 @@ function signChange() {
     }  
     if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
 
-    displayResult(result, units);
-    
+    displayResult(result, units);    
   } else {
+
     if (/[-+]/.test(txtInput.value.charAt(startPos - 1))) {
+
       if (/-/.test(txtInput.value.charAt(startPos - 1))) {
         txtInput.value = txtInput.value.removeAt(startPos - 1, startPos);
         if (/ /.test(txtInput.value.charAt(startPos - 2))) {// If space to left, insert explicit '+'
@@ -2033,14 +2038,16 @@ function signChange() {
       }
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
-
-    } else if (/[eE^√∠ ]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+]/.test(txtInput.value.charAt(startPos)) && !/[-+][ ]*$/.test(txtInput.value)) {
+    } else if (/[eE^√∠ ]/.test(txtInput.value.charAt(startPos - 1))
+      && !/[-+]/.test(txtInput.value.charAt(startPos))
+      && !/[-+][ ]*$/.test(txtInput.value)) {      
       // Space to left && no [-+] before space
       if (/ /.test(txtInput.value.charAt(startPos - 1)) && /(?<![-+])[ ]+$/.test(txtInput.value)) {
         txtInput.value = txtInput.value.insertAt(startPos, '-');
         startPos = startPos + 2;
       }
       if (/[eE^√∠]/.test(txtInput.value.charAt(startPos - 1))) {
+        
         if (/[-]/.test(txtInput.value.charAt(startPos))) {
           txtInput.value = txtInput.value.removeAt(startPos, startPos + 1);
           startPos ++;
@@ -2055,9 +2062,10 @@ function signChange() {
       }
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
-    } else {
+    } else {      
       // [0-9a-zA-Z] to left && No evaluation symbol to right
-      if (/[0-9a-zA-Z]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+=;,<>?:'"`~!@#$%^&×(){}[\]|\\_ij]/.test(txtInput.value.charAt(startPos))) {
+      if (/[0-9a-zA-Z]/.test(txtInput.value.charAt(startPos - 1))
+        && !/[-+=;,<>?:'"`~!@#$%^&×(){}[\]|\\_ij]/.test(txtInput.value.charAt(startPos))) {
         txtInput.value = txtInput.value.insertAt(startPos, '+');
         startPos ++;
         txtInput.selectionStart = startPos;

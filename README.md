@@ -9,7 +9,7 @@
 
 My first and favorite JS project - much of the code still needs refactoring.
 
-Created with engineering calculators like the HP 48 in mind, this calamatron is programmable with a command line interface. It operates using reverse Polish notation and algebraically. RPN complex maths have been implemented using the [math.js](https://mathjs.org/) library. The UI makes use of a visible, interactive, stack that can be saved, using cookies for persistent storage. Unit labeling is supported. Saving/loading files are supported thanks to Eli Grey's [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
+Created with engineering calculators like the HP 48 in mind, this calamatron is programmable with a command line interface. It operates using reverse Polish notation and algebraically. Complex maths have been implemented using the [math.js](https://mathjs.org/) library. The UI makes use of a visible, interactive, stack that can be saved, using cookies for persistent storage. Unit labeling is supported. Saving/loading files are supported thanks to Eli Grey's [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
 
 The project does not use any jQuery and Works offline. Some effort has been made to keep it compatible for backwardly browsers.
 
@@ -26,21 +26,21 @@ Example JavaScript snippet:
 `for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $('txt-input').value=''; $('txt-input').value=word; enterInput(); }`
 
 ## Notes
-A separate interface for note taking is also implemented.
+Separate interface for notes...
 
 ![Notes](images/screenshots/notes.jpg)
 
 ![Notes](images/screenshots/notes2.jpg)
 
-Thanks to [Mathjs.org](https://mathjs.org/) for the math.js library. Made implementing complex maths and formatting with engineering notation easy!
+Thanks to [Mathjs.org](https://mathjs.org/) for the math.js library. Made implementing complex maths and formatting with engineering notation, almost, easy.
 
 Opening and saving text files is supported thanks to Eli Grey's [FileSaver.js](https://github.com/eligrey/FileSaver.js/).
 
 Public IP address are obtained thanks to the [IPify](https://www.ipify.org/) Public IP Address API.
 
-Darryl Snow's [moveCursorToEnd](https://gist.github.com/darryl-snow/3990793) function saved the day in my attempts to wrangle with mobile keypads.
+Darryl Snow's [moveCursorToEnd](https://gist.github.com/darryl-snow/3990793) function saved my me from my attempts to wrangle with mobile keypads.
 
-The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/) tutorial by Omar Benseddik made including that feature (and timer) too tempting.
+The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/) was lifted from a tutorial by Omar Benseddik. Had to add it ;)
 
 ## Tricorder
 
