@@ -153,6 +153,168 @@ math.import({
     } else {
       return result;
     }
+  },
+  mathSin: function(input) {
+    var objX = getX(input);
+    var x = buildComplexNumber(objX);
+    var degrees;
+
+    try {
+      if (x.im === undefined) {
+        degrees = $('btn-angle').value === 'deg' ? x : x * 180 / Math.PI;
+      } else {
+        degrees = $('btn-angle').value === 'deg' ? x.re : x.re * 180 / Math.PI;
+      }
+      if ((x.im === undefined || x.im === 0) && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) return 0;  
+    
+      if ($('btn-angle').value === 'deg') {
+        if (x.im === undefined) {
+          x = x * Math.PI / 180;
+        } else {
+          x.re = x.re * Math.PI / 180;
+          x.im = x.im * Math.PI / 180;
+        }
+      }
+      x = math.sin(x);
+    } catch {
+      x = NaN;
+    }
+    return x;
+  },
+  mathCos: function(input) {
+    var objX = getX(input);
+    var x = buildComplexNumber(objX);
+    var degrees;
+  
+    try {
+      if (x.im === undefined) {
+        degrees = $('btn-angle').value === 'deg' ? x : x * 180 / Math.PI;
+      } else {
+        degrees = $('btn-angle').value === 'deg' ? x.re : x.re * 180 / Math.PI;
+      }
+      if ((x.im === undefined || x.im === 0) && (degrees === 270 || (degrees - 270) % 360 === 0 || degrees === 90 || (degrees - 90) % 360 === 0)) return 0;
+    
+      if ($('btn-angle').value === 'deg') {
+        if (x.im === undefined) {
+          x = x * Math.PI / 180;
+        } else {
+          x.re = x.re * Math.PI / 180;
+          x.im = x.im * Math.PI / 180;
+        }
+      }
+      x = math.cos(x);
+    } catch {
+      x = NaN;
+    }
+    return x;
+  },
+  mathTan: function(input) {
+    var objX = getX(input);
+    var x = buildComplexNumber(objX);
+    var degrees;
+  
+    try {
+      if (x.im === undefined) {
+        degrees = $('btn-angle').value === 'deg' ? x : x * 180 / Math.PI;
+      } else {
+        degrees = $('btn-angle').value === 'deg' ? x.re : x.re * 180 / Math.PI;
+      }
+      
+      if ((x.im === undefined || x.im === 0) && (degrees === 0 || degrees % 360 === 0 || degrees === 180 || (degrees - 180) % 360 === 0)) {
+        return 0;
+      } else if ((x.im === undefined || x.im === 0) && (degrees === 315 || (degrees - 315) % 360 === 0 || degrees === 135 || (degrees - 135) % 360 === 0)) {
+        return -1;
+      } else if((x.im === undefined || x.im === 0) && (degrees === 270 || (degrees - 270) % 360 === 0)) {
+        return -Infinity;
+      } else if ((x.im === undefined || x.im === 0) && (degrees === 90 || (degrees - 90) % 360 === 0)) {
+        return Infinity;
+      } else if ((x.im === undefined || x.im === 0) && (degrees === 225 || (degrees - 225) % 360 === 0 || degrees === 45 || (degrees - 45) % 360 === 0)) {
+        return 1;
+      }
+      if ($('btn-angle').value === 'deg') {
+        if (x.im === undefined) {
+          x = x * Math.PI / 180;
+        } else {
+          x.re = x.re * Math.PI / 180;
+          x.im = x.im * Math.PI / 180;
+        }
+      }
+      x = math.tan(x);
+    } catch {
+      x = NaN;
+    }
+    return x;
+  },
+  mathASin: function(input) {
+    var objX = getX(input);
+    var x = buildComplexNumber(objX);
+
+    try {
+      x = math.asin(x);
+    
+      if ($('btn-angle').value === 'deg') {
+        if (x.im === undefined) {
+          x = (x * 180) / Math.PI;
+        } else {
+          x.re = (x.re * 180) / Math.PI;
+          x.im = (x.im * 180) / Math.PI;
+        }
+      }
+    } catch {
+      x = NaN;
+    }
+    return x;
+  },
+  mathACos: function(input) {
+    var objX = getX(input);
+    var x = buildComplexNumber(objX);
+  
+    try {
+      x = math.acos(x);
+    
+      if ($('btn-angle').value === 'deg') {
+        if (x.im === undefined) {
+          x = (x * 180) / Math.PI;
+        } else {
+          x.re = (x.re * 180) / Math.PI;
+          x.im = (x.im * 180) / Math.PI;
+        }
+      }
+    } catch {
+      x = NaN;
+    }
+    return x;
+  },
+  mathATan: function(input) {
+    var objX = getX(input);
+    var x = buildComplexNumber(objX);
+  
+    try {
+      x = math.atan(x);
+    
+      if (input === 'Infinity') x = π / 2;
+      if (input === '-Infinity') x = -π / 2;
+    
+      if ($('btn-angle').value === 'deg') {
+        if (x.im === undefined) {
+          x = (x * 180) / Math.PI;
+        } else {
+          x.re = (x.re * 180) / Math.PI;
+          x.im = (x.im * 180) / Math.PI;
+        }
+      }
+    } catch {
+      x = NaN;
+    }  
+    return x; 
+  },
+  root: function(y, x) {
+    if (x === undefined) x = 2;
+    return mathRoot(x, y);
+  },
+  roots: function(y, x) {
+    if (x === undefined) x = 2;
+    return mathRoots(x, y);
   }
 });
 
@@ -682,9 +844,15 @@ function calculate(expression) {
     if (isNaN(result)) throw new Error;
     return result;
   } catch(e) {
-
+    // console.log('caught');
     if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();    
     try {      
+      parsed = parsed.replace(/sin/g, 'mathSin');
+      parsed = parsed.replace(/cos/g, 'mathCos');
+      parsed = parsed.replace(/tan/g, 'mathTan');
+      parsed = parsed.replace(/asin/g, 'mathASin');
+      parsed = parsed.replace(/acos/g, 'mathACos');
+      parsed = parsed.replace(/atan/g, 'mathATan');
       parsed = parsed.replace(/ln/g, 'log');
       parsed = parsed.replace(/mathP/g, 'p');
       parsed = parsed.replace(/ⅽ/g, '299792458');
