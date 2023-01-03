@@ -1796,10 +1796,10 @@ function exponential() {
 
   try {
     result = math.pow(y, x);
+    newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), x); 
   } catch {
     result = NaN;
   }  
-  newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), x); 
   displayResult(result, newUnits);
 }
 
@@ -1886,10 +1886,10 @@ function radical() {
          results.push(-1 * math.pow(-y, 1/x));
        } 
     }
+    newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), 1/x);   
   } catch {
     results = [NaN];
   }
-  newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), 1/x);   
   displayResults(results, newUnits);
 }
 
@@ -1967,10 +1967,10 @@ function modulus() {
   
   try {
     result = math.mod(y, x);
+    newUnits = divideUnits(objX.getUnits(), objY.getUnits(), 1);
   } catch {
     result = NaN;
   }
-  newUnits = divideUnits(objX.getUnits(), objY.getUnits(), 1); 
   displayResult(result, newUnits);
 }
 
@@ -2103,10 +2103,10 @@ function division() {
 
   try {
     result = math.divide(y, x);
+    newUnits = divideUnits(objX.getUnits(), objY.getUnits(), 1);
   } catch {
     result = NaN;
   }
-  newUnits = divideUnits(objX.getUnits(), objY.getUnits(), 1);
   displayResult(result, newUnits);
 }
 
@@ -2133,10 +2133,10 @@ function multiplication() {
    
   try {
     result = math.multiply(y, x);
+    newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), 1);
   } catch {
     result = NaN;
   }
-  newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), 1);
   displayResult(result, newUnits);
 }
 
@@ -2163,10 +2163,10 @@ function subtraction() {
  
   try {
     result = math.subtract(y, x);
+    newUnits = addUnits(objX.getUnits(), objY.getUnits());
   } catch {
     result = NaN;
   }
-  newUnits = addUnits(objX.getUnits(), objY.getUnits());
   displayResult(result, newUnits);
 }
 
@@ -2194,10 +2194,10 @@ function addition() {
   
   try {
     result = math.add(y, x);
+    newUnits = addUnits(objX.getUnits(), objY.getUnits());
   } catch {
     result = NaN;
   }
-  newUnits = addUnits(objX.getUnits(), objY.getUnits());
   displayResult(result, newUnits);
 }
 
@@ -2248,7 +2248,6 @@ function displayResult(result, newUnits) {
     }
     if (objX) result = objToString(objX);
     
-    // if (result !== '0') result += newUnits;
     if (result !== '0' && !isNaN(result)) result += newUnits;
   
     $('txt-input').value = result;  
@@ -2271,7 +2270,7 @@ function displayResults(results, newUnits) {
     }
     if (objX) results[i] = objToString(objX);
     $('txt-input').value += results[i];
-    
+
     if (results[i] !== '0' && !isNaN(results[i])) $('txt-input').value += newUnits;
 
     if (i < results.length - 1) $('txt-input').value += '\n';
