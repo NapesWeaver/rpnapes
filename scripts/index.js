@@ -1543,7 +1543,7 @@ function inverse() {
     objX = getX();
   }
   newUnits = inverseUnits(objX.getUnits());
-  //  If cashed
+  //  Input is cashed && Input is not equal to backup
   if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {
     var currentRadix = radix;
     radix = 10;
@@ -1553,7 +1553,7 @@ function inverse() {
 
     displayResult(result, '');
   } else {
-    // Is a number
+    // Input is a number
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
 
       if (objX.getImaginary() === '0') {
@@ -1565,14 +1565,14 @@ function inverse() {
 
       displayResult(math.inv(x), newUnits);
     } else {
-      // Remove units from expression and calculate
+      // Remove units from expression and try to calculate
       result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));      
       
       if (!isNaN(result)) {
         $('txt-input').value = 1 / result;
         $('txt-input').value += newUnits; 
       } else {
-        // We are parsing text        
+        // Input is text that begins with [-+]?1/     
         if(/^[-+]?1\//.test($('txt-input').value)) {
 
           if ($('txt-input').value.charAt(0) === '-') {
@@ -1593,20 +1593,22 @@ function inverse() {
             if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
           }
         } else {
-
+          // Input is blank
           if ($('txt-input').value.trim() === '') {
             $('txt-input').value = '0';
             backupUndo();
             $('txt-input').value = 1 / 0;
           } else {
-
-            if ($('txt-input').value.charAt(0) === '-') {
+            // Input is text that begins with [-+]?
+            if ($('txt-input').value.trim().charAt(0) === '-' && $('txt-input').value.trim().length > 1) {
               $('txt-input').value = $('txt-input').value.slice(1);
               $('txt-input').value = '-1/' + $('txt-input').value.toString();
             } else {
 
-              if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
-              $('txt-input').value = '1/' + $('txt-input').value.toString();
+              if ($('txt-input').value.charAt(0) === '+' && $('txt-input').value.trim().length > 1) {
+                $('txt-input').value = $('txt-input').value.slice(1);
+                $('txt-input').value = '1/' + $('txt-input').value.toString();
+              }
             }
           }
         }
