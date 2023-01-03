@@ -5176,7 +5176,7 @@ function button5() {
       if ($('widget').src.indexOf('forecast') === -1) {
         srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';        
       } else {
-        srcString += 'https://maps.darksky.net/@temperature,' + lat + ',' + lng + ',4?embed=true&timeControl=false&fieldControl=true&defaultField=temperature&defaultUnits=_f';
+        srcString += 'https://radar.weather.gov/region/conus/standard';
       }
       $('widget').src = srcString;
       $('widget').classList.remove('hidden');
