@@ -1542,9 +1542,10 @@ function inverse() {
   } else {
     objX = getX();
   }
+  var input = $('txt-input');
   newUnits = inverseUnits(objX.getUnits());
   //  Input is cashed && Input is not equal to backup
-  if ($('txt-input').value === cashed && $('txt-input').value !== decodeSpecialChar(backups[backups.length - 3])) {
+  if (input.value === cashed && input.value !== decodeSpecialChar(backups[backups.length - 3])) {
     var currentRadix = radix;
     radix = 10;
 
@@ -1566,58 +1567,56 @@ function inverse() {
       displayResult(math.inv(x), newUnits);
     } else {
       // Remove units from expression and try to calculate
-      result = calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));      
+      result = calculate(input.value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
       
       if (!isNaN(result)) {
-        $('txt-input').value = 1 / result;
-        $('txt-input').value += newUnits; 
+        input.value = 1 / result;
+        input.value += newUnits; 
       } else {
         // Input is text that begins with [-+]?1/     
-        if(/^[-+]?1\//.test($('txt-input').value)) {
+        if(/^[-+]?1\//.test(input.value)) {
 
-          if ($('txt-input').value.charAt(0) === '-') {
-            $('txt-input').value = $('txt-input').value.slice(3);
+          if (input.value.charAt(0) === '-') {
+            input.value = input.value.slice(3);
 
-            if ($('txt-input').value.charAt(0) === '-') {
-              $('txt-input').value = $('txt-input').value.slice(1);
+            if (input.value.charAt(0) === '-') {
+              input.value = input.value.slice(1);
             } else {
 
-              if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
-              $('txt-input').value = '-' + $('txt-input').value;
+              if (input.value.charAt(0) === '+') input.value = input.value.slice(1);
+              input.value = '-' + input.value;
             }
           } else {
 
-            if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
-            $('txt-input').value = $('txt-input').value.slice(2);
+            if (input.value.charAt(0) === '+') input.value = input.value.slice(1);
+            input.value = input.value.slice(2);
             
-            if ($('txt-input').value.charAt(0) === '+') $('txt-input').value = $('txt-input').value.slice(1);
+            if (input.value.charAt(0) === '+') input.value = input.value.slice(1);
           }
         } else {
           // Input is blank
-          if ($('txt-input').value.trim() === '') {
-            $('txt-input').value = '0';
+          if (input.value.trim() === '') {
+            input.value = '0';
             backupUndo();
-            $('txt-input').value = 1 / 0;
+            input.value = 1 / 0;
           } else {
             // Input is text that begins with [-+]?
-            if ($('txt-input').value.trim().charAt(0) === '-' && $('txt-input').value.trim().length > 1) {
-              $('txt-input').value = $('txt-input').value.slice(1);
-              $('txt-input').value = '-1/' + $('txt-input').value.toString();
+            if (input.value.trim().charAt(0) === '-' && input.value.trim().length > 1) {
+              input.value = input.value.slice(1);
+              input.value = '-1/' + input.value.toString();
             } else {
 
-              if ($('txt-input').value.charAt(0) === '+' && $('txt-input').value.trim().length > 1) {
-                $('txt-input').value = $('txt-input').value.slice(1);
-                $('txt-input').value = '1/' + $('txt-input').value.toString();
-              }
+              if (input.value.charAt(0) === '+') input.value = input.value.slice(1);
+              input.value = '1/' + input.value.toString();
             }
           }
         }
       }      
     }
   }
-  cashed = $('txt-input').value;
+  cashed = input.value;
   resizeInput();
-  $('txt-input').select();
+  input.select();
 }
 
 function btnInverse() {
