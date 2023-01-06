@@ -1549,12 +1549,12 @@ function inverse() {
     var currentRadix = radix;
     radix = 10;
 
-    var result = redoBase(decodeSpecialChar(backups[backups.length - 3]), currentRadix);
+    result = redoBase(decodeSpecialChar(backups[backups.length - 3]), currentRadix);
     radix = currentRadix;
 
     displayResult(result, '');
   } else {
-    // Input is a number
+    // Is input is a number?
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
 
       if (objX.getImaginary() === '0') {
@@ -2249,7 +2249,7 @@ function displayResult(result, newUnits) {
     }
     if (objX) result = objToString(objX);
     
-    if (result !== '0' && !isNaN(result)) result += newUnits;
+    if (result !== '0') result += newUnits;
   
     $('txt-input').value = result;  
     updateDisplay();
@@ -2272,7 +2272,7 @@ function displayResults(results, newUnits) {
     if (objX) results[i] = objToString(objX);
     $('txt-input').value += results[i];
 
-    if (results[i] !== '0' && !isNaN(results[i])) $('txt-input').value += newUnits;
+    if (results[i] !== '0') $('txt-input').value += newUnits;
 
     if (i < results.length - 1) $('txt-input').value += '\n';
   }
