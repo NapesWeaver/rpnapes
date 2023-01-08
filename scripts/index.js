@@ -1544,6 +1544,7 @@ function inverse() {
   }
   var input = $('txt-input');
   newUnits = inverseUnits(objX.getUnits());
+
   //  Input is cashed && Input is not equal to backup
   if (input.value === cashed && input.value !== decodeSpecialChar(backups[backups.length - 3])) {
     var currentRadix = radix;
@@ -1568,10 +1569,10 @@ function inverse() {
     } else {
       // Remove units from expression and try to calculate
       result = calculate(input.value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-      
-      if (!isNaN(result)) {
-        input.value = 1 / result;
-        input.value += newUnits; 
+
+      if (!isNaN(result) || !isNaN(result.im)) {
+        displayResult(math.inv(result), newUnits);
+
       } else {
         // Input is text that begins with [-+]?1/     
         if(/^[-+]?1\//.test(input.value)) {
