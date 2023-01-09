@@ -627,11 +627,9 @@ function getX(input) {
   var firstValueX = extractFirstValue(soulX);
   var tmpComplex = extractLateral(soulX, firstValueX);
   var imaginaryX = tmpComplex[1];
-  var unitsX;
+  var unitsX = extractUnits(soulX);
 
   firstValueX = tmpComplex[0];
-  isANumber(firstValueX) || isANumber(imaginaryX) ? unitsX = extractUnits(soulX) : unitsX = 'null';  
-
   unitsX = encodeSpecialChar(unitsX);
 
   if (radix === 10 || (!isANumber(firstValueX) && !isANumber(imaginaryX))) {
@@ -4244,8 +4242,8 @@ function extractFirstValue(tmpString) {
   var tmpReal = '';
 
   if (radix === 10) {      
-    // Not number [-+/*^] number && Not number followed by [*/^] && No other evaluation symbols && Not imaginary number && Not imgainary followed by [-+*/^] && Not IP address && not number-text-number e.g. 2x4 
-    if (!/^[ ]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?)([ ]*[-+/*^]+[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?))+$/.test(tmpString)
+    // Not number [-+/*^] number && Not number followed by [*/^] && No other evaluation symbols && Not imaginary number && Not imgainary followed by [-+*/^] && Not IP address && not number-text-number e.g. 2x4
+    if (!/^[ ]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?)([ ]*[-+/*^]+[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+[eE]?[-+]?[0-9]*))+($|[ ]+.+|(?![eEij]+)[a-zA-Z])/.test(tmpString)
     && !/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/.test(tmpString)
     && !/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)
     && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]*[-+]?[ⅽ℮ɢΦπ]*|(Infinity)*[-+]?(Infinity)*|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/.test(tmpString)
@@ -4256,7 +4254,7 @@ function extractFirstValue(tmpString) {
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?(?![a-zA-Z])[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);
       tmp = tmp.replace(/ /g, '');
 
-      if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);      
+      if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);  
       if (isANumber(tmp)) tmpReal += tmp;
     }
   }
