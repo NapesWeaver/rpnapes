@@ -41,6 +41,7 @@ var stackFocus = false;
 var shifted = false;
 var altHeld = false;
 var ctrlHeld = false;
+var shiftHeld = false;
 
 var fixDecimal = -1;
 var sciDecimal = -1;
@@ -840,10 +841,12 @@ function calculate(expression) {
     var result = eval(parsed);
 
     if (isNaN(result)) throw new Error;
+    
     return result;
+
   } catch(e) {
-    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();    
-    try {      
+    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
+    try {
       parsed = parsed.replace(/sin/g, 'mathSin');
       parsed = parsed.replace(/cos/g, 'mathCos');
       parsed = parsed.replace(/tan/g, 'mathTan');
@@ -858,7 +861,9 @@ function calculate(expression) {
       parsed = parsed.replace(/j/g, 'i');
       parsed = parsed.replace(/Φ/g, '1.618033988749895');
       parsed = parsed.replace(/π/g, '3.141592653589793');
+
       return math.evaluate(parsed);
+      
     } catch (e) {
 
       if (isMobile) return;
@@ -3721,7 +3726,7 @@ function insertDefaultIndex(input) {
   return inputArr.join('');
 }
 
-function parseEvaluation(input) {  
+function parseEvaluation(input) {
   // Contains [!^√)(] && Not part of a program  
   if (/[!^√()]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
     input = input.replace(/ /g, '');
@@ -5612,7 +5617,7 @@ function getEmptyRows() {
 
 document.addEventListener('keydown', function(event) {
   var key = event.keyCode || event.charCode;
-  
+
   switch (key) {
   case 8:// BACKSPACE  
     if ($('rpnapes').className !== 'hidden' && !isMobile) {
@@ -5625,7 +5630,11 @@ document.addEventListener('keydown', function(event) {
     }
     return;
   case 16:// SHIFT
-    if (altHeld) btnShift();    
+    if (altHeld) {
+      btnShift();
+    } else {
+      shiftHeld = true;
+    }
     return;
   case 17:// CTRL
     if (!event) event = window.event;
@@ -5634,7 +5643,7 @@ document.addEventListener('keydown', function(event) {
     return;
   case 18:// ALT
     altHeld = true;
-    return;
+    return;  
   case 33:// PAGE UP  
   if ($('notes').className === 'hidden') {
       if (!event) event = window.event;
@@ -5737,6 +5746,14 @@ document.addEventListener('keydown', function(event) {
       if (!isMobile) resizeInput();        
     }
     return;
+  case 57:
+      if ($('rpnapes').className !== 'hidden') {        
+        if (isTextSelected($('txt-input')) && shiftHeld) {
+          event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+          btnParenthesis();
+        }
+      }
+      return;
   case 65:// a
     if ($('rpnapes').className !== 'hidden' && stackFocus && ctrlHeld) {
       if (!event) event = window.event;
@@ -5824,6 +5841,9 @@ document.addEventListener('keyup', function(event) {
     if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     btnXoff();
+    break;
+  case 'Shift':
+    shiftHeld = false;
     break;
   case 'ArrowLeft':// (Falls through)
   case 'ArrowUp'://  (Falls through)
