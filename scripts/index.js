@@ -847,13 +847,13 @@ function calculate(expression) {
   } catch(e) {
     if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
     try {
-      parsed = parsed.replace(/sin/g, 'mathSin');
-      parsed = parsed.replace(/cos/g, 'mathCos');
-      parsed = parsed.replace(/tan/g, 'mathTan');
-      parsed = parsed.replace(/asin/g, 'mathASin');
-      parsed = parsed.replace(/acos/g, 'mathACos');
-      parsed = parsed.replace(/atan/g, 'mathATan');
-      parsed = parsed.replace(/ln/g, 'log');
+      parsed = parsed.replace(/sin\(/g, 'mathSin(');
+      parsed = parsed.replace(/cos\(/g, 'mathCos(');
+      parsed = parsed.replace(/tan\(/g, 'mathTan(');
+      parsed = parsed.replace(/asin\(/g, 'mathASin(');
+      parsed = parsed.replace(/acos\(/g, 'mathACos(');
+      parsed = parsed.replace(/atan\(/g, 'mathATan(');
+      parsed = parsed.replace(/ln\(/g, 'log(');
       parsed = parsed.replace(/mathP/g, 'p');
       parsed = parsed.replace(/ⅽ/g, '299792458');
       parsed = parsed.replace(/℮/g, '2.718281828459045');
@@ -3778,7 +3778,7 @@ function parseNested(input, symbol, prefix) {
   } else {// Keep parenthesis
     inputArr.splice(leftP, rightP - leftP + 1, maths);
   }
-  input = inputArr.join('');  
+  input = inputArr.join('');
   return input;
 }
 
@@ -3814,7 +3814,7 @@ function parseInline(input, symbol, prefix) {
     endPos++;
     if (inputArr[endPos] === '(') parenthesis++;
     if (inputArr[endPos] === ')') parenthesis--; 
-    if ((inputArr[endPos] === ',' || inputArr[endPos] === '') && inputArr[endPos + 1] === '-') endPos = endPos + 2;// NaN returned for negative roots (e.g. √-16) without inputArr[endPos] === '' check, 
+    if ((inputArr[endPos] === ',' || inputArr[endPos] === '') && inputArr[endPos + 1] === '-') endPos = endPos + 2;
   } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0)); 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
