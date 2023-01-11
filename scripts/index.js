@@ -3718,70 +3718,6 @@ function parseCommand() {
   if (!isMobile) resizeInput();
 }
 
-function insertDefaultIndex(input) {
-  var inputArr = input.split('');
-  for (var i = 0; i < inputArr.length; i++) {
-    if ((inputArr[i] === '√' && inputArr[i - 1] !== '!') && (inputArr[i - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/.test(inputArr[i - 1]))) inputArr.splice(i, 0, '2');
-  }
-  return inputArr.join('');
-}
-
-function parseEvaluation(input) {
-  // Contains [!^√)(] && Not part of a program  
-  if (/[!^√()]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
-    input = input.replace(/ /g, '');
-    input = input.replace(/(?<![a-zA-Z]|[-+*/^√!]|\(|^)[ ]*\(/g, '*(');
-    input = input.replace(/\)[ ]*(?!$|\)|[-+*/^√!]|[a-zA-Z])/g, ')*');
-
-    if (/√/g.test(input)) input = insertDefaultIndex(input);
-    // Parse nested symbols
-    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
-    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
-    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
-    // Parse in-line symbols
-    while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');
-    while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathRoot(');
-    while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathPow(');
-  }
-  return input;
-}
-
-function parseNested(input, symbol, prefix) {
-  var inputArr = input.split('');
-  var index = 0;
-  var startPos = 0;
-  var leftP = null;
-  var rightP = null;
-  var maths = '';
-  // Get nested parenthesis indices
-  while (startPos === 0) {
-    index++;
-    if (inputArr[index] === symbol && inputArr[index + 1] !== '(') startPos = index;
-  }
-  while (index < inputArr.length && rightP === null) {   
-    index++;
-    if (inputArr[index] === ')') rightP = index;
-  }
-  while (index > 0 && leftP === null) {
-    index--;
-    if (inputArr[index] === '(') leftP = index;
-  }
-  // Get nested maths
-  maths = inputArr.slice(leftP + 1, rightP).join('');
-  // Parse nested maths
-  if (/[(-ⅽ℮ɢΦπ\w][\^√][-ⅽ℮ɢΦπ\w)]/.test(maths) || /[(-ⅽ℮ɢΦπ\w]![-ⅽ℮ɢΦπ\w)]*/.test(maths)) {
-    maths = parseInline(maths, symbol, prefix);
-  }
-  // Re-insert parsed maths
-  if (!/\(\)/.test(maths)) {// Overwrite parenthesis
-    inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
-  } else {// Keep parenthesis
-    inputArr.splice(leftP, rightP - leftP + 1, maths);
-  }
-  input = inputArr.join('');
-  return input;
-}
-
 function parseInline(input, symbol, prefix) {
   var inputArr = input.split('');
   var index = 0;
@@ -3818,6 +3754,67 @@ function parseInline(input, symbol, prefix) {
   } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0)); 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
+  return input;
+}
+
+function parseNested(input, symbol, prefix) {
+  var inputArr = input.split('');
+  var index = 0;
+  var startPos = 0;
+  var leftP = null;
+  var rightP = null;
+  var maths = '';
+  // Get nested parenthesis indices
+  while (startPos === 0) {
+    index++;    
+    if (inputArr[index] === symbol) startPos = index;
+  }
+  while (index < inputArr.length && rightP === null) {   
+    index++;
+    if (inputArr[index] === ')') rightP = index;
+  }
+  while (index > 0 && leftP === null) {
+    index--;
+    if (inputArr[index] === '(') leftP = index;
+  }
+  // Get nested maths
+  maths = inputArr.slice(leftP + 1, rightP).join('');
+  // Parse nested maths
+  if (/[(-ⅽ℮ɢΦπ\w][\^√][-ⅽ℮ɢΦπ\w)]/.test(maths) || /[(-ⅽ℮ɢΦπ\w]![-ⅽ℮ɢΦπ\w)]*/.test(maths)) {
+    maths = parseInline(maths, symbol, prefix);
+  }
+  // Re-insert parsed maths
+  inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
+  
+  input = inputArr.join('');
+  return input;
+}
+
+function insertDefaultIndex(input) {
+  var inputArr = input.split('');
+  for (var i = 0; i < inputArr.length; i++) {
+    if ((inputArr[i] === '√' && inputArr[i - 1] !== '!') && (inputArr[i - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/.test(inputArr[i - 1]))) inputArr.splice(i, 0, '2');
+  }
+  return inputArr.join('');
+}
+
+function parseEvaluation(input) {
+  // Contains [!^√)(] && Not part of a program  
+  if (/[!^√()]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
+    input = input.replace(/ /g, '');
+    input = input.replace(/(?<![a-zA-Z]|[-+*/^√!]|\(|^)[ ]*\(/g, '*(');
+    input = input.replace(/\)[ ]*(?!$|\)|[-+*/^√!]|[a-zA-Z])/g, ')*');
+
+    if (/√/g.test(input)) input = insertDefaultIndex(input);
+    // Parse nested symbols
+    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+    // Parse in-line symbols
+    while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');
+    while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathPow(');
+  }
   return input;
 }
 
