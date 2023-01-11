@@ -3724,21 +3724,19 @@ function parseInline(input, symbol, prefix) {
   var endPos = 0;
   var parenthesis = 0;
   // Overwrite symbol
-  while (inputArr[index] !== symbol) { index++; }    
-  
-  if (prefix === 'factorial(') {
-    inputArr[index] = '';
-  } else {
-    inputArr[index] = ',';// n^n or n√n  
-  }
+  while (inputArr[index] !== symbol) { index++; }
+  // ! vs n^n, n√n
+  prefix === 'factorial(' ? inputArr[index] = '' : inputArr[index] = ',';  
   endPos = index;
+
   // Insert prefix
-  while (index > 0 && ((!/[-+*/^√(]/.test(inputArr[index]) || /[a-z]/.test(inputArr[index - 1])) || parenthesis > 0)) {
+  while (index > 0 && (parenthesis > 0 || (!/[-+*/^√(]/.test(inputArr[index]) || /[a-z]/.test(inputArr[index - 1])))) {
     index--; 
     if (inputArr[index] === ')') parenthesis++;
     if (inputArr[index] === '(') parenthesis--;  
   }
-  if (parenthesis > -1 && index === 0 || (inputArr[index] === '(' && parenthesis === 0)) {
+  if (parenthesis === 0 && (index === 0 || (inputArr[index] === '('))) {
+    
     if (symbol === '!' && /[√]/.test(inputArr[index])) index ++;
     inputArr.splice(index, 0, prefix);
   } else {
@@ -3750,7 +3748,8 @@ function parseInline(input, symbol, prefix) {
     endPos++;
     if (inputArr[endPos] === '(') parenthesis++;
     if (inputArr[endPos] === ')') parenthesis--; 
-    if ((inputArr[endPos] === ',' || inputArr[endPos] === '') && inputArr[endPos + 1] === '-') endPos = endPos + 2;
+    if (inputArr[endPos + 1] === '-' && (inputArr[endPos] === ',' || inputArr[endPos] === '')) endPos = endPos + 2;
+
   } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0)); 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
