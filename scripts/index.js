@@ -3723,6 +3723,9 @@ function parseInline(input, symbol, prefix) {
   var index = 0;
   var endPos = 0;
   var parenthesis = 0;
+  var leftParen = 0;
+  // var leftLimit = symbol === '√' ? 0 : 1;
+
   // Overwrite symbol
   while (inputArr[index] !== symbol) { index++; }
   // ! vs n^n, n√n
@@ -3730,10 +3733,12 @@ function parseInline(input, symbol, prefix) {
   endPos = index;
 
   // Insert prefix
-  while (index > 0 && (parenthesis > 0 || (!/[-+*/^√(]/.test(inputArr[index]) || /[a-z]/.test(inputArr[index - 1])))) {
+  // while (index > 0 && (parenthesis > 0 || (!/[-+*/^√(]/.test(inputArr[index]) || /[a-z]/.test(inputArr[index - 1])))) {
+  while (index > 0 && (parenthesis > 0 || (!/[-+*/^√(]/.test(inputArr[index]) || (leftParen <= 1 && /[a-z]/.test(inputArr[index - 1]))))) {
     index--; 
     if (inputArr[index] === ')') parenthesis++;
-    if (inputArr[index] === '(') parenthesis--;  
+    if (inputArr[index] === '(') parenthesis--; 
+    if (inputArr[index] === '(') leftParen++; 
   }
   if (parenthesis === 0 && (index === 0 || (inputArr[index] === '('))) {
     
