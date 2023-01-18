@@ -3724,7 +3724,6 @@ function parseInline(input, symbol, prefix) {
   var endPos = 0;
   var parenthesis = 0;
   var leftParen = 0;
-  // var leftLimit = symbol === '√' ? 0 : 1;
 
   // Overwrite symbol
   while (inputArr[index] !== symbol) { index++; }
@@ -3733,7 +3732,6 @@ function parseInline(input, symbol, prefix) {
   endPos = index;
 
   // Insert prefix
-  // while (index > 0 && (parenthesis > 0 || (!/[-+*/^√(]/.test(inputArr[index]) || /[a-z]/.test(inputArr[index - 1])))) {
   while (index > 0 && (parenthesis > 0 || (!/[-+*/^√(]/.test(inputArr[index]) || (leftParen <= 1 && /[a-z]/.test(inputArr[index - 1]))))) {
     index--; 
     if (inputArr[index] === ')') parenthesis++;
@@ -3803,8 +3801,8 @@ function insertDefaultIndex(input) {
 }
 
 function parseEvaluation(input) {
-  // Contains [!^√)(] && Not part of a program  
-  if (/[!^√()]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
+  // Contains [!^√] && Not part of a program  
+  if (/[!^√]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
     input = input.replace(/ /g, '');
     input = input.replace(/(?<![a-zA-Z]|[-+*/^√!]|\(|^)[ ]*\(/g, '*(');
     input = input.replace(/\)[ ]*(?!$|\)|[-+*/^√!]|[a-zA-Z])/g, ')*');
@@ -5182,7 +5180,7 @@ function button5() {
       if ($('widget').src.indexOf('forecast') === -1) {
         srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';        
       } else {
-        srcString += 'https://radar.weather.gov/region/conus/standard';
+        srcString += 'https://radar.weather.gov/region/conus/standard';// NATIONAL WEATHER SERVICE
       }
       $('widget').src = srcString;
       $('widget').classList.remove('hidden');
