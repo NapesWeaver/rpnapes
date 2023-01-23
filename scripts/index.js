@@ -3718,6 +3718,44 @@ function parseCommand() {
   if (!isMobile) resizeInput();
 }
 
+function parseNested(input, symbol, prefix) {
+
+  input = input.replace('(', '((');
+  input = input.replace(')', '))');
+  
+  var inputArr = input.split('');
+  var index = 0;
+  var startPos = 0;
+  var leftP = null;
+  var rightP = null;
+  var maths = '';
+  // Get nested parenthesis indices
+  while (startPos === 0) {
+    index++;    
+    if (inputArr[index] === symbol) startPos = index;
+  }
+  while (index < inputArr.length && rightP === null) {   
+    index++;
+    if (inputArr[index] === ')') rightP = index;
+  }
+  while (index > 0 && leftP === null) {
+    index--;
+    if (inputArr[index] === '(') leftP = index;
+  }
+  // Get nested maths
+  maths = inputArr.slice(leftP + 1, rightP).join('');
+  // Parse nested maths
+  if (/[(-ⅽ℮ɢΦπ\w][\^√][-ⅽ℮ɢΦπ\w)]/.test(maths) || /[(-ⅽ℮ɢΦπ\w]![-ⅽ℮ɢΦπ\w)]*/.test(maths)) {
+    maths = parseInline(maths, symbol, prefix);
+  }
+  // Re-insert parsed maths
+  inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
+  
+  input = inputArr.join('');
+  // console.log('nested', input);
+  return input;
+}
+
 function parseInline(input, symbol, prefix) {
   var inputArr = input.split('');
   var index = 0;
@@ -3756,39 +3794,7 @@ function parseInline(input, symbol, prefix) {
   } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0)); 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');
-  return input;
-}
-
-function parseNested(input, symbol, prefix) {
-  var inputArr = input.split('');
-  var index = 0;
-  var startPos = 0;
-  var leftP = null;
-  var rightP = null;
-  var maths = '';
-  // Get nested parenthesis indices
-  while (startPos === 0) {
-    index++;    
-    if (inputArr[index] === symbol) startPos = index;
-  }
-  while (index < inputArr.length && rightP === null) {   
-    index++;
-    if (inputArr[index] === ')') rightP = index;
-  }
-  while (index > 0 && leftP === null) {
-    index--;
-    if (inputArr[index] === '(') leftP = index;
-  }
-  // Get nested maths
-  maths = inputArr.slice(leftP + 1, rightP).join('');
-  // Parse nested maths
-  if (/[(-ⅽ℮ɢΦπ\w][\^√][-ⅽ℮ɢΦπ\w)]/.test(maths) || /[(-ⅽ℮ɢΦπ\w]![-ⅽ℮ɢΦπ\w)]*/.test(maths)) {
-    maths = parseInline(maths, symbol, prefix);
-  }
-  // Re-insert parsed maths
-  inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
-  
-  input = inputArr.join('');
+  // console.log('inline', input);
   return input;
 }
 
