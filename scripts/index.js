@@ -3749,10 +3749,9 @@ function parseNested(input, symbol, prefix) {
     maths = parseInline(maths, symbol, prefix);
   }
   // Re-insert parsed maths
-  inputArr.splice(leftP + 1, rightP - leftP - 1, maths);
-  
+  inputArr.splice(leftP + 1, rightP - leftP - 1, maths);  
   input = inputArr.join('');
-  // console.log('nested', input);
+
   return input;
 }
 
@@ -3792,9 +3791,10 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[endPos + 1] === '-' && (inputArr[endPos] === ',' || inputArr[endPos] === '')) endPos = endPos + 2;
 
   } while (endPos < inputArr.length && ((!/[-+*/^√)]/.test(inputArr[endPos])) || /[Ee]/.test(inputArr[endPos - 1]) || parenthesis > 0)); 
+
   inputArr.splice(endPos, 0, ')');
-  input = inputArr.join('');
-  // console.log('inline', input);
+  input = inputArr.join('');  
+  
   return input;
 }
 
