@@ -3751,7 +3751,7 @@ function parseNested(input, symbol, prefix) {
   // Re-insert parsed maths
   inputArr.splice(leftP + 1, rightP - leftP - 1, maths);  
   input = inputArr.join('');
-
+  
   return input;
 }
 
@@ -3776,8 +3776,6 @@ function parseInline(input, symbol, prefix) {
     if (inputArr[index] === '(') leftParen++; 
   }
   if (parenthesis === 0 && (index === 0 || (inputArr[index] === '('))) {
-    
-    if (symbol === '!' && /[√]/.test(inputArr[index])) index ++;
     inputArr.splice(index, 0, prefix);
   } else {
     inputArr.splice(index + 1, 0, prefix);
