@@ -3809,7 +3809,7 @@ function parseEvaluation(input) {
 
   // Contains [!^√] && Not part of a program  
   if (/[!^√]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
-    
+
     input = input.replace(/ /g, '');
     input = input.replace(/(?<![a-zA-Z]|[-+*/^√!_]|\(|^)[ ]*\(/g, '*(');
     input = input.replace(/\)[ ]*(?!$|\)|[-+*/^√!]|[a-zA-Z])/g, ')*');
@@ -3820,7 +3820,6 @@ function parseEvaluation(input) {
     while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
     while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
     while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
-
     // Parse in-line symbols
     while (/!/.test(input)) input = parseInline(input, '!', 'factorial(');
     while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
