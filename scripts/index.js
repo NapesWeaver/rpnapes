@@ -1572,8 +1572,8 @@ function inverse() {
     } else {
       // Remove units from expression and try to calculate
       result = calculate(input.value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
-
-      if (!isNaN(result) || !isNaN(result.im)) {
+      
+      if ((result !== undefined && result !== true && result !== false) && (!isNaN(result) || !isNaN(result.im))) {
         displayResult(math.inv(result), newUnits);
 
       } else {
