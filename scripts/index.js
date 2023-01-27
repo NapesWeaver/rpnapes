@@ -3756,6 +3756,7 @@ function parseNested(input, symbol, prefix) {
 }
 
 function parseInline(input, symbol, prefix) {
+  
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
@@ -3805,21 +3806,25 @@ function insertDefaultIndex(input) {
 }
 
 function parseEvaluation(input) {
+
   // Contains [!^√] && Not part of a program  
   if (/[!^√]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
+    
     input = input.replace(/ /g, '');
-    input = input.replace(/(?<![a-zA-Z]|[-+*/^√!]|\(|^)[ ]*\(/g, '*(');
+    input = input.replace(/(?<![a-zA-Z]|[-+*/^√!_]|\(|^)[ ]*\(/g, '*(');
     input = input.replace(/\)[ ]*(?!$|\)|[-+*/^√!]|[a-zA-Z])/g, ')*');
 
     if (/√/g.test(input)) input = insertDefaultIndex(input);
+
     // Parse nested symbols
-    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
-    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
-    while (/\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+    while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+
     // Parse in-line symbols
-    while (/[ⅽ℮ɢΦπ.\w)]!/.test(input)) input = parseInline(input, '!', 'factorial(');
-    while (/√[-ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '√', 'mathRoot(');
-    while (/[ⅽ℮ɢΦπ.\w)]\^[-√ⅽ℮ɢΦπ.\w(]/.test(input)) input = parseInline(input, '^', 'mathPow(');
+    while (/!/.test(input)) input = parseInline(input, '!', 'factorial(');
+    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');
   }
   return input;
 }
