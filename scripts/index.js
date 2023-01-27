@@ -816,15 +816,16 @@ function btnEval() {
   backupUndo();
   var objX;
   cashed = '';
-
+  
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   objX = getX();
+  var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
   
   if (objX.getSoul().match(/^run$/)) {
     btnLoad();
     return;
-  } 
-  displayResult(calculate($('txt-input').value), '');  
+  }
+  displayResult(calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')), units);
   $('txt-input').select();  
 }
 
@@ -1688,7 +1689,7 @@ function btnFactorial() {
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  
+
   displayResult(factorial(x), units);  
 }
 
