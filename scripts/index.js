@@ -1573,7 +1573,7 @@ function inverse() {
       displayResult(math.inv(x), newUnits);
     } else {
       // Remove units from expression and try to calculate
-      result = calculate(input.value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+      result = calculate(input.value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
       
       if ((result !== undefined && result !== true && result !== false) && (!isNaN(result) || !isNaN(result.im))) {
         displayResult(math.inv(result), newUnits);
@@ -1685,9 +1685,11 @@ function factorial(num) {
 function btnFactorial() {
   backupUndo();
   var objX;
-  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();  
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
-  displayResult(factorial(x), '');  
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
+  var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());
+  
+  displayResult(factorial(x), units);  
 }
 
 function mathLn(num) {
@@ -2222,7 +2224,7 @@ function buildComplexNumber(obj) {
     var b = 0;
     
     if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
-      a = calculate(obj.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
+      a = calculate(obj.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, ''));
     } else {
       if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
       if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
