@@ -1957,18 +1957,16 @@ function modulus() {
   if (stackFocus) {
     objY = stack[getIndex('lst-stack') - stackSize];
   } else {
-    if (stack.length - 1 < 0 || (isNaN(calculate(stack[stack.length - 1].getSoul())) && !isANumber(stack[stack.length - 1].getRealPart()) && !isANumber(stack[stack.length - 1].getImaginary()))) {
+    if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
       enterInput();
       $('txt-input').value = '2';
     }
     objY = stack.pop();
-  }
-  if (isNaN(objY.getRealPart()) && isNaN(objY.getImaginary())) {
-    y = calculate(objY.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')); 
-  } else {
-    y = isNaN(parseFloat(objY.getRealPart())) ? parseFloat(objY.getImaginary()) : parseFloat(objY.getRealPart()); 
-  }
-  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![j]\b) (?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')) : parseFloat(objX.getRealPart());  
+  }  
+  objX = getX();
+
+  y = buildComplexNumber(objY); 
+  x = buildComplexNumber(objX);
   
   try {
     result = math.mod(y, x);
