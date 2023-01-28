@@ -900,11 +900,8 @@ function runTest() {
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
       var expression = decodeSpecialChar(stack[stack.length - 2].getSoul());   
-      var result = calculate(expression.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity[ij]?.*)$/, ''));      
-      var units = getX(expression).getUnits();
-
-      units = units !== 'null' ? ' ' + units : '';
-      
+      var result = calculate(expression.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity[ij]?.*)$/, ''));
+      var units = getX(expression).getUnits() !== 'null' ? ' ' + getX(expression).getUnits() : '';
       var valueY = outputTestResult(result, units);
       var valueX = decodeSpecialChar(stack[stack.length - 1].getSoul());
       var color = valueY === valueX ? 'green' : 'red';
