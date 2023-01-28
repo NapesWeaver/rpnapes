@@ -769,6 +769,44 @@ function xyFunction() {
   setTimeout(resizeInput, 180);
 }
 
+function calculate(expression) {
+  var parsed = parseEvaluation(expression);
+
+  try {
+    var result = eval(parsed);
+
+    if (isNaN(result)) throw new Error;
+    
+    return result;
+
+  } catch(e) {
+    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
+    try {
+      parsed = parsed.replace(/sin\(/g, 'mathSin(');
+      parsed = parsed.replace(/cos\(/g, 'mathCos(');
+      parsed = parsed.replace(/tan\(/g, 'mathTan(');
+      parsed = parsed.replace(/asin\(/g, 'mathASin(');
+      parsed = parsed.replace(/acos\(/g, 'mathACos(');
+      parsed = parsed.replace(/atan\(/g, 'mathATan(');
+      parsed = parsed.replace(/ln\(/g, 'log(');
+      parsed = parsed.replace(/mathP/g, 'p');
+      parsed = parsed.replace(/ⅽ/g, '299792458');
+      parsed = parsed.replace(/℮/g, '2.718281828459045');
+      parsed = parsed.replace(/ɢ/g, '6.674e-11');
+      parsed = parsed.replace(/j/g, 'i');
+      parsed = parsed.replace(/Φ/g, '1.618033988749895');
+      parsed = parsed.replace(/π/g, '3.141592653589793');
+
+      return math.evaluate(parsed);
+      
+    } catch (e) {
+
+      if (isMobile) return;
+      return e.toString();
+    }    
+  }
+}
+
 function runProgram() {
   btnShift();
   btnLoad();
@@ -841,55 +879,36 @@ function enterInput() {
   $('txt-input').value = $('txt-input').value.trim();  
 }
 
-function calculate(expression) {
-  var parsed = parseEvaluation(expression);
+function outputTestResult(result, newUnits) { 
+  var objX;
+  if (result !== undefined) {
 
-  try {
-    var result = eval(parsed);
-
-    if (isNaN(result)) throw new Error;
+    if (typeof result === 'number' || typeof result === 'string') {
+      objX = getX(result);
+    } else {    
+      if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
+    }
+    if (objX) result = objToString(objX);
     
+    if (result !== '0') result += newUnits;
+
     return result;
-
-  } catch(e) {
-    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
-    try {
-      parsed = parsed.replace(/sin\(/g, 'mathSin(');
-      parsed = parsed.replace(/cos\(/g, 'mathCos(');
-      parsed = parsed.replace(/tan\(/g, 'mathTan(');
-      parsed = parsed.replace(/asin\(/g, 'mathASin(');
-      parsed = parsed.replace(/acos\(/g, 'mathACos(');
-      parsed = parsed.replace(/atan\(/g, 'mathATan(');
-      parsed = parsed.replace(/ln\(/g, 'log(');
-      parsed = parsed.replace(/mathP/g, 'p');
-      parsed = parsed.replace(/ⅽ/g, '299792458');
-      parsed = parsed.replace(/℮/g, '2.718281828459045');
-      parsed = parsed.replace(/ɢ/g, '6.674e-11');
-      parsed = parsed.replace(/j/g, 'i');
-      parsed = parsed.replace(/Φ/g, '1.618033988749895');
-      parsed = parsed.replace(/π/g, '3.141592653589793');
-
-      return math.evaluate(parsed);
-      
-    } catch (e) {
-
-      if (isMobile) return;
-      return e.toString();
-    }    
   }
 }
 
 function runTest() {  
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
-      var expression = decodeSpecialChar(stack[stack.length - 2].getSoul());
-      var result = calculate(expression);
-      var valueY = typeof result === 'number' || typeof result === 'string' ? result.toString() : objToString(getComplex(calculate(expression)));
-      var valueX = stack[stack.length - 1].getSoul();
-      valueY = valueY.replace(/e\+/g, 'e');
-      valueX = valueX.replace(/i$/g, 'j');
+      var expression = decodeSpecialChar(stack[stack.length - 2].getSoul());   
+      var result = calculate(expression.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity[ij]?.*)$/, ''));      
+      var units = getX(expression).getUnits();
 
-      var color = valueY === valueX ? 'green' : 'red';   
+      units = units !== 'null' ? ' ' + units : '';
+      
+      var valueY = outputTestResult(result, units);
+      var valueX = stack[stack.length - 1].getSoul();
+      var color = valueY === valueX ? 'green' : 'red';
+
       console.log(`${valueY} %c${valueY === valueX}`, `font-weight: bold; color: ${color};`);
     }
   } catch(e) {
