@@ -906,7 +906,7 @@ function runTest() {
       units = units !== 'null' ? ' ' + units : '';
       
       var valueY = outputTestResult(result, units);
-      var valueX = stack[stack.length - 1].getSoul();
+      var valueX = decodeSpecialChar(stack[stack.length - 1].getSoul());
       var color = valueY === valueX ? 'green' : 'red';
 
       console.log(`${valueY} %c${valueY === valueX}`, `font-weight: bold; color: ${color};`);
