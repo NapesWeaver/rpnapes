@@ -864,8 +864,7 @@ function btnEval() {
     return;
   }
   // Contains [!^√] && Not part of a program 
-  if (/[!^√]/.test($('txt-input').value) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
-  
+  if (/[!^√()]/.test($('txt-input').value) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
     displayResult(calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')), units);
   } else {
     displayResult(calculate($('txt-input').value), ''); 
@@ -3833,12 +3832,12 @@ function insertDefaultIndex(input) {
 function parseEvaluation(input) {
 
   // Contains [!^√] && Not part of a program  
-  if (/[!^√]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
+  if (/[!^√()]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
 
     input = input.replace(/ /g, '');
     input = input.replace(/(?<![a-zA-Z]|[-+*/^√!_]|\(|^)[ ]*\(/g, '*(');
     input = input.replace(/\)[ ]*(?!$|\)|[-+*/^√!]|[a-zA-Z])/g, ')*');
-
+    
     if (/√/g.test(input)) input = insertDefaultIndex(input);
 
     // Parse nested symbols
