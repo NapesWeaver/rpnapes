@@ -825,7 +825,13 @@ function btnEval() {
     btnLoad();
     return;
   }
-  displayResult(calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')), units);
+  // Contains [!^√] && Not part of a program 
+  if (/[!^√]/.test($('txt-input').value) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
+  
+    displayResult(calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![j]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/, '')), units);
+  } else {
+    displayResult(calculate($('txt-input').value), ''); 
+  }
   $('txt-input').select();  
 }
 
@@ -1152,7 +1158,7 @@ function btnEe() {
   if (shifted) {
     if ($('menu-form').textContent === 'Polar') {      
       // (Cursor is next to valid char && input doesn't contain illegal char) || cursor is at 'j' || cursor is next to 'j'
-      if ((/[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(index - 1)) && !/[;,<>?:'"`~!@#$%&×{}[\]|\\_]/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
+      if ((/[ⅽ℮ɢΦπ0-9y)]/.test(input.charAt(index - 1)) && !/[;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
         toggleChar(input, index, /[j]/, 'j');        
       }              
     } else {      
