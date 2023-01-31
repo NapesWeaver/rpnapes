@@ -23,6 +23,8 @@ new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
 
+var Infinityi = NaN;
+var Infinityj = NaN;
 var i = '√-1';
 var j = '√-1';
 var Φ = 1.618033988749895;
@@ -124,6 +126,8 @@ if (!Array.prototype.indexOf)
   })(Object, Math.max, Math.min);
 
 math.import({
+  Infinityi: NaN,
+  Infinityj: NaN,
   mathRoot: function (root, num) {
     var objX = getX(root);
     var objY = getX(num);
@@ -4281,13 +4285,13 @@ function extractFirstValue(tmpString) {
   if (radix === 10) {
     // No other evaluation symbols && Not number [-+/*^] number && Not number followed by [*/^] && Not imaginary number && Not imgainary followed by [-+*/^] && Not IP address && not number-text-number e.g. 2x4
     if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)
-    && !/^[ ]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?)([ ]*[-+/*^]+[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+[eE]?[-+]?[0-9]*))+($|[ ]+.+|(?![eEij]+)[a-zA-Z])/.test(tmpString)
+    && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?)([ ]*[-+/*^]+[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+[eE]?[-+]?[0-9]*))+($|[ ]+.+|(?![eEij]+)[a-zA-Z])/.test(tmpString)
     && !/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/.test(tmpString)
     && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]*[-+]?[ⅽ℮ɢΦπ]*|(Infinity)*[-+]?(Infinity)*|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/.test(tmpString)
     && !/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)(?<![a-zA-Z])[ij][ ]*[-+*/^]+/.test(tmpString)
     && !/^\d+[.]\d*[.]\d*/.test(tmpString)
-    && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {
-
+    && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
+      
       var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?(?![a-zA-Z])[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);
       tmp = tmp.replace(/ /g, '');
 
