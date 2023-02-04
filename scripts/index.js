@@ -855,6 +855,10 @@ function btnEnter() {
   parseCommand();  
 }
 
+function stripUnits(tmpString) {
+  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+(?<!Infinity|Infinity[ij])[-*^Ω♥a-zA-Z.0-9\/]*(?<!Infinity|Infinity[ij])$/, '');
+}
+
 function btnEval() {
   backupUndo();
   var objX;
@@ -870,7 +874,7 @@ function btnEval() {
   }
   // Contains [!^√()] && Not part of a program 
   if (/[!^√()]/.test($('txt-input').value) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
-    displayResult(calculate($('txt-input').value.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, '')), units);
+    displayResult(calculate(stripUnits($('txt-input').value)), units);
   } else {
     displayResult(calculate($('txt-input').value), ''); 
   }
@@ -900,10 +904,10 @@ function outputTestResult(result, newUnits) {
   }
 }
 
-function runTest() {  
+function runTest() {
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
-      var expression = decodeSpecialChar(stack[stack.length - 2].getSoul());   
+      var expression = decodeSpecialChar(stack[stack.length - 2].getSoul());
       var result = calculate(expression.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, ''));
       var units = getX(expression).getUnits() !== 'null' ? ' ' + getX(expression).getUnits() : '';
       var valueY = outputTestResult(result, units);
@@ -1599,8 +1603,7 @@ function inverse() {
 
       displayResult(math.inv(x), newUnits);
     } else {
-      // Remove units from expression and try to calculate
-      result = calculate(input.value.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, ''));
+      result = calculate(stripUnits(input.value));
       
       if ((result !== undefined && result !== true && result !== false) && (!isNaN(result) || !isNaN(result.im))) {
         displayResult(math.inv(result), newUnits);
@@ -1714,7 +1717,7 @@ function btnFactorial() {
   var objX;
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
-  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(objX.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, '')) : parseFloat(objX.getRealPart());
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
 
   displayResult(factorial(x), units);  
 }
@@ -2251,7 +2254,7 @@ function buildComplexNumber(obj) {
     var b = 0;
     
     if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
-      a = calculate(obj.getSoul().replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, ''));
+      a = calculate(stripUnits(obj.getSoul()));
     } else {
       if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
       if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
@@ -4147,51 +4150,8 @@ function encodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/;/g, '&#59');
   tmpString = tmpString.replace(/=/g, '&#61');
   tmpString = tmpString.replace(/_/g, '&#95');
-  tmpString = tmpString.replace(/°/g, '&deg');// degree
+  tmpString = tmpString.replace(/°/g, '&deg');
   tmpString = tmpString.replace(/−/g, '-');
-  //tmpString = tmpString.replace(/±/g, "&#177");
-  //tmpString = tmpString.replace(/²/g, "&#178");
-  //tmpString = tmpString.replace(/³/g, "&#179");
-  //tmpString = tmpString.replace(/µ/g, "&#181");// micro
-  //tmpString = tmpString.replace(/¹/g, "&#185");
-  //tmpString = tmpString.replace(/¼/g, "&#188");// 1/2
-  //tmpString = tmpString.replace(/½/g, "&#189");// 1/4
-  //tmpString = tmpString.replace(/¾/g, "&#190");// 3/4
-  //tmpString = tmpString.replace(/Ð/g, "&#208");// ETH
-  //tmpString = tmpString.replace(/Þ/g, "&#222");// THORN
-  //tmpString = tmpString.replace(/Δ/g, "&#916");// Delta
-  //tmpString = tmpString.replace(/Ω/g, '&#937');// Omega
-  //tmpString = tmpString.replace(/θ/g, "&#952");// Theta
-  //tmpString = tmpString.replace(/ψ/g, "&#968");// Psi
-  //tmpString = tmpString.replace(/†/g, "&#8224");// dagger
-  //tmpString = tmpString.replace(/‡/g, "&#8225");// double dagger
-  //tmpString = tmpString.replace(/•/g, "&#8226");// bullet
-  //tmpString = tmpString.replace(/…/g, "&#8230");// ellipsis
-  //tmpString = tmpString.replace(/⁰/g, "&#8304");
-  //tmpString = tmpString.replace(/⁴/g, "&#8308");
-  //tmpString = tmpString.replace(/⁵/g, "&#8309");
-  //tmpString = tmpString.replace(/⁶/g, "&#8310");
-  //tmpString = tmpString.replace(/⁷/g, "&#8311");
-  //tmpString = tmpString.replace(/⁸/g, "&#8312");
-  //tmpString = tmpString.replace(/⁹/g, "&#8313");
-  //tmpString = tmpString.replace(/⁻/g, "&#8315");// superscript minus    
-  //tmpString = tmpString.replace(/€/g, "&#8364");// Euro
-  //tmpString = tmpString.replace(/∞/g, "&#8734");// Infinity
-  //tmpString = tmpString.replace(/∠/g, "&#8736");// angle
-  //tmpString = tmpString.replace(/∴/g, "&#8756");// therefore
-  //tmpString = tmpString.replace(/≅/g, "&#8773");// approx. equal
-  //tmpString = tmpString.replace(/⊕/g, "&#8853");// direct sum
-  //tmpString = tmpString.replace(/⊗/g, "&#8855");// vector product
-  //tmpString = tmpString.replace(/⊥/g, "&#8869");// perpendicular
-  //tmpString = tmpString.replace(/◊/g, "&#9674");// lozenge
-  //tmpString = tmpString.replace(/♠/g, "&#9824");
-  //tmpString = tmpString.replace(/♣/g, "&#9827");
-  //tmpString = tmpString.replace(/♥/g, '&#9829');
-  //tmpString = tmpString.replace(/♦/g, "&#9830");
-  //tmpString = tmpString.replace(/ⅽ/g, '&#8573');
-  //tmpString = tmpString.replace(/℮/g, '&#8494');
-  //tmpString = tmpString.replace(/ɢ/g, '&#610');
-  //tmpString = tmpString.replace(/Φ/g, '&#934');// Phi 
   return tmpString;
 }
 function decodeSpecialChar(tmpString) {
@@ -4201,50 +4161,6 @@ function decodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/&#61/g, '=');
   tmpString = tmpString.replace(/&#95/g, '_');
   tmpString = tmpString.replace(/&deg/g, '°');
-  //tmpString = tmpString.replace(/&#177/g, "±");
-  //tmpString = tmpString.replace(/&#178/g, "²");
-  //tmpString = tmpString.replace(/&#179/g, "³");
-  //tmpString = tmpString.replace(/&#181/g, "µ");
-  //tmpString = tmpString.replace(/&#185/g, "¹");
-  //tmpString = tmpString.replace(/&#188/g, "¼");
-  //tmpString = tmpString.replace(/&#189/g, "½");
-  //tmpString = tmpString.replace(/&#190/g, "¾");
-  //tmpString = tmpString.replace(/&#208/g, "Ð");
-  //tmpString = tmpString.replace(/&#222/g, "Þ");
-  //tmpString = tmpString.replace(/&#916/g, "Δ");
-  //tmpString = tmpString.replace(/&#937/g, 'Ω');
-  //tmpString = tmpString.replace(/&#952/g, "θ");
-  //tmpString = tmpString.replace(/&#968/g, "ψ");
-  //tmpString = tmpString.replace(/&#8224/g, "†");
-  //tmpString = tmpString.replace(/&#8225/g, "‡");
-  //tmpString = tmpString.replace(/&#8226/g, "•");
-  //tmpString = tmpString.replace(/&#8230/g, "…");
-  //tmpString = tmpString.replace(/&#8304/g, "⁰");
-  //tmpString = tmpString.replace(/&#8308/g, "⁴");
-  //tmpString = tmpString.replace(/&#8309/g, "⁵");
-  //tmpString = tmpString.replace(/&#8310/g, "⁶");
-  //tmpString = tmpString.replace(/&#8311/g, "⁷");
-  //tmpString = tmpString.replace(/&#8312/g, "⁸");
-  //tmpString = tmpString.replace(/&#8313/g, "⁹");
-  //tmpString = tmpString.replace(/&#8315/g, "⁻");
-  //tmpString = tmpString.replace(/&#8364/g, "€");
-  //tmpString = tmpString.replace(/&#8734/g, "∞");
-  //tmpString = tmpString.replace(/&#8736/g, "∠");
-  //tmpString = tmpString.replace(/&#8756/g, "∴");
-  //tmpString = tmpString.replace(/&#8773/g, "≅");
-  //tmpString = tmpString.replace(/&#8853/g, "⊕");
-  //tmpString = tmpString.replace(/&#8855/g, "⊗");
-  //tmpString = tmpString.replace(/&#8869/g, "⊥");
-  //tmpString = tmpString.replace(/&#9674/g, "◊");
-  //tmpString = tmpString.replace(/&#9824/g, "♠");
-  //tmpString = tmpString.replace(/&#9827/g, "♣");
-  //tmpString = tmpString.replace(/&#9829/g, '♥');
-  //tmpString = tmpString.replace(/&#9830/g, "♦");
-  //tmpString = tmpString.replace(/&#8573/g, 'ⅽ');
-  //tmpString = tmpString.replace(/&#8494/g, '℮');
-  //tmpString = tmpString.replace(/&#610/g, 'ɢ');
-  //tmpString = tmpString.replace(/&#934/g, 'Φ');
-  //tmpString = tmpString.replace(/&#960/g, 'π');
   return tmpString;
 }
 
@@ -4280,64 +4196,67 @@ function removeLeadingZeros(str) {
 }
 
 function extractFirstValue(tmpString) {
-  var tmpReal = '';
+  var real = '';  
 
-  if (radix === 10) {
-    // No other evaluation symbols && Not number [-+/*^] number && Not number followed by [*/^] && Not imaginary number && Not imgainary followed by [-+*/^] && Not IP address && not number-text-number e.g. 2x4
-    if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)
-    && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+([eE][-+]?[0-9]+)?)([ ]*[-+/*^]+[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]+[eE]?[-+]?[0-9]*))+($|[ ]+.+|(?![eEij]+)[a-zA-Z])/.test(tmpString)
-    && !/^[.]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ ]*[*/^]+/.test(tmpString)
-    && !/^[-+]?[ ]*([ⅽ℮ɢΦπ]*[-+]?[ⅽ℮ɢΦπ]*|(Infinity)*[-+]?(Infinity)*|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij](?![a-zA-Z])/.test(tmpString)
-    && !/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)(?<![a-zA-Z])[ij][ ]*[-+*/^]+/.test(tmpString)
-    && !/^\d+[.]\d*[.]\d*/.test(tmpString)
-    && !/^[0-9]+[ ]*[a-df-zA-DF-Z]+[ ]*[0-9]/.test(tmpString)) {      
+  if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)) {
+        
+    tmpString = stripUnits(tmpString).trim();    
+
+    if (radix === 10
+    && (/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)$/.test(tmpString) 
+    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)([ ]+[-+][ ]*|[ ]*[-+][ ]+)([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString)
+    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)[ ]*[∠][ ]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)$/.test(tmpString))) {
+
+      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity[-+]?(?![ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);
       
-      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij](?![a-zA-Z]))|^[-+]?[ ]*Infinity(?![-+ij](?![a-zA-Z])*)|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?(?![a-zA-Z])[-+]?[0-9]*(?![ij](?![a-zA-Z]))/);
       tmp = tmp.replace(/ /g, '');
 
       if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);  
-      if (isANumber(tmp)) tmpReal += tmp;
+      if (isANumber(tmp)) real += tmp;         
     }
-  }
-  if (radix === 2) {
-    // Looking for a binary number but not an imaginary number
-    if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
-      tmpReal = '' + parseInt(tmpString, radix);   
+    if (radix === 2) {
+      // Looking for a binary number but not an imaginary number
+      if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
+        real = '' + parseInt(tmpString, radix);   
+      }
     }
-  }
-  if (radix === 8) {
-    if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+[ij]/g.test(tmpString)) {
-      tmpReal = '' + parseInt(tmpString, radix);
+    if (radix === 8) {
+      if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+[ij]/g.test(tmpString)) {
+        real = '' + parseInt(tmpString, radix);
+      }
     }
-  }
-  if (radix === 16) {
-    if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+[ij]/g.test(tmpString)) {
-      tmpReal = '' + parseInt(tmpString, radix);
+    if (radix === 16) {
+      if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+[ij]/g.test(tmpString)) {
+        real = '' + parseInt(tmpString, radix);
+      }
     }
+    if (real.charAt(0) === '+') real = real.slice(1);
+  
+    if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(real)) real = '0';
+    if (/[.]/g.test(real)) real = removeTrailingZeros(real);
+    if (/^[-]?0*/.test(real)) real = removeLeadingZeros(real);
+    if (real === '') real = 'NaN';
+  } else {
+    return NaN;
   }
-  if (tmpReal.charAt(0) === '+') tmpReal = tmpReal.slice(1);
-
-  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpReal)) tmpReal = '0';
-  if (/[.]/g.test(tmpReal)) tmpReal = removeTrailingZeros(tmpReal);
-  if (/^[-]?0*/.test(tmpReal)) tmpReal = removeLeadingZeros(tmpReal);
-  if (tmpReal === '') tmpReal = 'NaN';
-  return tmpReal;
+  return real;
 }
 
 function extractImaginary(tmpString) {
-  var tmpImaginary = '';
+  var imaginary = '';
+  
+  tmpString = stripUnits(tmpString).trim();  
 
-  if (radix === 10) {      
-    // No other evaluation symbols && Not imgainary followed by [-+*/^] && Not imaginary preceeded by [*/^] && Not a number followed by imaginary number with no space && No more than one imaginary number
+  if (radix === 10) {
+    
     if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)
-    && !/[.]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)(?<![a-zA-Z])[ij][ ]*[-+*/^]+/.test(tmpString)
-    && !/[.]*[*/^]+[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*)[ij][.]*$/.test(tmpString)
-    && !/([ⅽ℮ɢΦπ0-9]|Infinity)[-+]+([ⅽ℮ɢΦπ]|Infinity)[ij]/g.test(tmpString)
-    && (tmpString.match(/(?<![a-xzA-Z])[ij](?![a-zA-Z])/g)||[]).length < 2) {  
+    && (/^[-+]?[ ]*([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString)
+    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)([ ]+[-+][ ]*|[ ]*[-+][ ]+)([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString))) {
+ 
+      var tmp = '' + tmpString.match(/[-+]?[ ]*[ij]$|[-+]?[ ]*[ⅽ℮ɢΦπ][ij]$|[-+]?[ ]*Infinity[ij]$|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]$/);
       
-    var tmp = '' + tmpString.match(/[-+]?[ ]*[ⅽ℮ɢΦπ](?<![a-zA-Z][ ])[ij](?![.]*[-+*/]?[.]*[ⅽ℮ɢΦπa-zA-Z0-9]+[ ]*)|[-+]?[ ]*Infinity(?<![ij])[ij](?![ij])|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?<![a-zA-Z][ ]*)[ij](?![.]*[-+*/]?[.]*[ⅽ℮ɢΦπa-zA-Z0-9]+[ ]*)/);
       tmp = tmp.replace(/ /g, '');
-
+  
       if (/^[-][ij]\b/.test(tmp)) {
         tmp = '-1';
       } else if (/^[+]?[ij]\b/.test(tmp)) {
@@ -4346,25 +4265,23 @@ function extractImaginary(tmpString) {
         tmp = tmp.slice(0, tmp.length - 1);    
       }
       if (tmp.charAt(0) === '+') tmp = tmp.slice(1);
+      if (isANumber(tmp)) imaginary += tmp;
     }
-    if (isANumber(tmp)) tmpImaginary += tmp;
-
   } else {
-    if (radix === 2) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
-    if (radix === 8) tmpImaginary += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
-    if (radix === 16) tmpImaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
-    if (tmpImaginary.charAt(1) === ' ') tmpImaginary = tmpImaginary.replace(/ /g, '');
+    if (radix === 2) imaginary += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
+    if (radix === 8) imaginary += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
+    if (radix === 16) imaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
+    if (imaginary.charAt(1) === ' ') imaginary = imaginary.replace(/ /g, '');
 
-    tmpImaginary = tmpImaginary.slice(0, tmpImaginary.length - 1);
-    tmpImaginary = '' + parseInt(tmpImaginary, radix);
+    imaginary = imaginary.slice(0, imaginary.length - 1);
+    imaginary = '' + parseInt(imaginary, radix);
   }
-
-  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(tmpImaginary)) tmpImaginary = '0';
-  if (/[.]/g.test(tmpImaginary)) tmpImaginary = removeTrailingZeros(tmpImaginary);
-  if (/^[-]?0*/.test(tmpImaginary)) tmpImaginary = removeLeadingZeros(tmpImaginary);
-  if (tmpImaginary === '' || /^[eE]|nul/g.test(tmpImaginary)) tmpImaginary = 'NaN';
-
-  return  tmpImaginary;
+  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(imaginary)) imaginary = '0';
+  if (/[.]/g.test(imaginary)) imaginary = removeTrailingZeros(imaginary);
+  if (/^[-]?0*/.test(imaginary)) imaginary = removeLeadingZeros(imaginary);
+  if (imaginary === '') imaginary = 'NaN';  
+  
+  return  imaginary;
 }
 
 function parseAngle(tmpAngle, firstValue) {
@@ -4426,10 +4343,13 @@ function parseInfinitePolars(tmpAngle) {
 function extractAngle(tmpString, firstValue) {  
   var tmpComplex = [];
   var tmpAngle = '';
+
+  tmpString = tmpString.trim();
   
   if (radix === 10) {
-    if (!/[()]/g.test(tmpString)) {    
-      tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*Infinity|∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*/);    
+    
+    if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)) {   
+      tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])$|∠[ ]*[-+]?[ ]*Infinity[-+]?(?![ij])$|∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])$/);    
       tmpAngle = tmpAngle.replace(/ /g, '');
       // Remove ∠
       tmpAngle = tmpAngle.slice(1);    
@@ -4454,7 +4374,9 @@ function extractAngle(tmpString, firstValue) {
 }
 
 function extractLateral(tmpString, firstValue) {
-  var tmpComplex = [];  
+  var tmpComplex = [];
+
+  tmpString = stripUnits(tmpString);
 
   if (/∠/g.test(tmpString) && isANumber(firstValue)) {    
     tmpComplex = extractAngle(tmpString, firstValue);    
