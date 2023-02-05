@@ -856,6 +856,7 @@ function btnEnter() {
 }
 
 function stripUnits(tmpString) {
+  // return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+(?<!Infinity|Infinity[ij])[-*^Ω♥a-zA-Z.0-9\/]*(?<!Infinity|Infinity[ij])$/, '');
   return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, '');
 }
 

@@ -21,9 +21,11 @@ Example JavaScript snippet:
 
 `maxCount = prompt('Enter a number number','25');`
 
-`getFizzBuzz = function(w){ word = w;if (w % 3 === 0) word = 'fizz'; if(w % 5 === 0) word = 'buzz'; if (w % 15 === 0) word = 'fizzbuzz'; return word}`
+`getFizzBuzz = function(w) { word = w; if (w % 3 === 0) word = 'fizz'; if(w % 5 === 0) word = 'buzz'; if (w % 15 === 0) word = 'fizzbuzz'; return word }`
 
-`for(w = 1; w <= maxCount; w++){ word=getFizzBuzz(w); $('txt-input').value=''; $('txt-input').value=word; enterInput(); }`
+`for (w = 1; w <= maxCount; w++) { word = getFizzBuzz(w); $('txt-input').value = ''; $('txt-input').value = word; enterInput(); }`
+
+`updateDisplay();`
 
 ## Notes
 Separate interface for notes...
