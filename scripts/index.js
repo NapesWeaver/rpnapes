@@ -801,8 +801,7 @@ function calculate(expression) {
       parsed = parsed.replace(/j/g, 'i');
       parsed = parsed.replace(/Φ/g, '1.618033988749895');
       parsed = parsed.replace(/π/g, '3.141592653589793');
-      return math.evaluate(parsed);
-      
+      return math.evaluate(parsed);      
     } catch (e) {
 
       if (isMobile) return;
@@ -856,7 +855,7 @@ function btnEnter() {
 }
 
 function stripUnits(tmpString) {
-  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, '');
+  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, '');
 }
 
 function btnEval() {
@@ -2274,6 +2273,14 @@ function getComplex(complexObj) {
   return new NumberObject(soulX, firstValueX, imaginaryX, 'null');
 }
 
+function parseResult(result) {
+
+  result = result.replace(/(?<![0-9ijy])[ ]/g, '');
+  result = result.replace('(', '');
+  result = result.replace('i)', 'j ');
+  return result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
+}
+
 function displayResult(result, newUnits) { 
   var objX;
   if (result !== undefined) {
@@ -2284,10 +2291,10 @@ function displayResult(result, newUnits) {
       if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
     }
     if (objX) result = objToString(objX);
-    
     if (result !== '0') result += newUnits;
-  
-    $('txt-input').value = result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');  
+
+    $('txt-input').value = parseResult(result);
+
     updateDisplay();
     resizeInput();
   }
@@ -2306,7 +2313,8 @@ function displayResults(results, newUnits) {
       if (results[i].re !== undefined && !isNaN(results[i].re)) objX = getComplex(results[i]);
     }
     if (objX) results[i] = objToString(objX);
-    $('txt-input').value += results[i].replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
+
+    $('txt-input').value += parseResult(results[i]);
 
     if (results[i] !== '0') $('txt-input').value += newUnits;
 
@@ -4393,11 +4401,11 @@ function extractUnits(tmpString) {
   if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
 
   if (radix !== 16) {
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9\/]*$/);
   } else {
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9\/]*$/);    
   }
-  return tmpUnits;
+  return tmpUnits.replace(' ', '');
 }
 
 function appendUnits(unitString, tmpUnits, exponent) {
