@@ -855,6 +855,7 @@ function btnEnter() {
 }
 
 function stripUnits(tmpString) {
+  // return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+(?<!Infinity|Infinity[ij])[-*^Ω♥a-zA-Z.0-9\/]*(?<!Infinity|Infinity[ij])$/, '');
   return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, '');
 }
 
@@ -1421,22 +1422,21 @@ function saveFile(fileName, pretty) {
   var myBlob;
   var blobContent = '';
 
-  fileName = decodeSpecialChar(fileName.toString());
+  fileName = fileName.trim() === '' ? 'untitled' : decodeSpecialChar(fileName.toString());
 
-  if (fileName.trim() === '') {
-    fileName = 'untitled';
-  }
   if (stack.length > 0 || notes.length > 1) {
-    blobContent += '===== Stack =====\n\n';
+    blobContent += '===== ' + fileName.toString() + ' =====\n\n';
     for (var sta in stack) {
       if (pretty) {
         blobContent += objToString(stack[sta]);
       } else {
         blobContent += decodeSpecialChar(stack[sta].toString());
       }      
-      blobContent += '\n';
+      blobContent += '\n'; 
     }
-    blobContent += '\n===== Notes ======\n\n';
+    if (fileName !== 'untitled' || !pretty) blobContent += '\n';
+
+    blobContent += '===== Notes ======\n';
     for (var note in notes) {
       blobContent += decodeSpecialChar(notes[note]);
       blobContent += '\n';
