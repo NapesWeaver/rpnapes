@@ -692,6 +692,7 @@ function objToString(obj) {
     if (theString === '') theString = '0';
     if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
   }
+  theString = theString.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
   return theString;
 }
 
@@ -775,12 +776,12 @@ function xyFunction() {
 
 function calculate(expression) {
   var parsed = parseEvaluation(expression);
+  parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
 
   try {
     var result = eval(parsed);
 
     if (isNaN(result)) throw new Error;
-    
     return result;
 
   } catch(e) {
@@ -800,7 +801,6 @@ function calculate(expression) {
       parsed = parsed.replace(/j/g, 'i');
       parsed = parsed.replace(/Φ/g, '1.618033988749895');
       parsed = parsed.replace(/π/g, '3.141592653589793');
-
       return math.evaluate(parsed);
       
     } catch (e) {
@@ -856,7 +856,6 @@ function btnEnter() {
 }
 
 function stripUnits(tmpString) {
-  // return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+(?<!Infinity|Infinity[ij])[-*^Ω♥a-zA-Z.0-9\/]*(?<!Infinity|Infinity[ij])$/, '');
   return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*(?<!Infinity.*)$/, '');
 }
 
@@ -2288,7 +2287,7 @@ function displayResult(result, newUnits) {
     
     if (result !== '0') result += newUnits;
   
-    $('txt-input').value = result;  
+    $('txt-input').value = result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');  
     updateDisplay();
     resizeInput();
   }
@@ -2307,7 +2306,7 @@ function displayResults(results, newUnits) {
       if (results[i].re !== undefined && !isNaN(results[i].re)) objX = getComplex(results[i]);
     }
     if (objX) results[i] = objToString(objX);
-    $('txt-input').value += results[i];
+    $('txt-input').value += results[i].replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
 
     if (results[i] !== '0') $('txt-input').value += newUnits;
 
@@ -4398,7 +4397,6 @@ function extractUnits(tmpString) {
   } else {
     tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9/]*$/);    
   }
-  tmpUnits = tmpUnits.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
   return tmpUnits;
 }
 
