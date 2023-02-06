@@ -3846,7 +3846,8 @@ function insertDefaultIndex(input) {
 }
 
 function parseEvaluation(input) {
-
+  input = '' + input;
+  
   // Contains [!^√()] && Not part of a program  
   if (/[!^√()]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
 
