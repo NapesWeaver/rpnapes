@@ -1443,7 +1443,7 @@ function saveFile(fileName, pretty) {
     }
     myBlob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
     fileName += '.txt';
-    saveAs(myBlob, fileName);// This function exist in utils/filesaver.js
+    saveAs(myBlob, fileName);// filesaver.js
   } else {
     rpnAlert('Error: There is no data to save.');
   }

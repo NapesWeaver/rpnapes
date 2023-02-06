@@ -48,6 +48,6 @@ The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-
 
 ![Tricorder](images/screenshots/tricorder.jpg)
 
-The tricorder doesn't do much. It only exists because I wanted to map some buttons to an image and, also, I wanted to see a tricorder on my phone ;) It displays a weather forecast and weather map, from [darksky.net/forecast](https://darksky.net/forecast) and [maps.darksky.net](https://maps.darksky.net) There are also a few [Shoutcast](https://directory.shoutcast.com/) Internet radio stations and YouTube videos embedded in iFrames. Maybe some other useful links too.
+The tricorder doesn't do much. It only exists because I wanted to map some buttons to an image and, also, I wanted to see a tricorder on my phone ;) It displays a weather forecast widget and weather map, from [darksky.net](https://darksky.net/forecast) and [The National Weather Service](https://radar.weather.gov/region/conus/standard) There are also a few [Shoutcast](https://directory.shoutcast.com/) Internet radio stations and YouTube videos embedded in iFrames. Maybe some other useful links too.
 
 The original tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Thanks to keiske84.
