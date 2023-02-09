@@ -36,7 +36,7 @@ var ⅽ = 299792458;
 var stack = [];
 var backups = [];
 var restores = [];
-var cashed = '';
+// var cashed = '';
 
 var stackSize = 0;
 var stackFocus = false;
@@ -818,7 +818,7 @@ function runProgram() {
 
 function softEnter() {
   backupUndo();
-  cashed = '';
+  // cashed = '';
   
   var input = $('txt-input').value.trim();
   if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input));
@@ -837,7 +837,7 @@ function enterButton() {
 
 function btnEnter() {
   backupUndo();
-  cashed = '';
+  // cashed = '';
 
   if (stackFocus) {
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
@@ -861,7 +861,7 @@ function stripUnits(tmpString) {
 function btnEval() {
   backupUndo();
   var objX;
-  cashed = '';
+  // cashed = '';
   
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   objX = getX();
@@ -1580,7 +1580,8 @@ function inverse() {
   newUnits = inverseUnits(objX.getUnits());
 
   //  Input is cashed && Input is not equal to backup
-  if (input.value === cashed && input.value !== decodeSpecialChar(backups[backups.length - 3])) {
+  // if (input.value === cashed && input.value !== decodeSpecialChar(backups[backups.length - 3])) {
+  if (false) {
     var currentRadix = radix;
     radix = 10;
 
@@ -1648,7 +1649,7 @@ function inverse() {
       }      
     }
   }
-  cashed = input.value;
+  // cashed = input.value;
   resizeInput();
   input.select();
 }
