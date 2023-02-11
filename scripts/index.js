@@ -871,8 +871,8 @@ function btnEval() {
     btnLoad();
     return;
   }
-  // Contains [!^√()] && Not part of a program
-  if ((/[!^√()]/.test($('txt-input').value) || /1\//g.test(getX($('txt-input').value).units)) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
+  // Contains [*!^√()] && Not part of a program
+  if ((/[*!^√()]/.test($('txt-input').value) || /1\//g.test(getX($('txt-input').value).units)) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
     displayResult(calculate(stripUnits($('txt-input').value)), units);
   } else {
     displayResult(calculate($('txt-input').value), ''); 
