@@ -1944,12 +1944,9 @@ function btnPi() {
   if (shifted) {
     backupUndo();
     btnParenthesis();
-  } else {
-    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) {
-      buttonInsert(/[π]/ , 'π');
-    } else {
-      $('txt-input').focus();
-    }
+  } else {   
+    insertAtCursor($('txt-input'), 'π');
+    $('txt-input').focus();
   }
 }
 
@@ -3844,12 +3841,24 @@ function insertDefaultIndex(input) {
 function parseEvaluation(input) {
   input = '' + input;
   
-  // Contains [!^√()] && Not part of a program  
-  if (/[!^√()]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
+  // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
+  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
 
     input = input.replace(/ /g, '');
-    input = input.replace(/(?<![a-zA-Z]|[-+*/^√!_]|\(|^)[ ]*\(/g, '*(');
-    input = input.replace(/\)[ ]*(?!$|\)|[-+*/^√!]|[a-zA-Z])/g, ')*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*\(/g, '*(');
+    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*ⅽ/g, '*ⅽ');
+    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*℮/g, '*℮');
+    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*ɢ/g, '*ɢ');
+    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*Φ/g, '*Φ');
+    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*π/g, '*π');
+    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');
+
+    // console.log('input', input);
     
     if (/√/g.test(input)) input = insertDefaultIndex(input);
 
@@ -5926,20 +5935,25 @@ window.onload = function () {
   $('menu-form').onclick = toggleForm;
 
   // Menu Constants
-  $('menu-phi').onclick = function() {    
-    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[Φ]/ , 'Φ');      
+  $('menu-phi').onclick = function() {
+    insertAtCursor($('txt-input'), 'Φ');
+    $('txt-input').focus();    
   }
-  $('menu-eulers').onclick = function() {      
-    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[℮]/ , '℮');      
+  $('menu-eulers').onclick = function() {
+    insertAtCursor($('txt-input'), '℮');
+    $('txt-input').focus();   
   }
   $('menu-gravitational-constant').onclick = function() {  
-    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ɢ]/ , 'ɢ');     
+    insertAtCursor($('txt-input'), 'ɢ');
+    $('txt-input').focus();   
   }  
-  $('menu-light-speed').onclick = function() {    
-    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[ⅽ]/ , 'ⅽ');      
+  $('menu-light-speed').onclick = function() {
+    insertAtCursor($('txt-input'), 'ⅽ');
+    $('txt-input').focus();   
   } 
-  $('menu-pi').onclick = function() {  
-    if (!/^[ⅽ℮ɢΦa-hk-zA-HK-Z0-9]+$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[π]/ , 'π');      
+  $('menu-pi').onclick = function() {
+    insertAtCursor($('txt-input'), 'π');
+    $('txt-input').focus();      
   }
   
   $('menu-date').onclick = insertDate;
