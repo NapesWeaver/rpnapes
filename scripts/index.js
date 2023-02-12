@@ -3759,7 +3759,6 @@ function parseCommand() {
 }
 
 function parseNested(input, symbol, prefix) {
-
   input = input.replace('(', '((');
   input = input.replace(')', '))');
   
@@ -3791,12 +3790,10 @@ function parseNested(input, symbol, prefix) {
   // Re-insert parsed maths
   inputArr.splice(leftP + 1, rightP - leftP - 1, maths);  
   input = inputArr.join('');
-  
   return input;
 }
 
-function parseInline(input, symbol, prefix) {
-  
+function parseInline(input, symbol, prefix) {  
   var inputArr = input.split('');
   var index = 0;
   var endPos = 0;
@@ -3833,7 +3830,6 @@ function parseInline(input, symbol, prefix) {
 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');  
-  
   return input;
 }
 
@@ -5955,22 +5951,22 @@ window.onload = function () {
     insertText('P*(1+r/n)^(n*t)');
   }
   $('menu-circumference').onclick = function() {
-        insertText('2*π*r');
+        insertText('(2*π*r)');
   } 
   $('menu-circle-area').onclick = function() {    
-    insertText('π*r^2');
+    insertText('(π*r^2)');
   }
   $('menu-sphere-area').onclick = function() {
-    insertText('4*π*r^2');
+    insertText('(4*π*r^2)');
   }  
   $('menu-sphere-volume').onclick = function() {
-    insertText('4/3*π*r^3');
+    insertText('(4/3*π*r^3)');
   } 
   $('menu-cone-area').onclick = function() {    
-    insertText('π*r^2 + π*r*l');
+    insertText('(π*r^2 + π*r*l)');
   } 
   $('menu-cone-volume').onclick = function() {   
-    insertText('h/3*π*r^2');
+    insertText('(h/3*π*r^2)');
   }  
 
   // Menu Programs
