@@ -1425,6 +1425,7 @@ function saveFile(fileName, pretty) {
 
   if (stack.length > 0 || notes.length > 1) {
     blobContent += '===== ' + fileName.toString() + ' =====\n\n';
+    
     for (var sta in stack) {
       if (pretty) {
         blobContent += objToString(stack[sta]);
@@ -3339,8 +3340,8 @@ function parseCommand() {
         stack.pop();
         stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true);
       } else {
-        saveFile(commandArray[1], true);
         stack.pop();
+        saveFile(commandArray[1], true);
       }
       $('txt-input').value = '';
       updateDisplay();
@@ -3365,8 +3366,8 @@ function parseCommand() {
         stack.pop();
         stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, false) : saveFile('', false);
       } else {
-        saveFile(commandArray[1], false)
         stack.pop();
+        saveFile(commandArray[1], false)
       }
       $('txt-input').value = '';
       updateDisplay();
