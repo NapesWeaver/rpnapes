@@ -780,11 +780,12 @@ function calculate(expression) {
 
   try {
     var result = eval(parsed);
-
-    if (isNaN(result)) throw new Error;
+    
+    if (result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) throw new Error;
     return result;
 
   } catch(e) {
+
     if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
     try {
       parsed = parsed.replace(/sin\(/g, 'mathSin(');
