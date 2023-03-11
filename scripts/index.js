@@ -776,12 +776,13 @@ function xyFunction() {
 
 function calculate(expression) {
   var parsed = parseEvaluation(expression);
+
   parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
 
   try {
     var result = eval(parsed);
     
-    if (result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) throw new Error;
+    if (result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) throw new Error;    
     return result;
 
   } catch(e) {
@@ -3791,20 +3792,20 @@ function parseNested(input, symbol, prefix) {
   // Re-insert parsed maths
   inputArr.splice(leftP + 1, rightP - leftP - 1, maths);  
   input = inputArr.join('');
+  
   return input;
 }
 
-function parseInline(input, symbol, prefix) {  
+function parseInline(input, symbol, prefix) {
+  
   var inputArr = input.split('');
-  var index = 0;
+  var index = input.indexOf(symbol);
   var endPos = 0;
   var parenthesis = 0;
   var leftParen = 0;
 
   // Overwrite symbol
-  while (inputArr[index] !== symbol) { index++; }
-  // ! vs n^n, n√n
-  prefix === 'factorial(' ? inputArr[index] = '' : inputArr[index] = ',';  
+  symbol === '!' ? inputArr[index] = '' : inputArr[index] = ',';  
   endPos = index;
 
   // Insert prefix
@@ -3831,11 +3832,13 @@ function parseInline(input, symbol, prefix) {
 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');  
+
   return input;
 }
 
 function insertDefaultIndex(input) {
   var inputArr = input.split('');
+  
   for (var i = 0; i < inputArr.length; i++) {
     if ((inputArr[i] === '√' && inputArr[i - 1] !== '!') && (inputArr[i - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/.test(inputArr[i - 1]))) inputArr.splice(i, 0, '2');
   }
@@ -3860,16 +3863,14 @@ function parseEvaluation(input) {
     input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*Φ/g, '*Φ');
     input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
     input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*π/g, '*π');
-    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');
-
-    // console.log('input', input);
+    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');    
     
     if (/√/g.test(input)) input = insertDefaultIndex(input);
 
     // Parse nested symbols
-    while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
-    while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+√[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
-    while (/.+\([-+*/!^√ⅽ℮ɢΦπ.\w]+\^[-+*/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
     // Parse in-line symbols
     while (/!/.test(input)) input = parseInline(input, '!', 'factorial(');
     while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
