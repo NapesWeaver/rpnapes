@@ -188,7 +188,6 @@ select::-ms-expand {
 .lst-stack,
 .lst-notes,
 #txt-input {
-    font-size: .7em;
     font-weight: bold;
     outline: none;
     border: none;
@@ -196,7 +195,6 @@ select::-ms-expand {
 
 #txt-input {
     min-width: 97%;  
-    margin-bottom: .6em;
     background-color: #FFFFFF;
 }
 
@@ -210,7 +208,7 @@ select::-ms-expand {
 }
 
 .num-pad {
-    margin-top: .6em;
+    margin-bottom: 3px;
 }
 
 #notes .num-pad {
@@ -240,8 +238,7 @@ select::-ms-expand {
 .btn-med,
 .btn-small,
 .btn-other {
-    margin-right: 1.9%;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
     font-size: .7em;
     font-weight: bold;
     border-radius: 9%;
@@ -260,20 +257,19 @@ button:hover {
 .btn-big,
 .btn-med,
 .btn-small {
-    height: 23px;
+    height: 29px;
 }
 
 .btn-big {
-    width: 21%;
-    margin-right: 3%;
+    width: 24.5%;
 }
 
 .btn-med {
-    width: 16%;
+    width: 18.9%;
 }
 
 .btn-small {
-    width: 12%;
+    width: 14.2%;
 }
 
 #btn-delete,
@@ -801,30 +797,31 @@ label a {
         font-size: 1em;
     }
 
-    .lst-stack {
-        margin-bottom: .2em;
-    }
-
     #txt-input {
         min-height: 17px;
         height: 17px;
     }
-   
-    .btn-big,
-    .btn-med,
-    .btn-small,
-    .btn-other {
-        margin-bottom: 7px;
-    }
 
     .btn-big,
     .btn-med,
     .btn-small {
-        height: 30px;
+        height: 39px;
+    }
+    
+    .btn-big {
+        width: 25%;
+    }
+
+    .btn-med {
+        width: 19%;
     }
 
     .btn-small {
-        margin-right: 2%;
+        width: 14.6%;
+    }
+
+    .btn-small {
+        /* margin-right: 2%; */
     }
 
     .btn-big-font {

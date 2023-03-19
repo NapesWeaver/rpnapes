@@ -3831,7 +3831,6 @@ function parseInline(input, symbol, prefix) {
 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');  
-
   return input;
 }
 
