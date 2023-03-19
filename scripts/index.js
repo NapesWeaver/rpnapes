@@ -2277,6 +2277,8 @@ function getComplex(complexObj) {
 
 function parseResult(result) {
 
+  // result = result.replace(/(?<![0-9ijy])[ ]/g, '');
+  // result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
   result = result.replace('(', '');
   result = result.replace('i)', 'j ');
   return result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');

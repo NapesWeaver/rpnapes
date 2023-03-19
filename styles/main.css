@@ -298,6 +298,7 @@ button:hover {
 #btn-undo-notes,
 #btn-redo-notes,
 #btn-delete-notes {
+    height: 29px;
     margin-top: 3px;
     margin-bottom: 3px;
 }
@@ -820,9 +821,18 @@ label a {
         width: 14.6%;
     }
 
-    .btn-small {
-        /* margin-right: 2%; */
-    }
+    #btn-clear-notes,
+    #btn-load-notes,
+    #btn-save-notes,
+    #btn-copy-notes,
+    #btn-paste-notes,
+    #btn-undo-notes,
+    #btn-redo-notes,
+    #btn-delete-notes {
+    height: 39px;
+}
+
+
 
     .btn-big-font {
         font-size: 1.5em;
