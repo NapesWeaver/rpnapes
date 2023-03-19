@@ -299,6 +299,8 @@ button:hover {
 #btn-redo-notes,
 #btn-delete-notes {
     height: 29px;
+    margin-top: 1px;
+    margin-bottom: 1px;
 }
 
 #btn-clear-notes,
