@@ -249,6 +249,26 @@ select::-ms-expand {
     vertical-align: middle;/* Needed for horizontal alignment with input type=button */
 }
 
+#btn-ee,
+#btn-pi,
+#btn-nine,
+#btn-eight,
+#btn-seven,
+#btn-six,
+#btn-five,
+#btn-four,
+#btn-three,
+#btn-two,
+#btn-one,
+#btn-zero,
+#btn-dot,
+#btn-space {
+    border-top-color: #B5B5FC;
+    border-right-color: #9393FF;
+    border-bottom-color: #9393FF;
+    border-left-color: #B5B5FC;
+}
+
 input:hover,
 button:hover {
     background-color: #DEEEFC;

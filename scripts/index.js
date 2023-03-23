@@ -1298,23 +1298,29 @@ function btnShift() {
     $('btn-ee').value = 'EE';
     $('btn-pi').innerHTML = '&#120587;';
     $('btn-modulus').style.color = '#000000';
+    $('btn-modulus').style.borderColor = '#D4D0C8';
     $('btn-modulus').value = '%';
     $('btn-sign').style.color = '#000000';
+    $('btn-sign').style.borderColor = '#D4D0C8';
     $('btn-sign').innerHTML = '±';
     $('btn-go').classList.remove('you-tube');
     $('btn-go').classList.add('google');
     $('btn-go').innerHTML = '<span class="color-blue">G</span><span class="color-red">o</span>';
     $('btn-shift').className = 'btn-med btn-shift';
     $('btn-divide').style.color = '#000000';
+    $('btn-divide').style.borderColor = '#D4D0C8';
     $('btn-divide').value = '÷';
     $('btn-multiply').style.color = '#000000';
+    $('btn-multiply').style.borderColor = '#D4D0C8';
     $('btn-multiply').innerHTML = 'x';
     $('btn-sine').innerHTML = 'sin';
     $('btn-subtract').style.color = '#000000';
+    $('btn-subtract').style.borderColor = '#D4D0C8';
     $('btn-cosine').innerHTML = 'cos';
     $('btn-load').value = 'LOA';
     $('btn-space').value = '';
     $('btn-add').style.color = '#000000';
+    $('btn-add').style.borderColor = '#D4D0C8';
     $('btn-tangent').innerHTML = 'tan';
     $('btn-load-notes').value = 'LOAD';
   }
@@ -1345,23 +1351,47 @@ function btnShift() {
     $('btn-ee').value = $('menu-form').textContent === 'Polar' ? 'j' : '∠';
     $('btn-pi').innerHTML = '(  )';
     $('btn-modulus').style.color = '#0000A0';
+    $('btn-modulus').style.borderTopColor = '#B5B5FC';
+    $('btn-modulus').style.borderRightColor = '#9393FF';
+    $('btn-modulus').style.borderBottomColor = '#9393FF';
+    $('btn-modulus').style.borderLeftColor = '#B5B5FC';
     $('btn-modulus').value = '√¯';
     $('btn-sign').style.color = '#0000A0';
+    $('btn-sign').style.borderTopColor = '#B5B5FC';
+    $('btn-sign').style.borderRightColor = '#9393FF';
+    $('btn-sign').style.borderBottomColor = '#9393FF';
+    $('btn-sign').style.borderLeftColor = '#B5B5FC';
     $('btn-sign').innerHTML = '<sub class="symbol-big">^</sub>';
     $('btn-go').classList.remove('google');
     $('btn-go').classList.add('you-tube');
     $('btn-go').innerHTML = '&#9654';
     $('btn-shift').className = 'btn-med btn-shifted';
     $('btn-divide').style.color = '#0000A0';
+    $('btn-divide').style.borderTopColor = '#B5B5FC';
+    $('btn-divide').style.borderRightColor = '#9393FF';
+    $('btn-divide').style.borderBottomColor = '#9393FF';
+    $('btn-divide').style.borderLeftColor = '#B5B5FC';
     $('btn-divide').value = '/';
     $('btn-multiply').style.color = '#0000A0';
+    $('btn-multiply').style.borderTopColor = '#B5B5FC';
+    $('btn-multiply').style.borderRightColor = '#9393FF';
+    $('btn-multiply').style.borderBottomColor = '#9393FF';
+    $('btn-multiply').style.borderLeftColor = '#B5B5FC';
     $('btn-multiply').innerHTML = '<sub class="symbol-big">*</sub>';
     $('btn-sine').innerHTML = '<span class="btn-small-font">sin<sup>-1</sup></span>'
     $('btn-subtract').style.color = '#0000A0';
+    $('btn-subtract').style.borderTopColor = '#B5B5FC';
+    $('btn-subtract').style.borderRightColor = '#9393FF';
+    $('btn-subtract').style.borderBottomColor = '#9393FF';
+    $('btn-subtract').style.borderLeftColor = '#B5B5FC';
     $('btn-cosine').innerHTML = '<span class="btn-small-font">cos<sup>-1</sup></span>';
     $('btn-load').value = 'RUN';
     $('btn-space').value = '=';
     $('btn-add').style.color = '#0000A0';
+    $('btn-add').style.borderTopColor = '#B5B5FC';
+    $('btn-add').style.borderRightColor = '#9393FF';
+    $('btn-add').style.borderBottomColor = '#9393FF';
+    $('btn-add').style.borderLeftColor = '#B5B5FC';
     $('btn-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';   
     $('btn-load-notes').value = 'RUN';
  
@@ -2277,8 +2307,6 @@ function getComplex(complexObj) {
 
 function parseResult(result) {
 
-  // result = result.replace(/(?<![0-9ijy])[ ]/g, '');
-  // result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
   result = result.replace('(', '');
   result = result.replace('i)', 'j ');
   return result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
