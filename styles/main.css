@@ -263,10 +263,10 @@ select::-ms-expand {
 #btn-zero,
 #btn-dot,
 #btn-space {
-    border-top-color: #B5B5FC;
+    border-top-color: #D8D8FF;
     border-right-color: #9393FF;
     border-bottom-color: #9393FF;
-    border-left-color: #B5B5FC;
+    border-left-color: #D8D8FF;
 }
 
 input:hover,
