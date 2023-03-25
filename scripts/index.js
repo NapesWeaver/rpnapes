@@ -3821,7 +3821,6 @@ function parseNested(input, symbol, prefix) {
   // Re-insert parsed maths
   inputArr.splice(leftP + 1, rightP - leftP - 1, maths);  
   input = inputArr.join('');
-  
   return input;
 }
 
@@ -3838,7 +3837,7 @@ function parseInline(input, symbol, prefix) {
   endPos = index;
 
   // Insert prefix
-  while (index > 0 && (parenthesis > 0 || (!/[-+*/^√(]/.test(inputArr[index]) || (leftParen <= 1 && /[a-z]/.test(inputArr[index - 1]))))) {
+  while (index > 0 && (parenthesis > 0 || (!/[-+*/^√(]/.test(inputArr[index]) || (/[eEglnstw]/.test(inputArr[index - 1]) && leftParen <= 1)))) {
     index--; 
     if (inputArr[index] === ')') parenthesis++;
     if (inputArr[index] === '(') parenthesis--; 
@@ -3902,7 +3901,7 @@ function parseEvaluation(input) {
     // Parse in-line symbols
     while (/!/.test(input)) input = parseInline(input, '!', 'factorial(');
     while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
-    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');
+    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
   }
   return input;
 }
