@@ -875,7 +875,7 @@ function btnEval() {
   }
   // Contains [*!^√()] && Not part of a program
   if ((/[*!^√()]/.test($('txt-input').value) || /1\//g.test(getX($('txt-input').value).units)) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
-    displayResult(calculate(stripUnits($('txt-input').value)), units);
+      displayResult(calculate(stripUnits($('txt-input').value)), units);
   } else {
     displayResult(calculate($('txt-input').value), ''); 
   }
@@ -3789,42 +3789,6 @@ function parseCommand() {
   if (!isMobile) resizeInput();
 }
 
-function parseNested(input, symbol, prefix) {
-  input = input.replace('(', '((');
-  input = input.replace(')', '))');
-  
-  var inputArr = input.split('');
-  var index = 0;
-  var startPos = 0;
-  var leftP = null;
-  var rightP = null;
-  var maths = '';
-  // Get nested parenthesis indices
-  while (startPos === 0) {
-    index++;    
-    if (inputArr[index] === symbol) startPos = index;
-  }
-  while (index < inputArr.length && rightP === null) {   
-    index++;
-    if (inputArr[index] === ')') rightP = index;
-  }
-  while (index > 0 && leftP === null) {
-    index--;
-    if (inputArr[index] === '(') leftP = index;
-  }
-  // Get nested maths
-  maths = inputArr.slice(leftP + 1, rightP).join('');
-  // Parse nested maths
-  if (/[(-ⅽ℮ɢΦπ\w][\^√][-ⅽ℮ɢΦπ\w)]/.test(maths) || /[(-ⅽ℮ɢΦπ\w]![-ⅽ℮ɢΦπ\w)]*/.test(maths)) {
-    maths = parseInline(maths, symbol, prefix);
-  }
-  // Re-insert parsed maths
-  inputArr.splice(leftP + 1, rightP - leftP - 1, maths);  
-  input = inputArr.join('');
-  
-  return input;
-}
-
 function parseInline(input, symbol, prefix) {
   
   var inputArr = input.split('');
@@ -3861,6 +3825,42 @@ function parseInline(input, symbol, prefix) {
 
   inputArr.splice(endPos, 0, ')');
   input = inputArr.join('');  
+  return input;
+}
+
+function parseNested(input, symbol, prefix) {
+  input = input.replace('(', '((');
+  input = input.replace(')', '))');
+  
+  var inputArr = input.split('');
+  var index = 0;
+  var startPos = 0;
+  var leftP = null;
+  var rightP = null;
+  var maths = '';
+  // Get nested parenthesis indices
+  while (startPos === 0) {
+    index++;    
+    if (inputArr[index] === symbol) startPos = index;
+  }
+  while (index < inputArr.length && rightP === null) {   
+    index++;
+    if (inputArr[index] === ')') rightP = index;
+  }
+  while (index > 0 && leftP === null) {
+    index--;
+    if (inputArr[index] === '(') leftP = index;
+  }
+  // Get nested maths
+  maths = inputArr.slice(leftP + 1, rightP).join('');
+  // Parse nested maths
+  if (/[(-ⅽ℮ɢΦπ\w][\^√][-ⅽ℮ɢΦπ\w)]/.test(maths) || /[(-ⅽ℮ɢΦπ\w]![-ⅽ℮ɢΦπ\w)]*/.test(maths)) {
+    maths = parseInline(maths, symbol, prefix);
+  }
+  // Re-insert parsed maths
+  inputArr.splice(leftP + 1, rightP - leftP - 1, maths);  
+  input = inputArr.join('');
+  
   return input;
 }
 
@@ -5183,10 +5183,10 @@ function button5() {
     if ($('widget').classList.contains('hidden')) {
       var srcString = '';
 
-      if ($('widget').src.indexOf('forecast') === -1) {
-        srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';        
-      } else {
+      if ($('widget').src.indexOf('weather') === -1) {
         srcString += 'https://radar.weather.gov/region/conus/standard';// NATIONAL WEATHER SERVICE
+      } else {
+        srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';        
       }
       $('widget').src = srcString;
       $('widget').classList.remove('hidden');
