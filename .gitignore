@@ -39,6 +39,7 @@ Thumbs.db
 
 ######################
 /docs
+/tests
 *.config
 *.txt
 *.bak
