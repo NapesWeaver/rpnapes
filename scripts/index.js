@@ -3821,6 +3821,7 @@ function parseNested(input, symbol, prefix) {
   // Re-insert parsed maths
   inputArr.splice(leftP + 1, rightP - leftP - 1, maths);  
   input = inputArr.join('');
+  
   return input;
 }
 
