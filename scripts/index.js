@@ -875,7 +875,7 @@ function btnEval() {
   }
   // Contains [*!^√()] && Not part of a program
   if ((/[*!^√()]/.test($('txt-input').value) || /1\//g.test(getX($('txt-input').value).units)) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
-      displayResult(calculate(stripUnits($('txt-input').value)), units);
+    displayResult(calculate(stripUnits($('txt-input').value)), units);
   } else {
     displayResult(calculate($('txt-input').value), ''); 
   }
@@ -3062,11 +3062,6 @@ function help(command) {
       enterInput();
       inputText('eng [n]: Engineering notation. Precision 1 to 17. If no argument is supplied in-line, last entry on stack is used. Turn engineering notation off with -1.');
       break;
-    case 'flightlogger':
-      inputText('');
-      enterInput();
-      inputText('flightlogger: Opens Flight Logger in a new tab.');
-      break;
     case 'fix':
       inputText('');
       enterInput();
@@ -3220,7 +3215,15 @@ function help(command) {
     case 'shortcuts':
       inputText('');
       enterInput();
-      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Ctrl + s = Save, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
+      inputText('Ctrl + z = Undo');
+      enterInput();
+      inputText('Ctrl + y = Redo');
+      enterInput();
+      inputText('Ctrl + s = Save');
+      enterInput();
+      inputText('Alt + Shift = Shift Keypad');
+      enterInput();
+      inputText('Esc = Toggle interface button.');
       break;
     case 'sort':
       inputText('');
@@ -3294,7 +3297,7 @@ function help(command) {
   } else if (radix !== 16) {
     inputText('');
     enterInput();
-    inputText('about, ave, binary, clear, constants, darkmode, date, decimal, duckgo, embed, email, eng, fix, flightlogger, google, hexadecimal, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, octal, open, opennotes, off, paste, polar, print, run, runnotes, sandbox, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
+    inputText('about, ave, binary, clear, constants, darkmode, date, decimal, duckgo, embed, email, eng, fix, google, hexadecimal, ip, ipmapper, haptic, keyboard, load, locus, maths, max, min, notes, octal, open, opennotes, off, paste, polar, print, run, runnotes, sandbox, save, saveas, sci, shortcuts, sort, sound, stopwatch, stop, time, timer, total, tostring, unembed, vector, wiki, youtube.');
     enterInput();
     inputText('');
     enterInput();
@@ -3540,12 +3543,6 @@ function parseCommand() {
       updateDisplay();
       // window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here"
       window.location.href = "mailto:?subject=&body=";
-      break;   
-    case 'flightlogger':
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();
-      window.open('https://orbiter-flight-logger.herokuapp.com/', '_blank').focus();
       break;
     case 'gravity':
       gravity();
@@ -3726,7 +3723,15 @@ function parseCommand() {
       stack.pop();
       inputText('');
       enterInput();
-      inputText('Ctrl + z = Undo, Ctrl + y = Redo, Ctrl + s = Save, Alt + Shift = Shift Keypad, Esc = Toggle interface button.');
+      inputText('Ctrl + z = Undo');
+      enterInput();
+      inputText('Ctrl + y = Redo');
+      enterInput();
+      inputText('Ctrl + s = Save');
+      enterInput();
+      inputText('Alt + Shift = Shift Keypad');
+      enterInput();
+      inputText('Esc = Toggle interface button.');
       enterInput();
       updateDisplay();
       $('txt-input').value = '';
@@ -5183,7 +5188,7 @@ function button5() {
     if ($('widget').classList.contains('hidden')) {
       var srcString = '';
 
-      if ($('widget').src.indexOf('weather') === -1) {
+      if ($('widget').src.indexOf('radar') === -1) {
         srcString += 'https://radar.weather.gov/region/conus/standard';// NATIONAL WEATHER SERVICE
       } else {
         srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';        
