@@ -5288,10 +5288,10 @@ function button5() {
     if ($('widget').classList.contains('hidden')) {
       var srcString = '';
 
-      if ($('widget').src.indexOf('radar') === -1) {
+      if ($('widget').src.indexOf('windy') === -1) {
+        srcString += 'https://embed.windy.com/embed2.html?' + lat + '&lon=' + lng + '&detailLat=' + lat + '&detailLon=' + lng + '&width=650&height=450&zoom=5&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=default&metricTemp=default&radarRange=-1';// Windy.com
+      } else {     
         srcString += 'https://radar.weather.gov/region/conus/standard';// NATIONAL WEATHER SERVICE
-      } else {
-        srcString += 'https://forecast.io/embed/#lat=' + lat + '&lon=' + lng + '&name=Current';        
       }
       $('widget').src = srcString;
       $('widget').classList.remove('hidden');
