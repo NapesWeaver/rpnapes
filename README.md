@@ -48,7 +48,7 @@ The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-
 
 ![Tricorder](images/screenshots/tricorder.jpg)
 
-The Tricorder doesn't do too much. It only exists because I wanted to map some buttons to an image and, also, I wanted to see a Tricorder on my phone. It displays weather maps from [Windy.com](https://windy.com) and [The National Weather Service](https://radar.weather.gov/region/conus/standard), an [Orbital Mechanics](https://orbitalmechanics.info/) program, the American Astronomical Society's [WorldWide Telescope](https://worldwidetelescope.org/webclient/) web client, an [IP Mapper](https://napesweaver.github.io/ip-mapper/), a few [Shoutcast](https://directory.shoutcast.com/) radio stations and [YouTube](https://www.youtube.com/) videos - embedded in iFrames.
+The Tricorder doesn't do too much. It only exists because I wanted to map some buttons to an image and, also, I wanted to see a Tricorder on my phone. It displays weather maps from [Windy.com](https://windy.com) and [The National Weather Service](https://radar.weather.gov/region/conus/standard), an [Orbital Mechanics](https://orbitalmechanics.info/) program, the American Astronomical Society's [WorldWide Telescope](https://worldwidetelescope.org/webclient/) web client, [Wolframalpha](https://www.wolframalpha.com/), a few [Shoutcast](https://directory.shoutcast.com/) radio stations and [YouTube](https://www.youtube.com/) videos - embedded in iFrames.
 
 The original Tricorder image can be found on [IMGBIN](https://imgbin.com/png/7Ay8HnU3/medical-tricorder-star-trek-x-prize-foundation-hypospray-png). Thanks to keiske84.
 
