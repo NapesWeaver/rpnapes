@@ -3085,11 +3085,6 @@ function help(command) {
       enterInput();
       inputText('ip: Get public IP address from IPify.');
       break;
-    case 'ipmapper':
-      inputText('');
-      enterInput();
-      inputText('ipmapper: Opens IP Mapper in a new tab.');
-      break;
     case 'haptic':
       inputText('');
       enterInput();
@@ -3329,8 +3324,6 @@ function help(command) {
     inputText('hexadecimal');
     enterInput();
     inputText('ip');
-    enterInput();
-    inputText('ipmapper');
     enterInput();
     inputText('haptic');
     enterInput();
@@ -3696,12 +3689,6 @@ function parseCommand() {
       enterInput();
       $('txt-input').value = '';
       updateDisplay();
-      break;
-    case 'ipmapper':
-      stack.pop();
-      updateDisplay();
-      $('txt-input').value = '';
-      window.open('https://napesweaver.github.io/ip-mapper/', '_blank').focus();
       break;
     case 'keyboard':
       if (isMobile) {
@@ -6346,7 +6333,7 @@ window.onload = function () {
   if (document.cookie.indexOf('TRICORDER') !== -1) {
     loadTricorder();        
   } else {
-    widgetSrc.push('https://napesweaver.github.io/ip-mapper/');
+    widgetSrc.push('https://www.wolframalpha.com/');
   }
   if (document.cookie.indexOf('STACK') !== -1) {
     $('lst-stack').value = '';
