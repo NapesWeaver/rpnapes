@@ -59,6 +59,22 @@
     <p>&#60;!-- <a href="https://unsplash.com/" title="Beautiful free images" target="_blank">unsplash.com</a> --&#62;</p>
     <p>&#60;!-- <a href="https://validator.w3.org/" title="validator.w3.org" target="_blank">W3C Markup Validation</a> --&#62;</p>
     <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
+
+    <h3>Define these elements for older browsers (in header before style sheets)</h3>
+    <pre><code>
+    &#60;!--[if lt IE 9]&#62;
+      &#60;script&#62;
+        document.createElement("article");
+        document.createElement("aside");
+        document.createElement("footer");
+        document.createElement("header");
+        document.createElement("main");
+        document.createElement("nav");
+        document.createElement("section");
+      &#60;/script&#62;
+    &#60;![endif]--&#62;
+    </code></pre>
+    <p class="linksToTop"><a href="#top" title="Top of page">To Top</a></p>
     
     <h3>HTML5 Alphabetically</h3>
     <pre><code>
