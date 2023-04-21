@@ -3028,6 +3028,11 @@ function help(command) {
       enterInput();
       inputText('constants: Displays the values of \'constants\'. Reassignment of \'constants\' is allowed. Opening Constants or Formulas menu resets all \'constants\'.');
       break;
+    case 'contact':
+      inputText('');
+      enterInput();
+      inputText('contact: Email me with concerns, complaints & suggestions and general bitching.');
+      break;
     case 'darkmode':
       inputText('');
       enterInput();
@@ -3302,6 +3307,8 @@ function help(command) {
     inputText('clear');
     enterInput();
     inputText('constants');
+    enterInput();
+    inputText('contact');
     enterInput();
     inputText('darkmode');
     enterInput();
@@ -3611,6 +3618,12 @@ function parseCommand() {
       updateDisplay();
       $('txt-input').value = '';
       break;
+    case 'contact':
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();
+      window.location.href = "mailto:napesweaver@gmail.com?subject=RPNapes"
+        break;
     case 'clear':
     case 'cls':
       btnClear();
