@@ -779,15 +779,13 @@ function calculate(expression) {
   var parsed = parseEvaluation(expression);
 
   parsed = decodeSpecialChar(parsed);
-
-  if (/^\$?[0-9]+,[0-9]*/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
+  if (/[0-9]+,[0-9]+/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
     parsed = parsed.replace(/,/g, '');
   }
-  if (/^\$[0-9]+.*/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
+  if (/\$[0-9]/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
     dollar = '$';
     parsed = parsed.replace(/\$/g, '');
   }
-
   parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
 
   try {
