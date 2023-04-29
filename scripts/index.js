@@ -776,13 +776,14 @@ function xyFunction() {
 
 function calculate(expression) {
   var parsed = parseEvaluation(expression);
-
-  parsed = decodeSpecialChar(parsed);
-  parsed = parsed.replace(/,/g, '');
-  parsed = parsed.replace(/\$/g, '');
   
+  if (!/[a-zA-Z=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(parsed)) {
+    parsed = decodeSpecialChar(parsed);
+    parsed = parsed.replace(/,/g, '');
+    parsed = parsed.replace(/\$/g, '');
+  }
+
   parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
-  console.log('parsed', parsed);
 
   try {
     var result = eval(parsed);
