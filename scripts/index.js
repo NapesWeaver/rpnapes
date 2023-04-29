@@ -486,6 +486,16 @@ function toggleSound() {
   clearInterval(flashInterval);
 }
 
+function resetVariables() {
+  i = '√-1';
+  j = '√-1';
+  Φ = 1.618033988749895;
+  ℮ = Math.exp(1);
+  π = Math.PI
+  ɢ = 6.674e-11;
+  ⅽ = 299792458;
+}
+
 function runNotes() {
 
   try {
@@ -497,8 +507,7 @@ function runNotes() {
   } catch {
     if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
   }
-  i = '√-1';
-  j = '√-1';
+  
 }
 
 function menuNotes() {
@@ -825,6 +834,7 @@ function runProgram() {
   btnShift();
   btnLoad();
   $('txt-input').select();
+  resetVariables();
 }
 
 function softEnter() {
@@ -1522,9 +1532,9 @@ function btnLoad() {
     index = getCookie('MATHMON').indexOf('=') + 1;
     loadMathMon(getCookie('MATHMON').slice(index));
   } catch(err) { rpnAlert('Load MATHMON error.'); }
+
   updateDisplay();
-  i = '√-1';
-  j = '√-1';
+  resetVariables();
   if (isMobile) resizeInput();
 }
 
@@ -1550,8 +1560,7 @@ function loadProgram(tmpStack) {
     if (testing) runTest();
   }
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-  i = '√-1';
-  j = '√-1';
+  resetVariables();
 }
 
 function loadStack(tmpStack) {
@@ -4058,14 +4067,6 @@ function txtInputFocus() {
   stackFocus = false;
 }
 
-function resetConstants() {
-  Φ = 1.618033988749895;
-  ℮ = Math.exp(1);
-  π = Math.PI
-  ɢ = 6.674e-11;
-  ⅽ = 299792458;
-}
-
 function resetNotation() {
   fixDecimal = -1;
   sciDecimal = -1;
@@ -6026,8 +6027,7 @@ window.onload = function () {
       rpnAlert(err.toString());
       if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
     }
-    i = '√-1';
-    j = '√-1';
+    resetVariables();
     resizeInput();
   });
 

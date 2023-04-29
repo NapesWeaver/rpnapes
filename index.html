@@ -186,7 +186,7 @@
                   <a onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden';$('reference').className='hidden'">Tools</a>
                   <ul class="sub-menu">
                     <li class="menu">
-                      <a title="Symbolic constants" onclick="$('constants').className='visible';resetConstants()" onmouseover="$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden';$('reference').className='hidden'">Constants</a>
+                      <a title="Symbolic constants" onclick="$('constants').className='visible';resetVariables()" onmouseover="$('formulas').className='hidden';$('programs').className='hidden';$('symbols').className='hidden';$('reference').className='hidden'">Constants</a>
                       <ul id="constants" onclick="$('constants').className='hidden'">
                         <li><a id="menu-phi" title="Phi ~ Golden Ratio">&nbsp;&nbsp;&#934;</a></li>
                         <li><a id="menu-eulers"  title="Euler's Number">&nbsp;&nbsp;e</a></li>
@@ -258,7 +258,7 @@
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified April 28, 2023." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified April 29, 2023." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <textarea id="txt-input" class="txt-input" name="txt-input" tabindex="1" rows="1" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" onfocus="txtInputFocus()" onmousedown="haptic()"></textarea>
           <div id="entry-pad">
             <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
