@@ -778,10 +778,13 @@ function xyFunction() {
 function calculate(expression) {
   var parsed = parseEvaluation(expression);
 
-  if (/^[$][0-9]+.*/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
-    dollar = '$';
-    parsed = decodeSpecialChar(parsed);
+  parsed = decodeSpecialChar(parsed);
+
+  if (/^\$?[0-9]+,[0-9]*/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
     parsed = parsed.replace(/,/g, '');
+  }
+  if (/^\$[0-9]+.*/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
+    dollar = '$';
     parsed = parsed.replace(/\$/g, '');
   }
 
