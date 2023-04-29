@@ -776,8 +776,8 @@ function xyFunction() {
 
 function calculate(expression) {
   var parsed = parseEvaluation(expression);
-  
-  if (!/[a-zA-Z=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(parsed)) {
+
+  if (!/[a-zA-Z=;<>?:'"`~@#%&×(){}[\]|\\_]/g.test(parsed)) {
     parsed = decodeSpecialChar(parsed);
     parsed = parsed.replace(/,/g, '');
     parsed = parsed.replace(/\$/g, '');
