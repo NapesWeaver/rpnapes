@@ -49,6 +49,7 @@ var fixDecimal = -1;
 var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
+var dollar = '';
 
 var tStamp = '10:26:00';
 var testing = false;
@@ -777,7 +778,8 @@ function xyFunction() {
 function calculate(expression) {
   var parsed = parseEvaluation(expression);
 
-  if (!/[a-zA-Z=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
+  if (/^[$][0-9]+.*/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
+    dollar = '$';
     parsed = decodeSpecialChar(parsed);
     parsed = parsed.replace(/,/g, '');
     parsed = parsed.replace(/\$/g, '');
@@ -2331,7 +2333,8 @@ function displayResult(result, newUnits) {
     if (objX) result = objToString(objX);
     if (result !== '0') result += newUnits;
 
-    $('txt-input').value = parseResult(result);
+    $('txt-input').value = dollar + parseResult(result);
+    dollar = '';
 
     updateDisplay();
     resizeInput();
@@ -2352,12 +2355,14 @@ function displayResults(results, newUnits) {
     }
     if (objX) results[i] = objToString(objX);
 
-    $('txt-input').value += parseResult(results[i]);
+    $('txt-input').value += dollar + parseResult(results[i]);
 
     if (results[i] !== '0') $('txt-input').value += newUnits;
 
     if (i < results.length - 1) $('txt-input').value += '\n';
   }
+  dollar = '';
+
   updateDisplay();
   resizeInput();
 }
