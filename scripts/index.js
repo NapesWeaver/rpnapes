@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var dollar = '';
 
-var tStamp = '04:32:00';
+var tStamp = '04:41:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -467,11 +467,8 @@ function toggleKeyboard() {
 }
 
 function mobileKeyboardAllow() {
-  if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
-    if ($('txt-input').readOnly === true) {
-      // moveCursorToEnd($('txt-input'));
-      $('txt-input').readOnly = false;
-    }
+  if(!$('menu-keyboard-li').classList.contains('strikethrough')) {    
+    if ($('txt-input').readOnly === true) $('txt-input').readOnly = false;
   }
 }
 
@@ -4202,21 +4199,6 @@ function insertAtCursor(txtField, txtValue) {
     txtField.selectionStart = txtField.selectionEnd;
   }
 }
-
-// function moveCursorToEnd(el) {
-//   try {
-//     if (typeof el.selectionStart === 'number') {
-//       el.selectionStart = el.selectionEnd = el.value.length;
-//     } else if (typeof el.createTextRange !== 'undefined') {
-//       el.focus();
-//       var range = el.createTextRange();
-//       range.collapse(false);
-//       range.select();
-//     }
-//   } catch (err) {
-//     rpnAlert(err);
-//   }  
-// }
 
 function rpnAlert(text) {
   backupUndo();

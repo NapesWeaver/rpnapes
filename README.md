@@ -40,8 +40,6 @@ Opening and saving text files is supported thanks to Eli Grey's [FileSaver.js](h
 
 Public IP address are obtained thanks to the [IPify](https://www.ipify.org/) Public IP Address API.
 
-Darryl Snow's [moveCursorToEnd](https://gist.github.com/darryl-snow/3990793) function saved my me from my attempts to wrangle with mobile keypads.
-
 The [stopwatch](https://tinloof.com/blog/how-to-build-a-stopwatch-with-html-css-js-react-part-2/) was lifted from a tutorial by Omar Benseddik. Had to add it ;)
 
 ## Tricorder
