@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var dollar = '';
 
-var tStamp = '03:30:00';
+var tStamp = '03:45:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -457,24 +457,23 @@ function haptic() {
   if (!$('menu-haptic-li').classList.contains('strikethrough')) navigator.vibrate([1]);
 }
 
-function toggleKeyboard() {
-  if ($('menu-keyboard-li').classList.contains('strikethrough')) {
-    $('menu-keyboard-li').classList.remove('strikethrough');
-  } else {
-    $('menu-keyboard-li').classList.add('strikethrough');
-  }
-  $('txt-input').focus();
-}
+// function toggleKeyboard() {
+//   if ($('menu-keyboard-li').classList.contains('strikethrough')) {
+//     $('menu-keyboard-li').classList.remove('strikethrough');
+//   } else {
+//     $('menu-keyboard-li').classList.add('strikethrough');
+//   }
+//   $('txt-input').focus();
+// }
 
-function mobileKeyboardAllow() {
-  if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
-    if ($('txt-input').readOnly === true) {
-      // moveCursorToEnd($('txt-input'));
-      insertAtCursor($('txt-input'), '');
-      $('txt-input').readOnly = false;
-    }
-  }
-}
+// function mobileKeyboardAllow() {
+//   if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
+//     if ($('txt-input').readOnly === true) {
+//       moveCursorToEnd($('txt-input'));
+//       $('txt-input').readOnly = false;
+//     }
+//   }
+// }
 
 function toggleSound() {
   if ($('menu-sound-li').classList.contains('strikethrough')) {
@@ -6089,7 +6088,7 @@ window.onload = function () {
   $('menu-angle-mode').onclick = toggleAngleMode;
   $('menu-haptic').onclick = toggleHaptic;
   $('menu-darkmode').onclick = toggleDarkMode;
-  $('menu-keyboard').onclick = toggleKeyboard;
+  // $('menu-keyboard').onclick = toggleKeyboard;
   $('menu-sound').onclick = toggleSound;
   $('menu-notes').onclick = menuNotes;
   $('menu-shift').onclick = btnShift;
@@ -6227,7 +6226,7 @@ window.onload = function () {
   if (isMobile) {
     $('menu-twig').style = 'display:none';
   } else {
-    $('menu-keyboard').style = 'display:none';
+    // $('menu-keyboard').style = 'display:none';
     $('menu-haptic').style = 'display:none';
   }
 
@@ -6258,7 +6257,7 @@ window.onload = function () {
   stackSize = parseInt(screen.height / 18 + 2);
 
   // Text Input
-  $('txt-input').onclick = mobileKeyboardAllow;
+  // $('txt-input').onclick = mobileKeyboardAllow;
   $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
     backupUndo();
