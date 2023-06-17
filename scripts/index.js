@@ -49,9 +49,9 @@ var fixDecimal = -1;
 var sciDecimal = -1;
 var engDecimal = -1;
 var radix = 10;
-var dollar = '';
+var currency = '';
 
-var tStamp = '05:14:00';
+var tStamp = '05:39:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -789,7 +789,7 @@ function calculate(expression) {
     parsed = parsed.replace(/,/g, '');
   }
   if (/\$[0-9.]/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
-    dollar = '$';
+    currency = '$';
     parsed = parsed.replace(/\$/g, '');
   }
   parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
@@ -2325,7 +2325,7 @@ function parseResult(result) {
   result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
   result = result.replace('(', '');
   result = result.replace('i)', 'j ');
-  return dollar + result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
+  return currency + result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
 }
 
 function displayResult(result, newUnits) { 
@@ -2341,7 +2341,7 @@ function displayResult(result, newUnits) {
     if (result !== '0') result += newUnits;
 
     $('txt-input').value = parseResult(result);
-    dollar = '';
+    currency = '';
 
     updateDisplay();
     resizeInput();
@@ -2368,7 +2368,7 @@ function displayResults(results, newUnits) {
 
     if (i < results.length - 1) $('txt-input').value += '\n';
   }
-  dollar = '';
+  currency = '';
 
   updateDisplay();
   resizeInput();
