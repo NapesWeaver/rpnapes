@@ -39,7 +39,7 @@ header {
     background-color: #6D8EBF;
 }
 
-input[readonly] {
+#txt-input[readonly] {
     cursor: default;
 }
 
