@@ -40,7 +40,7 @@ header {
 }
 
 #txt-input[readonly] {
-    cursor: default;
+    cursor: text;
 }
 
 #txt-input,
