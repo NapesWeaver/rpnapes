@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var dollar = '';
 
-var tStamp = '04:54:00';
+var tStamp = '04:59:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2633,7 +2633,7 @@ function btnTwo() {
 function btnThree() {
   insertAtCursor($('txt-input'), '3');
   resizeInput();
-  if (!isMobile) $('txt-input').focus();
+  $('txt-input').focus();
 }
 
 function btnSpace() {    
