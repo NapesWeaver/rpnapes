@@ -40,7 +40,7 @@ header {
 }
 
 input[readonly] {
-    cursor: pointer;
+    cursor: text;
 }
 
 #txt-input,
