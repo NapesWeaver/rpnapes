@@ -788,10 +788,10 @@ function calculate(expression) {
   var parsed = parseEvaluation(expression);
 
   parsed = decodeSpecialChar(parsed);
-  if (/[0-9]+,[0-9]+/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
+  if (/[0-9]+,[0-9]+/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
     parsed = parsed.replace(/,/g, '');
   }
-  if (/\$[0-9]/g.test(parsed) && !/[a-zA-Zⅽ℮ɢΦπ=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
+  if (/\$[0-9.]/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
     dollar = '$';
     parsed = parsed.replace(/\$/g, '');
   }
@@ -2328,7 +2328,7 @@ function parseResult(result) {
   result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
   result = result.replace('(', '');
   result = result.replace('i)', 'j ');
-  return result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
+  return dollar + result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
 }
 
 function displayResult(result, newUnits) { 
@@ -2343,7 +2343,7 @@ function displayResult(result, newUnits) {
     if (objX) result = objToString(objX);
     if (result !== '0') result += newUnits;
 
-    $('txt-input').value = dollar + parseResult(result);
+    $('txt-input').value = parseResult(result);
     dollar = '';
 
     updateDisplay();
@@ -2365,7 +2365,7 @@ function displayResults(results, newUnits) {
     }
     if (objX) results[i] = objToString(objX);
 
-    $('txt-input').value += dollar + parseResult(results[i]);
+    $('txt-input').value += parseResult(results[i]);
 
     if (results[i] !== '0') $('txt-input').value += newUnits;
 
