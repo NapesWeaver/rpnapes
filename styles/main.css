@@ -39,6 +39,10 @@ header {
     background-color: #6D8EBF;
 }
 
+input[readonly] {
+    cursor: pointer;
+}
+
 #txt-input,
 #menu-wrap,
 #timer,
