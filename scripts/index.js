@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var dollar = '';
 
-var tStamp = '03:58:00';
+var tStamp = '04:03:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -466,14 +466,14 @@ function toggleKeyboard() {
   $('txt-input').focus();
 }
 
-// function mobileKeyboardAllow() {
-//   if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
-//     if ($('txt-input').readOnly === true) {
-//       moveCursorToEnd($('txt-input'));
-//       $('txt-input').readOnly = false;
-//     }
-//   }
-// }
+function mobileKeyboardAllow() {
+  if(!$('menu-keyboard-li').classList.contains('strikethrough')) {
+    if ($('txt-input').readOnly === true) {
+      moveCursorToEnd($('txt-input'));
+      $('txt-input').readOnly = false;
+    }
+  }
+}
 
 function toggleSound() {
   if ($('menu-sound-li').classList.contains('strikethrough')) {
@@ -4203,20 +4203,20 @@ function insertAtCursor(txtField, txtValue) {
   }
 }
 
-// function moveCursorToEnd(el) {
-//   try {
-//     if (typeof el.selectionStart === 'number') {
-//       el.selectionStart = el.selectionEnd = el.value.length;
-//     } else if (typeof el.createTextRange !== 'undefined') {
-//       el.focus();
-//       var range = el.createTextRange();
-//       range.collapse(false);
-//       range.select();
-//     }
-//   } catch (err) {
-//     rpnAlert(err);
-//   }  
-// }
+function moveCursorToEnd(el) {
+  try {
+    if (typeof el.selectionStart === 'number') {
+      el.selectionStart = el.selectionEnd = el.value.length;
+    } else if (typeof el.createTextRange !== 'undefined') {
+      el.focus();
+      var range = el.createTextRange();
+      range.collapse(false);
+      range.select();
+    }
+  } catch (err) {
+    rpnAlert(err);
+  }  
+}
 
 function rpnAlert(text) {
   backupUndo();
@@ -6257,10 +6257,7 @@ window.onload = function () {
   stackSize = parseInt(screen.height / 18 + 2);
 
   // Text Input
-  // $('txt-input').onclick = mobileKeyboardAllow;
-  $('txt-input').onclick = function() {
-    $('txt-input').readOnly = false;
-  };
+  $('txt-input').onclick = mobileKeyboardAllow;
   $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
     backupUndo();
