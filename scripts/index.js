@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var dollar = '';
 
-var tStamp = '10:26:00';
+var tStamp = '03:15:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -4204,18 +4204,18 @@ function insertAtCursor(txtField, txtValue) {
 }
 
 function moveCursorToEnd(el) {
-  try {
-    if (typeof el.selectionStart === 'number') {
-      el.selectionStart = el.selectionEnd = el.value.length;
-    } else if (typeof el.createTextRange !== 'undefined') {
-      el.focus();
-      var range = el.createTextRange();
-      range.collapse(false);
-      range.select();
-    }
-  } catch (err) {
-    rpnAlert(err);
-  }  
+  // try {
+  //   if (typeof el.selectionStart === 'number') {
+  //     el.selectionStart = el.selectionEnd = el.value.length;
+  //   } else if (typeof el.createTextRange !== 'undefined') {
+  //     el.focus();
+  //     var range = el.createTextRange();
+  //     range.collapse(false);
+  //     range.select();
+  //   }
+  // } catch (err) {
+  //   rpnAlert(err);
+  // }  
 }
 
 function rpnAlert(text) {
