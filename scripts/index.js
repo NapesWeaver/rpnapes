@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '14:24:00';
+var tStamp = '14:28:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6242,8 +6242,8 @@ window.onload = function () {
   stackSize = parseInt(screen.height / 18 + 2);
 
   // Input Text Area
-  $('txt-input').onclick = mobileKeyboardAllow;
-  $('txt-input').readOnly = true;
+  // $('txt-input').onclick = mobileKeyboardAllow;
+  // $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
     backupUndo();
   });
