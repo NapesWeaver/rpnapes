@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '05:39:00';
+var tStamp = '14:24:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2633,7 +2633,10 @@ function btnTwo() {
 function btnThree() {
   insertAtCursor($('txt-input'), '3');
   resizeInput();
-  $('txt-input').focus();
+  // $('txt-input').focus();
+  $('txt-input').focus(function() {
+    this.blur();
+  });
 }
 
 function btnSpace() {    
@@ -6220,7 +6223,7 @@ window.onload = function () {
     $('indicate-execution').innerHTML = '<span class=\"firefox-ind-exe\">&#10711</span>';
   }
 
-  // Text Area
+  // Stack Text Area
   $('lst-stack').style.color = '#000000';// noscript warning was red ;)
   $('lst-stack').value = '';
   // Stop long tap menu on mobile
@@ -6238,7 +6241,7 @@ window.onload = function () {
   $('lst-stack').setAttribute('rows', parseInt(screen.height / 18));
   stackSize = parseInt(screen.height / 18 + 2);
 
-  // Text Input
+  // Input Text Area
   $('txt-input').onclick = mobileKeyboardAllow;
   $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
