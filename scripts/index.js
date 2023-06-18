@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '14:30:00';
+var tStamp = '14:34:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -449,7 +449,7 @@ function toggleHaptic() {
 function hapticResponse() {
   if (isMobile) {
     haptic();
-    // $('txt-input').readOnly = true;
+    $('txt-input').readOnly = true;
   }
 }
 
@@ -2633,10 +2633,7 @@ function btnTwo() {
 function btnThree() {
   insertAtCursor($('txt-input'), '3');
   resizeInput();
-  // $('txt-input').focus();
-  $('txt-input').focus(function() {
-    this.blur();
-  });
+  $('txt-input').focus();
 }
 
 function btnSpace() {    
@@ -6242,8 +6239,8 @@ window.onload = function () {
   stackSize = parseInt(screen.height / 18 + 2);
 
   // Input Text Area
-  // $('txt-input').onclick = mobileKeyboardAllow;
-  // $('txt-input').readOnly = true;
+  $('txt-input').onclick = mobileKeyboardAllow;
+  $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
     backupUndo();
   });
