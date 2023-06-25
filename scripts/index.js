@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '9:53:00';
+var tStamp = '10:35:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
