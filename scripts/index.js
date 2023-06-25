@@ -449,10 +449,17 @@ function toggleHaptic() {
 function hapticResponse() {
   if (isMobile) {
     haptic();
-    $('txt-input').readOnly = true;
-    if (!isFirefox) setTimeout(function() {
-      $('txt-input').readOnly = false;
-    }, 100);
+    // $('txt-input').readOnly = true;
+    // if (!isFirefox) setTimeout(function() {
+    //   $('txt-input').readOnly = false;
+    // }, 100);
+    if (!isFirefox) {
+      setTimeout(function() {
+        $('txt-input').readOnly = false;
+      }, 100);
+    } else {
+      navigator.virtualKeyboard.hide();
+    }
   }
 }
 
