@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '12:15:00';
+var tStamp = '12:18:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -446,11 +446,21 @@ function toggleHaptic() {
   $('txt-input').focus();
 }
 
+// function hapticResponse() {
+//   if (isMobile) {
+//     haptic();
+//     $('txt-input').readOnly = true;
+//     if (!isFirefox) setTimeout(function() {
+//       $('txt-input').readOnly = false;
+//     }, 100);    
+//   }
+// }
+
 function hapticResponse() {
   if (isMobile) {
     haptic();
     $('txt-input').readOnly = true;
-    if (!isFirefox) setTimeout(function() {
+    setTimeout(function() {
       $('txt-input').readOnly = false;
     }, 100);    
   }
