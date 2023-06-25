@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '11:57:00';
+var tStamp = '12:04:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -460,17 +460,17 @@ function hapticResponse() {
   if (isMobile) {
     haptic();
     $('txt-input').readOnly = true;
-    // if (!isFirefox) setTimeout(function() {
-    //   $('txt-input').readOnly = false;
-    // }, 100);
     
     if (!isFirefox) {
       setTimeout(function() {
         $('txt-input').readOnly = false;
       }, 100);
     } else {
-      $('txt-input').readOnly='false';
+      $('txt-input').readOnly = false;
       $('txt-input').inputMode='none';
+      setTimeout(function() {
+        $('txt-input').inputMode='text';
+      }, 1000);
     }
   }
 }
