@@ -446,15 +446,23 @@ function toggleHaptic() {
   $('txt-input').focus();
 }
 
+// function hapticResponse() {
+//   if (isMobile) {
+//     haptic();
+//     $('txt-input').readOnly = true;
+
+//     if (!$('menu-keyboard-li').classList.contains('strikethrough')) {
+//       setTimeout(function() {
+//         $('txt-input').readOnly = false;
+//       }, 100);    
+//     }
+//   }
+// }
+
 function hapticResponse() {
   if (isMobile) {
     haptic();
-    $('txt-input').readOnly = true;
-    if (!$('menu-keyboard-li').classList.contains('strikethrough')) {
-      setTimeout(function() {
-        $('txt-input').readOnly = false;
-      }, 100);    
-    }
+    navigator.virtualKeyboard.hide();
   }
 }
 
