@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '19:11:00';
+var tStamp = '2:13:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -449,13 +449,13 @@ function toggleHaptic() {
 function hapticResponse() {
   if (isMobile) {
     haptic();
-    // $('txt-input').readOnly = true;
+    $('txt-input').readOnly = true;
     
-    // if (!$('menu-keyboard-li').classList.contains('strikethrough')) {
-    //   setTimeout(function() {
-    //     $('txt-input').readOnly = false;
-    //   }, 100);    
-    // }
+    if (!$('menu-keyboard-li').classList.contains('strikethrough')) {
+      setTimeout(function() {
+        $('txt-input').readOnly = false;
+      }, 100);    
+    }
   }
 }
 
@@ -2639,7 +2639,6 @@ function btnTwo() {
 function btnThree() {
   insertAtCursor($('txt-input'), '3');
   resizeInput();
-  $('txt-input').readOnly();
   $('txt-input').focus();
 }
 
