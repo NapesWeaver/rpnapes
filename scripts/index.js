@@ -51,7 +51,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '2:13:00';
+var tStamp = '19:00:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -450,7 +450,7 @@ function toggleHaptic() {
 //   if (isMobile) {
 //     haptic();
 //     $('txt-input').readOnly = true;
-
+    
 //     if (!$('menu-keyboard-li').classList.contains('strikethrough')) {
 //       setTimeout(function() {
 //         $('txt-input').readOnly = false;
