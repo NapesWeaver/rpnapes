@@ -5970,7 +5970,6 @@ document.addEventListener('keyup', function(event) {
 
 document.addEventListener('visibilitychange', function() {
   if (document.hidden) {
-    shifted = false;
     altHeld = false;
     ctrlHeld = false;
     shiftHeld = false;
