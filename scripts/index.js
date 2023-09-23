@@ -1,4 +1,4 @@
-﻿var $ = function(id) {
+var $ = function(id) {
   return document.getElementById(id);
 };
 
@@ -3075,7 +3075,7 @@ function help(command) {
     case 'duckgo':
       inputText('');
       enterInput();
-      inputText('duckgo [query]: Search DuckDuckGo. If no argument is supplied in-line, last entry on stack is used as query.');
+      inputText('duckgo: Search DuckDuckGo. Last entry on stack is used as query.');
       break;    
     case 'embed':
       inputText('');
@@ -3100,7 +3100,7 @@ function help(command) {
     case 'google':
       inputText('');
       enterInput();
-      inputText('google [query]: Search Google / open link or IP address. If no argument is supplied in-line, last entry on stack is used as query. Alias: go');
+      inputText('google: Search Google / open link or IP address. Last entry on stack is used as query. Alias: go');
       break;
     case 'hex':
       // Falls through
@@ -3308,12 +3308,12 @@ function help(command) {
     case 'wiki':
       inputText('');
       enterInput();
-      inputText('wiki [query]: Search Wikipedia. If no argument is supplied in-line, last entry on stack is used as query.');
+      inputText('wiki: Search Wikipedia. Last entry on stack is used as query.');
       break;    
     case 'youtube':
       inputText('');
       enterInput();
-      inputText('youtube [query]: Search youtube. If no argument is supplied in-line, last entry on stack is used as query. Alias: you');
+      inputText('youtube: Search youtube. Last entry on stack is used as query. Alias: you');
       break;    
     default:// case NOT a help argument
       enterInput();
@@ -3550,53 +3550,40 @@ function parseCommand() {
       
       if (commandArray[1] === undefined) {
         $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
-      } else {
-        commandArray.shift();
-        $('txt-input').value = commandArray.join(' ');
+        searchDuckDuckGo();
+        stack.pop();
+        $('txt-input').value = '';
+        updateDisplay();
       }
-      searchDuckDuckGo();
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();
     }
     if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
       
       if (commandArray[1] === undefined) {
         $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
-      } else {
-        commandArray.shift();
-        $('txt-input').value = commandArray.join(' ');
+        searchGoogle();
+        stack.pop();
+        $('txt-input').value = '';
+        updateDisplay();
       }
-      searchGoogle();
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();
     }
     if (command === 'wiki' || command.match(/^wiki .+/)) {
       
       if (commandArray[1] === undefined) {
         $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
-      } else {
-        commandArray.shift();
-        $('txt-input').value = commandArray.join(' ');
+        searchWikipedia();
+        stack.pop();
+        $('txt-input').value = '';
+        updateDisplay();
       }
-      searchWikipedia();
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();
-    }
+    }    
     if (command === 'youtube' || command === 'you' || command.match(/^youtube .+/) || command.match(/^you .+/)) {
-      
       if (commandArray[1] === undefined) {
         $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
-      } else {
-        commandArray.shift();
-        $('txt-input').value = commandArray.join(' ');
+        searchYouTube();
+        stack.pop();
+        $('txt-input').value = '';
+        updateDisplay();
       }
-      searchYouTube();
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();
     }
 
     switch (command) {  
