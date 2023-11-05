@@ -879,7 +879,7 @@ function btnEnter() {
 }
 
 function stripUnits(tmpString) {
-  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?([Ω♥a-zA-Z](?<!Infinity))+([-*\/\^Ω♥a-zA-Z.0-9](?<!Infinity))*$/, '');  
+  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?([Ω♥°a-zA-Z](?<!Infinity))+([-*\/\^Ω♥°a-zA-Z.0-9](?<!Infinity))*$/, '');  
 }
 
 function btnEval() {
@@ -4291,7 +4291,7 @@ function encodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/;/g, '&#59');
   tmpString = tmpString.replace(/=/g, '&#61');
   tmpString = tmpString.replace(/_/g, '&#95');
-  tmpString = tmpString.replace(/°/g, '&deg');
+  // tmpString = tmpString.replace(/°/g, '&deg');
   tmpString = tmpString.replace(/−/g, '-');
   return tmpString;
 }
@@ -4301,7 +4301,7 @@ function decodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/&#59/g, ';');
   tmpString = tmpString.replace(/&#61/g, '=');
   tmpString = tmpString.replace(/&#95/g, '_');
-  tmpString = tmpString.replace(/&deg/g, '°');
+  // tmpString = tmpString.replace(/&deg/g, '°');
   return tmpString;
 }
 
@@ -4534,10 +4534,11 @@ function extractUnits(tmpString) {
   if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
 
   if (radix !== 16) {
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9\/]*$/);
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);
   } else {
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥a-zA-Z]+[-*^Ω♥a-zA-Z.0-9\/]*$/);    
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);    
   }
+  console.log('tmpUnits', tmpUnits);
   return tmpUnits.replace(' ', '');
 }
 
@@ -4604,13 +4605,13 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
     var expA = 1;
     unitsDoNotMatch = true;
 
-    tmpUnitsA += unitsA[a].match(/[Ω♥a-zA-Z]+/);
+    tmpUnitsA += unitsA[a].match(/[Ω♥°a-zA-Z]+/);
     if (unitsA[a].indexOf('^') !== -1) expA = unitsA[a].match(/[-]?[.0-9]+/);
     // Check for matches between tmpUnitsA and unitsB
     for (var b in unitsB) {
       var tmpUnitsB = '';
       var expB = 1;
-      tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
+      tmpUnitsB += unitsB[b].match(/[Ω♥°a-zA-Z]+/);
 
       if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
 
@@ -4634,13 +4635,13 @@ function unitAddition(unitsA, unitsB, multiplier, add) {
     tmpUnitsB = '';
     expB = 1;
     unitsDoNotMatch = true;
-    tmpUnitsB += unitsB[b].match(/[Ω♥a-zA-Z]+/);
+    tmpUnitsB += unitsB[b].match(/[Ω♥°a-zA-Z]+/);
 
     if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
 
     for (a in unitsA) {
       tmpUnitsA = '';
-      tmpUnitsA += unitsA[a].match(/[Ω♥a-zA-Z]+/);
+      tmpUnitsA += unitsA[a].match(/[Ω♥°a-zA-Z]+/);
 
       if (tmpUnitsB === tmpUnitsA) unitsDoNotMatch = false;
     }
@@ -6188,6 +6189,9 @@ window.onload = function () {
   $('menu-plus').onclick = function() {    
     if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
   }
+  $('menu-degree').onclick = function() {     
+    buttonInsert(/[°]/ , '°');
+  }  
   $('menu-omega').onclick = function() {     
     buttonInsert(/[Ω]/ , 'Ω');
   }  
