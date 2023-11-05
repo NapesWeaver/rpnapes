@@ -4291,7 +4291,6 @@ function encodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/;/g, '&#59');
   tmpString = tmpString.replace(/=/g, '&#61');
   tmpString = tmpString.replace(/_/g, '&#95');
-  // tmpString = tmpString.replace(/°/g, '&deg');
   tmpString = tmpString.replace(/−/g, '-');
   return tmpString;
 }
@@ -4301,7 +4300,6 @@ function decodeSpecialChar(tmpString) {
   tmpString = tmpString.replace(/&#59/g, ';');
   tmpString = tmpString.replace(/&#61/g, '=');
   tmpString = tmpString.replace(/&#95/g, '_');
-  // tmpString = tmpString.replace(/&deg/g, '°');
   return tmpString;
 }
 
