@@ -879,7 +879,8 @@ function btnEnter() {
 }
 
 function stripUnits(tmpString) {
-  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?([Ω♥°a-zA-Z](?<!Infinity))+([-*\/\^Ω♥°a-zA-Z.0-9](?<!Infinity))*$/, '');  
+  if (radix === 16) return tmpString;
+  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?([Ω♥°a-zA-Z](?<!Infinity))+([-*\/\^Ω♥°a-zA-Z.0-9](?<!Infinity))*$/, '');
 }
 
 function btnEval() {
