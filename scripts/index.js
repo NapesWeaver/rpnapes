@@ -2337,6 +2337,7 @@ function parseResult(result) {
 
 function displayResult(result, newUnits) { 
   var objX;
+  
   if (result !== undefined) {
 
     if (typeof result === 'number' || typeof result === 'string') {
@@ -2345,7 +2346,11 @@ function displayResult(result, newUnits) {
       if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
     }
     if (objX) result = objToString(objX);
-    if (result !== '0') result += newUnits;
+    if (result !== '0' && !isNaN(result.re)) {
+      result += newUnits;
+    } else {
+      result +='';
+    }
 
     $('txt-input').value = parseResult(result);
     currency = '';
@@ -2371,7 +2376,11 @@ function displayResults(results, newUnits) {
 
     $('txt-input').value += parseResult(results[i]);
 
-    if (results[i] !== '0') $('txt-input').value += newUnits;
+    if (results[i] !== '0' && !isNaN(results[i].re)) {
+      $('txt-input').value += newUnits;
+    } else {
+      results[i] += '';
+    }
 
     if (i < results.length - 1) $('txt-input').value += '\n';
   }
