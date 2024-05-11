@@ -2328,10 +2328,13 @@ function getComplex(complexObj) {
 
 function parseResult(result) {
 
+  if (radix !== 10 && /^NaN./.test(result)) result = result.slice(0, 3);
+
   result = result.replace(/(?<![0-9ijy])[ ]/g, '');
   result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
   result = result.replace('(', '');
   result = result.replace('i)', 'j ');
+  
   return currency + result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
 }
 
@@ -2346,12 +2349,8 @@ function displayResult(result, newUnits) {
       if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
     }
     if (objX) result = objToString(objX);
-    // if (result !== '0' && !isNaN(result.re)) {
-    //   result += newUnits;
-    // } else {
-    //   result +='';
-    // }
-    if (result !== '0') result += newUnits
+    
+    if (result !== '0') result += newUnits;
 
     $('txt-input').value = parseResult(result);
     currency = '';
@@ -2377,11 +2376,6 @@ function displayResults(results, newUnits) {
 
     $('txt-input').value += parseResult(results[i]);
 
-    // if (results[i] !== '0' && !isNaN(results[i].re)) {
-    //   $('txt-input').value += newUnits;
-    // } else {
-    //   results[i] += '';
-    // }
     if (results[i] !== '0') $('txt-input').value += newUnits;
 
     if (i < results.length - 1) $('txt-input').value += '\n';
