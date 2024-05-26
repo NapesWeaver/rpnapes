@@ -953,14 +953,18 @@ function deleteButton() {
   }    
 }
 
+function deleteLines(){
+  var numLines = $('lst-stack').value.slice($('lst-stack').selectionStart, $('lst-stack').selectionEnd).split('\n').length;
+
+  stack.splice(getIndex('lst-stack') - stackSize, numLines);
+  updateDisplay();
+}
+
 function deleteInput() {
   if (stack.toString() !== '') backupUndo();
-
-  $('txt-input').value = $('txt-input').value;
     
   if (stackFocus) {
-    stack.splice(getIndex('lst-stack') - stackSize, 1);
-    updateDisplay();
+    deleteLines();
   } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
     $('txt-input').selectionStart = 0;
     $('txt-input').focus();
@@ -999,8 +1003,7 @@ function btnBackspace() {
   if (stack.toString() !== '') backupUndo();
 
   if (stackFocus) {
-    stack.splice(getIndex('lst-stack') - stackSize, 1);  
-    updateDisplay();  
+    deleteLines();
   } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
