@@ -44,6 +44,8 @@ var shifted = false;
 var altHeld = false;
 var ctrlHeld = false;
 var shiftHeld = false;
+var initSelStart = 0;
+var initSelEnd = 0;
 
 var fixDecimal = -1;
 var sciDecimal = -1;
@@ -323,6 +325,11 @@ math.import({
     return mathRoots(x, y);
   }
 });
+
+function setInitialSelection() {
+  initSelStart = $('lst-stack').selectionStart;
+  initSelEnd = $('lst-stack').selectionEnd;
+}
 
 function unFloat() {
   var wrapWidth = $('wrap').clientWidth;
@@ -4119,6 +4126,8 @@ function onClickSelection(textarea){
     textarea.selectionStart = startPos + 1;
     textarea.selectionEnd = endPos;
   }
+  setInitialSelection();
+  
   return true;  
 }
 
@@ -5794,7 +5803,7 @@ document.addEventListener('keydown', function(event) {
     if ($('rpnapes').className !== 'hidden') {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            
+           
       if (!stackFocus && stack.length > 0) {
         $('lst-stack').focus();
         $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
@@ -5804,12 +5813,28 @@ document.addEventListener('keydown', function(event) {
         var newLines = (testString.match(/\n/g) || []).length;
         var emptyRows = getEmptyRows();
         
-        if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1)) {
+        if ($('lst-stack').selectionEnd > $('lst-stack').value.indexOf('\n', (emptyRows * 2) + 1)) {          
 
-            if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {
+          if ($('lst-stack').offsetHeight < 35 && newLines > 0 || $('lst-stack').offsetHeight > 35 && $('lst-stack').offsetHeight / newLines < 69) {
             window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop - 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop - 12;
           }
-          if ($('lst-stack').selectionStart - 1 > $('lst-stack').value.indexOf('\n', (emptyRows * 2))) $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
+          if ($('lst-stack').selectionStart - 1 > $('lst-stack').value.indexOf('\n', (emptyRows * 2))) {
+            
+            if (shiftHeld) {              
+
+              if ($('lst-stack').selectionEnd > initSelEnd) {
+
+                $('lst-stack').setSelectionRange($('lst-stack').selectionStart, $('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionEnd - 1));
+              } else {
+
+                $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionEnd);
+              }
+            } else {
+
+              $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
+              setInitialSelection();
+            }
+          }
         }
       }
       if (twig.health > 0 && $('twig').className !== 'hidden') {
@@ -5836,7 +5861,21 @@ document.addEventListener('keydown', function(event) {
         $('txt-input').focus();
       } else {
         window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop + 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop + 12;
-        $('lst-stack').setSelectionRange($('lst-stack').selectionEnd + 1, $('lst-stack').value.indexOf('\n', $('lst-stack').selectionEnd + 1));        
+        
+        if (shiftHeld) {      
+
+          if ($('lst-stack').selectionStart < initSelStart) {
+
+            $('lst-stack').setSelectionRange($('lst-stack').value.indexOf('\n', $('lst-stack').selectionStart) + 1, $('lst-stack').selectionEnd);              
+          } else {
+
+            $('lst-stack').setSelectionRange($('lst-stack').selectionStart, $('lst-stack').value.indexOf('\n', $('lst-stack').selectionEnd + 1));
+          }
+        } else {
+
+          $('lst-stack').setSelectionRange($('lst-stack').selectionEnd + 1, $('lst-stack').value.indexOf('\n', $('lst-stack').selectionEnd + 1));
+          setInitialSelection();         
+        }   
       }      
       if (twig.health > 0 && $('twig').className !== 'hidden') {
         $('twig').src = 'images/twig/walk-right.gif';
@@ -5947,6 +5986,7 @@ document.addEventListener('keyup', function(event) {
     if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     btnXoff();
+    resizeInput();
     break;
   case 'Shift':
     shiftHeld = false;
