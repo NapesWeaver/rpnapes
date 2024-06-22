@@ -5808,6 +5808,7 @@ document.addEventListener('keydown', function(event) {
         $('lst-stack').focus();
         $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
         $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').value.length) + 1, $('lst-stack').value.length);
+        setInitialSelection();
       } else {
         var testString = $('lst-stack').value.slice($('lst-stack').selectionStart);
         var newLines = (testString.match(/\n/g) || []).length;
@@ -5823,14 +5824,11 @@ document.addEventListener('keydown', function(event) {
             if (shiftHeld) {              
 
               if ($('lst-stack').selectionEnd > initSelEnd) {
-
                 $('lst-stack').setSelectionRange($('lst-stack').selectionStart, $('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionEnd - 1));
               } else {
-
                 $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionEnd);
               }
             } else {
-
               $('lst-stack').setSelectionRange($('lst-stack').value.lastIndexOf('\n', $('lst-stack').selectionStart - 2) + 1, $('lst-stack').selectionStart - 1);
               setInitialSelection();
             }
@@ -5857,22 +5855,19 @@ document.addEventListener('keydown', function(event) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       
-      if ($('lst-stack').selectionEnd === $('lst-stack').value.length) {
+      if ($('lst-stack').selectionEnd === $('lst-stack').value.length && !shiftHeld) {
         $('txt-input').focus();
       } else {
         window.innerWidth > 359 ? $('lst-stack').scrollTop = $('lst-stack').scrollTop + 18 : $('lst-stack').scrollTop = $('lst-stack').scrollTop + 12;
         
-        if (shiftHeld) {      
-
+        if (shiftHeld) {
+          
           if ($('lst-stack').selectionStart < initSelStart) {
-
             $('lst-stack').setSelectionRange($('lst-stack').value.indexOf('\n', $('lst-stack').selectionStart) + 1, $('lst-stack').selectionEnd);              
           } else {
-
             $('lst-stack').setSelectionRange($('lst-stack').selectionStart, $('lst-stack').value.indexOf('\n', $('lst-stack').selectionEnd + 1));
           }
         } else {
-
           $('lst-stack').setSelectionRange($('lst-stack').selectionEnd + 1, $('lst-stack').value.indexOf('\n', $('lst-stack').selectionEnd + 1));
           setInitialSelection();         
         }   
