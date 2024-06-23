@@ -49,7 +49,7 @@
                     <li><a id="menu-clear" title="Clear stack and input">Clear</a></li>
                     <li><a id="menu-load" title="Load stack">Load</a></li>
                     <li><a id="menu-save" title="Save stack">Save</a></li>
-                    <li><a  title="Save as a .txt file" onclick="backupUndo(); if ($('txt-input').value.trim() !== '') {saveFile($('txt-input').value.trim(), true);} else if (stack[stack.length - 1]) {saveFile(stack[stack.length - 1].soul, true);} else {saveFile('', true)} updateDisplay()">SaveAs</a></li>
+                    <li><a  title="Save as a file" onclick="backupUndo(); if ($('txt-input').value.trim() !== '') {saveFile($('txt-input').value.trim(), true);} else if (stack[stack.length - 1]) {saveFile(stack[stack.length - 1].soul, true);} else {saveFile('', true)} updateDisplay()">SaveAs</a></li>
                     <li><a id="menu-print" title="Open printer dialog">Print</a></li>
                     <li><a id="menu-off" title="Close tab or redirect to google.com">Off</a></li>
                   </ul>
@@ -58,7 +58,7 @@
                   <a>Edit</a>
                   <ul class="sub-menu">
                     <li><a id="menu-copy" title="Copy text">Copy</a></li>
-                    <li><a id="menu-paste" title="Copy text">Paste</a></li>
+                    <li><a id="menu-paste" title="Paste text">Paste</a></li>
                     <li><a id="menu-ab" title="Swap last two stack entries">a&nbsp;&#60;&nbsp;&#62;&nbsp;b</a></li>
                     <li><a id="menu-xy" title="Swap input and last stack entry">x&nbsp;&#60;&nbsp;&#62;&nbsp;y</a></li>
                     <li><a id="menu-enter" title="Enter input">Enter</a></li>
@@ -259,7 +259,7 @@
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified June 21, 2024." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified June 23, 2024." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <textarea id="txt-input" class="txt-input" name="txt-input" tabindex="1" rows="1" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false" onfocus="txtInputFocus()" onmousedown="haptic()"></textarea>
           <div id="entry-pad">
             <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
