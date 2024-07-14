@@ -3208,11 +3208,6 @@ function help(command) {
       enterInput();
       $('txt-input').value ='Not working as consistently for mobile devices.';
       break;
-    case 'paste':
-      inputText('');
-      enterInput();
-      inputText('paste: Firefox only supports reading the clipboard in browser extensions using the "clipboardRead" extension permission :(');
-      break;
     case 'polar':
       inputText('');
       enterInput();
@@ -3395,8 +3390,6 @@ function help(command) {
     inputText('opennotes');
     enterInput();
     inputText('off');
-    enterInput();
-    inputText('paste');
     enterInput();
     inputText('polar');
     enterInput();
