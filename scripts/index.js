@@ -6273,6 +6273,7 @@ window.onload = function () {
   $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
     backupUndo();
+    setTimeout(resizeInput, 180);
   });
 
   // Buttons
