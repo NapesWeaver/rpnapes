@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '2:13:00';
+var tStamp = '3:00:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6234,7 +6234,7 @@ window.onload = function () {
   
   $('menu-help').onclick = menuHelp;
 
-  if (isFirefox) toggleKeyboard();
+  if (isFirefox && isMobile) setTimeout(toggleKeyboard, 300);
 
   if (isMobile) {
     $('menu-twig').style = 'display:none';
