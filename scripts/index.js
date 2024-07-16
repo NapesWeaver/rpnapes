@@ -1371,7 +1371,6 @@ function btnShift() {
     $('menu-notes').innerHTML = 'Run Notes'
     $('menu-notes').setAttribute('title', 'Run Notes');
     $('btn-copy').value = 'PASTE';
-    if (isFirefox) $('btn-copy').style.color = '#808080';
     $('btn-xy').value = 'a < > b';
     $('btn-enter').classList.add('btn-big-font');
     $('btn-enter').value = '=';
@@ -6352,7 +6351,6 @@ window.onload = function () {
   $('btn-save-notes').onclick = btnSaveNotes;
   $('btn-copy-notes').onclick = btnCopyNotes;
   $('btn-paste-notes').onclick = btnPasteNotes;
-  if (isFirefox) $('btn-paste-notes').style.color = '#808080';
   $('btn-undo-notes').onclick = btnUndoNotes;
   $('btn-redo-notes').onclick = btnRedoNotes;
   $('btn-clear-notes').onclick = btnClearNotes;
