@@ -3839,6 +3839,7 @@ function parseCommand() {
       break;
     case 'open':
       stack.pop();
+      updateDisplay();
       $('txt-input').value = '';
       openAFile();
       break;
