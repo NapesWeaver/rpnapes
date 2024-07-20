@@ -6235,6 +6235,7 @@ window.onload = function () {
   $('menu-help').onclick = menuHelp;
 
   if (isMobile) {
+    if (isFirefox) $('menu-keyboard-li').classList.add('strikethrough');
     $('menu-twig').style = 'display:none';
   } else {
     $('menu-keyboard').style = 'display:none';
