@@ -6129,12 +6129,12 @@ window.onload = function () {
             }
           };
           fr.readAsText(this.files[0]);
-          this.value = '';
         } catch (err) {
           rpnAlert(err.toString());
           if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');      
-        }        
+        }   
     }
+    this.value = '';
     resetVariables();
     resizeInput();
   });
