@@ -3063,6 +3063,11 @@ function help(command) {
       enterInput();
       inputText('clear: Clears the displays. Alias: cls');
       break;
+    case 'close':
+      inputText('');
+      enterInput();
+      inputText('close: Close opened media.');
+      break;
     case 'constants':
       inputText('');
       enterInput();
@@ -3175,6 +3180,11 @@ function help(command) {
       enterInput();
       inputText('min: Find the stack element with the minimum value that is not NaN.');
       break;;
+    case 'mute':
+      inputText('');
+      enterInput();
+      inputText('mute: Mute opened media.');
+      break;;
     case 'notes':
       inputText('');
       enterInput();
@@ -3190,12 +3200,12 @@ function help(command) {
     case 'open':
       inputText('');
       enterInput();
-      inputText('open: Open a text file onto the Stack. A bug prohibits loading the same file successively ;(');
+      inputText('open: Open a file.');
       break;
     case 'opennotes':
       inputText('');
       enterInput();
-      inputText('opennotes: Open a text file into Notes.');
+      inputText('opennotes: Open a file into Notes.');
       break;
     case 'off':
       inputText('');
@@ -3207,6 +3217,16 @@ function help(command) {
       $('txt-input').value ='Try \'Open in new tab\' first though. Or set as home page.';
       enterInput();
       $('txt-input').value ='Not working as consistently for mobile devices.';
+      break;
+    case 'pause':
+      inputText('');
+      enterInput();
+      inputText('pause: Pause opened media.');
+      break;
+    case 'play':
+      inputText('');
+      enterInput();
+      inputText('play: Play opened media.');
       break;
     case 'polar':
       inputText('');
@@ -3311,6 +3331,11 @@ function help(command) {
       enterInput();
       inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
       break;    
+    case 'unmute':
+      inputText('');
+      enterInput();
+      inputText('unmute: Unmute opened media.');
+      break;    
     case 'vector':
       inputText('');
       enterInput();
@@ -3340,6 +3365,8 @@ function help(command) {
     inputText('binary');
     enterInput();
     inputText('clear');
+    enterInput();
+    inputText('close');
     enterInput();
     inputText('constants');
     enterInput();
@@ -3381,6 +3408,8 @@ function help(command) {
     enterInput();
     inputText('min');
     enterInput();
+    inputText('mute');
+    enterInput();
     inputText('notes');
     enterInput();
     inputText('octal');
@@ -3390,6 +3419,10 @@ function help(command) {
     inputText('opennotes');
     enterInput();
     inputText('off');
+    enterInput();
+    inputText('pause');
+    enterInput();
+    inputText('play');
     enterInput();
     inputText('polar');
     enterInput();
@@ -3426,6 +3459,8 @@ function help(command) {
     inputText('tostring');
     enterInput();
     inputText('unembed');
+    enterInput();
+    inputText('unmute');
     enterInput();
     inputText('vector');
     enterInput();
@@ -3621,6 +3656,17 @@ function parseCommand() {
       convertBase(2);
       $('txt-input').value = '';
       break;
+    case 'clear':
+    case 'cls':
+      btnClear();
+      break;
+    case 'close':
+      stack.pop();
+      updateDisplay();
+      if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
+      $('audio-player').src = '';
+      resizeTextAreas();
+      break;
     case 'constants':
       stack.pop();
       inputText('');
@@ -3643,11 +3689,7 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
       window.location.href = "mailto:napesweaver@gmail.com?subject=RPNapes"
-        break;
-    case 'clear':
-    case 'cls':
-      btnClear();
-      break;
+        break;    
     case 'darkmode':
       stack.pop();
       toggleDarkMode();
@@ -3773,6 +3815,11 @@ function parseCommand() {
       updateDisplay();
       inputText(minNum());
       break;    
+    case 'mute':
+      stack.pop();
+      updateDisplay();
+      $('audio-player').muted = true;
+      break;    
     case 'notes':
       stack.pop();
       updateDisplay();
@@ -3801,6 +3848,16 @@ function parseCommand() {
       btnXoff();
       $('txt-input').value = '';
       openAFile();
+      break;
+    case 'pause':
+      stack.pop();
+      updateDisplay();
+      $('audio-player').pause();
+      break;
+    case 'play':
+      stack.pop();
+      updateDisplay();
+      $('audio-player').play();
       break;
     case 'polar':
       stack.pop();
@@ -3889,13 +3946,18 @@ function parseCommand() {
       updateDisplay();
       inputText('');
       monOn();
-      break;
+      break;        
     case 'unembed':
       stack.pop();
       updateDisplay();
       inputText(''); 
       widgetSrc.shift();
       saveTricorder();
+      break;
+    case 'unmute':
+      stack.pop();
+      updateDisplay();
+      $('audio-player').muted = false;
       break;
     case 'vector':
       // Falls through
@@ -6014,18 +6076,25 @@ window.onload = function () {
 
   // Menu File 
   $('menu-load').onclick = btnLoad;
-  $('open-file').addEventListener('change', function () {    
+  $('open-file').addEventListener('change', function () {
+
+    var fileName = this.files[0].name.slice(0, -4);
+
     $('indicate-execution').classList.remove('hidden');
     
     switch (this.files[0].name.slice(-3)) {
       case 'mp3':
       case 'wav':
         var sound = document.getElementById('audio-player');
+
         sound.src = URL.createObjectURL(this.files[0]);
         sound.onend = function(e) {
           URL.revokeObjectURL(this.src);
         }
         $('audio-player').classList.remove('hidden');
+        backupUndo();
+        $('txt-input').value = fileName;
+        $('txt-input').select();
 
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
       break;
@@ -6052,6 +6121,8 @@ window.onload = function () {
                 var objX = getX();
                 stack.push(objX);
               }
+              $('txt-input').value = fileName;
+              $('txt-input').select();
               updateDisplay();
               if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
             }
@@ -6062,7 +6133,7 @@ window.onload = function () {
           rpnAlert(err.toString());
           if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');      
         }        
-    }    
+    }
     resetVariables();
     resizeInput();
   });
