@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '5:19:00';
+var tStamp = '9:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2340,6 +2340,7 @@ function parseResult(result) {
   if (radix !== 10 && /^NaN./.test(result)) result = result.slice(0, 3);
 
   result = result.replace(/(?<![0-9ijy])[ ]/g, '');
+  // result = result.replace(/(?<![0-9ijy])/g, '');
   result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
   result = result.replace('(', '');
   result = result.replace('i)', 'j ');
@@ -5693,6 +5694,11 @@ document.addEventListener('click', function(event) {
     getStackEntry();
     resizeInput();
   }
+  if (event.detail === 2) {
+    if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
+    $('audio-player').src = '';
+    resizeTextAreas();
+  }
 });
 
 document.addEventListener('keypress', function(event) {
@@ -6010,40 +6016,53 @@ window.onload = function () {
   $('menu-load').onclick = btnLoad;
   $('open-file').addEventListener('change', function () {    
     $('indicate-execution').classList.remove('hidden');
-
-    try {
-      var fr = new FileReader();
-
-      fr.onload = function () {
-
-        if ($('rpnapes').classList.contains('hidden')) {
-          backupUndoNotes();
-          $('lst-notes').value += this.result;
-          backupUndoNotes();
-        } else {
-          var tmpStack = [];
-          backupUndo();
-          tmpStack = this.result.split('\n');
-          for (var i in tmpStack) {
-            $('txt-input').value = tmpStack[i];
-            
-            if (shifted) {
-              calculate($('txt-input').value);
-              if (testing) runTest();
-            }
-            var objX = getX();
-            stack.push(objX);
-          }
-          updateDisplay();
-          if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+    
+    switch (this.files[0].name.slice(-3)) {
+      case 'mp3':
+      case 'wav':
+        var sound = document.getElementById('audio-player');
+        sound.src = URL.createObjectURL(this.files[0]);
+        sound.onend = function(e) {
+          URL.revokeObjectURL(this.src);
         }
-      };
-      fr.readAsText(this.files[0]);
-      this.value = '';
-    } catch (err) {
-      rpnAlert(err.toString());
-      if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-    }
+        $('audio-player').classList.remove('hidden');
+
+        if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+      break;
+      default:
+        try {
+          var fr = new FileReader();
+          fr.onload = function () {
+    
+            if ($('rpnapes').classList.contains('hidden')) {
+              backupUndoNotes();
+              $('lst-notes').value += this.result;
+              backupUndoNotes();
+            } else {
+              var tmpStack = [];
+              backupUndo();
+              tmpStack = this.result.split('\n');
+              for (var i in tmpStack) {
+                $('txt-input').value = tmpStack[i];
+                
+                if (shifted) {
+                  calculate($('txt-input').value);
+                  if (testing) runTest();
+                }
+                var objX = getX();
+                stack.push(objX);
+              }
+              updateDisplay();
+              if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+            }
+          };
+          fr.readAsText(this.files[0]);
+          this.value = '';
+        } catch (err) {
+          rpnAlert(err.toString());
+          if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');      
+        }        
+    }    
     resetVariables();
     resizeInput();
   });
