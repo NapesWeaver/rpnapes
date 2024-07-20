@@ -2,14 +2,14 @@
 <html lang="en">
   <head>
     <title>RPNapes</title>
-    <meta charset="UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
-    <meta name="description" content="Reverse Polish Notation calculator with a stack display"/>
-    <meta name="keywords" content="rPn, R.P.N., Polish, reverse, notation, stack, tricorder, Napes, Napes Weaver,RPNapes"/>
-    <meta name="robots" content="index,follow"/>
-    <link rel="icon" href="favicon.ico" type="image/x-icon"/>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <meta name="description" content="Reverse Polish Notation calculator with a stack display">
+    <meta name="keywords" content="rPn, R.P.N., Polish, reverse, notation, stack, tricorder, Napes, Napes Weaver,RPNapes">
+    <meta name="robots" content="index,follow">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
     <!--[if lt IE 9]>
       <script>
         document.createElement("article");
@@ -21,7 +21,7 @@
         document.createElement("section");
       </script>
     <![endif]-->
-    <link rel="stylesheet" href="styles/main.css"/>
+    <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
     <div id="wrap">
@@ -32,19 +32,21 @@
         <span id="indicate-radians" class="hidden">rad</span>
         <span id="indicate-shift" class="hidden">eval</span>
         <span id="indicate-execution" class="hidden"><span>&#10711;</span></span>
-        <input type="button" id="btn-xoff" class='btn-other btn-xoff haptic-response' name="btn-xoff" title="Toggle interface" value="&nbsp;"/>        
+        <input type="button" id="btn-xoff" class='btn-other btn-xoff haptic-response' name="btn-xoff" title="Toggle interface" value="&nbsp;">
       </header>      
       <main id="main">
         <!-- RPNapes -->
         <div id="rpnapes">
           <audio id="audio-player" class="hidden" autoplay controls></audio>
+          <img id="image-viewer" class="hidden" src="foobar.jpg" alt="Image Viewer" width="320" height="240">
+          <video id="video-player" class="hidden" width="320" height="240" controls></video>
           <div id="menu-wrap">
             <nav class="menu">
               <ul class="clearfix">
                 <li class="haptic-response">
                   <a>File</a>
                   <ul class="sub-menu">
-                    <li><label id="open" title="Open a file"><input type="file" id="open-file" class="hidden"/><span id="menu-open">Open</span></label></li>
+                    <li><label id="open" title="Open a file"><input type="file" id="open-file" class="hidden"><span id="menu-open">Open</span></label></li>
                     <li><a id="menu-google" class="google" title="Go to Google"><span class="g-color">G</span><span class="o-color">o</span><span class="o2-color">o</span><span class="g2-color">g</span><span class="l-color">l</span><span class="e-color">e</span></a></li>
                     <li><a id="menu-you-tube" title="Go to YouTube"><span class="menu-you-tube">YouTube</span></a></li>
                     <li><a id="menu-clear" title="Clear stack and input">Clear</a></li>
@@ -263,65 +265,65 @@
           <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type help for a list of commands. Last modified July 20, 2024." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <textarea id="txt-input" class="txt-input" name="txt-input" tabindex="1" rows="1" autocapitalize="off" autocomplete="off" spellcheck="false" onfocus="txtInputFocus()" onmousedown="haptic()"></textarea>
           <div id="entry-pad">
-            <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY"/>
-            <input type="button" id="btn-xy" class="btn-big haptic-response" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y"/>
-            <input type="button" id="btn-enter" class="btn-big haptic-response" value="ENTER"/>
+            <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY">
+            <input type="button" id="btn-xy" class="btn-big haptic-response" value="x&nbsp;&#60;&nbsp;&#62;&nbsp;y">
+            <input type="button" id="btn-enter" class="btn-big haptic-response" value="ENTER">
             <button type="button" id="btn-delete" class="btn-med haptic-response">DEL</button>
-            <br/>
-            <input type="button" id="btn-inverse" class="btn-big haptic-response" value="1&nbsp;/&nbsp;x"/>
+            <br>
+            <input type="button" id="btn-inverse" class="btn-big haptic-response" value="1&nbsp;/&nbsp;x">
             <button type="button" id ="btn-log" class="btn-big haptic-response">log<sub>x</sub>y</button>
             <button type="button" id="btn-root" class="btn-big haptic-response">y&nbsp;<sup>x</sup></button>
-            <input type="button" id="btn-undo" class="btn-med haptic-response" value="UND"/>
-            <br/>
-            <input type="button" id="btn-ee" class="btn-small btn-small-font btn-char haptic-response" value="EE"/>
+            <input type="button" id="btn-undo" class="btn-med haptic-response" value="UND">
+            <br>
+            <input type="button" id="btn-ee" class="btn-small btn-small-font btn-char haptic-response" value="EE">
             <button type="button" id="btn-pi" class="btn-small btn-char btn-pi haptic-response">&#120587;</button>
-            <input type="button" id="btn-modulus" class="btn-small haptic-response" value="%"/>
+            <input type="button" id="btn-modulus" class="btn-small haptic-response" value="%">
             <button type="button" id="btn-sign" class="btn-small symbol-med haptic-response">±</button>
             <button type="button" id="btn-go" class="google btn-small haptic-response"><span class="color-blue">G</span><span class="color-red">o</span></button>
-            <input type="button" id="btn-shift" class="btn-med btn-shift haptic-response" value="Shift"/>
-            <br/>
+            <input type="button" id="btn-shift" class="btn-med btn-shift haptic-response" value="Shift">
+            <br>
             <div id="num-pad" class="num-pad">
-              <input type="button" id="btn-seven" class="btn-small btn-char haptic-response" value="7"/>
-              <input type="button" id="btn-eight" class="btn-small btn-char haptic-response" value="8"/>
-              <input type="button" id="btn-nine" class="btn-small btn-char haptic-response" value="9"/>
-              <input type="button" id="btn-divide" class="btn-small symbol-big haptic-response" value="&#247;"/>
-              <input type="button" id="btn-angle" class="btn-small btn-angle degree-border haptic-response" value="deg"/>
-              <input type="button" id="btn-clear" class="btn-med haptic-response" value="CLR"/>
-              <br/>
-              <input type="button" id="btn-four" class="btn-small btn-char haptic-response" value="4"/>
-              <input type="button" id="btn-five" class="btn-small btn-char haptic-response" value="5"/>
-              <input type="button" id="btn-six" class="btn-small btn-char haptic-response" value="6"/>
+              <input type="button" id="btn-seven" class="btn-small btn-char haptic-response" value="7">
+              <input type="button" id="btn-eight" class="btn-small btn-char haptic-response" value="8">
+              <input type="button" id="btn-nine" class="btn-small btn-char haptic-response" value="9">
+              <input type="button" id="btn-divide" class="btn-small symbol-big haptic-response" value="&#247;">
+              <input type="button" id="btn-angle" class="btn-small btn-angle degree-border haptic-response" value="deg">
+              <input type="button" id="btn-clear" class="btn-med haptic-response" value="CLR">
+              <br>
+              <input type="button" id="btn-four" class="btn-small btn-char haptic-response" value="4">
+              <input type="button" id="btn-five" class="btn-small btn-char haptic-response" value="5">
+              <input type="button" id="btn-six" class="btn-small btn-char haptic-response" value="6">
               <button type="button" id="btn-multiply" class="btn-small haptic-response">x</button>
               <button type="button" id="btn-sine" class="btn-small degree-border haptic-response">sin</button>
-              <input type="button" id="btn-load" class="btn-med haptic-response" value="LOA"/>          
-              <br/>
-              <input type="button" id="btn-one" class="btn-small btn-char haptic-response" value="1"/>
-              <input type="button" id="btn-two" class="btn-small btn-char haptic-response" value="2"/>
-              <input type="button" id="btn-three" class="btn-small btn-char haptic-response" value="3"/>
-              <input type="button" id="btn-subtract" class="btn-small symbol-big haptic-response" value="−"/>
+              <input type="button" id="btn-load" class="btn-med haptic-response" value="LOA">          
+              <br>
+              <input type="button" id="btn-one" class="btn-small btn-char haptic-response" value="1">
+              <input type="button" id="btn-two" class="btn-small btn-char haptic-response" value="2">
+              <input type="button" id="btn-three" class="btn-small btn-char haptic-response" value="3">
+              <input type="button" id="btn-subtract" class="btn-small symbol-big haptic-response" value="−">
               <button type="button" id="btn-cosine" class="btn-small degree-border haptic-response">cos</button>
-              <input type="button" id="btn-save" class="btn-med haptic-response" value="SAV"/>
-              <br/>
-              <input type="button" id="btn-zero" class="btn-small btn-char haptic-response" value="0"/>
+              <input type="button" id="btn-save" class="btn-med haptic-response" value="SAV">
+              <br>
+              <input type="button" id="btn-zero" class="btn-small btn-char haptic-response" value="0">
               <button type="button" id="btn-dot" class="btn-small btn-char haptic-response"><sup class="symbol-big">.</sup></button>
-              <input type="button" id="btn-space" class="btn-small symbol-big btn-char haptic-response" value="&nbsp;"/>
-              <input type="button" id="btn-add" class="btn-small symbol-big haptic-response" value="+"/>
+              <input type="button" id="btn-space" class="btn-small symbol-big btn-char haptic-response" value="&nbsp;">
+              <input type="button" id="btn-add" class="btn-small symbol-big haptic-response" value="+">
               <button type="button" id="btn-tangent" class="btn-small degree-border haptic-response">tan</button>
-              <input type="button" id="btn-off" class="btn-med btn-off haptic-response" value="OFF"/>
+              <input type="button" id="btn-off" class="btn-med btn-off haptic-response" value="OFF">
             </div>
           </div>
         </div>
         <!-- Notes -->
         <div id="notes" class="hidden">
           <div class="num-pad notes-fixed">
-            <input type="button" id="btn-clear-notes" class="btn-other haptic-response" value="CLR"/>
-            <input type="button" id="btn-load-notes" class="btn-other haptic-response" value="LOAD"/>
-            <input type="button" id="btn-save-notes" class="btn-other haptic-response" value="SAV"/>
-            <input type="button" id="btn-undo-notes" class="btn-other haptic-response" value="&nbsp;&#60;&nbsp;"/>
-            <input type="button" id="btn-redo-notes" class="btn-other haptic-response" value="&nbsp;&#62;&nbsp;"/>          
-            <input type="button" id="btn-copy-notes" class="btn-other haptic-response" value="COPY"/>
-            <input type="button" id="btn-paste-notes" class="btn-other haptic-response" value="PASTE"/>
-            <input type="button" id="btn-delete-notes" class="btn-other haptic-response" value="DEL"/>          
+            <input type="button" id="btn-clear-notes" class="btn-other haptic-response" value="CLR">
+            <input type="button" id="btn-load-notes" class="btn-other haptic-response" value="LOAD">
+            <input type="button" id="btn-save-notes" class="btn-other haptic-response" value="SAV">
+            <input type="button" id="btn-undo-notes" class="btn-other haptic-response" value="&nbsp;&#60;&nbsp;">
+            <input type="button" id="btn-redo-notes" class="btn-other haptic-response" value="&nbsp;&#62;&nbsp;">          
+            <input type="button" id="btn-copy-notes" class="btn-other haptic-response" value="COPY">
+            <input type="button" id="btn-paste-notes" class="btn-other haptic-response" value="PASTE">
+            <input type="button" id="btn-delete-notes" class="btn-other haptic-response" value="DEL">          
           </div>
           <textarea id="lst-notes" class="lst-notes haptic-response resizable" name="notes" placeholder="Notes:" contenteditable="true"></textarea>
         </div>
@@ -343,7 +345,7 @@
           <audio id="tricorder-alert" preload="none" src="https://www.trekcore.com/audio/tricorder/tos_tricoder_alert.mp3"></audio>
           <audio id="verified" preload="none" src="https://www.trekcore.com/audio/toscomputer/voice/tos_verified.mp3"></audio>
           <audio id="working" preload="none" src="https://www.trekcore.com/audio/toscomputer/voice/tos_working.mp3"></audio>
-          <img id="tricorderskin" src="images/tricorder.png" alt="tricorder" usemap="#tricorder-map" width="379" height="579"/>
+          <img id="tricorderskin" src="images/tricorder.png" alt="tricorder" usemap="#tricorder-map" width="379" height="579">
           <map name="tricorder-map">
             <area id="sensor1" class="btn-mapped" href="#" shape="rect" coords="250,24,293,72" title="Sensor 1" alt="sensor1">
             <area id="sensor2" class="btn-mapped" href="#" shape="circle" coords="273,237,39" title="Sensor 2" alt="sensor2">
@@ -354,15 +356,15 @@
             <area id="button5" class="btn-mapped" href="#" shape="circle" coords="273,125,14" title="Button 5" alt="button5">
             <area id="button6" class="btn-mapped" href="#" shape="circle" coords="310,125,14" title="Button 6" alt="button6">
           </map>
-          <iframe id="viewport" class="hidden" name="viewport" width="142" height="104" src="" allow="autoplay"></iframe>
-          <iframe id="widget" class="hidden" name="widget" width="285" height="249" src="" allowfullscreen></iframe>
+          <iframe id="viewport" class="hidden" name="viewport" width="142" height="104" src="foobar.html" allow="autoplay"></iframe>
+          <iframe id="widget" class="hidden" name="widget" width="285" height="249" src="foobar.html" allowfullscreen></iframe>
         </div>
       </main>
       <!-- Private Twig -->
       <div id="private-twig">
-        <img id="twig" class="hidden" src="images/twig/hat-on.gif" alt="animated gif" width="64" height="64"/>
-        <img id="tv" class="hidden" src="images/twig/tv-off.gif" alt="animated gif" width="64" height="64"/>
-        <img id="don" class="hidden" src="images/twig/don-jon.gif" alt="animated gif" width="64" height="64"/>
+        <img id="twig" class="hidden" src="images/twig/hat-on.gif" alt="animated gif" width="64" height="64">
+        <img id="tv" class="hidden" src="images/twig/tv-off.gif" alt="animated gif" width="64" height="64">
+        <img id="don" class="hidden" src="images/twig/don-jon.gif" alt="animated gif" width="64" height="64">
       </div>
     </div>    
     <script src="scripts/utils/filesaver.js" defer></script>
