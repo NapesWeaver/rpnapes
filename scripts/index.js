@@ -419,6 +419,8 @@ function toggleDarkMode() {
     $('menu-darkmode').innerHTML = 'Dark';
     $('wrap').classList.remove('dark-mode');
     $('wrap').style.borderStyle = 'outset';
+    $('image-viewer').style.filter = 'invert(0%)';
+    $('video-player').style.filter = 'invert(0%)';
     $('tricorderskin').classList.remove('dark-mode');
     $('widget').classList.remove('dark-mode');
     $('viewport').classList.remove('dark-mode');
@@ -432,6 +434,8 @@ function toggleDarkMode() {
     $('menu-darkmode').innerHTML = 'Light';       
     $('wrap').classList.add('dark-mode');   
     $('wrap').style.borderStyle = 'inset';
+    $('image-viewer').style.filter = 'invert(100%)';
+    $('video-player').style.filter = 'invert(100%)';
     $('tricorderskin').classList.add('dark-mode');
     $('widget').classList.add('dark-mode');
     $('viewport').classList.add('dark-mode');
@@ -6098,7 +6102,6 @@ window.onload = function () {
       case 'jepeg':
         closeMedia();
         $('image-viewer').src = URL.createObjectURL(this.files[0]);
-        // $('image-viewer').classList.remove('dark-mode');
         $('image-viewer').classList.remove('hidden');
         backupUndo();
         $('txt-input').value = fileName;
@@ -6127,6 +6130,7 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+        resizeTextAreas();
       break;
       default:
         try {

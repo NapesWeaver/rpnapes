@@ -172,6 +172,7 @@ select::-ms-expand {
 
 #media-player {
     margin-top: 3px;
+    min-width: 408px;
     resize: both;
     overflow: auto;
     background-color: #D4D0C8;
