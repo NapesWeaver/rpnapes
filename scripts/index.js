@@ -6122,7 +6122,7 @@ window.onload = function () {
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
       break;
       case 'mp4':
-      case 'oog':
+      case 'ogg':
         closeMedia();
         $('video-player').src = URL.createObjectURL(this.files[0]);
         $('video-player').classList.remove('hidden');
