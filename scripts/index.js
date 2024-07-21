@@ -6093,10 +6093,12 @@ window.onload = function () {
     
     switch (this.files[0].name.slice(-3).toLowerCase()) {
       case 'bmp':
+      case 'gif':
       case 'jpg':
       case 'jepeg':
         closeMedia();
         $('image-viewer').src = URL.createObjectURL(this.files[0]);
+        // $('image-viewer').classList.remove('dark-mode');
         $('image-viewer').classList.remove('hidden');
         backupUndo();
         $('txt-input').value = fileName;
