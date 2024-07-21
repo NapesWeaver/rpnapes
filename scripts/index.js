@@ -5747,10 +5747,12 @@ function donMove() {
 function closeMedia() {
   if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
   if (!$('image-viewer').classList.contains('hidden')) $('image-viewer').classList.add('hidden');
-  if (!$('video-player').classList.contains('hidden')) $('video-player').classList.add('hidden');
+  if (!$('video-player').classList.contains('hidden')) $('video-player').classList.add('hidden');  
   $('audio-player').src = '';
   $('image-viewer').src = 'foobar.jpg';
   $('video-player').src = '';
+  $('media-player').style.width = '97%';
+  $('media-player').style.height = 'initial';
   resizeTextAreas();
 }
 
@@ -6107,6 +6109,7 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+        setTimeout(resizeTextAreas, 100);
       break;
       case 'mp3':
       case 'wav':
@@ -6130,7 +6133,7 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-        resizeTextAreas();
+        setTimeout(resizeTextAreas, 100);
       break;
       default:
         try {
