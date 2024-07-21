@@ -3663,9 +3663,7 @@ function parseCommand() {
     case 'close':
       stack.pop();
       updateDisplay();
-      if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
-      $('audio-player').src = '';
-      resizeTextAreas();
+      closeMedia();
       break;
     case 'constants':
       stack.pop();
@@ -3819,6 +3817,7 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       $('audio-player').muted = true;
+      $('video-player').muted = true;
       break;    
     case 'notes':
       stack.pop();
@@ -3854,11 +3853,13 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       $('audio-player').pause();
+      $('video-player').pause();
       break;
     case 'play':
       stack.pop();
       updateDisplay();
       $('audio-player').play();
+      $('video-player').play();
       break;
     case 'polar':
       stack.pop();
@@ -3959,6 +3960,7 @@ function parseCommand() {
       stack.pop();
       updateDisplay();
       $('audio-player').muted = false;
+      $('video-player').muted = false;
       break;
     case 'vector':
       // Falls through
@@ -5738,6 +5740,16 @@ function donMove() {
   }  
 }
 
+function closeMedia() {
+  if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
+  if (!$('image-viewer').classList.contains('hidden')) $('image-viewer').classList.add('hidden');
+  if (!$('video-player').classList.contains('hidden')) $('video-player').classList.add('hidden');
+  $('audio-player').src = '';
+  $('image-viewer').src = 'foobar.jpg';
+  $('video-player').src = '';
+  resizeTextAreas();
+}
+
 //////// Event Firing and Listening //////////////////////////////////////////////////
 
 // Fire A Click Event
@@ -5757,11 +5769,7 @@ document.addEventListener('click', function(event) {
     getStackEntry();
     resizeInput();
   }
-  if (event.detail === 2) {
-    if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
-    $('audio-player').src = '';
-    resizeTextAreas();
-  }
+  if (event.detail === 2) closeMedia();
 });
 
 document.addEventListener('keypress', function(event) {
@@ -6083,20 +6091,39 @@ window.onload = function () {
 
     $('indicate-execution').classList.remove('hidden');
     
-    switch (this.files[0].name.slice(-3)) {
+    switch (this.files[0].name.slice(-3).toLowerCase()) {
+      case 'bmp':
+      case 'jpg':
+      case 'jepeg':
+        closeMedia();
+        $('image-viewer').src = URL.createObjectURL(this.files[0]);
+        $('image-viewer').classList.remove('hidden');
+        backupUndo();
+        $('txt-input').value = fileName;
+        $('txt-input').select();
+        if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+      break;
       case 'mp3':
       case 'wav':
-        var sound = document.getElementById('audio-player');
-
-        sound.src = URL.createObjectURL(this.files[0]);
-        sound.onend = function(e) {
+        closeMedia();
+        $('audio-player').src = URL.createObjectURL(this.files[0]);
+        $('audio-player').onend = function(e) {
           URL.revokeObjectURL(this.src);
         }
         $('audio-player').classList.remove('hidden');
         backupUndo();
         $('txt-input').value = fileName;
         $('txt-input').select();
-
+        if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+      break;
+      case 'mp4':
+      case 'oog':
+        closeMedia();
+        $('video-player').src = URL.createObjectURL(this.files[0]);
+        $('video-player').classList.remove('hidden');
+        backupUndo();
+        $('txt-input').value = fileName;
+        $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
       break;
       default:
