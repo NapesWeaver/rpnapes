@@ -6537,9 +6537,6 @@ window.onload = function () {
     $('btn-save').style.color = '#D4D0C8';
   }
   autoDark();
-  $('menu-tools').click();
-  $('txt-input').click();
-
   $('txt-input').readOnly = false;
   $('txt-input').focus();
 };
