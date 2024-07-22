@@ -171,13 +171,15 @@ select::-ms-expand {
 }
 
 #media-player {
-    margin-top: 3px;
+    /* margin-top: 3px; */
+    /* padding-bottom: 3px; */
     margin-left: auto;
     margin-right: auto;
-    min-width: 97%;
+    /* min-width: 97%; */
+    min-width: 100%;
     resize: both;
     overflow: auto;
-    background-color: #D4D0C8;
+    background-color: #6D8EBF;
 }
 
 #image-viewer,

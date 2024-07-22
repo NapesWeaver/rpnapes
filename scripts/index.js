@@ -21,7 +21,7 @@ new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(worldBordersSet).observe($('txt-input'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 
-if (!isPhone) window.onresize = resizeTextAreas;
+if (!isPhone) window.onresize = resizetextareas;
 
 var Infinityi = NaN;
 var Infinityj = NaN;
@@ -350,14 +350,14 @@ function unFloat() {
   $('txt-input').style.width = $('lst-stack').offsetWidth - 18 + 'px';
 }
 
-function resizeTextAreas() {
-  resizeTextarea($('lst-stack'));
-  resizeTextarea($('lst-notes'));
+function resizetextareas() {
+  resizetextarea($('lst-stack'));
+  resizetextarea($('lst-notes'));
   if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
   if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');
 }
 
-function resizeTextarea(textarea) {
+function resizetextarea(textarea) {
   var winSize = getSize();     
   var textareaHeight = textarea.offsetHeight;
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
@@ -368,6 +368,26 @@ function resizeTextarea(textarea) {
   }
   unFloat();
 }
+
+// function resizetextarea(textarea) {
+
+//   var rpnHidden = $('rpnapes').classList.contains('hidden') ? true : false;
+//   var mediaHidden = $('media-player').classList.contains('hidden') ? true : false;
+//   var winSize = getSize();
+//   var headerHeight = document.getElementsByTagName('header')[0].offsetHeight;
+//   // var headerHeight = 0
+
+//   var menuHeight = rpnHidden ? 0 : $('menu-wrap').offsetHeight; 
+//   var mediaHeight = rpnHidden || mediaHidden ? 0 : $('media-player').offsetHeight - menuHeight;  
+//   var inputHeight = rpnHidden ? 0 : $('txt-input').offsetHeight;
+//   var entryPadHeight = rpnHidden ? $('num-pad').offsetHeight : $('entry-pad').offsetHeight;
+//   var paddingSize = rpnHidden ? 21 : 15;
+//   // var paddingSize = 0;
+
+//   textarea.style.height = winSize[1] - headerHeight - menuHeight - mediaHeight - inputHeight - entryPadHeight - paddingSize + 'px';
+//   textarea.classList.remove('resizable');  
+//   unFloat();
+// }
 
 function resizeInput() {
   var winSize = getSize();   
@@ -381,10 +401,10 @@ function resizeInput() {
     $('txt-input').style.height = $('txt-input').scrollHeight + 'px';  
   } else {
     $('txt-input').style.height = winSize[1] - entryPadHeight - 110 + 'px';
-    resizeTextarea($('lst-stack'));
+    resizetextarea($('lst-stack'));
   }
   if (isMobile) bodyHeight = winSize[1];  
-  if (bodyHeight >= winSize[1]) resizeTextarea($('lst-stack'));
+  if (bodyHeight >= winSize[1]) resizetextarea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
@@ -551,7 +571,7 @@ function rpnapesOn() {
   $('rpnapes').classList.add('visible');
   if ($('lst-stack').classList.contains('resizable')) {
     $('lst-stack').classList.remove('resizable');
-    resizeTextarea($('lst-stack'));
+    resizetextarea($('lst-stack'));
   }
   $('txt-input').focus();
 }
@@ -572,7 +592,7 @@ function notesOn() {
   $('notes').classList.add('visible');
   if ($('lst-notes').classList.contains('resizable')) {
     $('lst-notes').classList.remove('resizable');
-    resizeTextarea($('lst-notes'));
+    resizetextarea($('lst-notes'));
   }
   if (!isPhone) $('lst-notes').focus();
 }
@@ -602,7 +622,7 @@ function btnXoff() {
     notesOn();
   }
   if (isMobile) {
-    resizeTextAreas();
+    resizetextareas();
     if (isFirefox) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   }
 }
@@ -5753,7 +5773,7 @@ function closeMedia() {
   $('video-player').src = '';
   $('media-player').style.width = '97%';
   $('media-player').style.height = 'initial';
-  resizeTextAreas();
+  resizetextareas();
 }
 
 //////// Event Firing and Listening //////////////////////////////////////////////////
@@ -6109,7 +6129,7 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-        setTimeout(resizeTextAreas, 100);
+        setTimeout(resizetextareas, 100);
       break;
       case 'mp3':
       case 'wav':
@@ -6133,7 +6153,7 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-        setTimeout(resizeTextAreas, 100);
+        setTimeout(resizetextareas, 100);
       break;
       default:
         try {
@@ -6391,7 +6411,7 @@ window.onload = function () {
     var emptyRows = window.innerWidth > 359 ? getEmptyRows() * 18 : getEmptyRows() * 12;
     if ($('lst-stack').scrollTop < emptyRows) $('lst-stack').scrollTop = emptyRows;
   }
-  resizeTextarea($('lst-stack'));
+  resizetextarea($('lst-stack'));
   $('lst-stack').setAttribute('rows', parseInt(screen.height / 18));
   stackSize = parseInt(screen.height / 18 + 2);
 
