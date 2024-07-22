@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '9:30:00';
+var tStamp = '6:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6537,6 +6537,9 @@ window.onload = function () {
     $('btn-save').style.color = '#D4D0C8';
   }
   autoDark();
+  $('menu-tools').click();
+  $('txt-input').click();
+
   $('txt-input').readOnly = false;
   $('txt-input').focus();
 };
