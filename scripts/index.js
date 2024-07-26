@@ -440,6 +440,7 @@ function toggleDarkMode() {
     $('wrap').classList.remove('dark-mode');
     $('wrap').style.borderStyle = 'outset';
     $('image-viewer').style.filter = 'invert(0%)';
+    $('iframe-player').style.filter = 'invert(0%)';
     $('video-player').style.filter = 'invert(0%)';
     $('tricorderskin').classList.remove('dark-mode');
     $('widget').classList.remove('dark-mode');
@@ -454,6 +455,7 @@ function toggleDarkMode() {
     $('menu-darkmode').innerHTML = 'Light';       
     $('wrap').classList.add('dark-mode');   
     $('wrap').style.borderStyle = 'inset';
+    $('iframe-player').style.filter = 'invert(100%)';
     $('image-viewer').style.filter = 'invert(100%)';
     $('video-player').style.filter = 'invert(100%)';
     $('tricorderskin').classList.add('dark-mode');
