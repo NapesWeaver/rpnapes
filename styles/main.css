@@ -178,7 +178,7 @@ select::-ms-expand {
     overflow: auto;
     background-color: #6D8EBF;
 }
-
+#iframe-player,
 #image-viewer,
 #video-player {
     width: 100%;

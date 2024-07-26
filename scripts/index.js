@@ -2879,12 +2879,30 @@ function getSize() {
   return [x, y];
 }
 
-function embed(src) {
-  if (src.indexOf('http') !== -1) {
-    widgetSrc.unshift(src);// https://www.youtube.com/embed/25QpDHCLOUc
-  } else {
-    rpnAlert('Enter web address to embed.');
+function embedIframePlayer(src) {
+  closeMedia();  
+  var srcURL = src;
+
+  if (src.indexOf('\"') !== -1) {
+    var srcArr = src.split('\"');
+    for (s in srcArr) if ((/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/).test(srcArr[s])) srcURL = srcArr[s];
   }
+  $('iframe-player').src = srcURL;
+  $('iframe-player').classList.remove('hidden');
+  backupUndo();
+  $('txt-input').value = '';
+  $('txt-input').select();
+  if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+  setTimeout(resizetextareas, 100);
+}
+
+function embedTricorder(src) {  
+    widgetSrc.unshift(src);// https://www.youtube.com/embed/25QpDHCLOUc;
+}
+
+function embed(src) {
+  embedIframePlayer(src);
+  // embedTricorder(src);
 }
 
 function getLocation() { 
@@ -3601,7 +3619,8 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
     }// If (command === embed and end of stack === URL) or command === embed with URL
-    if ((command.match(/^embed$/) && stackedCommand.getSoul().match(/^http[s]:\/\/[0-9A-Za-z]/)) || command.match(/^embed http[s]:\/\/[0-9A-Za-z]/)) {    
+    // if ((command.match(/^embed$/) && stackedCommand.getSoul().match(/^http[s]:\/\/[0-9A-Za-z]/)) || command.match(/^embed http[s]:\/\/[0-9A-Za-z]/)) {    
+    if ((command.match(/^embed$/) && stackedCommand.getSoul().match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/))) {    
       
       if (commandArray[1] === undefined) {
 
@@ -5766,12 +5785,14 @@ function donMove() {
 
 function closeMedia() {
   if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
+  if (!$('iframe-player').classList.contains('hidden')) $('iframe-player').classList.add('hidden');
   if (!$('image-viewer').classList.contains('hidden')) $('image-viewer').classList.add('hidden');
   if (!$('video-player').classList.contains('hidden')) $('video-player').classList.add('hidden');  
   $('audio-player').src = '';
+  $('iframe-player').src = 'foobar.html';
   $('image-viewer').src = 'foobar.jpg';
   $('video-player').src = '';
-  $('media-player').style.width = '97%';
+  $('media-player').style.width = '100%';
   $('media-player').style.height = 'initial';
   resizetextareas();
 }
