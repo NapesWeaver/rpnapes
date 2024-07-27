@@ -5820,7 +5820,7 @@ document.addEventListener('click', function(event) {
     getStackEntry();
     resizeInput();
   }
-  if (event.detail === 2) closeMedia();
+  if (event.detail === 2 && event.target === $('header')) closeMedia();
 });
 
 document.addEventListener('keypress', function(event) {
