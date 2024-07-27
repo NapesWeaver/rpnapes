@@ -3145,7 +3145,8 @@ function help(command) {
     case 'embed':
       inputText('');
       enterInput();
-      inputText('embed [URL]: Embed URL into Tricorder iFrame (Tricorder \'button\' 6). If no argument is supplied in-line, last entry on stack is used for URL.');
+      // inputText('embed [URL]: Embed URL into Tricorder iFrame (Tricorder \'button\' 6). If no argument is supplied in-line, last entry on stack is used for URL.');
+      inputText('embed [URL]: Embed URL into media player. If no argument is supplied in-line, last entry on stack is used for URL.');
       break;
     case 'email':
       inputText('');
@@ -3622,8 +3623,9 @@ function parseCommand() {
       $('txt-input').value = '';
       updateDisplay();
     }// If (command === embed and end of stack === URL/IP) or command === embed with URL/IP  
-    if ((command.match(/^embed$/) && (stackedCommand.getSoul().match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || stackedCommand.getSoul().match(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/)))
-    || (command.match(/^embed .*https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || command.match(/^embed ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/))) {    
+    if ((command.match(/^embed$/) && (stackedCommand.getSoul().match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || stackedCommand.getSoul().match(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/) || stackedCommand.getSoul().match(/.+\.(au|biz|blog|ca|com|de|edu|gov|in|io|mil|net|org|ru|stream|uk|us)\/?.*$/)))
+    || (command.match(/^embed .*https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || command.match(/^embed ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/) || command.match(/embed .+\.(au|biz|blog|ca|com|de|edu|gov|in|io|mil|net|org|ru|stream|uk|us)\/?.*$/))) {    
+    
       
       if (commandArray[1] === undefined) {
         embed(stackedCommand.getSoul());
