@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '00:30:00';
+var tStamp = '13:50:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2900,25 +2900,44 @@ function closeMedia() {
 function plot(input) {
   closeMedia();
 
-  var c = $('canvas');
-  var ctx = c.getContext('2d');
-  var grd = ctx.createLinearGradient(0, 0, 200, 0);
+  var canvas = $('canvas');
+  var context = canvas.getContext('2d');
+  // var boxWidth = 4096;
+  var boxWidth = 300;
+  // var boxHeight = 4096;
+  var boxHeight = 300;
+  var padding = 8;
+  var gradient = context.createLinearGradient(0, 0, 200, 0);
 
-  grd.addColorStop(0, 'blue');
-  grd.addColorStop(1, 'white');
-  ctx.fillStyle = grd;
-  ctx.fillRect(20, 40, 150, 80);
+  function drawGrid(){
+    for (var x = 0; x <= boxWidth; x += 30) {
+        context.moveTo(0.5 + x + padding, padding);
+        context.lineTo(0.5 + x + padding, boxHeight + padding);
+    }
+    for (var x = 0; x <= boxHeight; x += 30) {
+        context.moveTo(padding, 0.5 + x + padding);
+        context.lineTo(boxWidth + padding, 0.5 + x + padding);
+    }
+    context.strokeStyle = "black";
+    context.stroke();
+  }
+  drawGrid();
+  
+  gradient.addColorStop(0, 'blue');
+  gradient.addColorStop(1, 'white');
+  context.fillStyle = gradient;
+  context.fillRect(20, 40, 150, 80);
 
-  ctx.font = '30px Arial';
-  ctx.fillText('Hallo World', 340, 60);  
+  context.font = '30px Arial';
+  context.fillText('Hallo World', 340, 60);  
 
-  ctx.moveTo(0, 0);
-  ctx.lineTo(2000, 1000);
-  ctx.stroke();
+  context.moveTo(0, 0);
+  context.lineTo(2000, 1000);
+  context.stroke();
 
-  ctx.beginPath();
-  ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-  ctx.stroke();
+  context.beginPath();
+  context.arc(95, 50, 40, 0, 2 * Math.PI);
+  context.stroke();  
 
   $('canvas-wrap').classList.remove('hidden');
   backupUndo();
