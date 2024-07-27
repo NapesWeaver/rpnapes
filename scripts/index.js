@@ -2882,6 +2882,52 @@ function getSize() {
   return [x, y];
 }
 
+function closeMedia() {
+  if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
+  if (!$('canvas-wrap').classList.contains('hidden')) $('canvas-wrap').classList.add('hidden');
+  if (!$('iframe-player').classList.contains('hidden')) $('iframe-player').classList.add('hidden');
+  if (!$('image-viewer').classList.contains('hidden')) $('image-viewer').classList.add('hidden');
+  if (!$('video-player').classList.contains('hidden')) $('video-player').classList.add('hidden');  
+  $('audio-player').src = '';
+  $('iframe-player').src = 'foobar.html';
+  $('image-viewer').src = 'foobar.jpg';
+  $('video-player').src = '';
+  $('media-player').style.width = '100%';
+  $('media-player').style.height = 'initial';
+  resizeTextAreas();
+}
+
+function plot(input) {
+  closeMedia();
+
+  var c = $('canvas');
+  var ctx = c.getContext('2d');
+  var grd = ctx.createLinearGradient(0, 0, 200, 0);
+
+  grd.addColorStop(0, 'blue');
+  grd.addColorStop(1, 'white');
+  ctx.fillStyle = grd;
+  ctx.fillRect(20, 40, 150, 80);
+
+  ctx.font = '30px Arial';
+  ctx.fillText('Hallo World', 340, 60);  
+
+  ctx.moveTo(0, 0);
+  ctx.lineTo(2000, 1000);
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+  ctx.stroke();
+
+  $('canvas-wrap').classList.remove('hidden');
+  backupUndo();
+  $('txt-input').value = '';
+  $('txt-input').select();
+  if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+  setTimeout(resizeTextAreas, 100);
+}
+
 function embedIframePlayer(src) {
   closeMedia();  
   var srcURL = src;
@@ -3907,6 +3953,11 @@ function parseCommand() {
       updateDisplay();
       $('audio-player').play();
       $('video-player').play();
+      break;
+    case 'plot':
+      stack.pop();
+      updateDisplay();
+      plot();
       break;
     case 'polar':
       stack.pop();
@@ -5785,20 +5836,6 @@ function donMove() {
   } else {
     $('don').src = 'images/twig/don-jon.gif';
   }  
-}
-
-function closeMedia() {
-  if (!$('audio-player').classList.contains('hidden')) $('audio-player').classList.add('hidden');
-  if (!$('iframe-player').classList.contains('hidden')) $('iframe-player').classList.add('hidden');
-  if (!$('image-viewer').classList.contains('hidden')) $('image-viewer').classList.add('hidden');
-  if (!$('video-player').classList.contains('hidden')) $('video-player').classList.add('hidden');  
-  $('audio-player').src = '';
-  $('iframe-player').src = 'foobar.html';
-  $('image-viewer').src = 'foobar.jpg';
-  $('video-player').src = '';
-  $('media-player').style.width = '100%';
-  $('media-player').style.height = 'initial';
-  resizeTextAreas();
 }
 
 //////// Event Firing and Listening //////////////////////////////////////////////////

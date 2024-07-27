@@ -179,6 +179,11 @@ select::-ms-expand {
     background-color: #6D8EBF;
 }
 
+#canvas-wrap {
+    width: auto;
+    height: 100px;
+}
+
 #iframe-player {
     width: 100%;
     height: 100%;
