@@ -21,7 +21,7 @@ new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(worldBordersSet).observe($('txt-input'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 
-if (!isPhone) window.onresize = resizetextareas;
+if (!isPhone) window.onresize = resizeTextAreas;
 
 var Infinityi = NaN;
 var Infinityj = NaN;
@@ -347,17 +347,18 @@ function unFloat() {
   }
   if ($('notes').classList.contains('hidden')) worldBordersSet();
 
+  $('media-player').style.width = $('lst-stack').offsetWidth - 18 + 'px';
   $('txt-input').style.width = $('lst-stack').offsetWidth - 18 + 'px';
 }
 
-function resizetextareas() {
-  resizetextarea($('lst-stack'));
-  resizetextarea($('lst-notes'));
+function resizeTextAreas() {
+  resizeTextArea($('lst-stack'));
+  resizeTextArea($('lst-notes'));
   if ($('lst-notes').offsetHeight === 0) $('lst-notes').classList.add('resizable');
   if ($('lst-stack').offsetHeight === 0) $('lst-stack').classList.add('resizable');
 }
 
-function resizetextarea(textarea) {
+function resizeTextArea(textarea) {
   var winSize = getSize();     
   var textareaHeight = textarea.offsetHeight;
   var bodyHeight = document.getElementsByTagName('body')[0].offsetHeight;
@@ -369,7 +370,7 @@ function resizetextarea(textarea) {
   unFloat();
 }
 
-// function resizetextarea(textarea) {
+// function resizeTextArea(textarea) {
 
 //   var rpnHidden = $('rpnapes').classList.contains('hidden') ? true : false;
 //   var mediaHidden = $('media-player').classList.contains('hidden') ? true : false;
@@ -401,10 +402,10 @@ function resizeInput() {
     $('txt-input').style.height = $('txt-input').scrollHeight + 'px';  
   } else {
     $('txt-input').style.height = winSize[1] - entryPadHeight - 110 + 'px';
-    resizetextarea($('lst-stack'));
+    resizeTextArea($('lst-stack'));
   }
   if (isMobile) bodyHeight = winSize[1];  
-  if (bodyHeight >= winSize[1]) resizetextarea($('lst-stack'));
+  if (bodyHeight >= winSize[1]) resizeTextArea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
@@ -573,7 +574,7 @@ function rpnapesOn() {
   $('rpnapes').classList.add('visible');
   if ($('lst-stack').classList.contains('resizable')) {
     $('lst-stack').classList.remove('resizable');
-    resizetextarea($('lst-stack'));
+    resizeTextArea($('lst-stack'));
   }
   $('txt-input').focus();
 }
@@ -594,7 +595,7 @@ function notesOn() {
   $('notes').classList.add('visible');
   if ($('lst-notes').classList.contains('resizable')) {
     $('lst-notes').classList.remove('resizable');
-    resizetextarea($('lst-notes'));
+    resizeTextArea($('lst-notes'));
   }
   if (!isPhone) $('lst-notes').focus();
 }
@@ -624,7 +625,7 @@ function btnXoff() {
     notesOn();
   }
   if (isMobile) {
-    resizetextareas();
+    resizeTextAreas();
     if (isFirefox) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   }
 }
@@ -2895,7 +2896,7 @@ function embedIframePlayer(src) {
   $('txt-input').value = '';
   $('txt-input').select();
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-  setTimeout(resizetextareas, 100);
+  setTimeout(resizeTextAreas, 100);
 }
 
 function embedTricorder(src) {  
@@ -5797,7 +5798,7 @@ function closeMedia() {
   $('video-player').src = '';
   $('media-player').style.width = '100%';
   $('media-player').style.height = 'initial';
-  resizetextareas();
+  resizeTextAreas();
 }
 
 //////// Event Firing and Listening //////////////////////////////////////////////////
@@ -6153,7 +6154,7 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-        setTimeout(resizetextareas, 100);
+        setTimeout(resizeTextAreas, 100);
       break;
       case 'mp3':
       case 'wav':
@@ -6177,7 +6178,7 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-        setTimeout(resizetextareas, 100);
+        setTimeout(resizeTextAreas, 100);
       break;
       default:
         try {
@@ -6435,7 +6436,7 @@ window.onload = function () {
     var emptyRows = window.innerWidth > 359 ? getEmptyRows() * 18 : getEmptyRows() * 12;
     if ($('lst-stack').scrollTop < emptyRows) $('lst-stack').scrollTop = emptyRows;
   }
-  resizetextarea($('lst-stack'));
+  resizeTextArea($('lst-stack'));
   $('lst-stack').setAttribute('rows', parseInt(screen.height / 18));
   stackSize = parseInt(screen.height / 18 + 2);
 
