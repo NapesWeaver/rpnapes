@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '6:30:00';
+var tStamp = '00:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
