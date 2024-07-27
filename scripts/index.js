@@ -3525,7 +3525,8 @@ function parseCommand() {
   var command = $('txt-input').value.trim();
   var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', NaN, NaN, 'null'); 
   // Commands consist of words and numbers and URLs   
-  if (!/[*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
+  // if (!/[*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
+  if (!/[*√ⅽ℮ɢΦπ\\^]+/.test(command)) {
     var commandArray = command.split(' ');
     // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
     if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
@@ -3620,15 +3621,14 @@ function parseCommand() {
       }
       $('txt-input').value = '';
       updateDisplay();
-    }// If (command === embed and end of stack === URL) or command === embed with URL
-    // if ((command.match(/^embed$/) && stackedCommand.getSoul().match(/^http[s]:\/\/[0-9A-Za-z]/)) || command.match(/^embed http[s]:\/\/[0-9A-Za-z]/)) {    
-    if ((command.match(/^embed$/) && stackedCommand.getSoul().match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/))) {    
+    }// If (command === embed and end of stack === URL/IP) or command === embed with URL/IP  
+    if ((command.match(/^embed$/) && (stackedCommand.getSoul().match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || stackedCommand.getSoul().match(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/)))
+    || (command.match(/^embed .*https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || command.match(/^embed ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/))) {    
       
       if (commandArray[1] === undefined) {
-
         embed(stackedCommand.getSoul());
       } else {
-        embed(commandArray[1]);
+        embed(command.slice(6));
       }
       stack.pop();
       $('txt-input').value = '';
