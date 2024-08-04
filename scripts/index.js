@@ -1268,7 +1268,7 @@ function searchDuckDuckGo() {
 
   if (query) {    
     domainString += query;
-    window.open(domainString, '_blank');    
+    window.open(domainString, '_blank');
   } else {
     window.open('https://duckduckgo.com/');
   }
@@ -1292,7 +1292,7 @@ function searchGoogle() {
       window.open(domainString, '_blank');
     }    
   } else {
-    window.open('https://www.google.com/');
+    window.open('https://www.google.com/?udm=14');
   }
 }
 
@@ -1651,7 +1651,7 @@ function btnOff() {
   }
   
   rpnAlert('Scripts may only close windows they opened.');
-  window.location.href = 'https://www.google.com';
+  window.location.href = 'https://www.google.com/?udm=14';
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
