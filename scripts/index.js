@@ -547,6 +547,63 @@ function runNotes() {
   
 }
 
+function nestArrayByBrowser(srcArray) {
+  var newArray = '';
+
+  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
+    for (var chrome in srcArray) {
+      newArray += '_';
+      newArray += srcArray[chrome];
+    }
+  } else {// Firefox
+    for (var firefox in srcArray) {
+      newArray += '\t';
+      newArray += srcArray[firefox];
+    }
+  }
+  return newArray;
+}
+
+function colorUndoButton() {
+  if (($('btn-undo').value === 'UND' && backups.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
+    $('btn-undo').style.color = '#25FC5A';
+  } else {
+    $('btn-undo').style.color = '#D4D0C8';
+  }        
+  colorUndoRedoMenu();
+}
+
+function colorUndoRedoMenu() {
+  if (backups.length > 3) {
+    $('menu-undo').style.color = '#088B00';
+  } else {
+    $('menu-undo').style.color = '#D4D0C8';
+  }
+  if (restores.length > 0) {
+    $('menu-redo').style.color = '#088B00';
+  } else {
+    $('menu-redo').style.color = '#D4D0C8';
+  }
+}
+
+function backupUndo() {
+  var shortStack = [];
+  var currentRadix = radix;
+  var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
+
+  radix = 10;
+
+  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+  
+  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
+    backups.push(nestArrayByBrowser(shortStack));
+    backups.push(input);
+    restores.length = 0;
+    colorUndoButton();  
+  }
+  radix = currentRadix;
+}
+
 function menuNotes() {
   if (shifted) {
     backupUndo();    
@@ -616,7 +673,6 @@ function showTricorder() {
 
 function btnXoff() {
 
-  
   if ($('rpnapes').classList.contains('hidden')) {
     // Notes is visible - turn on RPNapes
     rpnapesOn();
@@ -631,6 +687,7 @@ function btnXoff() {
 }
 
 function copy() {
+
   if (!stackFocus && !isTextSelected($('txt-input'))) $('txt-input').select();
 
   if (!stackFocus) {
@@ -774,14 +831,6 @@ function objToVector(obj) {
   return theString;
 }
 
-function btnXy() {
-  if (shifted) {
-    abFunction();
-  } else {
-    xyFunction();
-  }  
-}
-
 function abFunction() {
   if (stack.length > 1) {
     backupUndo();
@@ -819,6 +868,14 @@ function xyFunction() {
     swapX(objX);
   }
   setTimeout(resizeInput, 180);
+}
+
+function btnXy() {
+  if (shifted) {
+    abFunction();
+  } else {
+    xyFunction();
+  }  
 }
 
 function calculate(expression) {
@@ -865,13 +922,6 @@ function calculate(expression) {
       return e.toString();
     }    
   }
-}
-
-function runProgram() {
-  btnShift();
-  btnLoad();
-  $('txt-input').select();
-  resetVariables();
 }
 
 function softEnter() {
@@ -1055,28 +1105,6 @@ function btnUndo() {
   }  
 }
 
-function colorUndoButton() {
-  if (($('btn-undo').value === 'UND' && backups.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
-    $('btn-undo').style.color = '#25FC5A';
-  } else {
-    $('btn-undo').style.color = '#D4D0C8';
-  }        
-  colorUndoRedoMenu();
-}
-
-function colorUndoRedoMenu() {
-  if (backups.length > 3) {
-    $('menu-undo').style.color = '#088B00';
-  } else {
-    $('menu-undo').style.color = '#D4D0C8';
-  }
-  if (restores.length > 0) {
-    $('menu-redo').style.color = '#088B00';
-  } else {
-    $('menu-redo').style.color = '#D4D0C8';
-  }
-}
-
 function undoBase(input, aRadix) {
   var inputArr = input.split('\n');
   var outputArr = [];
@@ -1183,24 +1211,6 @@ function redoFunction() {
     resizeInput();
   }
   colorUndoButton();
-}
-
-function backupUndo() {
-  var shortStack = [];
-  var currentRadix = radix;
-  var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
-
-  radix = 10;
-
-  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
-  
-  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
-    backups.push(nestArrayByBrowser(shortStack));
-    backups.push(input);
-    restores.length = 0;
-    colorUndoButton();  
-  }
-  radix = currentRadix;
 }
 
 function toggleChar(input, index, regex, char) {
@@ -1494,23 +1504,6 @@ function btnSave() {
   $('txt-input').focus();
 
   if (isMobile) resizeInput();
-}
-
-function nestArrayByBrowser(srcArray) {
-  var newArray = '';
-
-  if ((/*@cc_on!@*/false || !!document.documentMode) || isChrome || isSafari) {
-    for (var chrome in srcArray) {
-      newArray += '_';
-      newArray += srcArray[chrome];
-    }
-  } else {// Firefox
-    for (var firefox in srcArray) {
-      newArray += '\t';
-      newArray += srcArray[firefox];
-    }
-  }
-  return newArray;
 }
 
 function saveFile(fileName, pretty) {
@@ -5119,6 +5112,13 @@ function formatNumber(result) {
     }  
   }
   return result.toString().replace('+', '');
+}
+
+function runProgram() {
+  btnShift();
+  btnLoad();
+  $('txt-input').select();
+  resetVariables();
 }
 
 //////// Notes ///////////////////////////////////////////////////////////////////////
