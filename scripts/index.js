@@ -2885,8 +2885,8 @@ function closeMedia() {
   if (!$('image-viewer').classList.contains('hidden')) $('image-viewer').classList.add('hidden');
   if (!$('video-player').classList.contains('hidden')) $('video-player').classList.add('hidden');  
   $('audio-player').src = '';
-  $('iframe-player').src = 'foobar.html';
-  $('image-viewer').src = 'foobar.jpg';
+  $('iframe-player').src = '';
+  $('image-viewer').src = '';
   $('video-player').src = '';
   $('media-player').style.width = '100%';
   $('media-player').style.height = 'initial';
@@ -6203,8 +6203,11 @@ window.onload = function () {
     
     switch (this.files[0].name.slice(-3).toLowerCase()) {
       case 'bmp':
+        // Falls through
       case 'gif':
+        // Falls through
       case 'jpg':
+        // Falls through
       case 'jepeg':
         closeMedia();
         $('image-viewer').src = URL.createObjectURL(this.files[0]);
@@ -6216,6 +6219,7 @@ window.onload = function () {
         setTimeout(resizeTextAreas, 100);
       break;
       case 'mp3':
+        // Falls through
       case 'wav':
         closeMedia();
         $('audio-player').src = URL.createObjectURL(this.files[0]);
@@ -6229,6 +6233,7 @@ window.onload = function () {
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
       break;
       case 'mp4':
+        // Falls through
       case 'ogg':
         closeMedia();
         $('video-player').src = URL.createObjectURL(this.files[0]);
