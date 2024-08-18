@@ -1743,14 +1743,6 @@ function inverse() {
   input.select();
 }
 
-function btnInverse() {
-  if (shifted) {
-    btnFactorial();    
-  } else {
-    inverse();
-  }
-}
-
 function intFactorial(num) {  
   if (num <= 1) {
     return 1;
@@ -1809,6 +1801,14 @@ function btnFactorial() {
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
 
   displayResult(factorial(x), units);  
+}
+
+function btnInverse() {
+  if (shifted) {
+    btnFactorial();    
+  } else {
+    inverse();
+  }
 }
 
 function mathLn(num) {
