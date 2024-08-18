@@ -1804,6 +1804,7 @@ function btnFactorial() {
   backupUndo();
   var objX;
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
+  if (isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) && objX.getUnits() === 'null') objX.setRealPart(0);
   var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
   var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
 
