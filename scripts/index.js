@@ -1796,12 +1796,17 @@ function btnFactorial() {
   backupUndo();
   var objX;
   var x;
-  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-  if (isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) && objX.getUnits() === 'null') x = 0;
-  var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
-  if (x !== 0) x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
 
-  displayResult(factorial(x), units);  
+  stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
+
+  var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
+
+  x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
+  x = factorial(x);
+
+  if (isNaN(x)) units = '';
+
+  displayResult(x, units);  
 }
 
 function btnInverse() {
