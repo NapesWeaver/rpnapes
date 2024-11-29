@@ -1795,11 +1795,10 @@ function factorial(num) {
 function btnFactorial() {
   backupUndo();
   var objX;
-  var x;
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-  if (isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) && objX.getUnits() === 'null') x = 0;
+  if (isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) && objX.getUnits() === 'null') objX.setRealPart(0);
   var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
-  if (x !== 0) x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
+  var x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
 
   displayResult(factorial(x), units);  
 }
