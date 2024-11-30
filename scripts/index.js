@@ -23,15 +23,6 @@ new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
 
-if (isPhone && isFirefox) {
-  setTimeout(function () {
-    var viewHeight = $(window).height();
-    var viewWidth = $(window).width();
-    var viewport = $('meta[name=viewport]');
-    viewport.attr('content', 'height=' + viewHeight + 'px, width=' + viewWidth + 'px, initial-scale=1.0');
-}, 3000);
-}
-
 var Infinityi = NaN;
 var Infinityj = NaN;
 var i = '√-1';
@@ -62,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '8:50:00';
+var tStamp = '9:00:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
