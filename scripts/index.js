@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '9:30:00';
+var tStamp = '9:40:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6578,6 +6578,7 @@ window.onload = function () {
   $('btn-seven').onclick = btnSeven;
   $('btn-eight').onclick = btnEight;
   $('btn-nine').onclick = btnNine;
+  $('btn-nine').readOnly = true;
   $('btn-divide').onclick = btnDivide;
   $('btn-angle').onclick = toggleAngleMode;
   $('btn-clear').onclick = btnClear;
