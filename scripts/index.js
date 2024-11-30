@@ -1777,9 +1777,10 @@ function gamma(n) {  // Accurate to about 15 decimal places
 function factorial(num) {  
   var result;
   
+  if (num === Infinity) num = 999;
+  if (num === -Infinity) num = -999;
+  
   try {
-    if (num === Infinity) num = 999;
-    if (num === -Infinity) num = -999;
 
     if (num % 1 === 0) {
       result = intFactorial(num);
@@ -1796,17 +1797,17 @@ function btnFactorial() {
   backupUndo();
   var objX;
   var x;
+  var units;
 
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-
-  var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
-
+  units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
+
+  if (x === undefined) x = 0;
   x = factorial(x);
 
   if (isNaN(x)) units = '';
-
-  displayResult(x, units);  
+  displayResult(x, units);
 }
 
 function btnInverse() {
