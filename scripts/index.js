@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '9:40:00';
+var tStamp = '9:50:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6513,10 +6513,10 @@ window.onload = function () {
   
   $('menu-help').onclick = menuHelp;
 
-  if (isFirefox && isMobile) $('menu-keyboard-li').classList.add('strikethrough');
-
   if (isMobile) {
+    if (isFirefox) $('menu-keyboard-li').classList.add('strikethrough');
     $('menu-twig').style = 'display:none';
+
   } else {
     $('menu-keyboard').style = 'display:none';
     $('menu-haptic').style = 'display:none';
@@ -6578,7 +6578,7 @@ window.onload = function () {
   $('btn-seven').onclick = btnSeven;
   $('btn-eight').onclick = btnEight;
   $('btn-nine').onclick = btnNine;
-  $('btn-nine').readOnly = true;
+  $('btn-nine').addEventListener('blur', function() { window.scrollTo(0, 0) });
   $('btn-divide').onclick = btnDivide;
   $('btn-angle').onclick = toggleAngleMode;
   $('btn-clear').onclick = btnClear;
