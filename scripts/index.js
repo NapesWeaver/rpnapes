@@ -21,7 +21,7 @@ new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(worldBordersSet).observe($('txt-input'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 
-if (!isPhone) window.onresize = resizeTextAreas;
+if (!isPhone || isFirefox) window.onresize = resizeTextAreas;
 
 var Infinityi = NaN;
 var Infinityj = NaN;
@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '13:50:00';
+var tStamp = '7:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
