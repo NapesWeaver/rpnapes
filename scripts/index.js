@@ -22,7 +22,7 @@ new ResizeObserver(worldBordersSet).observe($('txt-input'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
-navigator.virtualKeyboard.overlaysContent = true;
+// navigator.virtualKeyboard.overlaysContent = true;
 
 var Infinityi = NaN;
 var Infinityj = NaN;
@@ -54,7 +54,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '8:30:00';
+var tStamp = '8:20:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
