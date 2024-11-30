@@ -22,7 +22,6 @@ new ResizeObserver(worldBordersSet).observe($('txt-input'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
-if ('virtualKeyboard' in navigator) navigator.virtualKeyboard.overlaysContent = true;
 
 var Infinityi = NaN;
 var Infinityj = NaN;
@@ -54,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '8:31:00';
+var tStamp = '8:40:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6226,6 +6225,8 @@ document.addEventListener('visibilitychange', function() {
     shiftHeld = false;
   }
 });
+
+if ('virtualKeyboard' in navigator) navigator.virtualKeyboard.overlaysContent = true;
 
 navigator.virtualKeyboard.addEventListener('geometrychange', function() {
   setTimeout(resizeTextAreas, 1000);
