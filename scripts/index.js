@@ -6228,7 +6228,7 @@ document.addEventListener('visibilitychange', function() {
 });
 
 navigator.virtualKeyboard.addEventListener('geometrychange', function() {
-  resizeTextAreas();
+  setTimeout(resizeTextAreas, 1000);
 });
 
 window.onload = function () {
