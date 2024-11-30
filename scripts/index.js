@@ -54,7 +54,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '8:30:00';
+var tStamp = '8:31:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6225,6 +6225,10 @@ document.addEventListener('visibilitychange', function() {
     ctrlHeld = false;
     shiftHeld = false;
   }
+});
+
+navigator.virtualKeyboard.addEventListener('geometrychange', function() {
+  resizeTextAreas();
 });
 
 window.onload = function () {
