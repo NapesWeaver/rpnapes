@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '9:00:00';
+var tStamp = '9:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -5922,6 +5922,7 @@ document.addEventListener('click', function(event) {
     resizeInput();
   }
   if (event.detail === 2 && event.target === $('header')) closeMedia();
+  if (isPhone && isFirefox) window.scrollTo(0, 0);
 });
 
 document.addEventListener('keypress', function(event) {
@@ -6511,6 +6512,8 @@ window.onload = function () {
   }  
   
   $('menu-help').onclick = menuHelp;
+
+  if (isFirefox && isMobile) $('menu-keyboard-li').classList.add('strikethrough');
 
   if (isMobile) {
     $('menu-twig').style = 'display:none';
