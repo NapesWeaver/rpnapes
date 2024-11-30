@@ -1776,12 +1776,11 @@ function gamma(n) {  // Accurate to about 15 decimal places
 
 function factorial(num) {  
   var result;
-  
+
   if (num === Infinity) num = 999;
   if (num === -Infinity) num = -999;
   
   try {
-
     if (num % 1 === 0) {
       result = intFactorial(num);
     } else {
@@ -1802,11 +1801,11 @@ function btnFactorial() {
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
-
+  
   if (x === undefined) x = 0;
-  x = factorial(x);
-
   if (isNaN(x)) units = '';
+
+  x = factorial(x);
   displayResult(x, units);
 }
 
