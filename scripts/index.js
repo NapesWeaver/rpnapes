@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '10:00:00';
+var tStamp = '8:50:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1774,7 +1774,7 @@ function gamma(n) {  // Accurate to about 15 decimal places
   }
 }
 
-function factorial(num) {  
+function factorial(num) {
   var result;
 
   if (num === Infinity) num = 999;
@@ -1803,6 +1803,7 @@ function btnFactorial() {
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
   
   if (x === undefined) x = 0;
+  if (typeof num === 'string') x === NaN;
   if (isNaN(x)) units = '';
 
   x = factorial(x);
@@ -5922,7 +5923,7 @@ document.addEventListener('click', function(event) {
     resizeInput();
   }
   if (event.detail === 2 && event.target === $('header')) closeMedia();
-  if (isPhone && isFirefox) window.scrollTo(0, 0);
+  if (isPhone && isFirefox) window.scrollTo(0, 0);// Firefox mobile keypad :(
 });
 
 document.addEventListener('keypress', function(event) {
