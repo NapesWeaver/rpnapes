@@ -134,8 +134,8 @@ math.import({
   mathRoot: function (root, num) {
     var objX = getX(root);
     var objY = getX(num);
-    var x = buildComplexNumber(objX);
-    var y = buildComplexNumber(objY);
+    var x = buildComplexNum(objX);
+    var y = buildComplexNum(objY);
     var signRoot = Math.sign(x);
     var signNum = Math.sign(y);
     var result = {};
@@ -164,7 +164,7 @@ math.import({
   },
   mathSin: function(input) {
     var objX = getX(input);
-    var x = buildComplexNumber(objX);
+    var x = buildComplexNum(objX);
     var degrees;
 
     try {
@@ -191,7 +191,7 @@ math.import({
   },
   mathCos: function(input) {
     var objX = getX(input);
-    var x = buildComplexNumber(objX);
+    var x = buildComplexNum(objX);
     var degrees;
   
     try {
@@ -218,7 +218,7 @@ math.import({
   },
   mathTan: function(input) {
     var objX = getX(input);
-    var x = buildComplexNumber(objX);
+    var x = buildComplexNum(objX);
     var degrees;
   
     try {
@@ -255,7 +255,7 @@ math.import({
   },
   mathASin: function(input) {
     var objX = getX(input);
-    var x = buildComplexNumber(objX);
+    var x = buildComplexNum(objX);
 
     try {
       x = math.asin(x);
@@ -275,7 +275,7 @@ math.import({
   },
   mathACos: function(input) {
     var objX = getX(input);
-    var x = buildComplexNumber(objX);
+    var x = buildComplexNum(objX);
   
     try {
       x = math.acos(x);
@@ -295,7 +295,7 @@ math.import({
   },
   mathATan: function(input) {
     var objX = getX(input);
-    var x = buildComplexNumber(objX);
+    var x = buildComplexNum(objX);
   
     try {
       x = math.atan(x);
@@ -1687,7 +1687,7 @@ function inverse() {
         if (objX.getRealPart() === 'NaN') objX.setRealPart('0');
         objX.setImaginary('NaN');
       }
-      var x = isANumber(objX.getImaginary()) ? buildComplexNumber(objX) : calculate(objX.getRealPart(objX));
+      var x = isANumber(objX.getImaginary()) ? buildComplexNum(objX) : calculate(objX.getRealPart(objX));
 
       displayResult(math.inv(x), newUnits);
     } else {
@@ -1814,8 +1814,9 @@ function btnFactorial() {
 
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
+  
+  x = buildComplexNum(objX);
 
-  x = buildComplexNumber(objX);
   if (x === -Infinity) x = -999;
   
   try {    
@@ -1823,6 +1824,8 @@ function btnFactorial() {
   } catch {
     result = NaN;
   }
+  if (isNaN(result)) units = '';
+
   displayResult(result, units);
 }
 
@@ -1836,7 +1839,7 @@ function btnInverse() {
 
 function mathLn(num) {
   var objX = getX(num);
-  var x = buildComplexNumber(objX);
+  var x = buildComplexNum(objX);
 
   return math.log(x, ℮);
 }
@@ -1862,8 +1865,8 @@ function mathLog(base, num) {
   var objX = getX(base);
   var objY = getX(num);
   var result = {};
-  var x = buildComplexNumber(objX);
-  var y = buildComplexNumber(objY);
+  var x = buildComplexNum(objX);
+  var y = buildComplexNum(objY);
 
   result = math.log(y, x);
 
@@ -1890,8 +1893,8 @@ function baseLog() {
   }  
   objX = getX();
 
-  y = buildComplexNumber(objY);
-  x = buildComplexNumber(objX);
+  y = buildComplexNum(objY);
+  x = buildComplexNum(objX);
 
   try {
     result = math.log(y, x);    
@@ -1916,8 +1919,8 @@ function mathPow(num, pow) {
   var objX = getX(pow);
   var objY = getX(num);
   
-  var x = buildComplexNumber(objX);
-  var y = buildComplexNumber(objY);
+  var x = buildComplexNum(objX);
+  var y = buildComplexNum(objY);
 
   return math.pow(y, x);
 }
@@ -1942,8 +1945,8 @@ function exponential() {
   }  
   objX = getX();
 
-  y = buildComplexNumber(objY); 
-  x = buildComplexNumber(objX);
+  y = buildComplexNum(objY); 
+  x = buildComplexNum(objX);
 
   try {
     result = math.pow(y, x);
@@ -1957,8 +1960,8 @@ function exponential() {
 function mathRoots(root, num) {
   var objX = getX(root);
   var objY = getX(num);
-  var x = buildComplexNumber(objX);
-  var y = buildComplexNumber(objY);
+  var x = buildComplexNum(objX);
+  var y = buildComplexNum(objY);
   var results = math.nthRoots(y, x);
   var resultsArr = results.toString().split(',');
 
@@ -1972,8 +1975,8 @@ function mathRoots(root, num) {
 function mathRoot(root, num) {
   var objX = getX(root);
   var objY = getX(num);
-  var x = buildComplexNumber(objX);
-  var y = buildComplexNumber(objY);
+  var x = buildComplexNum(objX);
+  var y = buildComplexNum(objY);
   var signRoot = Math.sign(x);
   var signNum = Math.sign(y);
   var result = {};
@@ -2021,8 +2024,8 @@ function radical() {
   }
   objX = getX();
   
-  y = buildComplexNumber(objY).toString(); 
-  x = buildComplexNumber(objX).toString();
+  y = buildComplexNum(objY).toString(); 
+  x = buildComplexNum(objX).toString();
 
   try {
     var signRoot = Math.sign(x);
@@ -2108,8 +2111,8 @@ function modulus() {
   }  
   objX = getX();
 
-  y = buildComplexNumber(objY); 
-  x = buildComplexNumber(objX);
+  y = buildComplexNum(objY); 
+  x = buildComplexNum(objX);
   
   try {
     result = math.mod(y, x);
@@ -2159,7 +2162,7 @@ function signChange() {
     || (startPos === txtInput.value.length && !/[-+^eE∠ ]/.test(txtInput.value.charAt(startPos - 1)))) {
     
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
-      result = math.unaryMinus(buildComplexNumber(objX));    
+      result = math.unaryMinus(buildComplexNum(objX));    
     } else {
       result = leadingSignChange(objX.getSoul());
     }  
@@ -2244,8 +2247,8 @@ function division() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = buildComplexNumber(objY);
-  var x = buildComplexNumber(objX);
+  var y = buildComplexNum(objY);
+  var x = buildComplexNum(objX);
 
   try {
     result = math.divide(y, x);
@@ -2274,8 +2277,8 @@ function multiplication() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = buildComplexNumber(objY);
-  var x = buildComplexNumber(objX);
+  var y = buildComplexNum(objY);
+  var x = buildComplexNum(objX);
    
   try {
     result = math.multiply(y, x);
@@ -2304,8 +2307,8 @@ function subtraction() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');  
 
-  var y = buildComplexNumber(objY);
-  var x = buildComplexNumber(objX);
+  var y = buildComplexNum(objY);
+  var x = buildComplexNum(objX);
  
   try {
     result = math.subtract(y, x);
@@ -2334,8 +2337,8 @@ function addition() {
   stackFocus ? objY = stack[getIndex('lst-stack') - stackSize] : objY = stack.pop();
   if (objY === undefined) objY = new NumberObject('', 'NaN', 'NaN','null');
 
-  var y = buildComplexNumber(objY);
-  var x = buildComplexNumber(objX);
+  var y = buildComplexNum(objY);
+  var x = buildComplexNum(objX);
   
   try {
     result = math.add(y, x);
@@ -2354,8 +2357,7 @@ function btnAdd() {
   }  
 }
 
-function buildComplexNumber(obj) {
-  if (obj.getSoul().trim() === '') obj.setSoul('0');
+function buildComplexNum(obj) {
 
   try {
     var a = 0;
@@ -2363,6 +2365,7 @@ function buildComplexNumber(obj) {
     
     if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
       a = calculate(stripUnits(obj.getSoul()));
+      if (obj.getSoul().trim() === '') a = 0;
     } else {
       if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
       if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
@@ -2482,7 +2485,7 @@ function displayResults(results, newUnits) {
 
 function sin(input) {
   var objX = getX(input);
-  var x = buildComplexNumber(objX);
+  var x = buildComplexNum(objX);
   var degrees;
 
   try {
@@ -2510,7 +2513,7 @@ function sin(input) {
 
 function cos(input) {
   var objX = getX(input);
-  var x = buildComplexNumber(objX);
+  var x = buildComplexNum(objX);
   var degrees;
 
   try {
@@ -2538,7 +2541,7 @@ function cos(input) {
 
 function tan(input) {
   var objX = getX(input);
-  var x = buildComplexNumber(objX);
+  var x = buildComplexNum(objX);
   var degrees;
 
   try {
@@ -2576,7 +2579,7 @@ function tan(input) {
 
 function asin(input) {
   var objX = getX(input);
-  var x = buildComplexNumber(objX);
+  var x = buildComplexNum(objX);
 
   try {
     x = math.asin(x);
@@ -2597,7 +2600,7 @@ function asin(input) {
 
 function acos(input) {
   var objX = getX(input);
-  var x = buildComplexNumber(objX);
+  var x = buildComplexNum(objX);
 
   try {
     x = math.acos(x);
@@ -2618,7 +2621,7 @@ function acos(input) {
 
 function atan(input) {
   var objX = getX(input);
-  var x = buildComplexNumber(objX);
+  var x = buildComplexNum(objX);
 
   try {
     x = math.atan(x);
