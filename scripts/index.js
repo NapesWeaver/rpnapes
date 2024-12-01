@@ -1814,7 +1814,7 @@ function btnFactorial() {
 
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
-  
+  console.log('units', units);
   x = buildComplexNum(objX);
 
   if (x === -Infinity) x = -999;
@@ -1824,7 +1824,7 @@ function btnFactorial() {
   } catch {
     result = NaN;
   }
-  if (isNaN(result)) units = '';
+  if (isNaN(x) && isNaN(result.re) && isNaN(result.im)) units = '';
 
   displayResult(result, units);
 }
@@ -2365,6 +2365,7 @@ function buildComplexNum(obj) {
     
     if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
       a = calculate(stripUnits(obj.getSoul()));
+      
       if (obj.getSoul().trim() === '') a = 0;
     } else {
       if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
