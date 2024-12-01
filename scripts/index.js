@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '8:50:00';
+var tStamp = '10:00:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1774,7 +1774,7 @@ function gamma(n) {  // Accurate to about 15 decimal places
   }
 }
 
-function factorial(num) {
+function factorial(num) {  
   var result;
 
   if (num === Infinity) num = 999;
@@ -1801,9 +1801,8 @@ function btnFactorial() {
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
   units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
   x = isNaN(objX.getRealPart()) && isNaN(objX.getImaginary()) ? calculate(stripUnits(objX.getSoul())) : parseFloat(objX.getRealPart());
-  
-  if (x === undefined) x = 0;
-  if (typeof num === 'string') x === NaN;
+
+  if (objX.getSoul() === '') x = 0;
   if (isNaN(x)) units = '';
 
   x = factorial(x);
