@@ -1809,6 +1809,7 @@ function btnFactorial() {
   backupUndo();
   var objX;
   var x;
+  var negativeNum;
   var units;
   var result;
 
@@ -1818,6 +1819,11 @@ function btnFactorial() {
   x = buildComplexNum(objX);
 
   if (x === -Infinity) x = -999;
+
+  if (x < 0) {
+    negativeNum = true;
+    x = x * -1;
+  }
   
   try {    
     result = math.gamma(math.add(x, 1));    
@@ -1825,6 +1831,8 @@ function btnFactorial() {
     result = NaN;
   }
   if (isNaN(x) && isNaN(result.re) && isNaN(result.im)) units = '';
+
+  if (negativeNum) result = result * -1;
 
   displayResult(result, units);
 }
