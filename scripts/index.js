@@ -1253,8 +1253,8 @@ function btnEe() {
   if (shifted) {
     if ($('menu-form').textContent === 'Polar') {      
       // (Cursor is next to valid char && input doesn't contain illegal char) || cursor is at 'j' || cursor is next to 'j'
-      if ((/[ⅽ℮ɢΦπ0-9y)]/.test(input.charAt(index - 1)) && !/[;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
-        toggleChar(input, index, /[j]/, 'j');        
+      if (((/[-+*/ⅽ℮ɢΦπ0-9y)]/.test(input.charAt(index - 1)) || input === '') && !/[;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
+        toggleChar(input, index, /[j]/, 'j');
       }              
     } else {      
       // (There is no '∠' && cursor is next to valid char && input doesn't contain illegal char) || cursor is at '∠' || cursor is next to '∠'
