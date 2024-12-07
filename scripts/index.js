@@ -131,6 +131,28 @@ if (!Array.prototype.indexOf)
 math.import({
   Infinityi: NaN,
   Infinityj: NaN,
+  mathFact: function (num) {
+    var objX = getX(num);
+    var x = buildComplexNum(objX);
+    var negativeNum;
+    var result;
+
+    if (x === -Infinity) x = -999;
+
+    if (x < 0) {
+      negativeNum = true;
+      x = x * -1;
+    }    
+    try {    
+      result = math.gamma(math.add(x, 1));    
+    } catch {
+      result = NaN;
+    }
+    if (isNaN(x) && isNaN(result.re) && isNaN(result.im)) units = '';
+
+    if (negativeNum) result = result * -1;
+    return result;
+  },
   mathRoot: function (root, num) {
     var objX = getX(root);
     var objY = getX(num);
@@ -315,6 +337,10 @@ math.import({
       x = NaN;
     }  
     return x; 
+  },
+  fact: function(x) {
+    if (x === undefined) x = 0;
+    return mathFact(x);
   },
   root: function(y, x) {
     if (x === undefined) x = 2;
@@ -1743,65 +1769,26 @@ function inverse() {
   input.select();
 }
 
-// function intFactorial(num) {  
-//   if (num <= 1) {
-//     return 1;
-//   } else {
-//     try {
-//       var result = num * factorial(num - 1);
-//     } catch (e) {
-//       return 'Infinity';
-//     }
-//     return result;
-//   }
-// }
-
-// function gamma(n) {  // Accurate to about 15 decimal places
-//   // Some magic constants
-//   var g = 7, // g represents the precision desired, p is the values of p[i] to plug into Lanczos' formula
-//     p = [0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313, -176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6, 1.5056327351493116e-7];
-//   if(n < 0.5) {
-//     return Math.PI / Math.sin(n * Math.PI) / gamma(1 - n);
-//   }
-//   else {
-//     n--;
-//     var x = p[0];
-//     for(var i = 1; i < g + 2; i++) {
-//       x += p[i] / (n + i);
-//     }
-//     var t = n + g + 0.5;
-//     return Math.sqrt(2 * Math.PI) * Math.pow(t, (n + 0.5)) * Math.exp(-t) * x;
-//   }
-// }
-
-// function factorial(num) {  
-//   var result;
-  
-//   try {
-//     if (num === Infinity) num = 999;
-//     if (num === -Infinity) num = -999;
-
-//     if (num % 1 === 0) {
-//       result = intFactorial(num);
-//     } else {
-//       result = gamma(num + 1);
-//     }
-//   } catch {
-//     result = NaN;
-//   }
-//   return result;
-// }
-
-function factorial(num) {
+function mathFact(num) {
+  var objX = getX(num);
+  var x = buildComplexNum(objX);
+  var negativeNum;
   var result;
 
-  if (num === -Infinity) num = -999;
-  
+  if (x === -Infinity) x = -999;
+
+  if (x < 0) {
+    negativeNum = true;
+    x = x * -1;
+  }    
   try {    
-    result = math.gamma(math.add(num, 1));    
+    result = math.gamma(math.add(x, 1));    
   } catch {
     result = NaN;
   }
+  if (isNaN(x) && isNaN(result.re) && isNaN(result.im)) units = '';
+
+  if (negativeNum) result = result * -1;
   return result;
 }
 
@@ -1814,8 +1801,7 @@ function btnFactorial() {
   var result;
 
   stackFocus ? objX = stack[getIndex('lst-stack') - stackSize] : objX = getX();
-  units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
-  console.log('units', units);
+  units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';  
   x = buildComplexNum(objX);
 
   if (x === -Infinity) x = -999;
@@ -1823,8 +1809,7 @@ function btnFactorial() {
   if (x < 0) {
     negativeNum = true;
     x = x * -1;
-  }
-  
+  }  
   try {    
     result = math.gamma(math.add(x, 1));    
   } catch {
@@ -1833,7 +1818,6 @@ function btnFactorial() {
   if (isNaN(x) && isNaN(result.re) && isNaN(result.im)) units = '';
 
   if (negativeNum) result = result * -1;
-
   displayResult(result, units);
 }
 
@@ -3346,7 +3330,7 @@ function help(command) {
     case 'maths':
       inputText('');
       enterInput();
-      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
+      inputText('acos(x) asin(x) atan(x) cos(x) fact(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]).');
       break;
     case 'max':
       inputText('');
@@ -4271,11 +4255,11 @@ function parseEvaluation(input) {
     if (/√/g.test(input)) input = insertDefaultIndex(input);
 
     // Parse nested symbols
-    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'factorial(');
+    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
     while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
     while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
     // Parse in-line symbols
-    while (/!/.test(input)) input = parseInline(input, '!', 'factorial(');
+    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
     while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
     while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
   }
@@ -4283,6 +4267,11 @@ function parseEvaluation(input) {
 }
 
 // User functions
+function fact(x) {
+  if (x === undefined) x = 0;
+  return mathFact(x);
+}
+
 function pow(y, x) {
   if (x === undefined) x = 2;
   return mathPow(y, x);
