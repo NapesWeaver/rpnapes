@@ -1278,7 +1278,7 @@ function btnEe() {
 
   if (shifted) {
     if ($('menu-form').textContent === 'Polar') {      
-      // (Cursor is next to valid char && input doesn't contain illegal char) || cursor is at 'j' || cursor is next to 'j'
+      // (Cursor is next to valid char || Input === '')&& input doesn't contain illegal char) || cursor is at 'j' || cursor is next to 'j'
       if (((/[-+*/ⅽ℮ɢΦπ0-9y)]/.test(input.charAt(index - 1)) || input === '') && !/[;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
         toggleChar(input, index, /[j]/, 'j');
       }              
