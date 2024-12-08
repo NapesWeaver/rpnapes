@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '10:00:00';
+var tStamp = '9:57:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1274,24 +1274,29 @@ function buttonInsert(regex, char) {
 
 function btnEe() {
   var input = $('txt-input').value;
-  var index = $('txt-input').selectionStart;
+  var start = $('txt-input').selectionStart;
+  var end = $('txt-input').selectionEnd;
 
   if (shifted) {
-    if ($('menu-form').textContent === 'Polar') {      
-      // (Cursor is next to valid char || Input === '')&& input doesn't contain illegal char) || cursor is at 'j' || cursor is next to 'j'
-      if (((/[-+*/ⅽ℮ɢΦπ0-9y)]/.test(input.charAt(index - 1)) || input === '') && !/[;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input.charAt(index) === 'j' || input.charAt(index - 1) === 'j') {
-        toggleChar(input, index, /[j]/, 'j');
-      }              
+    if ($('menu-form').textContent === 'Polar') {
+      // Text is selected && char before selection is valid && char after selection is valid
+      if (start < end && !/[;,?:'"`~@#$%&×{}[\]|\\_a-hk-zA-Z]/.test(input.charAt(start - 1)) && !/[;,?:'"`~@#$%&×{}[\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(end))) {
+        backupUndo();
+        insertAtCursor($('txt-input'), 'j');
+        // (Cursor is next to valid char) && input doesn't contain illegal char) || Input === '' || cursor is at [ij] || cursor is next to [ij]
+      } else if (((/[-+*/^√<>=ⅽ℮ɢΦπ0-9y(]/.test(input.charAt(start - 1)) && !/[;,?:'"`~@#$%&×{}[\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(start))) && !/[;,?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input === '' || /[ij]/.test(input.charAt(start)) || /[ij]/.test(input.charAt(start - 1))) {       
+        (/[i]/.test(input.charAt(start - 1)) || /[i]/.test(input.charAt(start))) ? toggleChar(input, start, /[i]/, 'j') : toggleChar(input, start, /[j]/, 'j');
+      }
     } else {      
       // (There is no '∠' && cursor is next to valid char && input doesn't contain illegal char) || cursor is at '∠' || cursor is next to '∠'
-      if ((input.split('∠').length - 1 === 0 && /[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(index - 1)) && !/[;,<>?:'"`~!@#$%√^&×(){}[\]|\\_]/g.test(input)) || input.charAt(index) === '∠' || input.charAt(index - 1) === '∠') {
-      toggleChar(input, index, /[∠]/, '∠');
+      if ((input.split('∠').length - 1 === 0 && /[ⅽ℮ɢΦπ0-9y]/.test(input.charAt(start - 1)) && !/[;,<>?:'"`~!@#$%√^&×(){}[\]|\\_]/g.test(input)) || input.charAt(start) === '∠' || input.charAt(start - 1) === '∠') {
+      toggleChar(input, start, /[∠]/, '∠');
       }
     }
   } else {
     // (Cursor is next to valid char && not at [.] && input doesn't contain illegal char && [Ee] is not already part of the number) || cursor is at [Ee] || cursor is next to [Ee]
-    if ((/[0-9Ee](?![.])/.test(input.charAt(index - 1)) && !/[.]/.test(input.charAt(index)) && !/[;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input)) || /[Ee]/.test(input.charAt(index)) || /[Ee]/.test(input.charAt(index - 1))) {      
-      toggleChar(input, index, /[Ee]/, 'e');
+    if ((/[0-9Ee](?![.])/.test(input.charAt(start - 1)) && !/[.]/.test(input.charAt(start)) && !/[;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input) && !/[0-9.]+[Ee]+[0-9.]+$/.test(input)) || /[Ee]/.test(input.charAt(start)) || /[Ee]/.test(input.charAt(start - 1))) {      
+      toggleChar(input, start, /[Ee]/, 'e');
     }
   }
   resizeInput();
