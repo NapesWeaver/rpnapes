@@ -6485,7 +6485,7 @@ window.onload = function () {
   }
   
   $('menu-stopwatch').onclick = menuStopwatch;
-  $('menu-tricorder').onclick = showTricorder;
+  // $('menu-tricorder').onclick = showTricorder;
   $('menu-twig').onclick = monOn;
   
   // Menu Symbols
