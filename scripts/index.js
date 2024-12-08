@@ -53,7 +53,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '9:57:00';
+var tStamp = '12:09:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1284,7 +1284,7 @@ function btnEe() {
         backupUndo();
         insertAtCursor($('txt-input'), 'j');
         // (Cursor is next to valid char) && input doesn't contain illegal char) || Input === '' || cursor is at [ij] || cursor is next to [ij]
-      } else if (((/[-+*/^√<>=ⅽ℮ɢΦπ0-9y(]/.test(input.charAt(start - 1)) && !/[;,?:'"`~@#$%&×{}[\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(start))) && !/[;,?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input === '' || /[ij]/.test(input.charAt(start)) || /[ij]/.test(input.charAt(start - 1))) {       
+      } else if (((/[-+*\/^√<>=ⅽ℮ɢΦπ0-9y(]/.test(input.charAt(start - 1)) && !/[;,?:'"`~@#$%&×{}([\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(start))) && !/[;,?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input === '' || /[ij]/.test(input.charAt(start)) || /[ij]/.test(input.charAt(start - 1))) {       
         (/[i]/.test(input.charAt(start - 1)) || /[i]/.test(input.charAt(start))) ? toggleChar(input, start, /[i]/, 'j') : toggleChar(input, start, /[j]/, 'j');
       }
     } else {      
