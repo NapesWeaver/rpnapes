@@ -5935,7 +5935,10 @@ document.addEventListener('click', function(event) {
     getStackEntry();
     resizeInput();
   }
-  if (event.detail === 2 && event.target === $('header')) closeMedia();
+  if (event.detail === 2 && event.target === $('header')) {
+    closeMedia();
+    $('txt-input').focus();
+  }
   if (isPhone && isFirefox) window.scrollTo(0, 0);// Firefox mobile keypad :(
 });
 
