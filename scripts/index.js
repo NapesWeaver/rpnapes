@@ -904,7 +904,7 @@ function btnXy() {
   }  
 }
 
-function calculate(expression) {
+function calculate(expression) {  
   var parsed = parseEvaluation(expression);
 
   parsed = decodeSpecialChar(parsed);
@@ -1006,12 +1006,7 @@ function btnEval() {
     btnLoad();
     return;
   }
-  // Contains [*!^√()] && Not part of a program
-  if ((/[*!^√()]/.test($('txt-input').value) || /1\//g.test(getX($('txt-input').value).units)) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test($('txt-input').value)) {
-    displayResult(calculate(stripUnits($('txt-input').value)), units);
-  } else {
-    displayResult(calculate($('txt-input').value), ''); 
-  }
+  displayResult(calculate(stripUnits($('txt-input').value)), units);
   $('txt-input').select();  
 }
 
@@ -1041,14 +1036,12 @@ function outputTestResult(result, newUnits) {
 function runTest() {
   try {
     if (stack.length > 0 && stack.length % 2 === 0) {
-      var expression = decodeSpecialChar(stack[stack.length - 2].getSoul());
-      var result = calculate(stripUnits(expression));
-      var units = getX(expression).getUnits() !== 'null' ? ' ' + getX(expression).getUnits() : '';
-      var valueY = outputTestResult(result, units);
-      var valueX = decodeSpecialChar(stack[stack.length - 1].getSoul());
-      var color = valueY === valueX ? 'green' : 'red';
-
-      console.log(`${valueY} %c${valueY === valueX}`, `font-weight: bold; color: ${color};`);
+      var testObj = getX(decodeSpecialChar(stack[stack.length - 2].getSoul()));
+      var units = testObj.getUnits() !== 'null' ? ' ' + testObj.getUnits() : '';
+      var result = outputTestResult(calculate(stripUnits(testObj.getSoul())), units);
+      var solution = decodeSpecialChar(stack[stack.length - 1].getSoul());
+      var color = result === solution ? 'green' : 'red';
+      console.log(`${result} %c${result === solution}`, `font-weight: bold; color: ${color};`);
     }
   } catch(e) {
     console.log(`%c${stack[stack.length - 2].soul, e.toString()}`, 'font-weight: bold; color: red;');
@@ -1585,9 +1578,7 @@ function btnLoad() {
         }, 20);        
       } else {
         loadStack(getCookie('STACK').slice(index));
-      }
-    } else {
-      backupUndo();
+      }   
     } 
   } catch (err) { 
     rpnAlert('Load STACK error.');
