@@ -20,6 +20,7 @@ if (isPhone) navigator.vibrate = navigator.vibrate || navigator.webkitVibrate ||
 new ResizeObserver(unFloat).observe($('lst-stack'));
 new ResizeObserver(worldBordersSet).observe($('txt-input'));
 new ResizeObserver(unFloat).observe($('lst-notes'));
+new ResizeObserver(resizeMedia).observe($('media-player'));
 
 if (!isPhone) window.onresize = resizeTextAreas;
 
@@ -369,12 +370,16 @@ function unFloat() {
     $('wrap').style.marginLeft = 'auto';
   }
   if (winSize[0] < lstWidth + margin) {
-    $('rpnapes').classList.contains('hidden') ? $('lst-notes').style.width = winSize[0] - margin + 'px' : $('lst-stack').style.width = winSize[0] - margin + 'px';
+
+    if ($('rpnapes').classList.contains('hidden')) {
+      $('lst-notes').style.width = winSize[0] - margin + 'px';
+    } else {
+      $('lst-stack').style.width = winSize[0] - margin + 'px';
+      if (lstWidth < $('media-player').clientWidth) $('media-player').style.width = $('lst-stack').offsetWidth - 18 + 'px';
+      if (lstWidth < $('txt-input').clientWidth) $('txt-input').style.width = $('lst-stack').offsetWidth - 18 + 'px';
+    }
   }
   if ($('notes').classList.contains('hidden')) worldBordersSet();
-
-  $('media-player').style.width = $('lst-stack').offsetWidth - 18 + 'px';
-  $('txt-input').style.width = $('lst-stack').offsetWidth - 18 + 'px';
 }
 
 function resizeTextAreas() {
@@ -396,25 +401,9 @@ function resizeTextArea(textarea) {
   unFloat();
 }
 
-// function resizeTextArea(textarea) {
-
-//   var rpnHidden = $('rpnapes').classList.contains('hidden') ? true : false;
-//   var mediaHidden = $('media-player').classList.contains('hidden') ? true : false;
-//   var winSize = getSize();
-//   var headerHeight = document.getElementsByTagName('header')[0].offsetHeight;
-//   // var headerHeight = 0
-
-//   var menuHeight = rpnHidden ? 0 : $('menu-wrap').offsetHeight; 
-//   var mediaHeight = rpnHidden || mediaHidden ? 0 : $('media-player').offsetHeight - menuHeight;  
-//   var inputHeight = rpnHidden ? 0 : $('txt-input').offsetHeight;
-//   var entryPadHeight = rpnHidden ? $('num-pad').offsetHeight : $('entry-pad').offsetHeight;
-//   var paddingSize = rpnHidden ? 21 : 15;
-//   // var paddingSize = 0;
-
-//   textarea.style.height = winSize[1] - headerHeight - menuHeight - mediaHeight - inputHeight - entryPadHeight - paddingSize + 'px';
-//   textarea.classList.remove('resizable');  
-//   unFloat();
-// }
+function resizeMedia() {
+  resizeTextArea($('lst-stack')); 
+}
 
 function resizeInput() {
   var winSize = getSize();   
