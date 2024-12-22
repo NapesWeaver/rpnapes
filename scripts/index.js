@@ -54,7 +54,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '12:08:00';
+var tStamp = '12:17:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6420,6 +6420,7 @@ window.onload = function () {
   $('menu-time').onclick = insertTime;
 
   // Menu Formulas
+
   $('menu-compound-interest').onclick = function() {
     insertText('P*(1+r/n)^(n*t)');
   }
@@ -6440,7 +6441,7 @@ window.onload = function () {
   } 
   $('menu-cone-volume').onclick = function() {   
     insertText('(h/3*π*r^2)');
-  }  
+  }
 
   // Menu Programs
   $('menu-stack-average').onclick = function() {   
@@ -6522,13 +6523,6 @@ window.onload = function () {
   $('menu-heart').onclick = function() {    
     buttonInsert(/[♥]/ , '♥');
   }
-
-  // Menu Reference
-  if (isMobile) $('math-n-pad').innerHTML = "Math&nbsp;Npads.";
-  if (isMobile) $('resistor-calc').innerHTML = "&#937;&nbsp;Calc&nbsp;&nbsp;";
-  if (isMobile) $('win-98').innerHTML = "Win 98&nbsp;";
-  if (isMobile) $('wolf').innerHTML = "Wolfram";
-  if (isMobile) $('worldWideTele').innerHTML = "WW Tele";
   
   $('menu-help').onclick = menuHelp;
 
