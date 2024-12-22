@@ -54,7 +54,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '11:18:00';
+var tStamp = '12:05:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6521,7 +6521,14 @@ window.onload = function () {
   }  
   $('menu-heart').onclick = function() {    
     buttonInsert(/[♥]/ , '♥');
-  }  
+  }
+
+  // Menu Reference
+  if (!isMobile) $('math-n-pad').innerHTML = "Math&nbsp;Npads.";
+  if (!isMobile) $('resistor-calc').innerHTML = "&#937;&nbsp;Calc&nbsp;&nbsp;";
+  if (!isMobile) $('win-98').innerHTML = "Win 98&nbsp;";
+  if (!isMobile) $('wolf').innerHTML = "Wolfram";
+  if (!isMobile) $('worldWideTele').innerHTML = "WW Tele";
   
   $('menu-help').onclick = menuHelp;
 
