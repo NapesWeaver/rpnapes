@@ -711,14 +711,6 @@ label a {
 }
 
 @media only screen and (min-width: 250px) {
-    #menu-wrap {
-        margin-left: 7%;
-    }
-
-    .menu > ul > li > a {
-        padding-right: 1.5em;
-    }
-    
     #indicate-format {
         margin-left: 5em;
     }
@@ -738,9 +730,6 @@ label a {
     #indicate-execution {
         margin-left: 13.2em;
     }
-}
-
-@media only screen and (min-width: 290px) {
     #menu-wrap {
         margin-left: 7%;
     }
@@ -748,7 +737,9 @@ label a {
     .menu > ul > li > a {
         padding-right: 1.5em;
     }
-    
+}
+
+@media only screen and (min-width: 290px) {    
     #indicate-format {
         margin-left: 7.5em;
     }
@@ -768,16 +759,20 @@ label a {
     #indicate-execution {
         margin-left: 15.5em;
     }
+
+    #menu-wrap {
+        margin-left: 7%;
+    }
+
+    .menu > ul > li > a {
+        padding-right: 1.5em;
+    }
 }
 
 @media only screen and (min-width: 360px) {
     #wrap {
         max-width: 414px;
-    }
-
-    .menu > ul > li > a {
-        padding-right: 1.2em;
-    }
+    }    
 
     #timer {
         font-size: 1.6em;
@@ -823,6 +818,16 @@ label a {
     .btn-xoff {
         width: 24px;
         margin-top: 0;
+    }
+
+    #menu-wrap {
+        margin-left: 7%;
+        padding-bottom: 23px;
+        font-size: 1.2em;
+    } 
+
+    .menu > ul > li > a {
+        padding-right: 1.2em;
     }
        
     #open {
@@ -874,10 +879,8 @@ label a {
     #btn-undo-notes,
     #btn-redo-notes,
     #btn-delete-notes {
-    height: 39px;
-}
-
-
+        height: 39px;
+    }
 
     .btn-big-font {
         font-size: 1.5em;
@@ -890,13 +893,7 @@ label a {
     .btn-pi,
     .symbol-big {
         font-size: 1.1em;
-    }
-
-    #menu-wrap {
-        margin-left: 10%;
-        padding-bottom: 23px;
-        font-size: 1.2em;
-    } 
+    }    
     
     #tricorderskin {
         top: 314px;  
@@ -926,6 +923,10 @@ label a {
 
     #indicate-execution {
         margin-left: 23.1em;
+    }
+
+    #menu-wrap {
+        margin-left: 10%;
     }
 
     .menu > ul > li > a {
