@@ -129,6 +129,29 @@ if (!Array.prototype.indexOf)
     }
   })(Object, Math.max, Math.min);
 
+function getX(input) {
+  var x = input === undefined ? $('txt-input').value.trim() : input.toString();
+  var soulX = x;
+  var firstValueX = extractFirstValue(soulX);
+  var tmpComplex = extractLateral(soulX, firstValueX);
+  var imaginaryX = tmpComplex[1];
+  var unitsX = extractUnits(soulX);
+
+  firstValueX = tmpComplex[0];
+  unitsX = encodeSpecialChar(unitsX);
+
+  if (radix === 10 || (!isANumber(firstValueX) && !isANumber(imaginaryX))) {
+    soulX = encodeSpecialChar(soulX);
+  } else {
+    var sign = imaginaryX > 0 ?  '+' : '';
+    var real = isNaN(firstValueX) ? '' : firstValueX + ' ';
+    var imaginary = isNaN(imaginaryX) ? '' : imaginaryX + 'j';
+    soulX = real + sign + imaginary + ' ' + unitsX;
+  }
+    
+  return new NumberObject(soulX, firstValueX, imaginaryX, unitsX);
+}
+
 math.import({
   Infinityi: NaN,
   Infinityj: NaN,
@@ -425,6 +448,84 @@ function resizeInput() {
   if (isMobile) bodyHeight = winSize[1];  
   if (bodyHeight >= winSize[1]) resizeTextArea($('lst-stack'));
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+}
+
+function objToString(obj) {
+  var theString = '';
+  var isNumber = isANumber(obj.getRealPart());
+  var isImaginary = isANumber(obj.getImaginary());
+
+  if (!isNumber && !isImaginary) {    
+    theString += decodeSpecialChar(obj.getSoul());
+  } else {      
+    if ($('menu-form').textContent === 'Polar') {      
+      // Rectangular
+      if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') theString += formatNumber(obj.getRealPart().toString());
+
+      if (isImaginary && obj.getImaginary() !== '0') {
+        var space = '';
+        var sign = '';
+  
+        if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') {
+          space = ' ';
+          sign = ' + ';
+        }
+        if (obj.getImaginary().charAt(0) === '-') {
+          theString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
+        } else {
+          theString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
+        }        
+      }
+    } else {
+      // Polar           
+      var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
+      var imaginary = calculate(obj.getImaginary()) ? calculate(obj.getImaginary()) : 0;
+      var complex = math.complex(argument, imaginary);
+      var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
+      argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
+
+      if (/[.][9]{13,}[0-9]*[0-9]$/.test(radius) || /[.][0]{13,}[0]*[1]$/.test(radius)) radius = Math.round(radius);  
+      if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument) || /[.][0]{13,}[0]*[1]$/.test(argument)) argument = Math.round(argument);  
+      
+      theString += formatNumber(radius);
+      if (argument !== 0) theString += '∠' + formatNumber(argument);          
+    }
+    if (theString === '') theString = '0';
+    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
+  }
+  theString = theString.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
+  return theString;
+}
+
+function objToVector(obj) {
+  var theString = '';
+  var isNumber = isANumber(obj.getRealPart());
+  var isImaginary = isANumber(obj.getImaginary());
+
+  if (!isNumber && !isImaginary) {    
+    theString += decodeSpecialChar(obj.getSoul());
+  } else {         
+    
+    if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') theString += formatNumber(obj.getRealPart().toString());
+
+    if (isImaginary && obj.getImaginary() !== '0') {
+      var space = '';
+      var sign = '';
+
+      if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') {
+        space = ' ';
+        sign = ' + ';
+      }
+      if (obj.getImaginary().charAt(0) === '-') {
+        theString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
+      } else {
+        theString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
+      }        
+    }    
+    if (theString === '') theString = '0';
+    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
+  }
+  return theString;
 }
 
 function toggleForm() {
@@ -746,107 +847,6 @@ function btnCopy() {
   } else {
     copy();
   }  
-}
-
-function getX(input) {
-  var x = input === undefined ? $('txt-input').value.trim() : input.toString();
-  var soulX = x;
-  var firstValueX = extractFirstValue(soulX);
-  var tmpComplex = extractLateral(soulX, firstValueX);
-  var imaginaryX = tmpComplex[1];
-  var unitsX = extractUnits(soulX);
-
-  firstValueX = tmpComplex[0];
-  unitsX = encodeSpecialChar(unitsX);
-
-  if (radix === 10 || (!isANumber(firstValueX) && !isANumber(imaginaryX))) {
-    soulX = encodeSpecialChar(soulX);
-  } else {
-    var sign = imaginaryX > 0 ?  '+' : '';
-    var real = isNaN(firstValueX) ? '' : firstValueX + ' ';
-    var imaginary = isNaN(imaginaryX) ? '' : imaginaryX + 'j';
-    soulX = real + sign + imaginary + ' ' + unitsX;
-  }
-    
-  return new NumberObject(soulX, firstValueX, imaginaryX, unitsX);
-}
-
-function objToString(obj) {
-  var theString = '';
-  var isNumber = isANumber(obj.getRealPart());
-  var isImaginary = isANumber(obj.getImaginary());
-
-  if (!isNumber && !isImaginary) {    
-    theString += decodeSpecialChar(obj.getSoul());
-  } else {      
-    if ($('menu-form').textContent === 'Polar') {      
-      // Rectangular
-      if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') theString += formatNumber(obj.getRealPart().toString());
-
-      if (isImaginary && obj.getImaginary() !== '0') {
-        var space = '';
-        var sign = '';
-  
-        if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') {
-          space = ' ';
-          sign = ' + ';
-        }
-        if (obj.getImaginary().charAt(0) === '-') {
-          theString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
-        } else {
-          theString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
-        }        
-      }
-    } else {
-      // Polar           
-      var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
-      var imaginary = calculate(obj.getImaginary()) ? calculate(obj.getImaginary()) : 0;
-      var complex = math.complex(argument, imaginary);
-      var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
-      argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
-
-      if (/[.][9]{13,}[0-9]*[0-9]$/.test(radius) || /[.][0]{13,}[0]*[1]$/.test(radius)) radius = Math.round(radius);  
-      if (/[.][9]{13,}[0-9]*[0-9]$/.test(argument) || /[.][0]{13,}[0]*[1]$/.test(argument)) argument = Math.round(argument);  
-      
-      theString += formatNumber(radius);
-      if (argument !== 0) theString += '∠' + formatNumber(argument);          
-    }
-    if (theString === '') theString = '0';
-    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
-  }
-  theString = theString.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
-  return theString;
-}
-
-function objToVector(obj) {
-  var theString = '';
-  var isNumber = isANumber(obj.getRealPart());
-  var isImaginary = isANumber(obj.getImaginary());
-
-  if (!isNumber && !isImaginary) {    
-    theString += decodeSpecialChar(obj.getSoul());
-  } else {         
-    
-    if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') theString += formatNumber(obj.getRealPart().toString());
-
-    if (isImaginary && obj.getImaginary() !== '0') {
-      var space = '';
-      var sign = '';
-
-      if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') {
-        space = ' ';
-        sign = ' + ';
-      }
-      if (obj.getImaginary().charAt(0) === '-') {
-        theString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
-      } else {
-        theString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
-      }        
-    }    
-    if (theString === '') theString = '0';
-    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
-  }
-  return theString;
 }
 
 function abFunction() {
