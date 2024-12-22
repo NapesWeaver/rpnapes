@@ -2366,51 +2366,9 @@ function getComplex(complexObj) {
   return new NumberObject(soulX, firstValueX, imaginaryX, 'null');
 }
 
-// function parseResult(result) {
-
-//   if (radix !== 10 && /^NaN./.test(result)) result = result.slice(0, 3);
-
-//   result = result.replace(/(?<![0-9ijy])[ ]/g, '');
-//   result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
-//   result = result.replace('(', '');
-//   result = result.replace('i)', 'j ');
-  
-//   return currency + result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
-// }
-
-// function displayResult(result, newUnits) { 
-//   var objX;
-  
-//   if (result !== undefined) {
-
-//     if (typeof result === 'number' || typeof result === 'string') {
-//       objX = getX(result);
-//     } else {    
-//       if (result.re !== undefined && !isNaN(result.re)) objX = getComplex(result);
-//     }
-//     if (objX) result = objToString(objX);
-    
-//     if (result !== '0') result += newUnits;
-
-//     $('txt-input').value = parseResult(result);
-//     currency = '';
-
-//     updateDisplay();
-//     resizeInput();
-//   }
-// }
-
 function parseResult(result) {
 
-  if (radix !== 10 && /^NaN./.test(result)) result = result.slice(0, 3);
-
-  // result = result.replace(/(?<![0-9ijy])[ ]/g, '');
-  result = result.replace(/(?<![0-9ijy])/g, '');
-  // result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
-  result = result.replace(/(?<![-+0-9ijy])/g, '');
-  // result = result.replace('(', '');
-  result = result.replace('i)', 'j ');
-  
+  if (radix !== 10 && /^NaN./.test(result)) result = result.slice(0, 3);  
   return currency + result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
 }
 
