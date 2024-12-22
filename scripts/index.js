@@ -3218,7 +3218,7 @@ function help(command) {
     case 'close':
       inputText('');
       enterInput();
-      inputText('close: Close opened media.');
+      inputText('close: Close opened media. Alternatively, double clicking the header will close opened media.');
       break;
     case 'constants':
       inputText('');
