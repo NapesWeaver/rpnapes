@@ -402,8 +402,9 @@ function resizeTextArea(textarea) {
 }
 
 function resizeMedia() {
-  $('lst-stack').style.height = '0px';  
-  if ($('media-player').offsetWidth > 414) $('lst-stack').style.width = $('media-player').offsetWidth + 'px';
+  $('lst-stack').style.height = '0px';
+  $('lst-stack').style.width = $('media-player').offsetWidth + 'px'
+  if($('media-player').offsetWidth === 414) $('lst-stack').style.width = $('media-player').offsetWidth - 18 + 'px'
   resizeTextArea($('lst-stack'));
 }
 
