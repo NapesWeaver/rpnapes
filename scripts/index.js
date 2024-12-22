@@ -375,10 +375,10 @@ function unFloat() {
       $('lst-notes').style.width = winSize[0] - margin + 'px';
     } else {
       $('lst-stack').style.width = winSize[0] - margin + 'px';
-      if (lstWidth < $('media-player').clientWidth) $('media-player').style.width = $('lst-stack').offsetWidth + 'px';
-      if (lstWidth < $('txt-input').clientWidth) $('txt-input').style.width = $('lst-stack').offsetWidth + 'px';
+      if (lstWidth < $('media-player').clientWidth) $('media-player').style.width = $('lst-stack').offsetWidth - 18 + 'px';
     }
   }
+  if (!$('rpnapes').classList.contains('hidden')) $('txt-input').style.width = $('lst-stack').offsetWidth + 'px';
   if ($('notes').classList.contains('hidden')) worldBordersSet();
 }
 
@@ -402,7 +402,8 @@ function resizeTextArea(textarea) {
 }
 
 function resizeMedia() {
-  if (!(isFirefox && isMobile) && $('media-player').offsetHeight > 0) $('lst-stack').style.height = '0px';
+  $('lst-stack').style.height = '0px';  
+  if ($('media-player').offsetWidth > 414) $('lst-stack').style.width = $('media-player').offsetWidth + 'px';
   resizeTextArea($('lst-stack'));
 }
 
