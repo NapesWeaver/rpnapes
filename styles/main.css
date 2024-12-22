@@ -776,7 +776,7 @@ label a {
     }
 
     .menu > ul > li > a {
-        padding-right: 1.3em;
+        padding-right: 1.2em;
     }
 
     #timer {
@@ -926,5 +926,9 @@ label a {
 
     #indicate-execution {
         margin-left: 23.1em;
+    }
+
+    .menu > ul > li > a {
+        padding-right: 1.5em;
     }
 }
