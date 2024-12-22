@@ -402,7 +402,7 @@ function resizeTextArea(textarea) {
 }
 
 function resizeMedia() {
-  if ((!firefox && !isMobile) && $('media-player').offsetHeight > 0) $('lst-stack').style.height = '0px';
+  if (!(isFirefox && isMobile) && $('media-player').offsetHeight > 0) $('lst-stack').style.height = '0px';
   resizeTextArea($('lst-stack'));
 }
 
