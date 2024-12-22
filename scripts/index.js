@@ -2999,8 +2999,11 @@ function embedIframePlayer(src) {
   backupUndo();
   $('txt-input').value = '';
   $('txt-input').select();
-  if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+
+  $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';
   setTimeout(resizeTextAreas, 100);
+
+  if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
 }
 
 function embedTricorder(src) {  
