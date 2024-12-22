@@ -54,7 +54,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '12:09:00';
+var tStamp = '7:30:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -402,11 +402,8 @@ function resizeTextArea(textarea) {
 }
 
 function resizeMedia() {
-  // resizeTextArea($('lst-stack'));
-  // if ($('media-player').style.width !== '100%' && $('media-player').style.width !== '') {
-  //   if ($('lst-stack').offsetWidth < $('media-player').offsetWidth) $('lst-stack').style.width = $('media-player').offsetWidth + 'px';
-  // }
-  $('lst-stack').style.height = '0px';
+  if ($('media-player').offsetHeight > 0) $('lst-stack').style.height = '0px';
+  resizeTextArea($('lst-stack'));
 }
 
 function resizeInput() {
