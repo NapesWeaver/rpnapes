@@ -2408,7 +2408,7 @@ function parseResult(result) {
   result = result.replace(/(?<![0-9ijy])/g, '');
   // result = result.replace(/(?<![-+0-9ijy])[ ]/g, '');
   result = result.replace(/(?<![-+0-9ijy])/g, '');
-  result = result.replace('(', '');
+  // result = result.replace('(', '');
   result = result.replace('i)', 'j ');
   
   return currency + result.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
@@ -2983,6 +2983,7 @@ function plot(input) {
   $('txt-input').value = '';
   $('txt-input').select();
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+  $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';
   setTimeout(resizeTextAreas, 100);
 }
 
