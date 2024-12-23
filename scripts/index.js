@@ -4189,18 +4189,19 @@ function parseEvaluation(input) {
   if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
 
     input = input.replace(/ /g, '');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*\(/g, '*(');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
     input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*ⅽ/g, '*ⅽ');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
     input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*℮/g, '*℮');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
     input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*ɢ/g, '*ɢ');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
     input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*Φ/g, '*Φ');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
     input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])[ ]*π/g, '*π');
-    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');    
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
+    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
+    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
     
     if (/√/g.test(input)) input = insertDefaultIndex(input);
 
