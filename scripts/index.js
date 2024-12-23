@@ -2894,55 +2894,130 @@ function closeMedia() {
   resizeTextAreas();
 }
 
-function plot(input) {
-  closeMedia();
+// function plot(input) {
+//   closeMedia();
 
-  var canvas = $('canvas');
-  var context = canvas.getContext('2d');
-  // var boxWidth = 4096;
-  var boxWidth = 300;
-  // var boxHeight = 4096;
-  var boxHeight = 300;
-  var padding = 8;
-  var gradient = context.createLinearGradient(0, 0, 200, 0);
+//   var canvas = $('canvas');
+//   var context = canvas.getContext('2d');
+//   // var boxWidth = 4096;
+//   var boxWidth = 300;
+//   // var boxHeight = 4096;
+//   var boxHeight = 300;
+//   var padding = 8;
+//   var gradient = context.createLinearGradient(0, 0, 200, 0);
 
-  function drawGrid(){
-    for (var x = 0; x <= boxWidth; x += 30) {
-        context.moveTo(0.5 + x + padding, padding);
-        context.lineTo(0.5 + x + padding, boxHeight + padding);
-    }
-    for (var x = 0; x <= boxHeight; x += 30) {
-        context.moveTo(padding, 0.5 + x + padding);
-        context.lineTo(boxWidth + padding, 0.5 + x + padding);
-    }
-    context.strokeStyle = "black";
-    context.stroke();
-  }
-  drawGrid();
+//   function drawGrid(){
+//     for (var x = 0; x <= boxWidth; x += 30) {
+//         context.moveTo(0.5 + x + padding, padding);
+//         context.lineTo(0.5 + x + padding, boxHeight + padding);
+//     }
+//     for (var x = 0; x <= boxHeight; x += 30) {
+//         context.moveTo(padding, 0.5 + x + padding);
+//         context.lineTo(boxWidth + padding, 0.5 + x + padding);
+//     }
+//     context.strokeStyle = "black";
+//     context.stroke();
+//   }
+//   drawGrid();
   
-  gradient.addColorStop(0, 'blue');
-  gradient.addColorStop(1, 'white');
-  context.fillStyle = gradient;
-  context.fillRect(20, 40, 150, 80);
+//   gradient.addColorStop(0, 'blue');
+//   gradient.addColorStop(1, 'white');
+//   context.fillStyle = gradient;
+//   context.fillRect(20, 40, 150, 80);
 
-  context.font = '30px Arial';
-  context.fillText('Hallo World', 340, 60);  
+//   context.font = '30px Arial';
+//   context.fillText('Hallo World', 340, 60);  
 
-  context.moveTo(0, 0);
-  context.lineTo(2000, 1000);
-  context.stroke();
+//   context.moveTo(0, 0);
+//   context.lineTo(2000, 1000);
+//   context.stroke();
 
-  context.beginPath();
-  context.arc(95, 50, 40, 0, 2 * Math.PI);
-  context.stroke();  
+//   context.beginPath();
+//   context.arc(95, 50, 40, 0, 2 * Math.PI);
+//   context.stroke();  
 
-  $('canvas-wrap').classList.remove('hidden');
+//   $('canvas-wrap').classList.remove('hidden');
+//   backupUndo();
+//   $('txt-input').value = '';
+//   $('txt-input').select();
+//   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+//   $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';
+//   setTimeout(resizeTextAreas, 100);
+// }
+
+function funGraph (ctx, axes, func, color, thick) {
+  var xx, yy, dx = 4, x0 = axes.x0, y0 = axes.y0, scale = axes.scale;
+  var iMax = Math.round((ctx.canvas.width - x0) / dx);
+  var iMin = axes.doNegativeX ? Math.round( - x0 / dx) : 0;
+
+  ctx.beginPath();
+  ctx.lineWidth = thick;
+  ctx.strokeStyle = color;
+
+  for (var i = iMin;i <= iMax; i++) {
+    xx = dx * i;
+    yy = scale * func(xx / scale);
+
+    if (i === iMin) {
+      ctx.moveTo(x0 + xx, y0 - yy);
+    } else {
+      ctx.lineTo(x0 + xx, y0 - yy);
+    }
+  }
+  ctx.stroke();
+}
+
+function drawAxes(ctx, axes) {
+  var x0 = axes.x0;
+  var width = ctx.canvas.width;
+  var y0 = axes.y0;
+  var height = ctx.canvas.height;
+  var xmin = axes.doNegativeX ? 0 : x0;
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgb(4, 3, 3)'; 
+  ctx.moveTo(xmin, y0);
+  ctx.lineTo(width, y0);// X axis
+  ctx.moveTo(x0, 0);
+  ctx.lineTo(x0, height);// Y axis
+  ctx.stroke();
+  }
+
+  function f1(x) { return Math.sin(x) }
+  // function f2(x) { return Math.cos(3 * x) }
+  function f2(x) { return Math.pow(x, 2) }
+
+  function draw() {
+  var canvas = document.getElementById('canvas');
+
+  if (null === canvas || !canvas.getContext) return;
+
+  var ctx = canvas.getContext('2d');
+  var axes = {};
+
+  axes.x0 = .5 + .5 * canvas.width;// x0 pixels from left to x=0
+  axes.y0 = .5 + .5 * canvas.height// y0 pixels from top to y=0
+  axes.scale = 40;// 40 pixels from x=0 to x=1
+  axes.doNegativeX = true;
+
+  drawAxes(ctx, axes);
+  
+  funGraph(ctx, axes, f1, 'rgb(26, 1, 122)', 3); 
+  funGraph(ctx, axes, f2, 'rgb(192, 8, 36)', 3);
+}
+
+function plot() {
   backupUndo();
+  closeMedia();
+  draw();
+ 
+  $('canvas-wrap').classList.remove('hidden');
   $('txt-input').value = '';
-  $('txt-input').select();
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
   $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';
+  $('media-player').scroll($('media-player').scrollWidth / 2, $('media-player').scrollHeight / 2);
   setTimeout(resizeTextAreas, 100);
+  $('txt-input').select();
 }
 
 function embedIframePlayer(src) {
