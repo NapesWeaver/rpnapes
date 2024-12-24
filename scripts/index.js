@@ -54,7 +54,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '12:17:00';
+var tStamp = '16:26:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2945,8 +2945,13 @@ function closeMedia() {
 //   setTimeout(resizeTextAreas, 100);
 // }
 
-function graphThis (ctx, axes, func, color, thick) {
-  var xx, yy, dx = 4, x0 = axes.x0, y0 = axes.y0, scale = axes.scale;
+function graph(ctx, axes, func, color, thick) {
+  var xx;
+  var yy;
+  var dx = 4;
+  var x0 = axes.x0;
+  var y0 = axes.y0;
+  var scale = axes.scale;
   var iMax = Math.round((ctx.canvas.width - x0) / dx);
   var iMin = axes.doNegativeX ? Math.round( - x0 / dx) : 0;
 
@@ -2984,31 +2989,30 @@ function drawAxes(ctx, axes) {
 }
 
 function drawGrid(ctx) {
-  var boxWidth = 4096;
-  // var boxWidth = 300;
-  var boxHeight = 4096;
-  // var boxHeight = 300;
+  var boxWidth = ctx.canvas.width;
+  var boxHeight = ctx.canvas.height;
   var padding = 8;
-  
-  for (var x = 0; x <= boxWidth; x += 30) {
-      ctx.moveTo(0.5 + x + padding, padding);
-      ctx.lineTo(0.5 + x + padding, boxHeight + padding);
+  ctx.lineWidth = 1;
+
+  for (var x = 0; x <= boxWidth; x += 40) {
+      // ctx.moveTo(0.5 + x + padding, padding);
+      // ctx.lineTo(0.5 + x + padding, boxHeight + padding);
+      ctx.moveTo(x + padding, padding);
+      ctx.lineTo(x + padding, boxHeight + padding);
   }
-  for (var x = 0; x <= boxHeight; x += 30) {
-      ctx.moveTo(padding, 0.5 + x + padding);
-      ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
+  for (var x = 0; x <= boxHeight; x += 40) {
+      // ctx.moveTo(padding, 0.5 + x + padding);
+      // ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
+      ctx.moveTo(padding, x + padding);
+      ctx.lineTo(boxWidth + padding, x + padding);
   }
   ctx.strokeStyle = 'rgb(163, 159, 179)';
   ctx.stroke();
 }
 
-// function f(x) { return Math.sin(x) }
-// function f2(x) { return Math.cos(3 * x) }
-// function f2(x) { return Math.pow(x, 2) }
-
 function draw(f) {
   
-  var canvas = document.getElementById('canvas');
+  var canvas = $('canvas');
 
   if (null === canvas || !canvas.getContext) return;
 
@@ -3023,12 +3027,10 @@ function draw(f) {
   drawGrid(ctx);
   drawAxes(ctx, axes);
   
-  graphThis(ctx, axes, f, 'rgb(26, 1, 122)', 3); 
-  // graphThis(ctx, axes, f2, 'rgb(192, 8, 36)', 3);
+  graph(ctx, axes, f, 'rgb(26, 1, 122)', 2);
 }
 
 function plot(input) {
-  // console.log('input', input);
   backupUndo();
   closeMedia();
 
@@ -5071,7 +5073,7 @@ function inverseUnits(units) {
 }
 
 function selectElement(id, valueToSelect) {    
-  let element = document.getElementById(id);
+  var element = $(id);
   element.value = valueToSelect;
 }
 
@@ -5980,7 +5982,7 @@ function eventFire(el, etype) {
     evObj.initEvent(etype, true, false);
     el.dispatchEvent(evObj);
   }
-}//eventFire(document.getElementById('test'), 'click');
+}//eventFire($('test'), 'click');
 
 // Custom 'double click' for Stack
 document.addEventListener('click', function(event) {
