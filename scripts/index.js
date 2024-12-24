@@ -2945,7 +2945,7 @@ function closeMedia() {
 //   setTimeout(resizeTextAreas, 100);
 // }
 
-function funGraph (ctx, axes, func, color, thick) {
+function graphThis (ctx, axes, func, color, thick) {
   var xx, yy, dx = 4, x0 = axes.x0, y0 = axes.y0, scale = axes.scale;
   var iMax = Math.round((ctx.canvas.width - x0) / dx);
   var iMin = axes.doNegativeX ? Math.round( - x0 / dx) : 0;
@@ -2981,13 +2981,32 @@ function drawAxes(ctx, axes) {
   ctx.moveTo(x0, 0);
   ctx.lineTo(x0, height);// Y axis
   ctx.stroke();
+}
+
+function drawGrid(ctx) {
+  var boxWidth = 4096;
+  // var boxWidth = 300;
+  var boxHeight = 4096;
+  // var boxHeight = 300;
+  var padding = 8;
+  
+  for (var x = 0; x <= boxWidth; x += 30) {
+      ctx.moveTo(0.5 + x + padding, padding);
+      ctx.lineTo(0.5 + x + padding, boxHeight + padding);
   }
+  for (var x = 0; x <= boxHeight; x += 30) {
+      ctx.moveTo(padding, 0.5 + x + padding);
+      ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
+  }
+  ctx.strokeStyle = 'rgb(163, 159, 179)';
+  ctx.stroke();
+}
 
-  function f1(x) { return Math.sin(x) }
-  // function f2(x) { return Math.cos(3 * x) }
-  function f2(x) { return Math.pow(x, 2) }
+function f1(x) { return Math.sin(x) }
+// function f2(x) { return Math.cos(3 * x) }
+function f2(x) { return Math.pow(x, 2) }
 
-  function draw() {
+function draw(input) {
   var canvas = document.getElementById('canvas');
 
   if (null === canvas || !canvas.getContext) return;
@@ -3000,22 +3019,23 @@ function drawAxes(ctx, axes) {
   axes.scale = 40;// 40 pixels from x=0 to x=1
   axes.doNegativeX = true;
 
+  drawGrid(ctx);
   drawAxes(ctx, axes);
   
-  funGraph(ctx, axes, f1, 'rgb(26, 1, 122)', 3); 
-  funGraph(ctx, axes, f2, 'rgb(192, 8, 36)', 3);
+  graphThis(ctx, axes, f1, 'rgb(26, 1, 122)', 3); 
+  graphThis(ctx, axes, f2, 'rgb(192, 8, 36)', 3);
 }
 
-function plot() {
+function plot(input) {
   backupUndo();
   closeMedia();
-  draw();
+  draw(input);
  
   $('canvas-wrap').classList.remove('hidden');
   $('txt-input').value = '';
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
   $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';
-  $('media-player').scroll($('media-player').scrollWidth / 2, $('media-player').scrollHeight / 2);
+  $('media-player').scroll($('media-player').scrollWidth / 2.2, $('media-player').scrollHeight / 2.2);
   setTimeout(resizeTextAreas, 100);
   $('txt-input').select();
 }
