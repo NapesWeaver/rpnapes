@@ -3002,11 +3002,12 @@ function drawGrid(ctx) {
   ctx.stroke();
 }
 
-function f1(x) { return Math.sin(x) }
+// function f(x) { return Math.sin(x) }
 // function f2(x) { return Math.cos(3 * x) }
-function f2(x) { return Math.pow(x, 2) }
+// function f2(x) { return Math.pow(x, 2) }
 
-function draw(input) {
+function draw(f) {
+  
   var canvas = document.getElementById('canvas');
 
   if (null === canvas || !canvas.getContext) return;
@@ -3022,13 +3023,15 @@ function draw(input) {
   drawGrid(ctx);
   drawAxes(ctx, axes);
   
-  graphThis(ctx, axes, f1, 'rgb(26, 1, 122)', 3); 
-  graphThis(ctx, axes, f2, 'rgb(192, 8, 36)', 3);
+  graphThis(ctx, axes, f, 'rgb(26, 1, 122)', 3); 
+  // graphThis(ctx, axes, f2, 'rgb(192, 8, 36)', 3);
 }
 
 function plot(input) {
+  // console.log('input', input);
   backupUndo();
   closeMedia();
+
   draw(input);
  
   $('canvas-wrap').classList.remove('hidden');
