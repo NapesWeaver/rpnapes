@@ -40,6 +40,8 @@ var scale = 1;
 var isDragging = false;
 var startX;
 var startY;
+var plotted;
+var graphed;
 
 var stack = [];
 var backups = [];
@@ -61,7 +63,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '16:26:00';
+var tStamp = '17:23';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2943,6 +2945,7 @@ function drawAxes(ctx, axes) {
 }
 
 function graphFunction(ctx, axes, func, color, thick) {
+  
   var xx;
   var yy;
   var dx = 4;
@@ -2950,9 +2953,9 @@ function graphFunction(ctx, axes, func, color, thick) {
   var y0 = axes.y0;
   var iMax = Math.round((ctx.canvas.width - x0) / dx);
   var iMin = axes.doNegativeX ? Math.round( - x0 / dx) : 0;
-  
-  func = x => Math.pow(x, 2);  
-  // console.log('func', func);
+
+  if (func) plotted = func;
+  if (!func) func = plotted;
 
   ctx.beginPath();
   ctx.lineWidth = thick;
@@ -2982,10 +2985,15 @@ function mapComplexToCanvas(c) {
   };
 }
 
-function graphComplex(ctx) {
-  // var complexNum = { re: -3, im: -3 };
-  var complexNum = { re: 3, im: 0 };
-  var canvasCoords = mapComplexToCanvas(complexNum);
+function graphComplex(ctx, complex) {
+  
+  if (complex) graphed = complex;
+  if (!complex) complex = graphed;
+
+  var complex = { re: -3, im: -3 };
+  // var complex = { re: 3, im: 0 };
+
+  var canvasCoords = mapComplexToCanvas(complex);
 
   ctx.beginPath();
   ctx.arc(canvasCoords.x, canvasCoords.y, 3, 0, 2 * Math.PI);
@@ -3002,7 +3010,7 @@ function graphComplex(ctx) {
   ctx.stroke();
 }
 
-function draw(f) {
+function draw(input) {
 
   if (null === canvas || !canvas.getContext) return;
 
@@ -3021,13 +3029,14 @@ function draw(f) {
   
   drawGrid(ctx);
   drawAxes(ctx, axes);
-  graphFunction(ctx, axes, f, 'rgb(26, 1, 122)', 2);
-  graphComplex(ctx);
+  graphFunction(ctx, axes, input, 'rgb(26, 1, 122)', 2);
+  // graphComplex(ctx, input);
   ctx.restore();
 }
 
 function plot(input) {
-  backupUndo();  
+  backupUndo();
+
   draw(input); 
   $('canvas-wrap').classList.remove('hidden');
   
@@ -4278,6 +4287,42 @@ function insertDefaultIndex(input) {
     if ((inputArr[i] === '√' && inputArr[i - 1] !== '!') && (inputArr[i - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/.test(inputArr[i - 1]))) inputArr.splice(i, 0, '2');
   }
   return inputArr.join('');
+}
+
+function parseFunction(input) {
+  input = input + '';
+  input = input.replace(/ /g, '').slice(19).slice(0, -1);
+  
+  // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
+  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[;?:'"`~@#$%&×[\]|\\_]/g.test(input)) {
+
+    input = input.replace(/ /g, '');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
+    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
+    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
+    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
+    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
+    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
+    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
+    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
+    
+    if (/√/g.test(input)) input = insertDefaultIndex(input);
+
+    // Parse nested symbols
+    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+    // Parse in-line symbols
+    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
+    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
+  }
+  return 'return ' + input;
 }
 
 function parseEvaluation(input) {
