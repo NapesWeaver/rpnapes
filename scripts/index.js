@@ -3015,13 +3015,12 @@ function draw(f) {
 }
 
 function plot(input) {
-  backupUndo();
-  
+  backupUndo();  
   draw(input);
  
   $('canvas-wrap').classList.remove('hidden');
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-  if ($('media-player').style.height < document.body.clientHeight / 4) $('media-player').style.height = document.body.clientHeight / 3 + 'px';
+  if ($('media-player').style.height === 'initial' || $('media-player').style.height < document.body.clientHeight / 4) $('media-player').style.height = document.body.clientHeight / 3 + 'px';
   $('media-player').scroll($('media-player').scrollWidth / 2.2, $('media-player').scrollHeight / 2.2);
 
   $('txt-input').value = '';
