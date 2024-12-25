@@ -2914,20 +2914,16 @@ function drawGrid(ctx) {
   var boxWidth = ctx.canvas.width;
   var boxHeight = ctx.canvas.height;
   var padding = 8;
-  var scale = 10;
+  var scale = 30;// pixels from x=0 to x=1
   ctx.lineWidth = 1;
 
   for (var x = 0; x <= boxWidth; x += scale) {
-      // ctx.moveTo(0.5 + x + padding, padding);
-      // ctx.lineTo(0.5 + x + padding, boxHeight + padding);
-      ctx.moveTo(x + padding, padding);
-      ctx.lineTo(x + padding, boxHeight + padding);
+      ctx.moveTo(0.5 + x + padding, padding);
+      ctx.lineTo(0.5 + x + padding, boxHeight + padding);
   }
   for (var x = 0; x <= boxHeight; x += scale) {
-      // ctx.moveTo(padding, 0.5 + x + padding);
-      // ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
-      ctx.moveTo(padding, x + padding);
-      ctx.lineTo(boxWidth + padding, x + padding);
+      ctx.moveTo(padding, 0.5 + x + padding);
+      ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
   }
   ctx.strokeStyle = 'rgb(163, 159, 179)';
   ctx.stroke();
@@ -2965,15 +2961,17 @@ function mapComplexToCanvas(c) {
   var height = canvas.height;
   var originX = width / 2;
   var originY = height / 2;
+  var scale = 30;// pixels from x=0 to x=1
 
   return {
-    x: originX + c.re,
-    y: originY - c.im // Flip y-axis for canvas
+    x: originX + c.re * scale,
+    y: originY - c.im * scale // Flip y-axis for canvas
   };
 }
 
 function graphComplex(ctx) {
-  var complexNum = { re: -100, im: -100 };
+  var complexNum = { re: -3, im: -3 };
+  // var complexNum = { re: 3, im: 0 };
   var canvasCoords = mapComplexToCanvas(complexNum);
 
   ctx.beginPath();
@@ -3001,13 +2999,13 @@ function draw(f) {
 
   axes.x0 = .5 + .5 * canvas.width;// x0 pixels from left to x=0
   axes.y0 = .5 + .5 * canvas.height// y0 pixels from top to y=0
-  axes.scale = 40;// 40 pixels from x=0 to x=1
+  axes.scale = 30;// pixels from x=0 to x=1
   axes.doNegativeX = true;
 
   drawGrid(ctx);
   drawAxes(ctx, axes); 
   graphFunction(ctx, axes, f, 'rgb(26, 1, 122)', 2);
-  graphComplex(ctx);  
+  // graphComplex(ctx);
 }
 
 function plot(input) {
