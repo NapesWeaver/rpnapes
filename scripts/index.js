@@ -34,6 +34,7 @@ var π = Math.PI;
 var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 
+var canvas = $('canvas');
 var stack = [];
 var backups = [];
 var restores = [];
@@ -2891,7 +2892,32 @@ function closeMedia() {
   $('video-player').src = '';
   $('media-player').style.width = '100%';
   $('media-player').style.height = 'initial';
+
+  var ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
   resizeTextAreas();
+}
+
+function drawGrid(ctx) {
+  var boxWidth = ctx.canvas.width;
+  var boxHeight = ctx.canvas.height;
+  var padding = 8;
+  var scale = 30;// pixels from x=0 to x=1
+  
+  ctx.beginPath();
+  ctx.lineWidth = 1;
+
+  for (var x = 0; x <= boxWidth; x += scale) {
+      ctx.moveTo(0.5 + x + padding, padding);
+      ctx.lineTo(0.5 + x + padding, boxHeight + padding);
+  }
+  for (var x = 0; x <= boxHeight; x += scale) {
+      ctx.moveTo(padding, 0.5 + x + padding);
+      ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
+  }
+  ctx.strokeStyle = 'rgb(163, 159, 179)';
+  ctx.stroke();
 }
 
 function drawAxes(ctx, axes) {
@@ -2907,25 +2933,6 @@ function drawAxes(ctx, axes) {
   ctx.lineTo(width, y0);// X axis
   ctx.moveTo(x0, 0);
   ctx.lineTo(x0, height);// Y axis
-  ctx.stroke();
-}
-
-function drawGrid(ctx) {
-  var boxWidth = ctx.canvas.width;
-  var boxHeight = ctx.canvas.height;
-  var padding = 8;
-  var scale = 30;// pixels from x=0 to x=1
-  ctx.lineWidth = 1;
-
-  for (var x = 0; x <= boxWidth; x += scale) {
-      ctx.moveTo(0.5 + x + padding, padding);
-      ctx.lineTo(0.5 + x + padding, boxHeight + padding);
-  }
-  for (var x = 0; x <= boxHeight; x += scale) {
-      ctx.moveTo(padding, 0.5 + x + padding);
-      ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
-  }
-  ctx.strokeStyle = 'rgb(163, 159, 179)';
   ctx.stroke();
 }
 
@@ -2989,8 +2996,7 @@ function graphComplex(ctx) {
   ctx.stroke();
 }
 
-function draw(f) {  
-  var canvas = $('canvas');
+function draw(f) {
 
   if (null === canvas || !canvas.getContext) return;
 
@@ -3003,28 +3009,31 @@ function draw(f) {
   axes.doNegativeX = true;
 
   drawGrid(ctx);
-  drawAxes(ctx, axes); 
+  drawAxes(ctx, axes);
   graphFunction(ctx, axes, f, 'rgb(26, 1, 122)', 2);
   // graphComplex(ctx);
 }
 
 function plot(input) {
   backupUndo();
-  closeMedia();
-
+  
   draw(input);
  
   $('canvas-wrap').classList.remove('hidden');
-  $('txt-input').value = '';
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-  $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';
+  if ($('media-player').style.height < document.body.clientHeight / 4) $('media-player').style.height = document.body.clientHeight / 3 + 'px';
   $('media-player').scroll($('media-player').scrollWidth / 2.2, $('media-player').scrollHeight / 2.2);
-  setTimeout(resizeTextAreas, 100);
+
+  $('txt-input').value = '';
   $('txt-input').select();
+  if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+  setTimeout(resizeTextAreas, 100);
 }
 
 function embedIframePlayer(src) {
-  closeMedia();  
+  backupUndo();
+  closeMedia();
+
   var srcURL = src;
 
   if (src.indexOf('\"') !== -1) {
@@ -3032,15 +3041,13 @@ function embedIframePlayer(src) {
     for (s in srcArr) if ((/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/).test(srcArr[s])) srcURL = srcArr[s];
   }
   $('iframe-player').src = srcURL;
-  $('iframe-player').classList.remove('hidden');
-  backupUndo();
+  $('iframe-player').classList.remove('hidden');  
+  $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';  
+  
   $('txt-input').value = '';
   $('txt-input').select();
-
-  $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';
-  setTimeout(resizeTextAreas, 100);
-
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+  setTimeout(resizeTextAreas, 100);
 }
 
 function embedTricorder(src) {  
