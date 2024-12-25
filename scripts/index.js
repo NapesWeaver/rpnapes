@@ -35,6 +35,12 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 
 var canvas = $('canvas');
+var canvasScale = 10;// pixels from x=0 to x=1
+var scale = 1;
+var isDragging = false;
+var startX;
+var startY;
+
 var stack = [];
 var backups = [];
 var restores = [];
@@ -2895,6 +2901,7 @@ function closeMedia() {
 
   var ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  scale = 1;
 
   resizeTextAreas();
 }
@@ -2903,16 +2910,15 @@ function drawGrid(ctx) {
   var boxWidth = ctx.canvas.width;
   var boxHeight = ctx.canvas.height;
   var padding = 8;
-  var scale = 30;// pixels from x=0 to x=1
   
   ctx.beginPath();
   ctx.lineWidth = 1;
 
-  for (var x = 0; x <= boxWidth; x += scale) {
+  for (var x = 0; x <= boxWidth; x += canvasScale) {
       ctx.moveTo(0.5 + x + padding, padding);
       ctx.lineTo(0.5 + x + padding, boxHeight + padding);
   }
-  for (var x = 0; x <= boxHeight; x += scale) {
+  for (var x = 0; x <= boxHeight; x += canvasScale) {
       ctx.moveTo(padding, 0.5 + x + padding);
       ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
   }
@@ -2942,9 +2948,11 @@ function graphFunction(ctx, axes, func, color, thick) {
   var dx = 4;
   var x0 = axes.x0;
   var y0 = axes.y0;
-  var scale = axes.scale;
   var iMax = Math.round((ctx.canvas.width - x0) / dx);
   var iMin = axes.doNegativeX ? Math.round( - x0 / dx) : 0;
+  
+  func = x => Math.pow(x, 2);  
+  // console.log('func', func);
 
   ctx.beginPath();
   ctx.lineWidth = thick;
@@ -2952,7 +2960,7 @@ function graphFunction(ctx, axes, func, color, thick) {
 
   for (var i = iMin;i <= iMax; i++) {
     xx = dx * i;
-    yy = scale * func(xx / scale);
+    yy = canvasScale * func(xx / canvasScale);
 
     if (i === iMin) {
       ctx.moveTo(x0 + xx, y0 - yy);
@@ -2968,17 +2976,15 @@ function mapComplexToCanvas(c) {
   var height = canvas.height;
   var originX = width / 2;
   var originY = height / 2;
-  var scale = 30;// pixels from x=0 to x=1
-
   return {
-    x: originX + c.re * scale,
-    y: originY - c.im * scale // Flip y-axis for canvas
+    x: originX + c.re * canvasScale,
+    y: originY - c.im * canvasScale // Flip y-axis for canvas
   };
 }
 
 function graphComplex(ctx) {
-  var complexNum = { re: -3, im: -3 };
-  // var complexNum = { re: 3, im: 0 };
+  // var complexNum = { re: -3, im: -3 };
+  var complexNum = { re: 3, im: 0 };
   var canvasCoords = mapComplexToCanvas(complexNum);
 
   ctx.beginPath();
@@ -3005,26 +3011,34 @@ function draw(f) {
 
   axes.x0 = .5 + .5 * canvas.width;// x0 pixels from left to x=0
   axes.y0 = .5 + .5 * canvas.height// y0 pixels from top to y=0
-  axes.scale = 30;// pixels from x=0 to x=1
   axes.doNegativeX = true;
 
+  // Apply the scale
+  ctx.save();
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.scale(scale, scale);
+  ctx.translate(-canvas.width / 2, -canvas.height / 2);
+  
   drawGrid(ctx);
   drawAxes(ctx, axes);
   graphFunction(ctx, axes, f, 'rgb(26, 1, 122)', 2);
-  // graphComplex(ctx);
+  graphComplex(ctx);
+  ctx.restore();
 }
 
 function plot(input) {
   backupUndo();  
-  draw(input);
- 
+  draw(input); 
   $('canvas-wrap').classList.remove('hidden');
+  
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+
   if ($('media-player').style.height === 'initial' || $('media-player').style.height < document.body.clientHeight / 4) $('media-player').style.height = document.body.clientHeight / 3 + 'px';
   $('media-player').scroll($('media-player').scrollWidth / 2.2, $('media-player').scrollHeight / 2.2);
 
   $('txt-input').value = '';
   $('txt-input').select();
+
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
   setTimeout(resizeTextAreas, 100);
 }
@@ -5979,6 +5993,51 @@ document.addEventListener('click', function(event) {
     $('txt-input').focus();
   }
   if (isPhone && isFirefox) window.scrollTo(0, 0);// Firefox mobile keypad :(
+});
+
+window.addEventListener('wheel', function(event) {
+  
+  if (document.activeElement === this.document.body) {
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    
+    var ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    if (event.deltaY > 0) {
+      if (scale > 1) scale = scale - 0.25;// Zoom out
+      draw();
+    } else {
+      scale = scale + 0.25// Zoom in
+      draw();
+    }
+  }  
+}, { passive: false });
+
+canvas.addEventListener('mousedown', function(e) {
+  isDragging = true;
+  startX = e.clientX - canvas.offsetLeft;
+  startY = e.clientY - canvas.offsetTop;
+});
+
+canvas.addEventListener('mousemove', function(e) {
+
+  if (!isDragging) return;
+  var ctx = $('canvas').getContext('2d');
+  var newX = e.clientX - canvas.offsetLeft;
+  var newY = e.clientY - canvas.offsetTop;
+  var deltaX = newX - startX;
+  var deltaY = newY - startY;
+
+  ctx.translate(deltaX, deltaY);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  draw();
+
+  startX = newX;
+  startY = newY;
+});
+
+canvas.addEventListener('mouseup', function(e) {
+  isDragging = false;
 });
 
 document.addEventListener('keypress', function(event) {
