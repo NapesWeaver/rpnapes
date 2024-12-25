@@ -2894,58 +2894,46 @@ function closeMedia() {
   resizeTextAreas();
 }
 
-// function plot(input) {
-//   closeMedia();
+function drawAxes(ctx, axes) {
+  var x0 = axes.x0;
+  var width = ctx.canvas.width;
+  var y0 = axes.y0;
+  var height = ctx.canvas.height;
+  var xmin = axes.doNegativeX ? 0 : x0;
 
-//   var canvas = $('canvas');
-//   var context = canvas.getContext('2d');
-//   // var boxWidth = 4096;
-//   var boxWidth = 300;
-//   // var boxHeight = 4096;
-//   var boxHeight = 300;
-//   var padding = 8;
-//   var gradient = context.createLinearGradient(0, 0, 200, 0);
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgb(4, 3, 3)'; 
+  ctx.moveTo(xmin, y0);
+  ctx.lineTo(width, y0);// X axis
+  ctx.moveTo(x0, 0);
+  ctx.lineTo(x0, height);// Y axis
+  ctx.stroke();
+}
 
-//   function drawGrid(){
-//     for (var x = 0; x <= boxWidth; x += 30) {
-//         context.moveTo(0.5 + x + padding, padding);
-//         context.lineTo(0.5 + x + padding, boxHeight + padding);
-//     }
-//     for (var x = 0; x <= boxHeight; x += 30) {
-//         context.moveTo(padding, 0.5 + x + padding);
-//         context.lineTo(boxWidth + padding, 0.5 + x + padding);
-//     }
-//     context.strokeStyle = "black";
-//     context.stroke();
-//   }
-//   drawGrid();
-  
-//   gradient.addColorStop(0, 'blue');
-//   gradient.addColorStop(1, 'white');
-//   context.fillStyle = gradient;
-//   context.fillRect(20, 40, 150, 80);
+function drawGrid(ctx) {
+  var boxWidth = ctx.canvas.width;
+  var boxHeight = ctx.canvas.height;
+  var padding = 8;
+  var scale = 10;
+  ctx.lineWidth = 1;
 
-//   context.font = '30px Arial';
-//   context.fillText('Hallo World', 340, 60);  
+  for (var x = 0; x <= boxWidth; x += scale) {
+      // ctx.moveTo(0.5 + x + padding, padding);
+      // ctx.lineTo(0.5 + x + padding, boxHeight + padding);
+      ctx.moveTo(x + padding, padding);
+      ctx.lineTo(x + padding, boxHeight + padding);
+  }
+  for (var x = 0; x <= boxHeight; x += scale) {
+      // ctx.moveTo(padding, 0.5 + x + padding);
+      // ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
+      ctx.moveTo(padding, x + padding);
+      ctx.lineTo(boxWidth + padding, x + padding);
+  }
+  ctx.strokeStyle = 'rgb(163, 159, 179)';
+  ctx.stroke();
+}
 
-//   context.moveTo(0, 0);
-//   context.lineTo(2000, 1000);
-//   context.stroke();
-
-//   context.beginPath();
-//   context.arc(95, 50, 40, 0, 2 * Math.PI);
-//   context.stroke();  
-
-//   $('canvas-wrap').classList.remove('hidden');
-//   backupUndo();
-//   $('txt-input').value = '';
-//   $('txt-input').select();
-//   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-//   $('media-player').style.height = $('lst-stack').clientHeight / 1.2 + 'px';
-//   setTimeout(resizeTextAreas, 100);
-// }
-
-function graph(ctx, axes, func, color, thick) {
+function graphFunction(ctx, axes, func, color, thick) {
   var xx;
   var yy;
   var dx = 4;
@@ -2972,46 +2960,38 @@ function graph(ctx, axes, func, color, thick) {
   ctx.stroke();
 }
 
-function drawAxes(ctx, axes) {
-  var x0 = axes.x0;
-  var width = ctx.canvas.width;
-  var y0 = axes.y0;
-  var height = ctx.canvas.height;
-  var xmin = axes.doNegativeX ? 0 : x0;
+function mapComplexToCanvas(c) {
+  var width = canvas.width;
+  var height = canvas.height;
+  var originX = width / 2;
+  var originY = height / 2;
+
+  return {
+    x: originX + c.re,
+    y: originY - c.im // Flip y-axis for canvas
+  };
+}
+
+function graphComplex(ctx) {
+  var complexNum = { re: -100, im: -100 };
+  var canvasCoords = mapComplexToCanvas(complexNum);
 
   ctx.beginPath();
-  ctx.strokeStyle = 'rgb(4, 3, 3)'; 
-  ctx.moveTo(xmin, y0);
-  ctx.lineTo(width, y0);// X axis
-  ctx.moveTo(x0, 0);
-  ctx.lineTo(x0, height);// Y axis
+  ctx.arc(canvasCoords.x, canvasCoords.y, 3, 0, 2 * Math.PI);
+  ctx.fill();
+
+  var width = canvas.width;
+  var height = canvas.height;
+  var originX = width / 2;
+  var originY = height / 2;
+
+  ctx.moveTo(originX, originY);
+  ctx.lineTo(canvasCoords.x, canvasCoords.y);
+  ctx.strokeStyle = 'rgb(185, 7, 54)';
   ctx.stroke();
 }
 
-function drawGrid(ctx) {
-  var boxWidth = ctx.canvas.width;
-  var boxHeight = ctx.canvas.height;
-  var padding = 8;
-  ctx.lineWidth = 1;
-
-  for (var x = 0; x <= boxWidth; x += 40) {
-      // ctx.moveTo(0.5 + x + padding, padding);
-      // ctx.lineTo(0.5 + x + padding, boxHeight + padding);
-      ctx.moveTo(x + padding, padding);
-      ctx.lineTo(x + padding, boxHeight + padding);
-  }
-  for (var x = 0; x <= boxHeight; x += 40) {
-      // ctx.moveTo(padding, 0.5 + x + padding);
-      // ctx.lineTo(boxWidth + padding, 0.5 + x + padding);
-      ctx.moveTo(padding, x + padding);
-      ctx.lineTo(boxWidth + padding, x + padding);
-  }
-  ctx.strokeStyle = 'rgb(163, 159, 179)';
-  ctx.stroke();
-}
-
-function draw(f) {
-  
+function draw(f) {  
   var canvas = $('canvas');
 
   if (null === canvas || !canvas.getContext) return;
@@ -3025,9 +3005,9 @@ function draw(f) {
   axes.doNegativeX = true;
 
   drawGrid(ctx);
-  drawAxes(ctx, axes);
-  
-  graph(ctx, axes, f, 'rgb(26, 1, 122)', 2);
+  drawAxes(ctx, axes); 
+  graphFunction(ctx, axes, f, 'rgb(26, 1, 122)', 2);
+  graphComplex(ctx);  
 }
 
 function plot(input) {
