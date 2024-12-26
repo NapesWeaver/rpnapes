@@ -2904,6 +2904,8 @@ function closeMedia() {
   var ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   scale = 1;
+  graphed = undefined;
+  plotted = undefined;
 
   resizeTextAreas();
 }
@@ -2979,6 +2981,7 @@ function mapComplexToCanvas(c) {
   var height = canvas.height;
   var originX = width / 2;
   var originY = height / 2;
+  
   return {
     x: originX + c.re * canvasScale,
     y: originY - c.im * canvasScale // Flip y-axis for canvas
@@ -2995,7 +2998,7 @@ function plotComplex(ctx, complex) {
   var canvasCoords = mapComplexToCanvas(complex);
 
   ctx.beginPath();
-  ctx.arc(canvasCoords.x, canvasCoords.y, 3, 0, 2 * Math.PI);
+  ctx.arc(canvasCoords.x, canvasCoords.y, 1, 0, 2 * Math.PI);
   ctx.fill();
 
   var width = canvas.width;
