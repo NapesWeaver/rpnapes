@@ -943,7 +943,7 @@ function calculate(expression) {
       parsed = parsed.replace(/Φ/g, '1.618033988749895');
       parsed = parsed.replace(/π/g, '3.141592653589793');
       return math.evaluate(parsed);      
-    } catch (e) {
+    } catch(e) {
 
       if (isMobile) return;
       return e.toString();
@@ -2954,8 +2954,8 @@ function graphFunction(ctx, axes, func, color, thick) {
   var iMax = Math.round((ctx.canvas.width - x0) / dx);
   var iMin = axes.doNegativeX ? Math.round( - x0 / dx) : 0;
 
-  if (func) plotted = func;
-  if (!func) func = plotted;
+  if (func) graphed = func;
+  if (!func) func = graphed;
 
   ctx.beginPath();
   ctx.lineWidth = thick;
@@ -2985,13 +2985,12 @@ function mapComplexToCanvas(c) {
   };
 }
 
-function graphComplex(ctx, complex) {
-  
-  if (complex) graphed = complex;
-  if (!complex) complex = graphed;
+function plotComplex(ctx, complex) {
 
-  var complex = { re: -3, im: -3 };
-  // var complex = { re: 3, im: 0 };
+  if (typeof complex === 'string') complex = math.complex(complex.replace(/[j]/g, 'i'));
+  
+  if (complex) plotted = complex;
+  if (!complex) complex = plotted;
 
   var canvasCoords = mapComplexToCanvas(complex);
 
@@ -3029,8 +3028,13 @@ function draw(input) {
   
   drawGrid(ctx);
   drawAxes(ctx, axes);
-  graphFunction(ctx, axes, input, 'rgb(26, 1, 122)', 2);
-  // graphComplex(ctx, input);
+
+  try {
+    if (typeof input === 'function' || (typeof input === 'undefined' && graphed)) graphFunction(ctx, axes, input, 'rgb(26, 1, 122)', 1);
+    if (typeof input === 'object' || typeof input === 'string' || (typeof input === 'undefined' && plotted)) plotComplex(ctx, input);    
+  } catch(e) {
+    rpnAlert(e.toString);
+  }
   ctx.restore();
 }
 
@@ -4598,7 +4602,7 @@ function colorSaveButton() {
     } else {
       $('btn-save').style.color = '#D4D0C8';
     }
-  } catch (err) { rpnAlert('load Stack error.'); }
+  } catch(err) { rpnAlert('load Stack error.'); }
 }
 
 function saveCookie(aName, tmpArray) {
@@ -5388,7 +5392,7 @@ function loadNotes() {
     notes = [];
     notes = splitArrayByBrowser(getCookie('NOTES').slice(index));
     if (notes[0] === '' && notes[1] === '') notes.pop();
-  } catch (err) {
+  } catch(err) {
     notes.push('Load NOTES error.');
   }
   updateDisplayNotes();
@@ -6477,7 +6481,7 @@ window.onload = function () {
             }
           };
           fr.readAsText(this.files[0]);
-        } catch (err) {
+        } catch(err) {
           rpnAlert(err.toString());
           if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');      
         }   
