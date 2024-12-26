@@ -35,7 +35,7 @@ var ɢ = 6.674e-11;
 var ⅽ = 299792458;
 
 var canvas = $('canvas');
-var canvasScale = 10;// pixels from x=0 to x=1
+var canvasScale = 30;// pixels from x=0 to x=1
 var scale = 1;
 var isDragging = false;
 var startX;
