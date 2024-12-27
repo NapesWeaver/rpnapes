@@ -906,7 +906,7 @@ function btnXy() {
 }
 
 function calculate(expression) {  
-  var parsed = parseEvaluation(expression);
+  var parsed = parseEval(expression);
 
   parsed = decodeSpecialChar(parsed);
   if (/[0-9]+,[0-9]+/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
@@ -2931,10 +2931,10 @@ function drawGrid(ctx) {
 }
 
 function drawAxes(ctx, axes) {
-  var x0 = axes.x0;
   var width = ctx.canvas.width;
-  var y0 = axes.y0;
   var height = ctx.canvas.height;
+  var x0 = axes.x0;
+  var y0 = axes.y0;
   var xmin = axes.doNegativeX ? 0 : x0;
 
   ctx.beginPath();
@@ -2944,6 +2944,16 @@ function drawAxes(ctx, axes) {
   ctx.moveTo(x0, 0);
   ctx.lineTo(x0, height);// Y axis
   ctx.stroke();
+  // Add numbers to x-axis  
+  for (var i = -100; i <= 100; i++) {
+    var x = width / 2 + i * canvasScale;
+    ctx.fillText(i, x, height / 2 + 15);
+  }
+  // Add numbers to y-axis
+  for (var i = -100; i <= 100; i++) {
+    var y = height / 2 - i * canvasScale;
+    ctx.fillText(i, width / 2 - 15, y);
+  }
 }
 
 function graphFunction(ctx, axes, func, color, thick) {
@@ -2958,6 +2968,9 @@ function graphFunction(ctx, axes, func, color, thick) {
 
   if (func) graphed = func;
   if (!func) func = graphed;
+
+  func = parseFunc(func);
+  // console.log('func', func);
 
   ctx.beginPath();
   ctx.lineWidth = thick;
@@ -4296,9 +4309,10 @@ function insertDefaultIndex(input) {
   return inputArr.join('');
 }
 
-function parseFunction(input) {
+function parseFunc(input) {
   input = input + '';
   input = input.replace(/ /g, '').slice(19).slice(0, -1);
+  // console.log('input', input);
   
   // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
   if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[;?:'"`~@#$%&×[\]|\\_]/g.test(input)) {
@@ -4329,10 +4343,10 @@ function parseFunction(input) {
     while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
     while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
   }
-  return 'return ' + input;
+  return new Function('x', 'return ' + input);
 }
 
-function parseEvaluation(input) {
+function parseEval(input) {
   input = '' + input;
   
   // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
