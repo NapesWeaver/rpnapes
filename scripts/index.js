@@ -3047,7 +3047,7 @@ function draw(input) {
   drawAxes(ctx, axes);  
 
   try {
-    if (typeof input === 'function' || (typeof input === 'undefined' && graphed)) graphFunction(ctx, axes, input, 'rgb(26, 1, 122)', 1);
+    if (typeof input === 'function' || (typeof input === 'string' && /x/g.test(input)) || (typeof input === 'undefined' && graphed)) graphFunction(ctx, axes, input, 'rgb(26, 1, 122)', 1);
     if (typeof input === 'object' || typeof input === 'string' || (typeof input === 'undefined' && plotted)) plotComplex(ctx, input);    
   } catch(e) {
     rpnAlert(e.toString);
@@ -3058,8 +3058,6 @@ function draw(input) {
 function plot(input) {
   backupUndo();
   
-  if (typeof input === 'string' && /x/g.test(input)) input = new Function('x', 'return ' + input);;
-
   draw(input);
 
   $('canvas-wrap').classList.remove('hidden');
@@ -3422,12 +3420,12 @@ function help(command) {
       inputText('');
       enterInput();
       inputText('min: Find the stack element with the minimum value that is not NaN.');
-      break;;
+      break;
     case 'mute':
       inputText('');
       enterInput();
       inputText('mute: Mute opened media.');
-      break;;
+      break;
     case 'notes':
       inputText('');
       enterInput();
@@ -4324,7 +4322,7 @@ function parseFunc(input) {
   input = input + '';
   input = input.replace(/[\n ]/g, '');
   input = input.replace(/}$/, '');
-  input = input.replace(/function[a-zA-Z0-9]+\([a-zA-Z0-9]+\){return/, '');
+  input = input.replace(/function[a-zA-Z0-9]+\(x\){return/, '');
   input = input.replace(/[a-zA-Z0-9]+=>/, '');
   
   // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
