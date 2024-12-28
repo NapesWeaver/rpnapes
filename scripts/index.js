@@ -2971,9 +2971,7 @@ function graphFunction(ctx, axes, func, color, thick) {
 
   if (func) graphed = func;
   if (!func) func = graphed;
-
   func = parseFunc(func);
-  // console.log('func', func);
 
   ctx.beginPath();
   ctx.lineWidth = thick;
@@ -3046,7 +3044,7 @@ function draw(input) {
   ctx.translate(-canvas.width / 2, -canvas.height / 2);
   
   drawGrid(ctx);
-  drawAxes(ctx, axes);
+  drawAxes(ctx, axes);  
 
   try {
     if (typeof input === 'function' || (typeof input === 'undefined' && graphed)) graphFunction(ctx, axes, input, 'rgb(26, 1, 122)', 1);
@@ -3059,8 +3057,11 @@ function draw(input) {
 
 function plot(input) {
   backupUndo();
+  
+  if (typeof input === 'string' && /x/g.test(input)) input = new Function('x', 'return ' + input);;
 
-  draw(input); 
+  draw(input);
+
   $('canvas-wrap').classList.remove('hidden');
   
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
@@ -3470,6 +3471,11 @@ function help(command) {
       enterInput();
       inputText('play: Play opened media.');
       break;
+    case 'plot':
+      inputText('');
+      enterInput();
+      inputText('plot: Plot numbers and functions.');
+      break;
     case 'polar':
       inputText('');
       enterInput();
@@ -3665,6 +3671,8 @@ function help(command) {
     inputText('pause');
     enterInput();
     inputText('play');
+    enterInput();
+    inputText('plot');
     enterInput();
     inputText('polar');
     enterInput();
@@ -4107,7 +4115,7 @@ function parseCommand() {
     case 'plot':
       stack.pop();
       updateDisplay();
-      plot();
+      plot(decodeSpecialChar(stack[stack.length - 1].getSoul()));
       break;
     case 'polar':
       stack.pop();
@@ -4314,13 +4322,15 @@ function insertDefaultIndex(input) {
 
 function parseFunc(input) {
   input = input + '';
-  input = input.replace(/ /g, '').slice(19).slice(0, -1);
-  // console.log('input', input);
+  input = input.replace(/[\n ]/g, '');
+  input = input.replace(/}$/, '');
+  input = input.replace(/function[a-zA-Z0-9]+\([a-zA-Z0-9]+\){return/, '');
+  input = input.replace(/[a-zA-Z0-9]+=>/, '');
   
   // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
   if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[;?:'"`~@#$%&×[\]|\\_]/g.test(input)) {
-
     input = input.replace(/ /g, '');
+    // Implied multiplication
     input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
     input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
     input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
@@ -4336,7 +4346,6 @@ function parseFunc(input) {
     input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
     
     if (/√/g.test(input)) input = insertDefaultIndex(input);
-
     // Parse nested symbols
     while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
     while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
@@ -4350,12 +4359,11 @@ function parseFunc(input) {
 }
 
 function parseEval(input) {
-  input = '' + input;
-  
+  input = '' + input;  
   // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
   if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
-
     input = input.replace(/ /g, '');
+    // Implied multiplication
     input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
     input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
     input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
@@ -4371,7 +4379,6 @@ function parseEval(input) {
     input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
     
     if (/√/g.test(input)) input = insertDefaultIndex(input);
-
     // Parse nested symbols
     while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
     while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
