@@ -40,6 +40,8 @@ var scale = 1;
 var isDragging = false;
 var startX;
 var startY;
+var scrollLeft;
+var scrollTop;
 var plotted;
 var graphed;
 
@@ -2936,6 +2938,7 @@ function drawAxes(ctx, axes) {
   var x0 = axes.x0;
   var y0 = axes.y0;
   var xmin = axes.doNegativeX ? 0 : x0;
+  var maxNum = 69;
 
   ctx.beginPath();
   ctx.strokeStyle = 'rgb(4, 3, 3)'; 
@@ -2945,12 +2948,12 @@ function drawAxes(ctx, axes) {
   ctx.lineTo(x0, height);// Y axis
   ctx.stroke();
   // Add numbers to x-axis  
-  for (var i = -100; i <= 100; i++) {
+  for (var i = -maxNum; i <= maxNum; i++) {
     var x = width / 2 + i * canvasScale;
     ctx.fillText(i, x, height / 2 + 15);
   }
   // Add numbers to y-axis
-  for (var i = -100; i <= 100; i++) {
+  for (var i = -maxNum; i <= maxNum; i++) {
     var y = height / 2 - i * canvasScale;
     ctx.fillText(i, width / 2 - 15, y);
   }
@@ -6063,7 +6066,7 @@ document.addEventListener('click', function(event) {
 
 window.addEventListener('wheel', function(event) {
   
-  if (document.activeElement === this.document.body) {
+  if (document.activeElement === this.document.body && !$('rpnapes').classList.contains('hidden') && !$('canvas-wrap').classList.contains('hidden')) {
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
     
     var ctx = canvas.getContext('2d');
@@ -6079,31 +6082,35 @@ window.addEventListener('wheel', function(event) {
   }  
 }, { passive: false });
 
-canvas.addEventListener('mousedown', function(e) {
-  isDragging = true;
-  startX = e.clientX - canvas.offsetLeft;
-  startY = e.clientY - canvas.offsetTop;
+$('media-player').addEventListener('mousedown', function(e) {
+
+  if (!$('rpnapes').classList.contains('hidden') && !$('canvas-wrap').classList.contains('hidden')){
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    scrollLeft = $('media-player').scrollLeft;
+    scrollTop = $('media-player').scrollTop;
+  }
 });
 
-canvas.addEventListener('mousemove', function(e) {
+$('media-player').addEventListener('mousemove', function(e) {
 
   if (!isDragging) return;
-  var ctx = $('canvas').getContext('2d');
-  var newX = e.clientX - canvas.offsetLeft;
-  var newY = e.clientY - canvas.offsetTop;
-  var deltaX = newX - startX;
-  var deltaY = newY - startY;
 
-  ctx.translate(deltaX, deltaY);
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  draw();
-
-  startX = newX;
-  startY = newY;
+  if (!$('rpnapes').classList.contains('hidden') && !$('canvas-wrap').classList.contains('hidden')){
+    var x = e.clientX;
+    var y = e.clientY;
+    var deltaX = startX - x;
+    var deltaY = startY - y;
+  
+    $('media-player').scrollLeft = scrollLeft + deltaX;
+    $('media-player').scrollTop = scrollTop + deltaY;
+  }
 });
 
-canvas.addEventListener('mouseup', function(e) {
-  isDragging = false;
+$('media-player').addEventListener('mouseup', function(e) {
+  
+  if (!$('rpnapes').classList.contains('hidden') && !$('canvas-wrap').classList.contains('hidden')) isDragging = false;
 });
 
 document.addEventListener('keypress', function(event) {
