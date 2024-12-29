@@ -946,7 +946,7 @@ function calculate(expression) {
       parsed = parsed.replace(/π/g, '3.141592653589793');
       return math.evaluate(parsed);      
     } catch(e) {
-
+      if (expression.match(/^plot\(.*\)$/)) return expression;
       if (isMobile) return;
       return e.toString();
     }    
