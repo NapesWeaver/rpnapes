@@ -907,6 +907,83 @@ function btnXy() {
   }  
 }
 
+function parseComplex(input) {
+  if (typeof input === 'string') input = math.complex(input.replace(/[j]/g, 'i'));
+  return input;
+}
+
+function parseFunc(input) {
+
+  input = input + '';
+  input = input.replace(/[\n ]/g, '');
+  input = input.replace(/}$/, '');
+  input = input.replace(/function[a-zA-Z0-9]+\(x\){return/, '');
+  input = input.replace(/[a-zA-Z0-9]+=>/, '');
+  
+  // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
+  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[;?:'"`~@#$%&×[\]|\\_]/g.test(input)) {
+    input = input.replace(/ /g, '');
+    // Implied multiplication
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
+    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
+    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
+    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
+    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
+    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
+    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
+    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
+    
+    if (/√/g.test(input)) input = insertDefaultIndex(input);
+    // Parse nested symbols
+    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+    // Parse in-line symbols
+    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
+    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
+  }
+  return new Function('x', 'return ' + input);
+}
+
+function parseEval(input) {
+  input = '' + input;  
+  // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
+  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
+    input = input.replace(/ /g, '');
+    // Implied multiplication
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
+    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
+    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
+    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
+    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
+    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
+    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
+    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
+    
+    if (/√/g.test(input)) input = insertDefaultIndex(input);
+    // Parse nested symbols
+    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+    // Parse in-line symbols
+    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
+    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
+  }
+  return input;
+}
+
 function calculate(expression) {  
   var parsed = parseEval(expression);
 
@@ -923,7 +1000,8 @@ function calculate(expression) {
   try {
     var result = eval(parsed);
     
-    if (result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) throw new Error;    
+    // if (result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) throw new Error;  
+    if ((result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) && !/plot\(/.test(parsed)) throw new Error;  
     return result;
 
   } catch(e) {
@@ -946,7 +1024,6 @@ function calculate(expression) {
       parsed = parsed.replace(/π/g, '3.141592653589793');
       return math.evaluate(parsed);      
     } catch(e) {
-      if (expression.match(/^plot\(.*\)$/)) return expression;
       if (isMobile) return;
       return e.toString();
     }    
@@ -1010,6 +1087,7 @@ function btnEval() {
     return;
   }
   displayResult(calculate(stripUnits($('txt-input').value)), units);
+  // displayResult(eval($('txt-input').value));
   $('txt-input').select();  
 }
 
@@ -2971,7 +3049,6 @@ function graphFunction(ctx, axes, func, color, thick) {
 
   if (func) graphed = func;
   if (!func) func = graphed;
-  func = parseFunc(func);
 
   ctx.beginPath();
   ctx.lineWidth = thick;
@@ -3003,8 +3080,7 @@ function mapComplexToCanvas(c) {
 }
 
 function plotComplex(ctx, complex) {
-
-  if (typeof complex === 'string') complex = math.complex(complex.replace(/[j]/g, 'i'));
+  complex = parseComplex(complex);
   
   if (complex) plotted = complex;
   if (!complex) complex = plotted;
@@ -3057,6 +3133,8 @@ function draw(input) {
 
 function plot(input) {
   backupUndo();
+
+  if (typeof input === 'function' || ('string' && /x/g.test(input))) input = parseFunc(input);
   
   draw(input);
 
@@ -4316,77 +4394,6 @@ function insertDefaultIndex(input) {
     if ((inputArr[i] === '√' && inputArr[i - 1] !== '!') && (inputArr[i - 1] === undefined || !/[\d\w)ⅽ℮ɢΦπ]/.test(inputArr[i - 1]))) inputArr.splice(i, 0, '2');
   }
   return inputArr.join('');
-}
-
-function parseFunc(input) {
-  input = input + '';
-  input = input.replace(/[\n ]/g, '');
-  input = input.replace(/}$/, '');
-  input = input.replace(/function[a-zA-Z0-9]+\(x\){return/, '');
-  input = input.replace(/[a-zA-Z0-9]+=>/, '');
-  
-  // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
-  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[;?:'"`~@#$%&×[\]|\\_]/g.test(input)) {
-    input = input.replace(/ /g, '');
-    // Implied multiplication
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
-    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
-    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
-    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
-    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
-    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
-    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
-    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
-    
-    if (/√/g.test(input)) input = insertDefaultIndex(input);
-    // Parse nested symbols
-    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
-    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
-    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
-    // Parse in-line symbols
-    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
-    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
-    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
-  }
-  return new Function('x', 'return ' + input);
-}
-
-function parseEval(input) {
-  input = '' + input;  
-  // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
-  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
-    input = input.replace(/ /g, '');
-    // Implied multiplication
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
-    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
-    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
-    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
-    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
-    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
-    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
-    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
-    
-    if (/√/g.test(input)) input = insertDefaultIndex(input);
-    // Parse nested symbols
-    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
-    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
-    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
-    // Parse in-line symbols
-    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
-    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
-    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
-  }
-  return input;
 }
 
 // User functions
