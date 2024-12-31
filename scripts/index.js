@@ -438,7 +438,7 @@ function resizeTextArea(textarea) {
 function resizeMedia() {
   $('lst-stack').style.height = '0px';
   $('lst-stack').style.width = $('media-player').offsetWidth + 'px'
-  if($('media-player').offsetWidth === 414) $('lst-stack').style.width = $('media-player').offsetWidth - 18 + 'px'
+  if($('media-player').offsetWidth === 414) $('lst-stack').style.width = $('media-player').offsetWidth - 18 + 'px';
   resizeTextArea($('lst-stack'));
 }
 
@@ -998,8 +998,7 @@ function calculate(expression) {
   parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
 
   try {
-    var result = eval(parsed);
-    
+    var result = eval(parsed);    
     // if (result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) throw new Error;  
     if ((result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) && !/plot\(/.test(parsed)) throw new Error;  
     return result;
@@ -1087,7 +1086,6 @@ function btnEval() {
     return;
   }
   displayResult(calculate(stripUnits($('txt-input').value)), units);
-  // displayResult(eval($('txt-input').value));
   $('txt-input').select();  
 }
 
