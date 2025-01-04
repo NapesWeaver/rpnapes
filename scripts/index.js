@@ -908,14 +908,7 @@ function btnXy() {
 }
 
 function parseComplex(input) {
-  if (typeof input === 'string') {
-    input = input.replace(/[j]/g, 'i');
-    input = input.replace(/[π]/g, '3.141592653589793');
-    input = input.replace(/[Φ]/g, '1.618033988749895');
-    input = input.replace(/[ɢ]/g, '6.674e-11');
-    input = input.replace(/[℮]/g, '2.718281828459045');
-    input = input.replace(/[ⅽ]/g, '299792458');
-  }
+  if (typeof input === 'string') input = calculate(input);
   return math.complex(input);
 }
 
