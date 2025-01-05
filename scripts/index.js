@@ -3089,8 +3089,8 @@ function mapComplexToCanvas(c) {
 }
 
 function plotComplex(ctx, complex) {
-  complex = parseComplex(complex);
-  
+
+  if (complex) complex = parseComplex(complex);  
   if (complex) plotted = complex;
   if (!complex) complex = plotted;
 
