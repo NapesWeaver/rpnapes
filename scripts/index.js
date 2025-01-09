@@ -1369,7 +1369,6 @@ function btnEe() {
 
   if (shifted) {
     if ($('menu-form').textContent === 'Polar') {
-      console.log('test', /[-+*\/^√<>=ⅽ℮ɢΦπ0-9y()'"]/.test(input.charAt(start)));
       // Text is selected && char before selection is valid && char after selection is valid
       if (start < end && !/[;,?:`~@#$%&×{}[\]|\\_a-hk-zA-Z]/.test(input.charAt(start - 1)) && !/[;,?:`~@#$%&×{}[\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(end))) {
         backupUndo();
