@@ -2211,6 +2211,7 @@ function btnModulus() {
 }
 
 function leadingSignChange(textInput) {
+
   if (textInput.charAt(0) === '-') {
     textInput = '+' + textInput.slice(1);
   } else {
@@ -2234,26 +2235,27 @@ function signChange() {
     objX = stack[getIndex('lst-stack') - stackSize];    
   } else {
     objX = getX();
-  }  
+  }
+  // Changing sign
   if (stackFocus
     || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos))
     || (startPos === txtInput.value.length && !/[-+^eE∠ ]/.test(txtInput.value.charAt(startPos - 1)))) {
-    
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
-      result = math.unaryMinus(buildComplexNum(objX));    
+      result = math.unaryMinus(buildComplexNum(objX));   
+      
+      if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
     } else {
       result = leadingSignChange(objX.getSoul());
-    }  
-    if (objX.getUnits() !== 'null') units = ' ' + objX.getUnits();
-
+    }
     displayResult(result, units);    
   } else {
-
+    // Editing sign
     if (/[-+]/.test(txtInput.value.charAt(startPos - 1))) {
 
       if (/-/.test(txtInput.value.charAt(startPos - 1))) {
         txtInput.value = txtInput.value.removeAt(startPos - 1, startPos);
-        if (/ /.test(txtInput.value.charAt(startPos - 2))) {// If space to left, insert explicit '+'
+        // If space to left, insert explicit '+'
+        if (/ /.test(txtInput.value.charAt(startPos - 2))) {
           txtInput.value = txtInput.value.insertAt(startPos - 1, '+');
           startPos ++;
         }
