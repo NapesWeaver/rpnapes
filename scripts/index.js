@@ -908,6 +908,13 @@ function btnXy() {
 }
 
 function parseComplex(input) {
+  var objX = getX(input);
+
+  if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
+
+    if (!isANumber(objX.getImaginary()) || objX.getImaginary() === '0') return  math.complex(objX.getRealPart());
+    return buildComplexNum(objX);
+  }
   if (typeof input === 'string') input = calculate(input);
   return math.complex(input);
 }
