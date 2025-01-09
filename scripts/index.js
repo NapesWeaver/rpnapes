@@ -1362,12 +1362,13 @@ function btnEe() {
 
   if (shifted) {
     if ($('menu-form').textContent === 'Polar') {
+      console.log('test', /[-+*\/^√<>=ⅽ℮ɢΦπ0-9y()'"]/.test(input.charAt(start)));
       // Text is selected && char before selection is valid && char after selection is valid
-      if (start < end && !/[;,?:'"`~@#$%&×{}[\]|\\_a-hk-zA-Z]/.test(input.charAt(start - 1)) && !/[;,?:'"`~@#$%&×{}[\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(end))) {
+      if (start < end && !/[;,?:`~@#$%&×{}[\]|\\_a-hk-zA-Z]/.test(input.charAt(start - 1)) && !/[;,?:`~@#$%&×{}[\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(end))) {
         backupUndo();
         insertAtCursor($('txt-input'), 'j');
-        // (Cursor is next to valid char) && input doesn't contain illegal char) || Input === '' || cursor is at [ij] || cursor is next to [ij]
-      } else if (((/[-+*\/^√<>=ⅽ℮ɢΦπ0-9y(]/.test(input.charAt(start - 1)) && !/[;,?:'"`~@#$%&×{}([\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(start))) && !/[;,?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) || input === '' || /[ij]/.test(input.charAt(start)) || /[ij]/.test(input.charAt(start - 1))) {       
+        // (Cursor is next to valid char) && input doesn't contain illegal char) || Input === '' || cursor is at [ij] || cursor is next to [ij]     
+      } else if ((((/[-+*\/^√<>(]/.test(input.charAt(start)) || /[-+*\/^√<>=ⅽ℮ɢΦπ0-9y()'"]/.test(input.charAt(start - 1))) && !/[;,?:`~@#$%&×{}[\]|\\_ⅽ℮ɢΦπ0-9a-hk-zA-Z]/.test(input.charAt(start))) && !/[;,?:`~@#$%&×{}[\]|\\_]/g.test(input)) || input === '' || /[ij]/.test(input.charAt(start)) || /[ij]/.test(input.charAt(start - 1))) {       
         (/[i]/.test(input.charAt(start - 1)) || /[i]/.test(input.charAt(start))) ? toggleChar(input, start, /[i]/, 'j') : toggleChar(input, start, /[j]/, 'j');
       }
     } else {      
@@ -2240,6 +2241,7 @@ function signChange() {
   if (stackFocus
     || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos))
     || (startPos === txtInput.value.length && !/[-+^eE∠ ]/.test(txtInput.value.charAt(startPos - 1)))) {
+      
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       result = math.unaryMinus(buildComplexNum(objX));   
       
@@ -2752,6 +2754,16 @@ function btnTangent() {
 
 //////// Input Buttons ///////////////////////////////////////////////////////////////
 
+function inputAllowed() {
+  var input = $('txt-input').value;
+  var start = $('txt-input').selectionStart;
+  var end = $('txt-input').selectionEnd;
+
+  if (!/[ij]/.test(input.charAt(start - 1))) return true;
+
+  return false;
+}
+
 function btnDot() {
   insertAtCursor($('txt-input'), '.');
   resizeInput();
@@ -2759,25 +2771,25 @@ function btnDot() {
 }
 
 function btnZero() {
-  insertAtCursor($('txt-input'), '0');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '0');
   resizeInput();
   $('txt-input').focus();
 }
 
 function btnOne() {
-  insertAtCursor($('txt-input'), '1');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '1');
   resizeInput();
   $('txt-input').focus();
 }
 
 function btnTwo() {
-  insertAtCursor($('txt-input'), '2');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '2');
   resizeInput();
   $('txt-input').focus();
 }
 
 function btnThree() {
-  insertAtCursor($('txt-input'), '3');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '3');
   resizeInput();
   $('txt-input').focus();
 }
@@ -2793,37 +2805,37 @@ function btnSpace() {
 }
 
 function btnFour() {
-  insertAtCursor($('txt-input'), '4');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '4');
   resizeInput();
   $('txt-input').focus();
 }
 
 function btnFive() {
-  insertAtCursor($('txt-input'), '5');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '5');
   resizeInput();
   $('txt-input').focus();
 }
 
 function btnSix() {
-  insertAtCursor($('txt-input'), '6');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '6');
   resizeInput();
   $('txt-input').focus();
 }
 
 function btnSeven() {
-  insertAtCursor($('txt-input'), '7');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '7');
   resizeInput();
   $('txt-input').focus();
 }
 
 function btnEight() {
-  insertAtCursor($('txt-input'), '8');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '8');
   resizeInput();
   $('txt-input').focus();
 }
 
 function btnNine() {
-  insertAtCursor($('txt-input'), '9');
+  if (inputAllowed()) insertAtCursor($('txt-input'), '9');
   resizeInput();
   $('txt-input').focus();
 }
