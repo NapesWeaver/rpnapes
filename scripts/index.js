@@ -908,7 +908,17 @@ function btnXy() {
 }
 
 function parseComplex(input) {
-  var objX = getX(input);
+
+  var objX;
+
+  if (typeof input === 'string') {
+    input = input.replace(/ⅽ/g, '299792458');
+    input = input.replace(/℮/g, '2.718281828459045');
+    input = input.replace(/ɢ/g, '6.674e-11');
+    input = input.replace(/Φ/g, '1.618033988749895');
+    input = input.replace(/π/g, '3.141592653589793'); 
+  }  
+  objX = getX(input);
 
   if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
 
