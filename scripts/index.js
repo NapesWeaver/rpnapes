@@ -2151,25 +2151,15 @@ function btnRoot() {
   resizeInput();
 }
 
-function btnPi() {
-  if (shifted) {
-    backupUndo();
-    btnParenthesis();
-  } else {   
-    insertAtCursor($('txt-input'), 'π');
-    $('txt-input').focus();
-  }
-}
-
 function insertAroundSelection(txtField, txtValue) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
   txtField.value = txtField.value.slice(0, startPos) + txtValue + txtField.value.slice(endPos, txtField.value.length);
-  txtField.selectionEnd = endPos + 1;  
+  txtField.selectionEnd = endPos + 2;  
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
-function btnParenthesis() {
+function btnBrackets(symbols) {
   var startPos = $('txt-input').selectionStart;
   var leftP = $('txt-input').value.split(/[(]/).length - 1;
   var rightP = $('txt-input').value.split(/[)]/).length - 1;
@@ -2180,11 +2170,22 @@ function btnParenthesis() {
   }
   if (startPos === $('txt-input').value.length && leftP > rightP) {
     // Auto-complete parenthesis
-    $('txt-input').value = $('txt-input').value.trim() + ')';
+    $('txt-input').value = $('txt-input').value.trim() + symbols.e;
   } else {
-    insertAroundSelection($('txt-input'), '(' + returnSelectedText('txt-input') + ')');
+    insertAroundSelection($('txt-input'), symbols.s + returnSelectedText('txt-input') + symbols.e);
   }
   $('txt-input').focus();
+}
+
+function btnPi() {
+  if (shifted) {
+    backupUndo();
+    var symbols = { s: '(', e: ')'}
+    btnBrackets(symbols);
+  } else {   
+    insertAtCursor($('txt-input'), 'π');
+    $('txt-input').focus();
+  }
 }
 
 function modulus() {
@@ -6348,10 +6349,12 @@ document.addEventListener('keydown', function(event) {
     }
     return;
   case 57:
-      if ($('rpnapes').className !== 'hidden') {        
+      if ($('rpnapes').className !== 'hidden') {    
         if (isTextSelected($('txt-input')) && shiftHeld) {
           event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-          btnParenthesis();
+          backupUndo();
+          var symbols = { s: '(', e: ')'}
+          btnBrackets(symbols);
         }
       }
       return;
@@ -6423,7 +6426,35 @@ document.addEventListener('keydown', function(event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDivide();
     }
-    break; 
+    break;    
+  case 192:
+    if ($('rpnapes').className !== 'hidden') {        
+      if (isTextSelected($('txt-input'))) {
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        backupUndo();
+        var symbols = { s: '\`', e: '\`' };
+        btnBrackets(symbols);
+      }
+    }
+  case 219:
+    if ($('rpnapes').className !== 'hidden') {        
+      if (isTextSelected($('txt-input'))) {
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        backupUndo();
+        var symbols = shiftHeld ? { s: '{', e: '}' } : { s: '[', e: ']' };
+        btnBrackets(symbols);
+      }
+    }
+  case 222:
+    if ($('rpnapes').className !== 'hidden') {        
+      if (isTextSelected($('txt-input'))) {
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        backupUndo();
+        var symbols = shiftHeld ? { s: '\"', e: '\"' } : { s: '\'', e: '\'' };
+        btnBrackets(symbols);
+      }
+    }
+    return;
   }
   // Resizing input with soft-keyboard open breaks resizing logic
   if (!isMobile) resizeInput();
@@ -6706,8 +6737,9 @@ window.onload = function () {
   $('menu-twig').onclick = monOn;
   
   // Menu Symbols
-  $('menu-parenthesis').onclick = function() {    
-    btnParenthesis();
+  $('menu-parenthesis').onclick = function() {
+    var symbols = { s: '(', e: ')'}  
+    btnBrackets(symbols);
   }  
   $('menu-equals').onclick = function() {    
     if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value) || isTextSelected($('txt-input'))) insertAtCursor($('txt-input'), '=');
