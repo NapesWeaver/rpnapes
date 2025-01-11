@@ -1692,7 +1692,7 @@ function btnLoad() {
     if (shifted) { 
       if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
     }
-   }
+  }
   try {
     index = getCookie('MATHMON').indexOf('=') + 1;
     loadMathMon(getCookie('MATHMON').slice(index));
@@ -1704,7 +1704,7 @@ function btnLoad() {
 }
 
 function loadProgram(tmpStack) {
-  var shortStack = [];    
+  var shortStack = [];
   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
   var prevStack = nestArrayByBrowser(shortStack);
