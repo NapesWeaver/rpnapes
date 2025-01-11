@@ -2256,9 +2256,7 @@ function signChange() {
     objX = getX();
   }
   // Changing sign
-  if (stackFocus
-    || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos))
-    || (startPos === txtInput.value.length && !/[-+^eE∠ ]/.test(txtInput.value.charAt(startPos - 1)))) {
+  if (stackFocus || (startPos === 0 && (endPos === txtInput.value.length || endPos === startPos)) || (startPos === txtInput.value.length && !/[-+^eE∠ ]/.test(txtInput.value.charAt(startPos - 1)))) {
       
     if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
       result = math.unaryMinus(buildComplexNum(objX));   
@@ -2267,18 +2265,17 @@ function signChange() {
     } else {
       result = leadingSignChange(objX.getSoul());
     }
-    displayResult(result, units);    
+    displayResult(result, units);
+
+  // Editing sign
   } else {
-    // Editing sign
+    
     if (/[-+]/.test(txtInput.value.charAt(startPos - 1))) {
 
       if (/-/.test(txtInput.value.charAt(startPos - 1))) {
         txtInput.value = txtInput.value.removeAt(startPos - 1, startPos);
-        // If space to left, insert explicit '+'
-        if (/ /.test(txtInput.value.charAt(startPos - 2))) {
-          txtInput.value = txtInput.value.insertAt(startPos - 1, '+');
-          startPos ++;
-        }
+        txtInput.value = txtInput.value.insertAt(startPos - 1, '+');
+        startPos ++;
       }
       if (/[+]/.test(txtInput.value.charAt(startPos - 1))) {   
         txtInput.value = txtInput.value.removeAt(startPos - 1, startPos);
@@ -2287,15 +2284,11 @@ function signChange() {
       }
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
-    } else if (/[eE^√∠/* ]/.test(txtInput.value.charAt(startPos - 1))
-      && !/[-+]/.test(txtInput.value.charAt(startPos))
-      && !/[-+][ ]*$/.test(txtInput.value)) {
-      // Space to left && no [-+] before space
-      if (/ /.test(txtInput.value.charAt(startPos - 1))
-        && /(?<![-+])[ ]+$/.test(txtInput.value)) {
-        txtInput.value = txtInput.value.insertAt(startPos, '-');
+
+    } else if (/[eE^√∠/* ]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+]/.test(txtInput.value.charAt(startPos)) && !/[-+][ ]*$/.test(txtInput.value)) {
+        txtInput.value = txtInput.value.insertAt(startPos, '+');
         startPos = startPos + 2;
-      }
+      
       if (/[eE^√∠/*]/.test(txtInput.value.charAt(startPos - 1))) {
         
         if (/[-]/.test(txtInput.value.charAt(startPos))) {
@@ -2312,10 +2305,10 @@ function signChange() {
       }
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
+
     } else {
       // [0-9a-zA-Z] to left && No evaluation symbol to right
-      if (/[0-9a-zA-Z/*]/.test(txtInput.value.charAt(startPos - 1))
-        && !/^[ ]*[-+=;,<>?:'"`~!@#$%^*/&×(){}[\]\|\\_ij]+/.test(txtInput.value.slice(startPos))) {
+      if (/[0-9a-zA-Z/*]/.test(txtInput.value.charAt(startPos - 1)) && !/^[ ]*[-+=;,<>?:'"`~!@#$%^*/&×(){}[\]\|\\_ij]+/.test(txtInput.value.slice(startPos))) {
         txtInput.value = txtInput.value.insertAt(startPos, '+');
         startPos ++;
         txtInput.selectionStart = startPos;
