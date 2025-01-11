@@ -2159,29 +2159,30 @@ function insertAroundSelection(txtField, txtValue) {
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
-function btnBrackets(symbols) {
-  var startPos = $('txt-input').selectionStart;
-  var leftP = $('txt-input').value.split(/[(]/).length - 1;
-  var rightP = $('txt-input').value.split(/[)]/).length - 1;
+function btnBrackets(id, symbols) {
+  var textarea = $(id);
+  var startPos = textarea.selectionStart;
+  var leftP = textarea.value.split(/[(]/).length - 1;
+  var rightP = textarea.value.split(/[)]/).length - 1;
 
   if (stackFocus) {
-    $('txt-input').value = getSelectedText('lst-stack');
-    $('txt-input').select();
+    textarea.value = getSelectedText('lst-stack');
+    textarea.select();
   }
-  if (startPos === $('txt-input').value.length && leftP > rightP) {
+  if (startPos === textarea.value.length && leftP > rightP) {
     // Auto-complete parenthesis
-    $('txt-input').value = $('txt-input').value.trim() + symbols.e;
+    textarea.value = textarea.value.trim() + symbols.e;
   } else {
-    insertAroundSelection($('txt-input'), symbols.s + returnSelectedText('txt-input') + symbols.e);
+    insertAroundSelection(textarea, symbols.s + returnSelectedText(id) + symbols.e);
   }
-  $('txt-input').focus();
+  textarea.focus();
 }
 
 function btnPi() {
   if (shifted) {
     backupUndo();
     var symbols = { s: '(', e: ')'}
-    btnBrackets(symbols);
+    btnBrackets('txt-input', symbols);
   } else {   
     insertAtCursor($('txt-input'), 'π');
     $('txt-input').focus();
@@ -6348,13 +6349,18 @@ document.addEventListener('keydown', function(event) {
       if (!isMobile) resizeInput();        
     }
     return;
-  case 57:
-      if ($('rpnapes').className !== 'hidden') {    
-        if (isTextSelected($('txt-input')) && shiftHeld) {
-          event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+  case 57:// ()
+      if (shiftHeld) {
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        var symbols = { s: '(', e: ')'};
+        
+        if ($('rpnapes').className === 'hidden') {
+
+          if (isTextSelected($('lst-notes'))) btnBrackets('lst-notes', symbols);
+          backupUndoNotes();
+        } else {
           backupUndo();
-          var symbols = { s: '(', e: ')'}
-          btnBrackets(symbols);
+          if (isTextSelected($('txt-input'))) btnBrackets('txt-input', symbols);
         }
       }
       return;
@@ -6426,33 +6432,53 @@ document.addEventListener('keydown', function(event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       btnDivide();
     }
-    break;    
-  case 192:
-    if ($('rpnapes').className !== 'hidden') {        
-      if (isTextSelected($('txt-input'))) {
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        backupUndo();
-        var symbols = { s: '\`', e: '\`' };
-        btnBrackets(symbols);
-      }
+    break;
+  case 192:// ``
+    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+    var symbols = { s: '\`', e: '\`' };
+    
+    if ($('rpnapes').className === 'hidden') {
+
+      if (isTextSelected($('lst-notes'))) btnBrackets('lst-notes', symbols);
+      backupUndoNotes();
+    } else {
+      backupUndo();
+
+      if (isTextSelected($('txt-input'))) btnBrackets('txt-input', symbols);
     }
-  case 219:
-    if ($('rpnapes').className !== 'hidden') {        
-      if (isTextSelected($('txt-input'))) {
+    return;
+  case 219:// [] {}
+    var symbols = shiftHeld ? { s: '{', e: '}' } : { s: '[', e: ']' };
+    
+    if ($('rpnapes').className === 'hidden') {
+          
+      if (isTextSelected($('lst-notes'))) {
         event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        backupUndo();
-        var symbols = shiftHeld ? { s: '{', e: '}' } : { s: '[', e: ']' };
-        btnBrackets(symbols);
+        btnBrackets('lst-notes', symbols);
+        backupUndoNotes();
       }
+    } else if (isTextSelected($('txt-input'))) {
+      
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      backupUndo();
+      btnBrackets('txt-input', symbols);
     }
-  case 222:
-    if ($('rpnapes').className !== 'hidden') {        
-      if (isTextSelected($('txt-input'))) {
+    return;
+  case 222:// '' ""
+    var symbols = shiftHeld ? { s: '\"', e: '\"' } : { s: '\'', e: '\'' };
+    
+    if ($('rpnapes').className === 'hidden') {
+
+      if (isTextSelected($('lst-notes'))) {
         event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        backupUndo();
-        var symbols = shiftHeld ? { s: '\"', e: '\"' } : { s: '\'', e: '\'' };
-        btnBrackets(symbols);
+        btnBrackets('lst-notes', symbols);
+        backupUndoNotes();
       }
+    } else if (isTextSelected($('txt-input'))) {
+      
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+      backupUndo();
+      btnBrackets('txt-input', symbols);
     }
     return;
   }
@@ -6739,7 +6765,7 @@ window.onload = function () {
   // Menu Symbols
   $('menu-parenthesis').onclick = function() {
     var symbols = { s: '(', e: ')'}  
-    btnBrackets(symbols);
+    btnBrackets('txt-input', symbols);
   }  
   $('menu-equals').onclick = function() {    
     if (!/[√]$/.test($('txt-input').value) && !/===/g.test($('txt-input').value) || isTextSelected($('txt-input'))) insertAtCursor($('txt-input'), '=');
