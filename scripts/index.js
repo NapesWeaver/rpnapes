@@ -6351,14 +6351,17 @@ document.addEventListener('keydown', function(event) {
     return;
   case 57:// ()
       if (shiftHeld) {
-        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-        var symbols = { s: '(', e: ')'};
+        var symbols = { s: '(', e: ')' };
         
         if ($('rpnapes').className === 'hidden') {
-
-          if (isTextSelected($('lst-notes'))) btnBrackets('lst-notes', symbols);
-          backupUndoNotes();
-        } else {
+          
+          if (isTextSelected($('lst-notes'))) {
+            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+            btnBrackets('lst-notes', symbols);
+            backupUndoNotes();
+          }
+        } else if (isTextSelected($('txt-input'))) {
+          event.preventDefault ? event.preventDefault() : (event.returnValue = false);
           backupUndo();
           if (isTextSelected($('txt-input'))) btnBrackets('txt-input', symbols);
         }
@@ -6457,8 +6460,7 @@ document.addEventListener('keydown', function(event) {
         btnBrackets('lst-notes', symbols);
         backupUndoNotes();
       }
-    } else if (isTextSelected($('txt-input'))) {
-      
+    } else if (isTextSelected($('txt-input'))) {      
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       backupUndo();
       btnBrackets('txt-input', symbols);
@@ -6474,8 +6476,7 @@ document.addEventListener('keydown', function(event) {
         btnBrackets('lst-notes', symbols);
         backupUndoNotes();
       }
-    } else if (isTextSelected($('txt-input'))) {
-      
+    } else if (isTextSelected($('txt-input'))) {      
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       backupUndo();
       btnBrackets('txt-input', symbols);
