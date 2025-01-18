@@ -461,6 +461,106 @@ function resizeInput() {
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
+function parseComplex(input) {
+
+  var objX;
+
+  if (typeof input === 'string') {
+    input = input.replace(/ⅽ/g, '299792458');
+    input = input.replace(/℮/g, '2.718281828459045');
+    input = input.replace(/ɢ/g, '6.674e-11');
+    input = input.replace(/Φ/g, '1.618033988749895');
+    input = input.replace(/π/g, '3.141592653589793'); 
+  }  
+  objX = getX(input);
+
+  if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
+
+    if (!isANumber(objX.getImaginary()) || objX.getImaginary() === '0') return  math.complex(objX.getRealPart());
+    return buildComplexNum(objX);
+  }
+  if (typeof input === 'string') input = calculate(input);
+  return math.complex(input);
+}
+
+function parseEval(input) {
+  input = '' + input;
+  // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
+  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
+    input = input.replace(/ /g, '');
+    // Implied multiplication
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
+    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
+    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
+    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
+    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
+    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
+    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
+    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
+    
+    if (/√/g.test(input)) input = insertDefaultIndex(input);
+    // Parse nested symbols
+    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+    // Parse in-line symbols
+    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
+    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
+  }
+  return input;
+}
+
+function parseFunc(input) {
+
+  input = input + '';
+  input = input.replace(/[\n ]/g, '');
+  input = input.replace(/}$/, '');
+  input = input.replace(/function[a-zA-Z0-9]+\(x\){return/, '');
+  input = input.replace(/[a-zA-Z0-9]+=>/, '');
+  
+  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[;?:'"`~@#$%&×[\]|\\_]/g.test(input)) {
+    input = input.replace(/ /g, '');
+    
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
+    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
+    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
+    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
+    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
+    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
+    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
+    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
+    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');    
+
+    input = input.replace(/(?<![a\.])sin/g, 'Math.sin');
+    input = input.replace(/(?<![a\.])cos/g, 'Math.cos');
+    input = input.replace(/(?<![a\.])tan/g, 'Math.tan');
+    input = input.replace(/(?<!\.)asin/g, 'Math.asin');
+    input = input.replace(/(?<!\.)acos/g, 'Math.acos');
+    input = input.replace(/(?<!\.)atan/g, 'Math.atan');
+    
+    if (/√/g.test(input)) input = insertDefaultIndex(input);
+
+    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
+    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
+    
+    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
+    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
+    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
+  }
+  return new Function('x', 'return ' + input);
+}
+
 function calculate(expression) {  
   
   if (/^plot\(/.test(expression) && /x/g.test(expression)) {
@@ -924,106 +1024,6 @@ function btnXy() {
   } else {
     xyFunction();
   }  
-}
-
-function parseComplex(input) {
-
-  var objX;
-
-  if (typeof input === 'string') {
-    input = input.replace(/ⅽ/g, '299792458');
-    input = input.replace(/℮/g, '2.718281828459045');
-    input = input.replace(/ɢ/g, '6.674e-11');
-    input = input.replace(/Φ/g, '1.618033988749895');
-    input = input.replace(/π/g, '3.141592653589793'); 
-  }  
-  objX = getX(input);
-
-  if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
-
-    if (!isANumber(objX.getImaginary()) || objX.getImaginary() === '0') return  math.complex(objX.getRealPart());
-    return buildComplexNum(objX);
-  }
-  if (typeof input === 'string') input = calculate(input);
-  return math.complex(input);
-}
-
-function parseEval(input) {
-  input = '' + input;  
-  // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
-  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[=;,<>?:'"`~@#$%&×{}[\]|\\_]/g.test(input)) {
-    input = input.replace(/ /g, '');
-    // Implied multiplication
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
-    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
-    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
-    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
-    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
-    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
-    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
-    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');
-    
-    if (/√/g.test(input)) input = insertDefaultIndex(input);
-    // Parse nested symbols
-    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
-    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
-    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
-    // Parse in-line symbols
-    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
-    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
-    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
-  }
-  return input;
-}
-
-function parseFunc(input) {
-
-  input = input + '';
-  input = input.replace(/[\n ]/g, '');
-  input = input.replace(/}$/, '');
-  input = input.replace(/function[a-zA-Z0-9]+\(x\){return/, '');
-  input = input.replace(/[a-zA-Z0-9]+=>/, '');
-  
-  if (/[!^√()ⅽ℮ɢΦπ]/.test(input) && !/[;?:'"`~@#$%&×[\]|\\_]/g.test(input)) {
-    input = input.replace(/ /g, '');
-    
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])\(/g, '*(');
-    input = input.replace(/\)(?!$|[-+*\/\)^√!a-zA-Z])/g, ')*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ⅽ/g, '*ⅽ');
-    input = input.replace(/ⅽ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ⅽ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])℮/g, '*℮');
-    input = input.replace(/℮(?!$|[-+*\/\)^√!a-zA-Z])/g, '℮*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])ɢ/g, '*ɢ');
-    input = input.replace(/ɢ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'ɢ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])Φ/g, '*Φ');
-    input = input.replace(/Φ(?!$|[-+*\/\)^√!a-zA-Z])/g, 'Φ*');
-    input = input.replace(/(?<!^|[-+*\/^√!\(a-zA-Z])π/g, '*π');
-    input = input.replace(/π(?!$|[-+*\/\)^√!a-zA-Z])/g, 'π*');  
-    input = input.replace(/[ij](?!$|[-+*\/\)^√!a-zA-Z])/g, 'j*');    
-
-    input = input.replace(/(?<![a\.])sin/g, 'Math.sin');
-    input = input.replace(/(?<![a\.])cos/g, 'Math.cos');
-    input = input.replace(/(?<![a\.])tan/g, 'Math.tan');
-    input = input.replace(/(?<!\.)asin/g, 'Math.asin');
-    input = input.replace(/(?<!\.)acos/g, 'Math.acos');
-    input = input.replace(/(?<!\.)atan/g, 'Math.atan');
-    
-    if (/√/g.test(input)) input = insertDefaultIndex(input);
-
-    while (/\([-+*\/!^√ⅽ℮ɢΦπ.\w]+!\)/.test(input)) input = parseNested(input, '!', 'mathFact(');
-    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+√[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '√', 'mathRoot('); 
-    while (/\w\([-+*\/!^√ⅽ℮ɢΦπ.\w]+\^[-+*\/!^√ⅽ℮ɢΦπ.\w]+\)/.test(input)) input = parseNested(input, '^', 'mathPow(');
-    
-    while (/!/.test(input)) input = parseInline(input, '!', 'mathFact(');
-    while (/√/.test(input)) input = parseInline(input, '√', 'mathRoot(');
-    while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
-  }
-  return new Function('x', 'return ' + input);
 }
 
 function softEnter() {
