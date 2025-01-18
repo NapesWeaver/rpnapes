@@ -491,6 +491,8 @@ function objToString(obj) {
       // Polar           
       var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
       var imaginary = calculate(obj.getImaginary()) ? calculate(obj.getImaginary()) : 0;
+      // var argument = obj.getRealPart() ? obj.getRealPart() : 0;
+      // var imaginary = obj.getImaginary() ? obj.getImaginary() : 0;
       var complex = math.complex(argument, imaginary);
       var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
       argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
@@ -1007,7 +1009,7 @@ function parseFunc(input) {
   return new Function('x', 'return ' + input);
 }
 
-function calculate(expression) {
+function calculate(expression) {  
   
   if (/^plot\(/.test(expression) && /x/g.test(expression)) {
     expression = parseFunc(expression.slice(5).slice(0, -1));

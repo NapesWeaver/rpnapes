@@ -251,6 +251,7 @@
                     <li class="menu haptic-response">
                       <a title="Reference Links" onclick="$('reference').className='visible'" onmouseover="$('constants').className='hidden';$('formulas').className='hidden';$('programs').className='hidden'">Reference</a>
                       <ul id="reference" onclick="$('reference').className='hidden'">
+                        <li><a href="https://www.circuitlab.com/" target="_blank" title="Circuit simulation and schematics">CircuitLab</a></li>
                         <li><a href="https://mathnotepad.com/" target="_blank" title="Mathematical editor">Math&nbsp;Notepad</a></li>
                         <li><a href="https://www.desmos.com/calculator/ms3eghkkgz" target="_blank" title="Polar coordinate mapping">desmos</a></li>
                         <li><a href="https://regex101.com/" target="_blank" title="Regular expression building/testing">regex101</a></li>
@@ -270,7 +271,7 @@
             </nav>
           </div>
 
-          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type 'help' for a list of commands. Last modified Jan 11, 2025." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
+          <textarea id="lst-stack" class="lst-stack haptic-response" name="lst-stack" tabindex="2" rows="135" placeholder="This is a Reverse Polish Notation Calculator, with a Stack. Type 'help' for a list of commands. Last modified Jan 18, 2025." contenteditable="false" onfocus="lstStackFocus()" onclick="onClickSelection($('lst-stack'))" readonly>&#10;&#10;&#10;&#10;&#10;&#10;&#10;     This page requires javascript.</textarea>
           <textarea id="txt-input" class="txt-input" name="txt-input" tabindex="1" rows="1" autocapitalize="off" autocomplete="off" spellcheck="false" onfocus="txtInputFocus()" onmousedown="haptic()"></textarea>
           <div id="entry-pad">
             <input type="button" id="btn-copy" class="btn-big haptic-response" value="COPY">
