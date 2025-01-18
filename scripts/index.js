@@ -461,6 +461,56 @@ function resizeInput() {
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
+function calculate(expression) {  
+  
+  if (/^plot\(/.test(expression) && /x/g.test(expression)) {
+    expression = parseFunc(expression.slice(5).slice(0, -1));
+    expression = 'plot(' + expression + '\)';
+  }  
+  var parsed = parseEval(expression);
+
+  parsed = decodeSpecialChar(parsed);
+  if (/[0-9]+,[0-9]+/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
+    parsed = parsed.replace(/,/g, '');
+  }
+  if (/\$[0-9.]/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
+    currency = '$';
+    parsed = parsed.replace(/\$/g, '');
+  }
+  parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
+
+  try {
+    var result = eval(parsed);
+
+    if ((result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) && !/^plot\(/.test(parsed)) throw new Error;  
+    return result;
+
+  } catch(e) {
+
+    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
+    try {
+      parsed = parsed.replace(/sin\(/g, 'mathSin(');
+      parsed = parsed.replace(/cos\(/g, 'mathCos(');
+      parsed = parsed.replace(/tan\(/g, 'mathTan(');
+      parsed = parsed.replace(/asin\(/g, 'mathASin(');
+      parsed = parsed.replace(/acos\(/g, 'mathACos(');
+      parsed = parsed.replace(/atan\(/g, 'mathATan(');
+      parsed = parsed.replace(/ln\(/g, 'log(');
+      parsed = parsed.replace(/mathP/g, 'p');
+      parsed = parsed.replace(/ⅽ/g, '299792458');
+      parsed = parsed.replace(/℮/g, '2.718281828459045');
+      parsed = parsed.replace(/ɢ/g, '6.674e-11');
+      parsed = parsed.replace(/j/g, 'i');
+      parsed = parsed.replace(/Φ/g, '1.618033988749895');
+      parsed = parsed.replace(/π/g, '3.141592653589793');
+      return math.evaluate(parsed);      
+    } catch(e) {
+      if (isMobile) return;
+      return e.toString();
+    }    
+  }
+}
+
 function objToString(obj) {
   var theString = '';
   var isNumber = isANumber(obj.getRealPart());
@@ -491,8 +541,6 @@ function objToString(obj) {
       // Polar           
       var argument = calculate(obj.getRealPart()) ? calculate(obj.getRealPart()) : 0;
       var imaginary = calculate(obj.getImaginary()) ? calculate(obj.getImaginary()) : 0;
-      // var argument = obj.getRealPart() ? obj.getRealPart() : 0;
-      // var imaginary = obj.getImaginary() ? obj.getImaginary() : 0;
       var complex = math.complex(argument, imaginary);
       var radius = complex.abs() ? complex.abs() : Math.abs(complex.re);
       argument = $('btn-angle').value === 'deg' ? complex.arg() * 180 / Math.PI : complex.arg();
@@ -507,37 +555,6 @@ function objToString(obj) {
     if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
   }
   theString = theString.replace(/(?<!\w)ohm(?!\w)/g, 'Ω');
-  return theString;
-}
-
-function objToVector(obj) {
-  var theString = '';
-  var isNumber = isANumber(obj.getRealPart());
-  var isImaginary = isANumber(obj.getImaginary());
-
-  if (!isNumber && !isImaginary) {    
-    theString += decodeSpecialChar(obj.getSoul());
-  } else {         
-    
-    if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') theString += formatNumber(obj.getRealPart().toString());
-
-    if (isImaginary && obj.getImaginary() !== '0') {
-      var space = '';
-      var sign = '';
-
-      if (isNumber && obj.getRealPart() !== 0 && obj.getRealPart() !== '0') {
-        space = ' ';
-        sign = ' + ';
-      }
-      if (obj.getImaginary().charAt(0) === '-') {
-        theString += space + '-' + space + formatNumber(obj.getImaginary().toString().slice(1)) + 'j';
-      } else {
-        theString += sign + formatNumber(obj.getImaginary().toString()) + 'j';
-      }        
-    }    
-    if (theString === '') theString = '0';
-    if (obj.getUnits() !== 'null' && theString !== '0') theString += ' ' + obj.getUnits();
-  }
   return theString;
 }
 
@@ -1007,56 +1024,6 @@ function parseFunc(input) {
     while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
   }
   return new Function('x', 'return ' + input);
-}
-
-function calculate(expression) {  
-  
-  if (/^plot\(/.test(expression) && /x/g.test(expression)) {
-    expression = parseFunc(expression.slice(5).slice(0, -1));
-    expression = 'plot(' + expression + '\)';
-  }  
-  var parsed = parseEval(expression);
-
-  parsed = decodeSpecialChar(parsed);
-  if (/[0-9]+,[0-9]+/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
-    parsed = parsed.replace(/,/g, '');
-  }
-  if (/\$[0-9.]/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
-    currency = '$';
-    parsed = parsed.replace(/\$/g, '');
-  }
-  parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
-
-  try {
-    var result = eval(parsed);
-
-    if ((result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) && !/^plot\(/.test(parsed)) throw new Error;  
-    return result;
-
-  } catch(e) {
-
-    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
-    try {
-      parsed = parsed.replace(/sin\(/g, 'mathSin(');
-      parsed = parsed.replace(/cos\(/g, 'mathCos(');
-      parsed = parsed.replace(/tan\(/g, 'mathTan(');
-      parsed = parsed.replace(/asin\(/g, 'mathASin(');
-      parsed = parsed.replace(/acos\(/g, 'mathACos(');
-      parsed = parsed.replace(/atan\(/g, 'mathATan(');
-      parsed = parsed.replace(/ln\(/g, 'log(');
-      parsed = parsed.replace(/mathP/g, 'p');
-      parsed = parsed.replace(/ⅽ/g, '299792458');
-      parsed = parsed.replace(/℮/g, '2.718281828459045');
-      parsed = parsed.replace(/ɢ/g, '6.674e-11');
-      parsed = parsed.replace(/j/g, 'i');
-      parsed = parsed.replace(/Φ/g, '1.618033988749895');
-      parsed = parsed.replace(/π/g, '3.141592653589793');
-      return math.evaluate(parsed);      
-    } catch(e) {
-      if (isMobile) return;
-      return e.toString();
-    }    
-  }
 }
 
 function softEnter() {
