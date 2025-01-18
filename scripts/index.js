@@ -605,7 +605,7 @@ function calculate(expression) {
       parsed = parsed.replace(/π/g, '3.141592653589793');
       return math.evaluate(parsed);      
     } catch(e) {
-      if (isMobile) return;
+      // if (isMobile) return;
       return e.toString();
     }    
   }
@@ -2123,31 +2123,52 @@ function btnRoot() {
 function insertAroundSelection(txtField, txtValue) {
   var startPos = txtField.selectionStart;
   var endPos = txtField.selectionEnd;
+
   txtField.value = txtField.value.slice(0, startPos) + txtValue + txtField.value.slice(endPos, txtField.value.length);
-  txtField.selectionEnd = endPos + 2;  
+  txtField.selectionEnd = endPos + 1;  
+
+  if (txtValue.slice(1, -1)) txtField.selectionEnd++;
   txtField.selectionStart = txtField.selectionEnd;// Deselect text for IE
 }
 
+function returnSelectedText(id) {
+  var textComponent = $(id);
+  var selectedText;
+  // IE
+  if (document.selection !== undefined) {
+    textComponent.focus();
+    var sel = document.selection.createRange();
+    selectedText = sel.text;
+  } else if (textComponent.selectionStart !== undefined) {
+    // Firefox
+    var startPos = textComponent.selectionStart;
+    var endPos = textComponent.selectionEnd;
+    selectedText = textComponent.value.slice(startPos, endPos);
+  }
+  return selectedText;
+}
+
 function btnBrackets(id, symbols) {
-  var textarea = $(id);
-  var startPos = textarea.selectionStart;
-  var leftP = textarea.value.split(/[(]/).length - 1;
-  var rightP = textarea.value.split(/[)]/).length - 1;
+  var txtField = $(id);
+  var startPos = txtField.selectionStart;
+  var lBrackets = txtField.value.split(symbols.s).length - 1;
+  var rBrackets = txtField.value.split(symbols.e).length - 1;
 
   if (stackFocus) {
-    textarea.value = getSelectedText('lst-stack');
-    textarea.select();
+    txtField.value = getSelectedText('lst-stack');
+    txtField.select();
   }
-  if (startPos === textarea.value.length && leftP > rightP) {
+  if (startPos === txtField.value.length && lBrackets > rBrackets) {
     // Auto-complete parenthesis
-    textarea.value = textarea.value.trim() + symbols.e;
+    txtField.value = txtField.value.trim() + symbols.e;
   } else {
-    insertAroundSelection(textarea, symbols.s + returnSelectedText(id) + symbols.e);
+    insertAroundSelection(txtField, symbols.s + returnSelectedText(id) + symbols.e);
   }
-  textarea.focus();
+  txtField.focus();
 }
 
 function btnPi() {
+
   if (shifted) {
     backupUndo();
     var symbols = { s: '(', e: ')'}
@@ -2159,7 +2180,6 @@ function btnPi() {
 }
 
 function modulus() {
-  backupUndo();
   var objX = getX();
   var objY;
   var newUnits = '';
@@ -2189,7 +2209,9 @@ function modulus() {
   displayResult(result, newUnits);
 }
 
-function btnModulus() {  
+function btnModulus() {
+  backupUndo();
+
   if (shifted) {
     buttonInsert(/[√]/, '√');
   } else {    
@@ -2210,8 +2232,6 @@ function leadingSignChange(textInput) {
 }
 
 function signChange() {
-  backupUndo();  
-
   var objX;
   var result;
   var units = '';
@@ -2289,7 +2309,8 @@ function signChange() {
   }
 }
 
-function btnSign() {  
+function btnSign() {
+  backupUndo();
   if (shifted) {
     if (!/[-+*/√%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[\^]/, '^');
   } else {
@@ -2300,7 +2321,6 @@ function btnSign() {
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
 function division() {
-  backupUndo();
   var objX = getX();
   var objY;
   var result;
@@ -2322,6 +2342,8 @@ function division() {
 }
 
 function btnDivide() {
+  backupUndo();
+
   if (shifted) {
     if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
   } else {
@@ -2330,7 +2352,6 @@ function btnDivide() {
 }
 
 function multiplication() {
-  backupUndo();
   var objX = getX();
   var objY;
   var result;
@@ -2351,7 +2372,9 @@ function multiplication() {
   displayResult(result, newUnits);
 }
 
-function btnMultiply() {  
+function btnMultiply() {
+  backupUndo();
+
   if (shifted) {
     if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
   } else {
@@ -2360,7 +2383,6 @@ function btnMultiply() {
 }
 
 function subtraction() {
-  backupUndo();
   var objX = getX();
   var objY;
   var result;
@@ -2382,6 +2404,8 @@ function subtraction() {
 }
 
 function btnSubtract() {  
+  backupUndo();
+
   if (shifted) {
     buttonInsert(/[-]/, '-');
   } else {
@@ -2390,7 +2414,6 @@ function btnSubtract() {
 }
 
 function addition() {
-  backupUndo();
   var objX = getX();
   var objY;
   var result;
@@ -2412,6 +2435,8 @@ function addition() {
 }
 
 function btnAdd() {  
+  backupUndo();
+
   if (shifted) {
     if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
   } else {
@@ -4529,24 +4554,6 @@ function getSelectedText(id) {
   return selectedText.trim();  
 }
 
-function returnSelectedText(id) {
-
-  var textComponent = $(id);
-  var selectedText;
-  // IE
-  if (document.selection !== undefined) {
-    textComponent.focus();
-    var sel = document.selection.createRange();
-    selectedText = sel.text;
-  } else if (textComponent.selectionStart !== undefined) {
-    // Firefox
-    var startPos = textComponent.selectionStart;
-    var endPos = textComponent.selectionEnd;
-    selectedText = textComponent.value.slice(startPos, endPos);
-  }
-  return selectedText;
-}
-
 function isTextSelected(input) {
   var startPos = input.selectionStart;
   var endPos = input.selectionEnd;
@@ -6398,18 +6405,20 @@ document.addEventListener('keydown', function(event) {
       btnDivide();
     }
     break;
-  case 192:// ``
-    event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+  case 192:// ``    
     var symbols = { s: '\`', e: '\`' };
     
     if ($('rpnapes').className === 'hidden') {
 
-      if (isTextSelected($('lst-notes'))) btnBrackets('lst-notes', symbols);
-      backupUndoNotes();
-    } else {
+      if (isTextSelected($('lst-notes'))) {
+        event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+        btnBrackets('lst-notes', symbols);
+        backupUndoNotes();
+      }
+    } else if (isTextSelected($('txt-input'))) {
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       backupUndo();
-
-      if (isTextSelected($('txt-input'))) btnBrackets('txt-input', symbols);
+      btnBrackets('txt-input', symbols);
     }
     return;
   case 219:// [] {}
