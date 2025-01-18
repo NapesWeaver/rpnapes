@@ -582,7 +582,7 @@ function calculate(expression) {
   try {
     var result = eval(parsed);
 
-    if ((result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) && !/^plot\(/.test(parsed)) throw new Error;  
+    if ((result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) && !/^plot\(/.test(parsed)) throw new Error;
     return result;
 
   } catch(e) {
@@ -603,10 +603,15 @@ function calculate(expression) {
       parsed = parsed.replace(/j/g, 'i');
       parsed = parsed.replace(/Φ/g, '1.618033988749895');
       parsed = parsed.replace(/π/g, '3.141592653589793');
-      return math.evaluate(parsed);      
+      return math.evaluate(parsed);
+
     } catch(e) {
-      // if (isMobile) return;
-      return e.toString();
+      
+      try {
+        return buildComplexNum(getX());
+      } catch (e) {
+        return e.toString();
+      }
     }    
   }
 }
