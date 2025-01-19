@@ -461,28 +461,6 @@ function resizeInput() {
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
-function parseComplex(input) {
-
-  var objX;
-
-  if (typeof input === 'string') {
-    input = input.replace(/ⅽ/g, '299792458');
-    input = input.replace(/℮/g, '2.718281828459045');
-    input = input.replace(/ɢ/g, '6.674e-11');
-    input = input.replace(/Φ/g, '1.618033988749895');
-    input = input.replace(/π/g, '3.141592653589793'); 
-  }  
-  objX = getX(input);
-
-  if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
-
-    if (!isANumber(objX.getImaginary()) || objX.getImaginary() === '0') return  math.complex(objX.getRealPart());
-    return buildComplexNum(objX);
-  }
-  if (typeof input === 'string') input = calculate(input);
-  return math.complex(input);
-}
-
 function parseEval(input) {
   input = '' + input;
   // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
@@ -565,7 +543,7 @@ function calculate(expression) {
   
   if (/^plot\(/.test(expression) && /x/g.test(expression)) {
     expression = parseFunc(expression.slice(5).slice(0, -1));
-    expression = 'plot(' + expression + '\)';
+    expression = 'plot(' + expression + ')';
   }  
   var parsed = parseEval(expression);
 
@@ -587,7 +565,6 @@ function calculate(expression) {
 
   } catch(e) {
 
-    if (/^ReferenceError: (?![ⅽ℮ɢΦπ])/.test(e.toString())) return e.toString();
     try {
       parsed = parsed.replace(/sin\(/g, 'mathSin(');
       parsed = parsed.replace(/cos\(/g, 'mathCos(');
@@ -603,17 +580,59 @@ function calculate(expression) {
       parsed = parsed.replace(/j/g, 'i');
       parsed = parsed.replace(/Φ/g, '1.618033988749895');
       parsed = parsed.replace(/π/g, '3.141592653589793');
-      return math.evaluate(parsed);
 
-    } catch(e) {
+      return math.evaluate(parsed);
       
-      try {
-        return buildComplexNum(getX());
-      } catch (e) {
-        return e.toString();
-      }
-    }    
+    } catch(e) {
+
+      if (/∠/g.test(parsed)) return;
+      return e.toString();
+    }
   }
+}
+
+function buildComplexNum(obj) {
+
+  try {
+    var a = 0;
+    var b = 0;
+    
+    if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
+      a = calculate(stripUnits(obj.getSoul()));
+      
+      if (obj.getSoul().trim() === '') a = 0;
+    } else {
+      if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
+      if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
+    }
+    if (b === 0 && radix === 10) return a;
+    
+    return math.complex(a, b);    
+  } catch {
+    return NaN;
+  }
+}
+
+function parseComplex(input) {
+
+  var objX;
+
+  if (typeof input === 'string') {
+    input = input.replace(/ⅽ/g, '299792458');
+    input = input.replace(/℮/g, '2.718281828459045');
+    input = input.replace(/ɢ/g, '6.674e-11');
+    input = input.replace(/Φ/g, '1.618033988749895');
+    input = input.replace(/π/g, '3.141592653589793'); 
+  }  
+  objX = getX(input);
+
+  if (isANumber(objX.getRealPart()) || isANumber(objX.getImaginary())) {
+
+    if (!isANumber(objX.getImaginary()) || objX.getImaginary() === '0') return  math.complex(objX.getRealPart());
+    return buildComplexNum(objX);
+  }
+  if (typeof input === 'string') input = calculate(input);
+  return math.complex(input);
 }
 
 function objToString(obj) {
@@ -2447,27 +2466,6 @@ function btnAdd() {
   } else {
     addition();
   }  
-}
-
-function buildComplexNum(obj) {
-
-  try {
-    var a = 0;
-    var b = 0;
-    
-    if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
-      a = calculate(stripUnits(obj.getSoul()));
-      
-      if (obj.getSoul().trim() === '') a = 0;
-    } else {
-      if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
-      if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
-    }
-    if (b === 0 && radix === 10) return a;
-    return math.complex(a, b);    
-  } catch {
-    return NaN;
-  }
 }
 
 function getComplex(complexObj) {
