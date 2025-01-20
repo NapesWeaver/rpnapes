@@ -584,11 +584,16 @@ function calculate(expression) {
       return math.evaluate(parsed);
       
     } catch(e) {
-
-      if (/∠/g.test(parsed)) return;
+      
+      if (/∠/g.test(parsed)) return buildComplexNum(getX());
       return e.toString();
     }
   }
+}
+
+function stripUnits(tmpString) {
+  if (radix === 16) return tmpString;
+  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?([Ω♥°a-zA-Z](?<!Infinity))+([-*\/\^Ω♥°a-zA-Z.0-9](?<!Infinity))*$/, '');
 }
 
 function buildComplexNum(obj) {
@@ -1086,11 +1091,6 @@ function btnEnter() {
   updateDisplay();
   if (isMobile) setTimeout(resizeInput, 180);
   parseCommand();  
-}
-
-function stripUnits(tmpString) {
-  if (radix === 16) return tmpString;
-  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?([Ω♥°a-zA-Z](?<!Infinity))+([-*\/\^Ω♥°a-zA-Z.0-9](?<!Infinity))*$/, '');
 }
 
 function btnEval() {
