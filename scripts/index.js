@@ -1655,7 +1655,9 @@ function saveFile(fileName, pretty) {
       blobContent += '\n';
     }
     myBlob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
-    fileName += '.txt';
+
+    if (!/^.+\..+$/.test(fileName)) fileName += '.txt';
+
     saveAs(myBlob, fileName);// filesaver.js
   } else {
     rpnAlert('Error: There is no data to save.');
@@ -3616,7 +3618,7 @@ function help(command) {
     case 'saveas':
       inputText('');
       enterInput();
-      inputText('saveas [filename]: Saves the stack to a text file. If no argument is supplied in-line, last entry on stack is used as the filename.');
+      inputText('saveas [filename]: Saves stack to a file. If no argument is supplied in-line, last entry on stack is used as the filename. Default file extension is .txt but any extension may be used.');
       break;
     case 'sci':
       inputText('');
