@@ -461,6 +461,29 @@ function resizeInput() {
   $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
+function mathFact(num) {
+  var objX = getX(num);
+  var x = buildComplexNum(objX);
+  var negativeNum;
+  var result;
+
+  if (x === -Infinity) x = -999;
+
+  if (x < 0) {
+    negativeNum = true;
+    x = x * -1;
+  }
+  try {
+    result = math.gamma(math.add(x, 1));
+  } catch {
+    result = NaN;
+  }
+  if (isNaN(x) && isNaN(result.re) && isNaN(result.im)) units = '';
+
+  if (negativeNum) result = result * -1;
+  return result;
+}
+
 function parseEval(input) {
   input = '' + input;
   // Contains [!^√()ⅽ℮ɢΦπ] && Not part of a program
@@ -1865,29 +1888,6 @@ function inverse() {
   // cashed = input.value;
   resizeInput();
   input.select();
-}
-
-function mathFact(num) {
-  var objX = getX(num);
-  var x = buildComplexNum(objX);
-  var negativeNum;
-  var result;
-
-  if (x === -Infinity) x = -999;
-
-  if (x < 0) {
-    negativeNum = true;
-    x = x * -1;
-  }    
-  try {    
-    result = math.gamma(math.add(x, 1));    
-  } catch {
-    result = NaN;
-  }
-  if (isNaN(x) && isNaN(result.re) && isNaN(result.im)) units = '';
-
-  if (negativeNum) result = result * -1;
-  return result;
 }
 
 function btnFactorial() {
