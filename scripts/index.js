@@ -1653,16 +1653,38 @@ function btnSave() {
   if (isMobile) resizeInput();
 }
 
-function saveFile(fileName, pretty) {
-  var myBlob;
+function saveFileNotes(fileName) {
+  var blob;
   var blobContent = '';
-
   fileName = fileName.trim() === '' ? 'untitled' : decodeSpecialChar(fileName.toString());
 
-  if (stack.length > 0 || notes.length > 1) {
-    blobContent += '===== ' + fileName.toString() + ' =====\n\n';
+  while (notes[0] === '') notes.shift();
+  while (notes[notes.length - 1] === '') notes.pop();
+
+  if (notes.length > 1) {
+
+    for (var note in notes) {
+      blobContent += decodeSpecialChar(notes[note]);
+      blobContent += '\n';
+    }
+    blob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
+
+    if (!/^.+\..+$/.test(fileName)) fileName += '.txt';    
+    saveAs(blob.slice(0, -1), fileName);// filesaver.js
+  } else {
+    rpnAlert('Error: There are no notes save.');
+  }
+}
+
+function saveFileStack(fileName, pretty) {
+  var blob;
+  var blobContent = '';
+  fileName = fileName.trim() === '' ? 'untitled' : decodeSpecialChar(fileName.toString());
+
+  if (stack.length > 0) {
     
     for (var sta in stack) {
+
       if (pretty) {
         blobContent += objToString(stack[sta]);
       } else {
@@ -1670,18 +1692,39 @@ function saveFile(fileName, pretty) {
       }      
       blobContent += '\n'; 
     }
-    if (fileName !== 'untitled' || !pretty) blobContent += '\n';
+    blob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
 
-    blobContent += '===== Notes ======\n';
+    if (!/^.+\..+$/.test(fileName)) fileName += '.txt';
+    saveAs(blob.slice(0, -1), fileName);// filesaver.js
+  } else {
+    rpnAlert('Error: There is no stack to save.');
+  }
+}
+
+function saveFileAll(fileName) {
+  var blob;
+  var blobContent = '';
+  fileName = fileName.trim() === '' ? 'untitled' : decodeSpecialChar(fileName.toString());
+
+  while (notes[0] === '') notes.shift();
+  while (notes[notes.length - 1] === '') notes.pop();
+
+  if (stack.length > 0 || notes.length > 1) {
+    
+    for (var sta in stack) {
+      blobContent += objToString(stack[sta]);
+      blobContent += '\n'; 
+    }
+    blobContent += '\n';
+
     for (var note in notes) {
       blobContent += decodeSpecialChar(notes[note]);
       blobContent += '\n';
     }
-    myBlob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
-
+    blob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
+    
     if (!/^.+\..+$/.test(fileName)) fileName += '.txt';
-
-    saveAs(myBlob, fileName);// filesaver.js
+    saveAs(blob, fileName);// filesaver.js
   } else {
     rpnAlert('Error: There is no data to save.');
   }
@@ -3615,10 +3658,20 @@ function help(command) {
       enterInput();
       inputText('save: Saves the stack to a browser cookie.');
       break;
+    case 'saveall':
+      inputText('');
+      enterInput();
+      inputText('saveall [filename]: Saves stack and notes to a file. If no argument is supplied in-line, last entry on stack is used as the filename. Default file extension is .txt but any extension may be used.');
+      break;
     case 'saveas':
       inputText('');
       enterInput();
       inputText('saveas [filename]: Saves stack to a file. If no argument is supplied in-line, last entry on stack is used as the filename. Default file extension is .txt but any extension may be used.');
+      break;
+    case 'savenotes':
+      inputText('');
+      enterInput();
+      inputText('savenotes [filename]: Saves notes to a file. If no argument is supplied in-line, last entry on stack is used as the filename. Default file extension is .txt but any extension may be used.');
       break;
     case 'sci':
       inputText('');
@@ -3795,7 +3848,11 @@ function help(command) {
     enterInput();
     inputText('save');
     enterInput();
+    inputText('saveall');
+    enterInput();
     inputText('saveas');
+    enterInput();
+    inputText('savenotes');
     enterInput();
     inputText('sci');
     enterInput();
@@ -3898,15 +3955,39 @@ function parseCommand() {
       }
       stack.pop();
       updateDisplay();    
+    }// NOT saveall with word and no space, NOT saveall with number, NOT saveall with word and alphanumeric word
+    if (command.match(/(?!saveall[A-Za-z]+)(?!saveall ?[0-9])(?!saveall [A-Za-z]+ +[0-9A-Za-z]+)^saveall ?[A-Za-z]*/)) {    
+
+      if (commandArray[1] === undefined) {
+        stack.pop();
+        stack[stack.length - 1] ? saveFileAll(stack[stack.length - 1].soul) : saveFileAll('');
+      } else {
+        stack.pop();
+        saveFileAll(commandArray[1]);
+      }
+      $('txt-input').value = '';
+      updateDisplay();
     }// NOT saveas with word and no space, NOT saveas with number, NOT saveas with word and alphanumeric word
     if (command.match(/(?!saveas[A-Za-z]+)(?!saveas ?[0-9])(?!saveas [A-Za-z]+ +[0-9A-Za-z]+)^saveas ?[A-Za-z]*/)) {    
 
       if (commandArray[1] === undefined) {
         stack.pop();
-        stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, true) : saveFile('', true);
+        stack[stack.length - 1] ? saveFileStack(stack[stack.length - 1].soul, true) : saveFileStack('', true);
       } else {
         stack.pop();
-        saveFile(commandArray[1], true);
+        saveFileStack(commandArray[1], true);
+      }
+      $('txt-input').value = '';
+      updateDisplay();
+    }// NOT savenotes with word and no space, NOT savenotes with number, NOT saveanotes with word and alphanumeric word
+    if (command.match(/(?!savenotes[A-Za-z]+)(?!savenotes ?[0-9])(?!savenotes [A-Za-z]+ +[0-9A-Za-z]+)^savenotes ?[A-Za-z]*/)) {    
+
+      if (commandArray[1] === undefined) {
+        stack.pop();
+        stack[stack.length - 1] ? saveFileNotes(stack[stack.length - 1].soul) : saveFileNotes('');
+      } else {
+        stack.pop();
+        saveFileNotes(commandArray[1]);
       }
       $('txt-input').value = '';
       updateDisplay();
@@ -3929,10 +4010,10 @@ function parseCommand() {
 
       if (commandArray[1] === undefined) {
         stack.pop();
-        stack[stack.length - 1] ? saveFile(stack[stack.length - 1].soul, false) : saveFile('', false);
+        stack[stack.length - 1] ? saveFileStack(stack[stack.length - 1].soul, false) : saveFileStack('', false);
       } else {
         stack.pop();
-        saveFile(commandArray[1], false)
+        saveFileStack(commandArray[1], false)
       }
       $('txt-input').value = '';
       updateDisplay();
