@@ -436,10 +436,13 @@ function resizeTextArea(textarea) {
 }
 
 function resizeMedia() {
-  $('lst-stack').style.height = '0px';
-  $('lst-stack').style.width = $('media-player').offsetWidth + 'px'
-  if($('media-player').offsetWidth === 414) $('lst-stack').style.width = $('media-player').offsetWidth - 18 + 'px';
-  resizeTextArea($('lst-stack'));
+  if ($('media-player').clientHeight > 0) {
+
+    $('lst-stack').style.height = '0px';
+    $('lst-stack').style.width = $('media-player').offsetWidth + 'px'
+    if($('media-player').offsetWidth === 414) $('lst-stack').style.width = $('media-player').offsetWidth - 18 + 'px';
+    resizeTextArea($('lst-stack'));
+  }
 }
 
 function resizeInput() {
@@ -896,7 +899,7 @@ function backupUndo() {
 
   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
   
-  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {      
+  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {
     backups.push(nestArrayByBrowser(shortStack));
     backups.push(input);
     restores.length = 0;
