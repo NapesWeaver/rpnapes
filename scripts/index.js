@@ -816,13 +816,26 @@ function mobileKeyboardAllow() {
   }
 }
 
+function muteTricorder(mute) {
+  if (mute) {
+    for (var i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
+      $('tricorder').getElementsByTagName('audio')[i].muted = true;
+      $('tricorder').getElementsByTagName('audio')[i].pause();
+    }
+  } else {
+    for (i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
+      $('tricorder').getElementsByTagName('audio')[i].muted = false;
+    }
+  }
+}
+
 function toggleSound() {
   if ($('menu-sound-li').classList.contains('strikethrough')) {
     $('menu-sound-li').classList.remove('strikethrough');
-    muteAudio(false);
+    muteTricorder(false);
   } else {
     $('menu-sound-li').classList.add('strikethrough');
-    muteAudio(true);
+    muteTricorder(true);
   }
   clearInterval(flashInterval);
 }
@@ -917,6 +930,18 @@ function menuNotes() {
   }
 }
 
+function power() {
+  var onOff;
+  onOff = $('tricorderskin').src.toString().indexOf('tricorderon');
+
+  if (onOff === -1) return false;
+  return true;
+}
+
+function playAudio(obj) {
+  if (!$('menu-sound-li').classList.contains('strikethrough')) obj.play();
+}
+
 //////// Buttons /////////////////////////////////////////////////////////////////////
 
 function rpnapesOn() {
@@ -930,7 +955,7 @@ function rpnapesOn() {
   $('tricorder').classList.remove('visible');
   $('tricorder').classList.add('hidden');
   if (power()) playAudio($('keypress3'));
-  if (!$('menu-sound-li').classList.contains('strikethrough')) muteAudio(false);
+  if (!$('menu-sound-li').classList.contains('strikethrough')) muteTricorder(false);
   $('rpnapes').classList.remove('hidden');
   $('rpnapes').classList.add('visible');
   if ($('lst-stack').classList.contains('resizable')) {
@@ -3232,7 +3257,6 @@ function plot(input) {
 }
 
 function embedIframePlayer(src) {
-  backupUndo();
   closeMedia();
 
   var srcURL = src;
@@ -3253,11 +3277,6 @@ function embedIframePlayer(src) {
 
 function embedTricorder(src) {  
     widgetSrc.unshift(src);// https://www.youtube.com/embed/25QpDHCLOUc;
-}
-
-function embed(src) {
-  embedIframePlayer(src);
-  // embedTricorder(src);
 }
 
 function getLocation() { 
@@ -3743,7 +3762,7 @@ function help(command) {
       inputText('');
       enterInput();
       inputText('unembed: Removes the last embedded video from Tricorder iFrame.');
-      break;    
+      break;
     case 'unmute':
       inputText('');
       enterInput();
@@ -3877,8 +3896,10 @@ function help(command) {
     enterInput();
     inputText('tostring');
     enterInput();
-    inputText('unembed');
-    enterInput();
+    // inputText('tricorder');
+    // enterInput();
+    // inputText('unembed');
+    // enterInput();
     inputText('unmute');
     enterInput();
     inputText('vector');
@@ -4025,9 +4046,9 @@ function parseCommand() {
     || (command.match(/^embed .*https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || command.match(/^embed ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/))) {    
           
       if (commandArray[1] === undefined) {
-        embed(stackedCommand.getSoul());
+        embedIframePlayer(stackedCommand.getSoul());
       } else {
-        embed(command.slice(6));
+        embedIframePlayer(command.slice(6));
       }
       stack.pop();
       $('txt-input').value = '';
@@ -5632,31 +5653,6 @@ function loadTricorder() {
   }
 }
 
-function power() {
-  var onOff;
-  onOff = $('tricorderskin').src.toString().indexOf('tricorderon');
-
-  if (onOff === -1) return false;
-  return true;
-}
-
-function muteAudio(mute) {
-  if (mute) {
-    for (var i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
-      $('tricorder').getElementsByTagName('audio')[i].muted = true;
-      $('tricorder').getElementsByTagName('audio')[i].pause();
-    }
-  } else {
-    for (i = 0; i < $('tricorder').getElementsByTagName('audio').length; i++) {
-      $('tricorder').getElementsByTagName('audio')[i].muted = false;
-    }
-  }
-}
-
-function playAudio(obj) {
-  if (!$('menu-sound-li').classList.contains('strikethrough')) obj.play();
-}
-
 // Power On/Off.
 function button1() {
   haptic();
@@ -5668,7 +5664,7 @@ function button1() {
 }
 
 function tricorderOff() {
-  muteAudio(true);
+  muteTricorder(true);
   $('widget').src = '';
   $('widget').classList.remove('visible');
   $('widget').classList.add('hidden');
@@ -5679,7 +5675,7 @@ function tricorderOff() {
 }
 
 function tricorderOn() {
-  muteAudio(false);  
+  muteTricorder(false);  
   $('tricorderskin').src = 'images/tricorderon.png';
   $('viewport').src = 'https://www.youtube.com/embed/563Fp4fv1Vk?autoplay=1&mute=1&loop=1&playlist=563Fp4fv1Vk';// Jerobeam Fenderson - Lines
   
@@ -6984,7 +6980,7 @@ window.onload = function () {
   $('button4').onclick = button4;
   $('button5').onclick = button5;
   $('button6').onclick = button6;
-  muteAudio(true);
+  muteTricorder(true);
 
   // Notes
   $('btn-load-notes').onclick = btnLoadNotes;
