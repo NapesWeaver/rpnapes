@@ -1571,6 +1571,8 @@ function btnShift() {
     $('btn-add').style.borderColor = '#D4D0C8';
     $('btn-tangent').innerHTML = 'tan';
     $('btn-load-notes').value = 'LOAD';
+
+    $('lst-notes').spellcheck = true;
   }
   else {
     // Shifting to true...
@@ -1641,7 +1643,8 @@ function btnShift() {
     $('btn-add').style.borderLeftColor = '#D8D8FF';
     $('btn-tangent').innerHTML = '<span class="btn-small-font">tan<sup>-1</sup></span>';   
     $('btn-load-notes').value = 'RUN';
- 
+    
+    $('lst-notes').spellcheck = false;
   }
   colorUndoButton();
   
