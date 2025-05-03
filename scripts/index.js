@@ -171,6 +171,11 @@ function removeLeadingZeros(str) {
   return neg + str;
 }
 
+function stripUnits(tmpString) {
+  if (radix === 16) return tmpString;
+  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?([Ω♥°a-zA-Z](?<!Infinity))+([-*\/\^Ω♥°a-zA-Z.0-9](?<!Infinity))*$/, '');
+}
+
 function extractFirstValue(tmpString) {
   var real = '';  
 
@@ -242,7 +247,6 @@ function extractUnits(tmpString) {
   } else {
     tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);    
   }
-
   return tmpUnits.replace(' ', '');
 }
 
@@ -652,6 +656,87 @@ function getX(input) {
   return new NumberObject(soulX, firstValueX, imaginaryX, unitsX);
 }
 
+function isANumber(testString) {  
+  var isNum = true;
+  if (isNaN(testString) || testString === '') isNum = false;
+  if (/[ⅽ℮ɢΦπ]/g.test(testString)) isNum = true;
+  return isNum;
+}
+
+function calculate(expression) {  
+  
+  if (/^plot\(/.test(expression) && /x/g.test(expression)) {
+    expression = parseFunc(expression.slice(5).slice(0, -1));
+    expression = 'plot(' + expression + ')';
+  }  
+  var parsed = parseEval(expression);
+
+  parsed = decodeSpecialChar(parsed);
+  if (/[0-9]+,[0-9]+/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
+    parsed = parsed.replace(/,/g, '');
+  }
+  if (/\$[0-9.]/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
+    currency = '$';
+    parsed = parsed.replace(/\$/g, '');
+  }
+  parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
+
+  try {
+    var result = eval(parsed);
+
+    if ((result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) && !/^plot\(/.test(parsed)) throw new Error;
+    return result;
+
+  } catch(e) {
+
+    try {
+      parsed = parsed.replace(/sin\(/g, 'mathSin(');
+      parsed = parsed.replace(/cos\(/g, 'mathCos(');
+      parsed = parsed.replace(/tan\(/g, 'mathTan(');
+      parsed = parsed.replace(/asin\(/g, 'mathASin(');
+      parsed = parsed.replace(/acos\(/g, 'mathACos(');
+      parsed = parsed.replace(/atan\(/g, 'mathATan(');
+      parsed = parsed.replace(/ln\(/g, 'log(');
+      parsed = parsed.replace(/mathP/g, 'p');
+      parsed = parsed.replace(/ⅽ/g, '299792458');
+      parsed = parsed.replace(/℮/g, '2.718281828459045');
+      parsed = parsed.replace(/ɢ/g, '6.674e-11');
+      parsed = parsed.replace(/j/g, 'i');
+      parsed = parsed.replace(/Φ/g, '1.618033988749895');
+      parsed = parsed.replace(/π/g, '3.141592653589793');
+
+      return math.evaluate(parsed);
+      
+    } catch(e) {
+      
+      if (/∠/g.test(parsed)) return buildComplexNum(getX());
+      return e.toString();
+    }
+  }
+}
+
+function buildComplexNum(obj) {
+
+  try {
+    var a = 0;
+    var b = 0;
+    
+    if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
+      a = calculate(stripUnits(obj.getSoul()));
+      
+      if (obj.getSoul().trim() === '') a = 0;
+    } else {
+      if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
+      if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
+    }
+    if (b === 0 && radix === 10) return a;
+    
+    return math.complex(a, b);    
+  } catch {
+    return NaN;
+  }
+}
+
 math.import({
   Infinityi: NaN,
   Infinityj: NaN,
@@ -1052,85 +1137,6 @@ function parseFunc(input) {
     while (/\^/.test(input)) input = parseInline(input, '^', 'mathPow(');    
   }
   return new Function('x', 'return ' + input);
-}
-
-function calculate(expression) {  
-  
-  if (/^plot\(/.test(expression) && /x/g.test(expression)) {
-    expression = parseFunc(expression.slice(5).slice(0, -1));
-    expression = 'plot(' + expression + ')';
-  }  
-  var parsed = parseEval(expression);
-
-  parsed = decodeSpecialChar(parsed);
-  if (/[0-9]+,[0-9]+/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {    
-    parsed = parsed.replace(/,/g, '');
-  }
-  if (/\$[0-9.]/g.test(parsed) && !/[=;<>?:'"`~@%×(){}[\]|\\_]/g.test(parsed)) {
-    currency = '$';
-    parsed = parsed.replace(/\$/g, '');
-  }
-  parsed = parsed.replace(/(?<!\w)Ω(?!\w)/g, 'ohm');
-
-  try {
-    var result = eval(parsed);
-
-    if ((result === undefined || (isNaN(result) && (typeof result).toLowerCase() === 'number') || /√-1|ii/g.test(result)) && !/^plot\(/.test(parsed)) throw new Error;
-    return result;
-
-  } catch(e) {
-
-    try {
-      parsed = parsed.replace(/sin\(/g, 'mathSin(');
-      parsed = parsed.replace(/cos\(/g, 'mathCos(');
-      parsed = parsed.replace(/tan\(/g, 'mathTan(');
-      parsed = parsed.replace(/asin\(/g, 'mathASin(');
-      parsed = parsed.replace(/acos\(/g, 'mathACos(');
-      parsed = parsed.replace(/atan\(/g, 'mathATan(');
-      parsed = parsed.replace(/ln\(/g, 'log(');
-      parsed = parsed.replace(/mathP/g, 'p');
-      parsed = parsed.replace(/ⅽ/g, '299792458');
-      parsed = parsed.replace(/℮/g, '2.718281828459045');
-      parsed = parsed.replace(/ɢ/g, '6.674e-11');
-      parsed = parsed.replace(/j/g, 'i');
-      parsed = parsed.replace(/Φ/g, '1.618033988749895');
-      parsed = parsed.replace(/π/g, '3.141592653589793');
-
-      return math.evaluate(parsed);
-      
-    } catch(e) {
-      
-      if (/∠/g.test(parsed)) return buildComplexNum(getX());
-      return e.toString();
-    }
-  }
-}
-
-function stripUnits(tmpString) {
-  if (radix === 16) return tmpString;
-  return tmpString.replace(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?([Ω♥°a-zA-Z](?<!Infinity))+([-*\/\^Ω♥°a-zA-Z.0-9](?<!Infinity))*$/, '');
-}
-
-function buildComplexNum(obj) {
-
-  try {
-    var a = 0;
-    var b = 0;
-    
-    if (!isANumber(obj.getRealPart()) && !isANumber(obj.getImaginary())) {
-      a = calculate(stripUnits(obj.getSoul()));
-      
-      if (obj.getSoul().trim() === '') a = 0;
-    } else {
-      if (isANumber(obj.getRealPart())) a = calculate(obj.getRealPart());
-      if (isANumber(obj.getImaginary())) b = calculate(obj.getImaginary());
-    }
-    if (b === 0 && radix === 10) return a;
-    
-    return math.complex(a, b);    
-  } catch {
-    return NaN;
-  }
 }
 
 function parseComplex(input) {
@@ -5225,13 +5231,6 @@ function updateDisplay() {
 
 function printHtml() {
   print();
-}
-
-function isANumber(testString) {  
-  var isNum = true;
-  if (isNaN(testString) || testString === '') isNum = false;
-  if (/[ⅽ℮ɢΦπ]/g.test(testString)) isNum = true;
-  return isNum;
 }
 
 function colorSaveButton() {
