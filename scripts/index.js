@@ -140,6 +140,494 @@ if (!Array.prototype.indexOf)
     }
   })(Object, Math.max, Math.min);
 
+function extractFirstValue(tmpString) {
+  var real = '';  
+
+  if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)) {
+        
+    tmpString = stripUnits(tmpString).trim();    
+
+    if (radix === 10
+    && (/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)$/.test(tmpString) 
+    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)([ ]+[-+][ ]*|[ ]*[-+][ ]+)([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString)
+    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)[ ]*[∠][ ]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)$/.test(tmpString))) {
+
+      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity[-+]?(?![ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);
+      
+      tmp = tmp.replace(/ /g, '');
+
+      if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);  
+      if (isANumber(tmp)) real += tmp;         
+    }
+    if (radix === 2) {
+      // Looking for a binary number but not an imaginary number
+      if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
+        real = '' + parseInt(tmpString, radix);   
+      }
+    }
+    if (radix === 8) {
+      if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+[ij]/g.test(tmpString)) {
+        real = '' + parseInt(tmpString, radix);
+      }
+    }
+    if (radix === 16) {
+      if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+[ij]/g.test(tmpString)) {
+        real = '' + parseInt(tmpString, radix);
+      }
+    }
+    if (real.charAt(0) === '+') real = real.slice(1);
+  
+    if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(real)) real = '0';
+    if (/[.]/g.test(real)) real = removeTrailingZeros(real);
+    if (/^[-]?0*/.test(real)) real = removeLeadingZeros(real);
+    if (real === '') real = 'NaN';
+  } else {
+    return NaN;
+  }
+  return real;
+}
+
+function extractLateral(tmpString, firstValue) {
+  var tmpComplex = [];
+
+  tmpString = stripUnits(tmpString);
+
+  if (/∠/g.test(tmpString) && isANumber(firstValue)) {    
+    tmpComplex = extractAngle(tmpString, firstValue);    
+  } else {
+    tmpComplex[0] = firstValue;
+    tmpComplex[1] = extractImaginary(tmpString);
+  }
+  return tmpComplex;
+}
+
+function extractUnits(tmpString) {
+  var tmpUnits = '';
+
+  if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
+
+  if (radix !== 16) {
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);
+  } else {
+    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);    
+  }
+  return tmpUnits.replace(' ', '');
+}
+
+function removeTrailingZeros(str) {
+
+  var arr = str.split(/[eE]/);
+  var engineering;
+
+  while (/[.]*0$/.test(arr[0])) {    
+    arr[0] = arr[0].slice(0, -1);
+  }
+  if (/[.]$/.test(arr[0])) arr[0] = arr[0].slice(0, -1);
+
+  arr[1] ? engineering = 'e' + arr[1] : engineering = '';
+
+  return arr[0] + engineering;
+}
+
+function removeLeadingZeros(str) {
+  var neg = '';
+  
+  if (str.charAt(0) === '-') {
+    neg = '-';
+    str = str.slice(1);
+  }
+  while (str.length > 1 && /^[0][.]*/.test(str)) {
+    str = str.slice(1);
+  }
+  if (str.charAt(0) === '.') {
+    str = '0' + str;
+  }
+  return neg + str;
+}
+
+function extractImaginary(tmpString) {
+  var imaginary = '';
+  
+  tmpString = stripUnits(tmpString).trim();  
+
+  if (radix === 10) {
+    
+    if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)
+    && (/^[-+]?[ ]*([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString)
+    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)([ ]+[-+][ ]*|[ ]*[-+][ ]+)([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString))) {
+ 
+      var tmp = '' + tmpString.match(/[-+]?[ ]*[ij]$|[-+]?[ ]*[ⅽ℮ɢΦπ][ij]$|[-+]?[ ]*Infinity[ij]$|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]$/);
+      
+      tmp = tmp.replace(/ /g, '');
+  
+      if (/^[-][ij]\b/.test(tmp)) {
+        tmp = '-1';
+      } else if (/^[+]?[ij]\b/.test(tmp)) {
+        tmp = '1';
+      } else {// remove [ij]
+        tmp = tmp.slice(0, tmp.length - 1);    
+      }
+      if (tmp.charAt(0) === '+') tmp = tmp.slice(1);
+      if (isANumber(tmp)) imaginary += tmp;
+    }
+  } else {
+    if (radix === 2) imaginary += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
+    if (radix === 8) imaginary += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
+    if (radix === 16) imaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
+    if (imaginary.charAt(1) === ' ') imaginary = imaginary.replace(/ /g, '');
+
+    imaginary = imaginary.slice(0, imaginary.length - 1);
+    imaginary = '' + parseInt(imaginary, radix);
+  }
+  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(imaginary)) imaginary = '0';
+  if (/[.]/g.test(imaginary)) imaginary = removeTrailingZeros(imaginary);
+  if (/^[-]?0*/.test(imaginary)) imaginary = removeLeadingZeros(imaginary);
+  if (imaginary === '') imaginary = 'NaN';  
+  
+  return  imaginary;
+}
+
+function parseAngle(tmpAngle, firstValue) {
+  var tmpComplex = [];
+
+  if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
+
+  polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
+  tmpAngle = tmpAngle * 180 / Math.PI;
+  
+  if (tmpAngle === 0 || tmpAngle % 360 === 0 || tmpAngle === 180 || (tmpAngle - 180) % 360 === 0) {
+    tmpComplex[0] = polar.re;
+    tmpComplex[1] = '0';
+  } else if ((tmpAngle === 270 || (tmpAngle - 270) % 360 === 0 || tmpAngle === 90 || (tmpAngle - 90) % 360 === 0)) {
+    tmpComplex[0] = 0;
+    tmpComplex[1] = polar.im.toString();
+  } else {
+    tmpComplex[0] = polar.re;
+    tmpComplex[1] = polar.im.toString();
+  }
+  return tmpComplex;
+}
+
+function parseInfinitePolars(tmpAngle) {
+  var tmpComplex = [];
+  var degrees = $('btn-angle').value === 'deg' ? parseFloat(tmpAngle) : 180 / π * tmpAngle;
+
+  if (degrees === 0 || degrees % 360 === 0) {
+    tmpComplex[0] = Infinity;
+    tmpComplex[1] = '0';
+  } else if (degrees === 315 || (degrees - 315) % 360 === 0) {
+    tmpComplex[0] = Infinity;
+    tmpComplex[1] = '-Infinity';
+  } else if (degrees === 270 || (degrees - 270) % 360 === 0) {
+    tmpComplex[0] = 0;
+    tmpComplex[1] = '-Infinity';
+  } else if (degrees === 225 || (degrees - 225) % 360 === 0) {
+    tmpComplex[0] = -Infinity;
+    tmpComplex[1] = '-Infinity';
+  } else if (degrees === 180 || (degrees - 180) % 360 === 0) {
+    tmpComplex[0] = -Infinity;
+    tmpComplex[1] = '0';
+  } else if (degrees === 135 || (degrees - 135) % 360 === 0) {
+    tmpComplex[0] = -Infinity;
+    tmpComplex[1] = 'Infinity';
+  } else if (degrees === 90 || (degrees - 90) % 360 === 0) {
+    tmpComplex[0] = 0;
+    tmpComplex[1] = 'Infinity';
+  } else if (degrees === 45 || (degrees - 45) % 360 === 0) {
+    tmpComplex[0] = Infinity;
+    tmpComplex[1] = 'Infinity';
+  } else {
+    tmpComplex[0] = NaN;
+    tmpComplex[1] = 'NaN';
+  }
+  return tmpComplex;
+}
+
+function extractAngle(tmpString, firstValue) {  
+  var tmpComplex = [];
+  var tmpAngle = '';
+
+  tmpString = tmpString.trim();
+  
+  if (radix === 10) {
+    
+    if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)) {   
+      tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])$|∠[ ]*[-+]?[ ]*Infinity[-+]?(?![ij])$|∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])$/);    
+      tmpAngle = tmpAngle.replace(/ /g, '');
+      // Remove ∠
+      tmpAngle = tmpAngle.slice(1);    
+      if (/[-+]?Infinity/.test(firstValue)) {
+        tmpComplex = parseInfinitePolars(tmpAngle);         
+      } else {
+        if (/[-+]?Infinity/.test(tmpAngle)) tmpAngle = '0';
+        tmpComplex =  parseAngle(tmpAngle, firstValue);
+      }
+    }
+  } else {
+    if (radix === 2) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-1]+/);
+    if (radix === 8) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-7]+/);
+    if (radix === 16) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[a-f0-9]+/);   
+
+    tmpAngle = tmpAngle.replace(/ /g, '');
+    tmpAngle = tmpAngle.slice(1);
+    tmpAngle = parseInt(tmpAngle, radix);
+    tmpComplex = parseAngle(tmpAngle, firstValue);
+  }  
+  return tmpComplex;
+}
+
+function appendUnits(unitString, tmpUnits, exponent) {
+
+  if (tmpUnits !== 'null') {
+    if (exponent === 1) {
+
+      if (unitString.length > 0) unitString += '*';
+      unitString += tmpUnits;
+    } else if (exponent !== 0) {
+
+      if (unitString.length > 0) unitString += '*';
+      if (exponent.toString().indexOf('.') < 0) {
+        unitString += tmpUnits + '^' + exponent;
+      } else {
+        unitString += tmpUnits + '^' + toFixed(exponent, 2);
+      }
+    }
+  }
+  return unitString;
+}
+
+function splitUnits(tmpUnits) {
+  var unitsA = '';
+  var unitsB = '';
+
+  if (tmpUnits.indexOf('/') !== -1) {
+    tmpUnits = tmpUnits.split('/');
+    unitsA = tmpUnits[0];
+    unitsB = tmpUnits[1];
+  } else {
+    unitsA += tmpUnits;
+  }
+  unitsA = unitsA.split('*');
+  unitsB = unitsB.split('*');
+
+  return [unitsA, unitsB];
+}
+
+function removeNegativeExponentSign(factorsArray) {
+  var tmpArray = [];
+  var i = 0;
+
+  while (i < factorsArray.length) {
+    if (factorsArray[i].indexOf('-') !== -1) {
+      var tmpString = '';
+      tmpString += factorsArray.splice(i, 1).toString();
+      tmpString = tmpString.replace(/-/g, '');
+      tmpArray.push(tmpString);
+      i--;
+    }
+    i++;
+  }
+  return tmpArray;
+}
+
+function unitAddition(unitsA, unitsB, multiplier, add) {
+  var unitsCombined = '';
+  var unitsDoNotMatch = true;
+
+  for (var a in unitsA) {
+    var tmpUnitsA = '';
+    var expA = 1;
+    unitsDoNotMatch = true;
+
+    tmpUnitsA += unitsA[a].match(/[Ω♥°a-zA-Z]+/);
+    if (unitsA[a].indexOf('^') !== -1) expA = unitsA[a].match(/[-]?[.0-9]+/);
+    // Check for matches between tmpUnitsA and unitsB
+    for (var b in unitsB) {
+      var tmpUnitsB = '';
+      var expB = 1;
+      tmpUnitsB += unitsB[b].match(/[Ω♥°a-zA-Z]+/);
+
+      if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
+
+      if (tmpUnitsA === tmpUnitsB) {
+        unitsDoNotMatch = false;
+
+        if (add) {
+          expA = (parseFloat(expA) * multiplier) + parseFloat(expB);
+        } else {
+          expA = parseFloat(expA) - parseFloat(expB);
+        }
+        unitsCombined = appendUnits(unitsCombined, tmpUnitsA, expA);
+      }
+    }
+    if (unitsDoNotMatch) {
+      if (add) expA = expA * multiplier;
+      unitsCombined = appendUnits(unitsCombined, tmpUnitsA, expA);
+    }
+  }// Check tmpUnitsB for units that didn't match unitsA
+  for (b in unitsB) {
+    tmpUnitsB = '';
+    expB = 1;
+    unitsDoNotMatch = true;
+    tmpUnitsB += unitsB[b].match(/[Ω♥°a-zA-Z]+/);
+
+    if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
+
+    for (a in unitsA) {
+      tmpUnitsA = '';
+      tmpUnitsA += unitsA[a].match(/[Ω♥°a-zA-Z]+/);
+
+      if (tmpUnitsB === tmpUnitsA) unitsDoNotMatch = false;
+    }
+    if (unitsDoNotMatch) {
+      if (!add) expB = expB * -1;
+      unitsCombined = appendUnits(unitsCombined, tmpUnitsB, parseFloat(expB));
+    }
+  }
+  return unitsCombined;
+}
+
+function rewriteNegUnitExp(tmpUnits) {
+  var newUnits = '';
+
+  if (tmpUnits.indexOf('-') !== -1) {
+    var unitsSplit = [];
+    var numerator = [];
+    var denominator = [];
+    var changedUnits = [];
+
+    unitsSplit = splitUnits(tmpUnits);
+    numerator = unitsSplit[0];
+    denominator = unitsSplit[1];
+
+    changedUnits = removeNegativeExponentSign(numerator);
+
+    denominator = unitAddition(denominator, changedUnits, 1, true);
+    denominator = denominator.split('*');
+
+    changedUnits = [];
+    changedUnits = removeNegativeExponentSign(denominator);
+
+    numerator = unitAddition(numerator, changedUnits, 1, true);
+    changedUnits = [];
+    denominator = unitAddition(denominator, changedUnits, 1, true);
+
+    if (numerator === '' && denominator !== '') numerator += '1';
+    newUnits += numerator;
+    if (denominator !== '') newUnits += '/' + denominator;  
+  } else {
+    newUnits = '' + tmpUnits;
+  }
+  return newUnits;
+}
+
+function addUnits(unitsX, unitsY) {
+  var units = '';
+  if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = unitsY;
+  if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = unitsX;
+  if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
+  if (units) units = ' ' + units;
+  return units;
+}
+
+function processUnits(unitsY, unitsX, multiplier, multiply) {
+
+  var unitsSplit = [];
+  var numeratorY = '';
+  var denominatorY = '';
+  var numeratorX = '';
+  var denominatorX = '';
+  var unitsCombined = '';
+
+  unitsSplit = splitUnits(unitsY);
+  numeratorY = unitsSplit[0];
+  denominatorY = unitsSplit[1];
+  unitsSplit = splitUnits(unitsX);
+  numeratorX = unitsSplit[0];
+  denominatorX = unitsSplit[1];
+
+  if (multiply) {
+    // Multiplication
+    numeratorX = unitAddition(numeratorY, numeratorX, multiplier, true);
+    denominatorX = unitAddition(denominatorY, denominatorX, multiplier, true);
+  } else {
+    // Division
+    numeratorY = unitAddition(numeratorY, denominatorX, multiplier, true);
+
+    if (denominatorY !== '') {
+      denominatorY = unitAddition(denominatorY, numeratorX, multiplier, true);
+    } else {
+      denominatorY = numeratorX.join('*');
+    }
+    numeratorX = numeratorY;
+    denominatorX = denominatorY;
+  }
+  unitsCombined = unitAddition(numeratorX.split('*'), denominatorX.split('*'), 1, false);
+
+  if (unitsCombined.indexOf('-') !== -1) unitsCombined = rewriteNegUnitExp(unitsCombined);
+  return unitsCombined;
+}
+
+function multiplyUnits(unitsX, unitsY, multiplier) {
+  var units = '';
+
+  if ((unitsY !== 'null' || unitsX !== 'null')) {
+    units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
+    if (units === ' ') units = '';
+  }
+  return units;
+}
+
+function divideUnits(unitsX, unitsY, multiplier) {
+  var units = '';
+
+  if ((unitsY !== 'null' || unitsX !== 'null')) {
+    units = ' ' + processUnits(unitsY, unitsX, multiplier, false);
+    if (units === ' ') units = '';
+  }
+  return units;
+}
+
+function inverseUnits(units) {
+  var tmpArray = [];
+  var invertedUnits = '';
+
+  if (units !== 'null') {
+    units = rewriteNegUnitExp(units);
+    if (units.indexOf('/') !== -1) {
+      tmpArray = units.split('/');
+      
+      if (tmpArray[0].indexOf('1') === -1) {
+        invertedUnits += ' ' + tmpArray[1] + '/' + tmpArray[0];
+      } else {
+        invertedUnits += ' ' + tmpArray[1];
+      }
+    } else {
+      invertedUnits += ' 1/' + units;
+    }
+  }
+  return invertedUnits;
+}
+
+function encodeSpecialChar(tmpString) {
+  tmpString = tmpString.replace(/%/g, '&#37');
+  tmpString = tmpString.replace(/,/g, '&#44');
+  tmpString = tmpString.replace(/;/g, '&#59');
+  tmpString = tmpString.replace(/=/g, '&#61');
+  tmpString = tmpString.replace(/_/g, '&#95');
+  tmpString = tmpString.replace(/−/g, '-');
+  return tmpString;
+}
+
+function decodeSpecialChar(tmpString) {
+  tmpString = tmpString.replace(/&#37/g, '%');
+  tmpString = tmpString.replace(/&#44/g, ',');
+  tmpString = tmpString.replace(/&#59/g, ';');
+  tmpString = tmpString.replace(/&#61/g, '=');
+  tmpString = tmpString.replace(/&#95/g, '_');
+  return tmpString;
+}
+
 function getX(input) {
   var x = input === undefined ? $('txt-input').value.trim() : input.toString();
   var soulX = x;
@@ -4785,493 +5273,6 @@ function getCookie(cname) {
     }
   }
   return '';
-}
-
-function encodeSpecialChar(tmpString) {
-  tmpString = tmpString.replace(/%/g, '&#37');
-  tmpString = tmpString.replace(/,/g, '&#44');
-  tmpString = tmpString.replace(/;/g, '&#59');
-  tmpString = tmpString.replace(/=/g, '&#61');
-  tmpString = tmpString.replace(/_/g, '&#95');
-  tmpString = tmpString.replace(/−/g, '-');
-  return tmpString;
-}
-function decodeSpecialChar(tmpString) {
-  tmpString = tmpString.replace(/&#37/g, '%');
-  tmpString = tmpString.replace(/&#44/g, ',');
-  tmpString = tmpString.replace(/&#59/g, ';');
-  tmpString = tmpString.replace(/&#61/g, '=');
-  tmpString = tmpString.replace(/&#95/g, '_');
-  return tmpString;
-}
-
-function removeTrailingZeros(str) {
-
-  var arr = str.split(/[eE]/);
-  var engineering;
-
-  while (/[.]*0$/.test(arr[0])) {    
-    arr[0] = arr[0].slice(0, -1);
-  }
-  if (/[.]$/.test(arr[0])) arr[0] = arr[0].slice(0, -1);
-
-  arr[1] ? engineering = 'e' + arr[1] : engineering = '';
-
-  return arr[0] + engineering;
-}
-
-function removeLeadingZeros(str) {
-  var neg = '';
-  
-  if (str.charAt(0) === '-') {
-    neg = '-';
-    str = str.slice(1);
-  }
-  while (str.length > 1 && /^[0][.]*/.test(str)) {
-    str = str.slice(1);
-  }
-  if (str.charAt(0) === '.') {
-    str = '0' + str;
-  }
-  return neg + str;
-}
-
-function extractFirstValue(tmpString) {
-  var real = '';  
-
-  if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)) {
-        
-    tmpString = stripUnits(tmpString).trim();    
-
-    if (radix === 10
-    && (/^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)$/.test(tmpString) 
-    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)([ ]+[-+][ ]*|[ ]*[-+][ ]+)([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString)
-    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)[ ]*[∠][ ]*[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)$/.test(tmpString))) {
-
-      var tmp = '' + tmpString.match(/^[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])|^[-+]?[ ]*Infinity[-+]?(?![ij])|^[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])/);
-      
-      tmp = tmp.replace(/ /g, '');
-
-      if (/[-+]$/.test(tmp)) tmp = tmp.slice(0, tmp.length - 1);  
-      if (isANumber(tmp)) real += tmp;         
-    }
-    if (radix === 2) {
-      // Looking for a binary number but not an imaginary number
-      if (/^[-+]?[0-1]+/g.test(tmpString) && !/^[-+]?[0-1]+[ij]/g.test(tmpString)) {
-        real = '' + parseInt(tmpString, radix);   
-      }
-    }
-    if (radix === 8) {
-      if (/^[-+]?[0-7]+/g.test(tmpString) && !/^[-+]?[0-7]+[ij]/g.test(tmpString)) {
-        real = '' + parseInt(tmpString, radix);
-      }
-    }
-    if (radix === 16) {
-      if (/^[-+]?[0-9a-f]+/g.test(tmpString) && !/^[-+]?[0-9a-f]+[ij]/g.test(tmpString)) {
-        real = '' + parseInt(tmpString, radix);
-      }
-    }
-    if (real.charAt(0) === '+') real = real.slice(1);
-  
-    if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(real)) real = '0';
-    if (/[.]/g.test(real)) real = removeTrailingZeros(real);
-    if (/^[-]?0*/.test(real)) real = removeLeadingZeros(real);
-    if (real === '') real = 'NaN';
-  } else {
-    return NaN;
-  }
-  return real;
-}
-
-function extractImaginary(tmpString) {
-  var imaginary = '';
-  
-  tmpString = stripUnits(tmpString).trim();  
-
-  if (radix === 10) {
-    
-    if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)
-    && (/^[-+]?[ ]*([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString)
-    || /^[-+]?[ ]*([ⅽ℮ɢΦπ]|Infinity|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?)([ ]+[-+][ ]*|[ ]*[-+][ ]+)([ij]|[ⅽ℮ɢΦπ][ij]|Infinity[ij]|([0-9]+[.]?[0-9]*|[0-9]*[.]?[0-9]+)([eE][-+]?[0-9]+)?[ij])$/.test(tmpString))) {
- 
-      var tmp = '' + tmpString.match(/[-+]?[ ]*[ij]$|[-+]?[ ]*[ⅽ℮ɢΦπ][ij]$|[-+]?[ ]*Infinity[ij]$|[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*[ij]$/);
-      
-      tmp = tmp.replace(/ /g, '');
-  
-      if (/^[-][ij]\b/.test(tmp)) {
-        tmp = '-1';
-      } else if (/^[+]?[ij]\b/.test(tmp)) {
-        tmp = '1';
-      } else {// remove [ij]
-        tmp = tmp.slice(0, tmp.length - 1);    
-      }
-      if (tmp.charAt(0) === '+') tmp = tmp.slice(1);
-      if (isANumber(tmp)) imaginary += tmp;
-    }
-  } else {
-    if (radix === 2) imaginary += tmpString.match(/[-+]?[ ]*[0-1]+[ij]/);
-    if (radix === 8) imaginary += tmpString.match(/[-+]?[ ]*[0-7]+[ij]/);
-    if (radix === 16) imaginary += tmpString.match(/[-+]?[ ]*[a-f0-9]+[ij]/);
-    if (imaginary.charAt(1) === ' ') imaginary = imaginary.replace(/ /g, '');
-
-    imaginary = imaginary.slice(0, imaginary.length - 1);
-    imaginary = '' + parseInt(imaginary, radix);
-  }
-  if (/^[-]?0*[.]0+$|^[-]?0+[.]?0*$/.test(imaginary)) imaginary = '0';
-  if (/[.]/g.test(imaginary)) imaginary = removeTrailingZeros(imaginary);
-  if (/^[-]?0*/.test(imaginary)) imaginary = removeLeadingZeros(imaginary);
-  if (imaginary === '') imaginary = 'NaN';  
-  
-  return  imaginary;
-}
-
-function parseAngle(tmpAngle, firstValue) {
-  var tmpComplex = [];
-
-  if ($('btn-angle').value === 'deg' && tmpAngle !== '0') tmpAngle = tmpAngle * Math.PI / 180;
-
-  polar = math.complex({ abs: calculate(firstValue), arg: calculate(tmpAngle) });             
-  tmpAngle = tmpAngle * 180 / Math.PI;
-  
-  if (tmpAngle === 0 || tmpAngle % 360 === 0 || tmpAngle === 180 || (tmpAngle - 180) % 360 === 0) {
-    tmpComplex[0] = polar.re;
-    tmpComplex[1] = '0';
-  } else if ((tmpAngle === 270 || (tmpAngle - 270) % 360 === 0 || tmpAngle === 90 || (tmpAngle - 90) % 360 === 0)) {
-    tmpComplex[0] = 0;
-    tmpComplex[1] = polar.im.toString();
-  } else {
-    tmpComplex[0] = polar.re;
-    tmpComplex[1] = polar.im.toString();
-  }
-  return tmpComplex;
-}
-
-function parseInfinitePolars(tmpAngle) {
-  var tmpComplex = [];
-  var degrees = $('btn-angle').value === 'deg' ? parseFloat(tmpAngle) : 180 / π * tmpAngle;
-
-  if (degrees === 0 || degrees % 360 === 0) {
-    tmpComplex[0] = Infinity;
-    tmpComplex[1] = '0';
-  } else if (degrees === 315 || (degrees - 315) % 360 === 0) {
-    tmpComplex[0] = Infinity;
-    tmpComplex[1] = '-Infinity';
-  } else if (degrees === 270 || (degrees - 270) % 360 === 0) {
-    tmpComplex[0] = 0;
-    tmpComplex[1] = '-Infinity';
-  } else if (degrees === 225 || (degrees - 225) % 360 === 0) {
-    tmpComplex[0] = -Infinity;
-    tmpComplex[1] = '-Infinity';
-  } else if (degrees === 180 || (degrees - 180) % 360 === 0) {
-    tmpComplex[0] = -Infinity;
-    tmpComplex[1] = '0';
-  } else if (degrees === 135 || (degrees - 135) % 360 === 0) {
-    tmpComplex[0] = -Infinity;
-    tmpComplex[1] = 'Infinity';
-  } else if (degrees === 90 || (degrees - 90) % 360 === 0) {
-    tmpComplex[0] = 0;
-    tmpComplex[1] = 'Infinity';
-  } else if (degrees === 45 || (degrees - 45) % 360 === 0) {
-    tmpComplex[0] = Infinity;
-    tmpComplex[1] = 'Infinity';
-  } else {
-    tmpComplex[0] = NaN;
-    tmpComplex[1] = 'NaN';
-  }
-  return tmpComplex;
-}
-
-function extractAngle(tmpString, firstValue) {  
-  var tmpComplex = [];
-  var tmpAngle = '';
-
-  tmpString = tmpString.trim();
-  
-  if (radix === 10) {
-    
-    if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString)) {   
-      tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[ⅽ℮ɢΦπ](?![ij])$|∠[ ]*[-+]?[ ]*Infinity[-+]?(?![ij])$|∠[ ]*[-+]?[ ]*[0-9]*[.]?[0-9]*[eE]?[-+]?[0-9]*(?![ij])$/);    
-      tmpAngle = tmpAngle.replace(/ /g, '');
-      // Remove ∠
-      tmpAngle = tmpAngle.slice(1);    
-      if (/[-+]?Infinity/.test(firstValue)) {
-        tmpComplex = parseInfinitePolars(tmpAngle);         
-      } else {
-        if (/[-+]?Infinity/.test(tmpAngle)) tmpAngle = '0';
-        tmpComplex =  parseAngle(tmpAngle, firstValue);
-      }
-    }
-  } else {
-    if (radix === 2) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-1]+/);
-    if (radix === 8) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[0-7]+/);
-    if (radix === 16) tmpAngle += tmpString.match(/∠[ ]*[-+]?[ ]*[a-f0-9]+/);   
-
-    tmpAngle = tmpAngle.replace(/ /g, '');
-    tmpAngle = tmpAngle.slice(1);
-    tmpAngle = parseInt(tmpAngle, radix);
-    tmpComplex = parseAngle(tmpAngle, firstValue);
-  }  
-  return tmpComplex;
-}
-
-function extractLateral(tmpString, firstValue) {
-  var tmpComplex = [];
-
-  tmpString = stripUnits(tmpString);
-
-  if (/∠/g.test(tmpString) && isANumber(firstValue)) {    
-    tmpComplex = extractAngle(tmpString, firstValue);    
-  } else {
-    tmpComplex[0] = firstValue;
-    tmpComplex[1] = extractImaginary(tmpString);
-  }
-  return tmpComplex;
-}
-
-function extractUnits(tmpString) {
-  var tmpUnits = '';
-
-  if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
-
-  if (radix !== 16) {
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);
-  } else {
-    tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);    
-  }
-  return tmpUnits.replace(' ', '');
-}
-
-function appendUnits(unitString, tmpUnits, exponent) {
-
-  if (tmpUnits !== 'null') {
-    if (exponent === 1) {
-
-      if (unitString.length > 0) unitString += '*';
-      unitString += tmpUnits;
-    } else if (exponent !== 0) {
-
-      if (unitString.length > 0) unitString += '*';
-      if (exponent.toString().indexOf('.') < 0) {
-        unitString += tmpUnits + '^' + exponent;
-      } else {
-        unitString += tmpUnits + '^' + toFixed(exponent, 2);
-      }
-    }
-  }
-  return unitString;
-}
-
-function splitUnits(tmpUnits) {
-  var unitsA = '';
-  var unitsB = '';
-
-  if (tmpUnits.indexOf('/') !== -1) {
-    tmpUnits = tmpUnits.split('/');
-    unitsA = tmpUnits[0];
-    unitsB = tmpUnits[1];
-  } else {
-    unitsA += tmpUnits;
-  }
-  unitsA = unitsA.split('*');
-  unitsB = unitsB.split('*');
-
-  return [unitsA, unitsB];
-}
-
-function removeNegativeExponentSign(factorsArray) {
-  var tmpArray = [];
-  var i = 0;
-
-  while (i < factorsArray.length) {
-    if (factorsArray[i].indexOf('-') !== -1) {
-      var tmpString = '';
-      tmpString += factorsArray.splice(i, 1).toString();
-      tmpString = tmpString.replace(/-/g, '');
-      tmpArray.push(tmpString);
-      i--;
-    }
-    i++;
-  }
-  return tmpArray;
-}
-
-function unitAddition(unitsA, unitsB, multiplier, add) {
-  var unitsCombined = '';
-  var unitsDoNotMatch = true;
-
-  for (var a in unitsA) {
-    var tmpUnitsA = '';
-    var expA = 1;
-    unitsDoNotMatch = true;
-
-    tmpUnitsA += unitsA[a].match(/[Ω♥°a-zA-Z]+/);
-    if (unitsA[a].indexOf('^') !== -1) expA = unitsA[a].match(/[-]?[.0-9]+/);
-    // Check for matches between tmpUnitsA and unitsB
-    for (var b in unitsB) {
-      var tmpUnitsB = '';
-      var expB = 1;
-      tmpUnitsB += unitsB[b].match(/[Ω♥°a-zA-Z]+/);
-
-      if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
-
-      if (tmpUnitsA === tmpUnitsB) {
-        unitsDoNotMatch = false;
-
-        if (add) {
-          expA = (parseFloat(expA) * multiplier) + parseFloat(expB);
-        } else {
-          expA = parseFloat(expA) - parseFloat(expB);
-        }
-        unitsCombined = appendUnits(unitsCombined, tmpUnitsA, expA);
-      }
-    }
-    if (unitsDoNotMatch) {
-      if (add) expA = expA * multiplier;
-      unitsCombined = appendUnits(unitsCombined, tmpUnitsA, expA);
-    }
-  }// Check tmpUnitsB for units that didn't match unitsA
-  for (b in unitsB) {
-    tmpUnitsB = '';
-    expB = 1;
-    unitsDoNotMatch = true;
-    tmpUnitsB += unitsB[b].match(/[Ω♥°a-zA-Z]+/);
-
-    if (unitsB[b].indexOf('^') !== -1) expB = unitsB[b].match(/[-]?[.0-9]+/);
-
-    for (a in unitsA) {
-      tmpUnitsA = '';
-      tmpUnitsA += unitsA[a].match(/[Ω♥°a-zA-Z]+/);
-
-      if (tmpUnitsB === tmpUnitsA) unitsDoNotMatch = false;
-    }
-    if (unitsDoNotMatch) {
-      if (!add) expB = expB * -1;
-      unitsCombined = appendUnits(unitsCombined, tmpUnitsB, parseFloat(expB));
-    }
-  }
-  return unitsCombined;
-}
-
-function rewriteNegUnitExp(tmpUnits) {
-  var newUnits = '';
-
-  if (tmpUnits.indexOf('-') !== -1) {
-    var unitsSplit = [];
-    var numerator = [];
-    var denominator = [];
-    var changedUnits = [];
-
-    unitsSplit = splitUnits(tmpUnits);
-    numerator = unitsSplit[0];
-    denominator = unitsSplit[1];
-
-    changedUnits = removeNegativeExponentSign(numerator);
-
-    denominator = unitAddition(denominator, changedUnits, 1, true);
-    denominator = denominator.split('*');
-
-    changedUnits = [];
-    changedUnits = removeNegativeExponentSign(denominator);
-
-    numerator = unitAddition(numerator, changedUnits, 1, true);
-    changedUnits = [];
-    denominator = unitAddition(denominator, changedUnits, 1, true);
-
-    if (numerator === '' && denominator !== '') numerator += '1';
-    newUnits += numerator;
-    if (denominator !== '') newUnits += '/' + denominator;  
-  } else {
-    newUnits = '' + tmpUnits;
-  }
-  return newUnits;
-}
-
-function addUnits(unitsX, unitsY) {
-  var units = '';
-  if (unitsY !== 'null' && (unitsY === unitsX || unitsX === 'null')) units = unitsY;
-  if (unitsX !== 'null' && (unitsX === unitsY || unitsY === 'null')) units = unitsX;
-  if (units.indexOf('-') !== -1) units = rewriteNegUnitExp(units);
-  if (units) units = ' ' + units;
-  return units;
-}
-
-function processUnits(unitsY, unitsX, multiplier, multiply) {
-
-  var unitsSplit = [];
-  var numeratorY = '';
-  var denominatorY = '';
-  var numeratorX = '';
-  var denominatorX = '';
-  var unitsCombined = '';
-
-  unitsSplit = splitUnits(unitsY);
-  numeratorY = unitsSplit[0];
-  denominatorY = unitsSplit[1];
-  unitsSplit = splitUnits(unitsX);
-  numeratorX = unitsSplit[0];
-  denominatorX = unitsSplit[1];
-
-  if (multiply) {
-    // Multiplication
-    numeratorX = unitAddition(numeratorY, numeratorX, multiplier, true);
-    denominatorX = unitAddition(denominatorY, denominatorX, multiplier, true);
-  } else {
-    // Division
-    numeratorY = unitAddition(numeratorY, denominatorX, multiplier, true);
-
-    if (denominatorY !== '') {
-      denominatorY = unitAddition(denominatorY, numeratorX, multiplier, true);
-    } else {
-      denominatorY = numeratorX.join('*');
-    }
-    numeratorX = numeratorY;
-    denominatorX = denominatorY;
-  }
-  unitsCombined = unitAddition(numeratorX.split('*'), denominatorX.split('*'), 1, false);
-
-  if (unitsCombined.indexOf('-') !== -1) unitsCombined = rewriteNegUnitExp(unitsCombined);
-  return unitsCombined;
-}
-
-function multiplyUnits(unitsX, unitsY, multiplier) {
-  var units = '';
-
-  if ((unitsY !== 'null' || unitsX !== 'null')) {
-    units = ' ' + processUnits(unitsY, unitsX, multiplier, true);
-    if (units === ' ') units = '';
-  }
-  return units;
-}
-
-function divideUnits(unitsX, unitsY, multiplier) {
-  var units = '';
-
-  if ((unitsY !== 'null' || unitsX !== 'null')) {
-    units = ' ' + processUnits(unitsY, unitsX, multiplier, false);
-    if (units === ' ') units = '';
-  }
-  return units;
-}
-
-function inverseUnits(units) {
-  var tmpArray = [];
-  var invertedUnits = '';
-
-  if (units !== 'null') {
-    units = rewriteNegUnitExp(units);
-    if (units.indexOf('/') !== -1) {
-      tmpArray = units.split('/');
-      
-      if (tmpArray[0].indexOf('1') === -1) {
-        invertedUnits += ' ' + tmpArray[1] + '/' + tmpArray[0];
-      } else {
-        invertedUnits += ' ' + tmpArray[1];
-      }
-    } else {
-      invertedUnits += ' 1/' + units;
-    }
-  }
-  return invertedUnits;
 }
 
 function selectElement(id, valueToSelect) {    
