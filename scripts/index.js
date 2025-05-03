@@ -140,6 +140,37 @@ if (!Array.prototype.indexOf)
     }
   })(Object, Math.max, Math.min);
 
+function removeTrailingZeros(str) {
+
+  var arr = str.split(/[eE]/);
+  var engineering;
+
+  while (/[.]*0$/.test(arr[0])) {    
+    arr[0] = arr[0].slice(0, -1);
+  }
+  if (/[.]$/.test(arr[0])) arr[0] = arr[0].slice(0, -1);
+
+  arr[1] ? engineering = 'e' + arr[1] : engineering = '';
+
+  return arr[0] + engineering;
+}
+
+function removeLeadingZeros(str) {
+  var neg = '';
+  
+  if (str.charAt(0) === '-') {
+    neg = '-';
+    str = str.slice(1);
+  }
+  while (str.length > 1 && /^[0][.]*/.test(str)) {
+    str = str.slice(1);
+  }
+  if (str.charAt(0) === '.') {
+    str = '0' + str;
+  }
+  return neg + str;
+}
+
 function extractFirstValue(tmpString) {
   var real = '';  
 
@@ -211,38 +242,8 @@ function extractUnits(tmpString) {
   } else {
     tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);    
   }
+
   return tmpUnits.replace(' ', '');
-}
-
-function removeTrailingZeros(str) {
-
-  var arr = str.split(/[eE]/);
-  var engineering;
-
-  while (/[.]*0$/.test(arr[0])) {    
-    arr[0] = arr[0].slice(0, -1);
-  }
-  if (/[.]$/.test(arr[0])) arr[0] = arr[0].slice(0, -1);
-
-  arr[1] ? engineering = 'e' + arr[1] : engineering = '';
-
-  return arr[0] + engineering;
-}
-
-function removeLeadingZeros(str) {
-  var neg = '';
-  
-  if (str.charAt(0) === '-') {
-    neg = '-';
-    str = str.slice(1);
-  }
-  while (str.length > 1 && /^[0][.]*/.test(str)) {
-    str = str.slice(1);
-  }
-  if (str.charAt(0) === '.') {
-    str = '0' + str;
-  }
-  return neg + str;
 }
 
 function extractImaginary(tmpString) {
