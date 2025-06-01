@@ -1767,7 +1767,8 @@ function btnUndo() {
     redoFunction();
   } else {
     undoFunction();
-  }  
+  }
+  $('txt-input').select();
 }
 
 function undoBase(input, aRadix) {
