@@ -2871,8 +2871,8 @@ function signChange() {
       txtInput.selectionStart = startPos - 1;
       txtInput.selectionEnd = startPos - 1;
 
-    } else if (/[eE^√∠/* ]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+]/.test(txtInput.value.charAt(startPos)) && !/[-+][ ]*$/.test(txtInput.value)) {
-        txtInput.value = txtInput.value.insertAt(startPos, '+');
+    } else if (/[eE^√∠/*]/.test(txtInput.value.charAt(startPos - 1)) && !/[-+]/.test(txtInput.value.charAt(startPos)) && !/[-+][ ]*$/.test(txtInput.value)) {
+        txtInput.value = txtInput.value.insertAt(startPos, '-');
         startPos = startPos + 2;
       
       if (/[eE^√∠/*]/.test(txtInput.value.charAt(startPos - 1))) {
@@ -2894,7 +2894,7 @@ function signChange() {
 
     } else {
       // [0-9a-zA-Z] to left && No evaluation symbol to right
-      if (/[0-9a-zA-Z/*]/.test(txtInput.value.charAt(startPos - 1)) && !/^[ ]*[-+=;,<>?:'"`~!@#$%^*/&×(){}[\]\|\\_ij]+/.test(txtInput.value.slice(startPos))) {
+      if (/[0-9a-df-zA-DF-Z/* ]/.test(txtInput.value.charAt(startPos - 1)) && !/^[ ]*[-+=;,<>?:'"`~!@#$%^*/&×(){}[\]\|\\_ij]+/.test(txtInput.value.slice(startPos))) {
         txtInput.value = txtInput.value.insertAt(startPos, '+');
         startPos ++;
         txtInput.selectionStart = startPos;
