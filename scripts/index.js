@@ -179,7 +179,7 @@ function stripUnits(tmpString) {
 function extractFirstValue(tmpString) {
   var real = '';  
 
-  if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && !/[0-9]*[a-d-f-zA-D-Z]+[0-9]+/g.test(tmpString)) {
+  if (!/[=;,<>?:'"`~!@#$%√&×(){}[\]|\\_]/g.test(tmpString) && !/[0-9]*[a-df-hk-zA-DF-Z]+[0-9]+/g.test(tmpString)) {
         
     tmpString = stripUnits(tmpString).trim();    
 
@@ -247,7 +247,7 @@ function extractUnits(tmpString) {
   } else {
     tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);    
   }
-  if (/[0-9]*[a-d-f-zA-D-Z]+[0-9]+/g.test(tmpUnits)) tmpUnits = 'null';
+  if (/[0-9]*[a-zA-Z]+[0-9]+/g.test(tmpUnits)) tmpUnits = 'null';
   return tmpUnits.replace(' ', '');
 }
 
