@@ -641,7 +641,7 @@ function getX(input) {
   var firstValueX = extractFirstValue(soulX);
   var tmpComplex = extractLateral(soulX, firstValueX);
   var imaginaryX = tmpComplex[1];
-  var unitsX = extractUnits(soulX);
+  var unitsX = isNaN(firstValueX) && isNaN(imaginaryX) ? 'null' : extractUnits(soulX);
 
   firstValueX = tmpComplex[0];
   unitsX = encodeSpecialChar(unitsX);
@@ -3739,8 +3739,8 @@ function draw(input) {
 function plot(input) {
   backupUndo();
 
-  if (typeof input === 'function' || ('string' && /x/g.test(input))) input = parseFunc(input);
-  
+  if (typeof input === 'function' || (typeof input === 'string' && /x/g.test(input))) input = parseFunc(input);
+    
   draw(input);
 
   $('canvas-wrap').classList.remove('hidden');
@@ -4532,8 +4532,8 @@ function parseCommand() {
     }
     $('txt-input').value = '';
     updateDisplay();
-  }// NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and two more alphanumeric words
-  if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+ +[0-9A-Za-z]+)^sort ?(asc|desc|unit)? ?(asc|desc)?$/)) { 
+  }// sort
+  if (/^sort( unit)?( asc| desc)?$/.test(command)) { 
     var com1 = commandArray[1];
     var com2 = commandArray[2];  
     var sortOrder;
