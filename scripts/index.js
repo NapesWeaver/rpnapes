@@ -4421,532 +4421,543 @@ function help(command) {
 function parseCommand() {
   var command = $('txt-input').value.trim();
   var stackedCommand = stack[stack.length - 2] ? stack[stack.length - 2] : new NumberObject('', NaN, NaN, 'null'); 
-  // Commands consist of words and numbers and URLs   
-  // if (!/[*√=ⅽ℮ɢΦπ\\^]+/.test(command)) {    
-  if (!/[*√ⅽ℮ɢΦπ\\^]+/.test(command)) {
-    var commandArray = command.split(' ');
-    // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
-    if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
-      stack.pop();      
-      help(command);
-    }// NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
-    if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix$|(^fix (-?[1]|[0-9]|1[0-7])$)/)) {    
-      
-      if (commandArray[1] === undefined) {
-        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
-        stack.pop();
-        setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
-      } else {
-        setFixDecimal(parseInt(commandArray[1]));
-      }
+  var commandArray = command.split(' ');
+  // NOT help with word and no space, NOT help with number, NOT help with word and number, NOT help with word and alphanumeric word
+  if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
+    stack.pop();      
+    help(command);
+  }// NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
+  if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix$|(^fix (-?[1]|[0-9]|1[0-7])$)/)) {    
+    
+    if (commandArray[1] === undefined) {
+      if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
       stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();    
-    }// NOT sci with number and no space, NOT sci with word, NOT sci with number and word, NOT sci with number and alphanumeric word
-    if (command.match(/(?!sci[0-9]+)(?!sci ?[A-Za-z])(?!sci [0-9 ]+[A-Za-z]+)(?!sci [0-9]+ +[0-9A-Za-z]+)^sci$|(^sci (-?[1]|[0-9]|1[0-7])$)/)) {    
-      
-      if (commandArray[1] === undefined) {
-        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
-        stack.pop();
-        setSciDecimal(parseInt(stack[stack.length - 1].getRealPart()));
-      } else {
-        setSciDecimal(parseInt(commandArray[1]));
-      }
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();    
-    }// NOT eng with number and no space, NOT eng with word, NOT eng with number and word, NOT eng with number and alphanumeric word
-    if (command.match(/(?!eng[0-9]+)(?!eng ?[A-Za-z])(?!eng [0-9 ]+[A-Za-z]+)(?!eng [0-9]+ +[0-9A-Za-z]+)^eng$|(^eng (-?[1]|[1-9]|1[0-7])$)/)) {    
-      
-      if (commandArray[1] === undefined) {
-        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
-        stack.pop();
-        setEngDecimal(parseInt(stack[stack.length - 1].getRealPart()));
-      } else {
-        setEngDecimal(parseInt(commandArray[1]));
-      }
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();    
-    }// NOT timer with number and no space, NOT timer with word, NOT timer with number and word, NOT timer with number and alphanumeric word 
-    if (command.match(/(?!timer[0-9]+)(?!timer ?[A-Za-z])(?!timer [0-9 ]+[A-Za-z]+)(?!timer [0-9]+ +[0-9A-Za-z]+)^timer$|(^timer [0-9]{1,5}$)/)) {    
-      
-      if (commandArray[1] === undefined) {
-        if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
-        stack.pop();
-        stopwatchStart(parseInt(stack[stack.length - 1].getRealPart()));
-      } else {
-        stopwatchStart(parseInt(commandArray[1]));
-      }
-      stack.pop();
-      updateDisplay();    
-    }// NOT saveall with word and no space, NOT saveall with number, NOT saveall with word and alphanumeric word
-    if (command.match(/(?!saveall[A-Za-z]+)(?!saveall ?[0-9])(?!saveall [A-Za-z]+ +[0-9A-Za-z]+)^saveall ?[A-Za-z]*/)) {    
-
-      if (commandArray[1] === undefined) {
-        stack.pop();
-        stack[stack.length - 1] ? saveFileAll(stack[stack.length - 1].soul) : saveFileAll('');
-      } else {
-        stack.pop();
-        saveFileAll(commandArray[1]);
-      }
-      $('txt-input').value = '';
-      updateDisplay();
-    }// NOT saveas with word and no space, NOT saveas with number, NOT saveas with word and alphanumeric word
-    if (command.match(/(?!saveas[A-Za-z]+)(?!saveas ?[0-9])(?!saveas [A-Za-z]+ +[0-9A-Za-z]+)^saveas ?[A-Za-z]*/)) {    
-
-      if (commandArray[1] === undefined) {
-        stack.pop();
-        stack[stack.length - 1] ? saveFileStack(stack[stack.length - 1].soul, true) : saveFileStack('', true);
-      } else {
-        stack.pop();
-        saveFileStack(commandArray[1], true);
-      }
-      $('txt-input').value = '';
-      updateDisplay();
-    }// NOT savenotes with word and no space, NOT savenotes with number, NOT saveanotes with word and alphanumeric word
-    if (command.match(/(?!savenotes[A-Za-z]+)(?!savenotes ?[0-9])(?!savenotes [A-Za-z]+ +[0-9A-Za-z]+)^savenotes ?[A-Za-z]*/)) {    
-
-      if (commandArray[1] === undefined) {
-        stack.pop();
-        stack[stack.length - 1] ? saveFileNotes(stack[stack.length - 1].soul) : saveFileNotes('');
-      } else {
-        stack.pop();
-        saveFileNotes(commandArray[1]);
-      }
-      $('txt-input').value = '';
-      updateDisplay();
-    }// NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and two more alphanumeric words
-    if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+ +[0-9A-Za-z]+)^sort ?(asc|desc|unit)? ?(asc|desc)?$/)) { 
-      var com1 = commandArray[1];
-      var com2 = commandArray[2];  
-      var sortOrder;
-      var sortByUnits = false;
-      
-      if (com1 === undefined || com1 === 'asc' || (com1 === 'unit' && (com2 === undefined || com2 === 'asc'))) sortOrder = true;
-      if (com1 === 'desc' || (com1 === 'unit' && com2 === 'desc')) sortOrder = false;
-      if (com1 === 'unit') sortByUnits = true;
-
-      stack.pop();
-      objectSort(sortOrder, sortByUnits);
-      updateDisplay();
-    }// NOT tostring with word and no space, NOT tostring with number, NOT tostring with word and alphanumeric word
-    if (command.match(/(?!tostring[A-Za-z]+)(?!tostring ?[0-9])(?!tostring [A-Za-z]+ +[0-9A-Za-z]+)^tostring ?[A-Za-z]*/)) {    
-
-      if (commandArray[1] === undefined) {
-        stack.pop();
-        stack[stack.length - 1] ? saveFileStack(stack[stack.length - 1].soul, false) : saveFileStack('', false);
-      } else {
-        stack.pop();
-        saveFileStack(commandArray[1], false)
-      }
-      $('txt-input').value = '';
-      updateDisplay();
-    }// If (command === embed and end of stack === URL/IP) or command === embed with URL/IP  
-    if ((command.match(/^embed$/) && (stackedCommand.getSoul().match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || stackedCommand.getSoul().match(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/)))
-    || (command.match(/^embed .*https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || command.match(/^embed ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/))) {    
-          
-      if (commandArray[1] === undefined) {
-        embedIframePlayer(stackedCommand.getSoul());
-      } else {
-        embedIframePlayer(command.slice(6));
-      }
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();
-      // saveTricorder();
+      setFixDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+    } else {
+      setFixDecimal(parseInt(commandArray[1]));
     }
-    if (command === 'duckgo'|| command.match(/^duckgo .+/)) {
-      
-      if (commandArray[1] === undefined) {
-        $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
-        searchDuckDuckGo();
-        stack.pop();
-        $('txt-input').value = '';
-        updateDisplay();
-      }
+    stack.pop();
+    $('txt-input').value = '';
+    updateDisplay();    
+  }// NOT sci with number and no space, NOT sci with word, NOT sci with number and word, NOT sci with number and alphanumeric word
+  if (command.match(/(?!sci[0-9]+)(?!sci ?[A-Za-z])(?!sci [0-9 ]+[A-Za-z]+)(?!sci [0-9]+ +[0-9A-Za-z]+)^sci$|(^sci (-?[1]|[0-9]|1[0-7])$)/)) {    
+    
+    if (commandArray[1] === undefined) {
+      if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
+      stack.pop();
+      setSciDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+    } else {
+      setSciDecimal(parseInt(commandArray[1]));
     }
-    if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
-      
-      if (commandArray[1] === undefined) {
-        $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
-        searchGoogle();
-        stack.pop();
-        $('txt-input').value = '';
-        updateDisplay();
-      }
+    stack.pop();
+    $('txt-input').value = '';
+    updateDisplay();    
+  }// NOT eng with number and no space, NOT eng with word, NOT eng with number and word, NOT eng with number and alphanumeric word
+  if (command.match(/(?!eng[0-9]+)(?!eng ?[A-Za-z])(?!eng [0-9 ]+[A-Za-z]+)(?!eng [0-9]+ +[0-9A-Za-z]+)^eng$|(^eng (-?[1]|[1-9]|1[0-7])$)/)) {    
+    
+    if (commandArray[1] === undefined) {
+      if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
+      stack.pop();
+      setEngDecimal(parseInt(stack[stack.length - 1].getRealPart()));
+    } else {
+      setEngDecimal(parseInt(commandArray[1]));
     }
-    if (command === 'wiki' || command.match(/^wiki .+/)) {
-      
-      if (commandArray[1] === undefined) {
-        $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
-        searchWikipedia();
-        stack.pop();
-        $('txt-input').value = '';
-        updateDisplay();
-      }
-    }    
-    if (command === 'youtube' || command === 'you' || command.match(/^youtube .+/) || command.match(/^you .+/)) {
-      if (commandArray[1] === undefined) {
-        $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
-        searchYouTube();
-        stack.pop();
-        $('txt-input').value = '';
-        updateDisplay();
-      }
-    }
+    stack.pop();
+    $('txt-input').value = '';
+    updateDisplay();    
+  }// plot
+  if (commandArray[0] === 'plot') {
 
-    switch (command) {  
-    case 'about':
+    if (commandArray[1] === undefined) {
       stack.pop();
-      inputText('');
-      enterInput();
-      inputText($('lst-stack').getAttribute('placeholder'));
-      enterInput();
-      inputText('https://github.com/NapesWeaver/rpnapes');
-      enterInput();
-      updateDisplay();
-      $('txt-input').value = '';
-      break;
-    case 'ave':
-      // Falls through
-    case 'average':
-      stack.pop();
-      updateDisplay();
-      inputText(averageStack());
-      break;
-    case 'bin':
-      // Falls through
-    case 'binary':
-      stack.pop();
-      convertBase(2);
-      $('txt-input').value = '';
-      break;
-    case 'clear':
-    case 'cls':
-      btnClear();
-      break;
-    case 'close':
-      stack.pop();
-      updateDisplay();
-      closeMedia();
-      break;
-    case 'constants':
-      stack.pop();
-      inputText('');
-      enterInput();
-      inputText('Φ = ' + calculate(Φ));
-      enterInput();
-      inputText('℮ = ' + calculate(℮));
-      enterInput();
-      inputText('ɢ = ' + calculate(ɢ));
-      enterInput();
-      inputText('ⅽ = ' + calculate(ⅽ));
-      enterInput();
-      inputText('π = ' + calculate(π));
-      enterInput();
-      updateDisplay();
-      $('txt-input').value = '';
-      break;
-    case 'contact':
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();
-      window.location.href = "mailto:napesweaver@gmail.com?subject=RPNapes"
-        break;    
-    case 'darkmode':
-      stack.pop();
-      toggleDarkMode();
-      updateDisplay(); 
-      $('txt-input').value = '';
-      break;
-    case 'date':
-      stack.pop();
-      updateDisplay();
-      insertDate();
-      break;
-    case 'decimal':
-      stack.pop();
-      convertBase(10);
-      $('txt-input').value = '';
-      break;
-    case 'email':
-      stack.pop();
-      $('txt-input').value = '';
-      updateDisplay();
-      // window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here"
-      window.location.href = "mailto:?subject=&body=";
-      break;
-    case 'gravity':
-      gravity();
-      btnDelete();
-      btnDelete();
-      break;
-    case 'haptic':
-      if (isMobile) {
-        stack.pop();
-        updateDisplay();
-        $('txt-input').value = '';      
-        toggleHaptic();
+
+      if (stack[stack.length - 1]) {
+        
+        if (stack[stack.length - 1].getSoul() === '') {
+          plot('0');
+        } else {
+          plot(decodeSpecialChar(stack[stack.length - 1].getSoul()));
+        }
       }
-      break;
-    case 'hex':
-      // Falls through
-    case 'hexadecimal':
+    } else {
       stack.pop();
-      convertBase(16);
+      plot(commandArray[1]);
+    }
+    updateDisplay();
+  }// timer 
+  if (commandArray[0] === 'timer' && (commandArray[1] === undefined || /[0-9]+/.test(commandArray[1]))) {
+    
+    if (commandArray[1] === undefined) {
+      if (isNaN(parseInt(stackedCommand.getRealPart()))) return;
+      stack.pop();
+      stopwatchStart(parseInt(stack[stack.length - 1].getRealPart()));
+    } else {
+      stopwatchStart(parseInt(commandArray[1]));
+    }
+    stack.pop();
+    updateDisplay();    
+  }// saveall
+  if (commandArray[0] === 'saveall' && (commandArray[1] === undefined || /^[\w\s-,.]+$/.test(commandArray[1]))) {    
+
+    if (commandArray[1] === undefined) {
+      stack.pop();
+      stack[stack.length - 1] ? saveFileAll(stack[stack.length - 1].soul) : saveFileAll('');
+    } else {
+      stack.pop();
+      saveFileAll(commandArray[1]);
+    }
+    $('txt-input').value = '';
+    updateDisplay();
+  }// saveas
+  if (commandArray[0] === 'saveas' && (commandArray[1] === undefined || /^[\w\s-,.]+$/.test(commandArray[1]))) {    
+
+    if (commandArray[1] === undefined) {
+      stack.pop();
+      stack[stack.length - 1] ? saveFileStack(stack[stack.length - 1].soul, true) : saveFileStack('', true);
+    } else {
+      stack.pop();
+      saveFileStack(commandArray[1], true);
+    }
+    $('txt-input').value = '';
+    updateDisplay();
+  }// savenotes
+  if (commandArray[0] === 'savenotes' && (commandArray[1] === undefined || /^[\w\s-,.]+$/.test(commandArray[1]))) {     
+
+    if (commandArray[1] === undefined) {
+      stack.pop();
+      stack[stack.length - 1] ? saveFileNotes(stack[stack.length - 1].soul) : saveFileNotes('');
+    } else {
+      stack.pop();
+      saveFileNotes(commandArray[1]);
+    }
+    $('txt-input').value = '';
+    updateDisplay();
+  }// NOT sort with word and no space, NOT sort with number, NOT sort with word and number, NOT sort with word and two more alphanumeric words
+  if (command.match(/(?!sort[A-Za-z]+)(?!sort ?[0-9])(?!sort [A-Za-z ]+[0-9]+)(?!sort [A-Za-z]+ +[0-9A-Za-z]+ +[0-9A-Za-z]+)^sort ?(asc|desc|unit)? ?(asc|desc)?$/)) { 
+    var com1 = commandArray[1];
+    var com2 = commandArray[2];  
+    var sortOrder;
+    var sortByUnits = false;
+    
+    if (com1 === undefined || com1 === 'asc' || (com1 === 'unit' && (com2 === undefined || com2 === 'asc'))) sortOrder = true;
+    if (com1 === 'desc' || (com1 === 'unit' && com2 === 'desc')) sortOrder = false;
+    if (com1 === 'unit') sortByUnits = true;
+
+    stack.pop();
+    objectSort(sortOrder, sortByUnits);
+    updateDisplay();
+  }// tostring
+  if (commandArray[0] === 'tostring' && (commandArray[1] === undefined || /^[\w\s-,.]+$/.test(commandArray[1]))) {    
+
+    if (commandArray[1] === undefined) {
+      stack.pop();
+      stack[stack.length - 1] ? saveFileStack(stack[stack.length - 1].soul, false) : saveFileStack('', false);
+    } else {
+      stack.pop();
+      saveFileStack(commandArray[1], false)
+    }
+    $('txt-input').value = '';
+    updateDisplay();
+  }// If (command === embed and end of stack === URL/IP) or command === embed with URL/IP  
+  if ((command.match(/^embed$/) && (stackedCommand.getSoul().match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || stackedCommand.getSoul().match(/^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/)))
+  || (command.match(/^embed .*https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/) || command.match(/^embed ((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(:([0-9]|[1-9][0-9]{1,3}|[1-3][0-9]{4}|4[0-8][0-9]{3}|490[0-9]{2}|491[0-4][0-9]|4915[01]))?$/))) {    
+        
+    if (commandArray[1] === undefined) {
+      embedIframePlayer(stackedCommand.getSoul());
+    } else {
+      embedIframePlayer(command.slice(6));
+    }
+    stack.pop();
+    $('txt-input').value = '';
+    updateDisplay();
+    // saveTricorder();
+  }
+  if (command === 'duckgo'|| command.match(/^duckgo .+/)) {
+    
+    if (commandArray[1] === undefined) {
+      $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
+      searchDuckDuckGo();
+      stack.pop();
       $('txt-input').value = '';
-      break;
-    case 'How are ya?':
-      // Falls through
-    case 'How are ya doing?':
-      // Falls through
-    case 'How are you?':
-      // Falls through
-    case 'How are you doing':
-      // Falls through
-    case 'How ya doing?':
-      // Falls through
-    case 'How you doing?':
-      inputText('');
-      enterInput();
-      inputText('Like a rhinestone cowboy!');
-      enterInput();
-      $('txt-input').value = '';
       updateDisplay();
-      break;
-    case 'Hallo':
-      // Falls through
-    case 'Hello':
-      // Falls through
-    case 'Hey':
-      // Falls through
-    case 'Hi':
-      inputText('');
-      enterInput();
-      inputText('Hallo there!');
-      enterInput();
-      $('txt-input').value = '';
-      updateDisplay();
-      break;
-    case 'keyboard':
-      if (isMobile) {
-        stack.pop();
-        updateDisplay();
-        $('txt-input').value = '';      
-        toggleKeyboard();
-      }
-      break;    
-    case 'ip':      
-      stack.pop();
-      updateDisplay();
-      $('txt-input').value = '';     
-      getIP();
-      break;
-    case 'load':
-    case 'ls':
-      stack.pop();
-      $('txt-input').value = '';
-      btnLoad();
-      break;
-    case 'locus':
-      stack.pop();
-      updateDisplay();
-      inputText('lat:' + lat + ', lon:' + lng);
-      break;
-    // case 'login':
-    //   window.location.href = '/login'; 
-    //   break;
-    // case 'logout':
-    //   window.location.href = '/logout'; 
-    //   break;
-    case 'maths':
-      stack.pop();
-      inputText('');
-      enterInput();
-      inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
-      enterInput();
-      updateDisplay();
-      $('txt-input').value = '';
-      break;
-    case 'max':
-      stack.pop();
-      updateDisplay();
-      inputText(maxNum());
-      break;
-    case 'min':
-      stack.pop();
-      updateDisplay();
-      inputText(minNum());
-      break;    
-    case 'mute':
-      stack.pop();
-      updateDisplay();
-      $('audio-player').muted = true;
-      $('video-player').muted = true;
-      break;    
-    case 'notes':
-      stack.pop();
-      updateDisplay();
-      btnXoff();
-      break;
-    case 'oct':
-      // Falls through
-    case 'octal':
-      stack.pop();
-      convertBase(8);
-      $('txt-input').value = '';
-      break;
-    case 'off':
-      stack.pop();
-      updateDisplay();
-      btnOff();
-      break;
-    case 'open':
-      stack.pop();
-      updateDisplay();
-      $('txt-input').value = '';
-      openAFile();
-      break;
-    case 'opennotes':
-      stack.pop();
-      updateDisplay();      
-      btnXoff();
-      $('txt-input').value = '';
-      openAFile();
-      break;
-    case 'pause':
-      stack.pop();
-      updateDisplay();
-      $('audio-player').pause();
-      $('video-player').pause();
-      break;
-    case 'play':
-      stack.pop();
-      updateDisplay();
-      $('audio-player').play();
-      $('video-player').play();
-      break;
-    case 'plot':
-      stack.pop();
-      updateDisplay();
-      plot(decodeSpecialChar(stack[stack.length - 1].getSoul()));
-      break;
-    case 'polar':
-      stack.pop();
-      if ($('menu-form').textContent === 'Polar') toggleForm();
-      $('txt-input').value = '';
-      break;
-    case 'print':
-      stack.pop();
-      updateDisplay();
-      $('txt-input').value = '';
-      printHtml();
-      break;
-    case 'sandbox':
-        window.location.href = 'reference/sandbox.html';
-        break;
-    case 'save':
-      stack.pop();
-      updateDisplay();
-      $('txt-input').value = '';
-      btnSave();
-      break;
-    case 'stop':
-      stack.pop();
-      updateDisplay();
-      $('txt-input').value = '';
-      stopwatchReset();
-      break;
-    case 'run':
-      stack.pop();
-      updateDisplay();
-      $('txt-input').value = '';
-      runProgram();
-      break;
-    case 'runnotes':
-      stack.pop();
-      updateDisplay();
-      $('txt-input').value = '';
-      runNotes();
-      break;
-    case 'shortcuts':
-      stack.pop();
-      inputText('');
-      enterInput();
-      inputText('Ctrl + z = Undo');
-      enterInput();
-      inputText('Ctrl + y = Redo');
-      enterInput();
-      inputText('Ctrl + s = Save');
-      enterInput();
-      inputText('Alt + Shift = Shift Keypad');
-      enterInput();
-      inputText('Esc = Toggle interface button.');
-      enterInput();
-      updateDisplay();
-      $('txt-input').value = '';
-      break;
-    case 'sound':
-      stack.pop();
-      updateDisplay();
-      toggleSound();
-      $('txt-input').value = '';
-      break;
-    case 'stopwatch':      
-      stopwatchStart();
-      break;
-    case 'time':
-      stack.pop();
-      updateDisplay();
-      inputText(getTime());
-      break;
-    case 'total':
-      stack.pop();
-      updateDisplay();
-      inputText(totalStack());
-      break;
-    case 'tri':
-      // Falls through
-    case 'tricorder':
-      stack.pop();
-      updateDisplay();
-      inputText('');
-      showTricorder();
-      break;
-    case 'twig':
-      stack.pop();
-      updateDisplay();
-      inputText('');
-      monOn();
-      break;        
-    case 'unembed':
-      stack.pop();
-      updateDisplay();
-      inputText(''); 
-      widgetSrc.shift();
-      saveTricorder();
-      break;
-    case 'unmute':
-      stack.pop();
-      updateDisplay();
-      $('audio-player').muted = false;
-      $('video-player').muted = false;
-      break;
-    case 'vector':
-      // Falls through
-    case 'rectangular':
-      stack.pop();
-      if ($('menu-form').textContent === 'Vector') toggleForm();
-      inputText('');
-      break;
-    default:
-      if ($('twig').className !== 'hidden' && twig.health > 0) {
-        $('twig').src = 'images/twig/hat-tip.gif';
-      }
-      break;
     }
   }
+  if (command === 'google' || command === 'go' || command.match(/^google .+/) || command.match(/^go .+/)) {
+    
+    if (commandArray[1] === undefined) {
+      $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
+      searchGoogle();
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();
+    }
+  }
+  if (command === 'wiki' || command.match(/^wiki .+/)) {
+    
+    if (commandArray[1] === undefined) {
+      $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
+      searchWikipedia();
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();
+    }
+  }    
+  if (command === 'youtube' || command === 'you' || command.match(/^youtube .+/) || command.match(/^you .+/)) {
+    if (commandArray[1] === undefined) {
+      $('txt-input').value = decodeSpecialChar(stackedCommand.getSoul());
+      searchYouTube();
+      stack.pop();
+      $('txt-input').value = '';
+      updateDisplay();
+    }
+  }
+
+  switch (command) {  
+  case 'about':
+    stack.pop();
+    inputText('');
+    enterInput();
+    inputText($('lst-stack').getAttribute('placeholder'));
+    enterInput();
+    inputText('https://github.com/NapesWeaver/rpnapes');
+    enterInput();
+    updateDisplay();
+    $('txt-input').value = '';
+    break;
+  case 'ave':
+    // Falls through
+  case 'average':
+    stack.pop();
+    updateDisplay();
+    inputText(averageStack());
+    break;
+  case 'bin':
+    // Falls through
+  case 'binary':
+    stack.pop();
+    convertBase(2);
+    $('txt-input').value = '';
+    break;
+  case 'clear':
+  case 'cls':
+    btnClear();
+    break;
+  case 'close':
+    stack.pop();
+    updateDisplay();
+    closeMedia();
+    break;
+  case 'constants':
+    stack.pop();
+    inputText('');
+    enterInput();
+    inputText('Φ = ' + calculate(Φ));
+    enterInput();
+    inputText('℮ = ' + calculate(℮));
+    enterInput();
+    inputText('ɢ = ' + calculate(ɢ));
+    enterInput();
+    inputText('ⅽ = ' + calculate(ⅽ));
+    enterInput();
+    inputText('π = ' + calculate(π));
+    enterInput();
+    updateDisplay();
+    $('txt-input').value = '';
+    break;
+  case 'contact':
+    stack.pop();
+    $('txt-input').value = '';
+    updateDisplay();
+    window.location.href = "mailto:napesweaver@gmail.com?subject=RPNapes"
+      break;    
+  case 'darkmode':
+    stack.pop();
+    toggleDarkMode();
+    updateDisplay(); 
+    $('txt-input').value = '';
+    break;
+  case 'date':
+    stack.pop();
+    updateDisplay();
+    insertDate();
+    break;
+  case 'decimal':
+    stack.pop();
+    convertBase(10);
+    $('txt-input').value = '';
+    break;
+  case 'email':
+    stack.pop();
+    $('txt-input').value = '';
+    updateDisplay();
+    // window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here"
+    window.location.href = "mailto:?subject=&body=";
+    break;
+  case 'gravity':
+    gravity();
+    btnDelete();
+    btnDelete();
+    break;
+  case 'haptic':
+    if (isMobile) {
+      stack.pop();
+      updateDisplay();
+      $('txt-input').value = '';      
+      toggleHaptic();
+    }
+    break;
+  case 'hex':
+    // Falls through
+  case 'hexadecimal':
+    stack.pop();
+    convertBase(16);
+    $('txt-input').value = '';
+    break;
+  case 'How are ya?':
+    // Falls through
+  case 'How are ya doing?':
+    // Falls through
+  case 'How are you?':
+    // Falls through
+  case 'How are you doing':
+    // Falls through
+  case 'How ya doing?':
+    // Falls through
+  case 'How you doing?':
+    inputText('');
+    enterInput();
+    inputText('Like a rhinestone cowboy!');
+    enterInput();
+    $('txt-input').value = '';
+    updateDisplay();
+    break;
+  case 'Hallo':
+    // Falls through
+  case 'Hello':
+    // Falls through
+  case 'Hey':
+    // Falls through
+  case 'Hi':
+    inputText('');
+    enterInput();
+    inputText('Hallo there!');
+    enterInput();
+    $('txt-input').value = '';
+    updateDisplay();
+    break;
+  case 'keyboard':
+    if (isMobile) {
+      stack.pop();
+      updateDisplay();
+      $('txt-input').value = '';      
+      toggleKeyboard();
+    }
+    break;    
+  case 'ip':      
+    stack.pop();
+    updateDisplay();
+    $('txt-input').value = '';     
+    getIP();
+    break;
+  case 'load':
+  case 'ls':
+    stack.pop();
+    $('txt-input').value = '';
+    btnLoad();
+    break;
+  case 'locus':
+    stack.pop();
+    updateDisplay();
+    inputText('lat:' + lat + ', lon:' + lng);
+    break;
+  // case 'login':
+  //   window.location.href = '/login'; 
+  //   break;
+  // case 'logout':
+  //   window.location.href = '/logout'; 
+  //   break;
+  case 'maths':
+    stack.pop();
+    inputText('');
+    enterInput();
+    inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
+    enterInput();
+    updateDisplay();
+    $('txt-input').value = '';
+    break;
+  case 'max':
+    stack.pop();
+    updateDisplay();
+    inputText(maxNum());
+    break;
+  case 'min':
+    stack.pop();
+    updateDisplay();
+    inputText(minNum());
+    break;    
+  case 'mute':
+    stack.pop();
+    updateDisplay();
+    $('audio-player').muted = true;
+    $('video-player').muted = true;
+    break;    
+  case 'notes':
+    stack.pop();
+    updateDisplay();
+    btnXoff();
+    break;
+  case 'oct':
+    // Falls through
+  case 'octal':
+    stack.pop();
+    convertBase(8);
+    $('txt-input').value = '';
+    break;
+  case 'off':
+    stack.pop();
+    updateDisplay();
+    btnOff();
+    break;
+  case 'open':
+    stack.pop();
+    updateDisplay();
+    $('txt-input').value = '';
+    openAFile();
+    break;
+  case 'opennotes':
+    stack.pop();
+    updateDisplay();      
+    btnXoff();
+    $('txt-input').value = '';
+    openAFile();
+    break;
+  case 'pause':
+    stack.pop();
+    updateDisplay();
+    $('audio-player').pause();
+    $('video-player').pause();
+    break;
+  case 'play':
+    stack.pop();
+    updateDisplay();
+    $('audio-player').play();
+    $('video-player').play();
+    break;
+  case 'polar':
+    stack.pop();
+    if ($('menu-form').textContent === 'Polar') toggleForm();
+    $('txt-input').value = '';
+    break;
+  case 'print':
+    stack.pop();
+    updateDisplay();
+    $('txt-input').value = '';
+    printHtml();
+    break;
+  case 'sandbox':
+      window.location.href = 'reference/sandbox.html';
+      break;
+  case 'save':
+    stack.pop();
+    updateDisplay();
+    $('txt-input').value = '';
+    btnSave();
+    break;
+  case 'stop':
+    stack.pop();
+    updateDisplay();
+    $('txt-input').value = '';
+    stopwatchReset();
+    break;
+  case 'run':
+    stack.pop();
+    updateDisplay();
+    $('txt-input').value = '';
+    runProgram();
+    break;
+  case 'runnotes':
+    stack.pop();
+    updateDisplay();
+    $('txt-input').value = '';
+    runNotes();
+    break;
+  case 'shortcuts':
+    stack.pop();
+    inputText('');
+    enterInput();
+    inputText('Ctrl + z = Undo');
+    enterInput();
+    inputText('Ctrl + y = Redo');
+    enterInput();
+    inputText('Ctrl + s = Save');
+    enterInput();
+    inputText('Alt + Shift = Shift Keypad');
+    enterInput();
+    inputText('Esc = Toggle interface button.');
+    enterInput();
+    updateDisplay();
+    $('txt-input').value = '';
+    break;
+  case 'sound':
+    stack.pop();
+    updateDisplay();
+    toggleSound();
+    $('txt-input').value = '';
+    break;
+  case 'stopwatch':      
+    stopwatchStart();
+    break;
+  case 'time':
+    stack.pop();
+    updateDisplay();
+    inputText(getTime());
+    break;
+  case 'total':
+    stack.pop();
+    updateDisplay();
+    inputText(totalStack());
+    break;
+  case 'tri':
+    // Falls through
+  case 'tricorder':
+    stack.pop();
+    updateDisplay();
+    inputText('');
+    showTricorder();
+    break;
+  case 'twig':
+    stack.pop();
+    updateDisplay();
+    inputText('');
+    monOn();
+    break;        
+  case 'unembed':
+    stack.pop();
+    updateDisplay();
+    inputText(''); 
+    widgetSrc.shift();
+    saveTricorder();
+    break;
+  case 'unmute':
+    stack.pop();
+    updateDisplay();
+    $('audio-player').muted = false;
+    $('video-player').muted = false;
+    break;
+  case 'vector':
+    // Falls through
+  case 'rectangular':
+    stack.pop();
+    if ($('menu-form').textContent === 'Vector') toggleForm();
+    inputText('');
+    break;
+  default:
+    if ($('twig').className !== 'hidden' && twig.health > 0) {
+      $('twig').src = 'images/twig/hat-tip.gif';
+    }
+    break;
+  }
+  
   // Resizing input with soft-keyboard open breaks resizing logic
   if (!isMobile) resizeInput();
 }
