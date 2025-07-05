@@ -246,9 +246,7 @@ function extractUnits(tmpString) {
     tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);
   } else {
     tmpUnits += tmpString.match(/(?![eE][-+]?[0-9]+)(?![a-f0-9]+[ij]*\b)(?![ij]\b)(?:[1][\/])?[Ω♥°a-zA-Z]+[-*^Ω♥°a-zA-Z.0-9\/]*$/);    
-  }
-  if (/[Ω♥°a-zA-Z][-0-9]|[Ω♥°a-zA-Z][*/][0-9]/g.test(tmpUnits)) tmpUnits = 'null';
-  
+  }  
   return tmpUnits.replace(' ', '');
 }
 
