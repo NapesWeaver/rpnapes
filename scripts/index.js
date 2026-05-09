@@ -238,6 +238,9 @@ function extractLateral(tmpString, firstValue) {
 }
 
 function extractUnits(tmpString) {
+
+  if (!/\d/g.test(tmpString)) tmpString = '';
+
   var tmpUnits = '';
 
   if (tmpString.indexOf('Infinity') !== -1) tmpString = tmpString.replace(/Infinity/g, '');
@@ -639,7 +642,8 @@ function getX(input) {
   var firstValueX = extractFirstValue(soulX);
   var tmpComplex = extractLateral(soulX, firstValueX);
   var imaginaryX = tmpComplex[1];
-  var unitsX = isNaN(firstValueX) && isNaN(imaginaryX) ? 'null' : extractUnits(soulX);
+  var unitsX = extractUnits(soulX);
+  // var unitsX = isNaN(firstValueX) && isNaN(imaginaryX) ? 'null' : extractUnits(soulX);
 
   firstValueX = tmpComplex[0];
   unitsX = encodeSpecialChar(unitsX);
@@ -1035,7 +1039,6 @@ function resizeInput() {
   }
   if (isMobile) bodyHeight = winSize[1];  
   if (bodyHeight >= winSize[1]) resizeTextArea($('lst-stack'));
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
 function mathFact(num) {
@@ -1554,6 +1557,28 @@ function btnCopy() {
   }  
 }
 
+function updateDisplay() {
+  $('lst-stack').value = '';  
+  // Buffer stack display
+  for (var i = 0; i < $('lst-stack').getAttribute('rows') ; i++) {
+    $('lst-stack').value += ' \n';
+  }
+  // Print to stack display
+  for (var sta in stack) {
+    $('lst-stack').value += '\n';
+    
+    if (stack[sta].getSoul() !== '') {
+      $('lst-stack').value += objToString(stack[sta]);
+    } else {
+      // A VERY long string of spaces ;)
+      $('lst-stack').value += '                                                                                                                                                                                                                                                                                                                                                                                      ';
+    }
+  }
+  colorSaveButton();  
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;   
+  $('txt-input').select();
+}
+
 function abFunction() {
   if (stack.length > 1) {
     backupUndo();
@@ -1568,7 +1593,7 @@ function abFunction() {
 
 function swapX(objX) {
   if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
-  $('txt-input').value = objToString(objX);  
+  $('txt-input').value = objToString(objX);
   updateDisplay()
 }
 
@@ -1639,6 +1664,41 @@ function btnEnter() {
   parseCommand();  
 }
 
+function btnLoad() {  
+  var index = 0;
+
+  try { 
+    index = getCookie('STACK').indexOf('=') + 1;
+    $('btn-save').style.color = '#D4D0C8';        
+
+    if (getCookie('STACK').slice(index) !== '') {
+
+      if (shifted) {
+        $('indicate-execution').classList.remove('hidden');
+        setTimeout(function() {
+          loadProgram(getCookie('STACK').slice(index));
+        }, 20);        
+      } else {
+        loadStack(getCookie('STACK').slice(index));
+      }   
+    } 
+  } catch (err) { 
+    rpnAlert('Load STACK error.');
+    if (shifted) { 
+      if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+    }
+  }
+  try {
+    index = getCookie('MATHMON').indexOf('=') + 1;
+    loadMathMon(getCookie('MATHMON').slice(index));
+  } catch(err) { rpnAlert('Load MATHMON error.'); }
+
+  updateDisplay();
+  resetVariables();
+  // Resizing input with soft-keyboard open breaks resizing logic
+  if (isMobile) resizeInput();
+}
+
 function btnEval() {
   backupUndo();
   var objX;
@@ -1653,7 +1713,7 @@ function btnEval() {
     return;
   }
   displayResult(calculate(stripUnits($('txt-input').value)), units);
-  $('txt-input').select();  
+  $('txt-input').select();
 }
 
 function enterInput() {
@@ -2149,6 +2209,7 @@ function btnShift() {
   } else {
     $('txt-input').focus();
   }
+  // Resizing input with soft-keyboard open breaks resizing logic
   if (isMobile) resizeInput();
 }
 
@@ -2177,6 +2238,7 @@ function btnSave() {
   $('btn-save').style.color = '#D4D0C8';
   $('txt-input').focus();
 
+  // Resizing input with soft-keyboard open breaks resizing logic
   if (isMobile) resizeInput();
 }
 
@@ -2255,40 +2317,6 @@ function saveFileAll(fileName) {
   } else {
     rpnAlert('Error: There is no data to save.');
   }
-}
-
-function btnLoad() {  
-  var index = 0;
-
-  try { 
-    index = getCookie('STACK').indexOf('=') + 1;
-    $('btn-save').style.color = '#D4D0C8';        
-
-    if (getCookie('STACK').slice(index) !== '') {
-
-      if (shifted) {
-        $('indicate-execution').classList.remove('hidden');
-        setTimeout(function() {
-          loadProgram(getCookie('STACK').slice(index));
-        }, 20);        
-      } else {
-        loadStack(getCookie('STACK').slice(index));
-      }   
-    } 
-  } catch (err) { 
-    rpnAlert('Load STACK error.');
-    if (shifted) { 
-      if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-    }
-  }
-  try {
-    index = getCookie('MATHMON').indexOf('=') + 1;
-    loadMathMon(getCookie('MATHMON').slice(index));
-  } catch(err) { rpnAlert('Load MATHMON error.'); }
-
-  updateDisplay();
-  resetVariables();
-  if (isMobile) resizeInput();
 }
 
 function loadProgram(tmpStack) {
@@ -5219,28 +5247,6 @@ function insertText(text) {
   $('txt-input').focus();
 }
 
-function updateDisplay() {
-  $('lst-stack').value = '';  
-  // Buffer stack display
-  for (var i = 0; i < $('lst-stack').getAttribute('rows') ; i++) {
-    $('lst-stack').value += ' \n';
-  }
-  // Print to stack display
-  for (var sta in stack) {
-    $('lst-stack').value += '\n';
-    
-    if (stack[sta].getSoul() !== '') {
-      $('lst-stack').value += objToString(stack[sta]);
-    } else {
-      // A VERY long string of spaces ;)
-      $('lst-stack').value += '                                                                                                                                                                                                                                                                                                                                                                                      ';
-    }
-  }
-  colorSaveButton();  
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;   
-  $('txt-input').select();
-}
-
 function printHtml() {
   print();
 }
@@ -6416,6 +6422,7 @@ document.addEventListener('keydown', function(event) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       deleteInput();
+      // Resizing input with soft-keyboard open breaks resizing logic
       if (!isMobile) resizeInput();        
     }
     return;
