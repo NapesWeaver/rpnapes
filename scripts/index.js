@@ -1557,6 +1557,10 @@ function btnCopy() {
   }  
 }
 
+function scrollStack() {
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+}
+
 function updateDisplay() {
   $('lst-stack').value = '';  
   // Buffer stack display
@@ -1575,7 +1579,6 @@ function updateDisplay() {
     }
   }
   colorSaveButton();  
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;   
   $('txt-input').select();
 }
 
@@ -1587,6 +1590,7 @@ function abFunction() {
     stack.push(yA);
     stack.push(yB);
     updateDisplay();
+    scrollStack();
   }
   $('txt-input').focus();
 }
@@ -1594,7 +1598,7 @@ function abFunction() {
 function swapX(objX) {
   if (objX === undefined) objX = new NumberObject('', 'NaN', 'NaN','null');
   $('txt-input').value = objToString(objX);
-  updateDisplay()
+  updateDisplay();
 }
 
 function xyFunction() {  
@@ -1614,6 +1618,7 @@ function xyFunction() {
     objX = stack.pop();
     enterInput();
     swapX(objX);
+    setTimeout(scrollStack, 180);
   }
   setTimeout(resizeInput, 180);
 }
@@ -1660,6 +1665,7 @@ function btnEnter() {
     }
   }
   updateDisplay();
+  scrollStack();
   if (isMobile) setTimeout(resizeInput, 180);
   parseCommand();  
 }
@@ -1694,6 +1700,8 @@ function btnLoad() {
   } catch(err) { rpnAlert('Load MATHMON error.'); }
 
   updateDisplay();
+  scrollStack();
+
   resetVariables();
   // Resizing input with soft-keyboard open breaks resizing logic
   if (isMobile) resizeInput();
@@ -1779,6 +1787,7 @@ function deleteInput() {
     $('txt-input').focus();
   } else if ($('txt-input').value === '') {
     stack.pop();
+    scrollStack();
     updateDisplay();
   } else {
     deleteText($('txt-input'), true);
@@ -1815,6 +1824,7 @@ function btnBackspace() {
     deleteLines();
   } else if ($('txt-input').value === '') {
     stack.pop();
+    scrollStack();
     updateDisplay();
   } else {
     deleteText($('txt-input'), false);
@@ -1828,6 +1838,7 @@ function btnUndo() {
   } else {
     undoFunction();
   }
+  scrollStack();
   $('txt-input').select();
 }
 
@@ -6689,6 +6700,7 @@ window.onload = function () {
               $('txt-input').value = fileName;
               $('txt-input').select();
               updateDisplay();
+              scrollStack();
               if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
             }
           };
