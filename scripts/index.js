@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '17:23';
+var tStamp = '20:30';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1542,11 +1542,11 @@ function btnPaste() {
       rpnAlert('Not supported by browser.');
     }
   }
-  setTimeout(resizeInput, 180);
-  setTimeout(function() {
+  setTimeout(() => {
+    resizeInput();
     $('txt-input').scrollTop = $('txt-input').scrollHeight;
-  }, 186);
-  $('txt-input').focus();
+    $('txt-input').focus();
+  }, 100);
 }
 
 function btnCopy() {
@@ -1558,7 +1558,7 @@ function btnCopy() {
 }
 
 function scrollStack() {
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;  
 }
 
 function updateDisplay() {
@@ -1578,8 +1578,7 @@ function updateDisplay() {
       $('lst-stack').value += '                                                                                                                                                                                                                                                                                                                                                                                      ';
     }
   }
-  colorSaveButton();  
-  $('txt-input').select();
+  colorSaveButton();
 }
 
 function abFunction() {
@@ -1618,9 +1617,10 @@ function xyFunction() {
     objX = stack.pop();
     enterInput();
     swapX(objX);
-    setTimeout(scrollStack, 180);
+    scrollStack();
   }
   setTimeout(resizeInput, 180);
+  $('txt-input').select();
 }
 
 function btnXy() {
@@ -1628,7 +1628,8 @@ function btnXy() {
     abFunction();
   } else {
     xyFunction();
-  }  
+  }
+  $('txt-input').select();
 }
 
 function softEnter() {
@@ -1663,9 +1664,10 @@ function btnEnter() {
     for (var i = 0; i < input.length; i++) {
       if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input[i].trim()));
     }
+    updateDisplay();
+    scrollStack();
   }
-  updateDisplay();
-  scrollStack();
+  $('txt-input').select();
   if (isMobile) setTimeout(resizeInput, 180);
   parseCommand();  
 }
@@ -1701,6 +1703,7 @@ function btnLoad() {
 
   updateDisplay();
   scrollStack();
+  $('txt-input').select();
 
   resetVariables();
   // Resizing input with soft-keyboard open breaks resizing logic
@@ -1775,6 +1778,7 @@ function deleteLines(){
 
   stack.splice(getIndex('lst-stack') - stackSize, numLines);
   updateDisplay();
+  $('txt-input').select();
 }
 
 function deleteInput() {
@@ -1789,6 +1793,7 @@ function deleteInput() {
     stack.pop();
     scrollStack();
     updateDisplay();
+    $('txt-input').select();
   } else {
     deleteText($('txt-input'), true);
   }
@@ -2516,7 +2521,7 @@ function btnFactorial() {
   if (x < 0) {
     negativeNum = true;
     x = x * -1;
-  }  
+  }
   try {    
     result = math.gamma(math.add(x, 1));    
   } catch {
@@ -2526,6 +2531,7 @@ function btnFactorial() {
 
   if (negativeNum) result = result * -1;
   displayResult(result, units);
+  $('txt-input').select();
 }
 
 function btnInverse() {
@@ -2612,6 +2618,7 @@ function btnLog() {
     baseLog();
   }
   resizeInput();
+  $('txt-input').select();
 }
 
 function mathPow(num, pow) {
@@ -2753,6 +2760,7 @@ function btnRoot() {
     exponential();
   }
   resizeInput();
+  $('txt-input').select();
 }
 
 function insertAroundSelection(txtField, txtValue) {
@@ -2851,8 +2859,9 @@ function btnModulus() {
     buttonInsert(/[√]/, '√');
   } else {    
     modulus();
+    $('txt-input').select();
   }
-  resizeInput(); 
+  resizeInput();
 }
 
 function leadingSignChange(textInput) {
@@ -2890,6 +2899,11 @@ function signChange() {
       result = leadingSignChange(objX.getSoul());
     }
     displayResult(result, units);
+    if (txtInput.value.trim() === '-' || txtInput.value.trim() === '+') {
+      $('txt-input').focus();
+    } else {
+      $('txt-input').select();
+    }
 
   // Editing sign
   } else {
@@ -2974,6 +2988,7 @@ function division() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  $('txt-input').select();
 }
 
 function btnDivide() {
@@ -3005,6 +3020,7 @@ function multiplication() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  $('txt-input').select();
 }
 
 function btnMultiply() {
@@ -3036,6 +3052,7 @@ function subtraction() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  $('txt-input').select();
 }
 
 function btnSubtract() {  
@@ -3067,6 +3084,7 @@ function addition() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  $('txt-input').select();
 }
 
 function btnAdd() {  
