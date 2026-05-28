@@ -1791,8 +1791,8 @@ function deleteInput() {
     $('txt-input').focus();
   } else if ($('txt-input').value === '') {
     stack.pop();
-    scrollStack();
     updateDisplay();
+    scrollStack();
     $('txt-input').select();
   } else {
     deleteText($('txt-input'), true);
@@ -1829,8 +1829,8 @@ function btnBackspace() {
     deleteLines();
   } else if ($('txt-input').value === '') {
     stack.pop();
-    scrollStack();
     updateDisplay();
+    scrollStack();
   } else {
     deleteText($('txt-input'), false);
   }
@@ -4471,6 +4471,7 @@ function help(command) {
   enterInput();
   $('txt-input').value = '';
   updateDisplay();
+  scrollStack();
 }
 
 function parseCommand() {
@@ -6848,6 +6849,8 @@ window.onload = function () {
     backupUndo();
     objectSort(true, false);
     updateDisplay();
+    scrollStack();
+    resizeInput();
     $('txt-input').select();
   }  
   $('menu-stack-total').onclick = function() {    
@@ -6865,6 +6868,7 @@ window.onload = function () {
   $('menu-stack-min').onclick = function() {    
     backupUndo();
     inputText(minNum());
+    resizeInput();
     $('txt-input').select();
   }
   
