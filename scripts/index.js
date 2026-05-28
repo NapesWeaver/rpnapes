@@ -4678,6 +4678,7 @@ function parseCommand() {
     inputText('https://github.com/NapesWeaver/rpnapes');
     enterInput();
     updateDisplay();
+    scrollStack();
     $('txt-input').value = '';
     break;
   case 'ave':
@@ -4744,8 +4745,8 @@ function parseCommand() {
     break;
   case 'email':
     stack.pop();
-    $('txt-input').value = '';
     updateDisplay();
+    $('txt-input').value = '';
     // window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here"
     window.location.href = "mailto:?subject=&body=";
     break;
@@ -4901,8 +4902,9 @@ function parseCommand() {
     break;
   case 'polar':
     stack.pop();
+    updateDisplay();
     if ($('menu-form').textContent === 'Polar') toggleForm();
-    $('txt-input').value = '';
+    inputText('');
     break;
   case 'print':
     stack.pop();
@@ -5004,6 +5006,7 @@ function parseCommand() {
     // Falls through
   case 'rectangular':
     stack.pop();
+    updateDisplay();
     if ($('menu-form').textContent === 'Vector') toggleForm();
     inputText('');
     break;
@@ -5012,8 +5015,7 @@ function parseCommand() {
       $('twig').src = 'images/twig/hat-tip.gif';
     }
     break;
-  }
-  
+  }  
   // Resizing input with soft-keyboard open breaks resizing logic
   if (!isMobile) resizeInput();
 }

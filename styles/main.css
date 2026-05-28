@@ -493,10 +493,11 @@ button:hover {
     padding-bottom: .07em;
     text-decoration: underline;
     border-radius: 2px;
+    color: #B85252;
 }
 
 #menu-off:hover {            
-        background-color: #B85252;/* YouTube red */
+        background-color: #B85252;
         color: #000000;
 }
 
