@@ -2091,7 +2091,7 @@ function btnShift() {
     // Shifting to false...
     shifted = false;
     $('header').style.backgroundColor = '#6D8EBF';
-    $('indicate-shift').classList.add('hidden');
+    $('indicate-shift').innerHTML = 'RPN';
     $('menu-open').innerHTML = 'Open';
     $('open').setAttribute('title', 'Open a file');
     $('menu-load').innerHTML = 'Load';
@@ -2147,7 +2147,7 @@ function btnShift() {
     // Shifting to true...
     shifted = true;
     $('header').style.backgroundColor = '#0000A0';
-    $('indicate-shift').classList.remove('hidden');
+    $('indicate-shift').innerHTML = 'AOS';
     $('menu-open').innerHTML = 'RunFile';
     $('open').setAttribute('title', 'Run JS file');
     $('menu-load').innerHTML = 'Run';
