@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '20:30';
+var tStamp = '17:30';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1669,7 +1669,7 @@ function btnEnter() {
   }
   $('txt-input').select();
   if (isMobile) setTimeout(resizeInput, 180);
-  parseCommand();  
+  parseCommand();
 }
 
 function btnLoad() {  
@@ -2608,6 +2608,7 @@ function baseLog() {
   }
 
   if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result);
+  if (!stackFocus) scrollStack();
   displayResult(result, '');
 }
 
@@ -2659,7 +2660,8 @@ function exponential() {
     newUnits = multiplyUnits(objX.getUnits(), objY.getUnits(), x); 
   } catch {
     result = NaN;
-  }  
+  }
+  if (!stackFocus) scrollStack();
   displayResult(result, newUnits);
 }
 
@@ -2750,6 +2752,7 @@ function radical() {
   } catch {
     results = [NaN];
   }
+  if (!stackFocus) scrollStack();
   displayResults(results, newUnits);
 }
 
@@ -2988,6 +2991,7 @@ function division() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  if (!stackFocus) scrollStack();
   $('txt-input').select();
 }
 
@@ -3020,6 +3024,7 @@ function multiplication() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  if (!stackFocus) scrollStack();
   $('txt-input').select();
 }
 
@@ -3052,6 +3057,7 @@ function subtraction() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  if (!stackFocus) scrollStack();
   $('txt-input').select();
 }
 
@@ -3084,6 +3090,7 @@ function addition() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  if (!stackFocus) scrollStack();
   $('txt-input').select();
 }
 
