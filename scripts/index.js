@@ -2826,6 +2826,8 @@ function btnPi() {
 }
 
 function modulus() {
+  backupUndo();
+
   var objX = getX();
   var objY;
   var newUnits = '';
@@ -2853,12 +2855,13 @@ function modulus() {
     result = NaN;
   }
   displayResult(result, newUnits);
+  if (!stackFocus) scrollStack();
 }
 
 function btnModulus() {
-  backupUndo();
-
+  
   if (shifted) {
+    backupUndo();
     buttonInsert(/[√]/, '√');
   } else {    
     modulus();
@@ -2973,6 +2976,8 @@ function btnSign() {
 //////// Basic Maths Buttons /////////////////////////////////////////////////////////
 
 function division() {
+  backupUndo();
+
   var objX = getX();
   var objY;
   var result;
@@ -2996,9 +3001,9 @@ function division() {
 }
 
 function btnDivide() {
-  backupUndo();
-
+  
   if (shifted) {
+    backupUndo();
     if (!/[-+*√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[/]/, '/');
   } else {
     division();
@@ -3006,6 +3011,8 @@ function btnDivide() {
 }
 
 function multiplication() {
+  backupUndo();
+
   var objX = getX();
   var objY;
   var result;
@@ -3029,9 +3036,9 @@ function multiplication() {
 }
 
 function btnMultiply() {
-  backupUndo();
-
+  
   if (shifted) {
+    backupUndo();
     if (!/[-+/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[*]/, '*');
   } else {
     multiplication();
@@ -3039,6 +3046,8 @@ function btnMultiply() {
 }
 
 function subtraction() {
+  backupUndo();
+
   var objX = getX();
   var objY;
   var result;
@@ -3062,9 +3071,9 @@ function subtraction() {
 }
 
 function btnSubtract() {  
-  backupUndo();
-
+  
   if (shifted) {
+    backupUndo();
     buttonInsert(/[-]/, '-');
   } else {
     subtraction();
@@ -3072,6 +3081,8 @@ function btnSubtract() {
 }
 
 function addition() {
+  backupUndo();
+
   var objX = getX();
   var objY;
   var result;
@@ -3095,9 +3106,9 @@ function addition() {
 }
 
 function btnAdd() {  
-  backupUndo();
-
+  
   if (shifted) {
+    backupUndo();
     if (!/[-*/√^%=]$/.test($('txt-input').value) || isTextSelected($('txt-input'))) buttonInsert(/[+]/, '+');
   } else {
     addition();
