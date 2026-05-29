@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '17:30';
+var tStamp = '21:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1837,16 +1837,6 @@ function btnBackspace() {
   setTimeout(resizeInput, 180);
 }
 
-function btnUndo() {
-  if (shifted) {
-    redoFunction();
-  } else {
-    undoFunction();
-  }
-  scrollStack();
-  $('txt-input').select();
-}
-
 function undoBase(input, aRadix) {
   var inputArr = input.split('\n');
   var outputArr = [];
@@ -1953,6 +1943,15 @@ function redoFunction() {
     resizeInput();
   }
   colorUndoButton();
+}
+
+function btnUndo() {
+  if (shifted) {
+    redoFunction();
+  } else {
+    undoFunction();
+  }
+  $('txt-input').select();
 }
 
 function toggleChar(input, index, regex, char) {
