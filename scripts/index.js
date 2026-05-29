@@ -1749,7 +1749,7 @@ function outputTestResult(result, newUnits) {
 
 function runTest() {
   try {
-    if (stack.length > 0 && stack.length % 2 === 0) {
+    if (stack.length - 2 > 0 && stack.length % 2 === 0) {
       var testObj = getX(decodeSpecialChar(stack[stack.length - 2].getSoul()));
       var units = testObj.getUnits() !== 'null' ? ' ' + testObj.getUnits() : '';
       var result = outputTestResult(calculate(stripUnits(testObj.getSoul())), units);
