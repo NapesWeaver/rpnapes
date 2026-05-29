@@ -2588,10 +2588,10 @@ function baseLog() {
     objY = stack[getIndex('lst-stack') - stackSize];
   } else {
     if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
-      enterInput();
-      $('txt-input').value = Number(10).toString(radix);
+      objY = getX(Number(10).toString(radix));
+    } else {
+      objY = stack[stack.length - 1];
     }
-    objY = stack[stack.length - 1];
   }  
   objX = getX();
 
