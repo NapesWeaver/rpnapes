@@ -1662,10 +1662,11 @@ function btnEnter() {
     }
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    parseCommand();
   }
   $('txt-input').select();
   if (isMobile) setTimeout(resizeInput, 180);
-  parseCommand();
+  // parseCommand();
 }
 
 function btnLoad() {  
@@ -2089,6 +2090,7 @@ function btnShift() {
   if (shifted) {
     // Shifting to false...
     shifted = false;
+    $('header').style.backgroundColor = '#6D8EBF';
     $('indicate-shift').classList.add('hidden');
     $('menu-open').innerHTML = 'Open';
     $('open').setAttribute('title', 'Open a file');
@@ -2144,6 +2146,7 @@ function btnShift() {
   else {
     // Shifting to true...
     shifted = true;
+    $('header').style.backgroundColor = '#0000A0';
     $('indicate-shift').classList.remove('hidden');
     $('menu-open').innerHTML = 'RunFile';
     $('open').setAttribute('title', 'Run JS file');
