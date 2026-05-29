@@ -2108,7 +2108,7 @@ function btnShift() {
     $('btn-enter').value = 'ENTER';
     $('btn-delete').innerHTML = 'DEL';
     $('btn-inverse').value = '1 / x';
-    $('btn-log').innerHTML = 'log<sub>x</sub>y';
+    $('btn-log').innerHTML = 'log<sub>y</sub>x';
     $('btn-root').innerHTML = 'y&nbsp;<sup>x</sup>';
     $('btn-undo').value = 'UND';
     $('btn-ee').classList.add('btn-small-font');
@@ -2591,7 +2591,7 @@ function baseLog() {
       enterInput();
       $('txt-input').value = Number(10).toString(radix);
     }
-    objY = stack.pop();
+    objY = stack[stack.length - 1];
   }  
   objX = getX();
 
@@ -2599,7 +2599,7 @@ function baseLog() {
   x = buildComplexNum(objX);
 
   try {
-    result = math.log(y, x);    
+    result = math.log(x, y);    
   } catch {
     result = NaN;
   }
@@ -4156,7 +4156,7 @@ function help(command) {
     case 'maths':
       inputText('');
       enterInput();
-      inputText('acos(x) asin(x) atan(x) cos(x) fact(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]).');
+      inputText('acos(x) asin(x) atan(x) cos(x) fact(x) sin(x) tan(x) ln(x) log(x,[y]) pow(y,[x]) root(y,[x]) roots(y,[x]).');
       break;
     case 'max':
       inputText('');
