@@ -1557,10 +1557,6 @@ function btnCopy() {
   }  
 }
 
-function scrollStack() {
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;  
-}
-
 function updateDisplay() {
   $('lst-stack').value = '';  
   // Buffer stack display
@@ -1589,7 +1585,7 @@ function abFunction() {
     stack.push(yA);
     stack.push(yB);
     updateDisplay();
-    scrollStack();
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   }
   $('txt-input').focus();
 }
@@ -1617,7 +1613,7 @@ function xyFunction() {
     objX = stack.pop();
     enterInput();
     swapX(objX);
-    scrollStack();
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   }
   setTimeout(resizeInput, 180);
   $('txt-input').select();
@@ -1665,7 +1661,7 @@ function btnEnter() {
       if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input[i].trim()));
     }
     updateDisplay();
-    scrollStack();
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   }
   $('txt-input').select();
   if (isMobile) setTimeout(resizeInput, 180);
@@ -1702,7 +1698,7 @@ function btnLoad() {
   } catch(err) { rpnAlert('Load MATHMON error.'); }
 
   updateDisplay();
-  scrollStack();
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 
   resetVariables();
@@ -1792,7 +1788,7 @@ function deleteInput() {
   } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
-    scrollStack();
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     $('txt-input').select();
   } else {
     deleteText($('txt-input'), true);
@@ -1830,7 +1826,7 @@ function btnBackspace() {
   } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
-    scrollStack();
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   } else {
     deleteText($('txt-input'), false);
   }
@@ -2607,7 +2603,7 @@ function baseLog() {
   }
 
   if (/[.][9]{11,}[0-9]*[0-9]$/.test(result)) result = Math.round(result);
-  if (!stackFocus) scrollStack();
+  if (!stackFocus) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   displayResult(result, '');
 }
 
@@ -2660,7 +2656,7 @@ function exponential() {
   } catch {
     result = NaN;
   }
-  if (!stackFocus) scrollStack();
+  if (!stackFocus) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   displayResult(result, newUnits);
 }
 
@@ -2751,7 +2747,7 @@ function radical() {
   } catch {
     results = [NaN];
   }
-  if (!stackFocus) scrollStack();
+  if (!stackFocus) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   displayResults(results, newUnits);
 }
 
@@ -2854,7 +2850,7 @@ function modulus() {
     result = NaN;
   }
   displayResult(result, newUnits);
-  if (!stackFocus) scrollStack();
+  if (!stackFocus) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
 function btnModulus() {
@@ -2995,7 +2991,7 @@ function division() {
     result = NaN;
   }
   displayResult(result, newUnits);
-  if (!stackFocus) scrollStack();
+  if (!stackFocus) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 }
 
@@ -3030,7 +3026,7 @@ function multiplication() {
     result = NaN;
   }
   displayResult(result, newUnits);
-  if (!stackFocus) scrollStack();
+  if (!stackFocus) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 }
 
@@ -3065,7 +3061,7 @@ function subtraction() {
     result = NaN;
   }
   displayResult(result, newUnits);
-  if (!stackFocus) scrollStack();
+  if (!stackFocus) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 }
 
@@ -3100,7 +3096,7 @@ function addition() {
     result = NaN;
   }
   displayResult(result, newUnits);
-  if (!stackFocus) scrollStack();
+  if (!stackFocus) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 }
 
@@ -4488,7 +4484,7 @@ function help(command) {
   enterInput();
   $('txt-input').value = '';
   updateDisplay();
-  scrollStack();
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
 function parseCommand() {
@@ -4695,7 +4691,7 @@ function parseCommand() {
     inputText('https://github.com/NapesWeaver/rpnapes');
     enterInput();
     updateDisplay();
-    scrollStack();
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     $('txt-input').value = '';
     break;
   case 'ave':
@@ -6738,7 +6734,7 @@ window.onload = function () {
               $('txt-input').value = fileName;
               $('txt-input').select();
               updateDisplay();
-              scrollStack();
+              $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
               if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
             }
           };
@@ -6868,7 +6864,7 @@ window.onload = function () {
     backupUndo();
     objectSort(true, false);
     updateDisplay();
-    scrollStack();
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     resizeInput();
     $('txt-input').select();
   }  
