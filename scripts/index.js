@@ -2590,7 +2590,7 @@ function baseLog() {
     if (stack.length - 1 < 0 || stack[stack.length - 1].getSoul() === '') {
       objY = getX(Number(10).toString(radix));
     } else {
-      objY = stack[stack.length - 1];
+      objY = stack.pop();
     }
   }  
   objX = getX();
