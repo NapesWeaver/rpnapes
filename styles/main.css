@@ -176,7 +176,7 @@ select::-ms-expand {
     min-width: 100%;
     resize: both;
     overflow: auto;
-    background-color: #6D8EBF;
+    background-color: #808080;
 }
 
 #canvas-wrap {
