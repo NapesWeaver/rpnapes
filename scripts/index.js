@@ -1596,6 +1596,29 @@ function swapX(objX) {
   updateDisplay();
 }
 
+// function xyFunction() {  
+//   var objY = getX();
+//   var objX;
+  
+//   if (stackFocus) {
+//     var index = getIndex('lst-stack') - stackSize;
+//     if (index > -1) {
+//       backupUndo();
+//       objX = stack[index];
+//       stack[index] = objY;
+//       swapX(objX);
+//     }
+//   } else {
+//     backupUndo();
+//     objX = stack.pop();
+//     enterInput();
+//     swapX(objX);
+//     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+//   }
+//   setTimeout(resizeInput, 180);
+//   $('txt-input').select();
+// }
+
 function xyFunction() {  
   var objY = getX();
   var objX;
@@ -2417,7 +2440,6 @@ function inverse() {
   if (stackFocus) {    
     objX = stack[getIndex('lst-stack') - stackSize];
     $('txt-input').value = decodeSpecialChar(objX.getSoul());
-    backupUndo();// <--Needed for UI consistency
   } else {
     objX = getX();
   }
