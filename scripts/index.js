@@ -1405,7 +1405,6 @@ function backupUndo() {
   var shortStack = [];
   var currentRadix = radix;
   var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
-
   radix = 10;
 
   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
@@ -6725,6 +6724,7 @@ window.onload = function () {
               backupUndoNotes();
               $('lst-notes').value += this.result;
               backupUndoNotes();
+              if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
             } else {
               var tmpStack = [];
               backupUndo();
