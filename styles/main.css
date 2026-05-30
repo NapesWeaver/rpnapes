@@ -618,7 +618,7 @@ label a {
 }
 
 .menu > ul > li:hover {
-    overflow: visible;
+    /* overflow: visible; */
 }
 
 .menu > ul > li > a {
