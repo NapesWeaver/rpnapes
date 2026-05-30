@@ -2399,23 +2399,6 @@ function splitArrayByBrowser(tmpArray) {
   return tmpArray;
 }
 
-// function btnOff() {
-//   monOff();
-//   tricorderOff();  
-//   // Works for Chrome and Firefox-desktop if set as a home page ;)
-//   if (!(isMobile && isFirefox)) {    
-//     window.open('','_self').close();
-//     window.open(location, '_self').close();
-//     window.close();
-//     window.open('', '_self', '');
-//     window.close();
-//     window.top.close();
-//   }
-  
-//   rpnAlert('Scripts may only close windows they opened.');
-//   window.location.href = 'https://www.google.com/';
-// }
-
 function btnOff() {
   monOff();
   tricorderOff();
@@ -2427,7 +2410,7 @@ function btnOff() {
   window.close();
   window.top.close();
   history.go(-1);
-  window.location.href = 'https://www.google.com/';
+  
   rpnAlert('Scripts may only close windows they opened.');
 }
 
