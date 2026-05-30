@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '11:00';
+var tStamp = '12:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2422,7 +2422,8 @@ function btnOff() {
   // Works for Chrome and Firefox-desktop if set as a home page ;)
   try {
     
-    if (!(isMobile && isFirefox)) {    
+    // if (!(isMobile && isFirefox)) {    
+    if (true) {    
       window.open('','_self').close();
       window.open(location, '_self').close();
       window.close();
