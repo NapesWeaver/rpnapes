@@ -2272,8 +2272,12 @@ function saveFileNotes(fileName) {
     }
     blob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
 
-    if (!/^.+\..+$/.test(fileName)) fileName += '.txt';    
-    saveAs(blob.slice(0, -1), fileName);// filesaver.js
+    if (!/^.+\..+$/.test(fileName)) {
+      fileName += '.txt';
+      saveAs(blob.slice(0, -1), fileName);// filesaver.js      
+    } else {
+      rpnAlert('Error: Illegal character in file name.');
+    }
   } else {
     rpnAlert('Error: There are no notes save.');
   }
@@ -2297,8 +2301,12 @@ function saveFileStack(fileName, pretty) {
     }
     blob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
 
-    if (!/^.+\..+$/.test(fileName)) fileName += '.txt';
-    saveAs(blob.slice(0, -1), fileName);// filesaver.js
+    if (!/^.+\..+$/.test(fileName)) {
+      fileName += '.txt';
+      saveAs(blob.slice(0, -1), fileName);// filesaver.js      
+    } else {
+      rpnAlert('Error: Illegal character in file name.');
+    }
   } else {
     rpnAlert('Error: There is no stack to save.');
   }
