@@ -2264,14 +2264,14 @@ function saveFileNotes(fileName) {
   while (notes[0] === '') notes.shift();
   while (notes[notes.length - 1] === '') notes.pop();
 
-  if (notes.length > 1) {
-
+  if (notes.length > 0) {
+    
     for (var note in notes) {
       blobContent += decodeSpecialChar(notes[note]);
       blobContent += '\n';
     }
     blob = new Blob([blobContent], { type: 'text/plain;charset=utf-8' });
-
+    
     if (!/^.+\..+$/.test(fileName)) {
       fileName += '.txt';
       saveAs(blob.slice(0, -1), fileName);// filesaver.js      
@@ -4597,7 +4597,6 @@ function parseCommand() {
       stack.pop();
       saveFileStack(commandArray[1], true);
     }
-    $('txt-input').value = '';
     updateDisplay();
   }// savenotes
   if (commandArray[0] === 'savenotes' && (commandArray[1] === undefined || /^[\w\s-,.]+$/.test(commandArray[1]))) {     
@@ -4609,7 +4608,6 @@ function parseCommand() {
       stack.pop();
       saveFileNotes(commandArray[1]);
     }
-    $('txt-input').value = '';
     updateDisplay();
   }// sort
   if (/^sort( unit)?( asc| desc)?$/.test(command)) { 
