@@ -617,10 +617,6 @@ label a {
     font-size: .85em;
 }
 
-.menu > ul > li:hover {
-    /* overflow: visible; */
-}
-
 .menu > ul > li > a {
     padding-top: 3px;
     padding-left: 3px;
