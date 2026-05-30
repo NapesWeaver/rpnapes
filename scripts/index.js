@@ -4219,7 +4219,7 @@ function help(command) {
     case 'plot':
       inputText('');
       enterInput();
-      inputText('plot: Plot numbers and functions.');
+      inputText('plot: In RPN mode, plot graphs the last entry (expression, number or function) on the stack. Also, plot may be followed by the argument e.g.\nplot 1∠45\nplot x^2\nFor AOS use plot() e.g.\nplot(function f(x) { return 1/x })\nplot(x=> sin(x))\nplot(\'1∠45\')');
       break;
     case 'polar':
       inputText('');
