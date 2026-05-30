@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '19:45';
+var tStamp = '11:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1380,7 +1380,7 @@ function nestArrayByBrowser(srcArray) {
 }
 
 function colorUndoButton() {
-  if (($('btn-undo').value === 'UND' && backups.length > 3) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
+  if (($('btn-undo').value === 'UND' && backups.length > 2) || ($('btn-undo').value === 'REDO' && restores.length > 0)) {
     $('btn-undo').style.color = '#25FC5A';
   } else {
     $('btn-undo').style.color = '#D4D0C8';
@@ -1409,10 +1409,10 @@ function backupUndo() {
   radix = 10;
 
   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
-  
-  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {
+
+  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {  
     backups.push(nestArrayByBrowser(shortStack));
-    backups.push(input);
+    backups.push(input);   
     restores.length = 0;
     colorUndoButton();  
   }
@@ -7096,14 +7096,14 @@ window.onload = function () {
   } else {
     widgetSrc.push('https://www.wolframalpha.com/');
   }
-  if (document.cookie.indexOf('STACK') !== -1) {
-    $('lst-stack').value = '';
-    $('txt-input').value = '';
+
+  if (document.cookie.indexOf('STACK') !== -1) {     
     btnLoad();
   } else {
-    backupUndo();
     $('btn-save').style.color = '#D4D0C8';
   }
+
+  if (backups.length < 2) backupUndo();  
   autoDark();
   $('txt-input').readOnly = false;
   $('txt-input').focus();
