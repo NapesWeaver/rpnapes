@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '12:15';
+var tStamp = '14:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1423,7 +1423,7 @@ function menuNotes() {
     backupUndo();    
     runNotes();
   } else {
-    btnXoff();
+    btnToggle();
   }
 }
 
@@ -1497,7 +1497,7 @@ function showTricorder() {
   $('viewport').classList.add('visible');
 }
 
-function btnXoff() {
+function btnToggle() {
 
   if ($('rpnapes').classList.contains('hidden')) {
     // Notes is visible - turn on RPNapes
@@ -1941,11 +1941,18 @@ function redoFunction() {
   colorUndoButton();
 }
 
-function btnUndo() {
+function btnUndo() {;
+  
   if (shifted) {
-    redoFunction();
+    if (restores.length > 0) {
+      redoFunction();
+      if ($('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .6) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    }
   } else {
-    undoFunction();
+    if (backups.length > 2)  {
+      undoFunction();
+      if ($('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .6) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
+    }
   }
   $('txt-input').select();
 }
@@ -2410,7 +2417,7 @@ function btnOff() {
   window.close();
   window.top.close();
   history.go(-1);
-  
+
   rpnAlert('Scripts may only close windows they opened.');
 }
 
@@ -4879,7 +4886,7 @@ function parseCommand() {
   case 'notes':
     stack.pop();
     updateDisplay();
-    btnXoff();
+    btnToggle();
     break;
   case 'oct':
     // Falls through
@@ -4902,7 +4909,7 @@ function parseCommand() {
   case 'opennotes':
     stack.pop();
     updateDisplay();      
-    btnXoff();
+    btnToggle();
     $('txt-input').value = '';
     openAFile();
     break;
@@ -6628,7 +6635,7 @@ document.addEventListener('keyup', function(event) {
   case 'Escape':
     if (!event) event = window.event;
     event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-    btnXoff();
+    btnToggle();
     resizeInput();
     break;
   case 'Shift':
@@ -6990,7 +6997,7 @@ window.onload = function () {
   });
 
   // Buttons
-  $('btn-xoff').onclick = btnXoff;
+  $('btn-toggle').onclick = btnToggle;
   $('btn-copy').onclick = btnCopy;
   $('btn-xy').onclick = btnXy;
   $('btn-enter').onclick = enterButton;
@@ -7100,8 +7107,8 @@ window.onload = function () {
   } else {
     $('btn-save').style.color = '#D4D0C8';
   }
+  if (backups.length < 2) backupUndo();
 
-  if (backups.length < 2) backupUndo();  
   autoDark();
   $('txt-input').readOnly = false;
   $('txt-input').focus();
