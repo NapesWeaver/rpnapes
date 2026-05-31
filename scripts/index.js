@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '14:15';
+var tStamp = '17:30';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2411,16 +2411,18 @@ function splitArrayByBrowser(tmpArray) {
 function btnOff() {
   monOff();
   tricorderOff();
-      
-  window.open('','_self').close();
-  window.open(location, '_self').close();
-  window.close();
-  window.open('', '_self', '');
-  window.close();
-  window.top.close();
-  history.go(-1);
 
-  rpnAlert('Scripts may only close windows they opened.');
+  try {
+    window.open('','_self').close();
+    window.open(location, '_self').close();
+    window.close();
+    window.open('', '_self', '');
+    window.close();
+    window.top.close();
+    history.go(-1);    
+  } catch {
+    rpnAlert('Scripts may only close windows they opened.');
+  }
 }
 
 //////// Algebraic Buttons ///////////////////////////////////////////////////////////
@@ -4045,6 +4047,13 @@ function help(command) {
       enterInput();
       inputText('https://github.com/NapesWeaver/rpnapes');
       break;
+    case 'aos':
+      // Falls through
+    case 'AOS':
+      inputText('');
+      enterInput();
+      inputText('Algebraic Operating System');
+      break;
     case 'ave':
       // Falls through
     case 'average':
@@ -4244,6 +4253,13 @@ function help(command) {
       inputText('');
       enterInput();
       inputText('print: Open printer dialoge.');
+      break;
+    case 'rpn':
+      // Falls through
+    case 'RPN':
+      inputText('');
+      enterInput();
+      inputText('RPN: Reverse Polish Notation.');
       break;
     case 'run':
       inputText('');
