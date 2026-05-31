@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '14:00';
+var tStamp = '14:15';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1942,6 +1942,7 @@ function redoFunction() {
 }
 
 function btnUndo() {;
+  var stackLength = stack.length;
   
   if (shifted) {
     if (restores.length > 0) {
@@ -1951,7 +1952,8 @@ function btnUndo() {;
   } else {
     if (backups.length > 2)  {
       undoFunction();
-      if ($('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .6) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
+      // If stackLength === 0 || cleintHeight is very small || ...
+      if (stackLength === 0 || $('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .6) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
     }
   }
   $('txt-input').select();
