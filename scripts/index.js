@@ -1947,13 +1947,13 @@ function btnUndo() {;
   if (shifted) {
     if (restores.length > 0) {
       redoFunction();
-      if ($('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .6) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+      if ($('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .3) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     }
   } else {
     if (backups.length > 2)  {
       undoFunction();
       // If stackLength === 0 || cleintHeight is very small || ...
-      if (stackLength === 0 || $('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .6) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
+      if (stackLength === 0 || $('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .3) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
     }
   }
   $('txt-input').select();
@@ -2422,6 +2422,7 @@ function btnOff() {
     history.go(-1);    
   } catch {
     rpnAlert('Scripts may only close windows they opened.');
+    window.location.href = 'https://www.google.com/';
   }
 }
 
