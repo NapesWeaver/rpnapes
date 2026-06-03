@@ -1947,13 +1947,13 @@ function btnUndo() {;
   if (shifted) {
     if (restores.length > 0) {
       redoFunction();
-      if ($('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .3) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+      if ($('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .12) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     }
   } else {
     if (backups.length > 2)  {
       undoFunction();
       // If stackLength === 0 || cleintHeight is very small || ...
-      if (stackLength === 0 || $('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .3) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
+      if (stackLength === 0 || $('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .12) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
     }
   }
   $('txt-input').select();
@@ -3841,6 +3841,7 @@ function plot(input) {
   $('txt-input').select();
 
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
+  
   setTimeout(resizeTextAreas, 100);
 }
 
