@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '11:30';
+var tStamp = '13:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1947,12 +1947,14 @@ function btnUndo() {;
   if (shifted) {
     if (restores.length > 0) {
       redoFunction();
+      // if ($('lst-stack').clientHeight < 171 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .66) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
       if ($('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .66) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     }
   } else {
     if (backups.length > 2)  {
       undoFunction();
       // If stackLength === 0 || cleintHeight is very small || ...
+      // if (stackLength === 0 || $('lst-stack').clientHeight < 171 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .66) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
       if (stackLength === 0 || $('lst-stack').clientHeight < 216 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .66) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
     }
   }
@@ -3841,10 +3843,15 @@ function plot(input) {
   $('txt-input').select();
 
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-  
-  setTimeout(resizeTextAreas, 100);
-}
 
+  setTimeout(function () {
+    setTimeout(resizeTextAreas, 100);
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight
+  }, 300);
+}
+function foo() {
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+}
 function embedIframePlayer(src) {
   closeMedia();
 
