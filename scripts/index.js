@@ -1595,6 +1595,12 @@ function swapX(objX) {
   updateDisplay();
 }
 
+function enterInput() {
+  var objX = getX();
+  stack.push(objX);
+  $('txt-input').value = $('txt-input').value.trim();  
+}
+
 function xyFunction() {  
   var objY = getX();
   var objX;
@@ -1718,26 +1724,23 @@ function btnLoad() {
 function btnEval() {
   backupUndo();
   var objX;
-  
-  if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
-  objX = getX();
+
+  if (stackFocus) {
+    objX = getX(getSelectedText('lst-stack'));
+  } else {
+    objX = getX();
+  }
   var units = objX.getUnits() !== 'null' ? ' ' + objX.getUnits() : '';
   
   if (objX.getSoul().match(/^run$/)) {
     btnLoad();
     return;
   }
-  displayResult(calculate(stripUnits($('txt-input').value)), units);
+  displayResult(calculate(stripUnits(objX.getSoul())), units);
   $('txt-input').select();
 }
 
-function enterInput() {
-  var objX = getX();
-  stack.push(objX);
-  $('txt-input').value = $('txt-input').value.trim();  
-}
-
-function outputTestResult(result, newUnits) { 
+function outputTestResult(result, newUnits) {
   var objX;
   if (result !== undefined) {
 
@@ -3175,7 +3178,11 @@ function displayResult(result, newUnits) {
     
     if (result !== '0') result += newUnits;
 
-    $('txt-input').value = parseResult(result);
+    if (shiftHeld) {
+      $('txt-input').value += '\n' + parseResult(result);
+    } else {
+      $('txt-input').value = parseResult(result);
+    }
     currency = '';
 
     updateDisplay();
@@ -4335,7 +4342,9 @@ function help(command) {
       enterInput();
       inputText('Ctrl + s = Save');
       enterInput();
-      inputText('Alt + Shift = Shift Keypad');
+      inputText('Ctrl + Shift = Shift Keypad');
+      enterInput();
+      inputText('Alt + Up / Down Arrow key = Select text up / down');
       enterInput();
       inputText('Esc = Toggle interface button.');
       break;
@@ -4577,7 +4586,7 @@ function parseCommand() {
     }
     stack.pop();
     $('txt-input').value = '';
-    updateDisplay();    
+    updateDisplay();
   }// NOT eng with number and no space, NOT eng with word, NOT eng with number and word, NOT eng with number and alphanumeric word
   if (command.match(/(?!eng[0-9]+)(?!eng ?[A-Za-z])(?!eng [0-9 ]+[A-Za-z]+)(?!eng [0-9]+ +[0-9A-Za-z]+)^eng$|(^eng (-?[1]|[1-9]|1[0-7])$)/)) {    
     
@@ -5017,7 +5026,9 @@ function parseCommand() {
     enterInput();
     inputText('Ctrl + s = Save');
     enterInput();
-    inputText('Alt + Shift = Shift Keypad');
+    inputText('Ctrl + Shift = Shift Keypad');
+    enterInput();
+    inputText('Alt + Up / Down Arrow key = Select text up / down');
     enterInput();
     inputText('Esc = Toggle interface button.');
     enterInput();
@@ -6384,7 +6395,8 @@ document.addEventListener('keydown', function(event) {
     }
     return;
   case 16:// SHIFT
-    if (altHeld) {
+    if (!event) event = window.event;
+    if (ctrlHeld) {
       btnShift();
     } else {
       shiftHeld = true;
