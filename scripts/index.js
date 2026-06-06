@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '15:00';
+var tStamp = '11:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1649,23 +1649,32 @@ function enterButton() {
 function btnEnter() {
   backupUndo();
   // cashed = '';
-
   if (stackFocus) {
+
+    if (shiftHeld) $('txt-input').value += '\n';
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
     resizeInput();
   } else {
-    var input = $('txt-input').value.split('\n');
     
-    for (var i = 0; i < input.length; i++) {
-      if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input[i].trim()));
+    if (shiftHeld) {
+      var endPos;
+      $('txt-input').value += '\n';
+      endPos = $('txt-input').value.length;
+      resizeInput();
+    } else {
+
+      var input = $('txt-input').value.split('\n');
+      
+      for (var i = 0; i < input.length; i++) {
+        if (stack.length > 0 || (input !== '' && input !== 'NaN')) stack.push(getX(input[i].trim()));
+      }
+      updateDisplay();
+      $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+      parseCommand();
+      $('txt-input').select();
     }
-    updateDisplay();
-    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    parseCommand();
   }
-  $('txt-input').select();
   if (isMobile) setTimeout(resizeInput, 180);
-  // parseCommand();
 }
 
 function btnLoad() {  
@@ -1709,7 +1718,6 @@ function btnLoad() {
 function btnEval() {
   backupUndo();
   var objX;
-  // cashed = '';
   
   if (stackFocus) insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
   objX = getX();
