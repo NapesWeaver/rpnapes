@@ -68,30 +68,30 @@ header {
     color: #F2F100;
 }
 
+#indicate-shift {
+    top: 2px;
+}
+
 #timer {
     top: 2px;
-    margin-left: .6em;
+    margin-left: 2.3em;
 }
 
 #indicate-format {
     top: 2px;
-    margin-left: 3.4em;
+    margin-left: 6.4em;
 }
 
 #indicate-polar {
     top: 1px;
-    margin-left: 5.3em;
+    margin-left: 8em;
 }
 
 #indicate-radians {
     top: 2px;
-    margin-left: 6.5em;
+    margin-left: 9em;
 }
 
-#indicate-shift {
-    top: 2px;
-    margin-left: 8.5em;
-}
 
 #indicate-execution {
     top: 2px;    
@@ -708,25 +708,26 @@ label a {
 }
 
 @media only screen and (min-width: 250px) {
+    #timer {
+        margin-left: 2.6em;
+    }
+
     #indicate-format {
-        margin-left: 5em;
+        margin-left: 7.2em;
     }
     
     #indicate-polar {
-        margin-left: 7.1em;
+        margin-left: 9.3em;
     }
 
     #indicate-radians {
-        margin-left: 8.5em;
-    }
-
-    #indicate-shift {
-        margin-left: 10.7em;
+        margin-left: 10.9em;
     }
 
     #indicate-execution {
         margin-left: 13.2em;
     }
+
     #menu-wrap {
         margin-left: 7%;
     }
@@ -736,20 +737,20 @@ label a {
     }
 }
 
-@media only screen and (min-width: 290px) {    
+@media only screen and (min-width: 290px) {
+    #timer {
+        margin-left: 3.6em;
+    }
+
     #indicate-format {
-        margin-left: 7.5em;
+        margin-left: 9em;
     }
 
     #indicate-polar {
-        margin-left: 9.6em;
+        margin-left: 11em;
     }
 
     #indicate-radians {
-        margin-left: 10.8em;
-    }
-
-    #indicate-shift {
         margin-left: 13em;
     }
 
@@ -785,22 +786,18 @@ label a {
     #indicate-radians {
         top: 5px;
     }
-    
+
     #indicate-format {
-        margin-left: 11em;
+        margin-left: 12.3em;
     }
     
     #indicate-polar {
         top: 4px;
-        margin-left: 13.2em;
+        margin-left: 15em;
     }
 
     #indicate-radians {
-        margin-left: 14.7em;
-    }
-
-    #indicate-shift {
-        margin-left: 17.1em;
+        margin-left: 17em;
     }
 
     #indicate-execution {
@@ -902,20 +899,24 @@ label a {
 }
 
 @media only screen and (min-width: 420px) {    
+    #indicate-shift {
+        margin-left: 1em;
+    }
+    
+    #timer {
+        margin-left: 4.8em;
+    }
+
     #indicate-format {
-        margin-left: 13.3em;
+        margin-left: 15em;
     }
 
     #indicate-polar {
-        margin-left: 15.7em;
+        margin-left: 18em;
     }
 
     #indicate-radians {
-        margin-left: 17.5em;
-    }
-
-    #indicate-shift {
-        margin-left: 20.2em;
+        margin-left: 20em;
     }
 
     #indicate-execution {
