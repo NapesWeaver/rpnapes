@@ -4685,7 +4685,7 @@ function parseCommand() {
     if (com1 === undefined || com1 === 'asc' || (com1 === 'unit' && (com2 === undefined || com2 === 'asc'))) sortOrder = true;
     if (com1 === 'desc' || (com1 === 'unit' && com2 === 'desc')) sortOrder = false;
     if (com1 === 'unit') sortByUnits = true;
-
+    
     stack.pop();
     objectSort(sortOrder, sortByUnits);
     updateDisplay();

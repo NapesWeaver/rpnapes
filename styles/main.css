@@ -708,6 +708,9 @@ label a {
 }
 
 @media only screen and (min-width: 250px) {
+    #indicate-shift {
+        margin-left: .3em;
+    }
     #timer {
         margin-left: 2.6em;
     }
