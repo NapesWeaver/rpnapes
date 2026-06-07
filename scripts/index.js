@@ -1660,6 +1660,7 @@ function btnEnter() {
     if (shiftHeld) $('txt-input').value += '\n';
     insertAtCursor($('txt-input'), getSelectedText('lst-stack'));
     resizeInput();
+    $('txt-input').select();
   } else {
     
     if (shiftHeld) {
@@ -1667,8 +1668,8 @@ function btnEnter() {
       $('txt-input').value += '\n';
       endPos = $('txt-input').value.length;
       resizeInput();
-    } else {
 
+    } else {
       var input = $('txt-input').value.split('\n');
       
       for (var i = 0; i < input.length; i++) {
