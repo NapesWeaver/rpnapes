@@ -1742,6 +1742,7 @@ function btnEval() {
 
 function outputTestResult(result, newUnits) {
   var objX;
+  
   if (result !== undefined) {
 
     if (typeof result === 'number' || typeof result === 'string') {
@@ -4023,7 +4024,7 @@ function stopwatchStart(seconds) {
     startTime = Date.now() - elapsedTime;
     
     if (stack[stack.length - 1] !== undefined && stack[stack.length - 1].getSoul() === 'stopwatch') stack.pop();
-    inputText('Click timer for lap times.\nQuit stopwatch by clicking Stopwatch menu item or use \'stop\' command.');
+    inputText('\nClick timer for lap times.\nQuit stopwatch by clicking Stopwatch menu item or use \'stop\' command.');
     btnEnter();
     $('txt-input').value = '';
     updateDisplay();
@@ -4065,6 +4066,23 @@ function stopwatchReset() {
 function menuHelp() {
   backupUndo();
   help('help');
+}
+
+function shortcuts() {
+  inputText('');
+  enterInput();
+  inputText('Ctrl + z = Undo');
+  enterInput();
+  inputText('Ctrl + y = Redo');
+  enterInput();
+  inputText('Ctrl + s = Save');
+  enterInput();
+  inputText('Ctrl + Shift = Shift Keypad');
+  enterInput();
+  inputText('Alt + Up / Down Arrow key = Select text up / down');
+  enterInput();
+  inputText('Esc = Toggle interface button.');
+  enterInput();
 }
 
 function help(command) {
@@ -4130,10 +4148,12 @@ function help(command) {
       enterInput();
       inputText('date: Returns the current date.');
       break;
+    case 'deci':
+      // Falls through
     case 'decimal':
       inputText('');
       enterInput();
-      inputText('decimal: Base10/Decimal mode.');
+      inputText('decimal: Base10/Decimal mode. Alias: deci');
       break;
     case 'duckgo':
       inputText('');
@@ -4334,19 +4354,7 @@ function help(command) {
       inputText('sci [n]: Scientific notation. Precision 0 to 17. If no argument is supplied in-line, last entry on stack is used. Turn scientific notation off with -1.');
       break;
     case 'shortcuts':
-      inputText('');
-      enterInput();
-      inputText('Ctrl + z = Undo');
-      enterInput();
-      inputText('Ctrl + y = Redo');
-      enterInput();
-      inputText('Ctrl + s = Save');
-      enterInput();
-      inputText('Ctrl + Shift = Shift Keypad');
-      enterInput();
-      inputText('Alt + Up / Down Arrow key = Select text up / down');
-      enterInput();
-      inputText('Esc = Toggle interface button.');
+      shortcuts();
       break;
     case 'sort':
       inputText('');
@@ -4550,7 +4558,6 @@ function help(command) {
   enterInput();
   $('txt-input').value = '';
   updateDisplay();
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
 function parseCommand() {
@@ -4561,6 +4568,7 @@ function parseCommand() {
   if (command.match(/(?!help[A-Za-z]+)(?!help ?[0-9])(?!help [A-Za-z ]+[0-9]+)(?!help [A-Za-z]+ +[0-9A-Za-z]+)^help ?[A-Za-z]*/)) {
     stack.pop();      
     help(command);
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   }// NOT fix with number and no space, NOT fix with word, NOT fix with number and word, NOT fix with number and alphanumeric word
   if (command.match(/(?!fix[0-9]+)(?!fix ?[A-Za-z])(?!fix [0-9 ]+[A-Za-z]+)(?!fix [0-9]+ +[0-9A-Za-z]+)^fix$|(^fix (-?[1]|[0-9]|1[0-7])$)/)) {    
     
@@ -4573,7 +4581,7 @@ function parseCommand() {
     }
     stack.pop();
     $('txt-input').value = '';
-    updateDisplay();    
+    updateDisplay();
   }// NOT sci with number and no space, NOT sci with word, NOT sci with number and word, NOT sci with number and alphanumeric word
   if (command.match(/(?!sci[0-9]+)(?!sci ?[A-Za-z])(?!sci [0-9 ]+[A-Za-z]+)(?!sci [0-9]+ +[0-9A-Za-z]+)^sci$|(^sci (-?[1]|[0-9]|1[0-7])$)/)) {    
     
@@ -4619,6 +4627,7 @@ function parseCommand() {
       plot(commandArray[1]);
     }
     updateDisplay();
+    setTimeout(function() { $('lst-stack').scrollTop = $('lst-stack').scrollHeight }, 100);
   }// timer 
   if (commandArray[0] === 'timer' && (commandArray[1] === undefined || /[0-9]+/.test(commandArray[1]))) {
     
@@ -4704,6 +4713,7 @@ function parseCommand() {
     $('txt-input').value = '';
     updateDisplay();
     // saveTricorder();
+    setTimeout(function() { $('lst-stack').scrollTop = $('lst-stack').scrollHeight }, 100);    
   }
   if (command === 'duckgo'|| command.match(/^duckgo .+/)) {
     
@@ -4815,6 +4825,8 @@ function parseCommand() {
     updateDisplay();
     insertDate();
     break;
+  case 'deci':
+    // Falls through
   case 'decimal':
     stack.pop();
     convertBase(10);
@@ -5018,22 +5030,10 @@ function parseCommand() {
     break;
   case 'shortcuts':
     stack.pop();
-    inputText('');
-    enterInput();
-    inputText('Ctrl + z = Undo');
-    enterInput();
-    inputText('Ctrl + y = Redo');
-    enterInput();
-    inputText('Ctrl + s = Save');
-    enterInput();
-    inputText('Ctrl + Shift = Shift Keypad');
-    enterInput();
-    inputText('Alt + Up / Down Arrow key = Select text up / down');
-    enterInput();
-    inputText('Esc = Toggle interface button.');
-    enterInput();
+    shortcuts();
     updateDisplay();
     $('txt-input').value = '';
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     break;
   case 'sound':
     stack.pop();
