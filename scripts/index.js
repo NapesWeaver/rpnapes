@@ -1543,7 +1543,7 @@ function btnPaste() {
   }
   setTimeout(() => {
     resizeInput();
-    $('txt-input').scrollTop = $('txt-input').scrollHeight;
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     $('txt-input').focus();
   }, 100);
 }
@@ -4687,6 +4687,7 @@ function parseCommand() {
     if (com1 === 'unit') sortByUnits = true;
     
     stack.pop();
+    // backupUndo();
     objectSort(sortOrder, sortByUnits);
     updateDisplay();
   }// tostring
@@ -7049,7 +7050,10 @@ window.onload = function () {
   $('txt-input').readOnly = true;
   $('txt-input').addEventListener('paste', function() {
     backupUndo();
-    setTimeout(resizeInput, 180);
+    setTimeout(function() {
+      resizeInput();
+      $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    }, 100);
   });
 
   // Buttons
