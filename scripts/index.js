@@ -1782,7 +1782,7 @@ function deleteButton() {
   }    
 }
 
-function deleteLines(){
+function deleteLines() {
   var numLines = $('lst-stack').value.slice($('lst-stack').selectionStart, $('lst-stack').selectionEnd).split('\n').length;
 
   stack.splice(getIndex('lst-stack') - stackSize, numLines);
@@ -1790,27 +1790,27 @@ function deleteLines(){
   $('txt-input').select();
 }
 
-function deleteInput() {
+function btnDelete() {
+  
   if (stack.toString() !== '') backupUndo();
     
   if (stackFocus) {
     deleteLines();
+
   } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
     $('txt-input').selectionStart = 0;
     $('txt-input').focus();
+
   } else if ($('txt-input').value === '') {
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     $('txt-input').select();
+    
   } else {
     deleteText($('txt-input'), true);
+    resizeInput();
   }
-}
-
-function btnDelete() {  
-  deleteInput();
-  setTimeout(resizeInput, 180);
 }
 
 function deleteText(txtField, forward) {
@@ -6529,11 +6529,10 @@ document.addEventListener('keydown', function(event) {
     return;
   case 46:// DELETE
     if ($('rpnapes').className !== 'hidden') {
+      
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      deleteInput();
-      // Resizing input with soft-keyboard open breaks resizing logic
-      if (!isMobile) resizeInput();        
+      btnDelete();    
     }
     return;
   case 57:// ()
