@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '11:00';
+var tStamp = '11:45';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -6775,7 +6775,10 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-        setTimeout(resizeTextAreas, 100);
+        setTimeout(function() {          
+          resizeTextAreas();
+          $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+        }, 180);
       break;
       default:
         try {
