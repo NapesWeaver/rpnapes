@@ -4072,11 +4072,15 @@ function menuHelp() {
 function shortcuts() {
   inputText('');
   enterInput();
-  inputText('Ctrl + z = Undo');
+  inputText('Ctrl + c = copy');
+  enterInput();
+  inputText('Ctrl + s = Save');
+  enterInput();
+  inputText('Ctrl + x = cut');
   enterInput();
   inputText('Ctrl + y = Redo');
   enterInput();
-  inputText('Ctrl + s = Save');
+  inputText('Ctrl + z = Undo');
   enterInput();
   inputText('Ctrl + Shift = Shift Keypad');
   enterInput();
@@ -6576,6 +6580,16 @@ document.addEventListener('keydown', function(event) {
         btnSaveNotes();
       }
     }        
+    break;
+  case 88:// x
+    if (ctrlHeld) {
+      if (!event) event = window.event;
+      event.preventDefault ? event.preventDefault() : (event.returnValue = false);  
+      if (stackFocus) {
+        navigator.clipboard.writeText(getSelectedText('lst-stack'));
+        btnDelete();
+      }
+    }
     break;
   case 89:// y
     if (ctrlHeld) {
