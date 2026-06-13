@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '13:00';
+var tStamp = '14:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1401,6 +1401,23 @@ function colorUndoRedoMenu() {
   }
 }
 
+// function backupUndo() {
+//   var shortStack = [];
+//   var currentRadix = radix;
+//   var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
+//   radix = 10;
+
+//   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
+
+//   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {  
+//     backups.push(nestArrayByBrowser(shortStack));
+//     backups.push(input);   
+//     restores.length = 0;
+//     colorUndoButton();  
+//   }
+//   radix = currentRadix;
+// }
+
 function backupUndo() {
   var shortStack = [];
   var currentRadix = radix;
@@ -1409,6 +1426,12 @@ function backupUndo() {
 
   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
+  // console.log('backups[backups.length - 1]', backups[backups.length - 1]);
+  // console.log('backups[backups.length - 2]', backups[backups.length - 2]);
+  // console.log('nestArrayByBrowser(shortStack)', nestArrayByBrowser(shortStack));
+  // console.log(backups[backups.length - 2] !== nestArrayByBrowser(shortStack));
+
+  // if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {  
   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {  
     backups.push(nestArrayByBrowser(shortStack));
     backups.push(input);   
@@ -1956,19 +1979,22 @@ function redoFunction() {
 
 function btnUndo() {;
   var stackLength = stack.length;
+
+  // console.log('height - top', $('lst-stack').scrollHeight - $('lst-stack').scrollTop);
+  // console.log('height', $('lst-stack').clientHeight);
   
   if (shifted) {
 
     if (restores.length > 0) {
       redoFunction();
-      if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.8 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+      if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.5 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     }
   } else {
 
     if (backups.length > 2)  {
       undoFunction();
       // If stack was cleared || ...
-      if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.8 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;     
+      if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.5 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;     
     }
   }
   $('txt-input').select();
