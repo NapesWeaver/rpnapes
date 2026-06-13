@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '12:00';
+var tStamp = '13:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1958,25 +1958,17 @@ function btnUndo() {;
   var stackLength = stack.length;
   
   if (shifted) {
+
     if (restores.length > 0) {
       redoFunction();
-
-      if ($('lst-stack').clientWidth > 299) {
-        if ($('lst-stack').scrollTop / $('lst-stack').scrollHeight > .7) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;         
-      } else {
-        if ($('lst-stack').scrollTop / $('lst-stack').scrollHeight > .9) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
-      }
+      if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.8 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     }
   } else {
+
     if (backups.length > 2)  {
       undoFunction();
-      
-      if ($('lst-stack').clientWidth > 299) {
-        // If stack was just cleared || ...
-        if (stackLength === 0 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .7) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;         
-      } else {
-        if (stackLength === 0 || $('lst-stack').scrollTop / $('lst-stack').scrollHeight > .9) $('lst-stack').scrollTop = $('lst-stack').scrollHeight; 
-      }
+      // If stack was cleared || ...
+      if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.8 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;     
     }
   }
   $('txt-input').select();
