@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '11:45';
+var tStamp = '12:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -3870,7 +3870,7 @@ function plot(input) {
   if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
 
   setTimeout(function () {
-    setTimeout(resizeTextAreas, 100);
+    resizeTextAreas();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight
   }, 300);
 }
@@ -6778,7 +6778,7 @@ window.onload = function () {
         setTimeout(function() {          
           resizeTextAreas();
           $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-        }, 180);
+        }, 300);
       break;
       default:
         try {
