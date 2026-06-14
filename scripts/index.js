@@ -4778,6 +4778,7 @@ function parseCommand() {
     break;
   case 'clear':
   case 'cls':
+    stack.pop();
     btnClear();
     break;
   case 'close':
