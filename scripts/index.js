@@ -1401,23 +1401,6 @@ function colorUndoRedoMenu() {
   }
 }
 
-// function backupUndo() {
-//   var shortStack = [];
-//   var currentRadix = radix;
-//   var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
-//   radix = 10;
-
-//   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
-
-//   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {  
-//     backups.push(nestArrayByBrowser(shortStack));
-//     backups.push(input);   
-//     restores.length = 0;
-//     colorUndoButton();  
-//   }
-//   radix = currentRadix;
-// }
-
 function backupUndo() {
   var shortStack = [];
   var currentRadix = radix;
@@ -1426,12 +1409,6 @@ function backupUndo() {
 
   for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
 
-  // console.log('backups[backups.length - 1]', backups[backups.length - 1]);
-  // console.log('backups[backups.length - 2]', backups[backups.length - 2]);
-  // console.log('nestArrayByBrowser(shortStack)', nestArrayByBrowser(shortStack));
-  // console.log(backups[backups.length - 2] !== nestArrayByBrowser(shortStack));
-
-  // if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {  
   if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {  
     backups.push(nestArrayByBrowser(shortStack));
     backups.push(input);   
@@ -1917,10 +1894,12 @@ function stringToStackObj(tmpArray) {
 
 function undoFunction() {
 
-  if (backups.length > 3) {   
+  if (backups.length > 3) {
+
     var shortStack = [];    
     var currentRadix = radix;
     var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, currentRadix);
+    var stackLength = stack.length;
 
     radix = 10;
     
@@ -1944,6 +1923,8 @@ function undoFunction() {
     resizeInput();
   }
   colorUndoButton();
+  // If stack was cleared || ...
+  if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.2 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
 function redoFunction() {
@@ -1975,27 +1956,16 @@ function redoFunction() {
     resizeInput();
   }
   colorUndoButton();
+
+  if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.2 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
 }
 
 function btnUndo() {;
-  var stackLength = stack.length;
-
-  // console.log('height - top', $('lst-stack').scrollHeight - $('lst-stack').scrollTop);
-  // console.log('height', $('lst-stack').clientHeight);
-  
-  if (shifted) {
-
-    if (restores.length > 0) {
-      redoFunction();
-      if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.5 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    }
-  } else {
-
-    if (backups.length > 2)  {
-      undoFunction();
-      // If stack was cleared || ...
-      if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.5 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;     
-    }
+   
+  if (shifted) {    
+    if (restores.length > 0) redoFunction();
+  } else {    
+    if (backups.length > 2) undoFunction();
   }
   $('txt-input').select();
 }
@@ -6624,7 +6594,7 @@ document.addEventListener('keydown', function(event) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
       if ($('rpnapes').className !== 'hidden') {
-        undoFunction();
+        undoFunction();        
       } else {
         btnUndoNotes();
       }
