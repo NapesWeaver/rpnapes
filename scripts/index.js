@@ -1925,6 +1925,7 @@ function undoFunction() {
   colorUndoButton();
   // If stack was cleared || ...
   if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.2 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  $('txt-input').select();
 }
 
 function redoFunction() {
@@ -1958,6 +1959,7 @@ function redoFunction() {
   colorUndoButton();
 
   if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.2 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  $('txt-input').select();
 }
 
 function btnUndo() {;
@@ -1967,7 +1969,6 @@ function btnUndo() {;
   } else {    
     if (backups.length > 2) undoFunction();
   }
-  $('txt-input').select();
 }
 
 function toggleChar(input, index, regex, char) {
