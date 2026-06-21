@@ -1926,7 +1926,8 @@ function undoFunction() {
   }
   colorUndoButton();
   // If stack was cleared || ...
-  if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.212 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  // if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.212 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight
   $('txt-input').select();
 }
 
@@ -1960,7 +1961,8 @@ function redoFunction() {
   }
   colorUndoButton();
 
-  if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.212 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  // if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.212 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  $('lst-stack').scrollTop = $('lst-stack').scrollHeight
   $('txt-input').select();
 }
 
@@ -6532,7 +6534,8 @@ document.addEventListener('keydown', function(event) {
       
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btnDelete();    
+      btnDelete();
+      $('lst-stack').scrollTop = $('lst-stack').scrollHeight;  
     }
     return;
   case 57:// ()
@@ -6573,13 +6576,12 @@ document.addEventListener('keydown', function(event) {
     }        
     break;
   case 88:// x
-    if (ctrlHeld) {
+    if ($('rpnapes').className !== 'hidden' && ctrlHeld && stackFocus) {
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);  
-      if (stackFocus) {
-        navigator.clipboard.writeText(getSelectedText('lst-stack'));
-        btnDelete();
-      }
+      navigator.clipboard.writeText(getSelectedText('lst-stack'));
+      btnDelete();
+      $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     }
     break;
   case 89:// y
