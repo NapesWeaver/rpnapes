@@ -1895,6 +1895,8 @@ function stringToStackObj(tmpArray) {
 function undoFunction() {
 
   if (backups.length > 3) {
+    // console.log('height - top', $('lst-stack').scrollHeight - $('lst-stack').scrollTop);
+    // console.log('height', $('lst-stack').clientHeight);
 
     var shortStack = [];    
     var currentRadix = radix;
@@ -1924,7 +1926,7 @@ function undoFunction() {
   }
   colorUndoButton();
   // If stack was cleared || ...
-  if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.2 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.212 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 }
 
@@ -1958,7 +1960,7 @@ function redoFunction() {
   }
   colorUndoButton();
 
-  if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.2 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+  if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.212 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 }
 
@@ -4061,11 +4063,11 @@ function menuHelp() {
 function shortcuts() {
   inputText('');
   enterInput();
-  inputText('Ctrl + c = copy');
+  inputText('Ctrl + c = Copy');
   enterInput();
   inputText('Ctrl + s = Save');
   enterInput();
-  inputText('Ctrl + x = cut');
+  inputText('Ctrl + x = Cut');
   enterInput();
   inputText('Ctrl + y = Redo');
   enterInput();
@@ -4073,9 +4075,9 @@ function shortcuts() {
   enterInput();
   inputText('Ctrl + Shift = Shift Keypad');
   enterInput();
-  inputText('Alt + Up / Down Arrow key = Select text up / down');
+  inputText('Alt + Up / Down Arrow Key = Select Text Up / Down');
   enterInput();
-  inputText('Esc = Toggle interface button.');
+  inputText('Esc = Toggle Interface');
   enterInput();
 }
 
@@ -6752,7 +6754,10 @@ window.onload = function () {
         $('txt-input').value = fileName;
         $('txt-input').select();
         if (!$('indicate-execution').classList.contains('hidden')) $('indicate-execution').classList.add('hidden');
-        setTimeout(resizeTextAreas, 100);
+        setTimeout(function() {          
+          resizeTextAreas();
+          $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+        }, 300);
       break;
       case 'mp3':
         // Falls through
