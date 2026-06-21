@@ -1790,23 +1790,22 @@ function deleteLines() {
   $('txt-input').select();
 }
 
-function btnDelete() {
-  
+function btnDelete() {  
   if (stack.toString() !== '') backupUndo();
     
   if (stackFocus) {
-    deleteLines();
 
+    deleteLines();
   } else if ($('txt-input').value !== '' && $('txt-input').selectionStart === $('txt-input').value.length) {
+
     $('txt-input').selectionStart = 0;
     $('txt-input').focus();
-
   } else if ($('txt-input').value === '') {
+
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    $('txt-input').select();
-    
+    $('txt-input').select();    
   } else {
     deleteText($('txt-input'), true);
     resizeInput();
@@ -6534,8 +6533,7 @@ document.addEventListener('keydown', function(event) {
       
       if (!event) event = window.event;
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-      btnDelete();
-      $('lst-stack').scrollTop = $('lst-stack').scrollHeight;  
+      btnDelete(); 
     }
     return;
   case 57:// ()
@@ -6581,7 +6579,6 @@ document.addEventListener('keydown', function(event) {
       event.preventDefault ? event.preventDefault() : (event.returnValue = false);  
       navigator.clipboard.writeText(getSelectedText('lst-stack'));
       btnDelete();
-      $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     }
     break;
   case 89:// y
