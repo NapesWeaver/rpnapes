@@ -669,7 +669,7 @@ function isANumber(testString) {
 function calculate(expression) {  
   
   if (/^plot\(/.test(expression) && /x/g.test(expression)) {
-    expression = parseFunc(expression.slice(5).slice(0, -1));
+    expression = parseFunc(decodeSpecialChar(expression).slice(5).slice(0, -1));
     expression = 'plot(' + expression + ')';
   }  
   var parsed = parseEval(expression);
