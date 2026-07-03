@@ -643,7 +643,6 @@ function getX(input) {
   var tmpComplex = extractLateral(soulX, firstValueX);
   var imaginaryX = tmpComplex[1];
   var unitsX = extractUnits(soulX);
-  // var unitsX = isNaN(firstValueX) && isNaN(imaginaryX) ? 'null' : extractUnits(soulX);
 
   firstValueX = tmpComplex[0];
   unitsX = encodeSpecialChar(unitsX);
@@ -4606,7 +4605,7 @@ function parseCommand() {
     $('txt-input').value = '';
     updateDisplay();    
   }// plot
-  if (commandArray[0] === 'plot') {
+  if (commandArray[0] === 'plot' && (/[xⅽ℮ɢΦπ0-9]/g.test(commandArray[1]) || commandArray[1] === undefined)) {   
 
     if (commandArray[1] === undefined) {
       stack.pop();
