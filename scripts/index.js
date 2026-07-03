@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '12:00';
+var tStamp = '17:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -1924,8 +1924,7 @@ function undoFunction() {
   }
   colorUndoButton();
   // If stack was cleared || ...
-  // if (stackLength === 0 || ($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.212 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight
+  if (stackLength === 0 || $('lst-stack').clientHeight < 200 || (($('lst-stack').scrollHeight - $('lst-stack').scrollTop - $('lst-stack').clientHeight) * 3  < $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 }
 
@@ -1959,8 +1958,7 @@ function redoFunction() {
   }
   colorUndoButton();
 
-  // if (($('lst-stack').scrollHeight - $('lst-stack').scrollTop < 1.212 * $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-  $('lst-stack').scrollTop = $('lst-stack').scrollHeight
+  if ($('lst-stack').clientHeight < 200 || (($('lst-stack').scrollHeight - $('lst-stack').scrollTop - $('lst-stack').clientHeight) * 3  < $('lst-stack').clientHeight)) $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
   $('txt-input').select();
 }
 
