@@ -65,7 +65,7 @@ var engDecimal = -1;
 var radix = 10;
 var currency = '';
 
-var tStamp = '13:00';
+var tStamp = '12:00';
 var testing = false;
 
 function NumberObject(soul, realPart, imaginary, units) {
@@ -2433,10 +2433,10 @@ function btnOff() {
     window.open('', '_self', '');
     window.close();
     window.top.close();
-    history.go(-1);    
-  } catch {
     rpnAlert('Scripts may only close windows they opened.');
     window.location.href = 'https://www.google.com/';
+  } catch {
+    history.go(-1);  
   }
 }
 
