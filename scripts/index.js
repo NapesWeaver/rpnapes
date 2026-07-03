@@ -4682,9 +4682,9 @@ function parseCommand() {
     if (com1 === 'unit') sortByUnits = true;
     
     stack.pop();
-    // backupUndo();
     objectSort(sortOrder, sortByUnits);
     updateDisplay();
+    $('txt-input').value = '';
   }// tostring
   if (commandArray[0] === 'tostring' && (commandArray[1] === undefined || /^[\w\s-,.]+$/.test(commandArray[1]))) {    
 
@@ -4771,7 +4771,7 @@ function parseCommand() {
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    inputText(averageStack());
+    $('txt-input').value = averageStack();
     break;
   case 'bin':
     // Falls through
@@ -4789,6 +4789,7 @@ function parseCommand() {
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    $('txt-input').value = '';
     closeMedia();
     break;
   case 'constants':
@@ -4811,8 +4812,8 @@ function parseCommand() {
     break;
   case 'contact':
     stack.pop();
-    $('txt-input').value = '';
     updateDisplay();
+    $('txt-input').value = '';
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     window.location.href = "mailto:napesweaver@gmail.com?subject=RPNapes"
       break;    
@@ -4833,21 +4834,23 @@ function parseCommand() {
     // Falls through
   case 'decimal':
     stack.pop();
-    convertBase(10);
     $('txt-input').value = '';
+    convertBase(10);
     break;
   case 'email':
     stack.pop();
     updateDisplay();
-    $('txt-input').value = '';
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    $('txt-input').value = '';
     // window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here"
     window.location.href = "mailto:?subject=&body=";
     break;
   case 'gravity':
+    stack.pop();
+    updateDisplay();
+    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    $('txt-input').value = '';
     gravity();
-    btnDelete();
-    btnDelete();
     break;
   case 'haptic':
     if (isMobile) {
@@ -4862,8 +4865,8 @@ function parseCommand() {
     // Falls through
   case 'hexadecimal':
     stack.pop();
-    convertBase(16);
     $('txt-input').value = '';
+    convertBase(16);
     break;
   case 'How are ya?':
     // Falls through
@@ -4876,9 +4879,9 @@ function parseCommand() {
   case 'How ya doing?':
     // Falls through
   case 'How you doing?':
-    inputText('');
+    $('txt-input').value = '';
     enterInput();
-    inputText('Like a rhinestone cowboy!');
+    $('txt-input').value = 'Like a rhinestone cowboy!';
     enterInput();
     $('txt-input').value = '';
     updateDisplay();
@@ -4891,9 +4894,9 @@ function parseCommand() {
   case 'Hey':
     // Falls through
   case 'Hi':
-    inputText('');
+    $('txt-input').value = '';
     enterInput();
-    inputText('Hallo there!');
+    $('txt-input').value = 'Hallo there!';
     enterInput();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
@@ -4935,9 +4938,9 @@ function parseCommand() {
   //   break;
   case 'maths':
     stack.pop();
-    inputText('');
+    $('txt-input').value = '';
     enterInput();
-    inputText('acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').');
+    $('txt-input').value = 'acos(x) asin(x) atan(x) cos(x) sin(x) tan(x) ln(x) log(y,[x]) pow(y,[x]) root(y,[x]) roots(y,[x]). Imaginary and complex numbers may be entered as strings e.g. sin(\'3 + 6j\').';
     enterInput();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
@@ -4947,18 +4950,20 @@ function parseCommand() {
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    inputText(maxNum());
+    $('txt-input').value = maxNum();
     break;
-  case 'min':
+    case 'min':
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    inputText(minNum());
+    $('txt-input').value = minNum();
     break;    
-  case 'mute':
+    case 'mute':
     stack.pop();
+    backupUndo();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    $('txt-input').value = '';
     $('audio-player').muted = true;
     $('video-player').muted = true;
     break;    
@@ -4972,13 +4977,14 @@ function parseCommand() {
     // Falls through
   case 'octal':
     stack.pop();
-    convertBase(8);
     $('txt-input').value = '';
+    convertBase(8);
     break;
   case 'off':
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    $('txt-input').value = '';
     btnOff();
     break;
   case 'open':
@@ -4992,14 +4998,15 @@ function parseCommand() {
     stack.pop();
     updateDisplay(); 
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;     
-    btnToggle();
     $('txt-input').value = '';
+    btnToggle();
     openAFile();
     break;
   case 'pause':
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    $('txt-input').value = '';
     $('audio-player').pause();
     $('video-player').pause();
     break;
@@ -5007,15 +5014,16 @@ function parseCommand() {
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
+    $('txt-input').value = '';
     $('audio-player').play();
     $('video-player').play();
     break;
   case 'polar':
     stack.pop();
+    if ($('menu-form').textContent === 'Polar') toggleForm();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    if ($('menu-form').textContent === 'Polar') toggleForm();
-    inputText('');
+    $('txt-input').value = '';
     break;
   case 'print':
     stack.pop();
@@ -5061,14 +5069,13 @@ function parseCommand() {
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     $('txt-input').value = '';
-    $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     break;
   case 'sound':
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    toggleSound();
     $('txt-input').value = '';
+    toggleSound();
     break;
   case 'stopwatch':      
     stopwatchStart();
@@ -5083,7 +5090,7 @@ function parseCommand() {
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    inputText(totalStack());
+    $('txt-input').value = totalStack();
     break;
   case 'tri':
     // Falls through
@@ -5091,27 +5098,28 @@ function parseCommand() {
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    inputText('');
+    $('txt-input').value = '';
     showTricorder();
     break;
   case 'twig':
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    inputText('');
+    $('txt-input').value = '';
     monOn();
     break;        
   case 'unembed':
     stack.pop();
     updateDisplay();
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
-    inputText(''); 
+    $('txt-input').value = '';
     widgetSrc.shift();
     saveTricorder();
     break;
   case 'unmute':
     stack.pop();
     updateDisplay();
+    $('txt-input').value = '';
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     $('audio-player').muted = false;
     $('video-player').muted = false;
@@ -5121,9 +5129,9 @@ function parseCommand() {
   case 'rectangular':
     stack.pop();
     updateDisplay();
+    $('txt-input').value = '';
     $('lst-stack').scrollTop = $('lst-stack').scrollHeight;
     if ($('menu-form').textContent === 'Vector') toggleForm();
-    inputText('');
     break;
   default:
     if ($('twig').className !== 'hidden' && twig.health > 0) {
