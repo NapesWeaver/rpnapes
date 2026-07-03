@@ -1402,13 +1402,14 @@ function colorUndoRedoMenu() {
 
 function backupUndo() {
   var shortStack = [];
+  var postFix = backups[backups.length - 1] ? '_' + backups[backups.length - 1] : '';  
   var currentRadix = radix;
   var input = radix === 10 ? $('txt-input').value.trim() : undoBase($('txt-input').value, radix);
   radix = 10;
 
-  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());
-
-  if (backups.length < 3 || backups[backups.length - 2] !== nestArrayByBrowser(shortStack) || backups[backups.length - 1] !== input && (stack.length > 0 || (input !== '' && input !== 'NaN'))) {  
+  for (var i = 0; i < stack.length; i++) shortStack.push(stack[i].getSoul());  
+ 
+  if (nestArrayByBrowser(shortStack) !== backups[backups.length - 2] + postFix || backups[backups.length - 1] !== input) {
     backups.push(nestArrayByBrowser(shortStack));
     backups.push(input);   
     restores.length = 0;
@@ -2436,7 +2437,7 @@ function btnOff() {
     rpnAlert('Scripts may only close windows they opened.');
     window.location.href = 'https://www.google.com/';
   } catch {
-    history.go(-1);  
+    history.go(-1);
   }
 }
 
